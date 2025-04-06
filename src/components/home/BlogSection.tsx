@@ -12,10 +12,10 @@ const featuredArticles = [
     author: {
       name: "Ana Mendes",
       role: "Head de Crescimento",
-      avatar: "https://i.pravatar.cc/150?u=ana"
+      avatar: "https://revhackers.com.br/images/avatar-ana.webp"
     },
     slug: "o-que-e-plg-e-como-aplicar-em-startups-brasileiras",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+    image: "https://revhackers.com.br/images/blog-plg.webp"
   },
   {
     title: "CRO na prática: como dobrar sua taxa de conversão sem investir mais",
@@ -24,10 +24,10 @@ const featuredArticles = [
     author: {
       name: "Ricardo Torres",
       role: "Especialista em CRO",
-      avatar: "https://i.pravatar.cc/150?u=ricardo"
+      avatar: "https://revhackers.com.br/images/avatar-ricardo.webp"
     },
     slug: "cro-na-pratica-como-dobrar-sua-taxa-de-conversao",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6"
+    image: "https://revhackers.com.br/images/blog-cro.webp"
   },
   {
     title: "ABM para times pequenos: segmentação que converte",
@@ -36,10 +36,10 @@ const featuredArticles = [
     author: {
       name: "Juliana Costa",
       role: "Estrategista de Marketing B2B",
-      avatar: "https://i.pravatar.cc/150?u=juliana"
+      avatar: "https://revhackers.com.br/images/avatar-juliana.webp"
     },
     slug: "abm-para-times-pequenos-segmentacao-que-converte",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+    image: "https://revhackers.com.br/images/blog-abm.webp"
   }
 ];
 
@@ -53,7 +53,7 @@ const BlogSection = () => {
               Blog RevHackers
             </h2>
             <p className="text-lg text-gray-600">
-              Conteúdo estratégico sobre crescimento, marketing e vendas B2B.
+              Conteúdo estratégico e especializado sobre crescimento, marketing e vendas B2B.
             </p>
           </div>
           
@@ -75,6 +75,10 @@ const BlogSection = () => {
                     src={article.image} 
                     alt={article.title} 
                     className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = `https://images.unsplash.com/photo-${1581091226825 + index}-a6a2a5aee158`;
+                    }}
                   />
                 </div>
                 <CardContent className="p-6">

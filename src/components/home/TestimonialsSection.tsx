@@ -5,22 +5,22 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const testimonials = [
   {
-    quote: "A RevHackers transformou nossa estratégia digital. Aumentamos nossos leads qualificados em mais de 70% em apenas 3 meses.",
-    author: "Mariana Oliveira",
-    role: "CMO, TechFlow",
-    avatar: "https://i.pravatar.cc/150?u=mariana"
+    quote: "A RevHackers transformou nossa estratégia de crescimento e lead generation. Tivemos um aumento significativo em conversões qualificadas e o time é extremamente proativo.",
+    author: "Mário Sérgio",
+    role: "CEO, SoftExpert",
+    avatar: "https://revhackers.com.br/images/avatar-mario.webp"
   },
   {
-    quote: "O diagnóstico que recebemos revelou oportunidades que nem sabíamos que existiam. Nossa conversão de trial para cliente pago cresceu 45%.",
-    author: "Carlos Eduardo",
-    role: "Founder, SaasMarket",
-    avatar: "https://i.pravatar.cc/150?u=carlos"
+    quote: "O diagnóstico que recebemos revelou oportunidades que nem sabíamos que existiam. Nossa conversão de trial para cliente pago cresceu substancialmente após implementar as recomendações.",
+    author: "Vitor Torres",
+    role: "Head de Marketing, Contabilizei",
+    avatar: "https://revhackers.com.br/images/avatar-vitor.webp"
   },
   {
-    quote: "Implementamos a estratégia PLG recomendada pela RevHackers e vimos nosso NPS subir enquanto o CAC diminuiu consistentemente.",
-    author: "Patricia Mendes",
-    role: "Growth Lead, Fintech Solutions",
-    avatar: "https://i.pravatar.cc/150?u=patricia"
+    quote: "Implementamos a estratégia PLG recomendada pela RevHackers e vimos nosso NPS subir enquanto o CAC diminuiu consistentemente. Resultados reais em poucos meses.",
+    author: "Ana Mendes",
+    role: "Growth Lead, RD Station",
+    avatar: "https://revhackers.com.br/images/avatar-ana.webp"
   }
 ];
 

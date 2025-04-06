@@ -8,19 +8,22 @@ const cases = [
     title: "SoftExpert",
     category: "SaaS B2B",
     result: "157% de aumento em MQLs",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
+    image: "https://revhackers.com.br/images/softexpert-logo.webp",
+    logo: true
   },
   {
     title: "Contabilizei",
     category: "Contabilidade Digital",
     result: "210% ROI em campanhas ABM",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
+    image: "https://revhackers.com.br/images/contabilizei-logo.webp",
+    logo: true
   },
   {
     title: "RD Station",
     category: "MarTech",
     result: "43% redução no CAC",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+    image: "https://revhackers.com.br/images/rd-station-logo.webp",
+    logo: true
   }
 ];
 
@@ -34,7 +37,7 @@ const CasesSection = () => {
               Cases de sucesso
             </h2>
             <p className="text-lg text-gray-600">
-              Veja como empresas de referência conquistaram resultados extraordinários com nossa metodologia.
+              Empresas de referência que conquistaram resultados extraordinários com nossa metodologia de crescimento.
             </p>
           </div>
           
@@ -51,11 +54,11 @@ const CasesSection = () => {
           {cases.map((item, index) => (
             <Link to={`/cases/${item.title.toLowerCase()}`} key={index}>
               <Card className="overflow-hidden card-hover h-full border-0 shadow-sm">
-                <div className="h-48 overflow-hidden">
+                <div className="h-48 overflow-hidden bg-white flex items-center justify-center p-6">
                   <img 
                     src={item.image} 
                     alt={item.title} 
-                    className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
+                    className={`${item.logo ? 'w-3/4 h-auto object-contain' : 'w-full h-full object-cover'} transition-transform hover:scale-105 duration-500`}
                   />
                 </div>
                 <CardContent className="p-6">
