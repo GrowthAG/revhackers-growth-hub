@@ -21,19 +21,19 @@ const Header = () => {
           
           <nav className="hidden md:flex space-x-8">
             <Link to="/" className="nav-link nav-link-active">Home</Link>
-            <Link to="/downloads" className="nav-link">Downloads</Link>
+            <Link to="/servicos" className="nav-link">Serviços</Link>
             <Link to="/cases" className="nav-link">Cases</Link>
+            <Link to="/downloads" className="nav-link">Materiais</Link>
             <Link to="/quem-somos" className="nav-link">Quem Somos</Link>
-            <Link to="/comunidade" className="nav-link">Comunidade</Link>
             <Link to="/blog" className="nav-link">Blog</Link>
-            <Link to="/tutoriais" className="nav-link">Tutoriais</Link>
           </nav>
         </div>
         
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost" className="text-black hover:text-revgreen">Login</Button>
-          <Button className="bg-revgreen text-white">
-            Falar com um especialista
+          <Button asChild variant="default">
+            <Link to="/diagnostico">
+              Solicitar diagnóstico
+            </Link>
           </Button>
         </div>
         
@@ -48,14 +48,15 @@ const Header = () => {
         <div className="md:hidden bg-white w-full shadow-lg animate-fade-in">
           <div className="container py-4 flex flex-col space-y-4">
             <Link to="/" className="nav-link" onClick={toggleMenu}>Home</Link>
-            <Link to="/downloads" className="nav-link" onClick={toggleMenu}>Downloads</Link>
+            <Link to="/servicos" className="nav-link" onClick={toggleMenu}>Serviços</Link>
             <Link to="/cases" className="nav-link" onClick={toggleMenu}>Cases</Link>
+            <Link to="/downloads" className="nav-link" onClick={toggleMenu}>Materiais</Link>
             <Link to="/quem-somos" className="nav-link" onClick={toggleMenu}>Quem Somos</Link>
-            <Link to="/comunidade" className="nav-link" onClick={toggleMenu}>Comunidade</Link>
             <Link to="/blog" className="nav-link" onClick={toggleMenu}>Blog</Link>
-            <Link to="/tutoriais" className="nav-link" onClick={toggleMenu}>Tutoriais</Link>
-            <Button className="bg-revgreen text-white w-full mt-4">
-              Falar com um especialista
+            <Button asChild variant="default" className="w-full mt-4">
+              <Link to="/diagnostico">
+                Solicitar diagnóstico
+              </Link>
             </Button>
           </div>
         </div>

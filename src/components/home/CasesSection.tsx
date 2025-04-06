@@ -5,24 +5,24 @@ import { Link } from 'react-router-dom';
 
 const cases = [
   {
-    title: "SoftExpert",
-    category: "SaaS B2B",
-    result: "157% de aumento em MQLs",
-    image: "https://revhackers.com.br/images/softexpert-logo.webp",
+    title: "Ambipar",
+    category: "Tecnologia Ambiental",
+    result: "173% de aumento em leads qualificados",
+    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-Ambipar.png",
     logo: true
   },
   {
-    title: "Contabilizei",
-    category: "Contabilidade Digital",
-    result: "210% ROI em campanhas ABM",
-    image: "https://revhackers.com.br/images/contabilizei-logo.webp",
+    title: "PetroReconcavo",
+    category: "Energia e Petróleo",
+    result: "38% redução no CAC",
+    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-petroreconcavo.png",
     logo: true
   },
   {
-    title: "RD Station",
-    category: "MarTech",
-    result: "43% redução no CAC",
-    image: "https://revhackers.com.br/images/rd-station-logo.webp",
+    title: "NTT DATA",
+    category: "Tecnologia",
+    result: "267% aumento em MQLs",
+    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-NTTDATA.png",
     logo: true
   }
 ];
@@ -37,7 +37,7 @@ const CasesSection = () => {
               Cases de sucesso
             </h2>
             <p className="text-lg text-gray-600">
-              Empresas de referência que conquistaram resultados extraordinários com nossa metodologia de crescimento.
+              Empresas de referência que conquistaram resultados extraordinários com nossa metodologia de crescimento orientado a dados.
             </p>
           </div>
           

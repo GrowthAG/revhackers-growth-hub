@@ -6,40 +6,40 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const featuredArticles = [
   {
-    title: "O que é PLG e como aplicar em startups brasileiras",
-    excerpt: "Estratégias para usar o produto como motor de crescimento adaptadas à realidade do mercado brasileiro.",
-    category: "Product Led Growth",
+    title: "Automação de Revenue: Como otimizar seu funil de vendas com tecnologia",
+    excerpt: "Descubra como a automação inteligente pode transformar seus processos de vendas e marketing para resultados mais previsíveis.",
+    category: "Automação",
     author: {
-      name: "Ana Mendes",
-      role: "Head de Crescimento",
-      avatar: "https://revhackers.com.br/images/avatar-ana.webp"
+      name: "Rafael Silva",
+      role: "Especialista em RevOps",
+      avatar: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79"
     },
-    slug: "o-que-e-plg-e-como-aplicar-em-startups-brasileiras",
-    image: "https://revhackers.com.br/images/blog-plg.webp"
+    slug: "automacao-de-revenue-como-otimizar-funil-vendas",
+    image: "https://images.unsplash.com/photo-1488229297570-58520851e868?ixlib=rb-4.0.3"
   },
   {
-    title: "CRO na prática: como dobrar sua taxa de conversão sem investir mais",
-    excerpt: "Técnicas avançadas de otimização que podem transformar seus resultados sem aumentar seu orçamento.",
-    category: "Conversão",
+    title: "Revenue Intelligence: Os dados que realmente importam para seu negócio",
+    excerpt: "Como utilizar dados para tomar decisões estratégicas e melhorar o desempenho de vendas e marketing.",
+    category: "Dados",
     author: {
-      name: "Ricardo Torres",
-      role: "Especialista em CRO",
-      avatar: "https://revhackers.com.br/images/avatar-ricardo.webp"
+      name: "Carla Mendes",
+      role: "Analista de Dados",
+      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956"
     },
-    slug: "cro-na-pratica-como-dobrar-sua-taxa-de-conversao",
-    image: "https://revhackers.com.br/images/blog-cro.webp"
+    slug: "revenue-intelligence-dados-que-realmente-importam",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3"
   },
   {
-    title: "ABM para times pequenos: segmentação que converte",
-    excerpt: "Como implementar Account-Based Marketing mesmo com recursos limitados e equipes enxutas.",
-    category: "Account-Based Marketing",
+    title: "RevOps: Integrando Marketing, Vendas e CS para crescimento acelerado",
+    excerpt: "Como implementar uma estratégia de Revenue Operations eficiente para alinhar departamentos e maximizar resultados.",
+    category: "RevOps",
     author: {
-      name: "Juliana Costa",
-      role: "Estrategista de Marketing B2B",
-      avatar: "https://revhackers.com.br/images/avatar-juliana.webp"
+      name: "Marcelo Costa",
+      role: "Diretor de RevOps",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
     },
-    slug: "abm-para-times-pequenos-segmentacao-que-converte",
-    image: "https://revhackers.com.br/images/blog-abm.webp"
+    slug: "revops-integrando-marketing-vendas-cs-crescimento",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3"
   }
 ];
 
@@ -53,7 +53,7 @@ const BlogSection = () => {
               Blog RevHackers
             </h2>
             <p className="text-lg text-gray-600">
-              Conteúdo estratégico e especializado sobre crescimento, marketing e vendas B2B.
+              Conteúdo estratégico e especializado sobre crescimento, tecnologia e dados para empresas B2B.
             </p>
           </div>
           
@@ -75,10 +75,6 @@ const BlogSection = () => {
                     src={article.image} 
                     alt={article.title} 
                     className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `https://images.unsplash.com/photo-${1581091226825 + index}-a6a2a5aee158`;
-                    }}
                   />
                 </div>
                 <CardContent className="p-6">

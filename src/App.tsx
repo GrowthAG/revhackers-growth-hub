@@ -10,6 +10,11 @@ import BlogPost from "./pages/BlogPost";
 import Diagnostico from "./pages/Diagnostico";
 import NotFound from "./pages/NotFound";
 import QuemSomos from "./pages/QuemSomos";
+import Servicos from "./pages/Servicos";
+import ServicosDetalhe from "./pages/ServicosDetalhe";
+import Cases from "./pages/Cases";
+import CasesDetalhe from "./pages/CasesDetalhe";
+import Downloads from "./pages/Downloads";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +30,11 @@ const App = () => (
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/diagnostico" element={<Diagnostico />} />
           <Route path="/quem-somos" element={<QuemSomos />} />
-          {/* Additional routes to be added later */}
+          <Route path="/servicos" element={<Servicos />} />
+          <Route path="/servicos/:slug" element={<ServicosDetalhe />} />
+          <Route path="/cases" element={<Cases />} />
+          <Route path="/cases/:slug" element={<CasesDetalhe />} />
+          <Route path="/downloads" element={<Downloads />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

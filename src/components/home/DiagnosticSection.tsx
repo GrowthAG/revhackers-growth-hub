@@ -3,11 +3,12 @@ import { CheckCircle } from 'lucide-react';
 import ContactForm from '../shared/ContactForm';
 
 const benefits = [
-  "Análise completa de sua estratégia atual",
-  "Identificação de oportunidades de crescimento",
-  "Recomendações personalizadas para sua empresa",
+  "Análise completa de sua operação de vendas e marketing",
+  "Identificação de oportunidades de automação e otimização",
+  "Diagnóstico de maturidade em RevOps e Revenue Intelligence",
+  "Recomendações personalizadas para seu modelo de negócio",
   "Benchmarks do seu segmento de mercado",
-  "Priorização de ações para resultados rápidos"
+  "Plano de ação priorizado para resultados rápidos"
 ];
 
 const DiagnosticSection = () => {
@@ -17,12 +18,12 @@ const DiagnosticSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <h2 className="text-3xl md:text-4xl font-bold">
-              Diagnóstico gratuito de <span className="text-revgreen">crescimento B2B</span>
+              Diagnóstico gratuito de <span className="text-revgreen">Revenue Operations</span>
             </h2>
             
             <p className="text-lg text-gray-300">
-              Entenda onde estão suas maiores oportunidades de crescimento e quais 
-              estratégias podem acelerar seus resultados.
+              Entenda onde estão suas maiores oportunidades de crescimento B2B e quais 
+              estratégias baseadas em dados podem acelerar seus resultados.
             </p>
             
             <div className="space-y-4">

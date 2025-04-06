@@ -1,33 +1,33 @@
 
-import { ArrowRight, LineChart, Users, Zap, Bot } from 'lucide-react';
+import { ArrowRight, LineChart, Database, Zap, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 
 const services = [
   {
-    title: "Product-Led Growth (PLG)",
-    description: "Transforme seu produto em canal de aquisição e retenção, criando loops de crescimento sustentável.",
-    icon: Zap,
-    link: "/servicos/plg"
-  },
-  {
-    title: "Account-Based Marketing",
-    description: "Estratégias personalizadas para conquistar contas estratégicas com abordagens altamente direcionadas.",
-    icon: Users,
-    link: "/servicos/abm"
-  },
-  {
-    title: "Automação de Marketing",
-    description: "Escale operações sem escalar seu time através de fluxos inteligentes e segmentação avançada.",
+    title: "Automação de Revenue",
+    description: "Automatizamos processos comerciais e de marketing para gerar mais resultados com menos esforço.",
     icon: Bot,
     link: "/servicos/automacao"
   },
   {
-    title: "Inteligência de Dados",
-    description: "Decisões baseadas em dados com dashboards personalizados e métricas que realmente importam.",
+    title: "Revenue Intelligence",
+    description: "Análise e insights a partir dos seus dados para melhorar a tomada de decisão em vendas e marketing.",
+    icon: Database,
+    link: "/servicos/revenue-intelligence"
+  },
+  {
+    title: "Revenue Operations",
+    description: "Alinhamento entre marketing, vendas e CS para uma gestão integrada do funil de vendas.",
     icon: LineChart,
-    link: "/servicos/dados"
+    link: "/servicos/revops"
+  },
+  {
+    title: "Customer Success",
+    description: "Estratégias para maximizar a retenção e expansão da sua base de clientes.",
+    icon: Zap,
+    link: "/servicos/customer-success"
   }
 ];
 
@@ -65,7 +65,7 @@ const ServicesSection = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <Button asChild className="bg-revgreen text-white">
+          <Button asChild variant="default">
             <Link to="/servicos">
               Ver todos os serviços
             </Link>

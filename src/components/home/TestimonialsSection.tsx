@@ -5,22 +5,22 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const testimonials = [
   {
-    quote: "A RevHackers transformou nossa estratégia de crescimento e lead generation. Tivemos um aumento significativo em conversões qualificadas e o time é extremamente proativo.",
-    author: "Mário Sérgio",
-    role: "CEO, SoftExpert",
-    avatar: "https://revhackers.com.br/images/avatar-mario.webp"
+    quote: "A RevHackers transformou nossa estratégia de leads e automação. Conseguimos aumentar significativamente nosso pipeline de negócios com uma abordagem baseada em dados.",
+    author: "Ricardo Ferreira",
+    role: "Head de Vendas, Ambipar",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
   },
   {
-    quote: "O diagnóstico que recebemos revelou oportunidades que nem sabíamos que existiam. Nossa conversão de trial para cliente pago cresceu substancialmente após implementar as recomendações.",
-    author: "Vitor Torres",
-    role: "Head de Marketing, Contabilizei",
-    avatar: "https://revhackers.com.br/images/avatar-vitor.webp"
+    quote: "A consultoria da RevHackers nos ajudou a implementar uma estratégia de RevOps que integrou nossas equipes de marketing e vendas, trazendo resultados expressivos em poucos meses.",
+    author: "Carolina Santos",
+    role: "Diretora de Marketing, PetroReconcavo",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330"
   },
   {
-    quote: "Implementamos a estratégia PLG recomendada pela RevHackers e vimos nosso NPS subir enquanto o CAC diminuiu consistentemente. Resultados reais em poucos meses.",
-    author: "Ana Mendes",
-    role: "Growth Lead, RD Station",
-    avatar: "https://revhackers.com.br/images/avatar-ana.webp"
+    quote: "Reduzimos nosso CAC em 38% após implementar as recomendações da RevHackers. O conhecimento técnico da equipe e a capacidade de extrair insights dos dados foram cruciais.",
+    author: "Alexandre Martins",
+    role: "CEO, NTT DATA Brasil",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
   }
 ];
 
