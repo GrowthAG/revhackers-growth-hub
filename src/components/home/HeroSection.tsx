@@ -20,8 +20,7 @@ const HeroSection = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 asChild 
-                className="bg-revgreen text-black font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
-                style={{ backgroundColor: '#00CF00' }}
+                className="bg-revgreen text-white font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
               >
                 <Link to="/diagnostico">
                   Solicitar diagnóstico gratuito

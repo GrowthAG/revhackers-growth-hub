@@ -17,7 +17,7 @@
     --popover-foreground: 0 0% 0%;
 
     --primary: 142 100% 40%;
-    --primary-foreground: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 0%;
@@ -68,7 +68,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-revgreen text-black font-medium px-6 py-3 rounded-md hover:brightness-110 transition-all shadow-lg;
+    @apply bg-revgreen text-white font-medium px-6 py-3 rounded-md hover:brightness-110 transition-all shadow-lg;
   }
   
   .section-padding {

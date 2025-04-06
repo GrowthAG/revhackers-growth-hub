@@ -1,4 +1,3 @@
-
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -23,8 +22,7 @@ const QuemSomos = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   asChild 
-                  className="bg-revgreen text-black font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
-                  style={{ backgroundColor: '#D3FF00' }}
+                  className="bg-revgreen text-white font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
                 >
                   <Link to="/diagnostico">
                     Conheça nossa metodologia
@@ -241,7 +239,7 @@ const QuemSomos = () => {
           </div>
           
           <div className="mt-16 text-center">
-            <Button asChild className="btn-primary">
+            <Button asChild className="bg-revgreen text-white">
               <Link to="/cases">
                 Ver cases de sucesso
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -267,8 +265,7 @@ const QuemSomos = () => {
               
               <Button 
                 asChild 
-                className="bg-revgreen text-black font-medium px-8 py-4 rounded-md hover:brightness-110 transition-all shadow-lg"
-                style={{ backgroundColor: '#D3FF00' }}
+                className="bg-revgreen text-white font-medium px-8 py-4 rounded-md hover:brightness-110 transition-all shadow-lg"
               >
                 <Link to="/diagnostico">
                   Falar com um especialista

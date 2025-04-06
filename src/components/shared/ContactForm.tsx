@@ -132,7 +132,7 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
         </div>
       </div>
       
-      <Button type="submit" className="btn-primary w-full">
+      <Button type="submit" className="w-full bg-revgreen text-white">
         {formType === 'diagnosis' ? 'Solicitar diagnóstico' : 'Enviar mensagem'}
       </Button>
       

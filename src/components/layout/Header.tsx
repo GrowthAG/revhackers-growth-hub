@@ -32,7 +32,7 @@ const Header = () => {
         
         <div className="hidden md:flex items-center space-x-4">
           <Button variant="ghost" className="text-black hover:text-revgreen">Login</Button>
-          <Button className="btn-primary">
+          <Button className="bg-revgreen text-white">
             Falar com um especialista
           </Button>
         </div>
@@ -54,7 +54,7 @@ const Header = () => {
             <Link to="/comunidade" className="nav-link" onClick={toggleMenu}>Comunidade</Link>
             <Link to="/blog" className="nav-link" onClick={toggleMenu}>Blog</Link>
             <Link to="/tutoriais" className="nav-link" onClick={toggleMenu}>Tutoriais</Link>
-            <Button className="btn-primary w-full mt-4">
+            <Button className="bg-revgreen text-white w-full mt-4">
               Falar com um especialista
             </Button>
           </div>

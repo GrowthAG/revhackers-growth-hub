@@ -69,8 +69,8 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
         revgreen: {
-          DEFAULT: '#D3FF00', // Atualizado para o verde neon correto
-          accent: '#D3FF00' // Verde neon de acento
+          DEFAULT: '#00CF00', // Updated to correct brand green
+          accent: '#00CF00' // Green accent
         },
         black: '#000000',
         white: '#FFFFFF',
