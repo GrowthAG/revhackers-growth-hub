@@ -31,15 +31,15 @@ const testimonials = [
   },
   {
     quote: "A implementação do RevOps pela equipe da RevHackers transformou completamente nosso funil de vendas. A visibilidade e previsibilidade que conseguimos agora são incomparáveis com o que tínhamos antes.",
-    author: "Yves Barsotti",
+    author: "Yves Mariano",
     role: "CEO, Wisyion",
-    avatar: "/lovable-uploads/33cf0d95-8cfd-4cf6-bd31-49c3466c365d.png"
+    avatar: "/lovable-uploads/81d46788-47c4-456e-b31d-d0681f39e12c.png"
   },
   {
     quote: "Depois da consultoria da RevHackers, conseguimos alinhar marketing, vendas e sucesso do cliente como nunca antes. Os resultados em termos de conversão e retenção foram impressionantes.",
     author: "Fabio Boldrini",
     role: "CEO, BLDN Digital",
-    avatar: "/lovable-uploads/34248d96-8719-4ebe-92df-787deb8621bd.png"
+    avatar: "/lovable-uploads/bfbe5a85-3867-44dc-adcc-909e6ebeae4f.png"
   }
 ];
 
@@ -93,11 +93,11 @@ const TestimonialsSection = () => {
               ))}
             </CarouselContent>
             
-            <div className="absolute top-1/2 -left-2 md:-left-4 z-10 transform -translate-y-1/2">
+            <div className="absolute top-1/2 -left-2 md:-left-8 z-10 transform -translate-y-1/2">
               <CarouselPrevious className="bg-white shadow-lg border-0 text-black h-10 w-10 opacity-90 hover:opacity-100" />
             </div>
             
-            <div className="absolute top-1/2 -right-2 md:-right-4 z-10 transform -translate-y-1/2">
+            <div className="absolute top-1/2 -right-2 md:-right-8 z-10 transform -translate-y-1/2">
               <CarouselNext className="bg-white shadow-lg border-0 text-black h-10 w-10 opacity-90 hover:opacity-100" />
             </div>
           </Carousel>
