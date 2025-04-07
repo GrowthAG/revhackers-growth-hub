@@ -1,4 +1,3 @@
-
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -44,8 +43,13 @@ const QuemSomos = () => {
     },
     {
       year: 2025,
-      title: "Futuro: Expansão internacional",
-      description: "Planos de internacionalização e parcerias globais para levar nossa metodologia a outros mercados."
+      title: "Consolidação de metodologia",
+      description: "Implementação de frameworks proprietários e consolidação da metodologia em grandes empresas."
+    },
+    {
+      year: 2026,
+      title: "Expansão internacional",
+      description: "Início das operações na América Latina e parcerias estratégicas com empresas globais de tecnologia."
     }
   ];
 
@@ -54,36 +58,23 @@ const QuemSomos = () => {
       {/* Hero Section */}
       <section className="pt-28 pb-16 md:pt-40 md:pb-20 bg-gradient-to-br from-white to-gray-50">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                Somos a <span className="text-revgreen">RevHackers</span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-gray-700 max-w-lg">
-                Ajudamos empresas a escalar com inteligência através de automação, crescimento e inovação orientados por dados.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  asChild 
-                  className="bg-revgreen text-white font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
-                >
-                  <Link to="/diagnostico">
-                    Conheça nossa metodologia
-                  </Link>
-                </Button>
-              </div>
-            </div>
+          <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-8">
+              Somos a <img src="/lovable-uploads/523a572a-20db-48ed-b7d7-aed43501e687.png" alt="RevHackers" className="h-12 inline-block ml-2 mb-1" />
+            </h1>
             
-            <div className="relative">
-              <div className="absolute -z-10 top-1/3 right-1/3 w-72 h-72 bg-revgreen/20 rounded-full blur-3xl" />
-              <img 
-                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c"
-                alt="Equipe RevHackers" 
-                className="w-full h-auto rounded-lg shadow-xl"
-              />
-            </div>
+            <p className="text-lg md:text-xl text-gray-700 mb-10">
+              Transformamos estratégias de marketing B2B através de funis de vendas otimizados, automações inteligentes e integração entre times de marketing e vendas para gerar resultados mensuráveis.
+            </p>
+            
+            <Button 
+              asChild 
+              className="bg-revgreen text-white font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
+            >
+              <Link to="/diagnostico">
+                Conheça nossa metodologia
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -103,8 +94,8 @@ const QuemSomos = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <img 
-                src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b" 
-                alt="Ideia inovadora" 
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" 
+                alt="Tecnologia e dados para crescimento de negócios" 
                 className="rounded-lg shadow-lg w-full h-auto"
               />
             </div>
@@ -139,7 +130,7 @@ const QuemSomos = () => {
               Nossa Jornada
             </h2>
             <p className="text-lg text-gray-600">
-              De 2012 até 2025: Como construímos a RevHackers ao longo dos anos
+              De 2012 até 2026: Como construímos a RevHackers ao longo dos anos
             </p>
           </div>
           
