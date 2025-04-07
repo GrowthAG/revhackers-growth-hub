@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { CheckCircle } from 'lucide-react';
-import BookingWidget from '@/components/shared/BookingWidget';
+import ContactForm from '@/components/shared/ContactForm';
 
 // This would normally come from an API or CMS
 const casesData = {
@@ -134,8 +134,15 @@ const CasesDetalhe = () => {
 
   return (
     <PageLayout>
-      <section className="pt-32 pb-12 bg-gradient-to-br from-black to-gray-900 text-white">
-        <div className="container-custom">
+      <section className="pt-32 pb-12 bg-gradient-to-br from-black to-gray-900 text-white relative">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <img 
+            src={caseData.coverImage} 
+            alt={`${caseData.title} cover`}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="container-custom relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center mb-8">
               <span className="text-sm text-gray-300 border border-gray-700 rounded-full px-4 py-1">
@@ -210,15 +217,13 @@ const CasesDetalhe = () => {
                 <h2 className="text-2xl font-bold mb-6">
                   Quer resultados como estes para sua empresa?
                 </h2>
-                <Button asChild size="lg">
-                  <a href="/diagnostico">Solicitar diagnóstico gratuito</a>
-                </Button>
+                
+                <div className="mt-8 max-w-xl mx-auto bg-gray-50 p-8 rounded-xl shadow-sm">
+                  <h3 className="text-xl font-bold mb-6">Solicite seu diagnóstico gratuito</h3>
+                  <ContactForm formType="diagnosis" />
+                </div>
               </div>
             </div>
-          </div>
-          
-          <div className="mt-20">
-            <BookingWidget />
           </div>
         </div>
       </section>

@@ -3,7 +3,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import BookingWidget from '@/components/shared/BookingWidget';
+import ContactForm from '@/components/shared/ContactForm';
 
 const caseStudies = [
   {
@@ -29,38 +29,21 @@ const caseStudies = [
     image: "https://revhackers.com.br/wp-content/uploads/2023/04/funnels-logo.png",
     slug: "funnels",
     description: "Estratégia personalizada combinando automação e abordagens focadas em atrair contas qualificadas."
-  },
-  {
-    title: "Neoenergia",
-    category: "Energia",
-    result: "124% aumento em oportunidades",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-NEOENERGIA.png",
-    slug: "neoenergia",
-    description: "Transformação digital do processo comercial com automação e integração de sistemas."
-  },
-  {
-    title: "GetNinjas",
-    category: "Marketplace",
-    result: "85% melhoria na conversão",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/getninjas.png",
-    slug: "getninjas",
-    description: "Otimização de campanhas e processo de onboarding para aumento significativo na conversão."
-  },
-  {
-    title: "XP Inc",
-    category: "Finanças",
-    result: "47% redução no tempo de vendas",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/xp-inc-logo.png",
-    slug: "xp-inc",
-    description: "Implementação de processos de sales enablement e automação para acelerar o ciclo de vendas."
   }
 ];
 
 const Cases = () => {
   return (
     <PageLayout>
-      <section className="pt-32 pb-10 bg-gradient-to-br from-black to-gray-900 text-white">
-        <div className="container-custom">
+      <section className="pt-32 pb-10 bg-gradient-to-br from-black to-gray-900 text-white relative">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <img 
+            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f" 
+            alt="Cases de sucesso background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Cases de Sucesso</h1>
             <p className="text-xl text-gray-300 mb-8">
@@ -113,16 +96,11 @@ const Cases = () => {
               Entre em contato agora mesmo e descubra como podemos ajudar sua empresa 
               a obter resultados excepcionais como estes.
             </p>
-            <Link 
-              to="/diagnostico" 
-              className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-revgreen text-black font-medium hover:brightness-110 transition-all"
-            >
-              Solicitar diagnóstico gratuito
-            </Link>
-          </div>
-          
-          <div className="mt-20">
-            <BookingWidget />
+            
+            <div className="mt-8 max-w-xl mx-auto bg-gray-50 p-8 rounded-xl shadow-sm">
+              <h3 className="text-xl font-bold mb-6">Solicite seu diagnóstico gratuito</h3>
+              <ContactForm formType="diagnosis" />
+            </div>
           </div>
         </div>
       </section>
