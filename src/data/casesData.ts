@@ -73,7 +73,7 @@ export const casesData = {
   "funnels": {
     title: "Funnels",
     category: "Tecnologia",
-    logo: "/lovable-uploads/208e34c7-ea4e-4bd1-b6e9-1b0ef887f201.png",
+    logo: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&fit=crop",
     coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
     challenge: "A Funnels precisava escalar rapidamente sua base de clientes e buscava uma estratégia eficiente para atrair contas qualificadas em curto prazo.",
     solution: "Implementamos uma estratégia personalizada combinando automação, personalização e abordagens focadas em atrair contas qualificadas no curto prazo.",
@@ -109,4 +109,3 @@ export const casesData = {
 
 export type CaseStudyKey = keyof typeof casesData;
 export type CaseStudy = typeof casesData[CaseStudyKey];
-

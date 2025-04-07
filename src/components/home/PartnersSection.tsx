@@ -32,7 +32,7 @@ const partners = [
   },
   {
     name: "Funnels",
-    logo: "/lovable-uploads/208e34c7-ea4e-4bd1-b6e9-1b0ef887f201.png",
+    logo: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&fit=crop",
     url: "https://growthfunnels.com.br/"
   },
   {
@@ -42,7 +42,7 @@ const partners = [
   },
   {
     name: "BLDN Digital",
-    logo: "/lovable-uploads/fcbfcb98-45e7-424a-a92f-ac88836d1564.png",
+    logo: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&fit=crop",
     url: "https://bldndigital.com.br/"
   },
   {

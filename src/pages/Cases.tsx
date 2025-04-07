@@ -26,7 +26,7 @@ const caseStudies = [
     title: "Funnels",
     category: "Tecnologia",
     result: "100 novas contas em 3 meses",
-    image: "/lovable-uploads/208e34c7-ea4e-4bd1-b6e9-1b0ef887f201.png",
+    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&fit=crop",
     slug: "funnels",
     description: "Estratégia personalizada combinando automação e abordagens focadas em atrair contas qualificadas."
   }
