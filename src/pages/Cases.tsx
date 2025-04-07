@@ -31,10 +31,10 @@ const caseStudies = [
     description: "Suporte consultivo para o time de marketing com foco na otimização de campanhas de Google Ads."
   },
   {
-    title: "TOEFL Brasil",
+    title: "TOEFL Junior Brasil",
     category: "Educação",
     result: "Leads B2B para escolas",
-    image: "/lovable-uploads/95e8dfb6-30ef-4311-b229-a6c702cd57b7.png",
+    image: "/lovable-uploads/ca6527d9-4124-4e67-8d8a-19a74056feb0.png",
     slug: "toefl",
     description: "Estratégia para geração de leads B2B de donos de escolas interessados em implementar o sistema TOEFL."
   },
@@ -42,7 +42,7 @@ const caseStudies = [
     title: "DataVoxx",
     category: "Tecnologia",
     result: "Novo site e funil inbound",
-    image: "/lovable-uploads/cc3b5882-63f6-43e1-8a86-af732510b45b.png", // Updated DataVoxx logo
+    image: "/lovable-uploads/cc3b5882-63f6-43e1-8a86-af732510b45b.png",
     slug: "datavoxx",
     description: "Desenvolvimento de novo site e implementação de um funil de vendas inbound completo."
   },

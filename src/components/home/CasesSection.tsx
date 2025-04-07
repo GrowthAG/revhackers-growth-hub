@@ -29,10 +29,10 @@ const cases = [
     logo: true
   },
   {
-    title: "TOEFL Brasil",
+    title: "TOEFL Junior Brasil",
     category: "Educação",
     result: "Leads B2B para escolas",
-    image: "/lovable-uploads/f591dfee-96da-4b90-905d-f74e1dd317c9.png", // Logo correto do TOEFL
+    image: "/lovable-uploads/ca6527d9-4124-4e67-8d8a-19a74056feb0.png",
     slug: "toefl",
     logo: true
   },
@@ -40,7 +40,7 @@ const cases = [
     title: "DataVoxx",
     category: "Tecnologia",
     result: "Novo site e funil inbound",
-    image: "/lovable-uploads/b7913df3-1c94-47a6-a0dd-3782e7d46b23.png", // Novo logo correto da DataVoxx
+    image: "/lovable-uploads/cc3b5882-63f6-43e1-8a86-af732510b45b.png",
     slug: "datavoxx",
     logo: true
   },

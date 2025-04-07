@@ -19,8 +19,8 @@ const partners = [
     slug: "security-first"
   },
   {
-    name: "TOEFL Brasil",
-    logo: "/lovable-uploads/95e8dfb6-30ef-4311-b229-a6c702cd57b7.png", 
+    name: "TOEFL Junior Brasil",
+    logo: "/lovable-uploads/ca6527d9-4124-4e67-8d8a-19a74056feb0.png", 
     url: "/partners/toefl",
     slug: "toefl"
   },
