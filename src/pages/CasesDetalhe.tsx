@@ -1,3 +1,4 @@
+
 import { useParams } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
@@ -78,7 +79,7 @@ const casesData = {
   "funnels": {
     title: "Funnels",
     category: "Tecnologia",
-    logo: "https://revhackers.com.br/wp-content/uploads/2023/04/funnels-logo.png",
+    logo: "/lovable-uploads/208e34c7-ea4e-4bd1-b6e9-1b0ef887f201.png",
     coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
     challenge: "A Funnels precisava escalar rapidamente sua base de clientes e buscava uma estratégia eficiente para atrair contas qualificadas em curto prazo.",
     solution: "Implementamos uma estratégia personalizada combinando automação, personalização e abordagens focadas em atrair contas qualificadas no curto prazo.",

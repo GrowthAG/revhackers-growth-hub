@@ -32,7 +32,7 @@ const partners = [
   },
   {
     name: "Funnels",
-    logo: "/lovable-uploads/c06ddff2-5712-4aef-bf4d-79b4ce4ac73f.png",
+    logo: "/lovable-uploads/208e34c7-ea4e-4bd1-b6e9-1b0ef887f201.png",
     url: "https://growthfunnels.com.br/"
   },
   {

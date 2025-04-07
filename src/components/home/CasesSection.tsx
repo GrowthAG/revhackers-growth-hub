@@ -24,7 +24,7 @@ const cases = [
     title: "Funnels",
     category: "Tecnologia",
     result: "100 contas em 3 meses",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/funnels-logo.png",
+    image: "/lovable-uploads/208e34c7-ea4e-4bd1-b6e9-1b0ef887f201.png",
     slug: "funnels",
     logo: true
   }
