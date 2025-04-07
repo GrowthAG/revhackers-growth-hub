@@ -20,19 +20,19 @@ const partners = [
   },
   {
     name: "TOEFL Brasil",
-    logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png", // Logo correto do TOEFL
+    logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png", 
     url: "/partners/toefl",
     slug: "toefl"
   },
   {
     name: "Anhembi Morumbi",
-    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png", // Logo correto da Anhembi
+    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png", 
     url: "/partners/anhembi",
     slug: "anhembi"
   },
   {
     name: "DataVoxx",
-    logo: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png", // Logo correto da DataVoxx
+    logo: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png", 
     url: "/partners/datavoxx",
     slug: "datavoxx"
   },
@@ -50,13 +50,13 @@ const partners = [
   },
   {
     name: "BLDN Digital",
-    logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png", // Logo correto da BLDN Digital
+    logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png", 
     url: "/partners/bldn-digital",
     slug: "bldn-digital"
   },
   {
     name: "PlacLux",
-    logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png", // Logo correto da PlacLux
+    logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png", 
     url: "/partners/placlux",
     slug: "placlux"
   },
