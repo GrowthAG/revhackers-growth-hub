@@ -32,7 +32,7 @@ const cases = [
     title: "TOEFL Brasil",
     category: "Educação",
     result: "Leads B2B para escolas",
-    image: "/lovable-uploads/f591dfee-96da-4b90-905d-f74e1dd317c9.png", // Atualizando logo do TOEFL
+    image: "/lovable-uploads/f591dfee-96da-4b90-905d-f74e1dd317c9.png", // Logo correto do TOEFL
     slug: "toefl",
     logo: true
   },
@@ -40,7 +40,7 @@ const cases = [
     title: "DataVoxx",
     category: "Tecnologia",
     result: "Novo site e funil inbound",
-    image: "/lovable-uploads/99649815-1e1e-44ce-ae53-2973725aaeb8.png", // Atualizando logo da DataVoxx
+    image: "/lovable-uploads/b7913df3-1c94-47a6-a0dd-3782e7d46b23.png", // Novo logo correto da DataVoxx
     slug: "datavoxx",
     logo: true
   },
