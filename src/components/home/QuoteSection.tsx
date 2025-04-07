@@ -13,25 +13,26 @@ const QuoteSection = () => {
             </div>
             
             <p className="text-xl md:text-2xl italic mb-8">
-              "A RevHackers transformou completamente nossa abordagem de crescimento B2B. 
-              A integração entre nossos times de marketing e vendas praticamente eliminou 
-              o atrito no funil e aumentamos em 47% nossa taxa de conversão de leads em 
-              apenas 3 meses. O ROI foi muito além do que esperávamos."
+              "A RevHackers tem sido uma parceira fundamental para a BLDN Digital. Enquanto nós 
+              focamos em vender os projetos, eles se encarregam de operacionalizar tudo, criando uma 
+              integração perfeita entre nossos processos e os dos nossos clientes. Isso tornou nossa 
+              operação muito mais eficiente e escalável, permitindo que entreguemos resultados 
+              consistentes com agilidade."
             </p>
             
             <div className="flex items-center">
               <div className="mr-4">
                 <div className="h-12 w-12 bg-gray-700 rounded-full overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a" 
-                    alt="CEO" 
+                    src="/lovable-uploads/e7b7343c-3506-497a-a146-eb393723c3a9.png" 
+                    alt="Fabio CEO" 
                     className="w-full h-full object-cover"
                   />
                 </div>
               </div>
               <div>
-                <p className="font-bold text-white">Ricardo Almeida</p>
-                <p className="text-gray-400">CEO, WA Project</p>
+                <p className="font-bold text-white">Fabio Cará</p>
+                <p className="text-gray-400">CEO, BLDN Digital</p>
               </div>
             </div>
           </Card>

@@ -5,10 +5,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const testimonials = [
   {
-    quote: "A RevHackers transformou nossa estratégia de leads e automação. Conseguimos aumentar significativamente nosso pipeline de negócios com uma abordagem baseada em dados.",
-    author: "Ricardo Ferreira",
-    role: "Head de Vendas, Ambipar",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
+    quote: "A RevHackers tem sido uma parceira fundamental para a BLDN Digital. Enquanto nós focamos em vender os projetos, eles se encarregam de operacionalizar tudo, criando uma integração perfeita.",
+    author: "Fabio Cará",
+    role: "CEO, BLDN Digital",
+    avatar: "/lovable-uploads/e7b7343c-3506-497a-a146-eb393723c3a9.png"
   },
   {
     quote: "A consultoria da RevHackers nos ajudou a implementar uma estratégia de RevOps que integrou nossas equipes de marketing e vendas, trazendo resultados expressivos em poucos meses.",
@@ -21,6 +21,12 @@ const testimonials = [
     author: "Alexandre Martins",
     role: "CEO, NTT DATA Brasil",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
+  },
+  {
+    quote: "A metodologia da RevHackers trouxe clareza para nossos processos de vendas e marketing. Hoje temos métricas confiáveis e um pipeline muito mais previsível.",
+    author: "Renata Oliveira",
+    role: "Head de Operações, FMU",
+    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956"
   }
 ];
 
@@ -36,7 +42,7 @@ const TestimonialsSection = () => {
   };
   
   return (
-    <section className="section-padding bg-gray-50">
+    <section className="section-padding bg-gray-50 py-24">
       <div className="container-custom">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
