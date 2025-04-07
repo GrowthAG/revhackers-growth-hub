@@ -4,7 +4,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { partnersData } from '@/data/partnersData';
+import { partnersData } from '@/data/partners'; // Updated import path
 import ContactForm from '@/components/shared/ContactForm';
 import NotFound from './NotFound';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
