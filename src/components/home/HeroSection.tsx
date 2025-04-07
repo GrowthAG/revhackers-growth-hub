@@ -13,8 +13,8 @@ const HeroSection = () => {
       
       <div className="container-custom relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-            Aumente sua <span className="text-revgreen">receita recorrente</span> com integração total entre Marketing, Vendas e CS
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+            Aumente sua <span className="text-revgreen">receita recorrente</span> com integração total entre Marketing, Vendas e <br className="hidden md:block" />CS
           </h1>
           
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-12 line-clamp-3">
