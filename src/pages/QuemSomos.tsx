@@ -1,7 +1,9 @@
+
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import BookingWidget from '@/components/shared/BookingWidget';
 
 const QuemSomos = () => {
   return (
@@ -168,74 +170,112 @@ const QuemSomos = () => {
         </div>
       </section>
 
-      {/* Nossa Equipe */}
+      {/* Clientes e Parceiros */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Conheça nosso time
+              Empresas que confiam no poder do Growth
             </h2>
             <p className="text-lg text-gray-600">
-              Especialistas apaixonados por crescimento, tecnologia e resultados
+              Conheça algumas das empresas que já transformaram seus resultados com a RevHackers
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="text-center">
-                <div className="relative mb-6">
-                  <div className="overflow-hidden rounded-lg">
-                    <img 
-                      src={member.image} 
-                      alt={member.name} 
-                      className="w-full h-auto transition-transform hover:scale-110 duration-500"
-                    />
-                  </div>
-                  {member.linkedin && (
-                    <a 
-                      href={member.linkedin} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="absolute bottom-3 right-3 h-10 w-10 rounded-full bg-revgreen flex items-center justify-center"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                        <rect x="2" y="9" width="4" height="12"></rect>
-                        <circle cx="4" cy="4" r="2"></circle>
-                      </svg>
-                    </a>
-                  )}
-                </div>
-                <h3 className="font-bold text-lg">{member.name}</h3>
-                <p className="text-gray-600">{member.role}</p>
-              </div>
-            ))}
+          {/* Primeira linha de logos */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.waproject.com.br/assets/logos/waproject-logo-colored.svg" 
+                alt="WA Project" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://enics.com.br/wp-content/uploads/2024/03/logo.png" 
+                alt="Enics" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://growthfunnels.com.br/wp-content/uploads/2023/07/logo-escura.png" 
+                alt="Growth Funnels" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://bldndigital.com.br/wp-content/uploads/2024/02/cropped-cropped-logo-bldn-2-e1709297192702.png" 
+                alt="BLDN Digital" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Clientes e Parceiros */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Clientes e parceiros
-            </h2>
-            <p className="text-lg text-gray-600">
-              Empresas que confiam na RevHackers para acelerar seu crescimento
-            </p>
+          {/* Segunda linha de logos */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/8/89/Heineken_logo.svg" 
+                alt="Heineken" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://s3.amazonaws.com/gupy5/production/companies/2033/career/4864/images/2021-10-26_15-33_logo.png" 
+                alt="Omni" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.tikpag.com.br/wp-content/uploads/2022/01/logo-tikpag.png" 
+                alt="TikPag" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.datavoxx.com.br/wp-content/uploads/2022/07/logo-datavoxx-1.png" 
+                alt="DataVoxx" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
           </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-            {clientLogos.map((logo, index) => (
-              <div key={index} className="p-6 bg-white rounded-lg flex items-center justify-center h-24">
-                <img 
-                  src={logo.src} 
-                  alt={logo.alt} 
-                  className="max-h-full max-w-full object-contain"
-                />
-              </div>
-            ))}
+
+          {/* Terceira linha de logos */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://enovaimobiliaria.com.br/wp-content/uploads/2019/11/Enove-Logo-Imobiliaria.png" 
+                alt="Enove Imobiliária" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://ideeseguros.com.br/wp-content/uploads/2019/10/logo-idee-seguros.png" 
+                alt="Idee Seguros" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.flexsolucoesfibraotica.com.br/wp-content/uploads/2023/02/Flex-Solucoes-26-anos.png" 
+                alt="Flex Soluções" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://agence.com.br/wp-content/uploads/2020/12/agence-logo.svg" 
+                alt="Agence" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
           </div>
           
           <div className="mt-16 text-center">
@@ -246,6 +286,13 @@ const QuemSomos = () => {
               </Link>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* Agendamento */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <BookingWidget />
         </div>
       </section>
 
@@ -286,71 +333,5 @@ const QuemSomos = () => {
     </PageLayout>
   );
 };
-
-// Dados de membros da equipe
-const teamMembers = [
-  {
-    name: "Ana Mendes",
-    role: "CEO & Fundadora",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
-    linkedin: "https://linkedin.com/"
-  },
-  {
-    name: "Ricardo Torres",
-    role: "Head de Estratégia",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
-    linkedin: "https://linkedin.com/"
-  },
-  {
-    name: "Juliana Costa",
-    role: "Head de Operações",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2",
-    linkedin: "https://linkedin.com/"
-  },
-  {
-    name: "Carlos Silva",
-    role: "Especialista em Dados",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-    linkedin: "https://linkedin.com/"
-  },
-  {
-    name: "Mariana Santos",
-    role: "Consultora de Growth",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956",
-    linkedin: "https://linkedin.com/"
-  },
-  {
-    name: "Fernando Lima",
-    role: "Especialista em PLG",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
-    linkedin: "https://linkedin.com/"
-  },
-  {
-    name: "Patricia Alves",
-    role: "Especialista em ABM",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
-    linkedin: "https://linkedin.com/"
-  },
-  {
-    name: "Rafael Gomez",
-    role: "Especialista em Automação",
-    image: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79",
-    linkedin: "https://linkedin.com/"
-  }
-];
-
-// Logos dos clientes
-const clientLogos = [
-  { src: "https://revhackers.com.br/images/softexpert-logo.webp", alt: "SoftExpert" },
-  { src: "https://revhackers.com.br/images/rd-station-logo.webp", alt: "RD Station" },
-  { src: "https://revhackers.com.br/images/contabilizei-logo.webp", alt: "Contabilizei" },
-  { src: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.png", alt: "Cliente 4" },
-  { src: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.png", alt: "Cliente 5" },
-  { src: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.png", alt: "Cliente 6" },
-  { src: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.png", alt: "Cliente 7" },
-  { src: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.png", alt: "Cliente 8" },
-  { src: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.png", alt: "Cliente 9" },
-  { src: "https://placeholder.com/wp-content/uploads/2018/10/placeholder.png", alt: "Cliente 10" }
-];
 
 export default QuemSomos;

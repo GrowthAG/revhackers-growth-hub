@@ -6,40 +6,52 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const featuredArticles = [
   {
-    title: "Automação de Revenue: Como otimizar seu funil de vendas com tecnologia",
-    excerpt: "Descubra como a automação inteligente pode transformar seus processos de vendas e marketing para resultados mais previsíveis.",
-    category: "Automação",
+    title: "RevOps: Framework completo para integrar Marketing, Vendas e CS",
+    excerpt: "Um guia detalhado de Revenue Operations com as melhores práticas para implementação e mensuração de resultados em empresas B2B.",
+    category: "RevOps",
     author: {
       name: "Rafael Silva",
       role: "Especialista em RevOps",
       avatar: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79"
     },
-    slug: "automacao-de-revenue-como-otimizar-funil-vendas",
-    image: "https://images.unsplash.com/photo-1488229297570-58520851e868?ixlib=rb-4.0.3"
-  },
-  {
-    title: "Revenue Intelligence: Os dados que realmente importam para seu negócio",
-    excerpt: "Como utilizar dados para tomar decisões estratégicas e melhorar o desempenho de vendas e marketing.",
-    category: "Dados",
-    author: {
-      name: "Carla Mendes",
-      role: "Analista de Dados",
-      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956"
-    },
-    slug: "revenue-intelligence-dados-que-realmente-importam",
+    slug: "revops-framework-completo-integracao",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3"
   },
   {
-    title: "RevOps: Integrando Marketing, Vendas e CS para crescimento acelerado",
-    excerpt: "Como implementar uma estratégia de Revenue Operations eficiente para alinhar departamentos e maximizar resultados.",
-    category: "RevOps",
+    title: "ABM 2.0: Como implementar Account Based Marketing com IA",
+    excerpt: "Metodologia avançada para identificar contas-alvo, personalizar jornadas e maximizar ROI com inteligência artificial e automação.",
+    category: "Account Based Marketing",
+    author: {
+      name: "Carla Mendes",
+      role: "Estrategista de ABM",
+      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956"
+    },
+    slug: "abm-implementar-account-based-marketing-ia",
+    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7"
+  },
+  {
+    title: "Product-Led Growth: O guia definitivo para SaaS B2B",
+    excerpt: "Como construir uma estratégia PLG que transforma usuários em defensores da marca e acelera crescimento orgânico sustentável.",
+    category: "PLG",
     author: {
       name: "Marcelo Costa",
-      role: "Diretor de RevOps",
+      role: "Especialista em Produto",
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
     },
-    slug: "revops-integrando-marketing-vendas-cs-crescimento",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3"
+    slug: "plg-guia-definitivo-saas-b2b",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+  },
+  {
+    title: "Data-Driven Growth: Métricas North Star para seu negócio",
+    excerpt: "Como definir e implementar KPIs estratégicos que realmente impactam seu crescimento e orientam decisões corporativas.",
+    category: "Dados",
+    author: {
+      name: "Ana Ferreira",
+      role: "Head de BI",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+    },
+    slug: "metricas-north-star-crescimento-baseado-dados",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5"
   }
 ];
 
@@ -66,7 +78,7 @@ const BlogSection = () => {
           </Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {featuredArticles.map((article, index) => (
             <Link to={`/blog/${article.slug}`} key={index}>
               <Card className="overflow-hidden card-hover h-full border-0 shadow-sm">
