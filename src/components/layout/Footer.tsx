@@ -13,9 +13,9 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <Link to="/" className="inline-block mb-4">
               <img 
-                src="/lovable-uploads/00aac887-24ac-4c80-a2f3-d4912050bb97.png" 
+                src="/lovable-uploads/9ca1f8d0-c9e9-4d69-b887-0617fbde8ec6.png" 
                 alt="RevHackers Logo" 
-                className="h-20 w-auto" // Aumentado de h-16 para h-20
+                className="h-20 w-auto"
               />
             </Link>
             <p className="text-gray-300 max-w-sm mb-6">
@@ -68,7 +68,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm mb-4 md:mb-0">
+          <p className="text-gray-400 text-sm mb-4 md:mb-0 text-center md:text-left">
             © {currentYear} RevHackers. Todos os direitos reservados.
           </p>
           <div className="flex space-x-6">
