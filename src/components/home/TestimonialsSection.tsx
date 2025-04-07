@@ -57,7 +57,7 @@ const TestimonialsSection = () => {
               align: "start",
               loop: true,
             }}
-            className="w-full"
+            className="w-full relative"
           >
             <CarouselContent>
               {testimonials.map((testimonial, index) => (
@@ -87,6 +87,7 @@ const TestimonialsSection = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
+            
             <div className="flex justify-center mt-8">
               <CarouselPrevious className="relative static mr-2" />
               <CarouselNext className="relative static ml-2" />

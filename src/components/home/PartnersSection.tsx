@@ -81,22 +81,13 @@ const PartnersSection = () => {
           </p>
         </div>
         
-        <div className="relative px-4 md:px-12">
-          {/* Carousel navigation buttons positioned on sides with improved visibility */}
-          <div className="absolute top-1/2 -left-2 md:left-0 z-10 transform -translate-y-1/2">
-            <CarouselPrevious className="bg-white shadow-lg border-0 text-black h-10 w-10 opacity-90 hover:opacity-100" />
-          </div>
-          
-          <div className="absolute top-1/2 -right-2 md:right-0 z-10 transform -translate-y-1/2">
-            <CarouselNext className="bg-white shadow-lg border-0 text-black h-10 w-10 opacity-90 hover:opacity-100" />
-          </div>
-          
+        <div className="px-4 md:px-12">
           <Carousel
             opts={{
               align: "start",
               loop: true,
             }}
-            className="w-full"
+            className="w-full relative"
           >
             <CarouselContent>
               {partners.map((partner) => (
@@ -118,6 +109,14 @@ const PartnersSection = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
+            
+            <div className="absolute top-1/2 -left-2 md:left-0 z-10 transform -translate-y-1/2">
+              <CarouselPrevious className="bg-white shadow-lg border-0 text-black h-10 w-10 opacity-90 hover:opacity-100" />
+            </div>
+            
+            <div className="absolute top-1/2 -right-2 md:right-0 z-10 transform -translate-y-1/2">
+              <CarouselNext className="bg-white shadow-lg border-0 text-black h-10 w-10 opacity-90 hover:opacity-100" />
+            </div>
           </Carousel>
         </div>
 
