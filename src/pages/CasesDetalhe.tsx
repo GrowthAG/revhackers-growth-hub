@@ -3,59 +3,114 @@ import { useParams } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { CheckCircle } from 'lucide-react';
+import BookingWidget from '@/components/shared/BookingWidget';
 
 // This would normally come from an API or CMS
 const casesData = {
-  "ambipar": {
-    title: "Ambipar",
-    category: "Tecnologia Ambiental",
-    logo: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-Ambipar.png",
-    coverImage: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0",
-    challenge: "A Ambipar enfrentava desafios significativos na geração de leads qualificados e na integração entre marketing e vendas. O processo manual consumia muito tempo e resultava em oportunidades perdidas.",
-    solution: "Implementamos uma estratégia completa de Revenue Operations, incluindo automação de marketing, integração de dados e otimização do funil de vendas.",
+  "enics": {
+    title: "ENICS",
+    category: "Eventos",
+    logo: "https://revhackers.com.br/wp-content/uploads/2023/04/enics-logo.png",
+    coverImage: "https://images.unsplash.com/photo-1540575467063-178a50c2df87",
+    challenge: "O ENICS precisava vender 3 mil ingressos para seu evento em um prazo muito curto de 30 dias, necessitando uma estratégia eficiente de marketing digital.",
+    solution: "Implementamos uma estratégia integrada de Google Ads, Meta Ads, campanhas de remarketing e automações via e-mail e WhatsApp altamente segmentadas para atingir o público correto.",
     results: [
-      "173% de aumento em leads qualificados",
-      "62% de redução no tempo do ciclo de vendas",
-      "89% de melhoria na conversão de MQL para SQL",
-      "42% de aumento na produtividade da equipe de vendas"
+      "3 mil ingressos vendidos no prazo estabelecido de 30 dias",
+      "Campanhas de Google Ads e Meta Ads segmentadas atraíram o público ideal",
+      "Remarketing aumentou a taxa de conversão em 50%",
+      "Automação em e-mail e WhatsApp manteve o público engajado"
     ],
-    quote: "A RevHackers transformou nosso processo de geração de demanda. A implementação de automação e inteligência de dados nos permitiu escalar nossos resultados de forma significativa.",
-    author: "Ricardo Ferreira",
-    role: "Head de Vendas, Ambipar"
+    metrics: [
+      {
+        value: "3 mil",
+        label: "Ingressos vendidos em 30 dias"
+      },
+      {
+        value: "30 dias",
+        label: "Prazo necessário para atingir a meta de vendas"
+      },
+      {
+        value: "50%",
+        label: "Aumento na conversão com o uso de campanhas de remarketing"
+      },
+      {
+        value: "4 canais",
+        label: "Para impulsionar as vendas (Google Ads, Meta Ads, e-mail e WhatsApp)"
+      }
+    ],
+    quote: "A estratégia integrada da RevHackers foi essencial para alcançarmos nossa meta de vendas em um prazo tão curto. A combinação de campanhas segmentadas e automações foi decisiva.",
+    author: "Diretor de Marketing",
+    role: "ENICS"
   },
-  "petroreconcavo": {
-    title: "PetroReconcavo",
-    category: "Energia e Petróleo",
-    logo: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-petroreconcavo.png",
-    coverImage: "https://images.unsplash.com/photo-1581094794329-c8112a89af12",
-    challenge: "A PetroReconcavo buscava reduzir seu CAC e melhorar a eficiência do seu processo comercial. A falta de alinhamento entre marketing e vendas resultava em esforços duplicados e ineficiência.",
-    solution: "Desenvolvemos uma estratégia integrada de lead generation alinhada ao processo de vendas, com automação de qualificação e nurturing de leads.",
+  "waproject": {
+    title: "Wa Project",
+    category: "Software",
+    logo: "https://revhackers.com.br/wp-content/uploads/2023/04/waproject-logo.png",
+    coverImage: "https://images.unsplash.com/photo-1581094428992-6100bc3ac3e3",
+    challenge: "A Wa Project buscava aumentar suas vendas e estabelecer parcerias estratégicas com grandes players do mercado de software, como Localiza e Porto Seguro.",
+    solution: "Estruturamos um processo de Account-Based Marketing (ABM) personalizado para abordar grandes empresas do setor de software, com estratégias específicas para cada conta.",
     results: [
-      "38% de redução no CAC",
-      "54% de aumento na taxa de conversão",
-      "105% de aumento no número de reuniões qualificadas",
-      "27% de redução no tempo de onboarding de novos clientes"
+      "R$ 3 milhões em vendas gerados com contratos estratégicos",
+      "Parcerias firmadas com empresas líderes como Localiza e Porto Seguro",
+      "Ciclo de vendas otimizado em 50% com estratégias personalizadas",
+      "Campanhas focadas resultaram em maior eficiência e conversão"
     ],
-    quote: "A consultoria da RevHackers trouxe resultados tangíveis para nosso negócio. A redução do CAC e o aumento da eficiência do processo comercial impactaram diretamente nosso crescimento.",
-    author: "Carolina Santos",
-    role: "Diretora de Marketing, PetroReconcavo"
+    metrics: [
+      {
+        value: "R$ 3 Mi",
+        label: "Valor gerado em novos negócios com grandes empresas"
+      },
+      {
+        value: "20%",
+        label: "Aumento na taxa de conversão após a implementação do ABM"
+      },
+      {
+        value: "50%",
+        label: "Na estratégia, essa foi a taxa de redução no tempo do ciclo de vendas"
+      },
+      {
+        value: "10",
+        label: "Empresas-chave conquistadas como clientes no setor de software"
+      }
+    ],
+    quote: "A estratégia de ABM implementada pela RevHackers nos permitiu abordar de forma efetiva grandes contas que antes pareciam inacessíveis, estabelecendo parcerias valiosas.",
+    author: "CEO",
+    role: "Wa Project"
   },
-  "ntt-data": {
-    title: "NTT DATA",
+  "funnels": {
+    title: "Funnels",
     category: "Tecnologia",
-    logo: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-NTTDATA.png",
-    coverImage: "https://images.unsplash.com/photo-1573164713988-8665fc963095",
-    challenge: "A NTT DATA precisava aumentar significativamente o volume de leads qualificados e melhorar a integração entre suas diversas unidades de negócio globais.",
-    solution: "Implementamos uma estratégia de RevOps com automação de processos, integração de dados e criação de dashboards consolidados para acompanhamento de resultados.",
+    logo: "https://revhackers.com.br/wp-content/uploads/2023/04/funnels-logo.png",
+    coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+    challenge: "A Funnels precisava escalar rapidamente sua base de clientes e buscava uma estratégia eficiente para atrair contas qualificadas em curto prazo.",
+    solution: "Implementamos uma estratégia personalizada combinando automação, personalização e abordagens focadas em atrair contas qualificadas no curto prazo.",
     results: [
-      "267% de aumento em MQLs",
-      "78% de melhoria na taxa de conversão de leads",
-      "42% de redução no tempo de qualificação",
-      "124% de aumento na receita recorrente"
+      "Estratégia personalizada atraiu contas qualificadas no curto prazo",
+      "100 novas contas foram adicionadas em 3 meses",
+      "Campanhas ABM e automação otimizadas aumentaram conversões",
+      "Base sólida para crescimento contínuo foi estabelecida"
     ],
-    quote: "O conhecimento técnico da equipe da RevHackers e a capacidade de extrair insights dos dados foram cruciais para o sucesso da implementação de RevOps em nossa empresa.",
-    author: "Alexandre Martins",
-    role: "CEO, NTT DATA Brasil"
+    metrics: [
+      {
+        value: "100",
+        label: "Novas contas ativas em 3 meses"
+      },
+      {
+        value: "90%",
+        label: "Aumento na taxa de conversão das campanhas"
+      },
+      {
+        value: "3",
+        label: "Meses para alcançar os resultados"
+      },
+      {
+        value: "25%",
+        label: "Essa foi a redução no ciclo de vendas"
+      }
+    ],
+    quote: "A implementação da estratégia da RevHackers superou nossas expectativas iniciais, nos permitindo crescer rapidamente e de forma sustentável.",
+    author: "Diretor Comercial",
+    role: "Funnels"
   }
 };
 
@@ -89,7 +144,7 @@ const CasesDetalhe = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Como a {caseData.title} transformou seus resultados com Revenue Operations
+              Case {caseData.title} - Revenue Operations
             </h1>
             
             <div className="flex flex-wrap items-center gap-6 mt-8">
@@ -122,12 +177,20 @@ const CasesDetalhe = () => {
                 <h2 className="text-2xl font-bold mb-4">A Solução</h2>
                 <p className="text-gray-700">{caseData.solution}</p>
               </div>
-              
-              <div>
-                <h2 className="text-2xl font-bold mb-4">Resultados</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+
+              <div className="bg-[#f3ffcc] rounded-lg p-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  {caseData.metrics.map((metric, index) => (
+                    <div key={index} className="bg-white rounded-lg p-6 shadow-sm">
+                      <div className="text-4xl font-bold text-black mb-2">{metric.value}</div>
+                      <div className="text-gray-600">{metric.label}</div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="space-y-3">
                   {caseData.results.map((result, index) => (
-                    <div key={index} className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                    <div key={index} className="flex items-center space-x-3">
                       <CheckCircle className="text-revgreen h-5 w-5 flex-shrink-0" />
                       <span className="text-gray-800">{result}</span>
                     </div>
@@ -152,6 +215,10 @@ const CasesDetalhe = () => {
                 </Button>
               </div>
             </div>
+          </div>
+          
+          <div className="mt-20">
+            <BookingWidget />
           </div>
         </div>
       </section>

@@ -15,6 +15,7 @@ import ServicosDetalhe from "./pages/ServicosDetalhe";
 import Cases from "./pages/Cases";
 import CasesDetalhe from "./pages/CasesDetalhe";
 import Downloads from "./pages/Downloads";
+import Comunidade from "./pages/Comunidade";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/cases" element={<Cases />} />
           <Route path="/cases/:slug" element={<CasesDetalhe />} />
           <Route path="/downloads" element={<Downloads />} />
+          <Route path="/comunidade" element={<Comunidade />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

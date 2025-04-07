@@ -1,6 +1,7 @@
 
 import { CheckCircle } from 'lucide-react';
 import ContactForm from '../shared/ContactForm';
+import BookingWidget from '../shared/BookingWidget';
 
 const benefits = [
   "Análise completa de sua operação de vendas e marketing",
@@ -39,6 +40,10 @@ const DiagnosticSection = () => {
           <div className="bg-white text-black p-8 rounded-xl shadow-xl">
             <ContactForm formType="diagnosis" />
           </div>
+        </div>
+        
+        <div className="mt-20">
+          <BookingWidget />
         </div>
       </div>
     </section>

@@ -3,31 +3,32 @@ import PageLayout from '@/components/layout/PageLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import BookingWidget from '@/components/shared/BookingWidget';
 
 const caseStudies = [
   {
-    title: "Ambipar",
-    category: "Tecnologia Ambiental",
-    result: "173% de aumento em leads qualificados",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-Ambipar.png",
-    slug: "ambipar",
-    description: "Como a Ambipar transformou seu processo de geração de demanda com automação e dados."
+    title: "ENICS",
+    category: "Eventos",
+    result: "3 mil ingressos em 30 dias",
+    image: "https://revhackers.com.br/wp-content/uploads/2023/04/enics-logo.png",
+    slug: "enics",
+    description: "Estratégia integrada de Google Ads, Meta Ads, remarketing e automações para venda de ingressos para o evento."
   },
   {
-    title: "PetroReconcavo",
-    category: "Energia e Petróleo",
-    result: "38% redução no CAC",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-petroreconcavo.png",
-    slug: "petroreconcavo",
-    description: "Estratégia de lead generation alinhada ao sales process para redução significativa do CAC."
+    title: "Wa Project",
+    category: "Software",
+    result: "R$ 3 milhões em vendas",
+    image: "https://revhackers.com.br/wp-content/uploads/2023/04/waproject-logo.png",
+    slug: "waproject",
+    description: "Processo de Account-Based Marketing (ABM) para gerar parcerias sólidas com grandes players do mercado."
   },
   {
-    title: "NTT DATA",
+    title: "Funnels",
     category: "Tecnologia",
-    result: "267% aumento em MQLs",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-NTTDATA.png",
-    slug: "ntt-data",
-    description: "Implementação de RevOps e otimização do funil de vendas para aumento expressivo de leads qualificados."
+    result: "100 novas contas em 3 meses",
+    image: "https://revhackers.com.br/wp-content/uploads/2023/04/funnels-logo.png",
+    slug: "funnels",
+    description: "Estratégia personalizada combinando automação e abordagens focadas em atrair contas qualificadas."
   },
   {
     title: "Neoenergia",
@@ -118,6 +119,10 @@ const Cases = () => {
             >
               Solicitar diagnóstico gratuito
             </Link>
+          </div>
+          
+          <div className="mt-20">
+            <BookingWidget />
           </div>
         </div>
       </section>

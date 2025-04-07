@@ -5,24 +5,27 @@ import { Link } from 'react-router-dom';
 
 const cases = [
   {
-    title: "Ambipar",
-    category: "Tecnologia Ambiental",
-    result: "173% de aumento em leads qualificados",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-Ambipar.png",
+    title: "ENICS",
+    category: "Eventos",
+    result: "3 mil ingressos em 30 dias",
+    image: "https://revhackers.com.br/wp-content/uploads/2023/04/enics-logo.png",
+    slug: "enics",
     logo: true
   },
   {
-    title: "PetroReconcavo",
-    category: "Energia e Petróleo",
-    result: "38% redução no CAC",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-petroreconcavo.png",
+    title: "Wa Project",
+    category: "Software",
+    result: "R$ 3 milhões em vendas",
+    image: "https://revhackers.com.br/wp-content/uploads/2023/04/waproject-logo.png",
+    slug: "waproject",
     logo: true
   },
   {
-    title: "NTT DATA",
+    title: "Funnels",
     category: "Tecnologia",
-    result: "267% aumento em MQLs",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-NTTDATA.png",
+    result: "100 contas em 3 meses",
+    image: "https://revhackers.com.br/wp-content/uploads/2023/04/funnels-logo.png",
+    slug: "funnels",
     logo: true
   }
 ];
@@ -52,7 +55,7 @@ const CasesSection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {cases.map((item, index) => (
-            <Link to={`/cases/${item.title.toLowerCase()}`} key={index}>
+            <Link to={`/cases/${item.slug}`} key={index}>
               <Card className="overflow-hidden card-hover h-full border-0 shadow-sm">
                 <div className="h-48 overflow-hidden bg-white flex items-center justify-center p-6">
                   <img 

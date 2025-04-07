@@ -16,6 +16,7 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
     industry: '',
     message: '',
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -47,6 +48,9 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
       description: "Entraremos em contato em breve.",
     });
     
+    // Show success message and calendar
+    setIsSubmitted(true);
+    
     // Reset form
     setFormData({
       name: '',
@@ -57,6 +61,33 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
       message: '',
     });
   };
+  
+  if (isSubmitted) {
+    return (
+      <div className="text-center p-6">
+        <h3 className="text-xl font-bold mb-4">
+          {formType === 'diagnosis' ? 'Diagnóstico solicitado!' : 'Mensagem enviada!'}
+        </h3>
+        <p className="mb-4">
+          Obrigado por entrar em contato! Nossa equipe analisará suas informações e entrará em contato em breve.
+        </p>
+        <p className="font-medium mb-6">
+          Enquanto isso, você pode agendar uma conversa com nossos especialistas:
+        </p>
+        <Button 
+          onClick={() => {
+            const calendarElement = document.getElementById('q8iihQ5MnZfqRAHh3KZz_1743983913878');
+            if (calendarElement) {
+              calendarElement.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="bg-revgreen text-black hover:bg-revgreen/80"
+        >
+          Agendar conversa
+        </Button>
+      </div>
+    );
+  }
   
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-md">
@@ -116,6 +147,9 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
               <SelectItem value="finance">Finanças</SelectItem>
               <SelectItem value="education">Educação</SelectItem>
               <SelectItem value="health">Saúde</SelectItem>
+              <SelectItem value="software">Software</SelectItem>
+              <SelectItem value="technology">Tecnologia</SelectItem>
+              <SelectItem value="events">Eventos</SelectItem>
               <SelectItem value="other">Outro</SelectItem>
             </SelectContent>
           </Select>
@@ -132,7 +166,7 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
         </div>
       </div>
       
-      <Button type="submit" className="w-full bg-revgreen text-white">
+      <Button type="submit" className="w-full bg-revgreen text-black hover:bg-revgreen/80">
         {formType === 'diagnosis' ? 'Solicitar diagnóstico' : 'Enviar mensagem'}
       </Button>
       
