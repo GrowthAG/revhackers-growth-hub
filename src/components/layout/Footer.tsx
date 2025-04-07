@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Youtube, Instagram, Linkedin, Mail } from 'lucide-react';
 
@@ -14,7 +15,7 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/166e0dc1-78ce-402a-8e4f-f700cae2ef67.png" 
                 alt="RevHackers Logo" 
-                className="h-10 w-auto"
+                className="h-16 w-auto" // Aumentado de h-10 para h-16
               />
             </Link>
             <p className="text-gray-300 max-w-sm mb-6">
