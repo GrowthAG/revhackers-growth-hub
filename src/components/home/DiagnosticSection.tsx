@@ -4,7 +4,7 @@ import ContactForm from '../shared/ContactForm';
 
 const benefits = [
   "Análise completa do stack tecnológico e fluxo de dados entre marketing, vendas e CS",
-  "Identificação de gaps de automação e ineficiências em seu funil de receita",
+  "Identificação de lacunas de automação e ineficiências em seu funil de receita",
   "Comparativo de maturidade em RevOps com os líderes do seu segmento",
   "Plano estratégico customizado para integração de sistemas e melhoria de processos",
   "Cálculo de ROI com aplicação de sistemas integrados e automações",
@@ -22,8 +22,8 @@ const DiagnosticSection = () => {
             </h2>
             
             <p className="text-lg text-gray-300">
-              Uma análise estratégica da sua infraestrutura de crescimento B2B feita para CEOs e diretores
-              que buscam expandir receita de forma consistente e eficiente.
+              Uma análise estratégica da sua infraestrutura de crescimento B2B desenvolvida para CEOs e diretores
+              que precisam expandir receita de forma consistente e eficiente.
             </p>
             
             <div className="space-y-4">

@@ -4,43 +4,58 @@ import { Card } from '@/components/ui/card';
 const partners = [
   {
     name: "Security First",
-    logo: "https://securityfirst.com.br/wp-content/uploads/2022/12/logo-ret.svg",
+    logo: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png",
     url: "https://securityfirst.com.br/"
   },
   {
     name: "Anhembi Morumbi",
-    logo: "https://portal.anhembi.br/wp-content/uploads/2023/12/logo-anhembi.png",
+    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
     url: "https://portal.anhembi.br/"
   },
   {
     name: "FMU Virtual",
-    logo: "https://www.fmuvirtual.com.br/wp-content/themes/fmuvirtual/assets/images/fmu-virtual.svg",
+    logo: "/lovable-uploads/33cf0d95-8cfd-4cf6-bd31-49c3466c365d.png",
     url: "https://www.fmuvirtual.com.br/"
   },
   {
-    name: "TOEFL Junior",
-    logo: "https://toefljunior.com.br/wp-content/uploads/2022/12/logo.png",
+    name: "TOEFL",
+    logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
     url: "https://toefljunior.com.br/"
   },
   {
-    name: "ENICS",
-    logo: "https://enics.com.br/wp-content/uploads/2020/12/logo-enics-2020.png",
-    url: "https://enics.com.br/"
+    name: "DataVoxx",
+    logo: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png",
+    url: "https://datavoxx.com.br/"
   },
   {
     name: "Funnels",
-    logo: "https://growthfunnels.com.br/wp-content/uploads/2021/01/cropped-Growth-Funnels-Logo.png",
+    logo: "/lovable-uploads/c06ddff2-5712-4aef-bf4d-79b4ce4ac73f.png",
     url: "https://growthfunnels.com.br/"
   },
   {
     name: "WA Project",
-    logo: "https://www.waproject.com.br/wp-content/uploads/2021/03/logo-waproject.png",
+    logo: "/lovable-uploads/b22a6616-9c9c-41b9-9374-de85e7155c80.png",
     url: "https://www.waproject.com.br/"
   },
   {
     name: "BLDN Digital",
-    logo: "https://bldndigital.com.br/wp-content/uploads/2022/04/logo-bldn-branco.png",
+    logo: "/lovable-uploads/e9f2329b-4293-420b-91da-b3eeadb382fd.png",
     url: "https://bldndigital.com.br/"
+  },
+  {
+    name: "PlacLux",
+    logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png",
+    url: "https://placlux.com/"
+  },
+  {
+    name: "Steel",
+    logo: "/lovable-uploads/4ce4f327-3b40-42aa-94ed-7851abfb7a34.png",
+    url: "https://steel.com.br/"
+  },
+  {
+    name: "Enics",
+    logo: "/lovable-uploads/d8e8ce3f-fb85-4297-938e-69c052e58580.png",
+    url: "https://enics.com.br/"
   }
 ];
 
@@ -52,7 +67,7 @@ const PartnersSection = () => {
           Nossos Clientes e Parceiros
         </h2>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {partners.map((partner) => (
             <a 
               key={partner.name}
@@ -61,7 +76,7 @@ const PartnersSection = () => {
               rel="noopener noreferrer"
               className="block"
             >
-              <Card className="h-24 flex items-center justify-center p-4 bg-gray-900 hover:bg-gray-800 transition-all">
+              <Card className="h-24 flex items-center justify-center p-4 bg-white hover:bg-gray-50 border border-gray-200 transition-all">
                 <img 
                   src={partner.logo} 
                   alt={partner.name}

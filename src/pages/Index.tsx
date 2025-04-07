@@ -12,11 +12,11 @@ const Index = () => {
   return (
     <PageLayout>
       <HeroSection />
+      <PartnersSection />
       <ServicesSection />
       <DiagnosticSection />
       <CasesSection />
       <TestimonialsSection />
-      <PartnersSection />
       <BlogSection />
     </PageLayout>
   );
