@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { partnersData } from '@/data/partnersData';
 import ContactForm from '@/components/shared/ContactForm';
 import NotFound from './NotFound';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import BookingWidget from '@/components/shared/BookingWidget';
 
 const PartnerDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -97,20 +99,24 @@ const PartnerDetail = () => {
               </div>
             )}
 
-            {/* CTA */}
+            {/* CTA with Dialog */}
             <div className="text-center mb-12">
               <h3 className="text-2xl font-bold mb-4">Quer resultados como esses?</h3>
               <p className="text-gray-600 mb-6">
                 Nossos especialistas estão prontos para desenvolver uma estratégia personalizada para o seu negócio.
               </p>
-              <Button asChild size="lg">
-                <Link to="/diagnostico">Agende uma consultoria gratuita</Link>
-              </Button>
-            </div>
-
-            <div className="bg-gray-50 p-8 rounded-xl">
-              <h3 className="text-2xl font-bold mb-4 text-center">Entre em contato</h3>
-              <ContactForm formType="diagnosis" />
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="lg" className="bg-revgreen hover:bg-revgreen/90">
+                    Agende uma consultoria gratuita
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <div className="p-2">
+                    <ContactForm formType="diagnosis" />
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>
