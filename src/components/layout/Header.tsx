@@ -17,7 +17,7 @@ const Header = () => {
         <div className="flex items-center">
           <Link to="/" className="mr-8">
             <img 
-              src="/lovable-uploads/523a572a-20db-48ed-b7d7-aed43501e687.png" 
+              src="/lovable-uploads/34248d96-8719-4ebe-92df-787deb8621bd.png" 
               alt="RevHackers Logo" 
               className="h-10 w-auto"
             />
