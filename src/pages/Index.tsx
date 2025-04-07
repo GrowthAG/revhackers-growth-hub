@@ -11,7 +11,6 @@ import FAQSection from '@/components/home/FAQSection';
 import StatsSection from '@/components/home/StatsSection';
 import QuoteSection from '@/components/home/QuoteSection';
 import ContactFormSection from '@/components/home/ContactFormSection';
-import BlogSection from '@/components/home/BlogSection';
 
 const Index = () => {
   return (
@@ -25,7 +24,6 @@ const Index = () => {
       <TestimonialsSection />
       <QuoteSection />
       <DiagnosticSection />
-      <BlogSection />
       <FAQSection />
       <ContactFormSection />
     </PageLayout>
