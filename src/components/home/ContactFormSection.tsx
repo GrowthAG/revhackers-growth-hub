@@ -1,12 +1,13 @@
 
 import ContactForm from '../shared/ContactForm';
+import { ArrowRight } from 'lucide-react';
 
 const ContactFormSection = () => {
   return (
     <section className="section-padding bg-gray-50 relative">
       <div className="absolute inset-0 z-0 opacity-5">
         <img 
-          src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40" 
+          src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1169&q=80" 
           alt="Contact background" 
           className="w-full h-full object-cover"
         />
@@ -23,7 +24,15 @@ const ContactFormSection = () => {
         </div>
         
         <div className="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-sm">
+          <h3 className="text-xl font-bold mb-6 text-center">Agende uma consulta estratégica</h3>
           <ContactForm formType="contact" />
+          <div className="mt-6 text-center text-gray-500 text-sm">
+            <p>Ao enviar, você será redirecionado para agendar sua consulta</p>
+            <p className="flex items-center justify-center mt-2">
+              <ArrowRight className="h-4 w-4 mr-2 text-revgreen" />
+              Resposta em até 24 horas úteis
+            </p>
+          </div>
         </div>
       </div>
     </section>
