@@ -14,7 +14,10 @@ const BookingWidget = () => {
     
     // Clean up function to remove the script when component unmounts
     return () => {
-      document.body.removeChild(script);
+      const existingScript = document.querySelector('script[src="https://team.growthagency.com.br/js/form_embed.js"]');
+      if (existingScript && document.body.contains(existingScript)) {
+        document.body.removeChild(existingScript);
+      }
     };
   }, []);
 

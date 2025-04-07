@@ -5,9 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnosis' }) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,7 +18,6 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
     industry: '',
     message: '',
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -45,11 +46,8 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
     
     toast({
       title: formType === 'diagnosis' ? "Diagnóstico solicitado!" : "Mensagem enviada!",
-      description: "Entraremos em contato em breve.",
+      description: "Redirecionando para agendamento...",
     });
-    
-    // Show success message and calendar
-    setIsSubmitted(true);
     
     // Reset form
     setFormData({
@@ -60,34 +58,10 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
       industry: '',
       message: '',
     });
+    
+    // Redirect to booking page
+    navigate('/booking');
   };
-  
-  if (isSubmitted) {
-    return (
-      <div className="text-center p-6">
-        <h3 className="text-xl font-bold mb-4">
-          {formType === 'diagnosis' ? 'Diagnóstico solicitado!' : 'Mensagem enviada!'}
-        </h3>
-        <p className="mb-4">
-          Obrigado por entrar em contato! Nossa equipe analisará suas informações e entrará em contato em breve.
-        </p>
-        <p className="font-medium mb-6">
-          Enquanto isso, você pode agendar uma conversa com nossos especialistas:
-        </p>
-        <Button 
-          onClick={() => {
-            const calendarElement = document.getElementById('q8iihQ5MnZfqRAHh3KZz_1743983913878');
-            if (calendarElement) {
-              calendarElement.scrollIntoView({ behavior: 'smooth' });
-            }
-          }}
-          className="bg-revgreen text-black hover:bg-revgreen/80"
-        >
-          Agendar conversa
-        </Button>
-      </div>
-    );
-  }
   
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-md">
@@ -166,7 +140,7 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
         </div>
       </div>
       
-      <Button type="submit" className="w-full bg-revgreen text-black hover:bg-revgreen/80">
+      <Button type="submit" className="w-full bg-[#00cf00] text-black hover:bg-[#00cf00]/80">
         {formType === 'diagnosis' ? 'Solicitar diagnóstico' : 'Enviar mensagem'}
       </Button>
       
