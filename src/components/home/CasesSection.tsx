@@ -61,7 +61,7 @@ const CasesSection = () => {
                   <img 
                     src={item.image} 
                     alt={item.title} 
-                    className={`${item.logo ? 'w-3/4 h-auto object-contain' : 'w-full h-full object-cover'} transition-transform hover:scale-105 duration-500`}
+                    className="w-3/4 h-auto max-h-32 object-contain transition-transform hover:scale-105 duration-500"
                   />
                 </div>
                 <CardContent className="p-6">

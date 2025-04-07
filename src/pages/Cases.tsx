@@ -64,7 +64,7 @@ const Cases = () => {
                     <img 
                       src={caseStudy.image} 
                       alt={caseStudy.title} 
-                      className="w-3/4 h-auto object-contain transition-transform hover:scale-105 duration-500"
+                      className="w-3/4 h-auto max-h-32 object-contain transition-transform hover:scale-105 duration-500"
                     />
                   </div>
                   <CardContent className="p-6">
@@ -98,7 +98,6 @@ const Cases = () => {
             </p>
             
             <div className="mt-8 max-w-xl mx-auto bg-gray-50 p-8 rounded-xl shadow-sm">
-              <h3 className="text-xl font-bold mb-6">Solicite seu diagnóstico gratuito</h3>
               <ContactForm formType="diagnosis" />
             </div>
           </div>

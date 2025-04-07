@@ -1,11 +1,9 @@
-
 import { useParams } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { CheckCircle } from 'lucide-react';
 import ContactForm from '@/components/shared/ContactForm';
 
-// This would normally come from an API or CMS
 const casesData = {
   "enics": {
     title: "ENICS",
