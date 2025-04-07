@@ -2,6 +2,7 @@
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const partners = [
   {
@@ -18,7 +19,7 @@ const partners = [
   },
   {
     name: "FMU Virtual",
-    logo: "/lovable-uploads/33cf0d95-8cfd-4cf6-bd31-49c3466c365d.png",
+    logo: "/lovable-uploads/e0d3d03b-c1d5-4a6e-9a61-3a1c2a707b5f.png",
     url: "https://www.fmuvirtual.com.br/",
     bgColor: "bg-[#1A1F2C]"
   },
@@ -95,9 +96,11 @@ const PartnersSection = () => {
         </div>
 
         <div className="text-center mt-8">
-          <Button variant="outline" className="rounded-full px-8 group">
-            <span>Ver mais sobre nossos cases</span>
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          <Button variant="outline" asChild className="rounded-full px-8 group">
+            <Link to="/cases">
+              <span>Ver mais sobre nossos cases</span>
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </Button>
         </div>
       </div>
