@@ -20,19 +20,19 @@ const partners = [
   },
   {
     name: "TOEFL Brasil",
-    logo: "/lovable-uploads/27ee9454-7a22-497b-aa98-d46f39527286.png", // Updated TOEFL logo (teal T with yellow triangle)
+    logo: "/lovable-uploads/27ee9454-7a22-497b-aa98-d46f39527286.png", 
     url: "/partners/toefl",
     slug: "toefl"
   },
   {
     name: "Anhembi Morumbi",
-    logo: "/lovable-uploads/01e0c486-c314-446f-9dfe-38487fef8946.png", 
+    logo: "/lovable-uploads/f5e74a47-fc77-4b34-970e-e839080310fd.png", 
     url: "/partners/anhembi",
     slug: "anhembi"
   },
   {
     name: "DataVoxx",
-    logo: "/lovable-uploads/cc3b5882-63f6-43e1-8a86-af732510b45b.png", // Updated to the DataVoxx logo
+    logo: "/lovable-uploads/cc3b5882-63f6-43e1-8a86-af732510b45b.png", 
     url: "/partners/datavoxx",
     slug: "datavoxx"
   },

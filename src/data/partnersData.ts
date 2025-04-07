@@ -1,3 +1,4 @@
+
 export const partnersData: Record<string, PartnerData> = {
   "security-first": {
     name: "Security First",
@@ -26,7 +27,7 @@ export const partnersData: Record<string, PartnerData> = {
   },
   "anhembi": {
     name: "Anhembi Morumbi",
-    logo: "/lovable-uploads/01e0c486-c314-446f-9dfe-38487fef8946.png",
+    logo: "/lovable-uploads/f5e74a47-fc77-4b34-970e-e839080310fd.png",
     coverImage: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1",
     category: "Educação Superior",
     description: "Uma das principais universidades privadas do Brasil, com diversos campi e oferecendo um amplo catálogo de cursos presenciais e EAD.",
