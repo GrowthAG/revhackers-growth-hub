@@ -76,26 +76,26 @@ export const partnersData: Record<string, PartnerData> = {
     }
   },
   "toefl": {
-    name: "TOEFL",
+    name: "TOEFL Brasil",
     logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
     coverImage: "https://images.unsplash.com/photo-1503428593586-e225b39bddfe",
     category: "Educação - Idiomas",
     description: "Certificação internacional de proficiência em inglês reconhecida por instituições acadêmicas e empresas em todo o mundo.",
-    tags: ["Educação", "Idiomas", "Certificação Internacional", "B2C"],
+    tags: ["Educação", "Idiomas", "Certificação Internacional", "B2B"],
     caseStudy: [
-      "O TOEFL Junior buscava aumentar seu reconhecimento no mercado brasileiro e ampliar o número de inscrições para seus exames de certificação. O principal desafio era educar o público sobre a importância da certificação e converter esse interesse em inscrições efetivas.",
-      "Criamos uma estratégia de conteúdo educativo que abordava desde a importância da proficiência em inglês até detalhes sobre o processo de certificação. Este conteúdo foi distribuído estrategicamente em blogs, redes sociais e através de webinars gratuitos.",
-      "Implementamos campanhas de mídia paga altamente segmentadas no Google e redes sociais, focando em estudantes em fase de preparação para intercâmbio ou ingresso em universidades internacionais. O funil incluía diversas ofertas gratuitas como simulados e guias de preparação.",
-      "Desenvolvemos um sistema de automação que acompanhava o usuário desde o primeiro contato até a inscrição final, com conteúdos específicos para cada etapa da jornada de decisão, incluindo depoimentos de pessoas certificadas e estatísticas sobre o impacto da certificação."
+      "O TOEFL Brasil buscava estratégias para gerar leads B2B de donos de escolas interessados em implementar o sistema TOEFL em suas instituições. O principal desafio era alcançar diretamente os tomadores de decisão das escolas e apresentar os benefícios do programa.",
+      "Criamos uma estratégia de conteúdo educativo que abordava desde a importância da proficiência em inglês até detalhes sobre o processo de certificação e os benefícios competitivos para as escolas. Este conteúdo foi distribuído estrategicamente em blogs, redes sociais e através de webinars gratuitos.",
+      "Implementamos campanhas de mídia paga altamente segmentadas no Google e LinkedIn, focando especificamente em proprietários e diretores de escolas de idiomas e colégios bilíngues. O funil incluía materiais educativos gratuitos específicos para gestores escolares.",
+      "Desenvolvemos um sistema de automação que acompanhava o usuário desde o primeiro contato até o agendamento de demonstração, com conteúdos focados nos benefícios comerciais e educacionais do sistema TOEFL para instituições de ensino."
     ],
     results: [
-      "Aumento de 85% no número de inscrições para os exames em 6 meses",
-      "Crescimento de 120% no banco de dados de leads qualificados",
-      "Redução de 40% no custo por inscrição através da otimização contínua das campanhas",
-      "Expansão da presença digital com crescimento de 200% em seguidores nas redes sociais"
+      "Aumento de 85% no número de escolas parceiras em 6 meses",
+      "Crescimento de 120% no banco de dados de leads qualificados (donos e diretores de escolas)",
+      "Redução de 40% no custo por conversão através da otimização contínua das campanhas",
+      "Implementação de um sistema de demonstração virtual que aumentou a taxa de fechamento em 60%"
     ],
     testimonial: {
-      quote: "A estratégia digital implementada transformou nossa abordagem ao mercado brasileiro, criando uma jornada educativa que converteu interesse em inscrições concretas.",
+      quote: "A estratégia B2B implementada transformou nossa abordagem ao mercado educacional brasileiro, criando um funil eficiente para alcançar diretamente os tomadores de decisão nas escolas.",
       author: "Julia Andrade",
       role: "Gerente de Expansão"
     }
@@ -108,19 +108,19 @@ export const partnersData: Record<string, PartnerData> = {
     description: "Empresa especializada em soluções de Business Intelligence e análise avançada de dados para médias e grandes empresas.",
     tags: ["Business Intelligence", "Big Data", "Analytics", "B2B"],
     caseStudy: [
-      "A DataVoxx, especialista em soluções de análise de dados, enfrentava o desafio de alcançar tomadores de decisão em grandes empresas para apresentar seus serviços de alto valor. O ciclo de vendas longo e a necessidade de educação do mercado exigiam uma estratégia sofisticada de geração de demanda.",
-      "Desenvolvemos um programa completo de Account-Based Marketing (ABM), identificando empresas-alvo com base em critérios como tamanho, setor e maturidade digital. Para cada conta, criamos abordagens personalizadas que consideravam desafios específicos do negócio e oportunidades para aplicação de analytics.",
-      "Implementamos campanhas multicanal que incluíam LinkedIn Ads direcionados a cargos específicos, remarketing personalizado e materiais educativos customizados para cada setor. Complementamos a estratégia digital com eventos presenciais exclusivos para decisores de empresas target.",
-      "Todo o processo foi apoiado por um sistema de automação que garantia o acompanhamento preciso de cada interação, desde o primeiro contato até as reuniões de vendas, proporcionando insights valiosos para a equipe comercial sobre as necessidades específicas de cada cliente potencial."
+      "A DataVoxx necessitava de um novo site e implementação de um funil de vendas inbound completo para gerar leads qualificados para suas soluções de análise de dados.",
+      "Desenvolvemos um novo site corporativo com arquitetura focada em conversão, incorporando elementos de proof of concept e demonstrações de resultados obtidos por clientes anteriores. O design priorizava a explicação clara de conceitos técnicos para decisores não-técnicos.",
+      "Implementamos uma estratégia de conteúdo baseada em pilares temáticos relacionados aos principais desafios de dados enfrentados pelos potenciais clientes. Criamos materiais ricos como white papers, webinars e calculadoras de ROI para captar leads em diferentes estágios do funil.",
+      "Integramos todo o sistema a um CRM com automações de nutrição segmentadas por indústria e tamanho da empresa, permitindo um acompanhamento personalizado de cada lead até o momento ideal para a abordagem comercial."
     ],
     results: [
-      "Aumento de 150% no número de reuniões qualificadas com decisores de grandes empresas",
-      "Redução do ciclo de vendas em 35% através da abordagem direcionada de ABM",
-      "Crescimento de 70% no ticket médio dos contratos fechados",
-      "ROI positivo alcançado em 5 meses, com crescimento sustentado nas vendas"
+      "Aumento de 150% no tráfego orgânico qualificado para o novo site",
+      "Crescimento de 200% no número de leads inbound gerados mensalmente",
+      "Redução do ciclo de vendas em 35% através do processo de nutrição automatizado",
+      "Implementação de um dashboard de BI que permitiu otimização contínua da estratégia de aquisição"
     ],
     testimonial: {
-      quote: "A estratégia de ABM implementada revolucionou nossa abordagem comercial, permitindo conversas relevantes com os decisores certos nas empresas que realmente queremos como clientes.",
+      quote: "O novo site e o funil de inbound implementado transformaram completamente nossa geração de leads, permitindo atrair exatamente o perfil de cliente que buscamos.",
       author: "Rodrigo Almeida",
       role: "Diretor Comercial"
     }
@@ -133,19 +133,19 @@ export const partnersData: Record<string, PartnerData> = {
     description: "Agência de tecnologia especializada em desenvolvimento de soluções digitais inovadoras para empresas de médio e grande porte.",
     tags: ["Desenvolvimento", "Tecnologia", "Inovação", "B2B"],
     caseStudy: [
-      "A Agence MR buscava escalar seu departamento de vendas B2B, focando em grandes contas corporativas. O desafio principal era qualificar melhor os leads antes do contato humano, garantindo que os consultores dedicassem tempo apenas a oportunidades com alto potencial de conversão.",
-      "Desenvolvemos um sistema integrado de qualificação e scoring de leads baseado em múltiplos critérios, incluindo comportamento do usuário no site, interação com materiais, características da empresa e sinais de intenção de compra.",
-      "Implementamos um fluxo automatizado de nutrição que educava os leads sobre as soluções da Agence MR através de materiais segmentados por setor e interesse. Apenas quando o lead atingia uma pontuação específica, era transferido para a equipe comercial.",
-      "Criamos uma integração entre as ferramentas de marketing e o CRM da empresa, garantindo visibilidade completa sobre a jornada do cliente. Os consultores recebiam alertas em tempo real quando leads de alta qualidade estavam prontos para o contato, com um resumo completo de suas interações anteriores."
+      "A Agence MR necessitava de suporte consultivo para seu time de marketing com foco na otimização de campanhas de Google Ads, visando melhorar o ROI e a qualidade dos leads gerados.",
+      "Realizamos uma auditoria completa das campanhas existentes, identificando oportunidades de otimização em estrutura de campanhas, segmentação de público, estratégias de lance e qualidade de landing pages.",
+      "Implementamos uma nova estrutura de campanha seguindo as melhores práticas do Google Ads, com segmentação avançada por intenção de busca e estágio do funil. Criamos um sistema de acompanhamento de métricas chave em tempo real.",
+      "Fornecemos treinamento intensivo para a equipe interna de marketing, capacitando-os a gerenciar e otimizar as campanhas de forma contínua, além de estabelecer um modelo de consultoria regular para acompanhamento de resultados e novas estratégias."
     ],
     results: [
-      "100 novas contas qualificadas adicionadas ao pipeline em apenas 3 meses",
-      "Aumento de 65% na taxa de conversão do funil de vendas",
-      "Redução de 40% no tempo gasto pelos consultores com leads não qualificados",
-      "Implementação de sistema de scoring que prioriza automaticamente as melhores oportunidades"
+      "Redução de 35% no custo por aquisição (CPA) em apenas 2 meses",
+      "Aumento de 50% na taxa de conversão das landing pages",
+      "Melhoria de 75% no quality score médio das campanhas",
+      "Implementação de um sistema de atribuição avançado que permitiu identificar os canais mais eficientes"
     ],
     testimonial: {
-      quote: "O processo de automação e qualificação desenvolvido revolucionou nosso departamento comercial. Agora temos um verdadeiro motor de crescimento orientado por dados.",
+      quote: "O suporte consultivo para nossa equipe de marketing transformou completamente nossa estratégia de Google Ads, permitindo alcançar resultados muito superiores com o mesmo orçamento.",
       author: "Marcos Ribeiro",
       role: "Diretor de Operações"
     }
@@ -158,21 +158,21 @@ export const partnersData: Record<string, PartnerData> = {
     description: "Uma das maiores cervejarias do mundo, conhecida por suas marcas premium e estratégias inovadoras de marketing.",
     tags: ["Bebidas", "CPG", "B2B2C", "E-commerce"],
     caseStudy: [
-      "A Heineken buscava ampliar sua presença no mercado digital brasileiro e desenvolver uma estratégia omnichannel que integrasse as vendas online com os pontos de venda físicos. O desafio incluía aumentar a visibilidade digital da marca e criar uma jornada fluida para o consumidor.",
-      "Desenvolvemos uma estratégia integrada que combinava campanhas de mídia paga para awareness com ações específicas de conversão. O funil incluía desde conteúdos sobre a cultura cervejeira até promoções exclusivas para compras online.",
-      "Implementamos uma solução de geolocalização que direcionava os consumidores para pontos de venda próximos ou para o e-commerce, dependendo da preferência e localização. Isso foi complementado por um programa de fidelidade digital que recompensava tanto compras online quanto em estabelecimentos parceiros.",
-      "Criamos um sistema de automação que acompanhava o comportamento do consumidor e enviava recomendações personalizadas baseadas em seu histórico de compras e preferências. A integração com o CRM permitia uma visão unificada do cliente em todos os canais."
+      "A Heineken necessitava de materiais em vídeo para fortalecer suas parcerias com bares e restaurantes no interior de São Paulo, com foco em aumentar o consumo nos pontos de venda.",
+      "Desenvolvemos uma estratégia de conteúdo em vídeo personalizada para diferentes tipos de estabelecimentos, considerando o perfil do público, ambiente e ocasiões de consumo. Criamos conteúdos para treinamento de equipe, promoções especiais e divulgação em redes sociais.",
+      "Produzimos uma série de vídeos em diferentes formatos: tutoriais de serviço perfeito para treinamento interno, vídeos promocionais para exibição no local, conteúdos para redes sociais dos estabelecimentos e materiais de merchandising digital.",
+      "Implementamos um sistema de distribuição dos conteúdos via plataforma online exclusiva, permitindo que cada estabelecimento parceiro acessasse os materiais específicos para seu perfil e necessidades, junto com guias de uso e melhores práticas."
     ],
     results: [
-      "Aumento de 45% nas vendas online em 6 meses",
-      "Redução do CAC (Custo de Aquisição de Cliente) em 30%",
-      "Implementação de um sistema de gestão de leads que aumentou a eficiência do time comercial",
-      "Crescimento de 25% no valor médio dos pedidos através de estratégias de cross-selling"
+      "Aumento médio de 30% nas vendas dos estabelecimentos participantes",
+      "Crescimento de 45% no engajamento dos conteúdos compartilhados nas redes sociais dos parceiros",
+      "Melhoria significativa na experiência de serviço, com avaliações positivas dos consumidores",
+      "Aumento de 60% no número de estabelecimentos interessados em parcerias após os casos de sucesso iniciais"
     ],
     testimonial: {
-      quote: "A estratégia omnichannel desenvolvida transformou nossa abordagem digital e fortaleceu significativamente nossa presença no mercado brasileiro.",
+      quote: "Os materiais em vídeo desenvolvidos transformaram a forma como nossos parceiros apresentam e servem nossos produtos, criando uma experiência premium que reflete perfeitamente os valores da nossa marca.",
       author: "Paulo Henrique Costa",
-      role: "Gerente de Marketing Digital"
+      role: "Gerente de Marketing Regional"
     }
   },
   "bldn-digital": {
@@ -183,21 +183,21 @@ export const partnersData: Record<string, PartnerData> = {
     description: "Agência especializada em estratégias digitais inovadoras para empresas que buscam crescimento exponencial e presença online diferenciada.",
     tags: ["Marketing Digital", "Agência", "B2B", "Consultoria"],
     caseStudy: [
-      "A BLDN Digital precisava estruturar seu processo de vendas B2B para agências parceiras, buscando escalar seu modelo de negócios sem perder a qualidade no atendimento. O desafio incluía identificar e conquistar agências com alto potencial para parcerias duradouras.",
-      "Desenvolvemos uma estratégia de Account-Based Marketing (ABM) focada em agências de médio e grande porte com necessidades específicas que se alinhavam aos serviços da BLDN. Criamos perfis detalhados de cada conta-alvo, incluindo desafios, oportunidades e pontos de contato relevantes.",
-      "Implementamos uma abordagem multicanal que incluía conteúdo personalizado, webinars exclusivos para cada segmento e eventos presenciais de networking. Para cada agência target, desenvolvemos propostas específicas baseadas em suas necessidades identificadas.",
-      "Criamos um processo de acompanhamento consultivo que ia além da venda inicial, estabelecendo um relacionamento de confiança e parceria. Isso incluía workshops de onboarding, treinamentos personalizados e reuniões estratégicas regulares."
+      "A BLDN Digital necessitava criar um funil de vendas completo para um cliente do setor de saúde (Emagrecentro), incluindo mídia paga, páginas otimizadas e integração com CRM.",
+      "Desenvolvemos uma estratégia omnichannel que abordava diferentes momentos da jornada do cliente potencial. Para a fase de descoberta, criamos campanhas de mídia paga no Google e redes sociais focadas em sintomas e soluções para problemas de peso.",
+      "Para a conversão, implementamos landing pages altamente otimizadas com depoimentos reais, resultados comprovados e chamadas para ação claras. Cada página foi testada A/B para maximizar as taxas de conversão.",
+      "Integramos todo o funil com um sistema de CRM automatizado que classificava os leads por proximidade de unidades físicas e interesses específicos, direcionando-os para as unidades corretas e fornecendo scripts personalizados para o primeiro contato."
     ],
     results: [
-      "Aumento de 120% no número de agências parceiras em 6 meses",
-      "Redução do ciclo de vendas de 90 para 45 dias em média",
-      "Taxa de renovação de contratos de 85%, muito acima da média do mercado",
-      "Aumento de 200% no valor médio dos contratos através da abordagem consultiva"
+      "Aumento de 120% no número de agendamentos de consultas em 3 meses",
+      "Redução de 40% no custo por lead através da otimização contínua das campanhas",
+      "Taxa de conversão de 25% de leads para pacientes efetivos",
+      "ROI positivo alcançado já no segundo mês de implementação da estratégia"
     ],
     testimonial: {
-      quote: "A estratégia de ABM implementada mudou completamente nosso modelo de aquisição de parceiros, permitindo um crescimento sustentável e focado nas contas que realmente importam.",
+      quote: "O funil de vendas completo implementado pela equipe transformou nossa capacidade de atrair e converter novos pacientes, com um impacto direto e mensurável no crescimento do negócio.",
       author: "Carolina Silva",
-      role: "CMO"
+      role: "Diretora de Marketing da Emagrecentro"
     }
   },
   "placlux": {

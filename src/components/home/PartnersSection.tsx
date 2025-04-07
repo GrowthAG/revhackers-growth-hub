@@ -19,16 +19,16 @@ const partners = [
     slug: "security-first"
   },
   {
-    name: "Anhembi Morumbi",
-    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
-    url: "/partners/anhembi",
-    slug: "anhembi"
-  },
-  {
     name: "TOEFL Brasil",
     logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
     url: "/partners/toefl",
     slug: "toefl"
+  },
+  {
+    name: "Anhembi Morumbi",
+    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
+    url: "/partners/anhembi",
+    slug: "anhembi"
   },
   {
     name: "DataVoxx",

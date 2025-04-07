@@ -49,7 +49,7 @@ const cases = [
     category: "Marketing",
     result: "Funil completo e mídia paga",
     image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
-    slug: "emagrecentro",
+    slug: "bldn-digital",
     logo: true
   }
 ];

@@ -51,8 +51,8 @@ const caseStudies = [
     category: "Marketing",
     result: "Funil completo e mídia paga",
     image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
-    slug: "emagrecentro",
-    description: "Criação de um funil de vendas completo com mídia paga, páginas otimizadas e integração com CRM."
+    slug: "bldn-digital",
+    description: "Criação de um funil de vendas completo com mídia paga, páginas otimizadas e integração com CRM para o Emagrecentro."
   }
 ];
 
