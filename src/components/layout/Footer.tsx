@@ -1,6 +1,5 @@
-
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Linkedin, Mail } from 'lucide-react';
+import { Youtube, Instagram, Linkedin, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -10,7 +9,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <Link to="/" className="inline-block mb-4">
               <img 
-                src="/lovable-uploads/c445d3ba-e024-4832-a3de-4eebc53f55c7.png" 
+                src="/lovable-uploads/fcbfcb98-45e7-424a-a92f-ac88836d1564.png" 
                 alt="RevHackers Logo" 
                 className="h-10 w-auto"
               />
@@ -20,17 +19,14 @@ const Footer = () => {
               crescimento e inovação.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-white hover:text-revgreen">
-                <Facebook size={20} />
+              <a href="https://www.linkedin.com/company/34579614/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-revgreen">
+                <Linkedin size={20} />
               </a>
-              <a href="#" className="text-white hover:text-revgreen">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-white hover:text-revgreen">
+              <a href="https://www.instagram.com/revhackers.com.br/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-revgreen">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-white hover:text-revgreen">
-                <Linkedin size={20} />
+              <a href="https://www.youtube.com/@RevHackersTV" target="_blank" rel="noopener noreferrer" className="text-white hover:text-revgreen">
+                <Youtube size={20} />
               </a>
             </div>
           </div>

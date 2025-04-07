@@ -6,6 +6,49 @@ import { ArrowRight, CheckCircle } from 'lucide-react';
 import BookingWidget from '@/components/shared/BookingWidget';
 
 const QuemSomos = () => {
+  const timelineEvents = [
+    {
+      year: 2012,
+      title: "Nascimento da ideia",
+      description: "Fundação da agência digital com foco em marketing digital para pequenas empresas."
+    },
+    {
+      year: 2014,
+      title: "Expansão para marketing B2B",
+      description: "Especialização em estratégias de marketing para empresas de tecnologia e SaaS."
+    },
+    {
+      year: 2016,
+      title: "Entrada no mercado de automação",
+      description: "Primeiros projetos de automação de marketing e implementação de CRM integrado."
+    },
+    {
+      year: 2018,
+      title: "Desenvolvimento da metodologia RevOps",
+      description: "Criação da metodologia própria de Revenue Operations para empresas B2B."
+    },
+    {
+      year: 2019,
+      title: "Nasce a RevHackers",
+      description: "Rebranding e foco exclusivo em estratégias de crescimento baseadas em RevOps."
+    },
+    {
+      year: 2021,
+      title: "Expansão nacional",
+      description: "Abertura de novas frentes de atuação em diferentes regiões do Brasil."
+    },
+    {
+      year: 2023,
+      title: "Comunidade RevHackers",
+      description: "Lançamento da comunidade para profissionais de RevOps, Marketing e Vendas B2B."
+    },
+    {
+      year: 2025,
+      title: "Futuro: Expansão internacional",
+      description: "Planos de internacionalização e parcerias globais para levar nossa metodologia a outros mercados."
+    }
+  ];
+
   return (
     <PageLayout>
       {/* Hero Section */}
@@ -88,8 +131,74 @@ const QuemSomos = () => {
         </div>
       </section>
 
-      {/* Nossos Valores */}
+      {/* Timeline Section */}
       <section className="py-16 md:py-24 bg-gray-50">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Nossa Jornada
+            </h2>
+            <p className="text-lg text-gray-600">
+              De 2012 até 2025: Como construímos a RevHackers ao longo dos anos
+            </p>
+          </div>
+          
+          <div className="relative">
+            {/* Timeline center line */}
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-revgreen/30"></div>
+            
+            <div className="space-y-12">
+              {timelineEvents.map((event, index) => (
+                <div key={index} className="relative">
+                  {/* Desktop layout */}
+                  <div className="hidden md:flex items-center">
+                    <div className={`w-1/2 ${index % 2 === 0 ? 'pr-12 text-right' : 'order-last pl-12'}`}>
+                      <div className="mb-2">
+                        <span className="text-4xl font-bold text-revgreen">{event.year}</span>
+                      </div>
+                      <h3 className="text-2xl font-bold mb-2">{event.title}</h3>
+                      <p className="text-gray-600">{event.description}</p>
+                    </div>
+                    
+                    <div className="z-10 flex items-center justify-center w-10 h-10 bg-revgreen rounded-full shrink-0 mx-auto">
+                      <span className="text-white font-bold">{index + 1}</span>
+                    </div>
+                    
+                    <div className={`w-1/2 ${index % 2 === 0 ? 'order-last pl-12' : 'pr-12 text-right'}`}>
+                      {index % 2 !== 0 && (
+                        <>
+                          <div className="mb-2">
+                            <span className="text-4xl font-bold text-revgreen">{event.year}</span>
+                          </div>
+                          <h3 className="text-2xl font-bold mb-2">{event.title}</h3>
+                          <p className="text-gray-600">{event.description}</p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Mobile layout */}
+                  <div className="md:hidden flex gap-4">
+                    <div className="z-10 flex items-center justify-center w-10 h-10 bg-revgreen rounded-full shrink-0">
+                      <span className="text-white font-bold">{index + 1}</span>
+                    </div>
+                    <div>
+                      <div className="mb-2">
+                        <span className="text-2xl font-bold text-revgreen">{event.year}</span>
+                      </div>
+                      <h3 className="text-xl font-bold mb-2">{event.title}</h3>
+                      <p className="text-gray-600">{event.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nossos Valores */}
+      <section className="py-16 md:py-24 bg-white">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -101,7 +210,7 @@ const QuemSomos = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -112,7 +221,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -123,7 +232,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -134,7 +243,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -145,7 +254,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -156,7 +265,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -166,157 +275,6 @@ const QuemSomos = () => {
                 recomendações, com equipe especializada e em constante atualização.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Clientes e Parceiros */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Empresas que confiam no poder do Growth
-            </h2>
-            <p className="text-lg text-gray-600">
-              Conheça algumas das empresas que já transformaram seus resultados com a RevHackers
-            </p>
-          </div>
-          
-          {/* Primeira linha de logos */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://www.waproject.com.br/assets/logos/waproject-logo-colored.svg" 
-                alt="WA Project" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://enics.com.br/wp-content/uploads/2024/03/logo.png" 
-                alt="Enics" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://growthfunnels.com.br/wp-content/uploads/2023/07/logo-escura.png" 
-                alt="Growth Funnels" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://bldndigital.com.br/wp-content/uploads/2024/02/cropped-cropped-logo-bldn-2-e1709297192702.png" 
-                alt="BLDN Digital" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-          </div>
-
-          {/* Segunda linha de logos */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/8/89/Heineken_logo.svg" 
-                alt="Heineken" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://s3.amazonaws.com/gupy5/production/companies/2033/career/4864/images/2021-10-26_15-33_logo.png" 
-                alt="Omni" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://www.tikpag.com.br/wp-content/uploads/2022/01/logo-tikpag.png" 
-                alt="TikPag" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://www.datavoxx.com.br/wp-content/uploads/2022/07/logo-datavoxx-1.png" 
-                alt="DataVoxx" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-          </div>
-
-          {/* Terceira linha de logos - novos clientes */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://securityfirst.com.br/wp-content/uploads/2022/12/logo-ret.svg" 
-                alt="Security First" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://portal.anhembi.br/wp-content/uploads/2023/12/logo-anhembi.png" 
-                alt="Anhembi Morumbi" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://www.fmuvirtual.com.br/wp-content/themes/fmuvirtual/assets/images/fmu-virtual.svg" 
-                alt="FMU Virtual" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://toefljunior.com.br/wp-content/uploads/2022/12/logo.png" 
-                alt="TOEFL Junior" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-          </div>
-
-          {/* Quarta linha de logos */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://enovaimobiliaria.com.br/wp-content/uploads/2019/11/Enove-Logo-Imobiliaria.png" 
-                alt="Enove Imobiliária" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://ideeseguros.com.br/wp-content/uploads/2019/10/logo-idee-seguros.png" 
-                alt="Idee Seguros" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://www.flexsolucoesfibraotica.com.br/wp-content/uploads/2023/02/Flex-Solucoes-26-anos.png" 
-                alt="Flex Soluções" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
-              <img 
-                src="https://agence.com.br/wp-content/uploads/2020/12/agence-logo.svg" 
-                alt="Agence" 
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
-          </div>
-          
-          <div className="mt-16 text-center">
-            <Button asChild className="bg-revgreen text-white">
-              <Link to="/cases">
-                Ver cases de sucesso
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
           </div>
         </div>
       </section>

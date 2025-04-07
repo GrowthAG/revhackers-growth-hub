@@ -42,7 +42,7 @@ const partners = [
   },
   {
     name: "BLDN Digital",
-    logo: "/lovable-uploads/e9f2329b-4293-420b-91da-b3eeadb382fd.png",
+    logo: "/lovable-uploads/fcbfcb98-45e7-424a-a92f-ac88836d1564.png",
     url: "https://bldndigital.com.br/"
   },
   {

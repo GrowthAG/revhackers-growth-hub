@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -17,7 +16,7 @@ const Header = () => {
         <div className="flex items-center">
           <Link to="/" className="mr-8">
             <img 
-              src="/lovable-uploads/c445d3ba-e024-4832-a3de-4eebc53f55c7.png" 
+              src="/lovable-uploads/fcbfcb98-45e7-424a-a92f-ac88836d1564.png" 
               alt="RevHackers Logo" 
               className="h-10 w-auto"
             />
@@ -42,13 +41,11 @@ const Header = () => {
           </Button>
         </div>
         
-        {/* Mobile menu button */}
         <button onClick={toggleMenu} className="md:hidden text-black">
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
       
-      {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white w-full shadow-lg animate-fade-in">
           <div className="container py-4 flex flex-col space-y-4">
