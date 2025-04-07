@@ -246,7 +246,39 @@ const QuemSomos = () => {
             </div>
           </div>
 
-          {/* Terceira linha de logos */}
+          {/* Terceira linha de logos - novos clientes */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://securityfirst.com.br/wp-content/uploads/2022/12/logo-ret.svg" 
+                alt="Security First" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://portal.anhembi.br/wp-content/uploads/2023/12/logo-anhembi.png" 
+                alt="Anhembi Morumbi" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.fmuvirtual.com.br/wp-content/themes/fmuvirtual/assets/images/fmu-virtual.svg" 
+                alt="FMU Virtual" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://toefljunior.com.br/wp-content/uploads/2022/12/logo.png" 
+                alt="TOEFL Junior" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+          </div>
+
+          {/* Quarta linha de logos */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
             <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
               <img 
