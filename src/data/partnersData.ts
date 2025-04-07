@@ -1,4 +1,3 @@
-
 export const partnersData: Record<string, PartnerData> = {
   "security-first": {
     name: "Security First",
@@ -27,7 +26,7 @@ export const partnersData: Record<string, PartnerData> = {
   },
   "anhembi": {
     name: "Anhembi Morumbi",
-    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png", // Logo correto da Anhembi Morumbi
+    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
     coverImage: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1",
     category: "Educação Superior",
     description: "Uma das principais universidades privadas do Brasil, com diversos campi e oferecendo um amplo catálogo de cursos presenciais e EAD.",
@@ -77,7 +76,7 @@ export const partnersData: Record<string, PartnerData> = {
   },
   "toefl": {
     name: "TOEFL Brasil",
-    logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png", // Logo correto do TOEFL (T azul com triângulo amarelo)
+    logo: "/lovable-uploads/f591dfee-96da-4b90-905d-f74e1dd317c9.png",
     coverImage: "https://images.unsplash.com/photo-1503428593586-e225b39bddfe",
     category: "Educação - Idiomas",
     description: "Certificação internacional de proficiência em inglês reconhecida por instituições acadêmicas e empresas em todo o mundo.",
@@ -102,7 +101,7 @@ export const partnersData: Record<string, PartnerData> = {
   },
   "datavoxx": {
     name: "DataVoxx",
-    logo: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png", // Logo correto da DataVoxx (texto estilizado com "V" vermelho)
+    logo: "/lovable-uploads/b7913df3-1c94-47a6-a0dd-3782e7d46b23.png",
     coverImage: "https://images.unsplash.com/photo-1551434678-e076c223a692",
     category: "Análise de Dados",
     description: "Empresa especializada em soluções de Business Intelligence e análise avançada de dados para médias e grandes empresas.",
@@ -177,7 +176,7 @@ export const partnersData: Record<string, PartnerData> = {
   },
   "bldn-digital": {
     name: "BLDN Digital",
-    logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png", // Logo correto da BLDN Digital (letras brancas modernas, fundo escuro)
+    logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
     coverImage: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a",
     category: "Marketing Digital",
     description: "Agência especializada em estratégias digitais inovadoras para empresas que buscam crescimento exponencial e presença online diferenciada.",
@@ -202,7 +201,7 @@ export const partnersData: Record<string, PartnerData> = {
   },
   "placlux": {
     name: "PlacLux",
-    logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png", // Logo correto da PlacLux (visual clean, cores vibrantes)
+    logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png",
     coverImage: "https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb",
     category: "Construção Civil",
     description: "Empresa especializada em soluções inovadoras para acabamentos e revestimentos de alto padrão para projetos residenciais e comerciais.",
