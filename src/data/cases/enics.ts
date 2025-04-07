@@ -2,7 +2,7 @@
 export const enicsCase = {
   title: "ENICS",
   category: "Eventos",
-  logo: "/lovable-uploads/d3fb7069-d98b-48fe-a6b6-64c0ea6636f8.png",
+  logo: "/lovable-uploads/a05718ad-1822-4102-909a-7e86af151e98.png",
   coverImage: "https://images.unsplash.com/photo-1540575467063-178a50c2df87",
   challenge: "O ENICS precisava vender 3 mil ingressos para seu evento em um prazo muito curto de 30 dias, necessitando uma estratégia eficiente de marketing digital.",
   solution: "Implementamos uma estratégia integrada de Google Ads, Meta Ads, campanhas de remarketing e automações via e-mail e WhatsApp altamente segmentadas para atingir o público correto.",

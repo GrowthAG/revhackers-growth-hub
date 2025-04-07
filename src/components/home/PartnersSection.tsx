@@ -62,7 +62,7 @@ const partners = [
   },
   {
     name: "ENICS",
-    logo: "/lovable-uploads/d3fb7069-d98b-48fe-a6b6-64c0ea6636f8.png",
+    logo: "/lovable-uploads/a05718ad-1822-4102-909a-7e86af151e98.png",
     url: "/partners/enics",
     slug: "enics"
   }

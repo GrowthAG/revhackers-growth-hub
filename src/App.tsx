@@ -18,6 +18,7 @@ import Downloads from "./pages/Downloads";
 import Comunidade from "./pages/Comunidade";
 import Booking from "./pages/Booking";
 import PartnerDetail from "./pages/PartnerDetail";
+import PartnerEnics from "./pages/PartnerEnics";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/cases" element={<Cases />} />
           <Route path="/cases/:slug" element={<CasesDetalhe />} />
           <Route path="/partners/:slug" element={<PartnerDetail />} />
+          <Route path="/partners/enics" element={<PartnerEnics />} />
           <Route path="/downloads" element={<Downloads />} />
           <Route path="/comunidade" element={<Comunidade />} />
           <Route path="/booking" element={<Booking />} />
