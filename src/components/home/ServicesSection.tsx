@@ -7,25 +7,25 @@ import { Link } from 'react-router-dom';
 const services = [
   {
     title: "Automação de Revenue",
-    description: "Fluxos inteligentes que conectam marketing, vendas e CS para eliminar tarefas manuais e escalar resultados.",
+    description: "Fluxos inteligentes que conectam marketing, vendas e CS para eliminar tarefas manuais e criar resultados concretos.",
     icon: Bot,
     link: "/servicos/automacao"
   },
   {
     title: "Revenue Intelligence",
-    description: "Transforme dados em insights acionáveis para melhorar decisões estratégicas e prever comportamentos de compra B2B.",
+    description: "Transforme dados brutos em decisões estratégicas precisas e antecipe comportamentos de compra no cenário B2B.",
     icon: Database,
     link: "/servicos/revenue-intelligence"
   },
   {
     title: "Revenue Operations",
-    description: "Unificação estratégica entre departamentos com processos, métricas e tecnologias alinhados ao crescimento.",
+    description: "Alinhamento estratégico entre departamentos com métricas e tecnologias que efetivamente geram crescimento.",
     icon: LineChart,
     link: "/servicos/revops"
   },
   {
     title: "Integração de Sistemas",
-    description: "Conectamos suas ferramentas de CRM, Marketing e CS em um ecossistema tecnológico coeso e sem silos.",
+    description: "Conectamos suas ferramentas de CRM, Marketing e CS em um ecossistema tecnológico sem barreiras de dados.",
     icon: GitMerge,
     link: "/servicos/integracoes"
   }
@@ -37,10 +37,10 @@ const ServicesSection = () => {
       <div className="container-custom">
         <div className="max-w-lg mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Soluções de RevOps para impulsionar seu crescimento B2B
+            Soluções de RevOps para seu crescimento B2B
           </h2>
           <p className="text-lg text-gray-600">
-            Arquitetamos o alinhamento entre pessoas, processos e plataformas para gerar resultados previsíveis e escaláveis.
+            Criamos o alinhamento entre pessoas, processos e plataformas para gerar resultados consistentes e mensuráveis.
           </p>
         </div>
         

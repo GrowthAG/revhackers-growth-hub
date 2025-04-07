@@ -3,12 +3,12 @@ import { CheckCircle } from 'lucide-react';
 import ContactForm from '../shared/ContactForm';
 
 const benefits = [
-  "Análise holística do seu tech stack e fluxo de dados entre marketing, vendas e CS",
-  "Identificação de lacunas de automação e ineficiências em seu funil de receita",
-  "Avaliação de maturidade em RevOps comparada aos líderes do seu setor",
-  "Plano estratégico personalizado para integração de sistemas e otimização de processos",
-  "Projeção de ROI com implementação de sistemas integrados e automações",
-  "Roadmap técnico e estratégico para implementação em fases"
+  "Análise completa do stack tecnológico e fluxo de dados entre marketing, vendas e CS",
+  "Identificação de gaps de automação e ineficiências em seu funil de receita",
+  "Comparativo de maturidade em RevOps com os líderes do seu segmento",
+  "Plano estratégico customizado para integração de sistemas e melhoria de processos",
+  "Cálculo de ROI com aplicação de sistemas integrados e automações",
+  "Roteiro técnico e estratégico para implementação estruturada"
 ];
 
 const DiagnosticSection = () => {
@@ -22,8 +22,8 @@ const DiagnosticSection = () => {
             </h2>
             
             <p className="text-lg text-gray-300">
-              Uma análise completa da sua infraestrutura de crescimento B2B para CEOs e diretores
-              que buscam escalar receita de forma previsível e eficiente.
+              Uma análise estratégica da sua infraestrutura de crescimento B2B feita para CEOs e diretores
+              que buscam expandir receita de forma consistente e eficiente.
             </p>
             
             <div className="space-y-4">

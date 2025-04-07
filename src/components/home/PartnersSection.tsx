@@ -3,6 +3,26 @@ import { Card } from '@/components/ui/card';
 
 const partners = [
   {
+    name: "Security First",
+    logo: "https://securityfirst.com.br/wp-content/uploads/2022/12/logo-ret.svg",
+    url: "https://securityfirst.com.br/"
+  },
+  {
+    name: "Anhembi Morumbi",
+    logo: "https://portal.anhembi.br/wp-content/uploads/2023/12/logo-anhembi.png",
+    url: "https://portal.anhembi.br/"
+  },
+  {
+    name: "FMU Virtual",
+    logo: "https://www.fmuvirtual.com.br/wp-content/themes/fmuvirtual/assets/images/fmu-virtual.svg",
+    url: "https://www.fmuvirtual.com.br/"
+  },
+  {
+    name: "TOEFL Junior",
+    logo: "https://toefljunior.com.br/wp-content/uploads/2022/12/logo.png",
+    url: "https://toefljunior.com.br/"
+  },
+  {
     name: "ENICS",
     logo: "https://enics.com.br/wp-content/uploads/2020/12/logo-enics-2020.png",
     url: "https://enics.com.br/"
@@ -21,26 +41,6 @@ const partners = [
     name: "BLDN Digital",
     logo: "https://bldndigital.com.br/wp-content/uploads/2022/04/logo-bldn-branco.png",
     url: "https://bldndigital.com.br/"
-  },
-  {
-    name: "Security First",
-    logo: "https://securityfirst.com.br/wp-content/uploads/2022/08/logo-security-first-white.svg",
-    url: "https://securityfirst.com.br/"
-  },
-  {
-    name: "Anhembi Morumbi",
-    logo: "https://portal.anhembi.br/wp-content/themes/laureatebr-base/img/logo-anhembi-morumbi-branco.png",
-    url: "https://portal.anhembi.br/"
-  },
-  {
-    name: "FMU Virtual",
-    logo: "https://www.fmuvirtual.com.br/wp-content/uploads/2020/03/logo-fmu-virtual-branco.png",
-    url: "https://www.fmuvirtual.com.br/"
-  },
-  {
-    name: "TOEFL Junior",
-    logo: "https://toefljunior.com.br/wp-content/themes/toefljunior/assets/images/logo-toefl-junior.png",
-    url: "https://toefljunior.com.br/"
   }
 ];
 
