@@ -32,6 +32,6 @@ export const toeflCase = {
   ],
   quote: "A estratégia para captar donos de escolas superou nossas expectativas. Conseguimos expandir significativamente nossa presença no mercado educacional brasileiro e aumentar o reconhecimento da certificação TOEFL entre as instituições de ensino.",
   author: "Carla Macedo",
-  role: "Gerente de Vendas, TOEFL Brasil",
-  authorImage: "/lovable-uploads/d94e5cc3-478d-4778-8476-fbc147f9ddd7.png"
+  role: "Diretora de Vendas, TOEFL Junior Brasil",
+  authorImage: "/lovable-uploads/95e8dfb6-30ef-4311-b229-a6c702cd57b7.png"
 };

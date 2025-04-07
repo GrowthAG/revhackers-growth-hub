@@ -33,5 +33,5 @@ export const fmuVirtualCase = {
   quote: "A estratégia implementada não apenas aumentou nossos números, mas transformou completamente a maneira como abordamos a captação e conversão de alunos para nossos cursos EAD. Os resultados superaram todas as nossas expectativas iniciais.",
   author: "Lucio Sardinha",
   role: "CEO, FMU Virtual",
-  authorImage: "/lovable-uploads/9b79a43e-f2bd-46ce-b73d-771abc3a4141.png"
+  authorImage: "/lovable-uploads/96db41f1-2d74-4913-997d-3296df29d457.png"
 };

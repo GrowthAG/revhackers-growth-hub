@@ -14,27 +14,21 @@ import { Card } from '@/components/ui/card';
 const testimonials = [
   {
     quote: "A consultoria da RevHackers nos ajudou a implementar uma estratégia de RevOps que integrou nossas equipes de marketing e vendas, trazendo resultados expressivos em poucos meses.",
-    author: "Carolina Santos",
-    role: "Diretora de Marketing, PetroReconcavo",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+    author: "Lucio Sardinha",
+    role: "CEO, FMU Virtual",
+    avatar: "/lovable-uploads/96db41f1-2d74-4913-997d-3296df29d457.png"
   },
   {
     quote: "Reduzimos nosso CAC em 38% após implementar as recomendações da RevHackers. O conhecimento técnico da equipe e a capacidade de extrair insights dos dados foram cruciais para nossa estratégia de crescimento.",
-    author: "Alexandre Martins",
-    role: "CEO, NTT DATA Brasil",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
+    author: "Fernando Correa",
+    role: "CEO, First Security",
+    avatar: "/lovable-uploads/2abb9e01-3bb4-413b-887d-0efab88c25eb.png"
   },
   {
     quote: "A metodologia da RevHackers trouxe clareza para nossos processos de vendas e marketing. Hoje temos métricas confiáveis e um pipeline muito mais previsível, o que nos permite escalar com segurança.",
-    author: "Renata Oliveira",
-    role: "Head de Operações, FMU",
-    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956"
-  },
-  {
-    quote: "Após implementar a metodologia da RevHackers, nossa equipe conseguiu aumentar a produtividade em 40%. A integração entre ferramentas e processos que eles propuseram revolucionou nossa forma de trabalhar.",
-    author: "Yves Santos",
-    role: "CEO, Wysion",
-    avatar: "/lovable-uploads/13c54ec3-0765-4781-ac07-47a3274ec055.png"
+    author: "Carla Macedo",
+    role: "Diretora de Vendas, TOEFL Junior Brasil",
+    avatar: "/lovable-uploads/95e8dfb6-30ef-4311-b229-a6c702cd57b7.png"
   }
 ];
 
