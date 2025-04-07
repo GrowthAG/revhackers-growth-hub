@@ -8,7 +8,7 @@ const cases = [
     title: "ENICS",
     category: "Eventos",
     result: "3 mil ingressos em 30 dias",
-    image: "/lovable-uploads/d3fb7069-d98b-48fe-a6b6-64c0ea6636f8.png",
+    image: "/lovable-uploads/a05718ad-1822-4102-909a-7e86af151e98.png",
     slug: "enics",
     logo: true
   },
