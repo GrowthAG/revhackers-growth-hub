@@ -10,6 +10,7 @@ import BenefitsSection from '@/components/home/BenefitsSection';
 import FAQSection from '@/components/home/FAQSection';
 import StatsSection from '@/components/home/StatsSection';
 import QuoteSection from '@/components/home/QuoteSection';
+import ContactFormSection from '@/components/home/ContactFormSection';
 
 const Index = () => {
   return (
@@ -23,6 +24,7 @@ const Index = () => {
       <QuoteSection />
       <TestimonialsSection />
       <DiagnosticSection />
+      <ContactFormSection />
       <FAQSection />
     </PageLayout>
   );
