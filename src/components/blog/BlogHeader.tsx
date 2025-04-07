@@ -53,8 +53,8 @@ const BlogHeader = ({
               key={category}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 activeCategory === category
-                  ? "bg-revgreen text-black"
-                  : "bg-white text-gray-600 hover:bg-gray-100"
+                  ? "bg-revgreen text-white shadow-md"
+                  : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
               }`}
               onClick={() => setActiveCategory(category)}
             >

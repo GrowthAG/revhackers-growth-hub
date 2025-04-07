@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 
 const featuredArticles = [
   {
@@ -69,13 +70,19 @@ const BlogSection = () => {
             </p>
           </div>
           
-          <Link 
-            to="/blog" 
-            className="inline-flex items-center text-revgreen hover:text-black font-medium group"
+          <Button
+            variant="link"
+            asChild
+            className="text-base"
           >
-            Ver todos os artigos
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+            <Link 
+              to="/blog" 
+              className="inline-flex items-center text-revgreen hover:text-black font-medium group"
+            >
+              Ver todos os artigos
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
