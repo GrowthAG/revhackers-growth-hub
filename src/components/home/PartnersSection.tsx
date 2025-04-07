@@ -26,7 +26,7 @@ const partners = [
   },
   {
     name: "Anhembi Morumbi",
-    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png", 
+    logo: "/lovable-uploads/01e0c486-c314-446f-9dfe-38487fef8946.png", 
     url: "/partners/anhembi",
     slug: "anhembi"
   },

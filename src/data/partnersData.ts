@@ -26,7 +26,7 @@ export const partnersData: Record<string, PartnerData> = {
   },
   "anhembi": {
     name: "Anhembi Morumbi",
-    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
+    logo: "/lovable-uploads/01e0c486-c314-446f-9dfe-38487fef8946.png",
     coverImage: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1",
     category: "Educação Superior",
     description: "Uma das principais universidades privadas do Brasil, com diversos campi e oferecendo um amplo catálogo de cursos presenciais e EAD.",
