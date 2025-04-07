@@ -40,6 +40,12 @@ const testimonials = [
     author: "Fabio Boldrini",
     role: "CEO, BLDN Digital",
     avatar: "/lovable-uploads/81d46788-47c4-456e-b31d-d0681f39e12c.png"
+  },
+  {
+    quote: "O suporte consultivo da RevHackers para nosso time de marketing transformou nossa abordagem em Google Ads e trouxe resultados impressionantes para todo nosso funil de vendas.",
+    author: "Pedro Silva",
+    role: "Gerente de Vendas, Agence MR",
+    avatar: "/lovable-uploads/c78b28dc-f100-4719-b64b-05c759d55429.png"
   }
 ];
 

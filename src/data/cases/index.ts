@@ -8,6 +8,7 @@ import { emagrecentroCase } from './emagrecentro';
 import { placluxCase } from './placlux';
 import { fmuVirtualCase } from './fmu-virtual';
 import { firstSecurityCase } from './first-security';
+import { funnelsCase } from './funnels';
 
 // Type definition for a case study
 export interface CaseStudy {
@@ -40,7 +41,8 @@ export const casesData: Record<string, CaseStudy> = {
   "emagrecentro": emagrecentroCase,
   "placlux": placluxCase,
   "fmu-virtual": fmuVirtualCase,
-  "first-security": firstSecurityCase
+  "first-security": firstSecurityCase,
+  "funnels": funnelsCase
 };
 
 export type CaseStudyKey = keyof typeof casesData;

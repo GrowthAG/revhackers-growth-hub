@@ -47,12 +47,12 @@ const caseStudies = [
     description: "Desenvolvimento de novo site e implementação de um funil de vendas inbound completo."
   },
   {
-    title: "BLDN Digital",
+    title: "Funnels",
     category: "Marketing",
-    result: "Funil completo e mídia paga",
-    image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
-    slug: "bldn-digital",
-    description: "Criação de funil de vendas com mídia paga, páginas otimizadas e integração com CRM para o Emagrecentro."
+    result: "Aumento de 130% em leads qualificados",
+    image: "/lovable-uploads/e468ed87-3eee-496b-bb1a-3525f02f8429.png",
+    slug: "funnels",
+    description: "Desenvolvimento de estratégia completa de funil de vendas com automações inteligentes e páginas otimizadas para conversão."
   }
 ];
 

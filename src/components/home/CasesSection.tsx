@@ -45,11 +45,11 @@ const cases = [
     logo: true
   },
   {
-    title: "BLDN Digital",
+    title: "Funnels",
     category: "Marketing",
-    result: "Funil completo e mídia paga",
-    image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
-    slug: "bldn-digital",
+    result: "Aumento de 130% em leads qualificados",
+    image: "/lovable-uploads/e468ed87-3eee-496b-bb1a-3525f02f8429.png",
+    slug: "funnels",
     logo: true
   }
 ];

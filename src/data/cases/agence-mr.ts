@@ -31,6 +31,7 @@ export const agenceMrCase = {
     }
   ],
   quote: "O suporte consultivo para nosso time de marketing transformou nossa abordagem em Google Ads e impactou positivamente todo nosso funil de vendas.",
-  author: "Diretor de Operações",
-  role: "Agence MR"
+  author: "Pedro Silva",
+  role: "Gerente de Vendas",
+  authorImage: "/lovable-uploads/c78b28dc-f100-4719-b64b-05c759d55429.png"
 };
