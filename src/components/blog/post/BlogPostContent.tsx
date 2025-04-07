@@ -1,5 +1,5 @@
 
-import { LineChart, BarChart3, ArrowRight, CheckCircle2, BookOpen } from 'lucide-react';
+import { LineChart, BarChart3, ArrowRight, CheckCircle2, BookOpen, Download, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -41,7 +41,7 @@ const BlogPostContent = ({ category, authorName, authorRole }: BlogPostContentPr
         Esta é uma análise aprofundada sobre estratégias de {category} para empresas B2B que buscam crescimento acelerado.
       </p>
       
-      <h2>Introdução ao {category}</h2>
+      <h2 id="introducao">Introdução ao {category}</h2>
       
       <p>
         No dinâmico cenário de negócios B2B atual, estratégias baseadas em dados e tecnologia 
@@ -77,7 +77,7 @@ const BlogPostContent = ({ category, authorName, authorRole }: BlogPostContentPr
         </figcaption>
       </figure>
       
-      <h2>Principais componentes de uma estratégia de {category} eficaz</h2>
+      <h2 id="componentes">Principais componentes de uma estratégia de {category} eficaz</h2>
       
       <p>
         A implementação eficaz de metodologias como {category} requer uma abordagem sistemática 
@@ -139,7 +139,7 @@ const BlogPostContent = ({ category, authorName, authorRole }: BlogPostContentPr
         <cite>— {authorName}, {authorRole}</cite>
       </blockquote>
       
-      <h2>O framework de maturidade em {category}</h2>
+      <h2 id="framework">O framework de maturidade em {category}</h2>
 
       <p>
         Nossa pesquisa com mais de 150 empresas B2B identificou cinco estágios de maturidade 
@@ -187,7 +187,7 @@ const BlogPostContent = ({ category, authorName, authorRole }: BlogPostContentPr
         </div>
       </div>
       
-      <h2>Casos de sucesso</h2>
+      <h2 id="casos-sucesso">Casos de sucesso</h2>
       
       <p>
         Empresas que adotaram estas metodologias têm consistentemente superado seus concorrentes 
@@ -214,7 +214,7 @@ const BlogPostContent = ({ category, authorName, authorRole }: BlogPostContentPr
         </div>
       </div>
       
-      <h2>Próximos passos</h2>
+      <h2 id="proximos-passos">Próximos passos</h2>
       
       <p>
         Para começar a implementar estas estratégias em sua empresa, recomendamos:
@@ -239,7 +239,7 @@ const BlogPostContent = ({ category, authorName, authorRole }: BlogPostContentPr
         </Button>
       </div>
       
-      <h2>Conclusão</h2>
+      <h2 id="conclusao">Conclusão</h2>
       
       <p>
         A transformação digital no B2B não é mais uma opção, mas uma necessidade competitiva. 
