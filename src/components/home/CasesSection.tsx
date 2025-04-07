@@ -8,7 +8,7 @@ const cases = [
     title: "ENICS",
     category: "Eventos",
     result: "3 mil ingressos em 30 dias",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/enics-logo.png",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&fit=crop",
     slug: "enics",
     logo: true
   },
@@ -16,7 +16,7 @@ const cases = [
     title: "Wa Project",
     category: "Software",
     result: "R$ 3 milhões em vendas",
-    image: "https://revhackers.com.br/wp-content/uploads/2023/04/waproject-logo.png",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&fit=crop",
     slug: "waproject",
     logo: true
   },

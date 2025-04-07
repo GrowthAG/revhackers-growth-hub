@@ -37,7 +37,7 @@ const partners = [
   },
   {
     name: "WA Project",
-    logo: "/lovable-uploads/b22a6616-9c9c-41b9-9374-de85e7155c80.png",
+    logo: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&fit=crop",
     url: "https://www.waproject.com.br/"
   },
   {

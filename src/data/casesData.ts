@@ -3,7 +3,7 @@ export const casesData = {
   "enics": {
     title: "ENICS",
     category: "Eventos",
-    logo: "https://revhackers.com.br/wp-content/uploads/2023/04/enics-logo.png",
+    logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&fit=crop",
     coverImage: "https://images.unsplash.com/photo-1540575467063-178a50c2df87",
     challenge: "O ENICS precisava vender 3 mil ingressos para seu evento em um prazo muito curto de 30 dias, necessitando uma estratégia eficiente de marketing digital.",
     solution: "Implementamos uma estratégia integrada de Google Ads, Meta Ads, campanhas de remarketing e automações via e-mail e WhatsApp altamente segmentadas para atingir o público correto.",
@@ -38,7 +38,7 @@ export const casesData = {
   "waproject": {
     title: "Wa Project",
     category: "Software",
-    logo: "https://revhackers.com.br/wp-content/uploads/2023/04/waproject-logo.png",
+    logo: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&fit=crop",
     coverImage: "https://images.unsplash.com/photo-1581094428992-6100bc3ac3e3",
     challenge: "A Wa Project buscava aumentar suas vendas e estabelecer parcerias estratégicas com grandes players do mercado de software, como Localiza e Porto Seguro.",
     solution: "Estruturamos um processo de Account-Based Marketing (ABM) personalizado para abordar grandes empresas do setor de software, com estratégias específicas para cada conta.",
