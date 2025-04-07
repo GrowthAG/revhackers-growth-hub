@@ -3,7 +3,7 @@ export const casesData = {
   "enics": {
     title: "ENICS",
     category: "Eventos",
-    logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&fit=crop",
+    logo: "/lovable-uploads/d3fb7069-d98b-48fe-a6b6-64c0ea6636f8.png",
     coverImage: "https://images.unsplash.com/photo-1540575467063-178a50c2df87",
     challenge: "O ENICS precisava vender 3 mil ingressos para seu evento em um prazo muito curto de 30 dias, necessitando uma estratégia eficiente de marketing digital.",
     solution: "Implementamos uma estratégia integrada de Google Ads, Meta Ads, campanhas de remarketing e automações via e-mail e WhatsApp altamente segmentadas para atingir o público correto.",
@@ -35,75 +35,180 @@ export const casesData = {
     author: "Diretor de Marketing",
     role: "ENICS"
   },
-  "waproject": {
-    title: "Wa Project",
-    category: "Software",
-    logo: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&fit=crop",
+  "heineken": {
+    title: "Heineken",
+    category: "Bebidas",
+    logo: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
     coverImage: "https://images.unsplash.com/photo-1581094428992-6100bc3ac3e3",
-    challenge: "A Wa Project buscava aumentar suas vendas e estabelecer parcerias estratégicas com grandes players do mercado de software, como Localiza e Porto Seguro.",
-    solution: "Estruturamos um processo de Account-Based Marketing (ABM) personalizado para abordar grandes empresas do setor de software, com estratégias específicas para cada conta.",
+    challenge: "A Heineken precisava aumentar sua participação no mercado digital brasileiro e construir uma estratégia de funil de vendas que integrasse os pontos de venda físicos com a presença online.",
+    solution: "Desenvolvemos um funil de vendas omnichannel que uniu mídias pagas, automações de marketing e integração com o time comercial para criar uma jornada fluida do online ao ponto de venda.",
     results: [
-      "R$ 3 milhões em vendas gerados com contratos estratégicos",
-      "Parcerias firmadas com empresas líderes como Localiza e Porto Seguro",
-      "Ciclo de vendas otimizado em 50% com estratégias personalizadas",
-      "Campanhas focadas resultaram em maior eficiência e conversão"
+      "Aumento de 45% nas vendas online em 6 meses",
+      "Redução do CAC (Custo de Aquisição de Cliente) em 30%",
+      "Implementação de um sistema de gestão de leads que aumentou a eficiência do time comercial",
+      "Integração total entre mídias pagas e automações de marketing"
     ],
     metrics: [
       {
-        value: "R$ 3 Mi",
-        label: "Valor gerado em novos negócios com grandes empresas"
+        value: "45%",
+        label: "Aumento nas vendas online"
       },
       {
-        value: "20%",
-        label: "Aumento na taxa de conversão após a implementação do ABM"
+        value: "30%",
+        label: "Redução no custo de aquisição de clientes"
       },
       {
-        value: "50%",
-        label: "Na estratégia, essa foi a taxa de redução no tempo do ciclo de vendas"
+        value: "85%",
+        label: "Taxa de conversão entre leads qualificados"
       },
       {
-        value: "10",
-        label: "Empresas-chave conquistadas como clientes no setor de software"
+        value: "6 meses",
+        label: "Tempo para atingir os resultados planejados"
       }
     ],
-    quote: "A estratégia de ABM implementada pela RevHackers nos permitiu abordar de forma efetiva grandes contas que antes pareciam inacessíveis, estabelecendo parcerias valiosas.",
-    author: "CEO",
-    role: "Wa Project"
+    quote: "A estratégia omnichannel desenvolvida com a RevHackers transformou nossa abordagem digital e fortaleceu significativamente nossa presença no mercado brasileiro.",
+    author: "Gerente de Marketing Digital",
+    role: "Heineken Brasil"
   },
-  "funnels": {
-    title: "Funnels",
+  "agence-mr": {
+    title: "Agence MR",
     category: "Tecnologia",
-    logo: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&fit=crop",
+    logo: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
     coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
-    challenge: "A Funnels precisava escalar rapidamente sua base de clientes e buscava uma estratégia eficiente para atrair contas qualificadas em curto prazo.",
-    solution: "Implementamos uma estratégia personalizada combinando automação, personalização e abordagens focadas em atrair contas qualificadas no curto prazo.",
+    challenge: "A Agence MR buscava escalar seu departamento de vendas B2B e aprimorar a qualificação de leads para otimizar o tempo dos consultores com prospects de maior potencial de conversão.",
+    solution: "Criamos um sistema integrado de automação de marketing que qualifica leads antes do contato humano, permitindo ao time comercial focar esforços apenas em oportunidades de alta conversão.",
     results: [
-      "Estratégia personalizada atraiu contas qualificadas no curto prazo",
-      "100 novas contas foram adicionadas em 3 meses",
-      "Campanhas ABM e automação otimizadas aumentaram conversões",
-      "Base sólida para crescimento contínuo foi estabelecida"
+      "100 novas contas qualificadas adicionadas ao pipeline em apenas 3 meses",
+      "Aumento de 65% na taxa de conversão do funil de vendas",
+      "Redução de 40% no tempo gasto pelos consultores com leads não qualificados",
+      "Implementação de sistema de scoring que prioriza automaticamente as melhores oportunidades"
     ],
     metrics: [
       {
         value: "100",
-        label: "Novas contas ativas em 3 meses"
+        label: "Novas contas qualificadas em 3 meses"
       },
       {
-        value: "90%",
-        label: "Aumento na taxa de conversão das campanhas"
+        value: "65%",
+        label: "Aumento na taxa de conversão do funil"
       },
       {
-        value: "3",
-        label: "Meses para alcançar os resultados"
+        value: "40%",
+        label: "Redução em tempo gasto com leads não qualificados"
+      },
+      {
+        value: "22%",
+        label: "Aumento no ticket médio dos contratos fechados"
+      }
+    ],
+    quote: "O processo de automação e qualificação desenvolvido revolucionou nosso departamento comercial. Agora temos um verdadeiro motor de crescimento orientado por dados.",
+    author: "Diretor de Operações",
+    role: "Agence MR"
+  },
+  "security-first": {
+    title: "Security First",
+    category: "Segurança",
+    logo: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png",
+    coverImage: "https://images.unsplash.com/photo-1504270997636-07ddfbd48945",
+    challenge: "A Security First enfrentava dificuldades para gerar leads qualificados para seus produtos de segurança corporativa, resultando em um alto CAC e baixa conversão.",
+    solution: "Implementamos uma estratégia completa de funil de vendas com conteúdo especializado, webinars técnicos e campanhas de mídia paga altamente segmentadas para atrair o público corporativo ideal.",
+    results: [
+      "Redução de 35% no Custo de Aquisição de Cliente (CAC) em 4 meses",
+      "Aumento de 78% no número de leads qualificados mensais",
+      "Implementação de automações que reduziram o ciclo de vendas em 25%",
+      "Integração completa entre marketing digital e equipe comercial"
+    ],
+    metrics: [
+      {
+        value: "35%",
+        label: "Redução no CAC"
+      },
+      {
+        value: "78%",
+        label: "Aumento em leads qualificados"
       },
       {
         value: "25%",
-        label: "Essa foi a redução no ciclo de vendas"
+        label: "Redução no ciclo de vendas"
+      },
+      {
+        value: "4 meses",
+        label: "Tempo para alcançar o ROI positivo"
       }
     ],
-    quote: "A implementação da estratégia da RevHackers superou nossas expectativas iniciais, nos permitindo crescer rapidamente e de forma sustentável.",
-    author: "Diretor Comercial",
-    role: "Funnels"
+    quote: "A estratégia integrada de marketing e vendas desenvolvida transformou completamente nossa capacidade de atrair e converter clientes no competitivo mercado de segurança corporativa.",
+    author: "CEO",
+    role: "Security First"
+  },
+  "anhembi": {
+    title: "Anhembi Morumbi",
+    category: "Educação",
+    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
+    coverImage: "https://images.unsplash.com/photo-1552664730-d307ca884978",
+    challenge: "A Universidade Anhembi Morumbi precisava aumentar o número de matrículas para seus cursos online e presenciais, enfrentando alta concorrência no setor educacional.",
+    solution: "Desenvolvemos uma estratégia de funil de vendas multicanal com segmentação por perfil de aluno, utilizando mídia paga, remarketing personalizado e automações para nutrir os leads até a matrícula.",
+    results: [
+      "Aumento de 42% nas matrículas online em comparação com o semestre anterior",
+      "Redução de 28% no custo por matrícula efetivada",
+      "Implementação de jornada automatizada que aumentou a taxa de conversão em 35%",
+      "Criação de dashboard em tempo real integrando dados de marketing e matrículas"
+    ],
+    metrics: [
+      {
+        value: "42%",
+        label: "Aumento em matrículas online"
+      },
+      {
+        value: "28%",
+        label: "Redução no custo por matrícula"
+      },
+      {
+        value: "35%",
+        label: "Aumento na taxa de conversão"
+      },
+      {
+        value: "60 dias",
+        label: "Tempo para implementação completa do funil"
+      }
+    ],
+    quote: "A estratégia de funil personalizado por perfil de aluno revolucionou nossa captação e nos permitiu escalar o número de matrículas mantendo a qualidade do processo.",
+    author: "Diretor de Marketing",
+    role: "Anhembi Morumbi"
+  },
+  "bldn-digital": {
+    title: "BLDN Digital",
+    category: "Marketing Digital",
+    logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
+    coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+    challenge: "A BLDN Digital precisava estruturar seu processo de vendas B2B para agências parceiras, buscando escalar seu modelo de negócios sem perder a qualidade no atendimento.",
+    solution: "Criamos uma estratégia de Account-Based Marketing (ABM) combinada com funil de vendas consultivo, focando em agências de médio e grande porte com alto potencial de parceria.",
+    results: [
+      "Aumento de 120% no número de agências parceiras em 6 meses",
+      "Redução do ciclo de vendas de 90 para 45 dias em média",
+      "Implementação de automações que mantiveram o relacionamento ativo com parceiros",
+      "Criação de sistema de lead scoring específico para o setor de agências"
+    ],
+    metrics: [
+      {
+        value: "120%",
+        label: "Aumento em agências parceiras"
+      },
+      {
+        value: "50%",
+        label: "Redução no ciclo de vendas"
+      },
+      {
+        value: "85%",
+        label: "Taxa de renovação de contratos"
+      },
+      {
+        value: "200%",
+        label: "Aumento no valor médio dos contratos"
+      }
+    ],
+    quote: "A estratégia de ABM implementada mudou completamente nosso modelo de aquisição de parceiros, permitindo um crescimento sustentável e focado nas contas que realmente importam.",
+    author: "CMO",
+    role: "BLDN Digital"
   }
 };
 

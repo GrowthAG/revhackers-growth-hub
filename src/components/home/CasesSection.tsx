@@ -8,24 +8,24 @@ const cases = [
     title: "ENICS",
     category: "Eventos",
     result: "3 mil ingressos em 30 dias",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&fit=crop",
+    image: "/lovable-uploads/d3fb7069-d98b-48fe-a6b6-64c0ea6636f8.png",
     slug: "enics",
     logo: true
   },
   {
-    title: "Wa Project",
-    category: "Software",
+    title: "Heineken",
+    category: "Bebidas",
     result: "R$ 3 milhões em vendas",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&fit=crop",
-    slug: "waproject",
+    image: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
+    slug: "heineken",
     logo: true
   },
   {
-    title: "Funnels",
+    title: "Agence MR",
     category: "Tecnologia",
     result: "100 contas em 3 meses",
-    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&fit=crop",
-    slug: "funnels",
+    image: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
+    slug: "agence-mr",
     logo: true
   }
 ];

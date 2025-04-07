@@ -10,25 +10,49 @@ const caseStudies = [
     title: "ENICS",
     category: "Eventos",
     result: "3 mil ingressos em 30 dias",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&fit=crop",
+    image: "/lovable-uploads/d3fb7069-d98b-48fe-a6b6-64c0ea6636f8.png",
     slug: "enics",
     description: "Estratégia integrada de Google Ads, Meta Ads, remarketing e automações para venda de ingressos para o evento."
   },
   {
-    title: "Wa Project",
-    category: "Software",
+    title: "Heineken",
+    category: "Bebidas",
     result: "R$ 3 milhões em vendas",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&fit=crop",
-    slug: "waproject",
-    description: "Processo de Account-Based Marketing (ABM) para gerar parcerias sólidas com grandes players do mercado."
+    image: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
+    slug: "heineken",
+    description: "Estratégia omnichannel que uniu mídias pagas, automações de marketing e integração com pontos de venda físicos."
   },
   {
-    title: "Funnels",
+    title: "Agence MR",
     category: "Tecnologia",
     result: "100 novas contas em 3 meses",
-    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&fit=crop",
-    slug: "funnels",
-    description: "Estratégia personalizada combinando automação e abordagens focadas em atrair contas qualificadas."
+    image: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
+    slug: "agence-mr",
+    description: "Sistema integrado de automação para qualificação de leads e otimização do tempo da equipe comercial."
+  },
+  {
+    title: "Security First",
+    category: "Segurança",
+    result: "-35% no CAC em 4 meses",
+    image: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png",
+    slug: "security-first",
+    description: "Estratégia completa de funil de vendas com conteúdo especializado e campanhas de mídia paga segmentadas."
+  },
+  {
+    title: "Anhembi Morumbi",
+    category: "Educação",
+    result: "+42% em matrículas online",
+    image: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
+    slug: "anhembi",
+    description: "Estratégia de funil de vendas multicanal com segmentação por perfil de aluno e automações personalizadas."
+  },
+  {
+    title: "BLDN Digital",
+    category: "Marketing Digital",
+    result: "+120% em agências parceiras",
+    image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
+    slug: "bldn-digital",
+    description: "Account-Based Marketing combinado com funil de vendas consultivo para agências de médio e grande porte."
   }
 ];
 

@@ -3,52 +3,68 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from '@/components/ui/carousel';
 
 const partners = [
   {
     name: "Security First",
     logo: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png",
-    url: "https://securityfirst.com.br/"
+    url: "/partners/security-first",
+    slug: "security-first"
   },
   {
     name: "Anhembi Morumbi",
     logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
-    url: "https://portal.anhembi.br/"
+    url: "/partners/anhembi",
+    slug: "anhembi"
   },
   {
     name: "FMU Virtual",
     logo: "/lovable-uploads/e0d3d03b-c1d5-4a6e-9a61-3a1c2a707b5f.png",
-    url: "https://www.fmuvirtual.com.br/"
+    url: "/partners/fmu-virtual",
+    slug: "fmu-virtual"
   },
   {
     name: "TOEFL",
     logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
-    url: "https://toefljunior.com.br/"
+    url: "/partners/toefl",
+    slug: "toefl"
   },
   {
     name: "DataVoxx",
     logo: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png",
-    url: "https://datavoxx.com.br/"
+    url: "/partners/datavoxx",
+    slug: "datavoxx"
   },
   {
-    name: "Funnels",
-    logo: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&fit=crop",
-    url: "https://growthfunnels.com.br/"
+    name: "Agence MR",
+    logo: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
+    url: "/partners/agence-mr",
+    slug: "agence-mr"
   },
   {
-    name: "WA Project",
-    logo: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&fit=crop",
-    url: "https://www.waproject.com.br/"
+    name: "Heineken",
+    logo: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
+    url: "/partners/heineken",
+    slug: "heineken"
   },
   {
     name: "BLDN Digital",
-    logo: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&fit=crop",
-    url: "https://bldndigital.com.br/"
+    logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
+    url: "/partners/bldn-digital",
+    slug: "bldn-digital"
   },
   {
     name: "PlacLux",
     logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png",
-    url: "https://placlux.com/"
+    url: "/partners/placlux",
+    slug: "placlux"
   }
 ];
 
@@ -65,26 +81,39 @@ const PartnersSection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          {partners.map((partner) => (
-            <a 
-              key={partner.name}
-              href={partner.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group"
-            >
-              <Card className="h-24 flex items-center justify-center p-4 bg-white border-0 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 group-hover:scale-105">
-                <div className="w-full h-full flex items-center justify-center">
-                  <img 
-                    src={partner.logo} 
-                    alt={partner.name}
-                    className="max-h-12 max-w-[80%] object-contain transition-all duration-300 grayscale group-hover:grayscale-0"
-                  />
-                </div>
-              </Card>
-            </a>
-          ))}
+        <div className="mb-12 px-4 md:px-12">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {partners.map((partner) => (
+                <CarouselItem key={partner.name} className="md:basis-1/3 lg:basis-1/4">
+                  <Link 
+                    to={partner.url}
+                    className="group block"
+                  >
+                    <Card className="h-24 flex items-center justify-center p-4 bg-white border-0 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 group-hover:scale-105">
+                      <div className="w-full h-full flex items-center justify-center">
+                        <img 
+                          src={partner.logo} 
+                          alt={partner.name}
+                          className="max-h-12 max-w-[80%] object-contain transition-all duration-300 grayscale group-hover:grayscale-0"
+                        />
+                      </div>
+                    </Card>
+                  </Link>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-6">
+              <CarouselPrevious className="static transform-none mx-2" />
+              <CarouselNext className="static transform-none mx-2" />
+            </div>
+          </Carousel>
         </div>
 
         <div className="text-center mt-8">
