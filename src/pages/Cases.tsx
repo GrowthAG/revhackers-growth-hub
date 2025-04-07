@@ -1,3 +1,4 @@
+
 import PageLayout from '@/components/layout/PageLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -16,7 +17,7 @@ const caseStudies = [
   {
     title: "Heineken",
     category: "Bebidas",
-    result: "Parceria com bares e restaurantes",
+    result: "Materiais em vídeo para parcerias",
     image: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
     slug: "heineken",
     description: "Criação de materiais em vídeo para parcerias com bares e restaurantes no interior de São Paulo."
@@ -46,8 +47,8 @@ const caseStudies = [
     description: "Desenvolvimento de novo site e implementação de um funil de vendas inbound completo."
   },
   {
-    title: "Emagrecentro",
-    category: "Saúde",
+    title: "BLDN Digital",
+    category: "Marketing",
     result: "Funil completo e mídia paga",
     image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
     slug: "emagrecentro",

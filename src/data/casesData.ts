@@ -75,7 +75,7 @@ export const casesData = {
     category: "Tecnologia",
     logo: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
     coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
-    challenge: "A Agence MR precisava otimizar seu funil de vendas com suporte consultivo para o time de marketing, especialmente com Google Ads.",
+    challenge: "A Agence MR precisava de suporte consultivo para o time de marketing com foco na otimização de campanhas de Google Ads.",
     solution: "Criamos e implementamos um suporte consultivo para o time de marketing, focando na otimização de campanhas de Google Ads e integrando-as ao funil de vendas existente.",
     results: [
       "Melhoria significativa no desempenho das campanhas de Google Ads",
@@ -180,7 +180,7 @@ export const casesData = {
     category: "Saúde",
     logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
     coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    challenge: "A Emagrecentro precisava de um funil de vendas completo com mídia paga, páginas otimizadas e integração com CRM.",
+    challenge: "A BLDN Digital precisava de um funil de vendas completo com mídia paga, páginas otimizadas e integração com CRM.",
     solution: "Criamos uma estratégia completa incluindo campanhas de mídia paga altamente segmentadas, landing pages otimizadas para conversão e integração com CRM para acompanhamento eficiente dos leads.",
     results: [
       "Aumento de 150% nas conversões de leads qualificados",
@@ -208,7 +208,7 @@ export const casesData = {
     ],
     quote: "O funil de vendas implementado revolucionou nossa captação de clientes, trazendo resultados expressivos e transformando nossa abordagem de marketing digital.",
     author: "Diretor de Marketing",
-    role: "Emagrecentro"
+    role: "BLDN Digital"
   },
   "placlux": {
     title: "PlacLux",

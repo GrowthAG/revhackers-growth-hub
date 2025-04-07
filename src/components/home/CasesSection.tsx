@@ -15,7 +15,7 @@ const cases = [
   {
     title: "Heineken",
     category: "Bebidas",
-    result: "Parceria com bares e restaurantes",
+    result: "Materiais em vídeo para parcerias",
     image: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
     slug: "heineken",
     logo: true
@@ -45,8 +45,8 @@ const cases = [
     logo: true
   },
   {
-    title: "Emagrecentro",
-    category: "Saúde",
+    title: "BLDN Digital",
+    category: "Marketing",
     result: "Funil completo e mídia paga",
     image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
     slug: "emagrecentro",

@@ -20,9 +20,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'sans': ['Inter', 'sans-serif'],
-				'display': ['Space Grotesk', 'sans-serif'],
-				'body': ['Lato', 'sans-serif'],
+				'sans': ['Poppins', 'sans-serif'],
+				'display': ['Poppins', 'sans-serif'],
+				'body': ['Poppins', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -69,8 +69,8 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
         revgreen: {
-          DEFAULT: '#03FC3B', // Updated to the new green color code
-          accent: '#03FC3B' // Green accent also updated
+          DEFAULT: '#03FC3B', // Verde atualizado
+          accent: '#03FC3B' // Verde de acento também atualizado
         },
         black: '#000000',
         white: '#FFFFFF',

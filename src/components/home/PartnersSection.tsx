@@ -1,3 +1,4 @@
+
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -48,10 +49,10 @@ const partners = [
     slug: "heineken"
   },
   {
-    name: "Emagrecentro",
+    name: "BLDN Digital",
     logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
-    url: "/partners/emagrecentro",
-    slug: "emagrecentro"
+    url: "/partners/bldn-digital",
+    slug: "bldn-digital"
   },
   {
     name: "PlacLux",
