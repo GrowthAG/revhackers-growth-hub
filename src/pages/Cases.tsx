@@ -34,7 +34,7 @@ const caseStudies = [
     title: "TOEFL Brasil",
     category: "Educação",
     result: "Leads B2B para escolas",
-    image: "/lovable-uploads/27ee9454-7a22-497b-aa98-d46f39527286.png", // Updated TOEFL logo
+    image: "/lovable-uploads/95e8dfb6-30ef-4311-b229-a6c702cd57b7.png",
     slug: "toefl",
     description: "Estratégia para geração de leads B2B de donos de escolas interessados em implementar o sistema TOEFL."
   },

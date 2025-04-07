@@ -1,4 +1,3 @@
-
 export const partnersData: Record<string, PartnerData> = {
   "security-first": {
     name: "Security First",
@@ -77,7 +76,7 @@ export const partnersData: Record<string, PartnerData> = {
   },
   "toefl": {
     name: "TOEFL Brasil",
-    logo: "/lovable-uploads/f591dfee-96da-4b90-905d-f74e1dd317c9.png",
+    logo: "/lovable-uploads/95e8dfb6-30ef-4311-b229-a6c702cd57b7.png",
     coverImage: "https://images.unsplash.com/photo-1503428593586-e225b39bddfe",
     category: "Educação - Idiomas",
     description: "Certificação internacional de proficiência em inglês reconhecida por instituições acadêmicas e empresas em todo o mundo.",

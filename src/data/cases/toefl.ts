@@ -2,7 +2,7 @@
 export const toeflCase = {
   title: "TOEFL Brasil",
   category: "Educação",
-  logo: "/lovable-uploads/27ee9454-7a22-497b-aa98-d46f39527286.png", // Updated TOEFL logo (teal T with yellow triangle)
+  logo: "/lovable-uploads/95e8dfb6-30ef-4311-b229-a6c702cd57b7.png",
   coverImage: "https://images.unsplash.com/photo-1503428593586-e225b39bddfe",
   challenge: "O TOEFL Brasil precisava gerar leads B2B de donos de escolas interessados em implementar o sistema TOEFL em suas instituições.",
   solution: "Implementamos uma estratégia focada em captar donos de escolas, demonstrando os benefícios da certificação TOEFL para instituições educacionais, através de campanhas segmentadas e conteúdos específicos.",

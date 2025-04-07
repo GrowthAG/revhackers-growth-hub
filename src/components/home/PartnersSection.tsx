@@ -20,7 +20,7 @@ const partners = [
   },
   {
     name: "TOEFL Brasil",
-    logo: "/lovable-uploads/27ee9454-7a22-497b-aa98-d46f39527286.png", 
+    logo: "/lovable-uploads/95e8dfb6-30ef-4311-b229-a6c702cd57b7.png", 
     url: "/partners/toefl",
     slug: "toefl"
   },
