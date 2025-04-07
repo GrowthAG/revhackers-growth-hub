@@ -2,7 +2,7 @@
 export const datavoxxCase = {
   title: "DataVoxx",
   category: "Tecnologia",
-  logo: "/lovable-uploads/b7913df3-1c94-47a6-a0dd-3782e7d46b23.png", // Logo correto da DataVoxx (Cinza com V vermelho)
+  logo: "/lovable-uploads/cc3b5882-63f6-43e1-8a86-af732510b45b.png", // Updated to the DataVoxx logo
   coverImage: "https://images.unsplash.com/photo-1504270997636-07ddfbd48945",
   challenge: "A DataVoxx necessitava de um novo site e implementação de um funil de vendas inbound para captar leads qualificados.",
   solution: "Desenvolvemos um site otimizado e implementamos um funil de vendas inbound completo, integrando conteúdo relevante, automações e estratégias de conversão.",

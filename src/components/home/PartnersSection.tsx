@@ -20,7 +20,7 @@ const partners = [
   },
   {
     name: "TOEFL Brasil",
-    logo: "/lovable-uploads/f591dfee-96da-4b90-905d-f74e1dd317c9.png", // Logo do TOEFL (T verde e amarelo)
+    logo: "/lovable-uploads/27ee9454-7a22-497b-aa98-d46f39527286.png", // Updated TOEFL logo (teal T with yellow triangle)
     url: "/partners/toefl",
     slug: "toefl"
   },
@@ -32,7 +32,7 @@ const partners = [
   },
   {
     name: "DataVoxx",
-    logo: "/lovable-uploads/b7913df3-1c94-47a6-a0dd-3782e7d46b23.png", // Logo da DataVoxx (Cinza com V vermelho)
+    logo: "/lovable-uploads/cc3b5882-63f6-43e1-8a86-af732510b45b.png", // Updated to the DataVoxx logo
     url: "/partners/datavoxx",
     slug: "datavoxx"
   },
