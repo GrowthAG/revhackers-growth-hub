@@ -1,5 +1,7 @@
 
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 const partners = [
   {
@@ -60,30 +62,43 @@ const partners = [
 
 const PartnersSection = () => {
   return (
-    <section className="py-16 bg-gray-100">
+    <section className="py-20 bg-gradient-to-b from-white to-gray-50">
       <div className="container-custom">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-          Nossos Clientes e Parceiros
-        </h2>
+        <div className="max-w-3xl mx-auto text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Nossos Clientes e Parceiros
+          </h2>
+          <p className="text-lg text-gray-600">
+            Empresas que confiam na nossa expertise para impulsionar seus resultados
+          </p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           {partners.map((partner) => (
             <a 
               key={partner.name}
               href={partner.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="block transition-transform hover:scale-105"
+              className="group"
             >
-              <Card className={`h-24 flex items-center justify-center p-4 ${partner.bgColor} shadow-md border-0`}>
+              <Card className={`h-24 flex items-center justify-center p-4 ${partner.bgColor} shadow-lg border-0 overflow-hidden hover:shadow-xl transition-all duration-300 group-hover:scale-105`}>
                 <img 
                   src={partner.logo} 
                   alt={partner.name}
                   className="max-h-16 max-w-full object-contain"
                 />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
               </Card>
             </a>
           ))}
+        </div>
+
+        <div className="text-center mt-8">
+          <Button variant="outline" className="rounded-full px-8 group">
+            <span>Ver mais sobre nossos cases</span>
+            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </div>
       </div>
     </section>

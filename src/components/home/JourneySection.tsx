@@ -55,22 +55,30 @@ const journeySteps = [
 
 const JourneySection = () => {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Como será sua jornada
           </h2>
           <p className="text-lg text-gray-600">
-            Acompanhamos cada passo do seu marketing e jornada do cliente, alinhando equipes e 
-            otimizando operações para aumentar a eficiência do seu time de vendas.
+            Acompanhamos cada passo do seu negócio, alinhando equipes e 
+            otimizando operações para amplificar seus resultados.
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {journeySteps.map((step, index) => (
-            <Card key={index} className="border border-gray-200 hover:shadow-md transition-shadow p-6">
-              <h3 className="text-xl font-bold mb-4">{step.title}</h3>
+            <Card 
+              key={index} 
+              className="border border-gray-200 hover:border-revgreen/30 hover:shadow-lg transition-all duration-300 p-6 group"
+            >
+              <div className="flex items-center mb-4">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-revgreen/10 text-revgreen font-bold mr-3">
+                  {index + 1}
+                </span>
+                <h3 className="text-xl font-bold group-hover:text-revgreen transition-colors">{step.title}</h3>
+              </div>
               <ul className="space-y-3">
                 {step.items.map((item, idx) => (
                   <li key={idx} className="flex">
