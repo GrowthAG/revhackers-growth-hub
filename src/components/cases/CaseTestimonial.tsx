@@ -1,5 +1,5 @@
 
-import { CaseStudy } from '@/data/casesData';
+import { CaseStudy } from '@/data/cases';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface CaseTestimonialProps {
