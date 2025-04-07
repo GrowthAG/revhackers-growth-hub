@@ -59,6 +59,12 @@ const partners = [
     logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png",
     url: "/partners/placlux",
     slug: "placlux"
+  },
+  {
+    name: "ENICS",
+    logo: "/lovable-uploads/d3fb7069-d98b-48fe-a6b6-64c0ea6636f8.png",
+    url: "/partners/enics",
+    slug: "enics"
   }
 ];
 
