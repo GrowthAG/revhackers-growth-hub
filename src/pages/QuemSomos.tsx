@@ -1,3 +1,4 @@
+
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -94,7 +95,7 @@ const QuemSomos = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <img 
-                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" 
+                src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7" 
                 alt="Tecnologia e dados para crescimento de negócios" 
                 className="rounded-lg shadow-lg w-full h-auto"
               />
