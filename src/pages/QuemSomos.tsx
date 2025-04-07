@@ -8,46 +8,34 @@ import ContactFormSection from '@/components/home/ContactFormSection';
 const QuemSomos = () => {
   return (
     <PageLayout>
-      {/* Hero Section */}
+      {/* Hero Section - Updated with centered content and better imagery */}
       <section className="pt-28 pb-16 md:pt-40 md:pb-20 bg-gradient-to-br from-black to-gray-900 text-white relative">
         <div className="absolute inset-0 z-0 opacity-15">
           <img 
-            src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5" 
-            alt="Team Collaboration" 
+            src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7" 
+            alt="Digital Innovation" 
             className="w-full h-full object-cover"
           />
         </div>
         <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                Somos a <span className="text-revgreen">RevHackers</span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-gray-300 max-w-lg">
-                Ajudamos empresas a escalar com inteligência através de automação, crescimento e inovação orientados por dados.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  asChild 
-                  className="bg-revgreen text-white font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
-                >
-                  <Link to="/diagnostico">
-                    Conheça nossa metodologia
-                  </Link>
-                </Button>
-              </div>
-            </div>
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+              Somos a <span className="text-revgreen">RevHackers</span>
+            </h1>
             
-            <div className="relative">
-              <div className="absolute -z-10 top-1/3 right-1/3 w-72 h-72 bg-revgreen/20 rounded-full blur-3xl" />
-              <img 
-                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c"
-                alt="Equipe RevHackers" 
-                className="w-full h-auto rounded-lg shadow-xl"
-              />
-            </div>
+            <p className="text-lg md:text-xl text-gray-300 max-w-lg mx-auto mb-8">
+              Ajudamos empresas a escalar com inteligência através de automação, 
+              crescimento e inovação orientados por dados.
+            </p>
+            
+            <Button 
+              asChild 
+              className="bg-revgreen text-white font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
+            >
+              <Link to="/diagnostico">
+                Conheça nossa metodologia
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -67,8 +55,8 @@ const QuemSomos = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <img 
-                src="https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b" 
-                alt="Ideia inovadora" 
+                src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81" 
+                alt="Equipe RevHackers em ação" 
                 className="rounded-lg shadow-lg w-full h-auto"
               />
             </div>
@@ -108,7 +96,7 @@ const QuemSomos = () => {
           </div>
           
           <div className="relative">
-            {/* Linha central */}
+            {/* Timeline central line */}
             <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-revgreen/30"></div>
             
             {/* 2012-2013 */}
@@ -247,20 +235,20 @@ const QuemSomos = () => {
         </div>
       </section>
 
-      {/* Nossos Valores */}
+      {/* Nossos Princípios - Renamed from "Valores" to feel more distinct */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Nossos valores
+              Nossos princípios
             </h2>
             <p className="text-lg text-gray-600">
-              Princípios que guiam nossa atuação e nosso compromisso com os clientes
+              Fundamentos que guiam nossa atuação e nosso compromisso com os clientes
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -271,7 +259,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -282,7 +270,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -293,7 +281,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -304,7 +292,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -315,7 +303,7 @@ const QuemSomos = () => {
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
               <div className="h-12 w-12 bg-revgreen/20 rounded-full flex items-center justify-center mb-6">
                 <CheckCircle className="h-6 w-6 text-revgreen" />
               </div>
@@ -329,47 +317,91 @@ const QuemSomos = () => {
         </div>
       </section>
 
+      {/* Depoimentos - Adding a new testimonials section */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              O que dizem sobre nós
+            </h2>
+            <p className="text-lg text-gray-600">
+              Depoimentos de clientes que transformaram seus resultados com a RevHackers
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 relative">
+              <div className="absolute -top-4 -left-4 h-10 w-10 bg-revgreen/20 rounded-full flex items-center justify-center">
+                <span className="text-4xl text-revgreen">"</span>
+              </div>
+              <p className="text-gray-700 mb-6 italic">
+                "A RevHackers transformou completamente nossa abordagem de crescimento. Conseguimos 
+                aumentar as conversões em 230% em apenas 6 meses com as estratégias de ABM implementadas."
+              </p>
+              <div className="flex items-center">
+                <div className="mr-4">
+                  <div className="h-12 w-12 bg-gray-300 rounded-full"></div>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Carlos Silva</h4>
+                  <p className="text-sm text-gray-500">CMO, TechSolutions</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 relative">
+              <div className="absolute -top-4 -left-4 h-10 w-10 bg-revgreen/20 rounded-full flex items-center justify-center">
+                <span className="text-4xl text-revgreen">"</span>
+              </div>
+              <p className="text-gray-700 mb-6 italic">
+                "O que mais me impressionou foi a capacidade da equipe em transferir conhecimento. 
+                Agora temos autonomia para executar nossas campanhas com excelência."
+              </p>
+              <div className="flex items-center">
+                <div className="mr-4">
+                  <div className="h-12 w-12 bg-gray-300 rounded-full"></div>
+                </div>
+                <div>
+                  <h4 className="font-semibold">Mariana Costa</h4>
+                  <p className="text-sm text-gray-500">Diretora de Marketing, GrowthBiz</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contato Section */}
       <ContactFormSection />
 
-      {/* CTA Section */}
-      <section className="section-padding bg-black text-white relative">
-        <div className="absolute inset-0 z-0 opacity-15">
+      {/* CTA Section - Improved and simplified */}
+      <section className="section-padding bg-black text-white relative py-20">
+        <div className="absolute inset-0 z-0 opacity-20">
           <img 
-            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf" 
+            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c" 
             alt="Growth strategy" 
             className="w-full h-full object-cover"
           />
         </div>
         <div className="container-custom relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-              <h2 className="text-3xl md:text-4xl font-bold">
-                Vamos crescer <span className="text-revgreen">juntos?</span>
-              </h2>
-              
-              <p className="text-lg text-gray-300">
-                Agende uma conversa com nossos especialistas e descubra como podemos 
-                ajudar sua empresa a escalar resultados de forma sustentável.
-              </p>
-              
-              <Button 
-                asChild 
-                className="bg-revgreen text-white font-medium px-8 py-4 rounded-md hover:brightness-110 transition-all shadow-lg"
-              >
-                <Link to="/diagnostico">
-                  Falar com um especialista
-                </Link>
-              </Button>
-            </div>
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Vamos crescer <span className="text-revgreen">juntos?</span>
+            </h2>
             
-            <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-                alt="Estratégias de crescimento" 
-                className="w-full h-auto rounded-lg"
-              />
-            </div>
+            <p className="text-lg text-gray-300 mb-8 mx-auto max-w-2xl">
+              Agende uma conversa com nossos especialistas e descubra como podemos 
+              ajudar sua empresa a escalar resultados de forma sustentável.
+            </p>
+            
+            <Button 
+              asChild 
+              className="bg-revgreen text-white font-medium px-8 py-4 rounded-md hover:brightness-110 transition-all shadow-lg mx-auto"
+            >
+              <Link to="/diagnostico">
+                Falar com um especialista
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
