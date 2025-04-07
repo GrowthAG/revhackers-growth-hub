@@ -96,12 +96,12 @@ const PartnersSection = () => {
                     to={partner.url}
                     className="group block"
                   >
-                    <Card className="h-24 flex items-center justify-center p-4 bg-white border-0 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 group-hover:scale-105">
+                    <Card className="h-28 flex items-center justify-center p-4 bg-white border-0 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 group-hover:scale-105">
                       <div className="w-full h-full flex items-center justify-center">
                         <img 
                           src={partner.logo} 
                           alt={partner.name}
-                          className="max-h-12 max-w-[80%] object-contain transition-all duration-300 grayscale group-hover:grayscale-0"
+                          className="max-h-16 max-w-[80%] object-contain transition-all duration-300 grayscale group-hover:grayscale-0"
                         />
                       </div>
                     </Card>

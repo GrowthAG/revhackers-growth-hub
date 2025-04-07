@@ -41,7 +41,7 @@ const PartnerDetail = () => {
               <img 
                 src={partner.logo}
                 alt={`${partner.name} logo`}
-                className="max-w-[80%] max-h-40 object-contain"
+                className="max-w-[85%] max-h-48 object-contain" // Aumentado de max-h-40 para max-h-48
               />
             </div>
             <div className="w-full md:w-2/3">

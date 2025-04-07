@@ -13,9 +13,9 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <Link to="/" className="inline-block mb-4">
               <img 
-                src="/lovable-uploads/166e0dc1-78ce-402a-8e4f-f700cae2ef67.png" 
+                src="/lovable-uploads/00aac887-24ac-4c80-a2f3-d4912050bb97.png" 
                 alt="RevHackers Logo" 
-                className="h-16 w-auto" // Aumentado de h-10 para h-16
+                className="h-20 w-auto" // Aumentado de h-16 para h-20
               />
             </Link>
             <p className="text-gray-300 max-w-sm mb-6">
