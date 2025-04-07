@@ -52,54 +52,6 @@ const featuredArticles = [
     },
     slug: "modelo-funil-gravatinha-transformando-jornada-cliente",
     image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5"
-  },
-  {
-    title: "CRO para B2B: Estratégias avançadas de otimização de conversão",
-    excerpt: "Técnicas comprovadas de Conversion Rate Optimization para empresas B2B aumentarem taxas de conversão e qualificarem melhor seus leads.",
-    category: "CRO",
-    author: {
-      name: "Carlos Mendonça",
-      role: "Consultor de Growth",
-      avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d"
-    },
-    slug: "cro-b2b-estrategias-avancadas-otimizacao",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71"
-  },
-  {
-    title: "Integração entre Inbound e Outbound: A estratégia híbrida para B2B",
-    excerpt: "Como combinar táticas de atração e prospecção ativa para criar uma máquina de geração de demanda consistente e escalável.",
-    category: "Geração de Demanda",
-    author: {
-      name: "Juliana Brito",
-      role: "Diretora de Marketing",
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2"
-    },
-    slug: "integracao-inbound-outbound-estrategia-hibrida",
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-  },
-  {
-    title: "Automação de Marketing B2B: Além do básico",
-    excerpt: "Implementações avançadas de automação que vão além de emails para orquestrar jornadas omnichannel personalizadas e baseadas em comportamento.",
-    category: "Automação",
-    author: {
-      name: "Gabriel Santos",
-      role: "Especialista em MarTech",
-      avatar: "https://images.unsplash.com/photo-1599566150163-29194dcaad36"
-    },
-    slug: "automacao-marketing-b2b-alem-do-basico",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6"
-  },
-  {
-    title: "DevOps para times de Marketing: Aumentando velocidade e eficiência",
-    excerpt: "Como aplicar princípios de DevOps para otimizar processos de marketing e tecnologia, entregando resultados mais rápidos e consistentes.",
-    category: "DevOps",
-    author: {
-      name: "Rodrigo Lima",
-      role: "CTO",
-      avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61"
-    },
-    slug: "devops-times-marketing-velocidade-eficiencia",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475"
   }
 ];
 
@@ -119,34 +71,34 @@ const BlogSection = () => {
           
           <Link 
             to="/blog" 
-            className="inline-flex items-center text-revgreen hover:text-black font-medium"
+            className="inline-flex items-center text-revgreen hover:text-black font-medium group"
           >
             Ver todos os artigos
-            <ArrowRight className="ml-2 h-4 w-4" />
+            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {featuredArticles.slice(0, 4).map((article, index) => (
-            <Link to={`/blog/${article.slug}`} key={index}>
-              <Card className="overflow-hidden card-hover h-full border-0 shadow-sm">
-                <div className="h-48 overflow-hidden">
+          {featuredArticles.map((article, index) => (
+            <Link to={`/blog/${article.slug}`} key={index} className="group block h-full">
+              <Card className="overflow-hidden card-hover h-full border-0 shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="h-48 overflow-hidden relative">
                   <img 
                     src={article.image} 
                     alt={article.title} 
-                    className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
+                    className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500"
                   />
-                </div>
-                <CardContent className="p-6">
-                  <div className="mb-3">
-                    <span className="text-xs px-3 py-1 bg-green-50 text-green-800 rounded-full font-medium">
+                  <div className="absolute top-3 left-3">
+                    <span className="text-xs px-3 py-1 bg-green-50 text-green-800 rounded-full font-medium shadow-sm">
                       {article.category}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold mb-2 line-clamp-2">{article.title}</h3>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-revgreen transition-colors">{article.title}</h3>
                   <p className="text-gray-600 mb-4 line-clamp-2">{article.excerpt}</p>
                   
-                  <div className="flex items-center justify-between mt-6">
+                  <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center space-x-3">
                       <Avatar className="h-8 w-8">
                         <AvatarImage src={article.author.avatar} alt={article.author.name} />
@@ -157,6 +109,9 @@ const BlogSection = () => {
                         <p className="text-xs text-gray-500">{article.author.role}</p>
                       </div>
                     </div>
+                    <span className="text-revgreen opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
                   </div>
                 </CardContent>
               </Card>

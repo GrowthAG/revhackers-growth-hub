@@ -1,26 +1,31 @@
 
 import { Card } from '@/components/ui/card';
+import { TrendingUp, Target, BarChart3, Users } from 'lucide-react';
 
 const stats = [
   {
     value: "150+",
     label: "Empresas B2B atendidas",
-    description: "Em diversos segmentos e portes"
+    description: "Em diversos segmentos e portes",
+    icon: Users
   },
   {
     value: "32%",
     label: "Aumento médio em vendas",
-    description: "Nos primeiros 6 meses de implementação"
+    description: "Nos primeiros 6 meses de implementação",
+    icon: TrendingUp
   },
   {
     value: "5x",
     label: "ROI médio",
-    description: "Retorno sobre investimento no primeiro ano"
+    description: "Retorno sobre investimento no primeiro ano",
+    icon: Target
   },
   {
     value: "24%",
     label: "Redução média de churn",
-    description: "Após implementação de RevOps"
+    description: "Após implementação de RevOps",
+    icon: BarChart3
   }
 ];
 
@@ -38,13 +43,19 @@ const StatsSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => (
-            <Card key={index} className="border-0 shadow-md p-6 text-center hover:shadow-lg transition-all duration-300">
-              <p className="text-4xl md:text-5xl font-bold text-revgreen mb-2">{stat.value}</p>
-              <p className="text-lg font-semibold mb-2">{stat.label}</p>
-              <p className="text-sm text-gray-500">{stat.description}</p>
-            </Card>
-          ))}
+          {stats.map((stat, index) => {
+            const IconComponent = stat.icon;
+            return (
+              <Card key={index} className="border-0 shadow-md p-8 text-center hover:shadow-lg transition-all duration-300 group">
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-green-50 text-revgreen mb-6 group-hover:bg-revgreen group-hover:text-white transition-colors">
+                  <IconComponent className="h-7 w-7" />
+                </div>
+                <p className="text-4xl md:text-5xl font-bold text-revgreen mb-2">{stat.value}</p>
+                <p className="text-lg font-semibold mb-2">{stat.label}</p>
+                <p className="text-sm text-gray-500">{stat.description}</p>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

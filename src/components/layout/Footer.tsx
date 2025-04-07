@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Youtube, Instagram, Linkedin, Mail } from 'lucide-react';
 
@@ -9,7 +10,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <Link to="/" className="inline-block mb-4">
               <img 
-                src="/lovable-uploads/fcbfcb98-45e7-424a-a92f-ac88836d1564.png" 
+                src="/lovable-uploads/523a572a-20db-48ed-b7d7-aed43501e687.png" 
                 alt="RevHackers Logo" 
                 className="h-10 w-auto"
               />
@@ -45,7 +46,7 @@ const Footer = () => {
             <h3 className="text-lg font-medium mb-4">Conteúdo</h3>
             <ul className="space-y-3">
               <li><Link to="/blog" className="text-gray-300 hover:text-revgreen">Blog</Link></li>
-              <li><Link to="/tutoriais" className="text-gray-300 hover:text-revgreen">Tutoriais</Link></li>
+              <li><Link to="/servicos" className="text-gray-300 hover:text-revgreen">Serviços</Link></li>
               <li><Link to="/comunidade" className="text-gray-300 hover:text-revgreen">Comunidade</Link></li>
             </ul>
           </div>
@@ -57,8 +58,8 @@ const Footer = () => {
                 <Mail size={16} className="mr-2 text-revgreen" />
                 <a href="mailto:contato@revhackers.com.br" className="text-gray-300 hover:text-revgreen">contato@revhackers.com.br</a>
               </li>
-              <li><a href="/diagnostico" className="text-gray-300 hover:text-revgreen">Solicitar Diagnóstico</a></li>
-              <li><a href="#" className="text-revgreen hover:underline">Falar com um especialista</a></li>
+              <li><Link to="/diagnostico" className="text-gray-300 hover:text-revgreen">Solicitar Diagnóstico</Link></li>
+              <li><Link to="/booking" className="text-revgreen hover:underline">Falar com um especialista</Link></li>
             </ul>
           </div>
         </div>

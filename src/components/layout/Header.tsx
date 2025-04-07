@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -16,7 +17,7 @@ const Header = () => {
         <div className="flex items-center">
           <Link to="/" className="mr-8">
             <img 
-              src="/lovable-uploads/fcbfcb98-45e7-424a-a92f-ac88836d1564.png" 
+              src="/lovable-uploads/523a572a-20db-48ed-b7d7-aed43501e687.png" 
               alt="RevHackers Logo" 
               className="h-10 w-auto"
             />
