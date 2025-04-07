@@ -34,7 +34,7 @@ const caseStudies = [
     title: "TOEFL Brasil",
     category: "Educação",
     result: "Leads B2B para escolas",
-    image: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
+    image: "/lovable-uploads/f591dfee-96da-4b90-905d-f74e1dd317c9.png", // Atualizando logo do TOEFL
     slug: "toefl",
     description: "Estratégia para geração de leads B2B de donos de escolas interessados em implementar o sistema TOEFL."
   },
@@ -42,7 +42,7 @@ const caseStudies = [
     title: "DataVoxx",
     category: "Tecnologia",
     result: "Novo site e funil inbound",
-    image: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png",
+    image: "/lovable-uploads/99649815-1e1e-44ce-ae53-2973725aaeb8.png", // Atualizando logo da DataVoxx
     slug: "datavoxx",
     description: "Desenvolvimento de novo site e implementação de um funil de vendas inbound completo."
   },

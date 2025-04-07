@@ -20,7 +20,7 @@ const partners = [
   },
   {
     name: "TOEFL Brasil",
-    logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png", 
+    logo: "/lovable-uploads/f591dfee-96da-4b90-905d-f74e1dd317c9.png", // Atualizando logo do TOEFL
     url: "/partners/toefl",
     slug: "toefl"
   },
@@ -32,7 +32,7 @@ const partners = [
   },
   {
     name: "DataVoxx",
-    logo: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png", 
+    logo: "/lovable-uploads/99649815-1e1e-44ce-ae53-2973725aaeb8.png", // Atualizando logo da DataVoxx
     url: "/partners/datavoxx",
     slug: "datavoxx"
   },
