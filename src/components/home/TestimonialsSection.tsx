@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { Quote } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
@@ -29,6 +28,18 @@ const testimonials = [
     author: "Carla Macedo",
     role: "Diretora de Vendas, TOEFL Junior Brasil",
     avatar: "/lovable-uploads/95e8dfb6-30ef-4311-b229-a6c702cd57b7.png"
+  },
+  {
+    quote: "A implementação do RevOps pela equipe da RevHackers transformou completamente nosso funil de vendas. A visibilidade e previsibilidade que conseguimos agora são incomparáveis com o que tínhamos antes.",
+    author: "Yves Barsotti",
+    role: "CEO, Wisyion",
+    avatar: "/lovable-uploads/33cf0d95-8cfd-4cf6-bd31-49c3466c365d.png"
+  },
+  {
+    quote: "Depois da consultoria da RevHackers, conseguimos alinhar marketing, vendas e sucesso do cliente como nunca antes. Os resultados em termos de conversão e retenção foram impressionantes.",
+    author: "Fabio Boldrini",
+    role: "CEO, BLDN Digital",
+    avatar: "/lovable-uploads/34248d96-8719-4ebe-92df-787deb8621bd.png"
   }
 ];
 
@@ -45,7 +56,7 @@ const TestimonialsSection = () => {
           </p>
         </div>
         
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto relative px-4 md:px-12">
           <Carousel
             opts={{
               align: "start",
@@ -82,9 +93,12 @@ const TestimonialsSection = () => {
               ))}
             </CarouselContent>
             
-            <div className="flex justify-center mt-8">
-              <CarouselPrevious className="relative static mr-2" />
-              <CarouselNext className="relative static ml-2" />
+            <div className="absolute top-1/2 -left-2 md:-left-4 z-10 transform -translate-y-1/2">
+              <CarouselPrevious className="bg-white shadow-lg border-0 text-black h-10 w-10 opacity-90 hover:opacity-100" />
+            </div>
+            
+            <div className="absolute top-1/2 -right-2 md:-right-4 z-10 transform -translate-y-1/2">
+              <CarouselNext className="bg-white shadow-lg border-0 text-black h-10 w-10 opacity-90 hover:opacity-100" />
             </div>
           </Carousel>
         </div>
