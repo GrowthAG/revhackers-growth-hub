@@ -11,6 +11,7 @@ import FAQSection from '@/components/home/FAQSection';
 import StatsSection from '@/components/home/StatsSection';
 import QuoteSection from '@/components/home/QuoteSection';
 import ContactFormSection from '@/components/home/ContactFormSection';
+import CasesSection from '@/components/home/CasesSection';
 
 const Index = () => {
   return (
@@ -21,6 +22,7 @@ const Index = () => {
       <BenefitsSection />
       <JourneySection />
       <ServicesSection />
+      <CasesSection />
       <QuoteSection />
       <TestimonialsSection />
       <DiagnosticSection />

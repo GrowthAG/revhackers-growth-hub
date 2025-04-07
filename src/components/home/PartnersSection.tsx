@@ -117,8 +117,12 @@ const PartnersSection = () => {
         </div>
 
         <div className="text-center mt-8">
-          <Button variant="outline" asChild className="rounded-full px-8 group">
-            <Link to="/cases">
+          <Button 
+            asChild 
+            className="bg-revgreen text-black font-medium px-8 py-6 rounded-md hover:brightness-110 transition-all shadow-lg min-w-[250px]"
+            size="lg"
+          >
+            <Link to="/cases" className="flex items-center justify-center">
               <span>Ver mais sobre nossos cases</span>
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
