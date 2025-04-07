@@ -15,8 +15,12 @@ const Header = () => {
     <header className="w-full bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
       <div className="container-custom flex justify-between items-center py-4">
         <div className="flex items-center">
-          <Link to="/" className="text-2xl font-display font-bold mr-8">
-            RevHackers
+          <Link to="/" className="mr-8">
+            <img 
+              src="/lovable-uploads/c445d3ba-e024-4832-a3de-4eebc53f55c7.png" 
+              alt="RevHackers Logo" 
+              className="h-10 w-auto"
+            />
           </Link>
           
           <nav className="hidden md:flex space-x-8">

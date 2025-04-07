@@ -8,8 +8,12 @@ const Footer = () => {
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-2">
-            <Link to="/" className="text-2xl font-display font-bold mb-4 inline-block">
-              RevHackers
+            <Link to="/" className="inline-block mb-4">
+              <img 
+                src="/lovable-uploads/c445d3ba-e024-4832-a3de-4eebc53f55c7.png" 
+                alt="RevHackers Logo" 
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="text-gray-300 max-w-sm mb-6">
               Ajudamos empresas a escalarem com inteligência através de automação, estratégia,

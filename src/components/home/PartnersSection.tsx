@@ -8,56 +8,47 @@ const partners = [
   {
     name: "Security First",
     logo: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png",
-    url: "https://securityfirst.com.br/",
-    bgColor: "bg-white"
+    url: "https://securityfirst.com.br/"
   },
   {
     name: "Anhembi Morumbi",
     logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
-    url: "https://portal.anhembi.br/",
-    bgColor: "bg-[#222]"
+    url: "https://portal.anhembi.br/"
   },
   {
     name: "FMU Virtual",
     logo: "/lovable-uploads/e0d3d03b-c1d5-4a6e-9a61-3a1c2a707b5f.png",
-    url: "https://www.fmuvirtual.com.br/",
-    bgColor: "bg-[#1A1F2C]"
+    url: "https://www.fmuvirtual.com.br/"
   },
   {
     name: "TOEFL",
     logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
-    url: "https://toefljunior.com.br/",
-    bgColor: "bg-[#222]"
+    url: "https://toefljunior.com.br/"
   },
   {
     name: "DataVoxx",
     logo: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png",
-    url: "https://datavoxx.com.br/",
-    bgColor: "bg-white"
+    url: "https://datavoxx.com.br/"
   },
   {
     name: "Funnels",
     logo: "/lovable-uploads/c06ddff2-5712-4aef-bf4d-79b4ce4ac73f.png",
-    url: "https://growthfunnels.com.br/",
-    bgColor: "bg-white"
+    url: "https://growthfunnels.com.br/"
   },
   {
     name: "WA Project",
     logo: "/lovable-uploads/b22a6616-9c9c-41b9-9374-de85e7155c80.png",
-    url: "https://www.waproject.com.br/",
-    bgColor: "bg-[#221F26]"
+    url: "https://www.waproject.com.br/"
   },
   {
     name: "BLDN Digital",
     logo: "/lovable-uploads/e9f2329b-4293-420b-91da-b3eeadb382fd.png",
-    url: "https://bldndigital.com.br/",
-    bgColor: "bg-white"
+    url: "https://bldndigital.com.br/"
   },
   {
     name: "PlacLux",
     logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png",
-    url: "https://placlux.com/",
-    bgColor: "bg-[#222]"
+    url: "https://placlux.com/"
   }
 ];
 
@@ -83,13 +74,14 @@ const PartnersSection = () => {
               rel="noopener noreferrer"
               className="group"
             >
-              <Card className={`h-24 flex items-center justify-center p-4 ${partner.bgColor} shadow-lg border-0 overflow-hidden hover:shadow-xl transition-all duration-300 group-hover:scale-105`}>
-                <img 
-                  src={partner.logo} 
-                  alt={partner.name}
-                  className="max-h-16 max-w-full object-contain"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+              <Card className="h-24 flex items-center justify-center p-4 bg-white border-0 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 group-hover:scale-105">
+                <div className="w-full h-full flex items-center justify-center">
+                  <img 
+                    src={partner.logo} 
+                    alt={partner.name}
+                    className="max-h-12 max-w-[80%] object-contain transition-all duration-300 grayscale group-hover:grayscale-0"
+                  />
+                </div>
               </Card>
             </a>
           ))}
