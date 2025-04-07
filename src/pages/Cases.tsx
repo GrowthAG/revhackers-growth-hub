@@ -1,4 +1,3 @@
-
 import PageLayout from '@/components/layout/PageLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -17,42 +16,42 @@ const caseStudies = [
   {
     title: "Heineken",
     category: "Bebidas",
-    result: "R$ 3 milhões em vendas",
+    result: "Parceria com bares e restaurantes",
     image: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
     slug: "heineken",
-    description: "Estratégia omnichannel que uniu mídias pagas, automações de marketing e integração com pontos de venda físicos."
+    description: "Criação de materiais em vídeo para parcerias com bares e restaurantes no interior de São Paulo."
   },
   {
     title: "Agence MR",
     category: "Tecnologia",
-    result: "100 novas contas em 3 meses",
+    result: "Otimização de Google Ads",
     image: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
     slug: "agence-mr",
-    description: "Sistema integrado de automação para qualificação de leads e otimização do tempo da equipe comercial."
+    description: "Suporte consultivo para o time de marketing com foco na otimização de campanhas de Google Ads."
   },
   {
-    title: "Security First",
-    category: "Segurança",
-    result: "-35% no CAC em 4 meses",
-    image: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png",
-    slug: "security-first",
-    description: "Estratégia completa de funil de vendas com conteúdo especializado e campanhas de mídia paga segmentadas."
-  },
-  {
-    title: "Anhembi Morumbi",
+    title: "TOEFL Brasil",
     category: "Educação",
-    result: "+42% em matrículas online",
-    image: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
-    slug: "anhembi",
-    description: "Estratégia de funil de vendas multicanal com segmentação por perfil de aluno e automações personalizadas."
+    result: "Leads B2B para escolas",
+    image: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
+    slug: "toefl",
+    description: "Estratégia para geração de leads B2B de donos de escolas interessados em implementar o sistema TOEFL."
   },
   {
-    title: "BLDN Digital",
-    category: "Marketing Digital",
-    result: "+120% em agências parceiras",
+    title: "DataVoxx",
+    category: "Tecnologia",
+    result: "Novo site e funil inbound",
+    image: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png",
+    slug: "datavoxx",
+    description: "Desenvolvimento de novo site e implementação de um funil de vendas inbound completo."
+  },
+  {
+    title: "Emagrecentro",
+    category: "Saúde",
+    result: "Funil completo e mídia paga",
     image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
-    slug: "bldn-digital",
-    description: "Account-Based Marketing combinado com funil de vendas consultivo para agências de médio e grande porte."
+    slug: "emagrecentro",
+    description: "Criação de um funil de vendas completo com mídia paga, páginas otimizadas e integração com CRM."
   }
 ];
 

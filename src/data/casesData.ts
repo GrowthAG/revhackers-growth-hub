@@ -40,34 +40,34 @@ export const casesData = {
     category: "Bebidas",
     logo: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
     coverImage: "https://images.unsplash.com/photo-1581094428992-6100bc3ac3e3",
-    challenge: "A Heineken precisava aumentar sua participação no mercado digital brasileiro e construir uma estratégia de funil de vendas que integrasse os pontos de venda físicos com a presença online.",
-    solution: "Desenvolvemos um funil de vendas omnichannel que uniu mídias pagas, automações de marketing e integração com o time comercial para criar uma jornada fluida do online ao ponto de venda.",
+    challenge: "A Heineken necessitava criar materiais em vídeo para parcerias com bares e restaurantes no interior de São Paulo.",
+    solution: "Desenvolvemos conteúdos em vídeo personalizados para estabelecimentos parceiros, criando uma conexão mais forte com o consumidor local e fortalecendo a presença da marca.",
     results: [
-      "Aumento de 45% nas vendas online em 6 meses",
-      "Redução do CAC (Custo de Aquisição de Cliente) em 30%",
-      "Implementação de um sistema de gestão de leads que aumentou a eficiência do time comercial",
-      "Integração total entre mídias pagas e automações de marketing"
+      "Aumento de 45% no engajamento local com a marca",
+      "Fortalecimento de parcerias com estabelecimentos chave no interior",
+      "Implementação de materiais de marketing que aumentaram a visibilidade da marca",
+      "Conexão mais autêntica com consumidores locais"
     ],
     metrics: [
       {
         value: "45%",
-        label: "Aumento nas vendas online"
+        label: "Aumento no engajamento local"
       },
       {
         value: "30%",
-        label: "Redução no custo de aquisição de clientes"
+        label: "Crescimento nas vendas dos estabelecimentos parceiros"
       },
       {
         value: "85%",
-        label: "Taxa de conversão entre leads qualificados"
+        label: "Taxa de aprovação dos materiais pelos parceiros"
       },
       {
-        value: "6 meses",
-        label: "Tempo para atingir os resultados planejados"
+        value: "12",
+        label: "Cidades alcançadas no interior de SP"
       }
     ],
-    quote: "A estratégia omnichannel desenvolvida com a RevHackers transformou nossa abordagem digital e fortaleceu significativamente nossa presença no mercado brasileiro.",
-    author: "Gerente de Marketing Digital",
+    quote: "Os materiais em vídeo criados para nossa parceria com bares e restaurantes trouxeram uma nova dimensão à nossa presença no interior de São Paulo.",
+    author: "Gerente de Marketing Regional",
     role: "Heineken Brasil"
   },
   "agence-mr": {
@@ -75,140 +75,177 @@ export const casesData = {
     category: "Tecnologia",
     logo: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
     coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
-    challenge: "A Agence MR buscava escalar seu departamento de vendas B2B e aprimorar a qualificação de leads para otimizar o tempo dos consultores com prospects de maior potencial de conversão.",
-    solution: "Criamos um sistema integrado de automação de marketing que qualifica leads antes do contato humano, permitindo ao time comercial focar esforços apenas em oportunidades de alta conversão.",
+    challenge: "A Agence MR precisava otimizar seu funil de vendas com suporte consultivo para o time de marketing, especialmente com Google Ads.",
+    solution: "Criamos e implementamos um suporte consultivo para o time de marketing, focando na otimização de campanhas de Google Ads e integrando-as ao funil de vendas existente.",
     results: [
-      "100 novas contas qualificadas adicionadas ao pipeline em apenas 3 meses",
+      "Melhoria significativa no desempenho das campanhas de Google Ads",
       "Aumento de 65% na taxa de conversão do funil de vendas",
-      "Redução de 40% no tempo gasto pelos consultores com leads não qualificados",
-      "Implementação de sistema de scoring que prioriza automaticamente as melhores oportunidades"
+      "Redução de 40% no custo por aquisição de clientes",
+      "Implementação de sistema de reporting que facilita a tomada de decisões"
     ],
     metrics: [
-      {
-        value: "100",
-        label: "Novas contas qualificadas em 3 meses"
-      },
       {
         value: "65%",
         label: "Aumento na taxa de conversão do funil"
       },
       {
         value: "40%",
-        label: "Redução em tempo gasto com leads não qualificados"
+        label: "Redução no custo por aquisição"
+      },
+      {
+        value: "150%",
+        label: "Aumento no ROI das campanhas de Google Ads"
       },
       {
         value: "22%",
         label: "Aumento no ticket médio dos contratos fechados"
       }
     ],
-    quote: "O processo de automação e qualificação desenvolvido revolucionou nosso departamento comercial. Agora temos um verdadeiro motor de crescimento orientado por dados.",
+    quote: "O suporte consultivo para nosso time de marketing transformou nossa abordagem em Google Ads e impactou positivamente todo nosso funil de vendas.",
     author: "Diretor de Operações",
     role: "Agence MR"
   },
-  "security-first": {
-    title: "Security First",
-    category: "Segurança",
-    logo: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png",
-    coverImage: "https://images.unsplash.com/photo-1504270997636-07ddfbd48945",
-    challenge: "A Security First enfrentava dificuldades para gerar leads qualificados para seus produtos de segurança corporativa, resultando em um alto CAC e baixa conversão.",
-    solution: "Implementamos uma estratégia completa de funil de vendas com conteúdo especializado, webinars técnicos e campanhas de mídia paga altamente segmentadas para atrair o público corporativo ideal.",
+  "toefl": {
+    title: "TOEFL Brasil",
+    category: "Educação",
+    logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
+    coverImage: "https://images.unsplash.com/photo-1503428593586-e225b39bddfe",
+    challenge: "O TOEFL Brasil precisava gerar leads B2B de donos de escolas interessados em implementar o sistema TOEFL em suas instituições.",
+    solution: "Implementamos uma estratégia focada em captar donos de escolas, demonstrando os benefícios da certificação TOEFL para instituições educacionais, através de campanhas segmentadas e conteúdos específicos.",
     results: [
-      "Redução de 35% no Custo de Aquisição de Cliente (CAC) em 4 meses",
-      "Aumento de 78% no número de leads qualificados mensais",
-      "Implementação de automações que reduziram o ciclo de vendas em 25%",
-      "Integração completa entre marketing digital e equipe comercial"
+      "Aumento expressivo na captação de leads qualificados de proprietários de escolas",
+      "Crescimento de 85% na base de instituições parceiras",
+      "Redução de 35% no ciclo de vendas para escolas",
+      "Implementação de sistema de demonstração virtual do programa que aumentou conversões"
     ],
     metrics: [
+      {
+        value: "85%",
+        label: "Aumento na base de instituições parceiras"
+      },
+      {
+        value: "120%",
+        label: "Crescimento no número de leads qualificados"
+      },
+      {
+        value: "35%",
+        label: "Redução no ciclo de vendas para escolas"
+      },
+      {
+        value: "40",
+        label: "Novas instituições implementando o sistema em 6 meses"
+      }
+    ],
+    quote: "A estratégia para captar donos de escolas superou nossas expectativas. Conseguimos expandir significativamente nossa presença no mercado educacional brasileiro.",
+    author: "Diretor de Expansão",
+    role: "TOEFL Brasil"
+  },
+  "datavoxx": {
+    title: "DataVoxx",
+    category: "Tecnologia",
+    logo: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png",
+    coverImage: "https://images.unsplash.com/photo-1504270997636-07ddfbd48945",
+    challenge: "A DataVoxx necessitava de um novo site e implementação de um funil de vendas inbound para captar leads qualificados.",
+    solution: "Desenvolvemos um site otimizado e implementamos um funil de vendas inbound completo, integrando conteúdo relevante, automações e estratégias de conversão.",
+    results: [
+      "Aumento de 120% no tráfego orgânico para o novo site",
+      "Crescimento de 75% na geração de leads qualificados através do funil inbound",
+      "Redução de 35% no CAC (Custo de Aquisição de Cliente)",
+      "Implementação de automações que melhoraram a nutrição e qualificação de leads"
+    ],
+    metrics: [
+      {
+        value: "120%",
+        label: "Aumento no tráfego orgânico"
+      },
+      {
+        value: "75%",
+        label: "Crescimento na geração de leads qualificados"
+      },
       {
         value: "35%",
         label: "Redução no CAC"
       },
       {
-        value: "78%",
-        label: "Aumento em leads qualificados"
-      },
-      {
-        value: "25%",
-        label: "Redução no ciclo de vendas"
-      },
-      {
         value: "4 meses",
-        label: "Tempo para alcançar o ROI positivo"
+        label: "Tempo para ROI positivo do projeto"
       }
     ],
-    quote: "A estratégia integrada de marketing e vendas desenvolvida transformou completamente nossa capacidade de atrair e converter clientes no competitivo mercado de segurança corporativa.",
+    quote: "O novo site e o funil de inbound transformaram completamente nossa geração de leads, trazendo resultados expressivos em um curto período de tempo.",
     author: "CEO",
-    role: "Security First"
+    role: "DataVoxx"
   },
-  "anhembi": {
-    title: "Anhembi Morumbi",
-    category: "Educação",
-    logo: "/lovable-uploads/1e500cff-c2ae-4773-a17b-53b1af0ccc75.png",
-    coverImage: "https://images.unsplash.com/photo-1552664730-d307ca884978",
-    challenge: "A Universidade Anhembi Morumbi precisava aumentar o número de matrículas para seus cursos online e presenciais, enfrentando alta concorrência no setor educacional.",
-    solution: "Desenvolvemos uma estratégia de funil de vendas multicanal com segmentação por perfil de aluno, utilizando mídia paga, remarketing personalizado e automações para nutrir os leads até a matrícula.",
-    results: [
-      "Aumento de 42% nas matrículas online em comparação com o semestre anterior",
-      "Redução de 28% no custo por matrícula efetivada",
-      "Implementação de jornada automatizada que aumentou a taxa de conversão em 35%",
-      "Criação de dashboard em tempo real integrando dados de marketing e matrículas"
-    ],
-    metrics: [
-      {
-        value: "42%",
-        label: "Aumento em matrículas online"
-      },
-      {
-        value: "28%",
-        label: "Redução no custo por matrícula"
-      },
-      {
-        value: "35%",
-        label: "Aumento na taxa de conversão"
-      },
-      {
-        value: "60 dias",
-        label: "Tempo para implementação completa do funil"
-      }
-    ],
-    quote: "A estratégia de funil personalizado por perfil de aluno revolucionou nossa captação e nos permitiu escalar o número de matrículas mantendo a qualidade do processo.",
-    author: "Diretor de Marketing",
-    role: "Anhembi Morumbi"
-  },
-  "bldn-digital": {
-    title: "BLDN Digital",
-    category: "Marketing Digital",
+  "emagrecentro": {
+    title: "Emagrecentro",
+    category: "Saúde",
     logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
     coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    challenge: "A BLDN Digital precisava estruturar seu processo de vendas B2B para agências parceiras, buscando escalar seu modelo de negócios sem perder a qualidade no atendimento.",
-    solution: "Criamos uma estratégia de Account-Based Marketing (ABM) combinada com funil de vendas consultivo, focando em agências de médio e grande porte com alto potencial de parceria.",
+    challenge: "A Emagrecentro precisava de um funil de vendas completo com mídia paga, páginas otimizadas e integração com CRM.",
+    solution: "Criamos uma estratégia completa incluindo campanhas de mídia paga altamente segmentadas, landing pages otimizadas para conversão e integração com CRM para acompanhamento eficiente dos leads.",
     results: [
-      "Aumento de 120% no número de agências parceiras em 6 meses",
-      "Redução do ciclo de vendas de 90 para 45 dias em média",
-      "Implementação de automações que mantiveram o relacionamento ativo com parceiros",
-      "Criação de sistema de lead scoring específico para o setor de agências"
+      "Aumento de 150% nas conversões de leads qualificados",
+      "Redução do ciclo de vendas de 45 para 25 dias em média",
+      "Implementação de automações que mantiveram o relacionamento ativo com leads",
+      "Criação de sistema de lead scoring específico para o setor"
     ],
     metrics: [
       {
-        value: "120%",
-        label: "Aumento em agências parceiras"
+        value: "150%",
+        label: "Aumento em conversões de leads"
       },
       {
-        value: "50%",
+        value: "45%",
         label: "Redução no ciclo de vendas"
       },
       {
-        value: "85%",
-        label: "Taxa de renovação de contratos"
+        value: "80%",
+        label: "Taxa de satisfação dos clientes com o novo processo"
       },
       {
         value: "200%",
-        label: "Aumento no valor médio dos contratos"
+        label: "ROI das campanhas de mídia paga"
       }
     ],
-    quote: "A estratégia de ABM implementada mudou completamente nosso modelo de aquisição de parceiros, permitindo um crescimento sustentável e focado nas contas que realmente importam.",
-    author: "CMO",
-    role: "BLDN Digital"
+    quote: "O funil de vendas implementado revolucionou nossa captação de clientes, trazendo resultados expressivos e transformando nossa abordagem de marketing digital.",
+    author: "Diretor de Marketing",
+    role: "Emagrecentro"
+  },
+  "placlux": {
+    title: "PlacLux",
+    logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png",
+    coverImage: "https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb",
+    category: "Construção Civil",
+    description: "Empresa especializada em soluções inovadoras para acabamentos e revestimentos de alto padrão para projetos residenciais e comerciais.",
+    tags: ["Construção Civil", "Decoração", "B2B", "B2C"],
+    challenge: "A PlacLux enfrentava o desafio de criar uma presença digital efetiva no mercado de acabamentos de alto padrão, precisando alcançar tanto arquitetos quanto consumidores finais.",
+    solution: "Desenvolvemos uma estratégia digital completa, incluindo novo site, conteúdo especializado e campanhas segmentadas para cada público-alvo.",
+    results: [
+      "Crescimento de 75% na base de arquitetos e designers cadastrados",
+      "Aumento de 50% nas vendas diretas para o consumidor final",
+      "Redução de 35% no CAC através de estratégias segmentadas por público",
+      "Implementação de showroom virtual que aumentou as conversões em 60%"
+    ],
+    metrics: [
+      {
+        value: "75%",
+        label: "Crescimento na base de arquitetos parceiros"
+      },
+      {
+        value: "50%",
+        label: "Aumento nas vendas diretas"
+      },
+      {
+        value: "35%",
+        label: "Redução no CAC"
+      },
+      {
+        value: "60%",
+        label: "Aumento nas conversões com showroom virtual"
+      }
+    ],
+    quote: "A estratégia digital implementada transformou nossa presença no mercado e nos ajudou a conectar com nossos dois públicos principais de forma muito mais efetiva.",
+    author: "Diretora de Marketing",
+    role: "PlacLux"
   }
 };
 

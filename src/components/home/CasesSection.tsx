@@ -15,7 +15,7 @@ const cases = [
   {
     title: "Heineken",
     category: "Bebidas",
-    result: "R$ 3 milhões em vendas",
+    result: "Parceria com bares e restaurantes",
     image: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
     slug: "heineken",
     logo: true
@@ -23,9 +23,33 @@ const cases = [
   {
     title: "Agence MR",
     category: "Tecnologia",
-    result: "100 contas em 3 meses",
+    result: "Otimização de Google Ads",
     image: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
     slug: "agence-mr",
+    logo: true
+  },
+  {
+    title: "TOEFL Brasil",
+    category: "Educação",
+    result: "Leads B2B para escolas",
+    image: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
+    slug: "toefl",
+    logo: true
+  },
+  {
+    title: "DataVoxx",
+    category: "Tecnologia",
+    result: "Novo site e funil inbound",
+    image: "/lovable-uploads/7fa541cd-3c76-419e-882f-f7a322d01c59.png",
+    slug: "datavoxx",
+    logo: true
+  },
+  {
+    title: "Emagrecentro",
+    category: "Saúde",
+    result: "Funil completo e mídia paga",
+    image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
+    slug: "emagrecentro",
     logo: true
   }
 ];
@@ -54,7 +78,7 @@ const CasesSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {cases.map((item, index) => (
+          {cases.slice(0, 3).map((item, index) => (
             <Link to={`/cases/${item.slug}`} key={index}>
               <Card className="overflow-hidden card-hover h-full border-0 shadow-sm">
                 <div className="h-48 overflow-hidden bg-white flex items-center justify-center p-6">

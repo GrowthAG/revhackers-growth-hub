@@ -1,4 +1,3 @@
-
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -25,13 +24,7 @@ const partners = [
     slug: "anhembi"
   },
   {
-    name: "FMU Virtual",
-    logo: "/lovable-uploads/e0d3d03b-c1d5-4a6e-9a61-3a1c2a707b5f.png",
-    url: "/partners/fmu-virtual",
-    slug: "fmu-virtual"
-  },
-  {
-    name: "TOEFL",
+    name: "TOEFL Brasil",
     logo: "/lovable-uploads/3bcf035e-8f15-4449-8008-e1fa958e7a1d.png",
     url: "/partners/toefl",
     slug: "toefl"
@@ -55,10 +48,10 @@ const partners = [
     slug: "heineken"
   },
   {
-    name: "BLDN Digital",
+    name: "Emagrecentro",
     logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
-    url: "/partners/bldn-digital",
-    slug: "bldn-digital"
+    url: "/partners/emagrecentro",
+    slug: "emagrecentro"
   },
   {
     name: "PlacLux",
