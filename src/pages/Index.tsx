@@ -2,7 +2,6 @@
 import PageLayout from '@/components/layout/PageLayout';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesSection from '@/components/home/ServicesSection';
-import DiagnosticSection from '@/components/home/DiagnosticSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import PartnersSection from '@/components/home/PartnersSection';
 import JourneySection from '@/components/home/JourneySection';
@@ -23,7 +22,6 @@ const Index = () => {
       <PartnersSection />
       <TestimonialsSection />
       <QuoteSection />
-      <DiagnosticSection />
       <FAQSection />
       <ContactFormSection />
     </PageLayout>
