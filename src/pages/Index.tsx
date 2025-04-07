@@ -2,7 +2,6 @@
 import PageLayout from '@/components/layout/PageLayout';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesSection from '@/components/home/ServicesSection';
-import BlogSection from '@/components/home/BlogSection';
 import DiagnosticSection from '@/components/home/DiagnosticSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import PartnersSection from '@/components/home/PartnersSection';
@@ -11,6 +10,7 @@ import BenefitsSection from '@/components/home/BenefitsSection';
 import FAQSection from '@/components/home/FAQSection';
 import StatsSection from '@/components/home/StatsSection';
 import QuoteSection from '@/components/home/QuoteSection';
+import ContactFormSection from '@/components/home/ContactFormSection';
 
 const Index = () => {
   return (
@@ -25,7 +25,7 @@ const Index = () => {
       <TestimonialsSection />
       <DiagnosticSection />
       <FAQSection />
-      <BlogSection />
+      <ContactFormSection />
     </PageLayout>
   );
 };

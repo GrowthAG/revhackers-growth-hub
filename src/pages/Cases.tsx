@@ -38,7 +38,7 @@ const Cases = () => {
       <section className="pt-32 pb-10 bg-gradient-to-br from-black to-gray-900 text-white relative">
         <div className="absolute inset-0 z-0 opacity-20">
           <img 
-            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f" 
+            src="https://images.unsplash.com/photo-1552664730-d307ca884978" 
             alt="Cases de sucesso background" 
             className="w-full h-full object-cover"
           />

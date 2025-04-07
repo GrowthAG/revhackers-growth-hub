@@ -26,8 +26,8 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (value: string) => {
-    setFormData(prev => ({ ...prev, industry: value }));
+  const handleSelectChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -118,13 +118,27 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
         </div>
         
         <div>
-          <Input
-            name="role"
-            placeholder="Cargo *"
-            value={formData.role}
-            onChange={handleChange}
-            required
-          />
+          <Select value={formData.role} onValueChange={(value) => handleSelectChange('role', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Cargo *" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="ceo">CEO / Presidente</SelectItem>
+              <SelectItem value="coo">COO / Diretor de Operações</SelectItem>
+              <SelectItem value="cfo">CFO / Diretor Financeiro</SelectItem>
+              <SelectItem value="cmo">CMO / Diretor de Marketing</SelectItem>
+              <SelectItem value="cto">CTO / Diretor de Tecnologia</SelectItem>
+              <SelectItem value="cro">CRO / Diretor de Receita</SelectItem>
+              <SelectItem value="vp_sales">VP de Vendas</SelectItem>
+              <SelectItem value="vp_marketing">VP de Marketing</SelectItem>
+              <SelectItem value="director">Diretor</SelectItem>
+              <SelectItem value="manager">Gerente</SelectItem>
+              <SelectItem value="specialist">Especialista</SelectItem>
+              <SelectItem value="analyst">Analista</SelectItem>
+              <SelectItem value="consultant">Consultor</SelectItem>
+              <SelectItem value="other">Outro</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         
         <div>
@@ -137,7 +151,7 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
         </div>
         
         <div>
-          <Select value={formData.industry} onValueChange={handleSelectChange}>
+          <Select value={formData.industry} onValueChange={(value) => handleSelectChange('industry', value)}>
             <SelectTrigger>
               <SelectValue placeholder="Segmento" />
             </SelectTrigger>

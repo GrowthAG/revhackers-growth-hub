@@ -83,8 +83,15 @@ const services = [
 const Servicos = () => {
   return (
     <PageLayout>
-      <section className="pt-32 pb-10 bg-gradient-to-br from-black to-gray-900 text-white">
-        <div className="container-custom">
+      <section className="pt-32 pb-10 bg-gradient-to-br from-black to-gray-900 text-white relative">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <img 
+            src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d" 
+            alt="Serviços background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Nossos Serviços</h1>
             <p className="text-xl text-gray-300 mb-8">
