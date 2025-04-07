@@ -13,11 +13,11 @@ const HeroSection = () => {
       
       <div className="container-custom relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-6">
             Aumente sua <span className="text-revgreen">receita recorrente</span> com integração total entre Marketing, Vendas e CS
           </h1>
           
-          <p className="text-base md:text-lg text-gray-300 max-w-3xl mx-auto mb-10">
+          <p className="text-sm md:text-base text-gray-300 max-w-3xl mx-auto mb-10">
             Conectamos seus dados, processos e equipes para criar um ecossistema de crescimento B2B através de RevOps, 
             automação e inteligência de dados. Solução completa para CEOs e diretores que buscam crescimento escalável.
           </p>

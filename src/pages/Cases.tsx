@@ -25,7 +25,7 @@ const caseStudies = [
   {
     title: "Agence MR",
     category: "Tecnologia",
-    result: "Otimização de Google Ads",
+    result: "Consultoria para Google Ads",
     image: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
     slug: "agence-mr",
     description: "Suporte consultivo para o time de marketing com foco na otimização de campanhas de Google Ads."
@@ -52,7 +52,7 @@ const caseStudies = [
     result: "Funil completo e mídia paga",
     image: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png",
     slug: "bldn-digital",
-    description: "Criação de um funil de vendas completo com mídia paga, páginas otimizadas e integração com CRM para o Emagrecentro."
+    description: "Criação de funil de vendas com mídia paga, páginas otimizadas e integração com CRM para o Emagrecentro."
   }
 ];
 

@@ -23,7 +23,7 @@ const cases = [
   {
     title: "Agence MR",
     category: "Tecnologia",
-    result: "Otimização de Google Ads",
+    result: "Consultoria para Google Ads",
     image: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
     slug: "agence-mr",
     logo: true
