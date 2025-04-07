@@ -7,6 +7,7 @@ import TimelineSection from '@/components/quem-somos/TimelineSection';
 import PrinciplesSection from '@/components/quem-somos/PrinciplesSection';
 import TestimonialsSection from '@/components/quem-somos/TestimonialsSection';
 import CTASection from '@/components/quem-somos/CTASection';
+import CasesSection from '@/components/home/CasesSection';
 
 const QuemSomos = () => {
   return (
@@ -16,6 +17,7 @@ const QuemSomos = () => {
       <TimelineSection />
       <PrinciplesSection />
       <TestimonialsSection />
+      <CasesSection />
       <ContactFormSection />
       <CTASection />
     </PageLayout>

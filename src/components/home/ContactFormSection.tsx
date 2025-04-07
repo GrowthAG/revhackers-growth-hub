@@ -18,6 +18,7 @@ const ContactFormSection = () => {
           </h2>
           <p className="text-lg text-gray-600">
             Estamos prontos para ajudar sua empresa a crescer com soluções de Revenue Operations personalizadas.
+            Nosso time de especialistas está preparado para entender seus desafios e propor soluções eficientes.
           </p>
         </div>
         

@@ -8,8 +8,8 @@ const HeroSection = () => {
     <section className="pt-28 pb-16 md:pt-40 md:pb-20 bg-gradient-to-br from-black to-gray-900 text-white relative">
       <div className="absolute inset-0 z-0 opacity-15">
         <img 
-          src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7" 
-          alt="Digital Innovation" 
+          src="https://images.unsplash.com/photo-1552664730-d307ca884978" 
+          alt="Digital Innovation Team" 
           className="w-full h-full object-cover"
         />
       </div>
@@ -19,9 +19,10 @@ const HeroSection = () => {
             Somos a <span className="text-revgreen">RevHackers</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-300 max-w-lg mx-auto mb-8">
-            Ajudamos empresas a escalar com inteligência através de automação, 
-            crescimento e inovação orientados por dados.
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+            Desde 2012, ajudamos empresas B2B a escalarem com inteligência através de 
+            automação, estratégia, crescimento e inovação orientados por dados.
+            Nossa expertise abrange todo o ecossistema de geração de receita.
           </p>
           
           <Button 

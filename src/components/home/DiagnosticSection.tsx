@@ -13,7 +13,7 @@ const benefits = [
 
 const DiagnosticSection = () => {
   return (
-    <section className="section-padding bg-black text-white">
+    <section id="diagnostico" className="section-padding bg-black text-white">
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
@@ -22,8 +22,10 @@ const DiagnosticSection = () => {
             </h2>
             
             <p className="text-lg text-gray-300">
-              Uma análise estratégica da sua infraestrutura de crescimento B2B desenvolvida para CEOs e diretores
-              que precisam expandir receita de forma consistente e eficiente.
+              Nossa análise estratégica mapeia sua infraestrutura completa de crescimento B2B e identifica 
+              oportunidades concretas para aumentar eficiência, reduzir CAC e maximizar LTV. 
+              Desenvolvido especialmente para CEOs e diretores que precisam expandir receita 
+              de forma consistente e escalável.
             </p>
             
             <div className="space-y-4">

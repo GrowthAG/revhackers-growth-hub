@@ -15,10 +15,12 @@ const CTASection = () => {
       <div className="container-custom relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Vamos crescer <span className="text-revgreen">juntos?</span>
+            Vamos construir seu <span className="text-revgreen">ecossistema de crescimento</span>?
           </h2>
           
           <p className="text-lg text-gray-300 mb-8 mx-auto max-w-2xl">
+            Estamos prontos para aplicar nossa experiência de mais de uma década em transformação 
+            digital para ajudar sua empresa a atingir o próximo nível de resultados. 
             Agende uma conversa com nossos especialistas e descubra como podemos 
             ajudar sua empresa a escalar resultados de forma sustentável.
           </p>
