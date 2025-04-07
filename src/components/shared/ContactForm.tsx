@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnosis' }) => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,6 +18,7 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
     phone: '',
     industry: '',
     message: '',
+    role: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -32,7 +34,7 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
     e.preventDefault();
     
     // Form validation
-    if (!formData.name || !formData.email || !formData.company) {
+    if (!formData.name || !formData.email || !formData.company || !formData.role) {
       toast({
         title: "Campos obrigatórios",
         description: "Por favor, preencha todos os campos obrigatórios.",
@@ -41,26 +43,40 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
       return;
     }
     
+    setIsSubmitting(true);
+    
     // In a real application, we would submit the form data to a server here
-    console.log('Form submitted:', formData);
-    
-    toast({
-      title: formType === 'diagnosis' ? "Diagnóstico solicitado!" : "Mensagem enviada!",
-      description: "Redirecionando para agendamento...",
+    console.log('Form submitted:', {
+      ...formData,
+      formType, 
+      timestamp: new Date().toISOString()
     });
     
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      phone: '',
-      industry: '',
-      message: '',
-    });
-    
-    // Redirect to booking page
-    navigate('/booking');
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      
+      toast({
+        title: formType === 'diagnosis' ? "Diagnóstico solicitado!" : "Mensagem enviada!",
+        description: "Redirecionando para agendamento...",
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        phone: '',
+        industry: '',
+        message: '',
+        role: '',
+      });
+      
+      // Redirect to booking page
+      setTimeout(() => {
+        navigate('/booking');
+      }, 1500);
+    }, 1000);
   };
   
   return (
@@ -103,6 +119,16 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
         
         <div>
           <Input
+            name="role"
+            placeholder="Cargo *"
+            value={formData.role}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
+        <div>
+          <Input
             name="phone"
             placeholder="Telefone"
             value={formData.phone}
@@ -117,12 +143,14 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="saas">SaaS</SelectItem>
+              <SelectItem value="tech">Tecnologia</SelectItem>
+              <SelectItem value="startup">Startup</SelectItem>
+              <SelectItem value="b2b">B2B</SelectItem>
               <SelectItem value="ecommerce">E-commerce</SelectItem>
               <SelectItem value="finance">Finanças</SelectItem>
               <SelectItem value="education">Educação</SelectItem>
               <SelectItem value="health">Saúde</SelectItem>
               <SelectItem value="software">Software</SelectItem>
-              <SelectItem value="technology">Tecnologia</SelectItem>
               <SelectItem value="events">Eventos</SelectItem>
               <SelectItem value="other">Outro</SelectItem>
             </SelectContent>
@@ -140,8 +168,12 @@ const ContactForm = ({ formType = 'contact' }: { formType?: 'contact' | 'diagnos
         </div>
       </div>
       
-      <Button type="submit" className="w-full bg-[#00cf00] text-black hover:bg-[#00cf00]/80">
-        {formType === 'diagnosis' ? 'Solicitar diagnóstico' : 'Enviar mensagem'}
+      <Button 
+        type="submit" 
+        className="w-full bg-[#00cf00] text-black hover:bg-[#00cf00]/80"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Processando...' : formType === 'diagnosis' ? 'Solicitar diagnóstico' : 'Enviar mensagem'}
       </Button>
       
       <p className="text-xs text-gray-500 text-center">

@@ -22,7 +22,7 @@ const BookingWidget = () => {
   }, []);
 
   return (
-    <div className="booking-calendar-container">
+    <div className="booking-calendar-container bg-white rounded-xl shadow-lg p-6 md:p-8">
       <h3 className="text-2xl font-bold text-center mb-6">
         Agende uma conversa com nossos especialistas
       </h3>
