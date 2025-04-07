@@ -41,7 +41,7 @@ const BenefitsSection = () => {
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Por que escolher a <span className="text-revgreen">RevHackers</span>?
+            Por que escolher a <img src="/lovable-uploads/00aac887-24ac-4c80-a2f3-d4912050bb97.png" alt="RevHackers" className="h-8 inline-block align-baseline mx-1" />?
           </h2>
           <p className="text-lg text-gray-600">
             Entendemos suas dúvidas e desafios. Veja como nossa abordagem resolve os principais 
