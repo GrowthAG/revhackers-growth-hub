@@ -7,12 +7,14 @@ import BlogSection from '@/components/home/BlogSection';
 import DiagnosticSection from '@/components/home/DiagnosticSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import PartnersSection from '@/components/home/PartnersSection';
+import JourneySection from '@/components/home/JourneySection';
 
 const Index = () => {
   return (
     <PageLayout>
       <HeroSection />
       <PartnersSection />
+      <JourneySection />
       <ServicesSection />
       <DiagnosticSection />
       <CasesSection />
