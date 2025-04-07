@@ -12,7 +12,7 @@ const QuoteSection = () => {
               <Quote className="h-5 w-5 text-white" />
             </div>
             
-            <p className="text-xl md:text-2xl italic mb-8">
+            <p className="text-xl md:text-2xl italic mb-8 text-white font-medium">
               "A RevHackers tem sido uma parceira fundamental para a BLDN Digital. Enquanto nós 
               focamos em vender os projetos, eles se encarregam de operacionalizar tudo, criando uma 
               integração perfeita entre nossos processos e os dos nossos clientes. Isso tornou nossa 
@@ -31,8 +31,8 @@ const QuoteSection = () => {
                 </div>
               </div>
               <div>
-                <p className="font-bold text-white">Fabio Cará</p>
-                <p className="text-gray-400">CEO, BLDN Digital</p>
+                <p className="font-bold text-white">Fabio Boldrini</p>
+                <p className="text-gray-300">CEO, BLDN Digital</p>
               </div>
             </div>
           </Card>
