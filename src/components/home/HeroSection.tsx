@@ -14,11 +14,12 @@ const HeroSection = () => {
       <div className="container-custom relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8">
-            Potencialize seu <span className="text-revgreen">crescimento B2B</span> com estratégia orientada por dados
+            Aumente sua <span className="text-revgreen">receita recorrente</span> com integração total entre Marketing, Vendas e CS
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10">
-            Ajudamos empresas a escalar através de automação, PLG, ABM e estratégias orientadas por dados para gerar resultados mensuráveis.
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+            Conectamos seus dados, processos e equipes para criar um ecossistema de crescimento B2B através de RevOps, 
+            automação e inteligência de dados. Solução completa para CEOs e diretores que buscam crescimento escalável.
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -27,7 +28,7 @@ const HeroSection = () => {
               className="bg-revgreen text-white font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
             >
               <Link to="/diagnostico">
-                Solicitar diagnóstico gratuito
+                Solicitar diagnóstico estratégico
               </Link>
             </Button>
             
@@ -37,7 +38,7 @@ const HeroSection = () => {
               asChild
             >
               <Link to="/cases">
-                <span>Ver cases de sucesso</span>
+                <span>Ver ROI comprovado</span>
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -45,7 +46,7 @@ const HeroSection = () => {
           
           <div className="mt-12">
             <p className="text-sm text-gray-400 mb-4">
-              +150 empresas aceleraram seu crescimento
+              +150 empresas SaaS e B2B aceleraram seu crescimento com nossa metodologia
             </p>
           </div>
         </div>

@@ -1,5 +1,5 @@
 
-import { ArrowRight, LineChart, Database, Zap, Bot } from 'lucide-react';
+import { ArrowRight, LineChart, Database, Zap, Bot, Layers, GitMerge } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -7,27 +7,27 @@ import { Link } from 'react-router-dom';
 const services = [
   {
     title: "Automação de Revenue",
-    description: "Automatizamos processos comerciais e de marketing para gerar mais resultados com menos esforço.",
+    description: "Fluxos inteligentes que conectam marketing, vendas e CS para eliminar tarefas manuais e escalar resultados.",
     icon: Bot,
     link: "/servicos/automacao"
   },
   {
     title: "Revenue Intelligence",
-    description: "Análise e insights a partir dos seus dados para melhorar a tomada de decisão em vendas e marketing.",
+    description: "Transforme dados em insights acionáveis para melhorar decisões estratégicas e prever comportamentos de compra B2B.",
     icon: Database,
     link: "/servicos/revenue-intelligence"
   },
   {
     title: "Revenue Operations",
-    description: "Alinhamento entre marketing, vendas e CS para uma gestão integrada do funil de vendas.",
+    description: "Unificação estratégica entre departamentos com processos, métricas e tecnologias alinhados ao crescimento.",
     icon: LineChart,
     link: "/servicos/revops"
   },
   {
-    title: "Customer Success",
-    description: "Estratégias para maximizar a retenção e expansão da sua base de clientes.",
-    icon: Zap,
-    link: "/servicos/customer-success"
+    title: "Integração de Sistemas",
+    description: "Conectamos suas ferramentas de CRM, Marketing e CS em um ecossistema tecnológico coeso e sem silos.",
+    icon: GitMerge,
+    link: "/servicos/integracoes"
   }
 ];
 
@@ -37,10 +37,10 @@ const ServicesSection = () => {
       <div className="container-custom">
         <div className="max-w-lg mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Soluções estratégicas para crescimento B2B
+            Soluções de RevOps para impulsionar seu crescimento B2B
           </h2>
           <p className="text-lg text-gray-600">
-            Combinamos tecnologia de ponta e metodologias comprovadas para acelerar seu crescimento.
+            Arquitetamos o alinhamento entre pessoas, processos e plataformas para gerar resultados previsíveis e escaláveis.
           </p>
         </div>
         
