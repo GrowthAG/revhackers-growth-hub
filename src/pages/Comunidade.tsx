@@ -1,29 +1,22 @@
 
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
+import BookingWidget from '@/components/shared/BookingWidget';
 import { MessageSquare, Share2, Users, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Comunidade = () => {
   return (
     <PageLayout>
-      <section className="pt-32 pb-12 bg-gradient-to-br from-black to-gray-900 text-white relative">
-        {/* Faded cover image */}
-        <div className="absolute inset-0 z-0 opacity-15">
-          <img 
-            src="https://images.unsplash.com/photo-1540304453527-62f979142a17" 
-            alt="Comunidade background" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="container-custom relative z-10">
+      <section className="pt-32 pb-12 bg-gradient-to-br from-black to-gray-900 text-white">
+        <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Comunidade RevHackers</h1>
             <p className="text-xl text-gray-300 mb-8">
               Conecte-se com outros profissionais de Revenue Operations, Marketing e Vendas.
               Compartilhe experiências, aprenda e cresça junto com nossa comunidade.
             </p>
-            <Button size="lg" className="text-white bg-revgreen hover:bg-revgreen/90">
+            <Button variant="outline" size="lg" className="text-revgreen border-revgreen hover:bg-revgreen hover:text-black">
               Participar agora
             </Button>
           </div>
@@ -135,24 +128,18 @@ const Comunidade = () => {
         </div>
       </section>
 
-      <section className="py-16 bg-gradient-to-br from-gray-900 to-black text-white relative">
-        <div className="absolute inset-0 z-0 opacity-15">
-          <img 
-            src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca" 
-            alt="RevHackers community" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="container-custom relative z-10">
+      <section className="py-16 bg-gradient-to-br from-gray-900 to-black text-white">
+        <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Faça parte da nossa comunidade</h2>
-            <p className="text-xl mb-10">
-              Junte-se a profissionais de todo o Brasil e transforme sua carreira e resultados
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Agende sua demonstração</h2>
+            <p className="text-xl mb-12">
+              Quer conhecer nossa comunidade por dentro antes de se inscrever?
+              Agende uma conversa com nossa equipe.
             </p>
             
-            <Button size="lg" className="text-white bg-revgreen hover:bg-revgreen/90 px-10">
-              Participar agora
-            </Button>
+            <div className="bg-white rounded-lg p-8 shadow-lg">
+              <BookingWidget />
+            </div>
           </div>
         </div>
       </section>

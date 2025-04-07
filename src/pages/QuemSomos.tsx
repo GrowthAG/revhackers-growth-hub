@@ -2,29 +2,22 @@
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle, Calendar, TrendingUp, Users, Target, Laptop, Layers, Zap, Rocket } from 'lucide-react';
-import ContactFormSection from '@/components/home/ContactFormSection';
+import { ArrowRight, CheckCircle } from 'lucide-react';
+import BookingWidget from '@/components/shared/BookingWidget';
 
 const QuemSomos = () => {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="pt-28 pb-16 md:pt-40 md:pb-20 bg-gradient-to-br from-black to-gray-900 text-white relative">
-        <div className="absolute inset-0 z-0 opacity-15">
-          <img 
-            src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5" 
-            alt="Team Collaboration" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="container-custom relative z-10">
+      <section className="pt-28 pb-16 md:pt-40 md:pb-20 bg-gradient-to-br from-white to-gray-50">
+        <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <h1 className="text-4xl md:text-5xl font-bold leading-tight">
                 Somos a <span className="text-revgreen">RevHackers</span>
               </h1>
               
-              <p className="text-lg md:text-xl text-gray-300 max-w-lg">
+              <p className="text-lg md:text-xl text-gray-700 max-w-lg">
                 Ajudamos empresas a escalar com inteligência através de automação, crescimento e inovação orientados por dados.
               </p>
               
@@ -76,7 +69,7 @@ const QuemSomos = () => {
             <div className="space-y-6">
               <h3 className="text-2xl font-bold mb-4">Do problema à solução</h3>
               <p className="text-gray-700">
-                Fundada em 2012, a RevHackers nasceu da percepção de que empresas B2B brasileiras 
+                Fundada em 2019, a RevHackers nasceu da percepção de que empresas B2B brasileiras 
                 enfrentavam desafios complexos para crescer de forma escalável e previsível. Nossa equipe 
                 de especialistas identificou que faltavam metodologias estruturadas e orientadas por dados 
                 para impulsionar o crescimento sustentável.
@@ -95,160 +88,8 @@ const QuemSomos = () => {
         </div>
       </section>
 
-      {/* Linha do Tempo */}
-      <section className="py-16 md:py-24 bg-gray-50">
-        <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Nossa evolução
-            </h2>
-            <p className="text-lg text-gray-600">
-              De 2012 a 2025: Uma jornada de inovação e crescimento exponencial
-            </p>
-          </div>
-          
-          <div className="relative">
-            {/* Linha central */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-revgreen/30"></div>
-            
-            {/* 2012-2013 */}
-            <div className="relative mb-20">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
-                  <h3 className="text-2xl font-bold text-revgreen mb-2">2012-2013</h3>
-                  <h4 className="text-xl font-semibold mb-3">Início com websites e landing pages</h4>
-                  <p className="text-gray-600">
-                    Começamos desenvolvendo websites e páginas de vendas para pequenas empresas, 
-                    focados em design responsivo e conversões.
-                  </p>
-                </div>
-                <div className="md:w-1/2 flex justify-center md:justify-start order-1 md:order-2 mb-6 md:mb-0">
-                  <div className="w-16 h-16 rounded-full bg-revgreen flex items-center justify-center z-10">
-                    <Laptop className="text-white w-8 h-8" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* 2014-2015 */}
-            <div className="relative mb-20">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/2 flex justify-center md:justify-end order-1 mb-6 md:mb-0">
-                  <div className="w-16 h-16 rounded-full bg-revgreen flex items-center justify-center z-10">
-                    <Users className="text-white w-8 h-8" />
-                  </div>
-                </div>
-                <div className="md:w-1/2 md:pl-12 md:text-left order-2">
-                  <h3 className="text-2xl font-bold text-revgreen mb-2">2014-2015</h3>
-                  <h4 className="text-xl font-semibold mb-3">Expansão para mídias sociais</h4>
-                  <p className="text-gray-600">
-                    Expandimos nossa oferta para incluir gestão de mídias sociais e estratégias de 
-                    conteúdo, ajudando empresas a construir presença online consistente.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            {/* 2016-2017 */}
-            <div className="relative mb-20">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
-                  <h3 className="text-2xl font-bold text-revgreen mb-2">2016-2017</h3>
-                  <h4 className="text-xl font-semibold mb-3">Tráfego pago e análise de dados</h4>
-                  <p className="text-gray-600">
-                    Implementamos estratégias avançadas de tráfego pago e começamos a aplicar análise de dados 
-                    para otimização de campanhas e ROI mensurável.
-                  </p>
-                </div>
-                <div className="md:w-1/2 flex justify-center md:justify-start order-1 md:order-2 mb-6 md:mb-0">
-                  <div className="w-16 h-16 rounded-full bg-revgreen flex items-center justify-center z-10">
-                    <TrendingUp className="text-white w-8 h-8" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* 2018-2019 */}
-            <div className="relative mb-20">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/2 flex justify-center md:justify-end order-1 mb-6 md:mb-0">
-                  <div className="w-16 h-16 rounded-full bg-revgreen flex items-center justify-center z-10">
-                    <Layers className="text-white w-8 h-8" />
-                  </div>
-                </div>
-                <div className="md:w-1/2 md:pl-12 md:text-left order-2">
-                  <h3 className="text-2xl font-bold text-revgreen mb-2">2018-2019</h3>
-                  <h4 className="text-xl font-semibold mb-3">Funis de vendas completos</h4>
-                  <p className="text-gray-600">
-                    Desenvolvemos metodologias para criação e otimização de funis de vendas completos, 
-                    integrando marketing e vendas em processos fluidos.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            {/* 2020-2021 */}
-            <div className="relative mb-20">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
-                  <h3 className="text-2xl font-bold text-revgreen mb-2">2020-2021</h3>
-                  <h4 className="text-xl font-semibold mb-3">Automação de marketing</h4>
-                  <p className="text-gray-600">
-                    Implementamos soluções avançadas de automação de marketing e vendas, 
-                    permitindo escalabilidade e personalização das jornadas de clientes.
-                  </p>
-                </div>
-                <div className="md:w-1/2 flex justify-center md:justify-start order-1 md:order-2 mb-6 md:mb-0">
-                  <div className="w-16 h-16 rounded-full bg-revgreen flex items-center justify-center z-10">
-                    <Zap className="text-white w-8 h-8" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* 2022-2023 */}
-            <div className="relative mb-20">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/2 flex justify-center md:justify-end order-1 mb-6 md:mb-0">
-                  <div className="w-16 h-16 rounded-full bg-revgreen flex items-center justify-center z-10">
-                    <Target className="text-white w-8 h-8" />
-                  </div>
-                </div>
-                <div className="md:w-1/2 md:pl-12 md:text-left order-2">
-                  <h3 className="text-2xl font-bold text-revgreen mb-2">2022-2023</h3>
-                  <h4 className="text-xl font-semibold mb-3">RevOps e ABM</h4>
-                  <p className="text-gray-600">
-                    Criamos nossa metodologia RevOps e implementamos estratégias de Account-Based Marketing (ABM) 
-                    para empresas B2B que buscam crescimento estratégico.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            {/* 2024-2025 */}
-            <div className="relative">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
-                  <h3 className="text-2xl font-bold text-revgreen mb-2">2024-2025</h3>
-                  <h4 className="text-xl font-semibold mb-3">Ecossistema completo</h4>
-                  <p className="text-gray-600">
-                    Nos tornamos um ecossistema completo de educação, marketing, vendas e tecnologia, 
-                    oferecendo soluções integradas para o crescimento sustentável de empresas B2B.
-                  </p>
-                </div>
-                <div className="md:w-1/2 flex justify-center md:justify-start order-1 md:order-2 mb-6 md:mb-0">
-                  <div className="w-16 h-16 rounded-full bg-revgreen flex items-center justify-center z-10">
-                    <Rocket className="text-white w-8 h-8" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Nossos Valores */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="py-16 md:py-24 bg-gray-50">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -329,19 +170,167 @@ const QuemSomos = () => {
         </div>
       </section>
 
-      {/* Contato Section */}
-      <ContactFormSection />
+      {/* Clientes e Parceiros */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Empresas que confiam no poder do Growth
+            </h2>
+            <p className="text-lg text-gray-600">
+              Conheça algumas das empresas que já transformaram seus resultados com a RevHackers
+            </p>
+          </div>
+          
+          {/* Primeira linha de logos */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.waproject.com.br/assets/logos/waproject-logo-colored.svg" 
+                alt="WA Project" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://enics.com.br/wp-content/uploads/2024/03/logo.png" 
+                alt="Enics" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://growthfunnels.com.br/wp-content/uploads/2023/07/logo-escura.png" 
+                alt="Growth Funnels" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://bldndigital.com.br/wp-content/uploads/2024/02/cropped-cropped-logo-bldn-2-e1709297192702.png" 
+                alt="BLDN Digital" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+          </div>
+
+          {/* Segunda linha de logos */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/8/89/Heineken_logo.svg" 
+                alt="Heineken" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://s3.amazonaws.com/gupy5/production/companies/2033/career/4864/images/2021-10-26_15-33_logo.png" 
+                alt="Omni" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.tikpag.com.br/wp-content/uploads/2022/01/logo-tikpag.png" 
+                alt="TikPag" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.datavoxx.com.br/wp-content/uploads/2022/07/logo-datavoxx-1.png" 
+                alt="DataVoxx" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+          </div>
+
+          {/* Terceira linha de logos - novos clientes */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://securityfirst.com.br/wp-content/uploads/2022/12/logo-ret.svg" 
+                alt="Security First" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://portal.anhembi.br/wp-content/uploads/2023/12/logo-anhembi.png" 
+                alt="Anhembi Morumbi" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.fmuvirtual.com.br/wp-content/themes/fmuvirtual/assets/images/fmu-virtual.svg" 
+                alt="FMU Virtual" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://toefljunior.com.br/wp-content/uploads/2022/12/logo.png" 
+                alt="TOEFL Junior" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+          </div>
+
+          {/* Quarta linha de logos */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://enovaimobiliaria.com.br/wp-content/uploads/2019/11/Enove-Logo-Imobiliaria.png" 
+                alt="Enove Imobiliária" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://ideeseguros.com.br/wp-content/uploads/2019/10/logo-idee-seguros.png" 
+                alt="Idee Seguros" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://www.flexsolucoesfibraotica.com.br/wp-content/uploads/2023/02/Flex-Solucoes-26-anos.png" 
+                alt="Flex Soluções" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white rounded-lg flex items-center justify-center h-24 shadow-sm">
+              <img 
+                src="https://agence.com.br/wp-content/uploads/2020/12/agence-logo.svg" 
+                alt="Agence" 
+                className="max-h-full max-w-full object-contain"
+              />
+            </div>
+          </div>
+          
+          <div className="mt-16 text-center">
+            <Button asChild className="bg-revgreen text-white">
+              <Link to="/cases">
+                Ver cases de sucesso
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Agendamento */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <BookingWidget />
+        </div>
+      </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-black text-white relative">
-        <div className="absolute inset-0 z-0 opacity-15">
-          <img 
-            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf" 
-            alt="Growth strategy" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="container-custom relative z-10">
+      <section className="section-padding bg-black text-white">
+        <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <h2 className="text-3xl md:text-4xl font-bold">
