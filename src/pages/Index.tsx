@@ -6,11 +6,13 @@ import CasesSection from '@/components/home/CasesSection';
 import BlogSection from '@/components/home/BlogSection';
 import DiagnosticSection from '@/components/home/DiagnosticSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
+import PartnersSection from '@/components/home/PartnersSection';
 
 const Index = () => {
   return (
     <PageLayout>
       <HeroSection />
+      <PartnersSection />
       <ServicesSection />
       <CasesSection />
       <TestimonialsSection />

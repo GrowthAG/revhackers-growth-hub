@@ -24,6 +24,7 @@ const Header = () => {
             <Link to="/servicos" className="nav-link">Serviços</Link>
             <Link to="/cases" className="nav-link">Cases</Link>
             <Link to="/downloads" className="nav-link">Materiais</Link>
+            <Link to="/comunidade" className="nav-link">Comunidade</Link>
             <Link to="/quem-somos" className="nav-link">Quem Somos</Link>
             <Link to="/blog" className="nav-link">Blog</Link>
           </nav>
@@ -51,6 +52,7 @@ const Header = () => {
             <Link to="/servicos" className="nav-link" onClick={toggleMenu}>Serviços</Link>
             <Link to="/cases" className="nav-link" onClick={toggleMenu}>Cases</Link>
             <Link to="/downloads" className="nav-link" onClick={toggleMenu}>Materiais</Link>
+            <Link to="/comunidade" className="nav-link" onClick={toggleMenu}>Comunidade</Link>
             <Link to="/quem-somos" className="nav-link" onClick={toggleMenu}>Quem Somos</Link>
             <Link to="/blog" className="nav-link" onClick={toggleMenu}>Blog</Link>
             <Button asChild variant="default" className="w-full mt-4">

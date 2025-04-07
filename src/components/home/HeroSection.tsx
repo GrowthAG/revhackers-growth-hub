@@ -31,20 +31,20 @@ const HeroSection = () => {
               </Link>
             </Button>
             
-            <Button variant="outline" className="group border-revgreen text-revgreen hover:bg-revgreen hover:text-white">
-              <span>Ver cases de sucesso</span>
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <Button 
+              variant="outline" 
+              className="group border-revgreen text-revgreen hover:bg-revgreen hover:text-white"
+              asChild
+            >
+              <Link to="/cases">
+                <span>Ver cases de sucesso</span>
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
           
-          <div className="flex flex-wrap items-center justify-center space-x-4 pt-12">
-            <div className="flex flex-wrap justify-center gap-8">
-              <img src="https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-Ambipar.png" alt="Ambipar" className="h-10 w-auto object-contain" />
-              <img src="https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-petroreconcavo.png" alt="PetroReconcavo" className="h-10 w-auto object-contain" />
-              <img src="https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-NTTDATA.png" alt="NTT DATA" className="h-10 w-auto object-contain" />
-              <img src="https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-NEOENERGIA.png" alt="Neoenergia" className="h-10 w-auto object-contain" />
-            </div>
-            <p className="text-sm text-gray-400 mt-4">
+          <div className="mt-12">
+            <p className="text-sm text-gray-400 mb-4">
               +150 empresas aceleraram seu crescimento
             </p>
           </div>
