@@ -33,13 +33,13 @@ const testimonials = [
     quote: "A implementação do RevOps pela equipe da RevHackers transformou completamente nosso funil de vendas. A visibilidade e previsibilidade que conseguimos agora são incomparáveis com o que tínhamos antes.",
     author: "Yves Mariano",
     role: "CEO, Wisyion",
-    avatar: "/lovable-uploads/81d46788-47c4-456e-b31d-d0681f39e12c.png"
+    avatar: "/lovable-uploads/bfbe5a85-3867-44dc-adcc-909e6ebeae4f.png"
   },
   {
     quote: "Depois da consultoria da RevHackers, conseguimos alinhar marketing, vendas e sucesso do cliente como nunca antes. Os resultados em termos de conversão e retenção foram impressionantes.",
     author: "Fabio Boldrini",
     role: "CEO, BLDN Digital",
-    avatar: "/lovable-uploads/bfbe5a85-3867-44dc-adcc-909e6ebeae4f.png"
+    avatar: "/lovable-uploads/81d46788-47c4-456e-b31d-d0681f39e12c.png"
   }
 ];
 

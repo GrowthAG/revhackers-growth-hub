@@ -19,7 +19,7 @@ const Header = () => {
             <img 
               src="/lovable-uploads/00aac887-24ac-4c80-a2f3-d4912050bb97.png" 
               alt="RevHackers Logo" 
-              className="h-14 w-auto" 
+              className="h-16 w-auto" 
             />
           </Link>
           
