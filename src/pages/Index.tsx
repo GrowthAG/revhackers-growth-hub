@@ -17,17 +17,17 @@ const Index = () => {
   return (
     <PageLayout>
       <HeroSection />
-      <PartnersSection />
       <StatsSection />
       <BenefitsSection />
-      <JourneySection />
       <ServicesSection />
+      <JourneySection />
       <CasesSection />
-      <QuoteSection />
       <TestimonialsSection />
+      <PartnersSection />
+      <QuoteSection />
       <DiagnosticSection />
-      <ContactFormSection />
       <FAQSection />
+      <ContactFormSection />
     </PageLayout>
   );
 };
