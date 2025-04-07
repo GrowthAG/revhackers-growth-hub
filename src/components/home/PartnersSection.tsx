@@ -32,12 +32,12 @@ const partners = [
   },
   {
     name: "Funnels",
-    logo: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&fit=crop",
+    logo: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&fit=crop",
     url: "https://growthfunnels.com.br/"
   },
   {
     name: "WA Project",
-    logo: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&fit=crop",
+    logo: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&fit=crop",
     url: "https://www.waproject.com.br/"
   },
   {

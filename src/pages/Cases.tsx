@@ -18,7 +18,7 @@ const caseStudies = [
     title: "Wa Project",
     category: "Software",
     result: "R$ 3 milhões em vendas",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&fit=crop",
     slug: "waproject",
     description: "Processo de Account-Based Marketing (ABM) para gerar parcerias sólidas com grandes players do mercado."
   },
@@ -26,7 +26,7 @@ const caseStudies = [
     title: "Funnels",
     category: "Tecnologia",
     result: "100 novas contas em 3 meses",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&fit=crop",
     slug: "funnels",
     description: "Estratégia personalizada combinando automação e abordagens focadas em atrair contas qualificadas."
   }
