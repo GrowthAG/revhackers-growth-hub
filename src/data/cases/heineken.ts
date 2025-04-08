@@ -3,8 +3,8 @@ export const heinekenCase = {
   title: "Heineken",
   category: "Bebidas",
   logo: "/lovable-uploads/aada4820-3f12-4185-9af6-811f30795a93.png",
-  coverImage: "https://images.unsplash.com/photo-1581094428992-6100bc3ac3e3",
-  challenge: "A Heineken necessitava criar materiais em vídeo para parcerias com bares e restaurantes no interior de São Paulo.",
+  coverImage: "https://images.unsplash.com/photo-1600705722074-eff2e0ce9dc4",
+  challenge: "A Heineken necessitava de materiais em vídeo para parcerias com bares e restaurantes no interior de São Paulo.",
   solution: "Desenvolvemos conteúdos em vídeo personalizados para estabelecimentos parceiros, criando uma conexão mais forte com o consumidor local e fortalecendo a presença da marca.",
   results: [
     "Aumento de 45% no engajamento local com a marca",

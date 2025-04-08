@@ -40,7 +40,7 @@ const cases = [
     title: "DataVoxx",
     category: "Tecnologia",
     result: "Novo site e funil inbound",
-    image: "/lovable-uploads/cc3b5882-63f6-43e1-8a86-af732510b45b.png",
+    image: "/lovable-uploads/b068bd61-d02d-4f35-a869-afd72751cf62.png",
     slug: "datavoxx",
     logo: true
   },
