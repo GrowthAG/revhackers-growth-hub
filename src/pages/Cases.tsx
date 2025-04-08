@@ -34,7 +34,7 @@ const caseStudies = [
     title: "TOEFL Junior Brasil",
     category: "Educação",
     result: "Leads B2B para escolas",
-    image: "/lovable-uploads/ca6527d9-4124-4e67-8d8a-19a74056feb0.png",
+    image: "/lovable-uploads/46993eff-c4c5-41af-b7ee-c93ef0366f59.png",
     slug: "toefl",
     description: "Estratégia para geração de leads B2B de donos de escolas interessados em implementar o sistema TOEFL."
   },
