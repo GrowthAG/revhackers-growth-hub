@@ -1,5 +1,6 @@
 
 import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
@@ -12,6 +13,11 @@ import BookingWidget from '@/components/shared/BookingWidget';
 
 const PartnerDetail = () => {
   const { slug } = useParams<{ slug: string }>();
+  
+  // Scroll to top when the component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]); // Re-run when slug changes
   
   if (!slug || !partnersData[slug]) {
     return <NotFound />;
