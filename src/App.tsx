@@ -19,6 +19,8 @@ import Comunidade from "./pages/Comunidade";
 import Booking from "./pages/Booking";
 import PartnerDetail from "./pages/PartnerDetail";
 import PartnerEnics from "./pages/PartnerEnics";
+import TermosDeUso from "./pages/TermosDeUso";
+import Privacidade from "./pages/Privacidade";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +45,8 @@ const App = () => (
           <Route path="/downloads" element={<Downloads />} />
           <Route path="/comunidade" element={<Comunidade />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/termos-de-uso" element={<TermosDeUso />} />
+          <Route path="/privacidade" element={<Privacidade />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

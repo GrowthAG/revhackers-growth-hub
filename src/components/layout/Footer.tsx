@@ -72,8 +72,8 @@ const Footer = () => {
             © {currentYear} RevHackers. Todos os direitos reservados.
           </p>
           <div className="flex space-x-6">
-            <a href="#" className="text-gray-400 text-sm hover:text-revgreen">Política de Privacidade</a>
-            <a href="#" className="text-gray-400 text-sm hover:text-revgreen">Termos de Uso</a>
+            <Link to="/privacidade" className="text-gray-400 text-sm hover:text-revgreen">Política de Privacidade</Link>
+            <Link to="/termos-de-uso" className="text-gray-400 text-sm hover:text-revgreen">Termos de Uso</Link>
           </div>
         </div>
       </div>

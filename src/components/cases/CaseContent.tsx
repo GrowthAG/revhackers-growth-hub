@@ -40,7 +40,6 @@ const CaseContent = ({ caseData }: CaseContentProps) => {
               </h2>
               
               <div className="mt-8 max-w-xl mx-auto bg-gray-50 p-8 rounded-xl shadow-sm">
-                <h3 className="text-xl font-bold mb-6">Solicite seu diagnóstico gratuito</h3>
                 <ContactForm formType="diagnosis" />
               </div>
             </div>
