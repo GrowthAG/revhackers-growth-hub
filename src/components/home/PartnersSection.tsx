@@ -52,7 +52,8 @@ const partners = [
     name: "BLDN Digital",
     logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png", 
     url: "/partners/bldn-digital",
-    slug: "bldn-digital"
+    slug: "bldn-digital",
+    customClass: "grayscale-0 bg-white"
   },
   {
     name: "PlacLux",
@@ -65,6 +66,13 @@ const partners = [
     logo: "/lovable-uploads/a05718ad-1822-4102-909a-7e86af151e98.png",
     url: "/partners/enics",
     slug: "enics"
+  },
+  {
+    name: "Funnels",
+    logo: "/lovable-uploads/e468ed87-3eee-496b-bb1a-3525f02f8429.png",
+    url: "/partners/funnels",
+    slug: "funnels",
+    customClass: "grayscale-0"
   }
 ];
 
@@ -96,12 +104,12 @@ const PartnersSection = () => {
                     to={partner.url}
                     className="group block"
                   >
-                    <Card className="h-28 flex items-center justify-center p-4 bg-white border-0 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 group-hover:scale-105">
+                    <Card className={`h-28 flex items-center justify-center p-4 bg-white border-0 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300 group-hover:scale-105 ${partner.slug === 'bldn-digital' ? 'bg-gray-100' : ''}`}>
                       <div className="w-full h-full flex items-center justify-center">
                         <img 
                           src={partner.logo} 
                           alt={partner.name}
-                          className="max-h-16 max-w-[80%] object-contain transition-all duration-300 grayscale group-hover:grayscale-0"
+                          className={`max-h-16 max-w-[80%] object-contain transition-all duration-300 ${partner.customClass || 'grayscale group-hover:grayscale-0'}`}
                         />
                       </div>
                     </Card>

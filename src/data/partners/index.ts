@@ -1,28 +1,28 @@
 
-import { agenceMrPartner } from './agence-mr';
-import { anhembiPartner } from './anhembi';
-import { bldnDigitalPartner } from './bldn-digital';
-import { datavoxxPartner } from './datavoxx';
-import { enicsPartner } from './enics';
-import { fmuVirtualPartner } from './fmu-virtual';
-import { heinekenPartner } from './heineken';
-import { placluxPartner } from './placlux';
-import { securityFirstPartner } from './security-first';
-import { toeflPartner } from './toefl';
+import { agenceMrData } from './agence-mr';
+import { anhembiData } from './anhembi';
+import { bldnDigitalData } from './bldn-digital';
+import { datavoxxData } from './datavoxx';
+import { enicsData } from './enics';
+import { fmuVirtualData } from './fmu-virtual';
+import { heinekenData } from './heineken';
+import { placluxData } from './placlux';
+import { securityFirstData } from './security-first';
+import { toeflData } from './toefl';
 import { funnelsPartner } from './funnels';
-import { Partner } from './types';
+import { PartnerData } from './types';
 
-export const partners: Record<string, Partner> = {
-  'agence-mr': agenceMrPartner,
-  'anhembi': anhembiPartner,
-  'bldn-digital': bldnDigitalPartner,
-  'datavoxx': datavoxxPartner,
-  'enics': enicsPartner,
-  'fmu-virtual': fmuVirtualPartner,
-  'heineken': heinekenPartner,
-  'placlux': placluxPartner,
-  'security-first': securityFirstPartner,
-  'toefl': toeflPartner,
+export const partners: Record<string, PartnerData> = {
+  'agence-mr': agenceMrData,
+  'anhembi': anhembiData,
+  'bldn-digital': bldnDigitalData,
+  'datavoxx': datavoxxData,
+  'enics': enicsData,
+  'fmu-virtual': fmuVirtualData,
+  'heineken': heinekenData,
+  'placlux': placluxData,
+  'security-first': securityFirstData,
+  'toefl': toeflData,
   'funnels': funnelsPartner,
 };
 
