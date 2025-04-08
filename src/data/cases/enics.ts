@@ -31,6 +31,7 @@ export const enicsCase = {
     }
   ],
   quote: "A estratégia integrada da RevHackers foi essencial para alcançarmos nossa meta de vendas em um prazo tão curto. A combinação de campanhas segmentadas e automações foi decisiva.",
-  author: "Diretor de Marketing",
-  role: "ENICS"
+  author: "Caroline Siqueira",
+  role: "VP do Grupo Innova Steel",
+  authorImage: "/lovable-uploads/5336ba0d-ed69-49f9-8041-36171f3f7b99.png"
 };

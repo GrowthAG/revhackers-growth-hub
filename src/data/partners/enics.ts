@@ -22,7 +22,7 @@ export const enicsData: PartnerData = {
   ],
   testimonial: {
     quote: "A estratégia digital implementada não apenas nos permitiu atingir nossa meta ambiciosa de vendas, mas também estabeleceu uma base sólida de dados para nossos próximos eventos, transformando completamente nosso processo de comercialização.",
-    author: "Ricardo Oliveira",
-    role: "Diretor de Eventos"
+    author: "Caroline Siqueira",
+    role: "VP do Grupo Innova Steel"
   }
 };

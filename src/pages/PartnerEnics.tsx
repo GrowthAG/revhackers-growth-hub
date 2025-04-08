@@ -1,4 +1,3 @@
-
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { ArrowRight, ArrowRightIcon, CheckCircle } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Card } from '@/components/ui/card';
 import ContactForm from '@/components/shared/ContactForm';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const PartnerEnics = () => {
   return (
@@ -126,14 +126,20 @@ const PartnerEnics = () => {
             <div className="mt-16 bg-gray-900 text-white p-8 rounded-lg relative">
               <div className="text-6xl text-gray-700 absolute top-4 left-6 opacity-30">"</div>
               <blockquote className="relative z-10">
-                <p className="text-lg italic mb-6">
-                  "A estratégia digital implementada não apenas nos permitiu atingir nossa meta ambiciosa de vendas, 
-                  mas também estabeleceu uma base sólida de dados para nossos próximos eventos, transformando 
-                  completamente nosso processo de comercialização."
-                </p>
-                <footer>
-                  <div className="font-bold">Ricardo Oliveira</div>
-                  <div className="text-gray-300">Diretor de Eventos</div>
+                <div className="flex flex-col md:flex-row gap-6 items-center md:items-start mb-6">
+                  <Avatar className="h-20 w-20">
+                    <AvatarImage src="/lovable-uploads/5336ba0d-ed69-49f9-8041-36171f3f7b99.png" alt="Caroline Siqueira" />
+                    <AvatarFallback>CS</AvatarFallback>
+                  </Avatar>
+                  <p className="text-lg italic">
+                    "A estratégia digital implementada não apenas nos permitiu atingir nossa meta ambiciosa de vendas, 
+                    mas também estabeleceu uma base sólida de dados para nossos próximos eventos, transformando 
+                    completamente nosso processo de comercialização."
+                  </p>
+                </div>
+                <footer className="text-right">
+                  <div className="font-bold">Caroline Siqueira</div>
+                  <div className="text-gray-300">VP do Grupo Innova Steel</div>
                 </footer>
               </blockquote>
             </div>
