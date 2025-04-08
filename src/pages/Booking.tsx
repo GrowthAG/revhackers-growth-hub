@@ -1,9 +1,13 @@
 
 import { useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
+import ContactForm from '@/components/shared/ContactForm';
 
 const BookingPage = () => {
   useEffect(() => {
+    // Scroll to top
+    window.scrollTo(0, 0);
+    
     // Create a script element for the form embed
     const script = document.createElement('script');
     script.src = "https://team.growthagency.com.br/js/form_embed.js";
@@ -40,6 +44,12 @@ const BookingPage = () => {
       
       <section className="py-16 bg-white">
         <div className="container-custom">
+          <div className="max-w-xl mx-auto mb-16">
+            <div className="bg-gray-50 p-8 rounded-xl shadow-sm">
+              <ContactForm />
+            </div>
+          </div>
+          
           <div className="booking-calendar-container bg-white rounded-xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto">
             <h3 className="text-2xl font-bold text-center mb-8">
               Selecione a data e horário para nossa conversa

@@ -45,6 +45,7 @@ const FormField = ({
   }
 
   if (type === 'select' && onSelectChange) {
+    // For select elements we need a dummy onChange handler even though we use onSelectChange
     return (
       <div>
         <Select value={value} onValueChange={(val) => onSelectChange(val)}>

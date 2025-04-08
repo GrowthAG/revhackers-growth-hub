@@ -1,41 +1,29 @@
 
-import { PartnerData } from './types';
-import { securityFirstData } from './security-first';
-import { anhembiData } from './anhembi';
-import { fmuVirtualData } from './fmu-virtual';
-import { toeflData } from './toefl';
-import { datavoxxData } from './datavoxx';
-import { agenceMrData } from './agence-mr';
-import { heinekenData } from './heineken';
-import { bldnDigitalData } from './bldn-digital';
-import { placluxData } from './placlux';
-import { enicsData } from './enics';
+import { agenceMrPartner } from './agence-mr';
+import { anhembiPartner } from './anhembi';
+import { bldnDigitalPartner } from './bldn-digital';
+import { datavoxxPartner } from './datavoxx';
+import { enicsPartner } from './enics';
+import { fmuVirtualPartner } from './fmu-virtual';
+import { heinekenPartner } from './heineken';
+import { placluxPartner } from './placlux';
+import { securityFirstPartner } from './security-first';
+import { toeflPartner } from './toefl';
+import { funnelsPartner } from './funnels';
+import { Partner } from './types';
 
-export const partnersData: Record<string, PartnerData> = {
-  "security-first": securityFirstData,
-  "anhembi": anhembiData,
-  "fmu-virtual": fmuVirtualData,
-  "toefl": toeflData,
-  "datavoxx": datavoxxData,
-  "agence-mr": agenceMrData,
-  "heineken": heinekenData,
-  "bldn-digital": bldnDigitalData,
-  "placlux": placluxData,
-  "enics": enicsData
+export const partners: Record<string, Partner> = {
+  'agence-mr': agenceMrPartner,
+  'anhembi': anhembiPartner,
+  'bldn-digital': bldnDigitalPartner,
+  'datavoxx': datavoxxPartner,
+  'enics': enicsPartner,
+  'fmu-virtual': fmuVirtualPartner,
+  'heineken': heinekenPartner,
+  'placlux': placluxPartner,
+  'security-first': securityFirstPartner,
+  'toefl': toeflPartner,
+  'funnels': funnelsPartner,
 };
 
-export type { PartnerData, PartnerKey } from './types';
-
-// Re-export individual partner data for direct imports
-export {
-  securityFirstData,
-  anhembiData,
-  fmuVirtualData,
-  toeflData,
-  datavoxxData,
-  agenceMrData,
-  heinekenData,
-  bldnDigitalData,
-  placluxData,
-  enicsData
-};
+export type PartnerKey = keyof typeof partners;

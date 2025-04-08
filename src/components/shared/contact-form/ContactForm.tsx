@@ -118,6 +118,7 @@ const ContactForm = ({ formType = 'contact' }: ContactFormProps) => {
           name="role"
           placeholder="Cargo *"
           value={formData.role}
+          onChange={handleChange}
           onSelectChange={(value) => handleSelectChange('role', value)}
           options={roleOptions}
           required
@@ -136,6 +137,7 @@ const ContactForm = ({ formType = 'contact' }: ContactFormProps) => {
           name="industry"
           placeholder="Segmento"
           value={formData.industry}
+          onChange={handleChange}
           onSelectChange={(value) => handleSelectChange('industry', value)}
           options={industryOptions}
         />

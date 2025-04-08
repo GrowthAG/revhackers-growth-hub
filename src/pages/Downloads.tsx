@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
@@ -126,6 +126,11 @@ const Downloads = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleDownloadClick = (material: (typeof materials)[0]) => {
     setSelectedMaterial(material);
     setShowForm(true);
@@ -147,8 +152,15 @@ const Downloads = () => {
 
   return (
     <PageLayout>
-      <section className="pt-32 pb-10 bg-gradient-to-br from-black to-gray-900 text-white">
-        <div className="container-custom">
+      <section className="pt-32 pb-10 bg-gradient-to-br from-black to-gray-900 text-white relative">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <img 
+            src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b" 
+            alt="Materiais Gratuitos"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Materiais Gratuitos</h1>
             <p className="text-xl text-gray-300 mb-8">

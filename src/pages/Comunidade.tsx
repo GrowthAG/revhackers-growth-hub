@@ -1,14 +1,27 @@
 
+import { useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { MessageSquare, Share2, Users, Zap, Calendar, Video, BookOpen, Trophy, Network } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Comunidade = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <PageLayout>
-      <section className="pt-32 pb-12 bg-gradient-to-br from-black to-gray-900 text-white">
-        <div className="container-custom">
+      <section className="pt-32 pb-12 bg-gradient-to-br from-black to-gray-900 text-white relative">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <img 
+            src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81" 
+            alt="Comunidade RevHackers"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Comunidade RevHackers</h1>
             <p className="text-xl text-gray-300 mb-8">
