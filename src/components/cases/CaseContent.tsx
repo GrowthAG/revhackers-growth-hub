@@ -2,7 +2,7 @@
 import { CaseStudy } from '@/data/casesData';
 import CaseMetrics from './CaseMetrics';
 import CaseTestimonial from './CaseTestimonial';
-import ContactForm from '@/components/shared/ContactForm';
+import ContactForm from '@/components/shared/contact-form';
 
 interface CaseContentProps {
   caseData: CaseStudy;
