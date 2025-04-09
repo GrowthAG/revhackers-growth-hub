@@ -73,43 +73,43 @@ const NewsletterForm = () => {
   };
   
   return (
-    <div className="w-full max-w-3xl mx-auto px-4">
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="max-w-lg mx-auto px-4">
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="flex flex-col space-y-3">
           <Input
             type="text"
             placeholder="Seu nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base"
+            className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-10 px-4 rounded-md text-sm"
           />
           <Input
             type="email"
             placeholder="Seu e-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base"
+            className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-10 px-4 rounded-md text-sm"
           />
         </div>
         <Button 
           type="submit" 
-          className="w-full md:w-auto px-8 h-14 text-base font-medium transition-all hover:translate-y-[-2px]"
+          className="w-full h-10 text-sm font-medium transition-all hover:translate-y-[-2px]"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <span className="flex items-center justify-center">
-              <Mail className="mr-2 h-5 w-5 animate-pulse" />
+              <Mail className="mr-2 h-4 w-4 animate-pulse" />
               Processando...
             </span>
           ) : (
             <span className="flex items-center justify-center">
-              <Mail className="mr-2 h-5 w-5" />
+              <Mail className="mr-2 h-4 w-4" />
               Inscrever-se
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-4 w-4" />
             </span>
           )}
         </Button>
-        <p className="text-sm text-gray-400 text-center mt-2">
+        <p className="text-xs text-gray-400 text-center mt-2">
           Ao se inscrever, você concorda com nossa <a href="/privacidade" className="text-gray-300 hover:text-revgreen underline">Política de Privacidade</a>
         </p>
       </form>
