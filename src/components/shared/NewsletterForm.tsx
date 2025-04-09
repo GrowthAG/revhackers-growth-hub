@@ -73,21 +73,21 @@ const NewsletterForm = () => {
   };
   
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 w-full">
+    <form onSubmit={handleSubmit} className="space-y-5 w-full max-w-xl mx-auto">
       <div className="space-y-4">
         <Input
           type="text"
           placeholder="Seu nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base"
+          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base w-full"
         />
         <Input
           type="email"
           placeholder="Seu e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base"
+          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base w-full"
         />
       </div>
       <Button 
