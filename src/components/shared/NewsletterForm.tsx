@@ -73,45 +73,47 @@ const NewsletterForm = () => {
   };
   
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 w-full max-w-xl mx-auto">
-      <div className="space-y-4">
-        <Input
-          type="text"
-          placeholder="Seu nome"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base w-full"
-        />
-        <Input
-          type="email"
-          placeholder="Seu e-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base w-full"
-        />
-      </div>
-      <Button 
-        type="submit" 
-        className="w-full h-14 text-base font-medium transition-all hover:translate-y-[-2px]"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? (
-          <span className="flex items-center justify-center">
-            <Mail className="mr-2 h-5 w-5 animate-pulse" />
-            Processando...
-          </span>
-        ) : (
-          <span className="flex items-center justify-center">
-            <Mail className="mr-2 h-5 w-5" />
-            Inscrever-se
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </span>
-        )}
-      </Button>
-      <p className="text-sm text-gray-400 text-center mt-2">
-        Ao se inscrever, você concorda com nossa <a href="/privacidade" className="text-gray-300 hover:text-revgreen underline">Política de Privacidade</a>
-      </p>
-    </form>
+    <div className="w-full max-w-3xl mx-auto px-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input
+            type="text"
+            placeholder="Seu nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base"
+          />
+          <Input
+            type="email"
+            placeholder="Seu e-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base"
+          />
+        </div>
+        <Button 
+          type="submit" 
+          className="w-full md:w-auto px-8 h-14 text-base font-medium transition-all hover:translate-y-[-2px]"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <span className="flex items-center justify-center">
+              <Mail className="mr-2 h-5 w-5 animate-pulse" />
+              Processando...
+            </span>
+          ) : (
+            <span className="flex items-center justify-center">
+              <Mail className="mr-2 h-5 w-5" />
+              Inscrever-se
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </span>
+          )}
+        </Button>
+        <p className="text-sm text-gray-400 text-center mt-2">
+          Ao se inscrever, você concorda com nossa <a href="/privacidade" className="text-gray-300 hover:text-revgreen underline">Política de Privacidade</a>
+        </p>
+      </form>
+    </div>
   );
 };
 
