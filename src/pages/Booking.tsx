@@ -93,13 +93,13 @@ const BookingPage = () => {
           )}
           
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-gradient-to-b from-gray-800/80 to-gray-900/90 backdrop-blur-sm border border-gray-700/50 rounded-xl shadow-xl p-6 md:p-8 animate-fade-in">
-              <h3 className="text-2xl md:text-3xl font-bold text-center mb-8 text-white">
-                <span className="text-revgreen">Selecione</span> a data e horário
+            <Card className="bg-black border border-gray-800 rounded-xl shadow-xl p-6 md:p-8 animate-fade-in">
+              <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">
+                <span className="bg-gradient-to-r from-revgreen via-green-400 to-revgreen bg-clip-text text-transparent">Selecione</span> a data e horário
               </h3>
               
-              <div className="booking-calendar-wrapper relative bg-gray-800/50 rounded-lg overflow-hidden p-1">
-                <div className="absolute inset-0 bg-gradient-to-br from-revgreen/5 to-transparent opacity-40"></div>
+              <div className="booking-calendar-wrapper relative bg-black rounded-lg overflow-hidden p-1">
+                <div className="absolute inset-0 bg-gradient-to-br from-revgreen/5 to-transparent opacity-30"></div>
                 <iframe 
                   src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${buildQueryParams()}`}
                   style={{ 

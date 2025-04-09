@@ -75,12 +75,12 @@ const BookingWidget = () => {
         <ContactForm />
       </Card>
       
-      <Card className="booking-calendar-container bg-gradient-to-b from-gray-900 to-black rounded-xl shadow-lg p-6 md:p-8 border-gray-800 hover:shadow-xl transition-all">
-        <h3 className="text-2xl font-bold text-center mb-6 text-white">
-          Ou agende <span className="text-revgreen">diretamente</span>
+      <Card className="booking-calendar-container bg-black rounded-xl shadow-lg p-6 md:p-8 border-gray-800 hover:shadow-xl transition-all">
+        <h3 className="text-2xl font-bold text-center mb-6">
+          Ou agende <span className="bg-gradient-to-r from-revgreen via-green-400 to-revgreen bg-clip-text text-transparent">diretamente</span>
         </h3>
-        <div className="w-full bg-gray-800/50 rounded-lg overflow-hidden p-1 relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-revgreen/5 to-transparent opacity-40"></div>
+        <div className="w-full bg-black rounded-lg overflow-hidden p-1 relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-revgreen/5 to-transparent opacity-30"></div>
           <iframe 
             src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${buildQueryParams()}`}
             style={{ 
