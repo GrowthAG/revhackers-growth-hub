@@ -47,18 +47,18 @@ const BookingPage = () => {
   return (
     <PageLayout>
       <section className="pt-0 pb-16 bg-gradient-to-b from-black to-gray-900 text-white">
-        <div className="w-full h-[40vh] md:h-[50vh] relative overflow-hidden">
+        <div className="w-full h-[30vh] relative overflow-hidden">
           <img 
             src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6" 
             alt="Código e desenvolvimento" 
-            className="w-full h-full object-cover object-center brightness-[0.6]"
+            className="w-full h-full object-cover object-center brightness-[0.4]"
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="container-custom text-center">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6 drop-shadow-lg">
+              <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-4 drop-shadow-lg">
                 Agende uma conversa com nossa equipe técnica
               </h1>
-              <p className="text-lg text-gray-100 max-w-3xl mx-auto drop-shadow-md">
+              <p className="text-base text-gray-100 max-w-2xl mx-auto drop-shadow-md">
                 Escolha o melhor horário para conversarmos sobre suas necessidades de Revenue Operations, 
                 estratégias técnicas e implementação de soluções para sua empresa.
               </p>
@@ -66,10 +66,10 @@ const BookingPage = () => {
           </div>
         </div>
         
-        <div className="container-custom mt-10">
+        <div className="container-custom mt-8">
           {userData.name && (
-            <div className="mb-10 max-w-3xl mx-auto text-center">
-              <Card className="bg-green-900/30 border-green-800 p-6 rounded-xl inline-block">
+            <div className="mb-8 max-w-3xl mx-auto text-center">
+              <Card className="bg-green-900/30 border-green-800 p-4 rounded-xl inline-block">
                 <p className="text-white">
                   Olá <strong>{userData.name}</strong>, você está quase lá! 
                   <br />Agora é só escolher o melhor horário para nossa conversa técnica.
@@ -79,7 +79,7 @@ const BookingPage = () => {
           )}
           
           <div className="booking-calendar-container bg-white rounded-xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">
+            <h3 className="text-2xl font-bold text-center mb-6 text-gray-900">
               Selecione a data e horário para nossa conversa
             </h3>
             <div className="w-full">

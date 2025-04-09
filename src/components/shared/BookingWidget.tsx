@@ -37,7 +37,7 @@ const BookingWidget = () => {
   }, []);
 
   return (
-    <div className="grid md:grid-cols-2 gap-10">
+    <div className="grid md:grid-cols-2 gap-8">
       <Card className="bg-white rounded-xl shadow-lg p-6 md:p-8 border-gray-200 hover:shadow-xl transition-all">
         <h3 className="text-2xl font-bold text-center mb-6">
           Entre em contato
