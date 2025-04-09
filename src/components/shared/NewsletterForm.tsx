@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Mail } from 'lucide-react';
+import { Mail, ArrowRight } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
 const NewsletterForm = () => {
@@ -73,31 +73,44 @@ const NewsletterForm = () => {
   };
   
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 w-full">
-      <div className="space-y-2">
+    <form onSubmit={handleSubmit} className="space-y-4 w-full">
+      <div className="space-y-3">
         <Input
           type="text"
           placeholder="Seu nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
+          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-12 px-4 rounded-md"
         />
         <Input
           type="email"
           placeholder="Seu e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
+          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-12 px-4 rounded-md"
         />
       </div>
       <Button 
         type="submit" 
-        className="w-full"
+        className="w-full h-12 text-base font-medium transition-all hover:translate-y-[-2px]"
         disabled={isSubmitting}
       >
-        <Mail className="mr-2 h-4 w-4" />
-        {isSubmitting ? 'Processando...' : 'Inscrever-se'}
+        {isSubmitting ? (
+          <span className="flex items-center">
+            <Mail className="mr-2 h-5 w-5 animate-pulse" />
+            Processando...
+          </span>
+        ) : (
+          <span className="flex items-center">
+            <Mail className="mr-2 h-5 w-5" />
+            Inscrever-se
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </span>
+        )}
       </Button>
+      <p className="text-xs text-gray-400 text-center">
+        Ao se inscrever, você concorda com nossa <a href="/privacidade" className="text-gray-300 hover:text-revgreen">Política de Privacidade</a>
+      </p>
     </form>
   );
 };
