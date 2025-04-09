@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { getFormData } from '@/utils/formStorage';
@@ -13,7 +12,7 @@ const BookingPage = () => {
   });
   
   useEffect(() => {
-    // Scroll to top
+    // Scroll to top when component mounts
     window.scrollTo(0, 0);
     
     // Load user data from localStorage
@@ -66,27 +65,21 @@ const BookingPage = () => {
       <section className="py-12 bg-black text-white">
         <div className="container-custom">
           <div className="text-center max-w-4xl mx-auto mb-8">
-            {userData.name ? (
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
-                <span className="text-revgreen">Agende</span> sua consulta técnica{" "}
-                <span className="text-revgreen block mt-2">{userData.name}</span>
-              </h1>
-            ) : (
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
-                <span className="text-revgreen">Agende</span> sua consulta técnica
-              </h1>
-            )}
-            <p className="text-lg text-white max-w-2xl mx-auto">
+            <h1 className="text-5xl font-bold leading-tight mb-4">
+              <span className="text-revgreen">Agende</span> sua consulta técnica
+              <span className="block text-revgreen mt-2">REVHACKERS SOLUTIONS</span>
+            </h1>
+            <p className="text-lg text-white max-w-2xl mx-auto mt-4">
               Escolha o melhor horário para conversarmos sobre suas necessidades 
               e discutir soluções sob medida para seu negócio.
             </p>
           </div>
           
           {userData.name && (
-            <div className="mb-8 max-w-3xl mx-auto text-center">
+            <div className="mb-6 max-w-3xl mx-auto text-center">
               <Card className="bg-black border border-revgreen/30 p-5 rounded-xl inline-block shadow-lg">
                 <p className="text-white text-lg">
-                  Olá <span className="font-bold text-revgreen">{userData.name}</span>, você está quase lá! 
+                  Olá <span className="font-bold text-revgreen">REVHACKERS SOLUTIONS</span>, você está quase lá! 
                   <br />Agora é só escolher o melhor horário para nossa conversa técnica.
                 </p>
               </Card>
@@ -95,7 +88,7 @@ const BookingPage = () => {
           
           <div className="max-w-4xl mx-auto">
             <Card className="bg-black border border-white/10 rounded-xl shadow-xl p-6 md:p-8">
-              <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">
+              <h3 className="text-2xl md:text-3xl font-bold text-center mb-6">
                 <span className="bg-gradient-to-r from-revgreen to-revgreen/80 bg-clip-text text-transparent">Selecione</span> a data e horário
               </h3>
               
