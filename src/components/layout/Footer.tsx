@@ -98,7 +98,6 @@ const Footer = () => {
           {/* Newsletter */}
           <div className="lg:col-span-2">
             <h3 className="text-lg font-semibold mb-6 border-b border-gray-800 pb-2">Newsletter</h3>
-            <p className="text-gray-300 mb-6">Receba conteúdos exclusivos sobre automação e estratégias de crescimento B2B.</p>
             <NewsletterForm />
           </div>
         </div>

@@ -85,22 +85,23 @@ const NewsletterForm = () => {
   };
   
   return (
-    <div className="max-w-[320px]">
-      <h3 className="text-[1.15rem] font-semibold text-white mb-1">
-        Receba conteúdos exclusivos sobre automação e crescimento B2B
+    <div>
+      <h3 className="text-[1rem] font-semibold text-white mb-1">
+        Receba conteúdos exclusivos sobre 
+        <br />automação e crescimento B2B
       </h3>
       
-      <p className="text-[0.9rem] text-[#cccccc] mb-4">
+      <p className="text-[0.8rem] text-[#cccccc] mb-3">
         Assine a nossa newsletter e fique por dentro.
       </p>
       
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit} className="space-y-2">
         <Input
           type="text"
           placeholder="Seu nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full px-3 py-[14px] h-auto bg-[#1A1A1A] border-0 rounded-lg text-white placeholder:text-[#999999]"
+          className="w-full px-3 py-2 h-auto bg-[#1A1A1A] border-0 rounded-lg text-white placeholder:text-[#999999]"
         />
         
         <Input
@@ -108,12 +109,12 @@ const NewsletterForm = () => {
           placeholder="Seu e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-3 py-[14px] h-auto bg-[#1A1A1A] border-0 rounded-lg text-white placeholder:text-[#999999]"
+          className="w-full px-3 py-2 h-auto bg-[#1A1A1A] border-0 rounded-lg text-white placeholder:text-[#999999]"
         />
         
         <Button 
           type="submit" 
-          className="w-full h-auto py-[14px] px-3 bg-[#00FF66] hover:bg-[#00e65c] text-black font-bold text-base rounded-lg transition-all duration-300 hover:-translate-y-[1px]"
+          className="w-full h-auto py-2 px-3 bg-[#00FF66] hover:bg-[#00e65c] text-black font-bold text-sm rounded-lg transition-all duration-300 hover:-translate-y-[1px]"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
@@ -126,19 +127,20 @@ const NewsletterForm = () => {
           )}
         </Button>
         
-        <div className="flex items-start mt-2 mb-4">
+        <div className="flex items-start mt-1 mb-2">
           <Checkbox
             id="privacyPolicy"
             checked={consent}
             onCheckedChange={(checked) => setConsent(checked as boolean)}
-            className="h-4 w-4 border-gray-500 rounded"
+            className="h-3 w-3 border-gray-500 rounded"
           />
           <label 
             htmlFor="privacyPolicy" 
-            className="ml-2 text-[0.75rem] text-[#888888] cursor-pointer"
+            className="ml-2 text-[0.7rem] text-[#888888] cursor-pointer"
             onClick={() => setConsent(!consent)}
           >
-            Ao se inscrever, você aceita receber conteúdos da RevHackers. Cancelamento a qualquer momento.
+            Ao se inscrever, você aceita receber 
+            <br />conteúdos da RevHackers.
           </label>
         </div>
       </form>
