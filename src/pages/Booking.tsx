@@ -63,16 +63,16 @@ const BookingPage = () => {
 
   return (
     <PageLayout>
-      <section className="pt-0 pb-12 bg-gradient-to-b from-black via-gray-900 to-black text-white">
+      <section className="pt-0 pb-12 bg-black text-white">
         <div className="w-full h-[35vh] relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-900 opacity-95"></div>
+          <div className="absolute inset-0 bg-black opacity-95"></div>
           <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="container-custom text-center">
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4 animate-fade-in">
                 <span className="text-revgreen">Agende</span> sua consulta técnica
               </h1>
-              <p className="text-lg text-gray-300 max-w-2xl mx-auto animate-fade-in">
+              <p className="text-lg text-white max-w-2xl mx-auto animate-fade-in">
                 Escolha o melhor horário para conversarmos sobre suas necessidades 
                 e discutir soluções sob medida para seu negócio.
               </p>
@@ -83,7 +83,7 @@ const BookingPage = () => {
         <div className="container-custom mt-12">
           {userData.name && (
             <div className="mb-8 max-w-3xl mx-auto text-center">
-              <Card className="bg-gradient-to-r from-green-900/60 to-green-800/30 border-green-700/50 p-5 rounded-xl inline-block shadow-lg animate-fade-in">
+              <Card className="bg-black border border-revgreen/30 p-5 rounded-xl inline-block shadow-lg animate-fade-in">
                 <p className="text-white text-lg">
                   Olá <span className="font-bold text-revgreen">{userData.name}</span>, você está quase lá! 
                   <br />Agora é só escolher o melhor horário para nossa conversa técnica.
@@ -93,13 +93,13 @@ const BookingPage = () => {
           )}
           
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-black border border-gray-800 rounded-xl shadow-xl p-6 md:p-8 animate-fade-in">
+            <Card className="bg-black border border-white/10 rounded-xl shadow-xl p-6 md:p-8 animate-fade-in">
               <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">
-                <span className="bg-gradient-to-r from-revgreen via-green-400 to-revgreen bg-clip-text text-transparent">Selecione</span> a data e horário
+                <span className="bg-gradient-to-r from-revgreen to-revgreen/80 bg-clip-text text-transparent">Selecione</span> a data e horário
               </h3>
               
               <div className="booking-calendar-wrapper relative bg-black rounded-lg overflow-hidden p-1">
-                <div className="absolute inset-0 bg-gradient-to-br from-revgreen/5 to-transparent opacity-30"></div>
+                <div className="absolute inset-0 bg-revgreen/5 opacity-30"></div>
                 <iframe 
                   src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${buildQueryParams()}`}
                   style={{ 
@@ -119,44 +119,44 @@ const BookingPage = () => {
         </div>
       </section>
       
-      <section className="py-16 bg-gradient-to-b from-black via-gray-900 to-black text-white">
+      <section className="py-16 bg-black text-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">O que discutiremos na nossa sessão</h2>
-            <p className="text-gray-300 mb-10 text-lg">
+            <p className="text-white mb-10 text-lg">
               Durante nossa reunião, vamos analisar seus sistemas e
               discutir soluções técnicas personalizadas para seu negócio.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <Card className="relative bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl border-gray-800 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <Card className="relative bg-black p-6 rounded-xl border border-white/10 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-revgreen/10 rounded-full"></div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 bg-gradient-to-br from-revgreen to-revgreen/80 rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">01</div>
+                  <div className="w-12 h-12 bg-revgreen rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">01</div>
                   <h3 className="font-bold text-xl mb-3 text-white">Diagnóstico Técnico</h3>
-                  <p className="text-gray-400">
+                  <p className="text-white/80">
                     Análise de suas ferramentas, sistemas e desafios específicos de operação
                   </p>
                 </div>
               </Card>
               
-              <Card className="relative bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl border-gray-800 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <Card className="relative bg-black p-6 rounded-xl border border-white/10 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-revgreen/10 rounded-full"></div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 bg-gradient-to-br from-revgreen to-revgreen/80 rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">02</div>
+                  <div className="w-12 h-12 bg-revgreen rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">02</div>
                   <h3 className="font-bold text-xl mb-3 text-white">Soluções Técnicas</h3>
-                  <p className="text-gray-400">
+                  <p className="text-white/80">
                     Apresentação das melhores ferramentas e metodologias para seu cenário
                   </p>
                 </div>
               </Card>
               
-              <Card className="relative bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl border-gray-800 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <Card className="relative bg-black p-6 rounded-xl border border-white/10 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-revgreen/10 rounded-full"></div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 bg-gradient-to-br from-revgreen to-revgreen/80 rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">03</div>
+                  <div className="w-12 h-12 bg-revgreen rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">02</div>
                   <h3 className="font-bold text-xl mb-3 text-white">Implementação</h3>
-                  <p className="text-gray-400">
+                  <p className="text-white/80">
                     Plano detalhado de execução com cronograma e métricas de sucesso
                   </p>
                 </div>

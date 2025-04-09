@@ -68,19 +68,19 @@ const BookingWidget = () => {
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
-      <Card className="bg-gradient-to-b from-gray-900 to-black rounded-xl shadow-lg p-6 md:p-8 border-gray-800 hover:shadow-xl transition-all">
+      <Card className="bg-black rounded-xl shadow-lg p-6 md:p-8 border border-white/10 hover:shadow-xl transition-all">
         <h3 className="text-2xl font-bold text-center mb-6 text-white">
           Entre em <span className="text-revgreen">contato</span>
         </h3>
         <ContactForm />
       </Card>
       
-      <Card className="booking-calendar-container bg-black rounded-xl shadow-lg p-6 md:p-8 border-gray-800 hover:shadow-xl transition-all">
+      <Card className="booking-calendar-container bg-black rounded-xl shadow-lg p-6 md:p-8 border border-white/10 hover:shadow-xl transition-all">
         <h3 className="text-2xl font-bold text-center mb-6">
-          Ou agende <span className="bg-gradient-to-r from-revgreen via-green-400 to-revgreen bg-clip-text text-transparent">diretamente</span>
+          Ou agende <span className="bg-gradient-to-r from-revgreen to-revgreen/80 bg-clip-text text-transparent">diretamente</span>
         </h3>
         <div className="w-full bg-black rounded-lg overflow-hidden p-1 relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-revgreen/5 to-transparent opacity-30"></div>
+          <div className="absolute inset-0 bg-revgreen/5 opacity-30"></div>
           <iframe 
             src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${buildQueryParams()}`}
             style={{ 
