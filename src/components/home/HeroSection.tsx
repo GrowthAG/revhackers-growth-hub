@@ -20,7 +20,7 @@ const HeroSection = () => {
           
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-14 text-center leading-relaxed">
             Conectamos seus dados, processos e equipes para criar um ecossistema de crescimento B2B 
-            através de RevOps, automação e inteligência de dados.
+            através de automações e inteligência de dados.
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-6 max-w-3xl mx-auto">
