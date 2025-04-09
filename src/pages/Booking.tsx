@@ -31,6 +31,13 @@ const BookingPage = () => {
       <section className="pt-28 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-black to-gray-900 text-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="mb-8">
+              <img 
+                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d" 
+                alt="Agende uma conversa" 
+                className="w-full max-w-2xl mx-auto rounded-xl object-cover h-64"
+              />
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
               Agende uma conversa com nossa equipe
             </h1>
@@ -56,10 +63,10 @@ const BookingPage = () => {
             </h3>
             <div className="w-full">
               <iframe 
-                src="https://team.growthagency.com.br/widget/booking/q8iihQ5MnZfqRAHh3KZz" 
+                src="https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H" 
                 style={{ width: '100%', border: 'none', overflow: 'hidden' }} 
                 scrolling="no" 
-                id="q8iihQ5MnZfqRAHh3KZz_1743983913878"
+                id="sKnL4ucDKohNmqj1hn6H_1744205651626"
                 title="Agendar consulta"
                 className="min-h-[700px]"
               />

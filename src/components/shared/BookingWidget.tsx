@@ -39,10 +39,10 @@ const BookingWidget = () => {
         </h3>
         <div className="w-full">
           <iframe 
-            src="https://team.growthagency.com.br/widget/booking/q8iihQ5MnZfqRAHh3KZz" 
+            src="https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H" 
             style={{ width: '100%', border: 'none', overflow: 'hidden' }} 
             scrolling="no" 
-            id="q8iihQ5MnZfqRAHh3KZz_1743983913878"
+            id="sKnL4ucDKohNmqj1hn6H_1744205651626"
             title="Agendar consulta"
             className="min-h-[600px]"
           />
