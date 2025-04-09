@@ -119,44 +119,44 @@ const BookingPage = () => {
         </div>
       </section>
       
-      <section className="py-16 bg-gradient-to-b from-gray-100 to-white">
+      <section className="py-16 bg-gradient-to-b from-black via-gray-900 to-black text-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">O que discutiremos na nossa sessão</h2>
-            <p className="text-gray-700 mb-10 text-lg">
+            <p className="text-gray-300 mb-10 text-lg">
               Durante nossa reunião, vamos analisar seus sistemas e
               discutir soluções técnicas personalizadas para seu negócio.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <Card className="relative bg-white p-6 rounded-xl border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <Card className="relative bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl border-gray-800 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-revgreen/10 rounded-full"></div>
                 <div className="relative z-10">
                   <div className="w-12 h-12 bg-gradient-to-br from-revgreen to-revgreen/80 rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">01</div>
-                  <h3 className="font-bold text-xl mb-3">Diagnóstico Técnico</h3>
-                  <p className="text-gray-600">
+                  <h3 className="font-bold text-xl mb-3 text-white">Diagnóstico Técnico</h3>
+                  <p className="text-gray-400">
                     Análise de suas ferramentas, sistemas e desafios específicos de operação
                   </p>
                 </div>
               </Card>
               
-              <Card className="relative bg-white p-6 rounded-xl border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <Card className="relative bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl border-gray-800 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-revgreen/10 rounded-full"></div>
                 <div className="relative z-10">
                   <div className="w-12 h-12 bg-gradient-to-br from-revgreen to-revgreen/80 rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">02</div>
-                  <h3 className="font-bold text-xl mb-3">Soluções Técnicas</h3>
-                  <p className="text-gray-600">
+                  <h3 className="font-bold text-xl mb-3 text-white">Soluções Técnicas</h3>
+                  <p className="text-gray-400">
                     Apresentação das melhores ferramentas e metodologias para seu cenário
                   </p>
                 </div>
               </Card>
               
-              <Card className="relative bg-white p-6 rounded-xl border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <Card className="relative bg-gradient-to-b from-gray-900 to-black p-6 rounded-xl border-gray-800 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-revgreen/10 rounded-full"></div>
                 <div className="relative z-10">
                   <div className="w-12 h-12 bg-gradient-to-br from-revgreen to-revgreen/80 rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">03</div>
-                  <h3 className="font-bold text-xl mb-3">Implementação</h3>
-                  <p className="text-gray-600">
+                  <h3 className="font-bold text-xl mb-3 text-white">Implementação</h3>
+                  <p className="text-gray-400">
                     Plano detalhado de execução com cronograma e métricas de sucesso
                   </p>
                 </div>
