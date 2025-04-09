@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { getFormData } from '@/utils/formStorage';
+import { Card } from '@/components/ui/card';
 
 const BookingPage = () => {
   const [userData, setUserData] = useState({
@@ -48,9 +49,9 @@ const BookingPage = () => {
       <section className="pt-28 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-black to-gray-900 text-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="mb-8">
+            <div className="mb-10 overflow-hidden rounded-xl shadow-xl">
               <img 
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d" 
+                src="/lovable-uploads/c78b28dc-f100-4719-b64b-05c759d55429.png" 
                 alt="Agende uma conversa" 
                 className="w-full max-w-2xl mx-auto rounded-xl object-cover h-64"
               />
@@ -63,11 +64,13 @@ const BookingPage = () => {
               estratégias de marketing B2B e crescimento para sua empresa.
             </p>
             {userData.name && (
-              <div className="mt-6 p-4 bg-gray-800 rounded-lg inline-block">
-                <p className="text-white">
-                  Olá <strong>{userData.name}</strong>, você está quase lá! 
-                  Agora é só escolher o melhor horário para nossa conversa.
-                </p>
+              <div className="mt-8">
+                <Card className="bg-green-900/30 border-green-800 p-6 rounded-xl inline-block">
+                  <p className="text-white">
+                    Olá <strong>{userData.name}</strong>, você está quase lá! 
+                    <br />Agora é só escolher o melhor horário para nossa conversa.
+                  </p>
+                </Card>
               </div>
             )}
           </div>
@@ -105,7 +108,7 @@ const BookingPage = () => {
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
                 <div className="text-revgreen font-bold text-xl mb-3">01</div>
                 <h3 className="font-bold text-lg mb-2">Entendimento</h3>
                 <p className="text-gray-600">
@@ -113,7 +116,7 @@ const BookingPage = () => {
                 </p>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
                 <div className="text-revgreen font-bold text-xl mb-3">02</div>
                 <h3 className="font-bold text-lg mb-2">Diagnóstico</h3>
                 <p className="text-gray-600">
@@ -121,7 +124,7 @@ const BookingPage = () => {
                 </p>
               </div>
               
-              <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
                 <div className="text-revgreen font-bold text-xl mb-3">03</div>
                 <h3 className="font-bold text-lg mb-2">Proposta</h3>
                 <p className="text-gray-600">

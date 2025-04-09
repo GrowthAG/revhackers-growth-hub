@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import ContactForm from './ContactForm';
 import { getFormData } from '@/utils/formStorage';
+import { Card } from '@/components/ui/card';
 
 // The webhook URL is already configured in the ContactForm component
 
@@ -39,14 +40,14 @@ const BookingWidget = () => {
 
   return (
     <div className="grid md:grid-cols-2 gap-10">
-      <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
+      <Card className="bg-white rounded-xl shadow-lg p-6 md:p-8 border-gray-200 hover:shadow-xl transition-all">
         <h3 className="text-2xl font-bold text-center mb-6">
           Entre em contato
         </h3>
         <ContactForm />
-      </div>
+      </Card>
       
-      <div className="booking-calendar-container bg-white rounded-xl shadow-lg p-6 md:p-8">
+      <Card className="booking-calendar-container bg-white rounded-xl shadow-lg p-6 md:p-8 border-gray-200 hover:shadow-xl transition-all">
         <h3 className="text-2xl font-bold text-center mb-6">
           Ou agende diretamente
         </h3>
@@ -60,7 +61,7 @@ const BookingWidget = () => {
             className="min-h-[600px]"
           />
         </div>
-      </div>
+      </Card>
     </div>
   );
 };
