@@ -1,11 +1,24 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ContactForm from './ContactForm';
+import { getFormData } from '@/utils/formStorage';
 
 // The webhook URL is already configured in the ContactForm component
 
 const BookingWidget = () => {
+  const [userData, setUserData] = useState({
+    email: '',
+  });
+
   useEffect(() => {
+    // Load user data from localStorage
+    const storedData = getFormData();
+    if (storedData) {
+      setUserData({
+        email: storedData.email || '',
+      });
+    }
+    
     // Create a script element for the form embed
     const script = document.createElement('script');
     script.src = "https://team.growthagency.com.br/js/form_embed.js";
@@ -39,7 +52,7 @@ const BookingWidget = () => {
         </h3>
         <div className="w-full">
           <iframe 
-            src="https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H" 
+            src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${userData.email ? `?email=${encodeURIComponent(userData.email)}` : ''}`}
             style={{ width: '100%', border: 'none', overflow: 'hidden' }} 
             scrolling="no" 
             id="sKnL4ucDKohNmqj1hn6H_1744205651626"

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -9,6 +8,7 @@ import FormCompanySection from './FormCompanySection';
 import FormRoleSection from './FormRoleSection';
 import FormPrivacySection from './FormPrivacySection';
 import { validateForm, WEBHOOK_URL } from './utils';
+import { saveFormData } from '@/utils/formStorage';
 
 const DownloadForm = ({ materialId, materialType, onSubmit }: DownloadFormProps) => {
   const navigate = useNavigate();
@@ -85,6 +85,18 @@ const DownloadForm = ({ materialId, materialType, onSubmit }: DownloadFormProps)
     console.log('Form submitted:', webhookData);
     
     try {
+      // Save form data to localStorage for use on booking page
+      saveFormData({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        industry: formData.industry,
+        role: formData.role,
+        formType: 'download'
+      });
+      
       // Send data to webhook
       const webhookResponse = await fetch(WEBHOOK_URL, {
         method: 'POST',

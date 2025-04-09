@@ -1,11 +1,29 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
+import { getFormData } from '@/utils/formStorage';
 
 const BookingPage = () => {
+  const [userData, setUserData] = useState({
+    name: '',
+    email: '',
+  });
+  
   useEffect(() => {
     // Scroll to top
     window.scrollTo(0, 0);
+    
+    // Load user data from localStorage
+    const storedData = getFormData();
+    if (storedData) {
+      const userName = storedData.name || `${storedData.firstName || ''} ${storedData.lastName || ''}`.trim();
+      setUserData({
+        name: userName,
+        email: storedData.email || '',
+      });
+      
+      console.log('Retrieved form data for booking:', storedData);
+    }
     
     // Create a script element for the form embed
     const script = document.createElement('script');
@@ -44,6 +62,14 @@ const BookingPage = () => {
               Escolha o melhor horário para conversarmos sobre suas necessidades de Revenue Operations, 
               estratégias de marketing B2B e crescimento para sua empresa.
             </p>
+            {userData.name && (
+              <div className="mt-6 p-4 bg-gray-800 rounded-lg inline-block">
+                <p className="text-white">
+                  Olá <strong>{userData.name}</strong>, você está quase lá! 
+                  Agora é só escolher o melhor horário para nossa conversa.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -56,7 +82,7 @@ const BookingPage = () => {
             </h3>
             <div className="w-full">
               <iframe 
-                src="https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H" 
+                src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${userData.email ? `?email=${encodeURIComponent(userData.email)}` : ''}`}
                 style={{ width: '100%', border: 'none', overflow: 'hidden' }} 
                 scrolling="no" 
                 id="sKnL4ucDKohNmqj1hn6H_1744205651626"

@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import FormField from './FormField';
 import { roleOptions, industryOptions } from './form-options';
 import { ContactFormProps, ContactFormData } from './types';
+import { saveFormData } from '@/utils/formStorage';
 
 const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/824c1633-dd07-4343-9ca4-2f25653042f5';
 
@@ -58,6 +59,18 @@ const ContactForm = ({ formType = 'contact' }: ContactFormProps) => {
     console.log('Form submitted:', webhookData);
     
     try {
+      // Save form data to localStorage for use on booking page
+      saveFormData({
+        name: formData.name,
+        email: formData.email,
+        company: formData.company,
+        phone: formData.phone,
+        industry: formData.industry,
+        role: formData.role,
+        message: formData.message,
+        formType
+      });
+      
       // Send data to webhook
       const webhookResponse = await fetch(WEBHOOK_URL, {
         method: 'POST',
