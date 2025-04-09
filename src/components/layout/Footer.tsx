@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Youtube, Instagram, Linkedin, Mail } from 'lucide-react';
+import NewsletterForm from '../shared/NewsletterForm';
 
 const Footer = () => {
   // Get current year for copyright
@@ -54,16 +55,10 @@ const Footer = () => {
             </ul>
           </div>
           
-          <div>
-            <h3 className="text-lg font-medium mb-4">Contato</h3>
-            <ul className="space-y-3">
-              <li className="flex items-center">
-                <Mail size={16} className="mr-2 text-revgreen" />
-                <a href="mailto:contato@revhackers.com.br" className="text-gray-300 hover:text-revgreen">contato@revhackers.com.br</a>
-              </li>
-              <li><Link to="/diagnostico" className="text-gray-300 hover:text-revgreen">Solicitar Diagnóstico</Link></li>
-              <li><Link to="/booking" className="text-revgreen hover:underline">Falar com um especialista</Link></li>
-            </ul>
+          <div className="lg:col-span-2">
+            <h3 className="text-lg font-medium mb-4">Newsletter</h3>
+            <p className="text-gray-300 mb-4">Receba conteúdos exclusivos sobre RevOps, automação e estratégias de crescimento B2B.</p>
+            <NewsletterForm />
           </div>
         </div>
         
