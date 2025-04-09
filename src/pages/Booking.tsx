@@ -63,27 +63,28 @@ const BookingPage = () => {
 
   return (
     <PageLayout>
-      <section className="pt-0 pb-12 bg-black text-white">
-        <div className="w-full h-[35vh] relative overflow-hidden">
-          <div className="absolute inset-0 bg-black opacity-95"></div>
-          <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="container-custom text-center">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4 animate-fade-in">
+      <section className="py-12 bg-black text-white">
+        <div className="container-custom">
+          <div className="text-center max-w-4xl mx-auto mb-8">
+            {userData.name ? (
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
+                <span className="text-revgreen">Agende</span> sua consulta técnica{" "}
+                <span className="text-revgreen block mt-2">{userData.name}</span>
+              </h1>
+            ) : (
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
                 <span className="text-revgreen">Agende</span> sua consulta técnica
               </h1>
-              <p className="text-lg text-white max-w-2xl mx-auto animate-fade-in">
-                Escolha o melhor horário para conversarmos sobre suas necessidades 
-                e discutir soluções sob medida para seu negócio.
-              </p>
-            </div>
+            )}
+            <p className="text-lg text-white max-w-2xl mx-auto">
+              Escolha o melhor horário para conversarmos sobre suas necessidades 
+              e discutir soluções sob medida para seu negócio.
+            </p>
           </div>
-        </div>
-        
-        <div className="container-custom mt-12">
+          
           {userData.name && (
             <div className="mb-8 max-w-3xl mx-auto text-center">
-              <Card className="bg-black border border-revgreen/30 p-5 rounded-xl inline-block shadow-lg animate-fade-in">
+              <Card className="bg-black border border-revgreen/30 p-5 rounded-xl inline-block shadow-lg">
                 <p className="text-white text-lg">
                   Olá <span className="font-bold text-revgreen">{userData.name}</span>, você está quase lá! 
                   <br />Agora é só escolher o melhor horário para nossa conversa técnica.
@@ -93,7 +94,7 @@ const BookingPage = () => {
           )}
           
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-black border border-white/10 rounded-xl shadow-xl p-6 md:p-8 animate-fade-in">
+            <Card className="bg-black border border-white/10 rounded-xl shadow-xl p-6 md:p-8">
               <h3 className="text-2xl md:text-3xl font-bold text-center mb-8">
                 <span className="bg-gradient-to-r from-revgreen to-revgreen/80 bg-clip-text text-transparent">Selecione</span> a data e horário
               </h3>
@@ -154,7 +155,7 @@ const BookingPage = () => {
               <Card className="relative bg-black p-6 rounded-xl border border-white/10 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-revgreen/10 rounded-full"></div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 bg-revgreen rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">02</div>
+                  <div className="w-12 h-12 bg-revgreen rounded-xl flex items-center justify-center text-xl font-bold text-black mb-4 shadow-md">03</div>
                   <h3 className="font-bold text-xl mb-3 text-white">Implementação</h3>
                   <p className="text-white/80">
                     Plano detalhado de execução com cronograma e métricas de sucesso

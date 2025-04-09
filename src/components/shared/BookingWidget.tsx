@@ -76,7 +76,7 @@ const BookingWidget = () => {
       </Card>
       
       <Card className="booking-calendar-container bg-black rounded-xl shadow-lg p-6 md:p-8 border border-white/10 hover:shadow-xl transition-all">
-        <h3 className="text-2xl font-bold text-center mb-6">
+        <h3 className="text-2xl font-bold text-center mb-6 text-white">
           Ou agende <span className="bg-gradient-to-r from-revgreen to-revgreen/80 bg-clip-text text-transparent">diretamente</span>
         </h3>
         <div className="w-full bg-black rounded-lg overflow-hidden p-1 relative">
