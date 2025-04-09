@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -86,15 +85,6 @@ const NewsletterForm = () => {
   
   return (
     <div>
-      <h3 className="text-[1rem] font-semibold text-white mb-1">
-        Receba conteúdos exclusivos sobre 
-        <br />automação e crescimento B2B
-      </h3>
-      
-      <p className="text-[0.8rem] text-[#cccccc] mb-3">
-        Assine a nossa newsletter e fique por dentro.
-      </p>
-      
       <form onSubmit={handleSubmit} className="space-y-2">
         <Input
           type="text"
