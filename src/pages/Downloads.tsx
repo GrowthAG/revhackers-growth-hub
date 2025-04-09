@@ -5,7 +5,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet } from 'lucide-react';
-import DownloadForm from '@/components/shared/DownloadForm';
+import DownloadForm from '@/components/shared/download-form';
 import { useToast } from '@/components/ui/use-toast';
 
 // Expanded materials list with more relevant B2B, SaaS, and RevOps content
