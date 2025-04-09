@@ -73,7 +73,13 @@ const NewsletterForm = () => {
   };
   
   return (
-    <div className="max-w-2xl mx-auto px-4">
+    <div className="max-w-md mx-auto px-4">
+      <div className="text-center mb-4">
+        <p className="text-sm text-gray-300">
+          Inscreva-se para receber dicas incríveis e se tornar um expert em marketing B2B.
+        </p>
+      </div>
+      
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="flex flex-col space-y-3">
           <Input
@@ -81,14 +87,14 @@ const NewsletterForm = () => {
             placeholder="Seu nome"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-12 px-4 rounded-md text-sm"
+            className="bg-white border-gray-200 text-gray-800 placeholder:text-gray-500 h-12 px-4 rounded-md"
           />
           <Input
             type="email"
             placeholder="Seu e-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-12 px-4 rounded-md text-sm"
+            className="bg-white border-gray-200 text-gray-800 placeholder:text-gray-500 h-12 px-4 rounded-md"
           />
         </div>
         <Button 
@@ -103,15 +109,24 @@ const NewsletterForm = () => {
             </span>
           ) : (
             <span className="flex items-center justify-center">
-              <Mail className="mr-2 h-5 w-5" />
               Inscrever-se
-              <ArrowRight className="ml-2 h-5 w-5" />
             </span>
           )}
         </Button>
-        <p className="text-xs text-gray-400 text-center mt-2">
-          Ao se inscrever, você concorda com nossa <a href="/privacidade" className="text-gray-300 hover:text-revgreen underline">Política de Privacidade</a>
-        </p>
+        <div className="flex items-start mt-2">
+          <div className="flex items-center h-5">
+            <input
+              type="checkbox"
+              id="privacyPolicy"
+              className="h-4 w-4 text-revgreen border-gray-300 rounded"
+            />
+          </div>
+          <div className="ml-2">
+            <label htmlFor="privacyPolicy" className="text-xs text-gray-400">
+              Ao inserir seu e-mail, você concorda em receber a newsletter da RevClass. Você pode cancelar a inscrição a qualquer momento. Confira nossa <a href="/privacidade" className="text-gray-300 hover:text-revgreen underline">Política de Privacidade</a>
+            </label>
+          </div>
+        </div>
       </form>
     </div>
   );
