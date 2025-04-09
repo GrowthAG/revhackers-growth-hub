@@ -46,41 +46,40 @@ const BookingPage = () => {
 
   return (
     <PageLayout>
-      <section className="pt-28 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-black to-gray-900 text-white">
-        <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="mb-10 overflow-hidden rounded-xl shadow-xl">
-              <img 
-                src="/lovable-uploads/c78b28dc-f100-4719-b64b-05c759d55429.png" 
-                alt="Agende uma conversa" 
-                className="w-full max-w-2xl mx-auto rounded-xl object-cover h-64"
-              />
+      <section className="pt-0 pb-16 bg-gradient-to-b from-black to-gray-900 text-white">
+        <div className="w-full h-[40vh] md:h-[50vh] relative overflow-hidden">
+          <img 
+            src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6" 
+            alt="Código e desenvolvimento" 
+            className="w-full h-full object-cover object-center brightness-[0.6]"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="container-custom text-center">
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6 drop-shadow-lg">
+                Agende uma conversa com nossa equipe técnica
+              </h1>
+              <p className="text-lg text-gray-100 max-w-3xl mx-auto drop-shadow-md">
+                Escolha o melhor horário para conversarmos sobre suas necessidades de Revenue Operations, 
+                estratégias técnicas e implementação de soluções para sua empresa.
+              </p>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
-              Agende uma conversa com nossa equipe
-            </h1>
-            <p className="text-lg text-gray-300">
-              Escolha o melhor horário para conversarmos sobre suas necessidades de Revenue Operations, 
-              estratégias de marketing B2B e crescimento para sua empresa.
-            </p>
-            {userData.name && (
-              <div className="mt-8">
-                <Card className="bg-green-900/30 border-green-800 p-6 rounded-xl inline-block">
-                  <p className="text-white">
-                    Olá <strong>{userData.name}</strong>, você está quase lá! 
-                    <br />Agora é só escolher o melhor horário para nossa conversa.
-                  </p>
-                </Card>
-              </div>
-            )}
           </div>
         </div>
-      </section>
-      
-      <section className="py-16 bg-white">
-        <div className="container-custom">
+        
+        <div className="container-custom mt-10">
+          {userData.name && (
+            <div className="mb-10 max-w-3xl mx-auto text-center">
+              <Card className="bg-green-900/30 border-green-800 p-6 rounded-xl inline-block">
+                <p className="text-white">
+                  Olá <strong>{userData.name}</strong>, você está quase lá! 
+                  <br />Agora é só escolher o melhor horário para nossa conversa técnica.
+                </p>
+              </Card>
+            </div>
+          )}
+          
           <div className="booking-calendar-container bg-white rounded-xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold text-center mb-8">
+            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">
               Selecione a data e horário para nossa conversa
             </h3>
             <div className="w-full">
@@ -100,35 +99,35 @@ const BookingPage = () => {
       <section className="py-16 bg-gray-50">
         <div className="container-custom">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">O que esperar da nossa conversa</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">O que discutiremos na nossa sessão técnica</h2>
             <p className="text-gray-700 mb-8">
-              Durante nossa reunião, vamos entender seus desafios atuais, 
-              apresentar soluções customizadas de Revenue Operations e 
-              discutir como podemos ajudar sua empresa a crescer.
+              Durante nossa reunião, vamos analisar seus sistemas atuais,
+              apresentar soluções técnicas de Revenue Operations e 
+              discutir como podemos implementar melhorias em sua infraestrutura digital.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
                 <div className="text-revgreen font-bold text-xl mb-3">01</div>
-                <h3 className="font-bold text-lg mb-2">Entendimento</h3>
+                <h3 className="font-bold text-lg mb-2">Diagnóstico Técnico</h3>
                 <p className="text-gray-600">
-                  Compreenderemos seus desafios atuais e objetivos de negócio
+                  Análise de suas ferramentas atuais, sistemas e desafios específicos
                 </p>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
                 <div className="text-revgreen font-bold text-xl mb-3">02</div>
-                <h3 className="font-bold text-lg mb-2">Diagnóstico</h3>
+                <h3 className="font-bold text-lg mb-2">Soluções</h3>
                 <p className="text-gray-600">
-                  Identificaremos oportunidades e áreas de melhoria em seu funil de vendas
+                  Apresentação das melhores ferramentas e metodologias para seu cenário
                 </p>
               </div>
               
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
                 <div className="text-revgreen font-bold text-xl mb-3">03</div>
-                <h3 className="font-bold text-lg mb-2">Proposta</h3>
+                <h3 className="font-bold text-lg mb-2">Implementação</h3>
                 <p className="text-gray-600">
-                  Apresentaremos um plano de ação personalizado para seu negócio
+                  Plano detalhado de execução com cronograma e métricas de sucesso
                 </p>
               </div>
             </div>

@@ -4,8 +4,6 @@ import ContactForm from './ContactForm';
 import { getFormData } from '@/utils/formStorage';
 import { Card } from '@/components/ui/card';
 
-// The webhook URL is already configured in the ContactForm component
-
 const BookingWidget = () => {
   const [userData, setUserData] = useState({
     email: '',
