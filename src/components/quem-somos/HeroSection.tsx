@@ -3,6 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+  
   return (
     <section className="pt-28 pb-16 md:pt-40 md:pb-20 bg-gradient-to-br from-white to-gray-50">
       <div className="container-custom">
@@ -19,7 +23,7 @@ const HeroSection = () => {
             asChild 
             className="bg-revgreen text-black font-medium px-6 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
           >
-            <Link to="/diagnostico">
+            <Link to="/diagnostico" onClick={scrollToTop}>
               Conheça nossa metodologia
             </Link>
           </Button>

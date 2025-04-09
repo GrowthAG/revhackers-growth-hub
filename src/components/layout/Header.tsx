@@ -11,11 +11,15 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <header className="w-full bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
       <div className="container-custom flex justify-between items-center py-2">
         <div className="flex items-center">
-          <Link to="/" className="mr-8">
+          <Link to="/" className="mr-8" onClick={scrollToTop}>
             <img 
               src="/lovable-uploads/00aac887-24ac-4c80-a2f3-d4912050bb97.png" 
               alt="RevHackers Logo" 
@@ -24,19 +28,19 @@ const Header = () => {
           </Link>
           
           <nav className="hidden md:flex space-x-8">
-            <Link to="/" className="nav-link nav-link-active">Home</Link>
-            <Link to="/servicos" className="nav-link">Serviços</Link>
-            <Link to="/cases" className="nav-link">Cases</Link>
-            <Link to="/downloads" className="nav-link">Materiais</Link>
-            <Link to="/comunidade" className="nav-link">Comunidade</Link>
-            <Link to="/quem-somos" className="nav-link">Quem Somos</Link>
-            <Link to="/blog" className="nav-link">Blog</Link>
+            <Link to="/" className="nav-link nav-link-active" onClick={scrollToTop}>Home</Link>
+            <Link to="/servicos" className="nav-link" onClick={scrollToTop}>Serviços</Link>
+            <Link to="/cases" className="nav-link" onClick={scrollToTop}>Cases</Link>
+            <Link to="/downloads" className="nav-link" onClick={scrollToTop}>Materiais</Link>
+            <Link to="/comunidade" className="nav-link" onClick={scrollToTop}>Comunidade</Link>
+            <Link to="/quem-somos" className="nav-link" onClick={scrollToTop}>Quem Somos</Link>
+            <Link to="/blog" className="nav-link" onClick={scrollToTop}>Blog</Link>
           </nav>
         </div>
         
         <div className="hidden md:flex items-center space-x-4">
           <Button asChild variant="default">
-            <Link to="/diagnostico">
+            <Link to="/diagnostico" onClick={scrollToTop}>
               Solicitar diagnóstico
             </Link>
           </Button>
@@ -50,15 +54,15 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white w-full shadow-lg animate-fade-in">
           <div className="container py-4 flex flex-col space-y-4">
-            <Link to="/" className="nav-link" onClick={toggleMenu}>Home</Link>
-            <Link to="/servicos" className="nav-link" onClick={toggleMenu}>Serviços</Link>
-            <Link to="/cases" className="nav-link" onClick={toggleMenu}>Cases</Link>
-            <Link to="/downloads" className="nav-link" onClick={toggleMenu}>Materiais</Link>
-            <Link to="/comunidade" className="nav-link" onClick={toggleMenu}>Comunidade</Link>
-            <Link to="/quem-somos" className="nav-link" onClick={toggleMenu}>Quem Somos</Link>
-            <Link to="/blog" className="nav-link" onClick={toggleMenu}>Blog</Link>
+            <Link to="/" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Home</Link>
+            <Link to="/servicos" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Serviços</Link>
+            <Link to="/cases" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Cases</Link>
+            <Link to="/downloads" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Materiais</Link>
+            <Link to="/comunidade" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Comunidade</Link>
+            <Link to="/quem-somos" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Quem Somos</Link>
+            <Link to="/blog" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Blog</Link>
             <Button asChild variant="default" className="w-full mt-4">
-              <Link to="/diagnostico">
+              <Link to="/diagnostico" onClick={() => { toggleMenu(); scrollToTop(); }}>
                 Solicitar diagnóstico
               </Link>
             </Button>

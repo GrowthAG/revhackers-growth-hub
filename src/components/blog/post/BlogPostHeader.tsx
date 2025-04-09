@@ -10,12 +10,17 @@ interface BlogPostHeaderProps {
 }
 
 const BlogPostHeader = ({ post, formatDate }: BlogPostHeaderProps) => {
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+  
   return (
     <>
       {/* Back to Blog Link */}
       <div className="mb-8">
         <Link 
           to="/blog" 
+          onClick={scrollToTop}
           className="inline-flex items-center text-gray-600 hover:text-revgreen"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />

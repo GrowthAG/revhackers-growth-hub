@@ -10,6 +10,10 @@ interface RelatedPostsProps {
 }
 
 const RelatedPosts = ({ posts }: RelatedPostsProps) => {
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+  
   if (posts.length === 0) return null;
   
   return (
@@ -18,7 +22,7 @@ const RelatedPosts = ({ posts }: RelatedPostsProps) => {
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold">Artigos relacionados</h2>
           <Button variant="link" asChild className="text-revgreen">
-            <Link to="/blog" className="flex items-center">
+            <Link to="/blog" onClick={scrollToTop} className="flex items-center">
               Ver todos os artigos
               <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
@@ -26,7 +30,7 @@ const RelatedPosts = ({ posts }: RelatedPostsProps) => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map(post => (
-            <BlogCard key={post.id} post={post} />
+            <BlogCard key={post.id} post={post} onClick={scrollToTop} />
           ))}
         </div>
       </div>

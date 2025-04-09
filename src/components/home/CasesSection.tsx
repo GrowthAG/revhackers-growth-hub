@@ -55,6 +55,10 @@ const cases = [
 ];
 
 const CasesSection = () => {
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section className="section-padding bg-gray-50">
       <div className="container-custom">
@@ -70,6 +74,7 @@ const CasesSection = () => {
           
           <Link 
             to="/cases" 
+            onClick={scrollToTop}
             className="inline-flex items-center text-revgreen hover:text-black font-medium"
           >
             Ver todos os cases
@@ -79,7 +84,7 @@ const CasesSection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {cases.slice(0, 3).map((item, index) => (
-            <Link to={`/cases/${item.slug}`} key={index}>
+            <Link to={`/cases/${item.slug}`} onClick={scrollToTop} key={index}>
               <Card className="overflow-hidden card-hover h-full border-0 shadow-sm">
                 <div className="h-48 overflow-hidden bg-white flex items-center justify-center p-6">
                   <img 

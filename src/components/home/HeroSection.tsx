@@ -4,6 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section className="py-20 md:py-32 bg-gradient-to-br from-black to-gray-900 text-white relative overflow-hidden">
       {/* Background elements - código matrix effect */}
@@ -29,7 +33,7 @@ const HeroSection = () => {
               className="bg-revgreen text-black font-medium px-8 py-6 rounded-md hover:brightness-110 transition-all shadow-lg"
               size="lg"
             >
-              <Link to="/diagnostico">
+              <Link to="/diagnostico" onClick={scrollToTop}>
                 Solicitar diagnóstico estratégico
               </Link>
             </Button>
@@ -40,7 +44,7 @@ const HeroSection = () => {
               className="border-revgreen text-white hover:bg-revgreen hover:text-black py-6 px-8"
               size="lg"
             >
-              <Link to="/cases" className="flex items-center justify-center">
+              <Link to="/cases" onClick={scrollToTop} className="flex items-center justify-center">
                 <span>Ver ROI comprovado</span>
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>

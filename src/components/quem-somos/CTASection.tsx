@@ -3,6 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const CTASection = () => {
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+  
   return (
     <section className="section-padding bg-black text-white">
       <div className="container-custom">
@@ -21,7 +25,7 @@ const CTASection = () => {
               asChild 
               className="bg-revgreen text-white font-medium px-8 py-4 rounded-md hover:brightness-110 transition-all shadow-lg"
             >
-              <Link to="/diagnostico">
+              <Link to="/diagnostico" onClick={scrollToTop}>
                 Falar com um especialista
               </Link>
             </Button>

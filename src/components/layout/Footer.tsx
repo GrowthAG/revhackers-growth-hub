@@ -7,13 +7,18 @@ const Footer = () => {
   // Get current year for copyright
   const currentYear = new Date().getFullYear();
   
+  // Scroll to top function for internal links
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+  
   return (
     <footer className="bg-black text-white py-16">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Logo and company info */}
           <div className="lg:col-span-4">
-            <Link to="/" className="inline-block mb-6">
+            <Link to="/" className="inline-block mb-6" onClick={scrollToTop}>
               <img 
                 src="/lovable-uploads/9ca1f8d0-c9e9-4d69-b887-0617fbde8ec6.png" 
                 alt="RevHackers Logo" 
@@ -48,10 +53,10 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <h3 className="text-lg font-semibold mb-6 border-b border-gray-800 pb-2">Navegação</h3>
             <ul className="space-y-4">
-              <li><Link to="/" className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Home</Link></li>
-              <li><Link to="/downloads" className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Downloads</Link></li>
-              <li><Link to="/cases" className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Cases</Link></li>
-              <li><Link to="/quem-somos" className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Quem Somos</Link></li>
+              <li><Link to="/" onClick={scrollToTop} className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Home</Link></li>
+              <li><Link to="/downloads" onClick={scrollToTop} className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Downloads</Link></li>
+              <li><Link to="/cases" onClick={scrollToTop} className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Cases</Link></li>
+              <li><Link to="/quem-somos" onClick={scrollToTop} className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Quem Somos</Link></li>
             </ul>
           </div>
           
@@ -59,9 +64,9 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <h3 className="text-lg font-semibold mb-6 border-b border-gray-800 pb-2">Conteúdo</h3>
             <ul className="space-y-4">
-              <li><Link to="/blog" className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Blog</Link></li>
-              <li><Link to="/servicos" className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Serviços</Link></li>
-              <li><Link to="/comunidade" className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Comunidade</Link></li>
+              <li><Link to="/blog" onClick={scrollToTop} className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Blog</Link></li>
+              <li><Link to="/servicos" onClick={scrollToTop} className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Serviços</Link></li>
+              <li><Link to="/comunidade" onClick={scrollToTop} className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">Comunidade</Link></li>
             </ul>
           </div>
           
@@ -70,13 +75,13 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-6 border-b border-gray-800 pb-2">Legal</h3>
             <ul className="space-y-4">
               <li>
-                <Link to="/termos-de-uso" className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">
+                <Link to="/termos-de-uso" onClick={scrollToTop} className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">
                   <FileText size={16} className="mr-2" /> 
                   Termos de Uso
                 </Link>
               </li>
               <li>
-                <Link to="/privacidade" className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">
+                <Link to="/privacidade" onClick={scrollToTop} className="text-gray-300 hover:text-revgreen transition-colors duration-200 flex items-center">
                   <Shield size={16} className="mr-2" /> 
                   Privacidade
                 </Link>
@@ -107,8 +112,8 @@ const Footer = () => {
             © {currentYear} RevHackers. Todos os direitos reservados.
           </p>
           <div className="flex flex-wrap justify-center md:justify-end gap-x-8 gap-y-4">
-            <Link to="/privacidade" className="text-gray-400 text-sm hover:text-revgreen transition-colors duration-200">Política de Privacidade</Link>
-            <Link to="/termos-de-uso" className="text-gray-400 text-sm hover:text-revgreen transition-colors duration-200">Termos de Uso</Link>
+            <Link to="/privacidade" onClick={scrollToTop} className="text-gray-400 text-sm hover:text-revgreen transition-colors duration-200">Política de Privacidade</Link>
+            <Link to="/termos-de-uso" onClick={scrollToTop} className="text-gray-400 text-sm hover:text-revgreen transition-colors duration-200">Termos de Uso</Link>
             <a 
               href="https://growthfunnels.com.br/" 
               target="_blank" 
