@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Mail, ArrowRight } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
 const NewsletterForm = () => {
@@ -73,42 +73,38 @@ const NewsletterForm = () => {
   };
   
   return (
-    <div className="max-w-md mx-auto px-4">
-      <div className="text-center mb-4">
-        <p className="text-sm text-gray-300">
-          Inscreva-se para receber dicas incríveis e se tornar um expert em marketing B2B.
-        </p>
-      </div>
+    <div>
+      <p className="text-sm text-gray-300 mb-3">
+        Inscreva-se para receber nossos materiais
+      </p>
       
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <div className="flex flex-col space-y-3">
-          <Input
-            type="text"
-            placeholder="Seu nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="bg-white border-gray-200 text-gray-800 placeholder:text-gray-500 h-12 px-4 rounded-md"
-          />
-          <Input
-            type="email"
-            placeholder="Seu e-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="bg-white border-gray-200 text-gray-800 placeholder:text-gray-500 h-12 px-4 rounded-md"
-          />
-        </div>
+      <form onSubmit={handleSubmit} className="space-y-2">
+        <Input
+          type="text"
+          placeholder="Seu nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="bg-white border-gray-200 text-gray-800 placeholder:text-gray-500 h-10 px-4 rounded-md"
+        />
+        <Input
+          type="email"
+          placeholder="Seu e-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="bg-white border-gray-200 text-gray-800 placeholder:text-gray-500 h-10 px-4 rounded-md"
+        />
         <Button 
           type="submit" 
-          className="w-full h-12 text-base font-medium transition-all hover:translate-y-[-2px]"
+          className="w-full h-10 text-base font-medium bg-revgreen text-black hover:bg-revgreen/90"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <span className="flex items-center justify-center">
-              <Mail className="mr-2 h-5 w-5 animate-pulse" />
+              <Mail className="mr-2 h-4 w-4 animate-pulse" />
               Processando...
             </span>
           ) : (
-            <span className="flex items-center justify-center">
+            <span>
               Inscrever-se
             </span>
           )}
@@ -123,7 +119,7 @@ const NewsletterForm = () => {
           </div>
           <div className="ml-2">
             <label htmlFor="privacyPolicy" className="text-xs text-gray-400">
-              Ao inserir seu e-mail, você concorda em receber a newsletter da RevClass. Você pode cancelar a inscrição a qualquer momento. Confira nossa <a href="/privacidade" className="text-gray-300 hover:text-revgreen underline">Política de Privacidade</a>
+              Ao inserir seu e-mail, você concorda em receber a newsletter da RevClass. Você pode cancelar a inscrição a qualquer momento.
             </label>
           </div>
         </div>
