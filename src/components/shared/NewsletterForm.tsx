@@ -34,8 +34,8 @@ const NewsletterForm = () => {
       timestamp: new Date().toISOString()
     };
     
-    // Use the same webhook URL as other forms
-    const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/824c1633-dd07-4343-9ca4-2f25653042f5';
+    // Updated webhook URL
+    const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/a98d7f48-96fb-4433-a10d-4fa22370034f';
 
     try {
       console.log('Newsletter submission:', webhookData);
@@ -73,43 +73,43 @@ const NewsletterForm = () => {
   };
   
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 w-full">
-      <div className="space-y-3">
+    <form onSubmit={handleSubmit} className="space-y-5 w-full">
+      <div className="space-y-4">
         <Input
           type="text"
           placeholder="Seu nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-12 px-4 rounded-md"
+          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base"
         />
         <Input
           type="email"
           placeholder="Seu e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-12 px-4 rounded-md"
+          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400 h-14 px-5 rounded-md text-base"
         />
       </div>
       <Button 
         type="submit" 
-        className="w-full h-12 text-base font-medium transition-all hover:translate-y-[-2px]"
+        className="w-full h-14 text-base font-medium transition-all hover:translate-y-[-2px]"
         disabled={isSubmitting}
       >
         {isSubmitting ? (
-          <span className="flex items-center">
+          <span className="flex items-center justify-center">
             <Mail className="mr-2 h-5 w-5 animate-pulse" />
             Processando...
           </span>
         ) : (
-          <span className="flex items-center">
+          <span className="flex items-center justify-center">
             <Mail className="mr-2 h-5 w-5" />
             Inscrever-se
-            <ArrowRight className="ml-2 h-4 w-4" />
+            <ArrowRight className="ml-2 h-5 w-5" />
           </span>
         )}
       </Button>
-      <p className="text-xs text-gray-400 text-center">
-        Ao se inscrever, você concorda com nossa <a href="/privacidade" className="text-gray-300 hover:text-revgreen">Política de Privacidade</a>
+      <p className="text-sm text-gray-400 text-center mt-2">
+        Ao se inscrever, você concorda com nossa <a href="/privacidade" className="text-gray-300 hover:text-revgreen underline">Política de Privacidade</a>
       </p>
     </form>
   );
