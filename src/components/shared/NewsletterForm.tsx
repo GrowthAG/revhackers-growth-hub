@@ -4,11 +4,13 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Mail } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { Checkbox } from "@/components/ui/checkbox";
 
 const NewsletterForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consent, setConsent] = useState(false);
   const { toast } = useToast();
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,6 +20,15 @@ const NewsletterForm = () => {
       toast({
         title: "Campos obrigatórios",
         description: "Por favor, preencha todos os campos para se inscrever.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!consent) {
+      toast({
+        title: "Consentimento necessário",
+        description: "Por favor, aceite os termos para prosseguir com a inscrição.",
         variant: "destructive",
       });
       return;
@@ -60,6 +71,7 @@ const NewsletterForm = () => {
       // Reset form
       setName('');
       setEmail('');
+      setConsent(false);
     } catch (error) {
       console.error('Newsletter submission error:', error);
       toast({
@@ -73,29 +85,35 @@ const NewsletterForm = () => {
   };
   
   return (
-    <div>
-      <p className="text-sm text-gray-300 mb-3">
-        Inscreva-se para receber nossos materiais
+    <div className="max-w-[320px]">
+      <h3 className="text-[1.15rem] font-semibold text-white mb-1">
+        Receba conteúdos exclusivos sobre automação e crescimento B2B
+      </h3>
+      
+      <p className="text-[0.9rem] text-[#cccccc] mb-4">
+        Assine a nossa newsletter e fique por dentro.
       </p>
       
-      <form onSubmit={handleSubmit} className="space-y-2">
+      <form onSubmit={handleSubmit} className="space-y-3">
         <Input
           type="text"
           placeholder="Seu nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="bg-white border-gray-200 text-gray-800 placeholder:text-gray-500 h-10 px-4 rounded-md"
+          className="w-full px-3 py-[14px] h-auto bg-[#1A1A1A] border-0 rounded-lg text-white placeholder:text-[#999999]"
         />
+        
         <Input
           type="email"
           placeholder="Seu e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="bg-white border-gray-200 text-gray-800 placeholder:text-gray-500 h-10 px-4 rounded-md"
+          className="w-full px-3 py-[14px] h-auto bg-[#1A1A1A] border-0 rounded-lg text-white placeholder:text-[#999999]"
         />
+        
         <Button 
           type="submit" 
-          className="w-full h-10 text-base font-medium bg-revgreen text-black hover:bg-revgreen/90"
+          className="w-full h-auto py-[14px] px-3 bg-[#00FF66] hover:bg-[#00e65c] text-black font-bold text-base rounded-lg transition-all duration-300 hover:-translate-y-[1px]"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
@@ -104,24 +122,24 @@ const NewsletterForm = () => {
               Processando...
             </span>
           ) : (
-            <span>
-              Inscrever-se
-            </span>
+            "Inscrever-se"
           )}
         </Button>
-        <div className="flex items-start mt-2">
-          <div className="flex items-center h-5">
-            <input
-              type="checkbox"
-              id="privacyPolicy"
-              className="h-4 w-4 text-revgreen border-gray-300 rounded"
-            />
-          </div>
-          <div className="ml-2">
-            <label htmlFor="privacyPolicy" className="text-xs text-gray-400">
-              Ao inserir seu e-mail, você concorda em receber a newsletter da RevClass. Você pode cancelar a inscrição a qualquer momento.
-            </label>
-          </div>
+        
+        <div className="flex items-start mt-2 mb-4">
+          <Checkbox
+            id="privacyPolicy"
+            checked={consent}
+            onCheckedChange={(checked) => setConsent(checked as boolean)}
+            className="h-4 w-4 border-gray-500 rounded"
+          />
+          <label 
+            htmlFor="privacyPolicy" 
+            className="ml-2 text-[0.75rem] text-[#888888] cursor-pointer"
+            onClick={() => setConsent(!consent)}
+          >
+            Ao se inscrever, você aceita receber conteúdos da RevHackers. Cancelamento a qualquer momento.
+          </label>
         </div>
       </form>
     </div>
