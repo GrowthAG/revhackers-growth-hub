@@ -68,25 +68,31 @@ const BookingWidget = () => {
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
-      <Card className="bg-white rounded-xl shadow-lg p-6 md:p-8 border-gray-200 hover:shadow-xl transition-all">
-        <h3 className="text-2xl font-bold text-center mb-6">
-          Entre em contato
+      <Card className="bg-gradient-to-b from-gray-900 to-black rounded-xl shadow-lg p-6 md:p-8 border-gray-800 hover:shadow-xl transition-all">
+        <h3 className="text-2xl font-bold text-center mb-6 text-white">
+          Entre em <span className="text-revgreen">contato</span>
         </h3>
         <ContactForm />
       </Card>
       
-      <Card className="booking-calendar-container bg-white rounded-xl shadow-lg p-6 md:p-8 border-gray-200 hover:shadow-xl transition-all">
-        <h3 className="text-2xl font-bold text-center mb-6">
-          Ou agende diretamente
+      <Card className="booking-calendar-container bg-gradient-to-b from-gray-900 to-black rounded-xl shadow-lg p-6 md:p-8 border-gray-800 hover:shadow-xl transition-all">
+        <h3 className="text-2xl font-bold text-center mb-6 text-white">
+          Ou agende <span className="text-revgreen">diretamente</span>
         </h3>
-        <div className="w-full">
+        <div className="w-full bg-gray-800/50 rounded-lg overflow-hidden p-1 relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-revgreen/5 to-transparent opacity-40"></div>
           <iframe 
             src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${buildQueryParams()}`}
-            style={{ width: '100%', border: 'none', overflow: 'hidden' }} 
+            style={{ 
+              width: '100%', 
+              border: 'none', 
+              overflow: 'hidden',
+              backgroundColor: 'transparent'
+            }} 
             scrolling="no" 
             id="sKnL4ucDKohNmqj1hn6H_1744205651626"
             title="Agendar consulta"
-            className="min-h-[600px]"
+            className="min-h-[600px] relative z-10"
           />
         </div>
       </Card>
