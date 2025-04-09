@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -97,17 +98,19 @@ const DownloadForm = ({ materialId, materialType, onSubmit }: DownloadFormProps)
         formType: 'download'
       });
       
-      // Send data to webhook
-      const webhookResponse = await fetch(WEBHOOK_URL, {
+      // Send data to webhook using standard fetch (removed no-cors)
+      const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(webhookData),
-        mode: 'no-cors' // Using no-cors mode to handle CORS issues
       });
       
-      // Since we're using no-cors, we'll assume success
+      if (!response.ok && response.status !== 0) {
+        throw new Error('Failed to submit form data');
+      }
+      
       setIsSubmitting(false);
       onSubmit();
       

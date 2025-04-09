@@ -8,6 +8,7 @@ const BookingWidget = () => {
   const [userData, setUserData] = useState({
     email: '',
   });
+  const [calendarLoaded, setCalendarLoaded] = useState(false);
 
   useEffect(() => {
     // Load user data from localStorage
@@ -23,6 +24,7 @@ const BookingWidget = () => {
     script.src = "https://team.growthagency.com.br/js/form_embed.js";
     script.type = "text/javascript";
     script.async = true;
+    script.onload = () => setCalendarLoaded(true);
     
     // Add the script to the document
     document.body.appendChild(script);
@@ -35,6 +37,13 @@ const BookingWidget = () => {
       }
     };
   }, []);
+
+  // Monitor any changes to the calendar
+  useEffect(() => {
+    if (calendarLoaded) {
+      console.log("Calendar loaded and ready with user email:", userData.email);
+    }
+  }, [calendarLoaded, userData.email]);
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
