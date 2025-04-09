@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/components/ui/use-toast';
+
+const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/31b57e7f-20a7-41d0-aba6-21df635e9e76';
 
 interface DownloadFormProps {
   materialId: string;
@@ -53,7 +54,7 @@ const DownloadForm = ({ materialId, materialType, onSubmit }: DownloadFormProps)
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validation
@@ -79,17 +80,30 @@ const DownloadForm = ({ materialId, materialType, onSubmit }: DownloadFormProps)
 
     setIsSubmitting(true);
 
-    // In a real application, we would submit the form data to a server here
-    // and integrate with your automation webhook
-    console.log('Form submitted:', {
-      ...formData, 
+    // Prepare data for webhook
+    const webhookData = {
+      ...formData,
+      formType: 'download',
       materialId,
       materialType,
+      source: window.location.href,
       timestamp: new Date().toISOString()
-    });
+    };
+
+    console.log('Form submitted:', webhookData);
     
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Send data to webhook
+      const webhookResponse = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookData),
+        mode: 'no-cors' // Using no-cors mode to handle CORS issues
+      });
+      
+      // Since we're using no-cors, we'll assume success
       setIsSubmitting(false);
       onSubmit();
       
@@ -97,7 +111,15 @@ const DownloadForm = ({ materialId, materialType, onSubmit }: DownloadFormProps)
       setTimeout(() => {
         navigate('/booking');
       }, 1500);
-    }, 1000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Erro ao enviar formulário",
+        description: "Ocorreu um erro ao enviar seus dados. Por favor, tente novamente.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+    }
   };
 
   return (

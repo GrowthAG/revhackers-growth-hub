@@ -7,6 +7,8 @@ import FormField from './FormField';
 import { roleOptions, industryOptions } from './form-options';
 import { ContactFormProps, ContactFormData } from './types';
 
+const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/31b57e7f-20a7-41d0-aba6-21df635e9e76';
+
 const ContactForm = ({ formType = 'contact' }: ContactFormProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ const ContactForm = ({ formType = 'contact' }: ContactFormProps) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Form validation
@@ -45,17 +47,29 @@ const ContactForm = ({ formType = 'contact' }: ContactFormProps) => {
     
     setIsSubmitting(true);
     
-    // In a real application, we would submit the form data to a server here
-    console.log('Form submitted:', {
+    // Prepare data for webhook
+    const webhookData = {
       ...formData,
-      formType, 
+      formType,
+      source: window.location.href,
       timestamp: new Date().toISOString()
-    });
+    };
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    console.log('Form submitted:', webhookData);
+    
+    try {
+      // Send data to webhook
+      const webhookResponse = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookData),
+        mode: 'no-cors' // Using no-cors mode to handle CORS issues
+      });
       
+      // Since we're using no-cors, we won't get response status
+      // We'll assume success and show toast notification
       toast({
         title: formType === 'diagnosis' ? "Diagnóstico solicitado!" : "Mensagem enviada!",
         description: "Redirecionando para agendamento...",
@@ -76,7 +90,16 @@ const ContactForm = ({ formType = 'contact' }: ContactFormProps) => {
       setTimeout(() => {
         navigate('/booking');
       }, 1500);
-    }, 1000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Erro ao enviar formulário",
+        description: "Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

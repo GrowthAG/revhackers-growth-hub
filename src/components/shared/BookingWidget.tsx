@@ -2,6 +2,8 @@
 import { useEffect } from 'react';
 import ContactForm from './ContactForm';
 
+// The webhook URL is already configured in the ContactForm component
+
 const BookingWidget = () => {
   useEffect(() => {
     // Create a script element for the form embed
