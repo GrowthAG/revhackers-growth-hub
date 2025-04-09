@@ -7,9 +7,10 @@ import { BlogPost } from '@/data/blogData';
 
 interface BlogCardProps {
   post: BlogPost;
+  onClick?: () => void;
 }
 
-const BlogCard = ({ post }: BlogCardProps) => {
+const BlogCard = ({ post, onClick }: BlogCardProps) => {
   // Format date to Portuguese
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -17,7 +18,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
   };
 
   return (
-    <Link to={`/blog/${post.slug}`} className="group block h-full">
+    <Link to={`/blog/${post.slug}`} className="group block h-full" onClick={onClick}>
       <Card className="overflow-hidden card-hover h-full border-0 shadow-sm hover:shadow-md transition-all duration-300">
         <div className="h-48 overflow-hidden relative">
           <img 
