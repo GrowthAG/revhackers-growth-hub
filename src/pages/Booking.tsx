@@ -66,25 +66,13 @@ const BookingPage = () => {
         <div className="container-custom">
           <div className="text-center max-w-4xl mx-auto mb-8">
             <h1 className="text-5xl font-bold leading-tight mb-4">
-              <span className="text-revgreen">Agende</span> sua consulta técnica
-              <span className="block text-revgreen mt-2">REVHACKERS SOLUTIONS</span>
+              <span className="text-revgreen">Agende</span> uma conversa com um especialista
             </h1>
             <p className="text-lg text-white max-w-2xl mx-auto mt-4">
               Escolha o melhor horário para conversarmos sobre suas necessidades 
               e discutir soluções sob medida para seu negócio.
             </p>
           </div>
-          
-          {userData.name && (
-            <div className="mb-6 max-w-3xl mx-auto text-center">
-              <Card className="bg-black border border-revgreen/30 p-5 rounded-xl inline-block shadow-lg">
-                <p className="text-white text-lg">
-                  Olá <span className="font-bold text-revgreen">REVHACKERS SOLUTIONS</span>, você está quase lá! 
-                  <br />Agora é só escolher o melhor horário para nossa conversa técnica.
-                </p>
-              </Card>
-            </div>
-          )}
           
           <div className="max-w-4xl mx-auto">
             <Card className="bg-black border border-white/10 rounded-xl shadow-xl p-6 md:p-8">
