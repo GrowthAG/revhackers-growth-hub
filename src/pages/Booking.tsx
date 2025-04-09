@@ -8,6 +8,8 @@ const BookingPage = () => {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
+    phone: '',
+    company: '',
   });
   
   useEffect(() => {
@@ -21,6 +23,8 @@ const BookingPage = () => {
       setUserData({
         name: userName,
         email: storedData.email || '',
+        phone: storedData.phone || '',
+        company: storedData.company || '',
       });
       
       console.log('Retrieved form data for booking:', storedData);
@@ -43,6 +47,19 @@ const BookingPage = () => {
       }
     };
   }, []);
+
+  // Build query parameters for the iframe URL
+  const buildQueryParams = () => {
+    const params = new URLSearchParams();
+    
+    if (userData.email) params.append('email', userData.email);
+    if (userData.name) params.append('name', userData.name);
+    if (userData.phone) params.append('phone', userData.phone);
+    if (userData.company) params.append('company', userData.company);
+    
+    const queryString = params.toString();
+    return queryString ? `?${queryString}` : '';
+  };
 
   return (
     <PageLayout>
@@ -84,7 +101,7 @@ const BookingPage = () => {
             </h3>
             <div className="w-full">
               <iframe 
-                src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${userData.email ? `?email=${encodeURIComponent(userData.email)}` : ''}`}
+                src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${buildQueryParams()}`}
                 style={{ width: '100%', border: 'none', overflow: 'hidden' }} 
                 scrolling="no" 
                 id="sKnL4ucDKohNmqj1hn6H_1744205651626"
