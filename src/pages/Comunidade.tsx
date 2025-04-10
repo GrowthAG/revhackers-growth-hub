@@ -29,14 +29,14 @@ const Comunidade = () => {
               Compartilhe experiências, aprenda e cresça junto com nossa comunidade.
             </p>
             <a href="https://academy.revhackers.com.br/" target="_blank" rel="noopener noreferrer">
-  <Button
-    variant="outline"
-    size="lg"
-    className="text-revgreen border-revgreen hover:bg-revgreen hover:text-black"
-  >
-    Faça parte
-  </Button>
-</a>
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-revgreen border-revgreen hover:bg-revgreen hover:text-black"
+              >
+                Faça parte
+              </Button>
+            </a>
           </div>
         </div>
       </section>
@@ -203,7 +203,6 @@ const Comunidade = () => {
                 Faça parte agora
               </Button>
             </a>
-
           </div>
         </div>
       </section>
