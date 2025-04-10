@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
@@ -28,9 +27,15 @@ const Comunidade = () => {
               Conecte-se com outros profissionais de Revenue Operations, Marketing e Vendas.
               Compartilhe experiências, aprenda e cresça junto com nossa comunidade.
             </p>
-            <Button variant="outline" size="lg" className="text-revgreen border-revgreen hover:bg-revgreen hover:text-black">
-              Faça parte
-            </Button>
+            <a href="https://academy.revhackers.com.br/" target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-revgreen border-revgreen hover:bg-revgreen hover:text-black"
+              >
+                Faça parte
+              </Button>
+            </a>
           </div>
         </div>
       </section>
@@ -188,9 +193,15 @@ const Comunidade = () => {
               Faça parte do maior hub de profissionais de RevOps, Marketing e Vendas B2B do Brasil e acelere seus resultados.
             </p>
             
-            <Button variant="default" size="lg" className="bg-revgreen text-black hover:brightness-110">
-              Faça parte agora
-            </Button>
+            <a href="https://academy.revhackers.com.br/" target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="default"
+                size="lg"
+                className="bg-revgreen text-black hover:brightness-110"
+              >
+                Faça parte agora
+              </Button>
+            </a>
           </div>
         </div>
       </section>
