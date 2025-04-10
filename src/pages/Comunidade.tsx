@@ -28,9 +28,11 @@ const Comunidade = () => {
               Conecte-se com outros profissionais de Revenue Operations, Marketing e Vendas.
               Compartilhe experiências, aprenda e cresça junto com nossa comunidade.
             </p>
-            <Button variant="outline" size="lg" className="text-revgreen border-revgreen hover:bg-revgreen hover:text-black">
-              Faça parte
-            </Button>
+            <Link href="https://academy.revhackers.com.br/" target="_blank">
+              <Button variant="outline" size="lg" className="text-revgreen border-revgreen hover:bg-revgreen hover:text-black">
+                Faça parte
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
