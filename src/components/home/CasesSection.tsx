@@ -21,11 +21,11 @@ const cases = [
     logo: true
   },
   {
-    title: "Agence MR",
-    category: "Tecnologia",
-    result: "Consultoria para Google Ads",
-    image: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
-    slug: "agence-mr",
+    title: "First Security",
+    category: "Segurança",
+    result: "38% redução no CAC",
+    image: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png",
+    slug: "first-security",
     logo: true
   },
   {

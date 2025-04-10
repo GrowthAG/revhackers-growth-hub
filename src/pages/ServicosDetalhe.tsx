@@ -138,6 +138,182 @@ const servicosData = {
         slug: "ntt-data"
       }
     ]
+  },
+  "integracoes": {
+    title: "Integração de Sistemas",
+    description: "Conectamos suas ferramentas de CRM, Marketing e CS em um ecossistema tecnológico sem barreiras de dados.",
+    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31",
+    benefits: [
+      "Eliminação de silos de informação",
+      "Visão unificada do cliente",
+      "Automação de fluxos entre sistemas",
+      "Redução de erros e inconsistências",
+      "Tomada de decisão baseada em dados completos"
+    ],
+    features: [
+      {
+        title: "Mapeamento de Sistemas",
+        description: "Identificação e mapeamento de todos os sistemas e ferramentas utilizados pela empresa para entender o fluxo de dados."
+      },
+      {
+        title: "Desenvolvimento de APIs",
+        description: "Criação de APIs personalizadas para conectar sistemas que não possuem integrações nativas."
+      },
+      {
+        title: "Implementação de iPaaS",
+        description: "Utilização de plataformas de integração como serviço para criar fluxos de dados automatizados entre sistemas."
+      },
+      {
+        title: "Consultoria Técnica",
+        description: "Suporte especializado para identificar as melhores soluções de integração para o seu ecossistema tecnológico."
+      }
+    ],
+    caseStudies: [
+      {
+        company: "First Security",
+        result: "38% redução no CAC",
+        image: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png",
+        slug: "first-security"
+      },
+      {
+        company: "DataVoxx",
+        result: "50% redução no tempo de implementação",
+        image: "/lovable-uploads/b068bd61-d02d-4f35-a869-afd72751cf62.png",
+        slug: "datavoxx"
+      }
+    ]
+  },
+  "customer-success": {
+    title: "Customer Success",
+    description: "Estratégias para maximizar a retenção e expansão da sua base de clientes.",
+    coverImage: "https://images.unsplash.com/photo-1529070538774-1843cb3265df",
+    benefits: [
+      "Aumento da retenção de clientes",
+      "Redução do churn",
+      "Aumento da receita recorrente",
+      "Melhoria na satisfação do cliente",
+      "Identificação de oportunidades de upsell e cross-sell"
+    ],
+    features: [
+      {
+        title: "Implementação de processos de onboarding",
+        description: "Desenvolvimento de processos estruturados para garantir o sucesso do cliente desde o primeiro dia."
+      },
+      {
+        title: "Criação de programas de customer success",
+        description: "Implementação de programas personalizados para diferentes segmentos de clientes."
+      },
+      {
+        title: "Análise de churn e estratégias de retenção",
+        description: "Identificação das causas de churn e desenvolvimento de estratégias para redução."
+      },
+      {
+        title: "Desenvolvimento de estratégias de expansão",
+        description: "Criação de estratégias para identificar e aproveitar oportunidades de upsell e cross-sell."
+      }
+    ],
+    caseStudies: [
+      {
+        company: "Emagrecentro",
+        result: "35% aumento na retenção",
+        image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-emagrecentro.png",
+        slug: "emagrecentro"
+      },
+      {
+        company: "FMU Virtual",
+        result: "45% redução no churn",
+        image: "https://revhackers.com.br/wp-content/uploads/2023/04/Logotipo-da-FMU.png",
+        slug: "fmu-virtual"
+      }
+    ]
+  },
+  "abm": {
+    title: "Account Based Marketing",
+    description: "Estratégias personalizadas para conquistar contas estratégicas com abordagem altamente direcionada.",
+    coverImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+    benefits: [
+      "Foco em contas de alto valor",
+      "Personalização de abordagem por conta",
+      "Alinhamento entre marketing e vendas",
+      "Aumento da taxa de conversão",
+      "Redução do ciclo de vendas"
+    ],
+    features: [
+      {
+        title: "Identificação de contas-alvo",
+        description: "Análise e seleção de contas com maior potencial de negócio para sua empresa."
+      },
+      {
+        title: "Desenvolvimento de estratégias personalizadas",
+        description: "Criação de estratégias específicas para cada conta ou segmento de contas."
+      },
+      {
+        title: "Implementação de campanhas multicanal",
+        description: "Desenvolvimento e execução de campanhas integradas em diversos canais."
+      },
+      {
+        title: "Mensuração de resultados e otimização",
+        description: "Acompanhamento constante de resultados e otimização das estratégias."
+      }
+    ],
+    caseStudies: [
+      {
+        company: "ENICS",
+        result: "3 mil ingressos em 30 dias",
+        image: "/lovable-uploads/a05718ad-1822-4102-909a-7e86af151e98.png",
+        slug: "enics"
+      },
+      {
+        company: "Agence MR",
+        result: "200% aumento em oportunidades",
+        image: "/lovable-uploads/6c09375e-5298-4672-9226-27eb60a6b038.png",
+        slug: "agence-mr"
+      }
+    ]
+  },
+  "sales-enablement": {
+    title: "Sales Enablement",
+    description: "Capacitação e ferramentas para potencializar o desempenho da sua equipe de vendas.",
+    coverImage: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4",
+    benefits: [
+      "Aumento da produtividade da equipe de vendas",
+      "Redução do ciclo de vendas",
+      "Melhoria na qualidade das apresentações",
+      "Uniformização do discurso de vendas",
+      "Aumento da taxa de fechamento"
+    ],
+    features: [
+      {
+        title: "Desenvolvimento de materiais de vendas",
+        description: "Criação de apresentações, propostas e outros materiais que apoiam o processo de vendas."
+      },
+      {
+        title: "Treinamento e capacitação de equipes",
+        description: "Programas de treinamento para melhorar habilidades técnicas e comportamentais."
+      },
+      {
+        title: "Implementação de ferramentas de produtividade",
+        description: "Seleção e implementação de ferramentas para aumentar a eficiência da equipe."
+      },
+      {
+        title: "Otimização de processos de vendas",
+        description: "Análise e melhoria contínua dos processos de prospecção, qualificação e fechamento."
+      }
+    ],
+    caseStudies: [
+      {
+        company: "TOEFL Junior Brasil",
+        result: "Leads B2B para escolas",
+        image: "/lovable-uploads/46993eff-c4c5-41af-b7ee-c93ef0366f59.png",
+        slug: "toefl"
+      },
+      {
+        company: "Funnels",
+        result: "130% aumento em leads qualificados",
+        image: "/lovable-uploads/e468ed87-3eee-496b-bb1a-3525f02f8429.png",
+        slug: "funnels"
+      }
+    ]
   }
 };
 
