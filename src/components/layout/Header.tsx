@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -23,7 +25,7 @@ const Header = () => {
             <img 
               src="/lovable-uploads/00aac887-24ac-4c80-a2f3-d4912050bb97.png" 
               alt="RevHackers Logo" 
-              className="h-16 w-auto" 
+              className={`${isMobile ? 'h-12' : 'h-16'} w-auto transition-all duration-300`} 
             />
           </Link>
           
