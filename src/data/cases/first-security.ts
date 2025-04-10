@@ -2,7 +2,7 @@
 export const firstSecurityCase = {
   title: "First Security",
   category: "Segurança",
-  logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png", // Usando um logo placeholder, atualize conforme necessário
+  logo: "/lovable-uploads/df4a88ca-2512-4ff3-831e-ceeb4564ed56.png", // Logo atualizado da First Security
   coverImage: "https://images.unsplash.com/photo-1557597774-9d273605dfa9",
   challenge: "A First Security buscava aumentar sua participação no mercado B2B de soluções de segurança, enfrentando concorrência de grandes players multinacionais.",
   solution: "Implementamos uma estratégia integrada de RevOps com foco em segmentação precisa, conteúdo técnico especializado e automação do processo de vendas para reduzir o CAC.",

@@ -7,7 +7,6 @@ import HistorySection from '@/components/quem-somos/HistorySection';
 import TimelineSection from '@/components/quem-somos/TimelineSection';
 import ValuesSection from '@/components/quem-somos/ValuesSection';
 import CTASection from '@/components/quem-somos/CTASection';
-import ContactForm from '@/components/shared/ContactForm';
 
 const QuemSomos = () => {
   // Scroll to top when component mounts
@@ -29,17 +28,9 @@ const QuemSomos = () => {
       {/* Nossos Valores */}
       <ValuesSection />
 
-      {/* Contact Form and Agendamento */}
+      {/* Booking Widget Section */}
       <section className="py-16 bg-gray-50">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto mb-16">
-            <h3 className="text-2xl font-bold text-center mb-6">
-              Entre em contato para agendar uma conversa
-            </h3>
-            <div className="bg-white p-8 rounded-xl shadow-sm">
-              <ContactForm />
-            </div>
-          </div>
           <BookingWidget />
         </div>
       </section>

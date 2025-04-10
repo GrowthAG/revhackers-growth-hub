@@ -23,7 +23,7 @@ const CTASection = () => {
             
             <Button 
               asChild 
-              className="bg-revgreen text-white font-medium px-8 py-4 rounded-md hover:brightness-110 transition-all shadow-lg"
+              className="bg-revgreen text-black font-medium px-8 py-4 rounded-md hover:brightness-110 transition-all shadow-lg"
             >
               <Link to="/diagnostico" onClick={scrollToTop}>
                 Falar com um especialista
