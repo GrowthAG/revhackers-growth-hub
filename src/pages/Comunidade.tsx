@@ -194,9 +194,16 @@ const Comunidade = () => {
               Faça parte do maior hub de profissionais de RevOps, Marketing e Vendas B2B do Brasil e acelere seus resultados.
             </p>
             
-            <Button variant="default" size="lg" className="bg-revgreen text-black hover:brightness-110">
-              Faça parte agora
-            </Button>
+            <a href="https://academy.revhackers.com.br/" target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="default"
+                size="lg"
+                className="bg-revgreen text-black hover:brightness-110"
+              >
+                Faça parte agora
+              </Button>
+            </a>
+
           </div>
         </div>
       </section>
