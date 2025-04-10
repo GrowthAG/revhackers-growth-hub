@@ -7,7 +7,7 @@ import { datavoxxCase } from './datavoxx';
 import { emagrecentroCase } from './emagrecentro';
 import { placluxCase } from './placlux';
 import { fmuVirtualCase } from './fmu-virtual';
-import { firstSecurityCase } from './first-security';
+import { firstSecurityCase } from './security-first';
 import { funnelsCase } from './funnels';
 
 // Type definition for a case study

@@ -21,10 +21,10 @@ const cases = [
     logo: true
   },
   {
-    title: "First Security",
+    title: "Security First",
     category: "Segurança",
     result: "38% redução no CAC",
-    image: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png", // Corrigido para mostrar o logo da Security First
+    image: "/lovable-uploads/5a2fe8fb-5913-4c05-a569-59206a388598.png", // Atualizado logo da Security First
     slug: "first-security",
     logo: true
   },

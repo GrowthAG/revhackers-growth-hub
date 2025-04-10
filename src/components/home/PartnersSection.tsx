@@ -14,7 +14,7 @@ import {
 const partners = [
   {
     name: "Security First",
-    logo: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png",
+    logo: "/lovable-uploads/5a2fe8fb-5913-4c05-a569-59206a388598.png", // Logo atualizado
     url: "/partners/security-first",
     slug: "security-first"
   },

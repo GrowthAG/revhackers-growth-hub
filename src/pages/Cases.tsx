@@ -47,11 +47,11 @@ const caseStudies = [
     description: "Desenvolvimento de novo site e implementação de um funil de vendas inbound completo."
   },
   {
-    title: "Funnels",
-    category: "Marketing",
-    result: "Aumento de 130% em leads qualificados",
-    image: "/lovable-uploads/e468ed87-3eee-496b-bb1a-3525f02f8429.png",
-    slug: "funnels",
+    title: "Security First",
+    category: "Segurança",
+    result: "38% redução no CAC",
+    image: "/lovable-uploads/5a2fe8fb-5913-4c05-a569-59206a388598.png",
+    slug: "first-security",
     description: "Desenvolvimento de estratégia completa de funil de vendas com automações inteligentes e páginas otimizadas para conversão."
   }
 ];
