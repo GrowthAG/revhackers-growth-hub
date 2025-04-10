@@ -3,7 +3,7 @@ import { PartnerData } from './types';
 
 export const securityFirstData: PartnerData = {
   name: "Security First",
-  logo: "/lovable-uploads/3780d954-0e57-4db5-9e1b-312a0e93bd82.png",
+  logo: "/lovable-uploads/7c4aa8da-d0fb-415e-9ba5-05a32c5adfbf.png", // Updated logo
   coverImage: "https://images.unsplash.com/photo-1504270997636-07ddfbd48945",
   category: "Segurança Corporativa",
   description: "Empresa líder em soluções de segurança corporativa, oferecendo serviços de proteção digital para empresas de médio e grande porte.",

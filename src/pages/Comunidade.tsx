@@ -188,7 +188,7 @@ const Comunidade = () => {
               Faça parte do maior hub de profissionais de RevOps, Marketing e Vendas B2B do Brasil e acelere seus resultados.
             </p>
             
-            <Button variant="default" size="lg" className="bg-revgreen text-white hover:brightness-110">
+            <Button variant="default" size="lg" className="bg-revgreen text-black hover:brightness-110">
               Faça parte agora
             </Button>
           </div>
