@@ -49,12 +49,6 @@ const partners = [
     slug: "heineken"
   },
   {
-    name: "BLDN Digital",
-    logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png", 
-    url: "/partners/bldn-digital",
-    slug: "bldn-digital",
-  },
-  {
     name: "PlacLux",
     logo: "/lovable-uploads/c949a25f-b0ab-4e66-981e-a3db0d728850.png", 
     url: "/partners/placlux",
