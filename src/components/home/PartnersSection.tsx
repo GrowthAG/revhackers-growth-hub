@@ -53,7 +53,6 @@ const partners = [
     logo: "/lovable-uploads/116d453a-7ffe-43a3-bcc4-aeac34c74bd4.png", 
     url: "/partners/bldn-digital",
     slug: "bldn-digital",
-    customClass: "grayscale-0 bg-white"
   },
   {
     name: "PlacLux",
@@ -72,7 +71,6 @@ const partners = [
     logo: "/lovable-uploads/e468ed87-3eee-496b-bb1a-3525f02f8429.png",
     url: "/partners/funnels",
     slug: "funnels",
-    customClass: "grayscale-0"
   }
 ];
 
