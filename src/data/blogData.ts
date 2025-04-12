@@ -1,4 +1,3 @@
-
 export interface Author {
   name: string;
   role: string;
@@ -20,6 +19,22 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    id: 16,
+    title: "Polemic Led Growth: O método que transforma seu LinkedIn em uma máquina de oportunidades silenciosa e magnética",
+    slug: "polemic-led-growth-metodo-linkedin-maquina-oportunidades",
+    excerpt: "Descubra como construir autoridade silenciosa e atrair oportunidades de alto valor no LinkedIn sem depender de autopromoção excessiva.",
+    category: "PLG",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+    author: {
+      name: "Rafael Silva",
+      role: "Especialista em Digital Branding",
+      avatar: "https://i.pravatar.cc/150?u=rafaelsilva"
+    },
+    date: "2025-04-10",
+    readTime: "10 min",
+    featured: true
+  },
   {
     id: 1,
     title: "O que é PLG e como aplicar em startups brasileiras",

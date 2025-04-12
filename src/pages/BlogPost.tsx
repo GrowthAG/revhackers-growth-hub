@@ -60,6 +60,7 @@ const BlogPostPage = () => {
                   category={post.category}
                   authorName={post.author.name}
                   authorRole={post.author.role}
+                  slug={post.slug}
                 />
                 <BlogPostFooter />
               </div>
