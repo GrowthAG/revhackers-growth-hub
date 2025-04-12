@@ -101,7 +101,7 @@ const PartnersSection = () => {
                         <img 
                           src={partner.logo} 
                           alt={partner.name}
-                          className={`max-h-16 max-w-[80%] object-contain transition-all duration-300 ${partner.customClass || 'grayscale group-hover:grayscale-0'}`}
+                          className="max-h-16 max-w-[80%] object-contain transition-all duration-300 grayscale group-hover:grayscale-0"
                         />
                       </div>
                     </Card>
