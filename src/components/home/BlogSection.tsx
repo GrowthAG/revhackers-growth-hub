@@ -14,10 +14,10 @@ const featuredArticles = [
     author: {
       name: "Giulliano Alves",
       role: "CEO da RevHackers",
-      avatar: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79"
+      avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
     },
     slug: "revops-framework-completo-integracao",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1800&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1553484771-047a44eee27a?q=80&w=1800&auto=format&fit=crop"
   },
   {
     title: "ABM 2.0: Como implementar Account Based Marketing com IA",
@@ -26,10 +26,10 @@ const featuredArticles = [
     author: {
       name: "Giulliano Alves",
       role: "CEO da RevHackers",
-      avatar: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79"
+      avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
     },
     slug: "abm-implementar-account-based-marketing-ia",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1800&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1558403194-611308249627?q=80&w=1800&auto=format&fit=crop"
   },
   {
     title: "Product-Led Growth: O guia definitivo para SaaS B2B",
@@ -38,10 +38,10 @@ const featuredArticles = [
     author: {
       name: "Giulliano Alves",
       role: "CEO da RevHackers",
-      avatar: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79"
+      avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
     },
     slug: "plg-guia-definitivo-saas-b2b",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1800&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1800&auto=format&fit=crop"
   },
   {
     title: "Modelo de Funil Gravatinha: Transformando a jornada do cliente B2B",
@@ -50,10 +50,10 @@ const featuredArticles = [
     author: {
       name: "Giulliano Alves",
       role: "CEO da RevHackers",
-      avatar: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79"
+      avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
     },
     slug: "modelo-funil-gravatinha-transformando-jornada-cliente",
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1800&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?q=80&w=1800&auto=format&fit=crop"
   }
 ];
 

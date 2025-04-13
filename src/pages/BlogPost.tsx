@@ -41,10 +41,11 @@ const BlogPostPage = () => {
     return null; // Will redirect in useEffect
   }
   
-  // Update the author info consistently
+  // Update the author info consistently with avatar
   const authorInfo = {
     name: "Giulliano Alves",
-    role: "CEO da RevHackers"
+    role: "CEO da RevHackers",
+    avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
   };
   
   // Copy the post but update the author

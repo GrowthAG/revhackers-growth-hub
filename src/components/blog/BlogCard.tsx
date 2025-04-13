@@ -22,7 +22,7 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
   const authorInfo = {
     name: "Giulliano Alves",
     role: "CEO da RevHackers",
-    avatar: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79"
+    avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
   };
 
   // Get custom image if available for this article
