@@ -1,4 +1,5 @@
-import { ArrowRight, BookOpen, CheckCircle2, Download, Eye, Link, MessageSquare, Star, TrendingUp, Users } from 'lucide-react';
+
+import { ArrowRight, BookOpen, CheckCircle2, Download, Eye, Link, MessageSquare, Star, TrendingUp, Users, Clock, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -10,13 +11,39 @@ interface PolemicLedGrowthArticleProps {
 const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArticleProps) => {
   return (
     <div className="prose prose-lg lg:prose-xl">
+      {/* Author Card - Start */}
+      <div className="not-prose bg-gray-50 p-6 rounded-lg border border-gray-200 mb-8">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <img 
+            src="/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png" 
+            alt={authorName} 
+            className="w-20 h-20 rounded-full object-cover border-2 border-revgreen"
+          />
+          <div className="text-center sm:text-left">
+            <h3 className="text-xl font-bold">{authorName}</h3>
+            <p className="text-gray-600">{authorRole}</p>
+            <div className="flex items-center justify-center sm:justify-start mt-2 gap-4">
+              <span className="flex items-center text-sm text-gray-500">
+                <Calendar className="h-4 w-4 mr-1" />
+                <span>Atualizado em 13 abril, 2025</span>
+              </span>
+              <span className="flex items-center text-sm text-gray-500">
+                <Clock className="h-4 w-4 mr-1" />
+                <span>12 min de leitura</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Author Card - End */}
+
       <p className="lead text-xl mb-8">
         Em um mundo onde todos lutam por atenção online, a verdadeira autoridade não é construída gritando mais alto, mas sim através de um posicionamento estratégico e magnético.
       </p>
       
       <figure className="my-10">
         <img 
-          src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1800&auto=format&fit=crop"
+          src="https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?q=80&w=1800&auto=format&fit=crop"
           alt="Ambiente corporativo com reação inesperada"
           className="w-full h-auto rounded-lg shadow-md"
         />
@@ -35,7 +62,7 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
 
       <div className="not-prose my-8 bg-green-50 p-6 rounded-lg border border-green-100">
         <p className="text-lg font-medium italic">
-          "Seu LinkedIn está trabalhando por você enquanto você dorme — ou é apenas um currículo digital esquecido?"
+          "Seu LinkedIn não é um currículo. É uma máquina de conversão invisível – se bem configurado."
         </p>
       </div>
       
@@ -93,6 +120,17 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
           <span><strong>Conteúdo que ativa demanda</strong>, não apenas visibilidade sem propósito</span>
         </li>
       </ul>
+
+      <figure className="my-10">
+        <img 
+          src="https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=1800&auto=format&fit=crop"
+          alt="Profissional apagado ou invisível em meio a colegas visíveis"
+          className="w-full h-auto rounded-lg shadow-md"
+        />
+        <figcaption className="text-center text-sm text-gray-500 mt-2">
+          O problema da invisibilidade profissional: competente, mas sem método de posicionamento estratégico
+        </figcaption>
+      </figure>
 
       <h2 id="framework">O Framework do Polemic Led Growth</h2>
       
@@ -286,7 +324,7 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
 
       <figure className="my-10">
         <img 
-          src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
+          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1800&auto=format&fit=crop"
           alt="Perfil LinkedIn otimizado com Polemic Led Growth"
           className="w-full h-auto rounded-lg shadow-md"
         />
@@ -352,7 +390,7 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
       </div>
 
       <blockquote>
-        <p>"O verdadeiro poder do Polemic Led Growth está na sua capacidade de transformar sua presença digital em um ativo estratégico que trabalha por você 24 horas por dia, atraindo exatamente o tipo de oportunidade que você deseja."</p>
+        <p>"Você não precisa gritar para ser notado. Precisa de clareza, estratégia e um perfil magnético que converte visualizações em oportunidades reais enquanto você dorme."</p>
         <cite>— {authorName}, {authorRole}</cite>
       </blockquote>
       
@@ -370,9 +408,20 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
         exatamente o tipo de conexões, projetos e reconhecimento que você deseja.
       </p>
 
+      <figure className="my-10">
+        <img 
+          src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1800&auto=format&fit=crop"
+          alt="Profissional confiante revisando perfil com resultados visíveis"
+          className="w-full h-auto rounded-lg shadow-md"
+        />
+        <figcaption className="text-center text-sm text-gray-500 mt-2">
+          O resultado do método PLG: autoridade silenciosa e atração constante de oportunidades
+        </figcaption>
+      </figure>
+
       <div className="not-prose my-10 bg-gray-800 text-white p-8 rounded-lg">
         <h3 className="text-xl font-bold mb-4">Pronto para transformar seu LinkedIn com o método PLG?</h3>
-        <p className="mb-6">Faça nosso diagnóstico gratuito e descubra como aplicar o Polemic Led Growth no seu perfil.</p>
+        <p className="mb-6">Quer descobrir se o seu perfil está invisível enquanto você dorme? Faça agora o diagnóstico gratuito em menos de 3 minutos.</p>
         <Button asChild className="bg-revgreen text-black hover:bg-revgreen/90">
           <RouterLink to="/diagnostico" className="flex items-center">
             Solicitar diagnóstico gratuito

@@ -26,7 +26,7 @@ export const getFrameworkImage = (category: string): string => {
     case "Vendas":
       return "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1800&auto=format&fit=crop"; // Sales/business discussion
     case "Polemic Led Growth":
-      return "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1800&auto=format&fit=crop"; // Person with surprised expression
+      return "https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?q=80&w=1800&auto=format&fit=crop"; // Person with surprised expression
     default:
       return "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1800&auto=format&fit=crop"; // Team collaboration
   }

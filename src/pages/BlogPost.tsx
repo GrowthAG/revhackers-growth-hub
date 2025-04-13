@@ -8,6 +8,7 @@ import BlogPostContent from '@/components/blog/post/BlogPostContent';
 import BlogPostFooter from '@/components/blog/post/BlogPostFooter';
 import RelatedPosts from '@/components/blog/post/RelatedPosts';
 import TableOfContents from '@/components/blog/post/TableOfContents';
+import { getArticleImageBySlug } from '@/components/blog/post/articles/utils/frameworkImages';
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -48,10 +49,14 @@ const BlogPostPage = () => {
     avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
   };
   
-  // Copy the post but update the author
+  // Get custom image if available for this article
+  const customImage = getArticleImageBySlug(post.slug);
+  
+  // Copy the post but update the author and image if custom one exists
   const updatedPost = {
     ...post,
-    author: authorInfo
+    author: authorInfo,
+    image: customImage || post.image
   };
   
   return (
