@@ -1,4 +1,3 @@
-
 // Utility function to get framework image based on category
 export const getFrameworkImage = (category: string): string => {
   switch(category) {
@@ -26,7 +25,7 @@ export const getFrameworkImage = (category: string): string => {
     case "Vendas":
       return "https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1800&auto=format&fit=crop"; // Sales/business discussion
     case "Polemic Led Growth":
-      return "https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?q=80&w=1800&auto=format&fit=crop"; // Person with surprised expression
+      return "https://images.unsplash.com/photo-1569078449082-26d12a7b31f7?q=80&w=1800&auto=format&fit=crop"; // Person with shocked expression / surprised face - more dramatic and shocking
     default:
       return "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1800&auto=format&fit=crop"; // Team collaboration
   }
@@ -37,7 +36,7 @@ export const getArticleImageBySlug = (slug: string): string => {
   switch(slug) {
     // 1. Polemic Led Growth
     case "polemic-led-growth-metodo-linkedin-maquina-oportunidades":
-      return "https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?q=80&w=1800&auto=format&fit=crop"; // Person with shocked/surprised expression
+      return "https://images.unsplash.com/photo-1569078449082-26d12a7b31f7?q=80&w=1800&auto=format&fit=crop"; // Person with shocked expression / surprised face - more dramatic and shocking
 
     // 2. O que é PLG e como aplicar
     case "plg-guia-definitivo-saas-b2b":

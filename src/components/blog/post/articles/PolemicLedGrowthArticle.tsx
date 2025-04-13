@@ -1,4 +1,3 @@
-
 import { ArrowRight, BookOpen, CheckCircle2, Download, Eye, Link, MessageSquare, Star, TrendingUp, Users, Clock, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link as RouterLink } from 'react-router-dom';
@@ -43,8 +42,8 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
       
       <figure className="my-10">
         <img 
-          src="https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?q=80&w=1800&auto=format&fit=crop"
-          alt="Ambiente corporativo com reação inesperada"
+          src="https://images.unsplash.com/photo-1569078449082-26d12a7b31f7?q=80&w=1800&auto=format&fit=crop"
+          alt="Reação de choque e surpresa - a essência do Polemic Led Growth"
           className="w-full h-auto rounded-lg shadow-md"
         />
         <figcaption className="text-center text-sm text-gray-500 mt-2">
@@ -123,8 +122,8 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
 
       <figure className="my-10">
         <img 
-          src="https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=1800&auto=format&fit=crop"
-          alt="Profissional apagado ou invisível em meio a colegas visíveis"
+          src="https://images.unsplash.com/photo-1484069560501-87d72b0c3669?q=80&w=1800&auto=format&fit=crop"
+          alt="Profissional apagado ou invisível em meio a colegas visíveis - representando invisibilidade profissional"
           className="w-full h-auto rounded-lg shadow-md"
         />
         <figcaption className="text-center text-sm text-gray-500 mt-2">
@@ -324,8 +323,8 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
 
       <figure className="my-10">
         <img 
-          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1800&auto=format&fit=crop"
-          alt="Perfil LinkedIn otimizado com Polemic Led Growth"
+          src="https://images.unsplash.com/photo-1629207924502-78bc13571d12?q=80&w=1800&auto=format&fit=crop"
+          alt="Perfil LinkedIn otimizado com conteúdo polêmico e estratégico"
           className="w-full h-auto rounded-lg shadow-md"
         />
         <figcaption className="text-center text-sm text-gray-500 mt-2">
@@ -410,8 +409,8 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
 
       <figure className="my-10">
         <img 
-          src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=1800&auto=format&fit=crop"
-          alt="Profissional confiante revisando perfil com resultados visíveis"
+          src="https://images.unsplash.com/photo-1552581234-26160f608093?q=80&w=1800&auto=format&fit=crop"
+          alt="Profissional confiante revisando perfil com resultados visíveis de engajamento"
           className="w-full h-auto rounded-lg shadow-md"
         />
         <figcaption className="text-center text-sm text-gray-500 mt-2">
