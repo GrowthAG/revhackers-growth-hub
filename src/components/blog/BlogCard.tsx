@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BlogPost } from '@/data/blogData';
+import { getArticleImageBySlug } from './post/articles/utils/frameworkImages';
 
 interface BlogCardProps {
   post: BlogPost;
@@ -17,12 +18,22 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
     return new Date(dateString).toLocaleDateString('pt-BR', options);
   };
 
+  // Standard author info for all articles
+  const authorInfo = {
+    name: "Giulliano Alves",
+    role: "CEO da RevHackers",
+    avatar: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79"
+  };
+
+  // Get custom image if available for this article
+  const articleImage = getArticleImageBySlug(post.slug) || post.image;
+
   return (
     <Link to={`/blog/${post.slug}`} className="group block h-full" onClick={onClick}>
       <Card className="overflow-hidden card-hover h-full border-0 shadow-sm hover:shadow-md transition-all duration-300">
         <div className="h-48 overflow-hidden relative">
           <img 
-            src={post.image} 
+            src={articleImage} 
             alt={post.title} 
             className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500"
           />
@@ -50,12 +61,12 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
           <div className="flex items-center justify-between mt-2">
             <div className="flex items-center space-x-3">
               <Avatar className="h-8 w-8">
-                <AvatarImage src={post.author.avatar} alt={post.author.name} />
-                <AvatarFallback>{post.author.name.substring(0, 2)}</AvatarFallback>
+                <AvatarImage src={authorInfo.avatar} alt={authorInfo.name} />
+                <AvatarFallback>{authorInfo.name.substring(0, 2)}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium">{post.author.name}</p>
-                <p className="text-xs text-gray-500">{post.author.role}</p>
+                <p className="text-sm font-medium">{authorInfo.name}</p>
+                <p className="text-xs text-gray-500">{authorInfo.role}</p>
               </div>
             </div>
             <span className="text-revgreen opacity-0 group-hover:opacity-100 transition-opacity flex items-center">

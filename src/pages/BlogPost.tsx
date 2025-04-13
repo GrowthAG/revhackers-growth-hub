@@ -41,11 +41,23 @@ const BlogPostPage = () => {
     return null; // Will redirect in useEffect
   }
   
+  // Update the author info consistently
+  const authorInfo = {
+    name: "Giulliano Alves",
+    role: "CEO da RevHackers"
+  };
+  
+  // Copy the post but update the author
+  const updatedPost = {
+    ...post,
+    author: authorInfo
+  };
+  
   return (
     <PageLayout>
       <article className="pt-16 pb-24">
         <div className="container-custom">
-          <BlogPostHeader post={post} formatDate={formatDate} />
+          <BlogPostHeader post={updatedPost} formatDate={formatDate} />
           
           {/* Article Content with Table of Contents */}
           <div className="max-w-3xl mx-auto">
@@ -58,8 +70,8 @@ const BlogPostPage = () => {
               <div ref={contentRef} className="lg:col-span-3">
                 <BlogPostContent 
                   category={post.category}
-                  authorName={post.author.name}
-                  authorRole={post.author.role}
+                  authorName={authorInfo.name}
+                  authorRole={authorInfo.role}
                   slug={post.slug}
                 />
                 <BlogPostFooter />
@@ -70,7 +82,7 @@ const BlogPostPage = () => {
       </article>
       
       {/* Related Articles */}
-      <RelatedPosts posts={relatedPosts} />
+      <RelatedPosts posts={relatedPosts.map(p => ({ ...p, author: authorInfo }))} />
     </PageLayout>
   );
 };

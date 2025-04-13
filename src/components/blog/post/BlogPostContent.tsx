@@ -1,5 +1,5 @@
 
-import { getFrameworkImage } from './articles/utils/frameworkImages';
+import { getFrameworkImage, getArticleImageBySlug } from './articles/utils/frameworkImages';
 import PolemicLedGrowthArticle from './articles/PolemicLedGrowthArticle';
 import DefaultArticle from './articles/DefaultArticle';
 
@@ -10,10 +10,14 @@ interface BlogPostContentProps {
   slug?: string;
 }
 
-const BlogPostContent = ({ category, authorName, authorRole, slug }: BlogPostContentProps) => {
-  // Conteúdo específico para o artigo de Polemic Led Growth
+const BlogPostContent = ({ category, slug }: BlogPostContentProps) => {
+  // Standard author info for all articles
+  const authorName = "Giulliano Alves";
+  const authorRole = "CEO da RevHackers";
+
+  // Special content for the Polemic Led Growth article
   if (slug === "polemic-led-growth-metodo-linkedin-maquina-oportunidades") {
-    return <PolemicLedGrowthArticle />;
+    return <PolemicLedGrowthArticle authorName={authorName} authorRole={authorRole} />;
   }
 
   // Default content for other articles
@@ -23,6 +27,8 @@ const BlogPostContent = ({ category, authorName, authorRole, slug }: BlogPostCon
       authorName={authorName}
       authorRole={authorRole}
       getFrameworkImage={getFrameworkImage}
+      slug={slug}
+      getArticleImageBySlug={getArticleImageBySlug}
     />
   );
 };

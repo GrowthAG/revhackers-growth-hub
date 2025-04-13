@@ -9,9 +9,21 @@ interface DefaultArticleProps {
   authorName: string;
   authorRole: string;
   getFrameworkImage: (category: string) => string;
+  slug?: string;
+  getArticleImageBySlug: (slug: string) => string;
 }
 
-const DefaultArticle = ({ category, authorName, authorRole, getFrameworkImage }: DefaultArticleProps) => {
+const DefaultArticle = ({ 
+  category, 
+  authorName, 
+  authorRole, 
+  getFrameworkImage, 
+  slug,
+  getArticleImageBySlug 
+}: DefaultArticleProps) => {
+  // Use slug-specific image if available, fallback to category image
+  const articleImage = slug ? getArticleImageBySlug(slug) : getFrameworkImage(category);
+
   return (
     <div className="prose prose-lg lg:prose-xl">
       <p className="lead text-xl mb-8">
@@ -49,7 +61,7 @@ const DefaultArticle = ({ category, authorName, authorRole, getFrameworkImage }:
       
       <figure className="my-10">
         <img 
-          src={getFrameworkImage(category)}
+          src={articleImage}
           alt={`Framework de ${category}`}
           className="w-full h-auto rounded-lg shadow-md"
         />

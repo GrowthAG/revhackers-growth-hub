@@ -1,9 +1,13 @@
-
 import { ArrowRight, BookOpen, CheckCircle2, Download, Eye, Link, MessageSquare, Star, TrendingUp, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link as RouterLink } from 'react-router-dom';
 
-const PolemicLedGrowthArticle = () => {
+interface PolemicLedGrowthArticleProps {
+  authorName: string;
+  authorRole: string;
+}
+
+const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArticleProps) => {
   return (
     <div className="prose prose-lg lg:prose-xl">
       <p className="lead text-xl mb-8">
@@ -12,8 +16,8 @@ const PolemicLedGrowthArticle = () => {
       
       <figure className="my-10">
         <img 
-          src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81"
-          alt="Pessoa se destacando em meio à multidão"
+          src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1800&auto=format&fit=crop"
+          alt="Ambiente corporativo com reação inesperada"
           className="w-full h-auto rounded-lg shadow-md"
         />
         <figcaption className="text-center text-sm text-gray-500 mt-2">
@@ -349,7 +353,7 @@ const PolemicLedGrowthArticle = () => {
 
       <blockquote>
         <p>"O verdadeiro poder do Polemic Led Growth está na sua capacidade de transformar sua presença digital em um ativo estratégico que trabalha por você 24 horas por dia, atraindo exatamente o tipo de oportunidade que você deseja."</p>
-        <cite>— Rafael Silva, Especialista em Digital Branding</cite>
+        <cite>— {authorName}, {authorRole}</cite>
       </blockquote>
       
       <h2 id="conclusao">Seu LinkedIn é uma máquina de oportunidades ou apenas um currículo digital?</h2>
