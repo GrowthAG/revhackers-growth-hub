@@ -1,23 +1,19 @@
 import { ArrowRight, BookOpen, CheckCircle2, Download, Eye, Link, MessageSquare, Star, TrendingUp, Users, Clock, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link as RouterLink } from 'react-router-dom';
-
 interface PolemicLedGrowthArticleProps {
   authorName: string;
   authorRole: string;
 }
-
-const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArticleProps) => {
-  return (
-    <div className="prose prose-lg lg:prose-xl">
+const PolemicLedGrowthArticle = ({
+  authorName,
+  authorRole
+}: PolemicLedGrowthArticleProps) => {
+  return <div className="prose prose-lg lg:prose-xl">
       {/* Author Card - Start */}
       <div className="not-prose bg-gray-50 p-6 rounded-lg border border-gray-200 mb-8">
         <div className="flex flex-col sm:flex-row items-center gap-4">
-          <img 
-            src="/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png" 
-            alt={authorName} 
-            className="w-20 h-20 rounded-full object-cover border-2 border-revgreen"
-          />
+          <img src="/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png" alt={authorName} className="w-20 h-20 rounded-full object-cover border-2 border-revgreen" />
           <div className="text-center sm:text-left">
             <h3 className="text-xl font-bold">{authorName}</h3>
             <p className="text-gray-600">{authorRole}</p>
@@ -41,11 +37,7 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
       </p>
       
       <figure className="my-10">
-        <img 
-          src="https://images.unsplash.com/photo-1569078449082-26d12a7b31f7?q=80&w=1800&auto=format&fit=crop"
-          alt="Reação de choque e surpresa - a essência do Polemic Led Growth"
-          className="w-full h-auto rounded-lg shadow-md"
-        />
+        <img alt="Reação de choque e surpresa - a essência do Polemic Led Growth" className="w-full h-auto rounded-lg shadow-md" src="/lovable-uploads/598e264f-f94b-4ef1-a672-c75147e00f3a.jpg" />
         <figcaption className="text-center text-sm text-gray-500 mt-2">
           Visibilidade com autoridade: o verdadeiro objetivo do Polemic Led Growth
         </figcaption>
@@ -121,14 +113,8 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
       </ul>
 
       <figure className="my-10">
-        <img 
-          src="https://images.unsplash.com/photo-1484069560501-87d72b0c3669?q=80&w=1800&auto=format&fit=crop"
-          alt="Profissional apagado ou invisível em meio a colegas visíveis - representando invisibilidade profissional"
-          className="w-full h-auto rounded-lg shadow-md"
-        />
-        <figcaption className="text-center text-sm text-gray-500 mt-2">
-          O problema da invisibilidade profissional: competente, mas sem método de posicionamento estratégico
-        </figcaption>
+        
+        
       </figure>
 
       <h2 id="framework">O Framework do Polemic Led Growth</h2>
@@ -322,11 +308,7 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
       </div>
 
       <figure className="my-10">
-        <img 
-          src="https://images.unsplash.com/photo-1629207924502-78bc13571d12?q=80&w=1800&auto=format&fit=crop"
-          alt="Perfil LinkedIn otimizado com conteúdo polêmico e estratégico"
-          className="w-full h-auto rounded-lg shadow-md"
-        />
+        <img src="https://images.unsplash.com/photo-1629207924502-78bc13571d12?q=80&w=1800&auto=format&fit=crop" alt="Perfil LinkedIn otimizado com conteúdo polêmico e estratégico" className="w-full h-auto rounded-lg shadow-md" />
         <figcaption className="text-center text-sm text-gray-500 mt-2">
           Transformação visível na apresentação profissional com o método PLG
         </figcaption>
@@ -408,11 +390,7 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
       </p>
 
       <figure className="my-10">
-        <img 
-          src="https://images.unsplash.com/photo-1552581234-26160f608093?q=80&w=1800&auto=format&fit=crop"
-          alt="Profissional confiante revisando perfil com resultados visíveis de engajamento"
-          className="w-full h-auto rounded-lg shadow-md"
-        />
+        <img src="https://images.unsplash.com/photo-1552581234-26160f608093?q=80&w=1800&auto=format&fit=crop" alt="Profissional confiante revisando perfil com resultados visíveis de engajamento" className="w-full h-auto rounded-lg shadow-md" />
         <figcaption className="text-center text-sm text-gray-500 mt-2">
           O resultado do método PLG: autoridade silenciosa e atração constante de oportunidades
         </figcaption>
@@ -452,8 +430,6 @@ const PolemicLedGrowthArticle = ({ authorName, authorRole }: PolemicLedGrowthArt
           </a>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default PolemicLedGrowthArticle;
