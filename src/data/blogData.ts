@@ -25,7 +25,7 @@ export const blogPosts: BlogPost[] = [
     slug: "polemic-led-growth-metodo-linkedin-maquina-oportunidades",
     excerpt: "Descubra como construir autoridade silenciosa e atrair oportunidades de alto valor no LinkedIn sem depender de autopromoção excessiva.",
     category: "PLG",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+    image: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe3e8f11cc71d2ba4dbe53.png",
     author: {
       name: "Rafael Silva",
       role: "Especialista em Digital Branding",
