@@ -35,7 +35,7 @@ export const getFrameworkImage = (category: string): string => {
 export const getArticleImageBySlug = (slug: string): string => {
   switch(slug) {
     case "polemic-led-growth-metodo-linkedin-maquina-oportunidades":
-      return "https://images.unsplash.com/photo-1484069560501-87d72b0c3669?q=80&w=1800&auto=format&fit=crop"; // Professional looking invisible or disrupted
+      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe3e8f11cc71d2ba4dbe53.png"; // Updated image URL
     case "plg-guia-definitivo-saas-b2b":
     case "o-que-e-plg-e-como-aplicar-em-startups-brasileiras":
       return "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1800&auto=format&fit=crop"; // Startup team with post-its
