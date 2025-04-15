@@ -294,14 +294,7 @@ const PolemicLedGrowthArticle = ({
             </div>
             
             <div className="bg-green-50 p-3 rounded-lg mb-2">
-              <div className="flex items-start">
-                <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded mr-2">STATS</span>
-                <div>
-                  <p className="text-sm">• 300+ visualizações mensais</p>
-                  <p className="text-sm">• 7-8 oportunidades qualificadas por mês</p>
-                  <p className="text-sm">• Propostas como especialista (+62% de ticket)</p>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
