@@ -40,21 +40,26 @@ export const getArticleImageBySlug = (slug: string): string => {
     case "o-que-e-plg-e-como-aplicar-em-startups-brasileiras":
       return "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1800&auto=format&fit=crop"; // Startup team with post-its
 
-    // 3. CRO na prática
     case "cro-na-pratica-como-dobrar-sua-taxa-de-conversao":
       return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe41c1c7a015061ddad94c.webp"; // Person analyzing conversion dashboards
 
-    // 4. ABM para times pequenos
+    case "diagnostico-de-marketing-orientado-por-dados":
+      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe44c6266b6f314095cef2.webp"; // Updated data-driven marketing image
+
+    case "estrategias-de-inteligencia-artificial-aplicadas-a-pre-vendas":
+      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe4564266b6f147c95d647.jpeg"; // Updated AI strategies image
+
+    case "playbooks-de-vendas-e-marketing-que-escalam-resultados":
+      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe45ae266b6f07fd95deee.jpeg"; // Updated playbooks image
+
     case "abm-para-times-pequenos-segmentacao-que-converte":
     case "abm-implementar-account-based-marketing-ia":
       return "https://images.unsplash.com/photo-1558403194-611308249627?q=80&w=1800&auto=format&fit=crop"; // Small team strategizing with visual tools
 
-    // 5. 7 automações de marketing
     case "7-automacoes-de-marketing-que-escalam-sua-operacao":
     case "automacoes-marketing-escalar-operacao":
       return "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1800&auto=format&fit=crop"; // Automation/workflow visualization
 
-    // 6. Como construir um funil
     case "como-construir-um-funil-de-aquisicao-usando-seu-proprio-produto":
     case "construir-funil-aquisicao-proprio-produto":
       return "https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?q=80&w=1800&auto=format&fit=crop"; // Funnel visualization/user journey
