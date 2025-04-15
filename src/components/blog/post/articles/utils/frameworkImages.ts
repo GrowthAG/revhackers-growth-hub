@@ -1,3 +1,4 @@
+
 // Utility function to get framework image based on category
 export const getFrameworkImage = (category: string): string => {
   switch(category) {
@@ -62,7 +63,7 @@ export const getArticleImageBySlug = (slug: string): string => {
 
     case "como-construir-um-funil-de-aquisicao-usando-seu-proprio-produto":
     case "construir-funil-aquisicao-proprio-produto":
-      return "https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?q=80&w=1800&auto=format&fit=crop"; // Funnel visualization/user journey
+      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe48dc71384bf372b7d943.webp"; // Updated funil de aquisição image
 
     default:
       return ""; // Empty string will fall back to the category image

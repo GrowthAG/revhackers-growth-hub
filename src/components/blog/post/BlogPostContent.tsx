@@ -11,7 +11,7 @@ interface BlogPostContentProps {
 }
 
 const BlogPostContent = ({ category, authorName, authorRole, slug }: BlogPostContentProps) => {
-  // Special content for the Polemic Led Growth article
+  // Special content for specific articles
   if (slug === "polemic-led-growth-metodo-linkedin-maquina-oportunidades") {
     return <PolemicLedGrowthArticle authorName={authorName} authorRole={authorRole} />;
   }

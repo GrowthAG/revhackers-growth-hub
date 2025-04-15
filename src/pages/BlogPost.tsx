@@ -9,6 +9,7 @@ import BlogPostFooter from '@/components/blog/post/BlogPostFooter';
 import RelatedPosts from '@/components/blog/post/RelatedPosts';
 import TableOfContents from '@/components/blog/post/TableOfContents';
 import { getArticleImageBySlug } from '@/components/blog/post/articles/utils/frameworkImages';
+import useFrameworkImage from '@/hooks/useFrameworkImage';
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
