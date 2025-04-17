@@ -34,38 +34,58 @@ export const getFrameworkImage = (category: string): string => {
 
 // Function to get specific image for article by slug
 export const getArticleImageBySlug = (slug: string): string => {
-  switch(slug) {
-    case "polemic-led-growth-metodo-linkedin-maquina-oportunidades":
-      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe3e8f11cc71d2ba4dbe53.png"; // Updated image URL
-    case "plg-guia-definitivo-saas-b2b":
-    case "o-que-e-plg-e-como-aplicar-em-startups-brasileiras":
-      return "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1800&auto=format&fit=crop"; // Startup team with post-its
+  // Mapa detalhado para garantir que cada artigo tenha uma imagem única
+  const articleImageMap: Record<string, string> = {
+    // PLG articles - each with unique imagery
+    "polemic-led-growth-metodo-linkedin-maquina-oportunidades": 
+      "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe3e8f11cc71d2ba4dbe53.png",
+    "plg-guia-definitivo-saas-b2b": 
+      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1800&auto=format&fit=crop",
+    "o-que-e-plg-e-como-aplicar-em-startups-brasileiras": 
+      "https://images.unsplash.com/photo-1536825211030-094de935f680?q=80&w=1800&auto=format&fit=crop",
 
-    case "cro-na-pratica-como-dobrar-sua-taxa-de-conversao":
-      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe41c1c7a015061ddad94c.webp"; // Person analyzing conversion dashboards
+    // CRO articles
+    "cro-na-pratica-como-dobrar-sua-taxa-de-conversao": 
+      "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe41c1c7a015061ddad94c.webp",
 
-    case "diagnostico-de-marketing-orientado-por-dados":
-      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe44c6266b6f314095cef2.webp"; // Updated data-driven marketing image
+    // Data-driven articles
+    "diagnostico-de-marketing-orientado-por-dados": 
+      "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe44c6266b6f314095cef2.webp",
 
-    case "estrategias-de-inteligencia-artificial-aplicadas-a-pre-vendas":
-      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe4564266b6f147c95d647.jpeg"; // Updated AI strategies image
+    // AI strategy articles
+    "estrategias-de-inteligencia-artificial-aplicadas-a-pre-vendas": 
+      "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe4564266b6f147c95d647.jpeg",
 
-    case "playbooks-de-vendas-e-marketing-que-escalam-resultados":
-      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe45ae266b6f07fd95deee.jpeg"; // Updated playbooks image
+    // Sales & Marketing articles
+    "playbooks-de-vendas-e-marketing-que-escalam-resultados": 
+      "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe45ae266b6f07fd95deee.jpeg",
 
-    case "abm-para-times-pequenos-segmentacao-que-converte":
-    case "abm-implementar-account-based-marketing-ia":
-      return "https://images.unsplash.com/photo-1558403194-611308249627?q=80&w=1800&auto=format&fit=crop"; // Small team strategizing with visual tools
+    // ABM articles - each with unique imagery
+    "abm-para-times-pequenos-segmentacao-que-converte": 
+      "https://images.unsplash.com/photo-1558403194-611308249627?q=80&w=1800&auto=format&fit=crop",
+    "abm-implementar-account-based-marketing-ia": 
+      "https://images.unsplash.com/photo-1552581234-26160f608093?q=80&w=1800&auto=format&fit=crop",
 
-    case "7-automacoes-de-marketing-que-escalam-sua-operacao":
-    case "automacoes-marketing-escalar-operacao":
-      return "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1800&auto=format&fit=crop"; // Automation/workflow visualization
+    // Automation articles - each with unique imagery
+    "7-automacoes-de-marketing-que-escalam-sua-operacao": 
+      "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1800&auto=format&fit=crop",
+    "automacoes-marketing-escalar-operacao": 
+      "https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1800&auto=format&fit=crop",
 
-    case "como-construir-um-funil-de-aquisicao-usando-seu-proprio-produto":
-    case "construir-funil-aquisicao-proprio-produto":
-      return "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe48dc71384bf372b7d943.webp"; // Updated funil de aquisição image
-
-    default:
-      return ""; // Empty string will fall back to the category image
-  }
+    // Acquisition funnel articles
+    "como-construir-um-funil-de-aquisicao-usando-seu-proprio-produto": 
+      "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe48dc71384bf372b7d943.webp",
+    "construir-funil-aquisicao-proprio-produto": 
+      "https://images.unsplash.com/photo-1551135049-8a33b5883817?q=80&w=1800&auto=format&fit=crop",
+      
+    // RevOps articles
+    "revops-framework-completo-integracao":
+      "https://images.unsplash.com/photo-1552581234-26160f608093?q=80&w=1800&auto=format&fit=crop",
+      
+    // Strategy articles
+    "modelo-funil-gravatinha-transformando-jornada-cliente":
+      "https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?q=80&w=1800&auto=format&fit=crop",
+  };
+  
+  return articleImageMap[slug] || "";
 };

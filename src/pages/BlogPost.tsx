@@ -19,7 +19,8 @@ const BlogPostPage = () => {
   // Find the current post
   const post = blogPosts.find(post => post.slug === slug);
   
-  // Get related posts (same category, excluding current)
+  // Get related posts - garantimos conteúdo relacionado mas não repetitivo
+  // Filtramos por categoria, mas excluímos o post atual
   const relatedPosts = post 
     ? blogPosts
         .filter(p => p.category === post.category && p.id !== post.id)
@@ -88,7 +89,7 @@ const BlogPostPage = () => {
         </div>
       </article>
       
-      {/* Related Articles */}
+      {/* Related Articles - sempre mostrando conteúdo relevante e não repetitivo */}
       <RelatedPosts posts={relatedPosts.map(p => ({ ...p, author: authorInfo }))} />
     </PageLayout>
   );
