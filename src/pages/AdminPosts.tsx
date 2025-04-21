@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -84,7 +83,7 @@ const AdminPosts = () => {
   const migrateExistingPosts = async () => {
     setIsMigrating(true);
     try {
-      // Check if any posts already exist with the same IDs
+      // Check if any posts already exist with the same IDs or slugs
       const { data: existingPosts } = await supabase
         .from('blog_posts')
         .select('id, slug')
@@ -95,48 +94,74 @@ const AdminPosts = () => {
       
       let imported = 0;
       let skipped = 0;
+      let errors = 0;
       
-      for (const post of blogPosts) {
-        // Skip if post with same ID or slug already exists
-        if (existingIds.has(post.id) || existingSlugs.has(post.slug)) {
-          console.log(`Skipping post: ${post.title} (already exists)`);
-          skipped++;
-          continue;
-        }
+      // Process posts in batches to avoid overwhelming the database
+      const batchSize = 5;
+      const totalPosts = blogPosts.length;
+      
+      for (let i = 0; i < totalPosts; i += batchSize) {
+        const batch = blogPosts.slice(i, i + batchSize);
+        const batchToImport = [];
         
-        // Prepare the post data
-        const postData = {
-          id: post.id,
-          title: post.title,
-          slug: post.slug,
-          excerpt: post.excerpt,
-          content: post.content || `# ${post.title}\n\n${post.excerpt}`,
-          category: post.category,
-          image: post.image,
-          author_name: post.author?.name || 'Giulliano Alves',
-          author_role: post.author?.role || 'CEO da RevHackers',
-          author_avatar: post.author?.avatar || '/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png',
-          date: post.date,
-          read_time: post.readTime || '5 min',
-          featured: post.featured || false
-        };
-        
-        // Insert into Supabase
-        const { error } = await supabase
-          .from('blog_posts')
-          .insert([postData]);
+        for (const post of batch) {
+          // Skip if post with same ID or slug already exists
+          if (existingIds.has(post.id) || existingSlugs.has(post.slug)) {
+            console.log(`Skipping post: ${post.title} (already exists)`);
+            skipped++;
+            continue;
+          }
           
-        if (error) {
-          console.error(`Error importing post ${post.title}:`, error);
-          throw error;
+          // Prepare the post data
+          const postData = {
+            id: post.id,
+            title: post.title,
+            slug: post.slug,
+            excerpt: post.excerpt,
+            content: post.content || `# ${post.title}\n\n${post.excerpt}`,
+            category: post.category,
+            image: post.image,
+            author_name: post.author?.name || 'Giulliano Alves',
+            author_role: post.author?.role || 'CEO da RevHackers',
+            author_avatar: post.author?.avatar || '/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png',
+            date: post.date,
+            read_time: post.readTime || '5 min',
+            featured: post.featured || false
+          };
+          
+          batchToImport.push(postData);
         }
         
-        imported++;
+        if (batchToImport.length > 0) {
+          // Insert batch into Supabase
+          const { error, count } = await supabase
+            .from('blog_posts')
+            .insert(batchToImport);
+            
+          if (error) {
+            console.error(`Error importing batch:`, error);
+            errors++;
+          } else {
+            imported += batchToImport.length;
+            console.log(`Successfully imported ${batchToImport.length} posts (batch ${i/batchSize + 1})`);
+          }
+        }
+        
+        // Small delay to avoid rate limiting
+        if (i + batchSize < totalPosts) {
+          await new Promise(resolve => setTimeout(resolve, 300));
+        }
       }
       
       // Refresh posts list
-      fetchPosts();
-      toast.success(`Importação concluída! ${imported} posts importados, ${skipped} posts ignorados.`);
+      await fetchPosts();
+      
+      if (errors > 0) {
+        toast.error(`Importação concluída com erros. ${imported} posts importados, ${skipped} posts ignorados, ${errors} erros.`);
+      } else {
+        toast.success(`Importação concluída! ${imported} posts importados, ${skipped} posts ignorados.`);
+      }
+      
       setShowMigrationDialog(false);
     } catch (error) {
       console.error('Error during migration:', error);
