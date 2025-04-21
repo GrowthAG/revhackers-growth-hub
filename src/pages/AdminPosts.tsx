@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -23,37 +22,75 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Plus, Pencil, Trash2, Eye } from 'lucide-react';
-import { blogPosts, BlogPost } from '@/data/blogData';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  category: string;
+  date: string;
+}
 
 const AdminPosts = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [postToDelete, setPostToDelete] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Carregar os posts do localStorage ou usar os dados estáticos para demonstração
-    const savedPosts = localStorage.getItem('blogPosts');
-    if (savedPosts) {
-      setPosts(JSON.parse(savedPosts));
-    } else {
-      setPosts(blogPosts);
-      localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
-    }
+    fetchPosts();
   }, []);
 
-  const handleDeletePost = (id: number) => {
-    const updatedPosts = posts.filter(post => post.id !== id);
-    setPosts(updatedPosts);
-    localStorage.setItem('blogPosts', JSON.stringify(updatedPosts));
-    setPostToDelete(null);
-    toast.success('Post excluído com sucesso!');
+  const fetchPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setPosts(data || []);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      toast.error('Erro ao carregar os posts');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Formatar data para exibição
+  const handleDeletePost = async (id: number) => {
+    try {
+      const { error } = await supabase
+        .from('blog_posts')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      setPosts(posts.filter(post => post.id !== id));
+      setPostToDelete(null);
+      toast.success('Post excluído com sucesso!');
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      toast.error('Erro ao excluir o post');
+    }
+  };
+
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('pt-BR', options);
   };
+
+  if (isLoading) {
+    return (
+      <AdminLayout pageTitle="Carregando...">
+        <div className="flex justify-center items-center h-64">
+          <div className="w-8 h-8 border-4 border-revgreen border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout pageTitle="Gerenciar Posts">

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -12,16 +11,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BlogPost } from '@/data/blogData';
 import { toast } from 'sonner';
 import { Save, Eye, Image, FileText } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
-interface PostEditorProps {
-  post?: BlogPost; // Para edição
-  isEditing?: boolean;
-}
-
-// Lista de categorias únicas extraídas dos posts existentes
 const categories = [
   'RevOps',
   'Account Based Marketing',
@@ -36,6 +29,20 @@ const categories = [
   'Outra',
 ];
 
+interface PostEditorProps {
+  post?: {
+    id: number;
+    title: string;
+    slug: string;
+    excerpt: string;
+    content?: string;
+    category: string;
+    image: string;
+    read_time?: string;
+  };
+  isEditing?: boolean;
+}
+
 const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
@@ -49,7 +56,6 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
   const [isSaving, setIsSaving] = useState(false);
   const [readTime, setReadTime] = useState('5 min');
 
-  // Carregar dados do post para edição
   useEffect(() => {
     if (post && isEditing) {
       setTitle(post.title);
@@ -57,40 +63,72 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
       setExcerpt(post.excerpt);
       setCategory(post.category);
       setCoverImage(post.image);
-      setReadTime(post.readTime || '5 min');
-      // Simulando conteúdo para edição
-      setContent(`# ${post.title}\n\n${post.excerpt}\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel tincidunt sagittis, nunc nisl aliquam nisl, nec aliquam nisl nisl nec nisl.`);
+      setReadTime(post.read_time || '5 min');
+      setContent(post.content || '');
     }
   }, [post, isEditing]);
 
-  // Gerar slug a partir do título
-  const generateSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/--+/g, '-')
-      .trim();
-  };
-
-  // Atualizar slug quando o título mudar
   useEffect(() => {
     if (!isEditing || !post) {
       setSlug(generateSlug(title));
     }
   }, [title, isEditing, post]);
 
-  // Calcular tempo de leitura com base no conteúdo
   useEffect(() => {
     if (content) {
-      // Estimativa: média de leitura de 200 palavras por minuto
       const wordCount = content.split(/\s+/).length;
       const minutes = Math.max(1, Math.ceil(wordCount / 200));
       setReadTime(`${minutes} min`);
     }
   }, [content]);
+
+  const handleSave = async () => {
+    if (!title || !slug || !excerpt || !category) {
+      toast.error('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    setIsSaving(true);
+
+    const finalCategory = category === 'Outra' ? customCategory : category;
+    
+    try {
+      const postData = {
+        title,
+        slug,
+        excerpt,
+        content,
+        category: finalCategory,
+        image: coverImage || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1800&auto=format&fit=crop',
+        read_time: readTime,
+        date: new Date().toISOString()
+      };
+
+      if (isEditing && post) {
+        const { error } = await supabase
+          .from('blog_posts')
+          .update(postData)
+          .eq('id', post.id);
+
+        if (error) throw error;
+        toast.success('Post atualizado com sucesso!');
+      } else {
+        const { error } = await supabase
+          .from('blog_posts')
+          .insert([postData]);
+
+        if (error) throw error;
+        toast.success('Post criado com sucesso!');
+      }
+
+      navigate('/admin/posts');
+    } catch (error) {
+      console.error('Erro ao salvar post:', error);
+      toast.error('Erro ao salvar o post. Por favor, tente novamente.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -109,57 +147,19 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Em um ambiente real, isto incluiria upload de imagem para servidor
-    // Para este exemplo, vamos apenas simular com uma URL estática
     setCoverImage('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1800&auto=format&fit=crop');
     toast.success('Imagem carregada com sucesso!');
   };
 
-  const handleSave = () => {
-    if (!title || !slug || !excerpt || !category) {
-      toast.error('Por favor, preencha todos os campos obrigatórios.');
-      return;
-    }
-
-    setIsSaving(true);
-
-    // Recuperar posts existentes
-    const existingPosts = JSON.parse(localStorage.getItem('blogPosts') || '[]');
-    
-    const finalCategory = category === 'Outra' ? customCategory : category;
-    
-    const newPost: BlogPost = {
-      id: isEditing && post ? post.id : Date.now(),
-      title,
-      slug,
-      excerpt,
-      category: finalCategory,
-      image: coverImage || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1800&auto=format&fit=crop',
-      date: isEditing && post ? post.date : new Date().toISOString(),
-      readTime: readTime,
-      author: {
-        name: "Giulliano Alves",
-        role: "CEO da RevHackers",
-        avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
-      }
-    };
-
-    let updatedPosts;
-    if (isEditing && post) {
-      updatedPosts = existingPosts.map((p: BlogPost) => 
-        p.id === post.id ? newPost : p
-      );
-    } else {
-      updatedPosts = [...existingPosts, newPost];
-    }
-
-    // Simular operação de salvamento
-    setTimeout(() => {
-      localStorage.setItem('blogPosts', JSON.stringify(updatedPosts));
-      setIsSaving(false);
-      toast.success(`Post ${isEditing ? 'atualizado' : 'criado'} com sucesso!`);
-      navigate('/admin/posts');
-    }, 1000);
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/--+/g, '-')
+      .trim();
   };
 
   return (
@@ -350,7 +350,6 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
                 {excerpt}
               </div>
               <div className="prose">
-                {/* Renderização simples do markdown */}
                 {content.split('\n').map((line, index) => {
                   if (line.startsWith('# ')) {
                     return <h1 key={index} className="text-2xl font-bold my-4">{line.substring(2)}</h1>;

@@ -3,9 +3,21 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AdminLayout from '@/components/admin/AdminLayout';
 import PostEditor from '@/components/admin/PostEditor';
-import { blogPosts, BlogPost } from '@/data/blogData';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content?: string;
+  category: string;
+  image: string;
+  date: string;
+  read_time?: string;
+}
 
 const AdminPostEdit = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,23 +26,27 @@ const AdminPostEdit = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Buscar post pelo ID
-    const fetchPost = () => {
+    const fetchPost = async () => {
       setIsLoading(true);
-      
-      // Tentar buscar do localStorage primeiro
-      const savedPosts = localStorage.getItem('blogPosts');
-      let posts = savedPosts ? JSON.parse(savedPosts) : blogPosts;
-      
-      const foundPost = posts.find((p: BlogPost) => p.id === Number(id));
-      
-      if (foundPost) {
-        setPost(foundPost);
-      } else {
+      try {
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .eq('id', Number(id))
+          .single();
+
+        if (error) throw error;
+        if (data) {
+          setPost(data);
+        } else {
+          navigate('/admin/posts');
+        }
+      } catch (error) {
+        console.error('Error fetching post:', error);
         navigate('/admin/posts');
+      } finally {
+        setIsLoading(false);
       }
-      
-      setIsLoading(false);
     };
     
     fetchPost();
