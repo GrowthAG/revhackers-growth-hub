@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -21,9 +22,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Plus, Pencil, Trash2, Eye } from 'lucide-react';
+import { Plus, Pencil, Trash2, Eye, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { blogPosts } from '@/data/blogData';
 
 interface BlogPost {
   id: number;
@@ -37,6 +39,8 @@ const AdminPosts = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [postToDelete, setPostToDelete] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMigrating, setIsMigrating] = useState(false);
+  const [showMigrationDialog, setShowMigrationDialog] = useState(false);
 
   useEffect(() => {
     fetchPosts();
@@ -77,6 +81,71 @@ const AdminPosts = () => {
     }
   };
 
+  const migrateExistingPosts = async () => {
+    setIsMigrating(true);
+    try {
+      // Check if any posts already exist with the same IDs
+      const { data: existingPosts } = await supabase
+        .from('blog_posts')
+        .select('id, slug')
+        .in('id', blogPosts.map(post => post.id));
+      
+      const existingIds = new Set((existingPosts || []).map(post => post.id));
+      const existingSlugs = new Set((existingPosts || []).map(post => post.slug));
+      
+      let imported = 0;
+      let skipped = 0;
+      
+      for (const post of blogPosts) {
+        // Skip if post with same ID or slug already exists
+        if (existingIds.has(post.id) || existingSlugs.has(post.slug)) {
+          console.log(`Skipping post: ${post.title} (already exists)`);
+          skipped++;
+          continue;
+        }
+        
+        // Prepare the post data
+        const postData = {
+          id: post.id,
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt,
+          content: post.content || `# ${post.title}\n\n${post.excerpt}`,
+          category: post.category,
+          image: post.image,
+          author_name: post.author?.name || 'Giulliano Alves',
+          author_role: post.author?.role || 'CEO da RevHackers',
+          author_avatar: post.author?.avatar || '/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png',
+          date: post.date,
+          read_time: post.readTime || '5 min',
+          featured: post.featured || false
+        };
+        
+        // Insert into Supabase
+        const { error } = await supabase
+          .from('blog_posts')
+          .insert([postData]);
+          
+        if (error) {
+          console.error(`Error importing post ${post.title}:`, error);
+          throw error;
+        }
+        
+        imported++;
+      }
+      
+      // Refresh posts list
+      fetchPosts();
+      toast.success(`Importação concluída! ${imported} posts importados, ${skipped} posts ignorados.`);
+      setShowMigrationDialog(false);
+    } catch (error) {
+      console.error('Error during migration:', error);
+      toast.error('Erro durante a migração dos posts');
+    } finally {
+      setIsMigrating(false);
+    }
+  };
+
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('pt-BR', options);
@@ -96,11 +165,43 @@ const AdminPosts = () => {
     <AdminLayout pageTitle="Gerenciar Posts">
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-2xl font-bold">Posts do Blog</h2>
-        <Button asChild>
-          <Link to="/admin/posts/new">
-            <Plus className="h-4 w-4 mr-2" /> Novo Post
-          </Link>
-        </Button>
+        <div className="flex gap-2">
+          <AlertDialog open={showMigrationDialog} onOpenChange={setShowMigrationDialog}>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">
+                <Upload className="h-4 w-4 mr-2" /> Importar Posts
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Importar Posts Existentes</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Isso importará todos os posts existentes no arquivo blogData.ts para o banco de dados. 
+                  Posts existentes com ID ou slug iguais serão ignorados.
+                  Essa ação não pode ser desfeita.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel disabled={isMigrating}>Cancelar</AlertDialogCancel>
+                <AlertDialogAction 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    migrateExistingPosts();
+                  }}
+                  disabled={isMigrating}
+                  className="bg-revgreen hover:bg-revgreen/90"
+                >
+                  {isMigrating ? 'Importando...' : 'Importar Posts'}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <Button asChild>
+            <Link to="/admin/posts/new">
+              <Plus className="h-4 w-4 mr-2" /> Novo Post
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="bg-white rounded-lg shadow">
