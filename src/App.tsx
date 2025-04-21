@@ -4,6 +4,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Pages
 import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -22,6 +24,13 @@ import PartnerEnics from "./pages/PartnerEnics";
 import TermosDeUso from "./pages/TermosDeUso";
 import Privacidade from "./pages/Privacidade";
 
+// Admin Pages
+import Admin from "./pages/Admin";
+import AdminPosts from "./pages/AdminPosts";
+import AdminPostNew from "./pages/AdminPostNew";
+import AdminPostEdit from "./pages/AdminPostEdit";
+import AdminSettings from "./pages/AdminSettings";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -31,6 +40,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Index />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
@@ -47,6 +57,15 @@ const App = () => (
           <Route path="/booking" element={<Booking />} />
           <Route path="/termos-de-uso" element={<TermosDeUso />} />
           <Route path="/privacidade" element={<Privacidade />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/posts" element={<AdminPosts />} />
+          <Route path="/admin/posts/new" element={<AdminPostNew />} />
+          <Route path="/admin/posts/edit/:id" element={<AdminPostEdit />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
+          
+          {/* 404 Route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

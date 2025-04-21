@@ -1,5 +1,5 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { blogPosts } from '@/data/blogData';
@@ -15,14 +15,23 @@ const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const contentRef = useRef<HTMLDivElement>(null);
+  const [allPosts, setAllPosts] = useState(blogPosts);
+  
+  // Load posts from localStorage if available
+  useEffect(() => {
+    const savedPosts = localStorage.getItem('blogPosts');
+    if (savedPosts) {
+      setAllPosts(JSON.parse(savedPosts));
+    }
+  }, []);
   
   // Find the current post
-  const post = blogPosts.find(post => post.slug === slug);
+  const post = allPosts.find(post => post.slug === slug);
   
   // Get related posts - garantimos conteúdo relacionado mas não repetitivo
   // Filtramos por categoria, mas excluímos o post atual
   const relatedPosts = post 
-    ? blogPosts
+    ? allPosts
         .filter(p => p.category === post.category && p.id !== post.id)
         .slice(0, 3)
     : [];

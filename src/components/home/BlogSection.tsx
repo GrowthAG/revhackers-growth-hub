@@ -1,63 +1,29 @@
 
+import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { getArticleImageBySlug } from '../blog/post/articles/utils/frameworkImages';
-
-const featuredArticles = [
-  {
-    title: "RevOps: Framework completo para integrar Marketing, Vendas e CS",
-    excerpt: "Um guia detalhado de Revenue Operations com as melhores práticas para implementação e mensuração de resultados em empresas B2B.",
-    category: "RevOps",
-    author: {
-      name: "Giulliano Alves",
-      role: "CEO da RevHackers",
-      avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
-    },
-    slug: "revops-framework-completo-integracao",
-    image: "https://images.unsplash.com/photo-1553484771-047a44eee27a?q=80&w=1800&auto=format&fit=crop"
-  },
-  {
-    title: "ABM 2.0: Como implementar Account Based Marketing com IA",
-    excerpt: "Metodologia avançada para identificar contas-alvo, personalizar jornadas e maximizar ROI com inteligência artificial e automação.",
-    category: "Account Based Marketing",
-    author: {
-      name: "Giulliano Alves",
-      role: "CEO da RevHackers",
-      avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
-    },
-    slug: "abm-implementar-account-based-marketing-ia",
-    image: "https://images.unsplash.com/photo-1558403194-611308249627?q=80&w=1800&auto=format&fit=crop"
-  },
-  {
-    title: "Product-Led Growth: O guia definitivo para SaaS B2B",
-    excerpt: "Como construir uma estratégia PLG que transforma usuários em defensores da marca e acelera crescimento orgânico sustentável.",
-    category: "PLG",
-    author: {
-      name: "Giulliano Alves",
-      role: "CEO da RevHackers",
-      avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
-    },
-    slug: "plg-guia-definitivo-saas-b2b",
-    image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1800&auto=format&fit=crop"
-  },
-  {
-    title: "Modelo de Funil Gravatinha: Transformando a jornada do cliente B2B",
-    excerpt: "Conheça o modelo de funil que revoluciona a visão sobre a jornada do cliente, integrando marketing, vendas e sucesso do cliente de forma fluida.",
-    category: "Estratégia",
-    author: {
-      name: "Giulliano Alves",
-      role: "CEO da RevHackers",
-      avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
-    },
-    slug: "modelo-funil-gravatinha-transformando-jornada-cliente",
-    image: "https://images.unsplash.com/photo-1512758017271-d7b84c2113f1?q=80&w=1800&auto=format&fit=crop"
-  }
-];
+import { blogPosts, BlogPost } from '@/data/blogData';
 
 const BlogSection = () => {
+  const [featuredArticles, setFeaturedArticles] = useState<BlogPost[]>([]);
+  
+  useEffect(() => {
+    // Try to load posts from localStorage first
+    const savedPosts = localStorage.getItem('blogPosts');
+    const posts = savedPosts ? JSON.parse(savedPosts) : blogPosts;
+    
+    // Sort posts by date (newest first) and take the first 4
+    const sortedPosts = [...posts].sort((a, b) => 
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+    ).slice(0, 4);
+    
+    setFeaturedArticles(sortedPosts);
+  }, []);
+
   return (
     <section className="section-padding bg-white">
       <div className="container-custom">

@@ -10,14 +10,25 @@ import { Search, Filter, BookOpen } from 'lucide-react';
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
+  const [localPosts, setLocalPosts] = useState<BlogPost[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
   const [displayedPosts, setDisplayedPosts] = useState<BlogPost[]>([]);
   const [postsPerPage] = useState(9);
   const [currentPage, setCurrentPage] = useState(1);
   
+  // Load posts from localStorage if available
+  useEffect(() => {
+    const savedPosts = localStorage.getItem('blogPosts');
+    if (savedPosts) {
+      setLocalPosts(JSON.parse(savedPosts));
+    } else {
+      setLocalPosts(blogPosts);
+    }
+  }, []);
+  
   // Filter posts based on category and search query
   useEffect(() => {
-    let filtered = [...blogPosts];
+    let filtered = [...localPosts];
     
     if (activeCategory !== 'Todos') {
       filtered = filtered.filter(post => post.category === activeCategory);
@@ -33,7 +44,7 @@ const Blog = () => {
     
     setFilteredPosts(filtered);
     setCurrentPage(1); // Reset to first page when filters change
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, localPosts]);
   
   // Update displayed posts based on pagination
   useEffect(() => {
@@ -50,7 +61,7 @@ const Blog = () => {
   const hasMorePosts = currentPage * postsPerPage < filteredPosts.length;
 
   // Get all unique categories
-  const categories = ['Todos', ...Array.from(new Set(blogPosts.map(post => post.category)))];
+  const categories = ['Todos', ...Array.from(new Set(localPosts.map(post => post.category)))];
   
   return (
     <PageLayout>
