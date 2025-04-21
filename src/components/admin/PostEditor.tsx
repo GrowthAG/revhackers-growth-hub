@@ -47,6 +47,7 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
   const [activeTab, setActiveTab] = useState('editor');
   const [customCategory, setCustomCategory] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [readTime, setReadTime] = useState('5 min');
 
   // Carregar dados do post para edição
   useEffect(() => {
@@ -56,6 +57,7 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
       setExcerpt(post.excerpt);
       setCategory(post.category);
       setCoverImage(post.image);
+      setReadTime(post.readTime || '5 min');
       // Simulando conteúdo para edição
       setContent(`# ${post.title}\n\n${post.excerpt}\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel tincidunt sagittis, nunc nisl aliquam nisl, nec aliquam nisl nisl nec nisl.`);
     }
@@ -79,6 +81,16 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
       setSlug(generateSlug(title));
     }
   }, [title, isEditing, post]);
+
+  // Calcular tempo de leitura com base no conteúdo
+  useEffect(() => {
+    if (content) {
+      // Estimativa: média de leitura de 200 palavras por minuto
+      const wordCount = content.split(/\s+/).length;
+      const minutes = Math.max(1, Math.ceil(wordCount / 200));
+      setReadTime(`${minutes} min`);
+    }
+  }, [content]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -124,6 +136,7 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
       category: finalCategory,
       image: coverImage || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1800&auto=format&fit=crop',
       date: isEditing && post ? post.date : new Date().toISOString(),
+      readTime: readTime,
       author: {
         name: "Giulliano Alves",
         role: "CEO da RevHackers",
