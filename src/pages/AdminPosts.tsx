@@ -80,14 +80,37 @@ const AdminPosts = () => {
     }
   };
 
+  const validatePost = (post: any) => {
+    const requiredFields = ['title', 'excerpt', 'category', 'date'];
+    const missingFields = requiredFields.filter(field => !post[field]);
+    
+    if (missingFields.length > 0) {
+      throw new Error(`Missing required fields: ${missingFields.join(', ')}`);
+    }
+    
+    return {
+      id: post.id,
+      title: post.title.trim(),
+      slug: post.slug.trim(),
+      excerpt: post.excerpt.trim(),
+      content: post.content?.trim() || `# ${post.title}\n\n${post.excerpt}`,
+      category: post.category.trim(),
+      image: post.image || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5',
+      author_name: post.author?.name?.trim() || 'Giulliano Alves',
+      author_role: post.author?.role?.trim() || 'CEO da RevHackers',
+      author_avatar: post.author?.avatar || '/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png',
+      date: new Date(post.date).toISOString(),
+      read_time: post.readTime?.trim() || '5 min',
+      featured: Boolean(post.featured)
+    };
+  };
+
   const migrateExistingPosts = async () => {
     setIsMigrating(true);
     try {
-      // Check if any posts already exist with the same IDs or slugs
       const { data: existingPosts } = await supabase
         .from('blog_posts')
-        .select('id, slug')
-        .in('id', blogPosts.map(post => post.id));
+        .select('id, slug');
       
       const existingIds = new Set((existingPosts || []).map(post => post.id));
       const existingSlugs = new Set((existingPosts || []).map(post => post.slug));
@@ -95,68 +118,43 @@ const AdminPosts = () => {
       let imported = 0;
       let skipped = 0;
       let errors = 0;
+      let errorDetails = [];
       
-      // Process posts in batches to avoid overwhelming the database
-      const batchSize = 5;
-      const totalPosts = blogPosts.length;
-      
-      for (let i = 0; i < totalPosts; i += batchSize) {
-        const batch = blogPosts.slice(i, i + batchSize);
-        const batchToImport = [];
-        
-        for (const post of batch) {
-          // Skip if post with same ID or slug already exists
+      for (const post of blogPosts) {
+        try {
           if (existingIds.has(post.id) || existingSlugs.has(post.slug)) {
             console.log(`Skipping post: ${post.title} (already exists)`);
             skipped++;
             continue;
           }
           
-          // Prepare the post data
-          const postData = {
-            id: post.id,
-            title: post.title,
-            slug: post.slug,
-            excerpt: post.excerpt,
-            content: post.content || `# ${post.title}\n\n${post.excerpt}`,
-            category: post.category,
-            image: post.image,
-            author_name: post.author?.name || 'Giulliano Alves',
-            author_role: post.author?.role || 'CEO da RevHackers',
-            author_avatar: post.author?.avatar || '/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png',
-            date: post.date,
-            read_time: post.readTime || '5 min',
-            featured: post.featured || false
-          };
+          const validatedPost = validatePost(post);
           
-          batchToImport.push(postData);
-        }
-        
-        if (batchToImport.length > 0) {
-          // Insert batch into Supabase
-          const { error, count } = await supabase
+          const { error } = await supabase
             .from('blog_posts')
-            .insert(batchToImport);
+            .insert([validatedPost]);
             
           if (error) {
-            console.error(`Error importing batch:`, error);
+            console.error(`Error importing post ${post.title}:`, error);
             errors++;
+            errorDetails.push(`${post.title}: ${error.message}`);
           } else {
-            imported += batchToImport.length;
-            console.log(`Successfully imported ${batchToImport.length} posts (batch ${i/batchSize + 1})`);
+            imported++;
+            console.log(`Successfully imported: ${post.title}`);
           }
-        }
-        
-        // Small delay to avoid rate limiting
-        if (i + batchSize < totalPosts) {
+          
           await new Promise(resolve => setTimeout(resolve, 300));
+        } catch (error) {
+          console.error(`Error processing post ${post.title}:`, error);
+          errors++;
+          errorDetails.push(`${post.title}: ${error.message}`);
         }
       }
       
-      // Refresh posts list
       await fetchPosts();
       
       if (errors > 0) {
+        console.error('Import errors:', errorDetails);
         toast.error(`Importação concluída com erros. ${imported} posts importados, ${skipped} posts ignorados, ${errors} erros.`);
       } else {
         toast.success(`Importação concluída! ${imported} posts importados, ${skipped} posts ignorados.`);
