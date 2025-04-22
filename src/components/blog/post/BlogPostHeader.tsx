@@ -1,28 +1,22 @@
-
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { BlogPost } from '@/data/blogData';
-
 interface BlogPostHeaderProps {
   post: BlogPost;
   formatDate: (dateString: string) => string;
 }
-
-const BlogPostHeader = ({ post, formatDate }: BlogPostHeaderProps) => {
+const BlogPostHeader = ({
+  post,
+  formatDate
+}: BlogPostHeaderProps) => {
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
-  
-  return (
-    <>
+  return <>
       {/* Back to Blog Link */}
       <div className="mb-8">
-        <Link 
-          to="/blog" 
-          onClick={scrollToTop}
-          className="inline-flex items-center text-gray-600 hover:text-revgreen"
-        >
+        <Link to="/blog" onClick={scrollToTop} className="inline-flex items-center text-gray-600 hover:text-revgreen">
           <ArrowLeft className="h-4 w-4 mr-2" />
           <span>Voltar para o blog</span>
         </Link>
@@ -36,7 +30,7 @@ const BlogPostHeader = ({ post, formatDate }: BlogPostHeaderProps) => {
           </span>
         </div>
         
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+        <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6 px-0 lg:text-4xl">
           {post.title}
         </h1>
         
@@ -68,15 +62,9 @@ const BlogPostHeader = ({ post, formatDate }: BlogPostHeaderProps) => {
       {/* Featured Image */}
       <div className="max-w-4xl mx-auto mb-10">
         <figure className="rounded-lg overflow-hidden">
-          <img 
-            src={post.image}
-            alt={post.title}
-            className="w-full h-auto"
-          />
+          <img src={post.image} alt={post.title} className="w-full h-auto" />
         </figure>
       </div>
-    </>
-  );
+    </>;
 };
-
 export default BlogPostHeader;
