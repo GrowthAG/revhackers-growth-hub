@@ -117,7 +117,7 @@ const materials = [
     downloadLink: "/downloads/calculadora-roi-revops.xlsx",
   },
   {
-    title: "PLAYBOOK DE VENDAS ADAPTÁVEL PARA QUALQUER NEGÓCIO",
+    title: "Playbook de Vendas Adaptável para Qualquer Negócio",
     description: "Descubra estratégias práticas e adaptáveis para estruturar e escalar o processo comercial em diferentes segmentos e portes de empresas.",
     type: "E-book",
     icon: Book,
