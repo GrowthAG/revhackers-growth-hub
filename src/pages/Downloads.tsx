@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet, Funnel } from 'lucide-react';
+import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet, FunnelIcon } from 'lucide-react';
 import DownloadForm from '@/components/shared/download-form';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -129,7 +129,7 @@ const materials = [
     title: "Descomplicando o Google Ads",
     description: "Um guia visual e prático para criar, otimizar e destravar resultados com funis no Google Ads mesmo para quem está começando.",
     type: "Funil",
-    icon: Funnel,
+    icon: FunnelIcon,
     id: "funil-google-ads",
     category: "marketing",
     downloadLink: "/downloads/funil-descomplicando-google-ads.pdf",
