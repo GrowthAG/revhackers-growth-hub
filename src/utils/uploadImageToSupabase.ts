@@ -9,19 +9,24 @@ import { supabase } from '@/integrations/supabase/client';
 export const uploadImageToSupabase = async (file: File) => {
   const bucket = 'blog-covers';
   const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
-  const { data, error } = await supabase.storage.from(bucket).upload(fileName, file, {
+
+  // Upload da imagem
+  const { error } = await supabase.storage.from(bucket).upload(fileName, file, {
     cacheControl: '3600',
     upsert: false
   });
 
   if (error) {
-    throw error;
+    console.error('Erro no upload para supabase.storage:', error);
+    throw new Error('Erro ao enviar imagem para o Supabase Storage');
   }
 
-  // Obter a URL pública da imagem
-  const {
-    data: { publicUrl }
-  } = supabase.storage.from(bucket).getPublicUrl(fileName);
+  // Obter a URL pública da imagem recém-enviada
+  const getUrlRes = supabase.storage.from(bucket).getPublicUrl(fileName);
+  if (!getUrlRes.data || !getUrlRes.data.publicUrl) {
+    console.error('Erro ao obter a URL pública após upload:', getUrlRes.error);
+    throw new Error('Não foi possível obter a URL pública da imagem');
+  }
 
-  return publicUrl;
+  return getUrlRes.data.publicUrl;
 };
