@@ -24,7 +24,7 @@ export const uploadImageToSupabase = async (file: File) => {
   // Obter a URL pública da imagem recém-enviada
   const getUrlRes = supabase.storage.from(bucket).getPublicUrl(fileName);
   if (!getUrlRes.data || !getUrlRes.data.publicUrl) {
-    console.error('Erro ao obter a URL pública após upload:', getUrlRes.error);
+    console.error('Erro ao obter a URL pública após upload:');
     throw new Error('Não foi possível obter a URL pública da imagem');
   }
 
