@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { Save, Eye, Image, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { uploadImageToSupabase } from '@/utils/uploadImageToSupabase';
 
 const categories = [
   'RevOps',
@@ -55,6 +56,7 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
   const [customCategory, setCustomCategory] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [readTime, setReadTime] = useState('5 min');
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   useEffect(() => {
     if (post && isEditing) {
@@ -146,9 +148,21 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
     setCategory(value);
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCoverImage('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1800&auto=format&fit=crop');
-    toast.success('Imagem carregada com sucesso!');
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setIsUploadingImage(true);
+      try {
+        const imageUrl = await uploadImageToSupabase(file);
+        setCoverImage(imageUrl);
+        toast.success('Imagem enviada com sucesso!');
+      } catch (err) {
+        toast.error('Erro ao enviar imagem de capa.');
+        console.error(err);
+      } finally {
+        setIsUploadingImage(false);
+      }
+    }
   };
 
   const generateSlug = (title: string) => {
@@ -294,10 +308,14 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
                   <Button
                     variant="outline"
                     className="w-full"
+                    type="button"
+                    disabled={isUploadingImage}
                     onClick={() => document.getElementById('image')?.click()}
                   >
                     <Image className="mr-2 h-4 w-4" />
-                    {coverImage ? 'Trocar imagem' : 'Escolher imagem'}
+                    {isUploadingImage
+                      ? 'Enviando imagem...'
+                      : coverImage ? 'Trocar imagem' : 'Escolher imagem'}
                   </Button>
                 </div>
                 {coverImage && (
@@ -310,6 +328,9 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
                   </div>
                 )}
               </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Imagem recomendada: 1200x600px. JPG ou PNG.
+              </p>
             </div>
             
             <div>
