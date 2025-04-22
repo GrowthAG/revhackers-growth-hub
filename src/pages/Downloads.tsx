@@ -1,14 +1,12 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet } from 'lucide-react';
+import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet, Funnel } from 'lucide-react';
 import DownloadForm from '@/components/shared/download-form';
 import { useToast } from '@/components/ui/use-toast';
 
-// Expanded materials list with more relevant B2B, SaaS, and RevOps content
 const materials = [
   {
     title: "Guia Completo: Revenue Operations para B2B",
@@ -117,6 +115,24 @@ const materials = [
     id: "calculadora-roi-revops",
     category: "analytics",
     downloadLink: "/downloads/calculadora-roi-revops.xlsx",
+  },
+  {
+    title: "PLAYBOOK DE VENDAS ADAPTÁVEL PARA QUALQUER NEGÓCIO",
+    description: "Descubra estratégias práticas e adaptáveis para estruturar e escalar o processo comercial em diferentes segmentos e portes de empresas.",
+    type: "E-book",
+    icon: Book,
+    id: "ebook-playbook-vendas-negocio",
+    category: "vendas",
+    downloadLink: "/downloads/ebook-playbook-vendas-adaptavel.pdf",
+  },
+  {
+    title: "Descomplicando o Google Ads",
+    description: "Um guia visual e prático para criar, otimizar e destravar resultados com funis no Google Ads mesmo para quem está começando.",
+    type: "Funil",
+    icon: Funnel,
+    id: "funil-google-ads",
+    category: "marketing",
+    downloadLink: "/downloads/funil-descomplicando-google-ads.pdf",
   }
 ];
 
@@ -126,7 +142,6 @@ const Downloads = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -134,7 +149,6 @@ const Downloads = () => {
   const handleDownloadClick = (material: (typeof materials)[0]) => {
     setSelectedMaterial(material);
     setShowForm(true);
-    // Scroll to the form
     setTimeout(() => {
       document.getElementById('download-form')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
@@ -146,7 +160,6 @@ const Downloads = () => {
       description: "Seu download está sendo preparado. Você receberá o material por e-mail em instantes.",
     });
     setShowForm(false);
-    // In a real app, we would track this download and trigger automations
     console.log(`Material ${selectedMaterial?.id} requested for download`);
   };
 
@@ -173,7 +186,6 @@ const Downloads = () => {
 
       <section className="py-16 bg-gray-50">
         <div className="container-custom">
-          {/* Filter tabs could be added here in future iterations */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {materials.map((material, index) => (
               <Card key={index} className="overflow-hidden shadow-md hover:shadow-xl transition-shadow h-full flex flex-col">
