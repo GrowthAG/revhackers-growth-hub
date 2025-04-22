@@ -301,10 +301,8 @@ const PolemicLedGrowthArticle = ({
       </div>
 
       <figure className="my-10">
-        <img src="https://images.unsplash.com/photo-1629207924502-78bc13571d12?q=80&w=1800&auto=format&fit=crop" alt="Perfil LinkedIn otimizado com conteúdo polêmico e estratégico" className="w-full h-auto rounded-lg shadow-md" />
-        <figcaption className="text-center text-sm text-gray-500 mt-2">
-          Transformação visível na apresentação profissional com o método PLG
-        </figcaption>
+        
+        
       </figure>
       
       <h2 id="implementacao">Como implementar o Polemic Led Growth no seu LinkedIn</h2>
