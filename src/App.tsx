@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -57,6 +56,9 @@ const App = () => (
           <Route path="/booking" element={<Booking />} />
           <Route path="/termos-de-uso" element={<TermosDeUso />} />
           <Route path="/privacidade" element={<Privacidade />} />
+          
+          {/* Secure Booking Route - Not listed in navigation */}
+          <Route path="/secure-booking/:token" element={<SecureBooking />} />
           
           {/* Admin Routes */}
           <Route path="/admin" element={<Admin />} />
