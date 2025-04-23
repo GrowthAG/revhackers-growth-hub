@@ -1,8 +1,6 @@
-
 import { Linkedin, Twitter, Facebook, Instagram, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
-
 const BlogPostFooter = () => {
   const shareUrl = window.location.href;
   const shareTitle = document.title;
@@ -10,7 +8,6 @@ const BlogPostFooter = () => {
   // Função para compartilhar nas redes sociais
   const shareOnSocial = (platform: string) => {
     let shareLink = '';
-    
     switch (platform) {
       case 'linkedin':
         shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
@@ -24,24 +21,16 @@ const BlogPostFooter = () => {
       default:
         return;
     }
-    
     window.open(shareLink, '_blank', 'width=600,height=400');
   };
-
-  return (
-    <div className="max-w-3xl mx-auto mt-12 border-t border-gray-100 pt-8">
+  return <div className="max-w-3xl mx-auto mt-12 border-t border-gray-100 pt-8">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <span className="text-gray-500">Compartilhe este artigo:</span>
         <div className="flex space-x-3">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="h-10 w-10 rounded-full"
-                  onClick={() => shareOnSocial('linkedin')}
-                >
+                <Button variant="outline" size="icon" onClick={() => shareOnSocial('linkedin')} className="h-10 w-10 rounded-full bg-[#00fc00]">
                   <Linkedin className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
@@ -54,12 +43,7 @@ const BlogPostFooter = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="h-10 w-10 rounded-full"
-                  onClick={() => shareOnSocial('twitter')}
-                >
+                <Button variant="outline" size="icon" onClick={() => shareOnSocial('twitter')} className="h-10 w-10 rounded-full bg-[#00ff00]">
                   <Twitter className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
@@ -72,12 +56,7 @@ const BlogPostFooter = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="h-10 w-10 rounded-full"
-                  onClick={() => shareOnSocial('facebook')}
-                >
+                <Button variant="outline" size="icon" onClick={() => shareOnSocial('facebook')} className="h-10 w-10 rounded-full bg-[#00ff00]">
                   <Facebook className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
@@ -109,8 +88,6 @@ const BlogPostFooter = () => {
           </a>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default BlogPostFooter;

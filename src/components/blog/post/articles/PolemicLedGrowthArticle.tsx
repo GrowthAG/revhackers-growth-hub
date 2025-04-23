@@ -398,29 +398,7 @@ const PolemicLedGrowthArticle = ({
         </Button>
       </div>
       
-      <div className="not-prose my-6">
-        <p className="text-sm font-medium">Recursos adicionais:</p>
-        <div className="flex flex-col space-y-2 mt-2">
-          <a href="#" className="flex items-center text-revgreen hover:underline">
-            <Button variant="link" className="p-0 h-auto">
-              <Download className="h-4 w-4 mr-2" />
-              <span>Checklist: 27 elementos de um perfil LinkedIn magnético (PDF)</span>
-            </Button>
-          </a>
-          <a href="#" className="flex items-center text-revgreen hover:underline">
-            <Button variant="link" className="p-0 h-auto">
-              <MessageSquare className="h-4 w-4 mr-2" />
-              <span>Webinar: Como aplicar o PLG em seu nicho específico</span>
-            </Button>
-          </a>
-          <a href="#" className="flex items-center text-revgreen hover:underline">
-            <Button variant="link" className="p-0 h-auto">
-              <Star className="h-4 w-4 mr-2" />
-              <span>Template: Headline magnética para seu perfil LinkedIn</span>
-            </Button>
-          </a>
-        </div>
-      </div>
+      
     </div>;
 };
 export default PolemicLedGrowthArticle;
