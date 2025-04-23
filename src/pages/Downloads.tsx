@@ -124,15 +124,6 @@ const materials = [
     id: "ebook-playbook-vendas-negocio",
     category: "vendas",
     downloadLink: "/downloads/ebook-playbook-vendas-adaptavel.pdf",
-  },
-  {
-    title: "Descomplicando o Google Ads",
-    description: "Um guia visual e prático para criar, otimizar e destravar resultados com funis no Google Ads mesmo para quem está começando.",
-    type: "E-book",
-    icon: Book,
-    id: "funil-google-ads",
-    category: "marketing",
-    downloadLink: "/downloads/funil-descomplicando-google-ads.pdf",
   }
 ];
 
