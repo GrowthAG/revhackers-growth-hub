@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -60,9 +61,13 @@ const BlogPostHeader = ({
       </div>
       
       {/* Featured Image */}
-      <div className="max-w-4xl mx-auto mb-10">
-        <figure className="rounded-lg overflow-hidden">
-          <img src={post.image} alt={post.title} className="w-full h-auto" />
+      <div className="max-w-3xl mx-auto mb-10">
+        <figure className="rounded-lg overflow-hidden shadow-sm">
+          <img 
+            src={post.image} 
+            alt={post.title} 
+            className="w-full h-[500px] object-cover" 
+          />
         </figure>
       </div>
     </>;
