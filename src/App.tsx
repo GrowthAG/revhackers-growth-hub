@@ -23,6 +23,7 @@ import PartnerDetail from "./pages/PartnerDetail";
 import PartnerEnics from "./pages/PartnerEnics";
 import TermosDeUso from "./pages/TermosDeUso";
 import Privacidade from "./pages/Privacidade";
+import SecureBooking from "./pages/SecureBooking";
 
 // Admin Pages
 import Admin from "./pages/Admin";
@@ -57,6 +58,7 @@ const App = () => (
           <Route path="/booking" element={<Booking />} />
           <Route path="/termos-de-uso" element={<TermosDeUso />} />
           <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/secure-booking" element={<SecureBooking />} />
           
           {/* Admin Routes */}
           <Route path="/admin" element={<Admin />} />
