@@ -1,7 +1,9 @@
+
 import { ArrowRight, BarChart3, CheckCircle2, Download, LineChart, BookOpen, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
+
 interface DefaultArticleProps {
   category: string;
   authorName: string;
@@ -10,17 +12,20 @@ interface DefaultArticleProps {
   slug?: string;
   getArticleImageBySlug: (slug: string) => string;
 }
-const DefaultArticle = ({
-  category,
-  authorName,
-  authorRole,
-  getFrameworkImage,
+
+const DefaultArticle = ({ 
+  category, 
+  authorName, 
+  authorRole, 
+  getFrameworkImage, 
   slug,
-  getArticleImageBySlug
+  getArticleImageBySlug 
 }: DefaultArticleProps) => {
   // Use slug-specific image if available, fallback to category image
   const articleImage = slug ? getArticleImageBySlug(slug) : getFrameworkImage(category);
-  return <div className="prose prose-lg lg:prose-xl">
+
+  return (
+    <div className="prose prose-lg lg:prose-xl">
       <p className="lead text-xl mb-8">
         Esta é uma análise aprofundada sobre estratégias de {category} para empresas B2B que buscam crescimento acelerado.
       </p>
@@ -55,7 +60,11 @@ const DefaultArticle = ({
       </div>
       
       <figure className="my-10">
-        <img src={articleImage} alt={`Framework de ${category}`} className="w-full h-auto rounded-lg shadow-md" />
+        <img 
+          src={articleImage}
+          alt={`Framework de ${category}`}
+          className="w-full h-auto rounded-lg shadow-md"
+        />
         <figcaption className="text-center text-sm text-gray-500 mt-2">
           Framework visual de implementação de {category} para empresas B2B
         </figcaption>
@@ -232,7 +241,25 @@ const DefaultArticle = ({
         excepcionais para seus clientes.
       </p>
 
-      
-    </div>;
+      <div className="not-prose my-6">
+        <p className="text-sm font-medium">Recursos adicionais:</p>
+        <div className="flex flex-col space-y-2 mt-2">
+          <a href="#" className="flex items-center text-revgreen hover:underline">
+            <Button variant="link" className="p-0 h-auto">
+              <Download className="h-4 w-4 mr-2" />
+              <span>Guia Completo de {category} para B2B (PDF)</span>
+            </Button>
+          </a>
+          <a href="#" className="flex items-center text-revgreen hover:underline">
+            <Button variant="link" className="p-0 h-auto">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              <span>Webinar: Implementando {category} na prática</span>
+            </Button>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
 };
+
 export default DefaultArticle;
