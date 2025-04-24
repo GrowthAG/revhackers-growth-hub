@@ -28,7 +28,7 @@ const SecureBooking = () => {
         <div className="container-custom">
           <div className="text-center max-w-4xl mx-auto mb-8">
             <h1 className="text-5xl font-bold leading-tight mb-4">
-              <span className="text-revgreen">Agende</span> uma conversa com um especialista
+              <span className="text-revgreen">Agende</span> uma conversa agora
             </h1>
             <p className="text-lg text-white max-w-2xl mx-auto mt-4">
               Escolha o melhor horário para conversarmos sobre suas necessidades 
