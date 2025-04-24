@@ -1,4 +1,3 @@
-
 export interface Author {
   name: string;
   role: string;
@@ -26,7 +25,7 @@ export const blogPosts: BlogPost[] = [
     slug: "polemic-led-growth-metodo-linkedin-maquina-oportunidades",
     excerpt: "Descubra como construir autoridade silenciosa e atrair oportunidades de alto valor no LinkedIn sem depender de autopromoção excessiva.",
     category: "PLG",
-    image: "/lovable-uploads/3e83124e-b157-4e90-af6e-32ddb4c52178.png",
+    image: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe3e8f11cc71d2ba4dbe53.png",
     author: {
       name: "Rafael Silva",
       role: "Especialista em Digital Branding",
