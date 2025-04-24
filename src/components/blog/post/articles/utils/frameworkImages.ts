@@ -1,4 +1,3 @@
-
 // Utility function to get framework image based on category
 export const getFrameworkImage = (category: string): string => {
   switch(category) {
@@ -34,11 +33,10 @@ export const getFrameworkImage = (category: string): string => {
 
 // Function to get specific image for article by slug
 export const getArticleImageBySlug = (slug: string): string => {
-  // Mapa detalhado para garantir que cada artigo tenha uma imagem única
   const articleImageMap: Record<string, string> = {
     // PLG articles - each with unique imagery
     "polemic-led-growth-metodo-linkedin-maquina-oportunidades": 
-      "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67fe3e8f11cc71d2ba4dbe53.png",
+      "/lovable-uploads/116be6ad-cd44-4cf3-b9aa-fac29176a53c.png",
     "plg-guia-definitivo-saas-b2b": 
       "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1800&auto=format&fit=crop",
     "o-que-e-plg-e-como-aplicar-em-startups-brasileiras": 
