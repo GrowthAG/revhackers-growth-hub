@@ -1,5 +1,5 @@
 
-const API_URL = 'https://blog.revhackers.com.br/wp-json/wp/v2/posts?_embed';
+const API_URL = 'https://materiais.revhackers.com.br/wp-json/wp/v2/posts?_embed';
 
 export async function getAllPosts() {
   try {
