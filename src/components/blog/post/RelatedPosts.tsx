@@ -1,9 +1,28 @@
 
-import { BlogPost } from '@/data/blogData';
-import BlogCard from '@/components/blog/BlogCard';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import BlogCard from '@/components/blog/BlogCard';
+
+// Updated BlogPost interface to match the WordPress API data structure
+interface Author {
+  name: string;
+  role: string;
+  avatar: string;
+}
+
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  readTime: string;
+  image: string;
+  category: string;
+  author: Author;
+}
 
 interface RelatedPostsProps {
   posts: BlogPost[];

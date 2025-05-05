@@ -2,7 +2,30 @@
 import { useEffect, useState } from 'react';
 import { getAllPosts } from '../../api/posts';
 import DOMPurify from 'dompurify';
+import React from 'react';
 
+interface AdminLayoutProps {
+  children: React.ReactNode;
+  pageTitle: string;
+}
+
+const AdminLayout: React.FC<AdminLayoutProps> = ({ children, pageTitle }) => {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white border-b border-gray-200 px-4 py-4">
+        <div className="container mx-auto">
+          <h1 className="text-2xl font-bold">{pageTitle}</h1>
+        </div>
+      </header>
+      
+      <main className="container mx-auto px-4 py-8">
+        {children}
+      </main>
+    </div>
+  );
+};
+
+// Original BlogTest component is kept but exported separately
 function BlogTest() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -72,4 +95,5 @@ function BlogTest() {
   );
 }
 
-export default BlogTest;
+export default AdminLayout;
+export { BlogTest };
