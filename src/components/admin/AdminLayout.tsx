@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllPosts } from './api/posts';
+import { getAllPosts } from '../../api/posts';
 
 function BlogTest() {
   const [posts, setPosts] = useState([]);
