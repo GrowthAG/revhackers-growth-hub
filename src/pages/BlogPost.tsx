@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
@@ -61,8 +62,7 @@ const BlogPostPage = () => {
   // Find the current post
   const post = posts.find(post => post.slug === slug);
   
-  // Get related posts - garantimos conteúdo relacionado mas não repetitivo
-  // Filtramos por categoria, mas excluímos o post atual
+  // Get related posts
   const relatedPosts = post 
     ? posts
         .filter(p => p.category === post.category && p.id !== post.id)
@@ -144,6 +144,7 @@ const BlogPostPage = () => {
               </div>
               <div ref={contentRef} className="lg:col-span-3">
                 <BlogPostContent 
+                  content={post.content}
                   category={post.category}
                   authorName={post.author.name}
                   authorRole={post.author.role}
@@ -156,7 +157,7 @@ const BlogPostPage = () => {
         </div>
       </article>
       
-      {/* Related Articles - sempre mostrando conteúdo relevante e não repetitivo */}
+      {/* Related Articles */}
       <RelatedPosts posts={relatedPosts} />
     </PageLayout>
   );
