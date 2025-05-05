@@ -2,11 +2,32 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { BlogPost } from '@/data/blogData';
+import DOMPurify from 'dompurify';
+
+interface Author {
+  name: string;
+  role: string;
+  avatar: string;
+}
+
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  readTime: string;
+  image: string;
+  category: string;
+  author: Author;
+}
+
 interface BlogPostHeaderProps {
   post: BlogPost;
   formatDate: (dateString: string) => string;
 }
+
 const BlogPostHeader = ({
   post,
   formatDate
@@ -14,6 +35,14 @@ const BlogPostHeader = ({
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
+  
+  // Clean HTML from title
+  const cleanTitle = () => {
+    const div = document.createElement('div');
+    div.innerHTML = DOMPurify.sanitize(post.title);
+    return div.textContent || div.innerText || '';
+  };
+  
   return <>
       {/* Back to Blog Link */}
       <div className="mb-8">
@@ -32,7 +61,7 @@ const BlogPostHeader = ({
         </div>
         
         <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6 px-0 lg:text-4xl">
-          {post.title}
+          {cleanTitle()}
         </h1>
         
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
@@ -65,11 +94,12 @@ const BlogPostHeader = ({
         <figure className="rounded-lg overflow-hidden shadow-sm">
           <img 
             src={post.image} 
-            alt={post.title} 
+            alt={cleanTitle()} 
             className="w-full h-[500px] object-cover" 
           />
         </figure>
       </div>
     </>;
 };
+
 export default BlogPostHeader;
