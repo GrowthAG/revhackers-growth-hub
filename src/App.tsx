@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,7 +16,6 @@ import ServicosDetalhe from "./pages/ServicosDetalhe";
 import Cases from "./pages/Cases";
 import CasesDetalhe from "./pages/CasesDetalhe";
 import Downloads from "./pages/Downloads";
-import Materials from "./pages/Materials";
 import Comunidade from "./pages/Comunidade";
 import Booking from "./pages/Booking";
 import PartnerDetail from "./pages/PartnerDetail";
@@ -25,6 +23,13 @@ import PartnerEnics from "./pages/PartnerEnics";
 import TermosDeUso from "./pages/TermosDeUso";
 import Privacidade from "./pages/Privacidade";
 import SecureBooking from "./pages/SecureBooking";
+
+// Admin Pages
+import Admin from "./pages/Admin";
+import AdminPosts from "./pages/AdminPosts";
+import AdminPostNew from "./pages/AdminPostNew";
+import AdminPostEdit from "./pages/AdminPostEdit";
+import AdminSettings from "./pages/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -48,12 +53,18 @@ const App = () => (
           <Route path="/partners/:slug" element={<PartnerDetail />} />
           <Route path="/partners/enics" element={<PartnerEnics />} />
           <Route path="/downloads" element={<Downloads />} />
-          <Route path="/materiais" element={<Materials />} />
           <Route path="/comunidade" element={<Comunidade />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/termos-de-uso" element={<TermosDeUso />} />
           <Route path="/privacidade" element={<Privacidade />} />
           <Route path="/agenda/giulliano" element={<SecureBooking />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/posts" element={<AdminPosts />} />
+          <Route path="/admin/posts/new" element={<AdminPostNew />} />
+          <Route path="/admin/posts/edit/:id" element={<AdminPostEdit />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
           
           {/* 404 Route */}
           <Route path="*" element={<NotFound />} />

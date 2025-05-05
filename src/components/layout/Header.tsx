@@ -33,7 +33,7 @@ const Header = () => {
             <Link to="/" className="nav-link nav-link-active" onClick={scrollToTop}>Home</Link>
             <Link to="/servicos" className="nav-link" onClick={scrollToTop}>Serviços</Link>
             <Link to="/cases" className="nav-link" onClick={scrollToTop}>Cases</Link>
-            <Link to="/materiais" className="nav-link" onClick={scrollToTop}>Materiais</Link>
+            <Link to="/downloads" className="nav-link" onClick={scrollToTop}>Materiais</Link>
             <Link to="/comunidade" className="nav-link" onClick={scrollToTop}>Comunidade</Link>
             <Link to="/quem-somos" className="nav-link" onClick={scrollToTop}>Quem Somos</Link>
             <Link to="/blog" className="nav-link" onClick={scrollToTop}>Blog</Link>
@@ -59,7 +59,7 @@ const Header = () => {
             <Link to="/" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Home</Link>
             <Link to="/servicos" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Serviços</Link>
             <Link to="/cases" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Cases</Link>
-            <Link to="/materiais" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Materiais</Link>
+            <Link to="/downloads" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Materiais</Link>
             <Link to="/comunidade" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Comunidade</Link>
             <Link to="/quem-somos" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Quem Somos</Link>
             <Link to="/blog" className="nav-link" onClick={() => { toggleMenu(); scrollToTop(); }}>Blog</Link>
