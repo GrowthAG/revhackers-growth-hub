@@ -53,6 +53,13 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
     div.innerHTML = DOMPurify.sanitize(post.title);
     return div.textContent || div.innerText || '';
   };
+  
+  // Safe way to get initials from author name
+  const getAuthorInitials = () => {
+    return post.author && post.author.name 
+      ? post.author.name.substring(0, 2) 
+      : 'AU';
+  };
 
   return (
     <Link to={`/blog/${post.slug}`} className="group block h-full" onClick={onClick}>
@@ -91,12 +98,12 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
           <div className="flex items-center justify-between mt-2">
             <div className="flex items-center space-x-3">
               <Avatar className="h-8 w-8">
-                <AvatarImage src={post.author.avatar} alt={post.author.name} />
-                <AvatarFallback>{post.author.name.substring(0, 2)}</AvatarFallback>
+                <AvatarImage src={post.author?.avatar} alt={post.author?.name || 'Author'} />
+                <AvatarFallback>{getAuthorInitials()}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium">{post.author.name}</p>
-                <p className="text-xs text-gray-500">{post.author.role}</p>
+                <p className="text-sm font-medium">{post.author?.name || 'Author'}</p>
+                <p className="text-xs text-gray-500">{post.author?.role || ''}</p>
               </div>
             </div>
             <span className="text-revgreen opacity-0 group-hover:opacity-100 transition-opacity flex items-center">

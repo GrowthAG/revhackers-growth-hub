@@ -66,6 +66,13 @@ const BlogSection = () => {
     div.innerHTML = DOMPurify.sanitize(htmlExcerpt);
     return div.textContent || div.innerText || '';
   };
+  
+  // Safe way to get initials from author name
+  const getAuthorInitials = (author: BlogPost['author'] | undefined) => {
+    return author && author.name 
+      ? author.name.substring(0, 2) 
+      : 'AU';
+  };
 
   return (
     <section className="section-padding bg-white">
@@ -137,12 +144,12 @@ const BlogSection = () => {
                       <div className="flex items-center justify-between mt-4">
                         <div className="flex items-center space-x-3">
                           <Avatar className="h-8 w-8">
-                            <AvatarImage src={article.author.avatar} alt={article.author.name} />
-                            <AvatarFallback>{article.author.name.substring(0, 2)}</AvatarFallback>
+                            <AvatarImage src={article.author?.avatar} alt={article.author?.name || 'Author'} />
+                            <AvatarFallback>{getAuthorInitials(article.author)}</AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="text-sm font-medium">{article.author.name}</p>
-                            <p className="text-xs text-gray-500">{article.author.role}</p>
+                            <p className="text-sm font-medium">{article.author?.name || 'Author'}</p>
+                            <p className="text-xs text-gray-500">{article.author?.role || ''}</p>
                           </div>
                         </div>
                         <span className="text-revgreen opacity-0 group-hover:opacity-100 transition-opacity">

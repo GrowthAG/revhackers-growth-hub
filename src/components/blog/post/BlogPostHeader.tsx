@@ -43,6 +43,13 @@ const BlogPostHeader = ({
     return div.textContent || div.innerText || '';
   };
   
+  // Safe way to get initials from author name
+  const getAuthorInitials = () => {
+    return post.author && post.author.name 
+      ? post.author.name.substring(0, 2) 
+      : 'AU';
+  };
+  
   return <>
       {/* Back to Blog Link */}
       <div className="mb-8">
@@ -67,12 +74,12 @@ const BlogPostHeader = ({
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div className="flex items-center space-x-3">
             <Avatar className="h-10 w-10">
-              <AvatarImage src={post.author.avatar} alt={post.author.name} />
-              <AvatarFallback>{post.author.name.substring(0, 2)}</AvatarFallback>
+              <AvatarImage src={post.author?.avatar} alt={post.author?.name || 'Author'} />
+              <AvatarFallback>{getAuthorInitials()}</AvatarFallback>
             </Avatar>
             <div>
-              <p className="font-medium">{post.author.name}</p>
-              <p className="text-sm text-gray-500">{post.author.role}</p>
+              <p className="font-medium">{post.author?.name || 'Author'}</p>
+              <p className="text-sm text-gray-500">{post.author?.role || ''}</p>
             </div>
           </div>
           
