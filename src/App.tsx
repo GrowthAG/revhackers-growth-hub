@@ -26,13 +26,6 @@ import TermosDeUso from "./pages/TermosDeUso";
 import Privacidade from "./pages/Privacidade";
 import SecureBooking from "./pages/SecureBooking";
 
-// Admin Pages
-import Admin from "./pages/Admin";
-import AdminPosts from "./pages/AdminPosts";
-import AdminPostNew from "./pages/AdminPostNew";
-import AdminPostEdit from "./pages/AdminPostEdit";
-import AdminSettings from "./pages/AdminSettings";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -61,13 +54,6 @@ const App = () => (
           <Route path="/termos-de-uso" element={<TermosDeUso />} />
           <Route path="/privacidade" element={<Privacidade />} />
           <Route path="/agenda/giulliano" element={<SecureBooking />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/posts" element={<AdminPosts />} />
-          <Route path="/admin/posts/new" element={<AdminPostNew />} />
-          <Route path="/admin/posts/edit/:id" element={<AdminPostEdit />} />
-          <Route path="/admin/settings" element={<AdminSettings />} />
           
           {/* 404 Route */}
           <Route path="*" element={<NotFound />} />
