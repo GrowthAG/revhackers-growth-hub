@@ -1,4 +1,23 @@
-import { useEffect, useState } from 'react';
+
+import { useEffect, useState, ReactNode } from 'react';
+
+interface AdminLayoutProps {
+  children: ReactNode;
+  pageTitle?: string;
+}
+
+export default function AdminLayout({ children, pageTitle }: AdminLayoutProps) {
+  return (
+    <div className="bg-gray-50 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {pageTitle && (
+          <h1 className="text-3xl font-bold text-gray-900 mb-6">{pageTitle}</h1>
+        )}
+        <main>{children}</main>
+      </div>
+    </div>
+  );
+}
 
 type Material = {
   id: number;
