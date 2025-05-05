@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,7 +16,6 @@ import ServicosDetalhe from "./pages/ServicosDetalhe";
 import Cases from "./pages/Cases";
 import CasesDetalhe from "./pages/CasesDetalhe";
 import Downloads from "./pages/Downloads";
-import Materials from "./pages/Materials";
 import Comunidade from "./pages/Comunidade";
 import Booking from "./pages/Booking";
 import PartnerDetail from "./pages/PartnerDetail";
@@ -55,7 +53,6 @@ const App = () => (
           <Route path="/partners/:slug" element={<PartnerDetail />} />
           <Route path="/partners/enics" element={<PartnerEnics />} />
           <Route path="/downloads" element={<Downloads />} />
-          <Route path="/materiais" element={<Materials />} />
           <Route path="/comunidade" element={<Comunidade />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/termos-de-uso" element={<TermosDeUso />} />
