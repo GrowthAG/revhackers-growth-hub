@@ -13,18 +13,15 @@ const BlogPostContent = ({ content, category, authorName, authorRole, slug }: Bl
   // Sanitize HTML content from WordPress
   const sanitizedContent = DOMPurify.sanitize(content);
   
-  // Safe access to author name
-  const safeAuthorName = authorName || 'Author';
-  
   return (
     <div className="prose prose-lg lg:prose-xl max-w-none">
       {/* Author Card - Start */}
       <div className="not-prose bg-gray-50 p-6 rounded-lg border border-gray-200 mb-8">
         <div className="flex flex-col sm:flex-row items-center gap-4">
-          <img src="/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png" alt={safeAuthorName} className="w-20 h-20 rounded-full object-cover border-2 border-revgreen" />
+          <img src="/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png" alt={authorName} className="w-20 h-20 rounded-full object-cover border-2 border-revgreen" />
           <div className="text-center sm:text-left">
-            <h3 className="text-xl font-bold">{safeAuthorName}</h3>
-            <p className="text-gray-600">{authorRole || ''}</p>
+            <h3 className="text-xl font-bold">{authorName}</h3>
+            <p className="text-gray-600">{authorRole}</p>
           </div>
         </div>
       </div>
