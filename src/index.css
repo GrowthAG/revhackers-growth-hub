@@ -99,4 +99,41 @@
   .nav-link:hover::after {
     @apply w-full;
   }
+
+  /* WordPress content styling */
+  .wordpress-content {
+    @apply text-base leading-relaxed;
+  }
+
+  .wordpress-content h2 {
+    @apply text-2xl font-bold mt-8 mb-4;
+  }
+
+  .wordpress-content h3 {
+    @apply text-xl font-bold mt-6 mb-3;
+  }
+
+  .wordpress-content p {
+    @apply mb-4;
+  }
+
+  .wordpress-content ul, .wordpress-content ol {
+    @apply mb-6 pl-5;
+  }
+
+  .wordpress-content li {
+    @apply mb-2;
+  }
+
+  .wordpress-content a {
+    @apply text-revgreen hover:underline;
+  }
+
+  .wordpress-content blockquote {
+    @apply pl-4 border-l-4 border-revgreen italic my-6;
+  }
+
+  .wordpress-content img {
+    @apply rounded-md my-6 mx-auto;
+  }
 }

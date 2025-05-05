@@ -28,7 +28,10 @@ const BlogPostContent = ({ content, category, authorName, authorRole, slug }: Bl
       {/* Author Card - End */}
       
       {/* WordPress Content */}
-      <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+      <div 
+        className="wordpress-content font-body"
+        dangerouslySetInnerHTML={{ __html: sanitizedContent }} 
+      />
     </div>
   );
 };
