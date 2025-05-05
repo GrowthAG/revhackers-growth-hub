@@ -3,8 +3,27 @@ import { CalendarIcon, Clock, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { BlogPost } from '@/data/blogData';
 import { getArticleImageBySlug } from './post/articles/utils/frameworkImages';
+import DOMPurify from 'dompurify';
+
+interface Author {
+  name: string;
+  role: string;
+  avatar: string;
+}
+
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  readTime: string;
+  image: string;
+  category: string;
+  author: Author;
+}
 
 interface BlogCardProps {
   post: BlogPost;
@@ -12,21 +31,28 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({ post, onClick }: BlogCardProps) => {
-  // Format date to Portuguese
+  // Formatar data para português
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('pt-BR', options);
   };
 
-  // Standard author info for all articles
-  const authorInfo = {
-    name: "Giulliano Alves",
-    role: "CEO da RevHackers",
-    avatar: "/lovable-uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
-  };
-
-  // Get custom image if available for this article
+  // Obter imagem personalizada se disponível para este artigo
   const articleImage = getArticleImageBySlug(post.slug) || post.image;
+  
+  // Limpar HTML do excerpt
+  const cleanExcerpt = () => {
+    const div = document.createElement('div');
+    div.innerHTML = DOMPurify.sanitize(post.excerpt);
+    return div.textContent || div.innerText || '';
+  };
+  
+  // Limpar HTML do título
+  const cleanTitle = () => {
+    const div = document.createElement('div');
+    div.innerHTML = DOMPurify.sanitize(post.title);
+    return div.textContent || div.innerText || '';
+  };
 
   return (
     <Link to={`/blog/${post.slug}`} className="group block h-full" onClick={onClick}>
@@ -34,7 +60,7 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
         <div className="h-48 overflow-hidden relative">
           <img 
             src={articleImage} 
-            alt={post.title} 
+            alt={cleanTitle()} 
             className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500"
           />
           <div className="absolute top-3 left-3">
@@ -44,8 +70,12 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
           </div>
         </div>
         <CardContent className="p-6">
-          <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-revgreen transition-colors">{post.title}</h3>
-          <p className="text-gray-600 mb-4 line-clamp-2">{post.excerpt}</p>
+          <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-revgreen transition-colors">
+            {cleanTitle()}
+          </h3>
+          <p className="text-gray-600 mb-4 line-clamp-2">
+            {cleanExcerpt()}
+          </p>
           
           <div className="flex text-sm text-gray-500 space-x-4 mb-4">
             <div className="flex items-center">
@@ -61,12 +91,12 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
           <div className="flex items-center justify-between mt-2">
             <div className="flex items-center space-x-3">
               <Avatar className="h-8 w-8">
-                <AvatarImage src={authorInfo.avatar} alt={authorInfo.name} />
-                <AvatarFallback>{authorInfo.name.substring(0, 2)}</AvatarFallback>
+                <AvatarImage src={post.author.avatar} alt={post.author.name} />
+                <AvatarFallback>{post.author.name.substring(0, 2)}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium">{authorInfo.name}</p>
-                <p className="text-xs text-gray-500">{authorInfo.role}</p>
+                <p className="text-sm font-medium">{post.author.name}</p>
+                <p className="text-xs text-gray-500">{post.author.role}</p>
               </div>
             </div>
             <span className="text-revgreen opacity-0 group-hover:opacity-100 transition-opacity flex items-center">

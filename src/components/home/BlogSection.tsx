@@ -6,23 +6,66 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { getArticleImageBySlug } from '../blog/post/articles/utils/frameworkImages';
-import { blogPosts, BlogPost } from '@/data/blogData';
+import { getAllPosts } from '@/api/posts';
+import DOMPurify from 'dompurify';
+
+// Interface para post do blog
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  readTime: string;
+  image: string;
+  category: string;
+  author: {
+    name: string;
+    role: string;
+    avatar: string;
+  };
+}
 
 const BlogSection = () => {
   const [featuredArticles, setFeaturedArticles] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    // Try to load posts from localStorage first
-    const savedPosts = localStorage.getItem('blogPosts');
-    const posts = savedPosts ? JSON.parse(savedPosts) : blogPosts;
+    const fetchPosts = async () => {
+      try {
+        const posts = await getAllPosts();
+        
+        // Ordenar posts por data (mais recentes primeiro) e pegar os primeiros 4
+        const sortedPosts = [...posts].sort((a, b) => 
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        ).slice(0, 4);
+        
+        setFeaturedArticles(sortedPosts);
+      } catch (error) {
+        console.error("Erro ao carregar artigos do blog:", error);
+        setFeaturedArticles([]);
+      } finally {
+        setLoading(false);
+      }
+    };
     
-    // Sort posts by date (newest first) and take the first 4
-    const sortedPosts = [...posts].sort((a, b) => 
-      new Date(b.date).getTime() - new Date(a.date).getTime()
-    ).slice(0, 4);
-    
-    setFeaturedArticles(sortedPosts);
+    fetchPosts();
   }, []);
+  
+  // Limpar HTML do título
+  const cleanTitle = (htmlTitle: string) => {
+    const div = document.createElement('div');
+    div.innerHTML = DOMPurify.sanitize(htmlTitle);
+    return div.textContent || div.innerText || '';
+  };
+  
+  // Limpar HTML do excerpt
+  const cleanExcerpt = (htmlExcerpt: string) => {
+    const div = document.createElement('div');
+    div.innerHTML = DOMPurify.sanitize(htmlExcerpt);
+    return div.textContent || div.innerText || '';
+  };
 
   return (
     <section className="section-padding bg-white">
@@ -52,51 +95,67 @@ const BlogSection = () => {
           </Button>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {featuredArticles.map((article, index) => {
-            // Get custom image if available for this article
-            const articleImage = getArticleImageBySlug(article.slug) || article.image;
-            
-            return (
-              <Link to={`/blog/${article.slug}`} key={index} className="group block h-full">
-                <Card className="overflow-hidden card-hover h-full border-0 shadow-sm hover:shadow-md transition-all duration-300">
-                  <div className="h-48 overflow-hidden relative">
-                    <img 
-                      src={articleImage} 
-                      alt={article.title} 
-                      className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className="text-xs px-3 py-1 bg-green-50 text-green-800 rounded-full font-medium shadow-sm">
-                        {article.category}
-                      </span>
-                    </div>
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-revgreen transition-colors">{article.title}</h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">{article.excerpt}</p>
-                    
-                    <div className="flex items-center justify-between mt-4">
-                      <div className="flex items-center space-x-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src={article.author.avatar} alt={article.author.name} />
-                          <AvatarFallback>{article.author.name.substring(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="text-sm font-medium">{article.author.name}</p>
-                          <p className="text-xs text-gray-500">{article.author.role}</p>
-                        </div>
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="rounded-full border-4 border-gray-200 border-t-revgreen animate-spin h-12 w-12"></div>
+          </div>
+        ) : featuredArticles.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500">Nenhum artigo disponível no momento.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {featuredArticles.map((article) => {
+              // Obter imagem personalizada se disponível para este artigo
+              const articleImage = getArticleImageBySlug(article.slug) || article.image;
+              const title = cleanTitle(article.title);
+              const excerpt = cleanExcerpt(article.excerpt);
+              
+              return (
+                <Link to={`/blog/${article.slug}`} key={article.id} className="group block h-full">
+                  <Card className="overflow-hidden card-hover h-full border-0 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div className="h-48 overflow-hidden relative">
+                      <img 
+                        src={articleImage} 
+                        alt={title} 
+                        className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500"
+                      />
+                      <div className="absolute top-3 left-3">
+                        <span className="text-xs px-3 py-1 bg-green-50 text-green-800 rounded-full font-medium shadow-sm">
+                          {article.category}
+                        </span>
                       </div>
-                      <span className="text-revgreen opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ArrowRight className="h-4 w-4" />
-                      </span>
                     </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-revgreen transition-colors">
+                        {title}
+                      </h3>
+                      <p className="text-gray-600 mb-4 line-clamp-2">
+                        {excerpt}
+                      </p>
+                      
+                      <div className="flex items-center justify-between mt-4">
+                        <div className="flex items-center space-x-3">
+                          <Avatar className="h-8 w-8">
+                            <AvatarImage src={article.author.avatar} alt={article.author.name} />
+                            <AvatarFallback>{article.author.name.substring(0, 2)}</AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="text-sm font-medium">{article.author.name}</p>
+                            <p className="text-xs text-gray-500">{article.author.role}</p>
+                          </div>
+                        </div>
+                        <span className="text-revgreen opacity-0 group-hover:opacity-100 transition-opacity">
+                          <ArrowRight className="h-4 w-4" />
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );

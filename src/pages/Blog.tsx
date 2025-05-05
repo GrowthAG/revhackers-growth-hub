@@ -4,31 +4,62 @@ import PageLayout from '@/components/layout/PageLayout';
 import BlogHeader from '@/components/blog/BlogHeader';
 import BlogCard from '@/components/blog/BlogCard';
 import { Button } from '@/components/ui/button';
-import { blogPosts, BlogPost } from '@/data/blogData';
 import { Search, Filter, BookOpen } from 'lucide-react';
+import { getAllPosts } from '@/api/posts';
+import { getArticleImageBySlug } from '@/components/blog/post/articles/utils/frameworkImages';
+
+// Interface para post do blog
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  readTime: string;
+  image: string;
+  category: string;
+  author: {
+    name: string;
+    role: string;
+    avatar: string;
+  };
+}
 
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
-  const [localPosts, setLocalPosts] = useState<BlogPost[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
   const [displayedPosts, setDisplayedPosts] = useState<BlogPost[]>([]);
   const [postsPerPage] = useState(9);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
-  // Load posts from localStorage if available
+  // Carregar posts da API do WordPress
   useEffect(() => {
-    const savedPosts = localStorage.getItem('blogPosts');
-    if (savedPosts) {
-      setLocalPosts(JSON.parse(savedPosts));
-    } else {
-      setLocalPosts(blogPosts);
-    }
+    const fetchPosts = async () => {
+      setIsLoading(true);
+      try {
+        const posts = await getAllPosts();
+        setBlogPosts(posts);
+        setError(null);
+      } catch (err) {
+        console.error("Erro ao buscar posts:", err);
+        setError("Não foi possível carregar os artigos. Por favor, tente novamente mais tarde.");
+        setBlogPosts([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchPosts();
   }, []);
   
-  // Filter posts based on category and search query
+  // Filtrar posts com base na categoria e consulta de pesquisa
   useEffect(() => {
-    let filtered = [...localPosts];
+    let filtered = [...blogPosts];
     
     if (activeCategory !== 'Todos') {
       filtered = filtered.filter(post => post.category === activeCategory);
@@ -43,25 +74,25 @@ const Blog = () => {
     }
     
     setFilteredPosts(filtered);
-    setCurrentPage(1); // Reset to first page when filters change
-  }, [activeCategory, searchQuery, localPosts]);
+    setCurrentPage(1); // Redefinir para a primeira página quando os filtros mudarem
+  }, [activeCategory, searchQuery, blogPosts]);
   
-  // Update displayed posts based on pagination
+  // Atualizar posts exibidos com base na paginação
   useEffect(() => {
     const startIndex = (currentPage - 1) * postsPerPage;
     const endIndex = startIndex + postsPerPage;
     setDisplayedPosts(filteredPosts.slice(startIndex, endIndex));
   }, [filteredPosts, currentPage, postsPerPage]);
   
-  // Load more posts
+  // Carregar mais posts
   const loadMore = () => {
     setCurrentPage(prev => prev + 1);
   };
   
   const hasMorePosts = currentPage * postsPerPage < filteredPosts.length;
 
-  // Get all unique categories
-  const categories = ['Todos', ...Array.from(new Set(localPosts.map(post => post.category)))];
+  // Obter todas as categorias únicas
+  const categories = ['Todos', ...Array.from(new Set(blogPosts.map(post => post.category)))];
   
   return (
     <PageLayout>
@@ -94,7 +125,29 @@ const Blog = () => {
             ))}
           </div>
           
-          {filteredPosts.length > 0 ? (
+          {isLoading ? (
+            <div className="text-center py-20">
+              <div className="mx-auto w-16 h-16 rounded-full border-4 border-gray-200 border-t-revgreen animate-spin mb-4"></div>
+              <h3 className="text-2xl font-bold mb-4">Carregando artigos...</h3>
+            </div>
+          ) : error ? (
+            <div className="text-center py-20">
+              <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                <BookOpen className="h-8 w-8 text-red-400" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">Erro ao carregar artigos</h3>
+              <p className="text-gray-600 max-w-md mx-auto">
+                {error}
+              </p>
+              <Button 
+                variant="outline" 
+                onClick={() => window.location.reload()}
+                className="mt-6 border-2 border-revgreen text-revgreen hover:bg-revgreen hover:text-white"
+              >
+                Tentar novamente
+              </Button>
+            </div>
+          ) : filteredPosts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {displayedPosts.map(post => (
