@@ -71,18 +71,19 @@ const ContactForm = ({ formType = 'contact' }: ContactFormProps) => {
         formType
       });
       
-      // Send data to webhook using no-cors mode
-      await fetch(WEBHOOK_URL, {
+      // Send data to webhook using standard fetch (removed no-cors)
+      const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        mode: 'no-cors',
         body: JSON.stringify(webhookData),
       });
       
-      // When using 'no-cors', we can't check response status
-      // We assume success since the request didn't throw an error
+      if (!response.ok && response.status !== 0) {
+        throw new Error('Failed to submit form data');
+      }
+      
       toast({
         title: formType === 'diagnosis' ? "Diagnóstico solicitado!" : "Mensagem enviada!",
         description: "Redirecionando para agendamento...",
