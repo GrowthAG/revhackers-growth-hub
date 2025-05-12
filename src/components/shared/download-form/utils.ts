@@ -24,3 +24,5 @@ export const validateForm = (formData: DownloadFormData): { isValid: boolean; er
 };
 
 export const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/a43962ce-48d9-4af9-84ae-06f3e9216b96';
+
+export const EMAIL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/email-material';

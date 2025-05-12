@@ -61,10 +61,16 @@ const Materiais = () => {
   const handleFormSubmit = () => {
     toast({
       title: "Material disponível!",
-      description: "Seu download está sendo preparado. Você receberá o material por e-mail em instantes.",
+      description: "Seu download está sendo preparado e foi enviado para seu email.",
     });
     setShowForm(false);
     console.log(`Material ${selectedMaterial?.materialId} requested for download`);
+  };
+
+  const cleanTitle = (title: string) => {
+    const div = document.createElement('div');
+    div.innerHTML = title;
+    return div.textContent || div.innerText || '';
   };
 
   return (
@@ -149,7 +155,7 @@ const Materiais = () => {
           {showForm && selectedMaterial && (
             <div id="download-form" className="mt-16 max-w-2xl mx-auto bg-white rounded-xl shadow-xl p-6 md:p-8 border">
               <h2 className="text-2xl font-bold mb-6">
-                Preencha seus dados para baixar "{selectedMaterial.title.replace(/<\/?[^>]+(>|$)/g, "")}"
+                Preencha seus dados para baixar "{cleanTitle(selectedMaterial.title)}"
               </h2>
               <DownloadForm 
                 materialId={selectedMaterial.materialId} 

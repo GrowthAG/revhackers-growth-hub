@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -8,7 +7,7 @@ import FormPersonalSection from './FormPersonalSection';
 import FormCompanySection from './FormCompanySection';
 import FormRoleSection from './FormRoleSection';
 import FormPrivacySection from './FormPrivacySection';
-import { validateForm, WEBHOOK_URL } from './utils';
+import { validateForm, WEBHOOK_URL, EMAIL_WEBHOOK_URL } from './utils';
 import { saveFormData } from '@/utils/formStorage';
 
 const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: DownloadFormProps) => {
@@ -54,6 +53,29 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
       ...formData,
       agree: checked
     });
+  };
+
+  const sendMaterialByEmail = async (webhookData: any) => {
+    try {
+      const emailData = {
+        ...webhookData,
+        materialTitle: materialType,
+        materialLink: linkMaterial || '',
+        actionType: 'send_material_email'
+      };
+      
+      await fetch(EMAIL_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
+      });
+      
+      console.log('Email request sent:', emailData);
+    } catch (error) {
+      console.error('Error sending email request:', error);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -110,6 +132,9 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
       if (!response.ok && response.status !== 0) {
         throw new Error('Failed to submit form data');
       }
+      
+      // Send material by email
+      await sendMaterialByEmail(webhookData);
       
       setIsSubmitting(false);
       onSubmit();
