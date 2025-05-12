@@ -14,7 +14,6 @@ export interface StoredFormData {
   message?: string;
   formType?: string;
   timestamp?: string;
-  materialLink?: string;
 }
 
 // Save form data to localStorage

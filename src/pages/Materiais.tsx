@@ -8,7 +8,6 @@ import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsh
 import DownloadForm from '@/components/shared/download-form';
 import { useToast } from '@/components/ui/use-toast';
 import { getAllMaterials } from '@/api/materials';
-import ContactForm from '@/components/shared/contact-form';
 
 // Icon map for dynamic icon rendering
 const IconMap: Record<string, React.ElementType> = {
@@ -152,9 +151,10 @@ const Materiais = () => {
               <h2 className="text-2xl font-bold mb-6">
                 Preencha seus dados para baixar "{selectedMaterial.title.replace(/<\/?[^>]+(>|$)/g, "")}"
               </h2>
-              <ContactForm 
-                formType="diagnosis" 
-                materialLink={selectedMaterial.link_material || selectedMaterial.downloadLink}
+              <DownloadForm 
+                materialId={selectedMaterial.materialId} 
+                materialType={selectedMaterial.type}
+                onSubmit={handleFormSubmit}
               />
             </div>
           )}

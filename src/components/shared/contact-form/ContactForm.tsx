@@ -10,7 +10,7 @@ import { saveFormData } from '@/utils/formStorage';
 
 const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/824c1633-dd07-4343-9ca4-2f25653042f5';
 
-const ContactForm = ({ formType = 'contact', materialLink = '' }: ContactFormProps) => {
+const ContactForm = ({ formType = 'contact' }: ContactFormProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -52,7 +52,6 @@ const ContactForm = ({ formType = 'contact', materialLink = '' }: ContactFormPro
     const webhookData = {
       ...formData,
       formType,
-      materialLink,
       source: window.location.href,
       timestamp: new Date().toISOString()
     };
@@ -69,8 +68,7 @@ const ContactForm = ({ formType = 'contact', materialLink = '' }: ContactFormPro
         industry: formData.industry,
         role: formData.role,
         message: formData.message,
-        formType,
-        materialLink
+        formType
       });
       
       // Send data to webhook
@@ -105,11 +103,6 @@ const ContactForm = ({ formType = 'contact', materialLink = '' }: ContactFormPro
         role: '',
       });
       
-      // If a material link is provided, open it in a new tab
-      if (materialLink) {
-        window.open(materialLink, '_blank');
-      }
-      
       // Redirect to booking page
       setTimeout(() => {
         navigate('/booking');
@@ -123,11 +116,6 @@ const ContactForm = ({ formType = 'contact', materialLink = '' }: ContactFormPro
         title: formType === 'diagnosis' ? "Diagnóstico solicitado!" : "Mensagem enviada!",
         description: "Redirecionando para agendamento...",
       });
-      
-      // If a material link is provided, open it in a new tab even if there was an error
-      if (materialLink) {
-        window.open(materialLink, '_blank');
-      }
       
       // Redirect to booking page despite webhook error
       setTimeout(() => {
