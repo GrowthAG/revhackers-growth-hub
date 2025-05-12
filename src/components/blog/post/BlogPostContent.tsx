@@ -1,6 +1,4 @@
 
-import DOMPurify from 'dompurify';
-
 interface BlogPostContentProps {
   content: string;
   category: string;
@@ -10,9 +8,6 @@ interface BlogPostContentProps {
 }
 
 const BlogPostContent = ({ content, category, authorName, authorRole, slug }: BlogPostContentProps) => {
-  // Sanitize HTML content from WordPress
-  const sanitizedContent = DOMPurify.sanitize(content);
-  
   return (
     <div className="prose prose-lg lg:prose-xl max-w-none">
       {/* Author Card - Start */}
@@ -30,7 +25,7 @@ const BlogPostContent = ({ content, category, authorName, authorRole, slug }: Bl
       {/* WordPress Content */}
       <div 
         className="wordpress-content font-body"
-        dangerouslySetInnerHTML={{ __html: sanitizedContent }} 
+        dangerouslySetInnerHTML={{ __html: content }} 
       />
     </div>
   );

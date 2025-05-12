@@ -2,7 +2,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import DOMPurify from 'dompurify';
 
 interface Author {
   name: string;
@@ -39,7 +38,7 @@ const BlogPostHeader = ({
   // Clean HTML from title
   const cleanTitle = () => {
     const div = document.createElement('div');
-    div.innerHTML = DOMPurify.sanitize(post.title);
+    div.innerHTML = post.title;
     return div.textContent || div.innerText || '';
   };
   

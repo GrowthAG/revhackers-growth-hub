@@ -7,7 +7,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { getArticleImageBySlug } from '../blog/post/articles/utils/frameworkImages';
 import { getAllPosts } from '@/api/posts';
-import DOMPurify from 'dompurify';
 
 // Interface para post do blog
 interface BlogPost {
@@ -56,14 +55,14 @@ const BlogSection = () => {
   // Limpar HTML do título
   const cleanTitle = (htmlTitle: string) => {
     const div = document.createElement('div');
-    div.innerHTML = DOMPurify.sanitize(htmlTitle);
+    div.innerHTML = htmlTitle;
     return div.textContent || div.innerText || '';
   };
   
   // Limpar HTML do excerpt
   const cleanExcerpt = (htmlExcerpt: string) => {
     const div = document.createElement('div');
-    div.innerHTML = DOMPurify.sanitize(htmlExcerpt);
+    div.innerHTML = htmlExcerpt;
     return div.textContent || div.innerText || '';
   };
 

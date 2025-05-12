@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getArticleImageBySlug } from './post/articles/utils/frameworkImages';
-import DOMPurify from 'dompurify';
 
 interface Author {
   name: string;
@@ -43,14 +42,14 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
   // Limpar HTML do excerpt
   const cleanExcerpt = () => {
     const div = document.createElement('div');
-    div.innerHTML = DOMPurify.sanitize(post.excerpt);
+    div.innerHTML = post.excerpt;
     return div.textContent || div.innerText || '';
   };
   
   // Limpar HTML do título
   const cleanTitle = () => {
     const div = document.createElement('div');
-    div.innerHTML = DOMPurify.sanitize(post.title);
+    div.innerHTML = post.title;
     return div.textContent || div.innerText || '';
   };
 
