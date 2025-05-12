@@ -1,10 +1,4 @@
 
-export interface DownloadFormProps {
-  materialId: string;
-  materialType: string;
-  onSubmit: () => void;
-}
-
 export interface DownloadFormData {
   firstName: string;
   lastName: string;
@@ -15,4 +9,11 @@ export interface DownloadFormData {
   role: string;
   roleType: string;
   agree: boolean;
+}
+
+export interface DownloadFormProps {
+  materialId: string;
+  materialType: string;
+  onSubmit: () => void;
+  linkMaterial?: string;  // Novo campo para o link do material
 }

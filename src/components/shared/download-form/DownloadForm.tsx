@@ -11,7 +11,7 @@ import FormPrivacySection from './FormPrivacySection';
 import { validateForm, WEBHOOK_URL } from './utils';
 import { saveFormData } from '@/utils/formStorage';
 
-const DownloadForm = ({ materialId, materialType, onSubmit }: DownloadFormProps) => {
+const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: DownloadFormProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -98,7 +98,7 @@ const DownloadForm = ({ materialId, materialType, onSubmit }: DownloadFormProps)
         formType: 'download'
       });
       
-      // Send data to webhook using standard fetch (removed no-cors)
+      // Send data to webhook using standard fetch
       const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: {
@@ -113,6 +113,11 @@ const DownloadForm = ({ materialId, materialType, onSubmit }: DownloadFormProps)
       
       setIsSubmitting(false);
       onSubmit();
+      
+      // Abrir o link do material se disponível
+      if (linkMaterial && linkMaterial.trim() !== '') {
+        window.open(linkMaterial, '_blank');
+      }
       
       // Redirect to booking page after successful download
       setTimeout(() => {

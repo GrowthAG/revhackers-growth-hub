@@ -21,6 +21,7 @@ export async function getAllMaterials() {
       category: getMaterialCategory(material),
       downloadLink: material.acf?.download_link || "#",
       materialId: `material-${material.id}`,
+      link_material: material.acf?.link_material || "", // Adicionando o novo campo
     }));
   } catch (error) {
     console.error("Erro ao carregar materiais:", error);

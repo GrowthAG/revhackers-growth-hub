@@ -154,6 +154,7 @@ const Materiais = () => {
               <DownloadForm 
                 materialId={selectedMaterial.materialId} 
                 materialType={selectedMaterial.type}
+                linkMaterial={selectedMaterial.link_material}
                 onSubmit={handleFormSubmit}
               />
             </div>
