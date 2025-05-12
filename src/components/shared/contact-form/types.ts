@@ -1,5 +1,8 @@
 
-export type FormType = 'contact' | 'diagnosis';
+export interface ContactFormProps {
+  formType?: 'contact' | 'diagnosis';
+  materialLink?: string;
+}
 
 export interface ContactFormData {
   name: string;
@@ -9,8 +12,4 @@ export interface ContactFormData {
   industry: string;
   message: string;
   role: string;
-}
-
-export interface ContactFormProps {
-  formType?: FormType;
 }

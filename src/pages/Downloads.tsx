@@ -1,11 +1,12 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet } from 'lucide-react';
-import DownloadForm from '@/components/shared/download-form';
 import { useToast } from '@/components/ui/use-toast';
+import ContactForm from '@/components/shared/contact-form';
 
 const materials = [
   {
@@ -213,10 +214,9 @@ const Downloads = () => {
               <h2 className="text-2xl font-bold mb-6">
                 Preencha seus dados para baixar "{selectedMaterial.title}"
               </h2>
-              <DownloadForm 
-                materialId={selectedMaterial.id} 
-                materialType={selectedMaterial.type}
-                onSubmit={handleFormSubmit}
+              <ContactForm 
+                formType="diagnosis"
+                materialLink={selectedMaterial.downloadLink}
               />
             </div>
           )}

@@ -20,6 +20,7 @@ export async function getAllMaterials() {
       icon: getMaterialIcon(material),
       category: getMaterialCategory(material),
       downloadLink: material.acf?.download_link || "#",
+      link_material: material.acf?.link_material || "",
       materialId: `material-${material.id}`,
     }));
   } catch (error) {
