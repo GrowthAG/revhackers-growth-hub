@@ -65,7 +65,8 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
         actionType: 'send_material_email'
       };
       
-      console.log('Sending email webhook with data:', emailData); // Debug log
+      console.log('Sending email webhook with data:', emailData);
+      console.log('Material link being sent:', linkMaterial);
       
       await fetch(EMAIL_WEBHOOK_URL, {
         method: 'POST',
@@ -104,12 +105,13 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
       formType: 'download',
       materialId,
       materialType,
-      materialLink: linkMaterial || '', // Include the material link in webhook data
+      materialLink: linkMaterial || '', // Ensure material link is included
       source: window.location.href,
       timestamp: new Date().toISOString()
     };
 
-    console.log('Form submitted:', webhookData);
+    console.log('Form submitted with material link:', linkMaterial);
+    console.log('Full form data being sent:', webhookData);
     
     try {
       // Save form data to localStorage for use on booking page

@@ -10,19 +10,41 @@ export async function getAllMaterials() {
     }
     
     const data = await response.json();
+    console.log('Raw WordPress API response:', data);
     
     // Transform WordPress API data to match our app's format
-    return data.map(material => ({
-      id: material.id,
-      title: material.title?.rendered || "Material sem título",
-      description: material.excerpt?.rendered || "",
-      type: getMaterialType(material),
-      icon: getMaterialIcon(material),
-      category: getMaterialCategory(material),
-      downloadLink: material.acf?.download_link || "#",
-      materialId: `material-${material.id}`,
-      link_material: material.acf?.link_material || "", // Make sure this field is extracted correctly
-    }));
+    return data.map(material => {
+      // Inspect ACF fields for debugging
+      console.log(`Material ID ${material.id} ACF fields:`, material.acf);
+      
+      // Try to get link_material from different possible locations
+      let link_material = '';
+      
+      if (material.acf?.link_material) {
+        link_material = material.acf.link_material;
+      } else if (material.acf?.arquivo_download) {
+        link_material = material.acf.arquivo_download;
+      } else if (material.meta?.link_material) {
+        link_material = material.meta.link_material;
+      } else if (material.link) {
+        // If no dedicated download link field exists, use the post URL as fallback
+        link_material = material.link;
+      }
+      
+      console.log(`Material ID ${material.id} extracted link:`, link_material);
+      
+      return {
+        id: material.id,
+        title: material.title?.rendered || "Material sem título",
+        description: material.excerpt?.rendered || "",
+        type: getMaterialType(material),
+        icon: getMaterialIcon(material),
+        category: getMaterialCategory(material),
+        downloadLink: material.acf?.download_link || "#",
+        materialId: `material-${material.id}`,
+        link_material: link_material,
+      };
+    });
   } catch (error) {
     console.error("Erro ao carregar materiais:", error);
     return [];
