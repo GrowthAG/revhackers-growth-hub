@@ -10,19 +10,33 @@ export async function getAllMaterials() {
     }
     
     const data = await response.json();
+    console.log('Raw WordPress API response:', data);
     
     // Transform WordPress API data to match our app's format
-    return data.map(material => ({
-      id: material.id,
-      title: material.title?.rendered || "Material sem título",
-      description: material.excerpt?.rendered || "",
-      type: getMaterialType(material),
-      icon: getMaterialIcon(material),
-      category: getMaterialCategory(material),
-      downloadLink: material.acf?.download_link || "#",
-      materialId: `material-${material.id}`,
-      link_material: material.acf?.link_material || "", // Adicionando o novo campo
-    }));
+    return data.map(material => {
+      // Debug logging for direct field access
+      console.log(`Material ID ${material.id} ACF fields:`, material.acf);
+      
+      // Try to extract link from multiple possible locations
+      const linkMaterial = material.link_material || 
+                         (material.acf && material.acf.link_material) || 
+                         material.link || 
+                         "";
+      
+      console.log(`Material ID ${material.id} extracted link:`, linkMaterial);
+      
+      return {
+        id: material.id,
+        title: material.title?.rendered || "Material sem título",
+        description: material.excerpt?.rendered || "",
+        type: getMaterialType(material),
+        icon: getMaterialIcon(material),
+        category: getMaterialCategory(material),
+        downloadLink: material.acf?.download_link || "#",
+        materialId: `material-${material.id}`,
+        link_material: linkMaterial,
+      };
+    });
   } catch (error) {
     console.error("Erro ao carregar materiais:", error);
     return [];

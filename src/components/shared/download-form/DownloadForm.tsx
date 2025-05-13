@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -64,6 +65,8 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
         actionType: 'send_material_email'
       };
       
+      console.log('Sending email webhook with data:', emailData);
+      
       await fetch(EMAIL_WEBHOOK_URL, {
         method: 'POST',
         headers: {
@@ -71,8 +74,6 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
         },
         body: JSON.stringify(emailData),
       });
-      
-      console.log('Email request sent:', emailData);
     } catch (error) {
       console.error('Error sending email request:', error);
     }
@@ -101,12 +102,13 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
       formType: 'download',
       materialId,
       materialType,
-      materialLink: linkMaterial || '', // Include the material link in webhook data
+      materialLink: linkMaterial || '',
       source: window.location.href,
       timestamp: new Date().toISOString()
     };
 
-    console.log('Form submitted:', webhookData);
+    console.log('Form submitted with linkMaterial:', linkMaterial);
+    console.log('Full webhook data:', webhookData);
     
     try {
       // Save form data to localStorage for use on booking page

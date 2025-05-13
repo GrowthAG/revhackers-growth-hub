@@ -35,6 +35,7 @@ const Materiais = () => {
       try {
         const data = await getAllMaterials();
         setMaterials(data);
+        console.log('Materials data from API:', data);
       } catch (error) {
         console.error("Error fetching materials:", error);
         toast({
