@@ -101,6 +101,7 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
       formType: 'download',
       materialId,
       materialType,
+      materialLink: linkMaterial || '', // Include the material link in webhook data
       source: window.location.href,
       timestamp: new Date().toISOString()
     };
@@ -138,11 +139,6 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
       
       setIsSubmitting(false);
       onSubmit();
-      
-      // Abrir o link do material se disponível
-      if (linkMaterial && linkMaterial.trim() !== '') {
-        window.open(linkMaterial, '_blank');
-      }
       
       // Redirect to booking page after successful download
       setTimeout(() => {
