@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -63,6 +64,8 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
         materialLink: linkMaterial || '',
         actionType: 'send_material_email'
       };
+      
+      console.log('Sending email webhook with data:', emailData); // Debug log
       
       await fetch(EMAIL_WEBHOOK_URL, {
         method: 'POST',
