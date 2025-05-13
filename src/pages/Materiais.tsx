@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
@@ -33,7 +34,6 @@ const Materiais = () => {
       setLoading(true);
       try {
         const data = await getAllMaterials();
-        console.log('Materials data from API:', data); // Debug log to check link_material
         setMaterials(data);
       } catch (error) {
         console.error("Error fetching materials:", error);
@@ -51,7 +51,6 @@ const Materiais = () => {
   }, [toast]);
 
   const handleDownloadClick = (material: any) => {
-    console.log('Selected material:', material); // Debug log to check material data
     setSelectedMaterial(material);
     setShowForm(true);
     setTimeout(() => {
@@ -161,7 +160,7 @@ const Materiais = () => {
               <DownloadForm 
                 materialId={selectedMaterial.materialId} 
                 materialType={selectedMaterial.type}
-                linkMaterial={selectedMaterial.link_material} // Ensure we pass the link_material here
+                linkMaterial={selectedMaterial.link_material}
                 onSubmit={handleFormSubmit}
               />
             </div>
