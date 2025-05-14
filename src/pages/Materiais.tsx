@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet, ExternalLink } from 'lucide-react';
+import { FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet, ExternalLink } from 'lucide-react';
 import DownloadForm from '@/components/shared/download-form';
 import { useToast } from '@/components/ui/use-toast';
 import { getAllMaterials } from '@/api/materials';
@@ -149,24 +149,14 @@ const Materiais = () => {
                       </CardContent>
                     </Link>
                     <CardFooter className="bg-gray-50 border-t">
-                      <div className="grid grid-cols-2 gap-2 w-full">
-                        <Button 
-                          className="w-full"
-                          variant="outline" 
-                          onClick={() => navigate(`/materiais/${materialSlug}`)}
-                        >
-                          <ExternalLink className="mr-2 h-4 w-4" />
-                          Ver detalhes
-                        </Button>
-                        <Button 
-                          className="w-full"
-                          variant="default" 
-                          onClick={() => handleDownloadClick(material)}
-                        >
-                          <Download className="mr-2 h-4 w-4" />
-                          Baixar
-                        </Button>
-                      </div>
+                      <Button 
+                        className="w-full"
+                        variant="default" 
+                        onClick={() => navigate(`/materiais/${materialSlug}`)}
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Ver detalhes
+                      </Button>
                     </CardFooter>
                   </Card>
                 );
