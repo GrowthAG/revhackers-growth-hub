@@ -76,7 +76,6 @@ export const useDownloadForm = (
       });
     } catch (error) {
       console.error('Error sending email request:', error);
-      // Continuamos mesmo se houver erro no envio de email
     }
   };
 
@@ -124,29 +123,22 @@ export const useDownloadForm = (
         formType: 'download'
       });
       
-      // Try to send data to webhook using standard fetch
-      try {
-        const response = await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(webhookData),
-        });
-        
-        // Verificamos o status, mas não consideramos um erro de webhook como bloqueador
-        if (!response.ok && response.status !== 0) {
-          console.warn('Webhook response not OK, but will continue:', response.status);
-        }
-      } catch (webhookError) {
-        console.warn('Webhook error, but will continue:', webhookError);
-        // Continuamos mesmo se houver erro no webhook
+      // Send data to webhook using standard fetch
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(webhookData),
+      });
+      
+      if (!response.ok && response.status !== 0) {
+        throw new Error('Failed to submit form data');
       }
       
-      // Sending material by email as backup
+      // Send material by email
       await sendMaterialByEmail(webhookData);
       
-      // Consideramos o formulário como enviado com sucesso
       setIsSubmitting(false);
       onSubmit();
       
