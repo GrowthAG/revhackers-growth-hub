@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet } from 'lucide-react';
+import { Download, FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet, ExternalLink } from 'lucide-react';
 import DownloadForm from '@/components/shared/download-form';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -154,6 +155,14 @@ const Downloads = () => {
     console.log(`Material ${selectedMaterial?.id} requested for download`);
   };
 
+  const getSlugFromTitle = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '') // Remove special characters
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-'); // Replace multiple hyphens with a single one
+  };
+
   return (
     <PageLayout>
       <section className="pt-32 pb-10 bg-gradient-to-br from-black to-gray-900 text-white relative">
@@ -178,34 +187,48 @@ const Downloads = () => {
       <section className="py-16 bg-gray-50">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {materials.map((material, index) => (
-              <Card key={index} className="overflow-hidden shadow-md hover:shadow-xl transition-shadow h-full flex flex-col">
-                <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
-                  <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-revgreen/10 text-revgreen">
-                      {material.type}
-                    </span>
-                    <material.icon className="h-6 w-6 text-revgreen" />
-                  </div>
-                  <CardTitle className="mt-4">{material.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6 flex-grow">
-                  <CardDescription className="text-gray-600 mb-4">
-                    {material.description}
-                  </CardDescription>
-                </CardContent>
-                <CardFooter className="bg-gray-50 border-t">
-                  <Button 
-                    className="w-full"
-                    variant="default" 
-                    onClick={() => handleDownloadClick(material)}
-                  >
-                    <Download className="mr-2 h-4 w-4" />
-                    Baixar Material
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
+            {materials.map((material, index) => {
+              const materialSlug = getSlugFromTitle(material.title);
+              
+              return (
+                <Card key={index} className="overflow-hidden shadow-md hover:shadow-xl transition-shadow h-full flex flex-col">
+                  <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 border-b">
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-revgreen/10 text-revgreen">
+                        {material.type}
+                      </span>
+                      <material.icon className="h-6 w-6 text-revgreen" />
+                    </div>
+                    <CardTitle className="mt-4">{material.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-6 flex-grow">
+                    <CardDescription className="text-gray-600 mb-4">
+                      {material.description}
+                    </CardDescription>
+                  </CardContent>
+                  <CardFooter className="bg-gray-50 border-t">
+                    <div className="grid grid-cols-2 gap-2 w-full">
+                      <Button 
+                        className="w-full"
+                        variant="outline" 
+                        onClick={() => navigate(`/materiais/${materialSlug}`)}
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Ver detalhes
+                      </Button>
+                      <Button 
+                        className="w-full"
+                        variant="default" 
+                        onClick={() => handleDownloadClick(material)}
+                      >
+                        <Download className="mr-2 h-4 w-4" />
+                        Baixar
+                      </Button>
+                    </div>
+                  </CardFooter>
+                </Card>
+              );
+            })}
           </div>
           
           {showForm && selectedMaterial && (
