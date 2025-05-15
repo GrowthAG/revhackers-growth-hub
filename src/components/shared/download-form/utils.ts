@@ -23,6 +23,6 @@ export const validateForm = (formData: DownloadFormData): { isValid: boolean; er
   return { isValid: true };
 };
 
-export const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/a43962ce-48d9-4af9-84ae-06f3e9216b96';
+export const WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/53a38266-2b9b-4039-8dbb-5d92c453069b';
 
 export const EMAIL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/oFTw9DcsKRUj6xCiq4mb/webhook-trigger/email-material';
