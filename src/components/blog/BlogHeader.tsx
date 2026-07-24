@@ -17,46 +17,47 @@ const BlogHeader = ({
   setSearchQuery
 }: BlogHeaderProps) => {
   return (
-    <div className="bg-black py-24 md:py-32 relative overflow-hidden">
-      {/* Sophisticated Dark Pattern */}
+    <div className="bg-zinc-950 py-20 relative overflow-hidden border-b border-zinc-800">
       <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
-      <div className="absolute inset-0 bg-black/50 pointer-events-none" />
 
-      <div className="container-custom relative z-10">
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-white tracking-tight leading-[1.1]">
-            Blog<span className="text-revgreen">.</span>
+      <div className="max-w-7xl mx-auto px-6 relative z-10 space-y-8">
+        <div className="max-w-3xl mx-auto text-center space-y-3">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#00CC6A]">
+            Mídia & Inteligência B2B
+          </span>
+          <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
+            Artigos Ricos & Playbooks
           </h1>
-          <p className="text-lg md:text-xl text-zinc-500 font-normal tracking-tight leading-relaxed max-w-2xl mx-auto">
-            Estratégias avançadas de Growth, Revenue Operations e Tecnologia.
+          <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed">
+            Estratégias avançadas de Growth, Revenue Operations, arquiteturas de vendas e automações com IA.
           </p>
         </div>
 
-        <div className="max-w-xl mx-auto relative mb-20">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+        {/* Search Input */}
+        <div className="max-w-md mx-auto relative">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
           <Input
             type="search"
-            placeholder="BUSCAR ARTIGOS..."
-            className="pl-12 pr-4 py-8 bg-zinc-900/30 border-zinc-800 text-white placeholder:text-zinc-600 focus:border-revgreen/50 transition-all rounded-sm shadow-sm text-xs font-bold uppercase tracking-widest"
+            placeholder="Buscar por artigos, frameworks ou palavras-chave..."
+            className="pl-10 pr-4 h-10 bg-zinc-900/90 border-zinc-800 text-white placeholder:text-zinc-500 focus-visible:ring-1 focus-visible:ring-[#00CC6A] focus-visible:ring-offset-0 transition-all rounded-xl text-xs font-medium shadow-xs"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />
         </div>
 
-        <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 border-t border-zinc-900/50 pt-8 mt-12">
+        {/* Category Pills */}
+        <div className="flex flex-wrap justify-center gap-2 pt-2">
           {categories.map(category => (
             <button
               key={category}
-              className={`text-xxs uppercase tracking-[0.2em] font-bold font-sans transition-all duration-300 relative py-2 ${activeCategory === category
-                ? "text-revgreen"
-                : "text-zinc-500 hover:text-white"
-                }`}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                activeCategory === category
+                  ? "bg-[#00CC6A] text-black font-bold shadow-xs"
+                  : "bg-zinc-900/60 text-zinc-400 hover:text-white hover:bg-zinc-900 border border-zinc-800"
+              }`}
               onClick={() => setActiveCategory(category)}
             >
               {category}
-              {activeCategory === category && (
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-revgreen" />
-              )}
             </button>
           ))}
         </div>

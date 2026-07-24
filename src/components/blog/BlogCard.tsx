@@ -1,9 +1,6 @@
-
 import { useState, useEffect, useMemo } from 'react';
-import { CalendarIcon, Clock, ArrowRight } from 'lucide-react';
+import { Clock, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getArticleImageBySlug, getFrameworkImage } from './post/articles/utils/frameworkImages';
 
 interface Author {
@@ -31,7 +28,6 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({ post, onClick }: BlogCardProps) => {
-  // Obter imagem personalizada se disponível para este artigo
   const isStatic = typeof post.id === 'number' || post.id.toString().startsWith('static-');
   const articleImage = (post.image && post.image !== '')
     ? post.image
@@ -50,7 +46,6 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
     }
   };
 
-  // Strip HTML tags with regex instead of creating DOM elements
   const cleanExcerpt = useMemo(() =>
     (post.excerpt || '').replace(/<[^>]*>?/gm, ''),
     [post.excerpt]
@@ -62,56 +57,59 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
       className="group block h-full"
       onClick={onClick}
     >
-      <article className="h-full flex flex-col bg-white">
-        {/* Image Container */}
-        <div className="aspect-[16/9] w-full overflow-hidden bg-black relative mb-6 flex items-center justify-center">
+      <article className="h-full flex flex-col bg-white border border-zinc-200/80 rounded-xl overflow-hidden hover:border-zinc-300 transition-all duration-300 shadow-xs hover:shadow-md p-5 space-y-4">
+        {/* Cover Container */}
+        <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-zinc-950 relative flex items-center justify-center border border-zinc-800">
           <img
             src={imgSrc}
             alt={post.title}
             onError={handleImageError}
-            className="max-w-full max-h-full object-contain transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100 p-4"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100"
           />
-        </div>
-
-        {/* Content Container */}
-        <div className="flex-1 flex flex-col pr-4">
-          {/* Badge & Meta */}
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xxs font-bold uppercase tracking-widest text-black bg-zinc-100 px-2 py-1 rounded-none border border-transparent">
+          <div className="absolute top-3 left-3">
+            <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#00CC6A] text-black">
               {post.category}
             </span>
-            <span className="text-xxs font-bold text-zinc-300 uppercase tracking-widest">
-              {post.readTime || '5 MIN'}
-            </span>
+          </div>
+        </div>
+
+        {/* Content Details */}
+        <div className="flex-1 flex flex-col justify-between space-y-3">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs font-medium text-zinc-400">
+              <Clock size={13} className="text-zinc-400" />
+              <span>{post.readTime || '5 min de leitura'}</span>
+            </div>
+
+            <h3 className="text-lg font-bold text-zinc-900 group-hover:text-black leading-snug tracking-tight">
+              {post.title}
+            </h3>
+
+            <p className="text-xs text-zinc-500 font-normal line-clamp-3 leading-relaxed">
+              {cleanExcerpt}
+            </p>
           </div>
 
-          {/* Title - Heavy & Tight */}
-          <h3 className="text-xl md:text-2xl font-bold text-black mb-3 leading-tight tracking-tight mt-2">
-            {post.title}
-          </h3>
-
-          {/* Excerpt - Clean & Minimal */}
-          <p className="text-zinc-500 text-xs font-medium uppercase tracking-wide line-clamp-3 mb-6 leading-relaxed">
-            {cleanExcerpt}
-          </p>
-
-          {/* Footer / Author - Ultra clean */}
-          <div className="mt-auto pt-4 flex items-center justify-between border-t border-zinc-100">
-            <div className="flex items-center gap-3">
+          {/* Author Footer */}
+          <div className="pt-3 border-t border-zinc-100 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
               <img
-                  src={post.author?.avatar || '/uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png'}
-                  alt={post.author?.name || 'Giulliano Alves'}
-                  className="w-8 h-8 rounded-full object-cover border border-zinc-100"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png';
-                  }}
-                />
-              <div className="flex flex-col">
-                <span className="text-2xs font-bold text-black uppercase tracking-widest">{post.author?.name}</span>
-                <span className="text-3xs font-bold text-zinc-400 uppercase tracking-widest">{post.author?.role}</span>
+                src={post.author?.avatar || '/uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png'}
+                alt={post.author?.name || 'Giulliano Alves'}
+                className="w-7 h-7 rounded-full object-cover border border-zinc-200"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png';
+                }}
+              />
+              <div>
+                <span className="text-xs font-semibold text-zinc-900 block leading-tight">{post.author?.name}</span>
+                <span className="text-[10px] text-zinc-500 font-medium block">{post.author?.role}</span>
               </div>
             </div>
-            <ArrowRight className="w-4 h-4 text-zinc-300 group-hover:text-black transition-transform group-hover:translate-x-1" />
+
+            <div className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center group-hover:bg-zinc-950 group-hover:text-white transition-all">
+              <ArrowUpRight size={14} className="text-zinc-500 group-hover:text-[#00CC6A]" />
+            </div>
           </div>
         </div>
       </article>
