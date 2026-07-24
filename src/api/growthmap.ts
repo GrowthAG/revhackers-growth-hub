@@ -97,7 +97,7 @@ const supabaseAdapter: GrowthMapAdapter = {
 
   async load(project_id) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('growthmap_results')
         .select('*')
         .eq('project_id', project_id)
@@ -118,7 +118,7 @@ const supabaseAdapter: GrowthMapAdapter = {
         [framework.id]: framework,
       };
 
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('growthmap_results')
         .upsert(
           {

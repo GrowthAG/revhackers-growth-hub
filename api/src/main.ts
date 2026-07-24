@@ -2,10 +2,16 @@ import { loadConfig } from './config';
 import { PostgresIdempotencyStore } from './context/postgres-idempotency-store';
 import { loadDatabaseConfig } from './db/config';
 import { checkPostgresReady, createPostgresResources } from './db/postgres';
+import { PostgresClientRepository } from './domains/clients/postgres-repository';
+import { ClientService } from './domains/clients/service';
 import { PostgresGrowthMapRepository } from './domains/growthmap/postgres-repository';
 import { GrowthMapService } from './domains/growthmap/service';
+import { PostgresReiProjectRepository } from './domains/rei-projects/postgres-repository';
+import { ReiProjectService } from './domains/rei-projects/service';
+import { createClientsRoutes } from './http/clients-routes';
 import { createGrowthMapRoutes } from './http/growthmap-routes';
 import { createIdentityRoutes } from './http/identity-routes';
+import { createReiProjectsRoutes } from './http/rei-projects-routes';
 import { GoogleIdentityTokenVerifier } from './identity/google-identity-verifier';
 import { PostgresIdentityRepository } from './identity/postgres-identity-repository';
 import { createApiServer } from './server';
@@ -19,6 +25,16 @@ async function main(): Promise<void> {
   const verifier = new GoogleIdentityTokenVerifier({ projectId: googleProjectId });
   const identities = new PostgresIdentityRepository(postgres.pool);
   const identityRoutes = createIdentityRoutes({ verifier, identities });
+  const clientRoutes = createClientsRoutes({
+    verifier,
+    identities,
+    service: new ClientService(new PostgresClientRepository(postgres.pool)),
+  });
+  const reiProjectRoutes = createReiProjectsRoutes({
+    verifier,
+    identities,
+    service: new ReiProjectService(new PostgresReiProjectRepository(postgres.pool)),
+  });
   const growthMapRoutes = createGrowthMapRoutes({
     verifier,
     identities,
@@ -26,7 +42,10 @@ async function main(): Promise<void> {
     idempotency: new PostgresIdempotencyStore(postgres.pool),
   });
   const route = async (request: Request, requestId: string) =>
-    (await identityRoutes(request)) ?? growthMapRoutes(request, requestId);
+    (await identityRoutes(request)) ??
+    (await clientRoutes(request)) ??
+    (await reiProjectRoutes(request)) ??
+    growthMapRoutes(request, requestId);
   const api = createApiServer(config, undefined, {
     route,
     readiness: async () => {
