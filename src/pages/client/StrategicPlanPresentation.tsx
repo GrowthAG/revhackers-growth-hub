@@ -7,6 +7,7 @@ import { EditToolbar } from '@/components/plan/PlanEditContext';
 import { QRCodeSVG } from 'qrcode.react';
 import { useReactToPrint } from 'react-to-print';
 import { SignatureEngine } from '@/components/legal/SignatureEngine';
+import { strategicPlansGcpAdapter } from '@/api/adapters/strategic-plans-gcp';
 
 // Section imports
 import CoverSection from './sections/CoverSection';
@@ -242,8 +243,20 @@ export default function StrategicPlanPresentation() {
     async function loadPlan() {
         if (!token) { setLoading(false); return; }
         try {
-            // RPCs publicas escopadas por token/nome - RLS anonima fechada,
-            // ver 20260718000002_secure_strategic_plans_proposals.sql
+            if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+                try {
+                    const gcpPlan = await strategicPlansGcpAdapter.getById(token) || await strategicPlansGcpAdapter.getByProjectId(token);
+                    if (gcpPlan) {
+                        setPlan(gcpPlan);
+                        setLoading(false);
+                        return;
+                    }
+                } catch (e) {
+                    console.warn('Plano via GCP não localizado, tentando Supabase fallback...', e);
+                }
+            }
+
+            // RPCs publicas escopadas por token/nome
             const { data, error } = await (supabase as any)
                 .rpc('get_public_strategic_plan', { p_token: token })
                 .single();
@@ -254,7 +267,6 @@ export default function StrategicPlanPresentation() {
                 if (cl) setClient(cl);
             }
 
-            // Try to find if there is a Deal Room proposal for this client
             const clientName = (data as any)?.client_company || (data as any)?.client_name;
             if (clientName) {
                 const { data: dealSlugData } = await (supabase as any)
