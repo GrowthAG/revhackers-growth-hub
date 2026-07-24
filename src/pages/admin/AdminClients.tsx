@@ -15,11 +15,7 @@ import {
     MapPin,
     Briefcase,
     ArrowLeft,
-    MoreHorizontal,
-    Sparkles,
-    CheckCircle2,
-    Clock,
-    XCircle
+    Clock
 } from 'lucide-react';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Button } from '@/components/ui/button';
@@ -93,28 +89,28 @@ export const AdminClients = () => {
     return (
         <AdminLayout>
             <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
-                {/* Header — Linear / Vercel Benchmark */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/60">
+                {/* Header — 100% Nobibecode Compliance */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200">
                     <div>
-                        <div className="flex items-center gap-2 text-xs font-medium text-zinc-400 mb-1.5">
+                        <div className="flex items-center gap-2 text-xs font-mono font-bold text-zinc-400 mb-1.5 uppercase tracking-wider">
                             <button
                                 onClick={() => navigate('/admin')}
                                 className="hover:text-zinc-900 transition-colors flex items-center gap-1"
                             >
-                                <ArrowLeft size={13} /> Dashboard
+                                <ArrowLeft size={13} /> DASHBOARD
                             </button>
                             <span>/</span>
-                            <span className="text-zinc-900 font-medium">Clientes</span>
+                            <span className="text-zinc-900">CLIENTES</span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
-                                Portfolio de Clientes
+                            <h1 className="text-2xl font-black tracking-tight text-zinc-900 uppercase">
+                                Carteira de Clientes
                             </h1>
-                            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-700 border border-zinc-200/60 font-mono">
-                                {clients.length} contas
+                            <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
+                                {clients.length} CONTAS
                             </span>
                         </div>
-                        <p className="text-sm text-zinc-500 mt-1">
+                        <p className="text-sm font-medium text-zinc-500 mt-1">
                             Gestão operacional de contas B2B, projetos REI e histórico sob contrato.
                         </p>
                     </div>
@@ -122,69 +118,69 @@ export const AdminClients = () => {
                     <div className="flex items-center gap-2">
                         <Button
                             onClick={() => navigate('/admin/clients/novo')}
-                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-medium tracking-wide shadow-sm gap-2 flex items-center transition-all border border-zinc-800"
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-800"
                         >
-                            <Plus size={15} className="text-[#00CC6A]" /> Novo Cliente
+                            <Plus size={15} className="text-[#00CC6A]" /> NOVO CLIENTE
                         </Button>
                     </div>
                 </div>
 
-                {/* Metric Cards — High Precision SaaS UI */}
+                {/* Metric Cards — 100% Zinc Scale + #00CC6A */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-white border border-zinc-200/70 rounded-xl p-4.5 shadow-xs hover:border-zinc-300 transition-all">
+                    <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
                         <div className="flex items-center justify-between text-zinc-500 mb-2">
-                            <span className="text-xs font-medium">Total de Contas</span>
+                            <span className="text-xs font-mono font-bold uppercase tracking-wider">Total de Contas</span>
                             <Building2 size={15} className="text-zinc-400" />
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-zinc-900 tabular-nums">{clients.length}</span>
-                            <span className="text-[11px] text-zinc-400 font-normal">empresas</span>
+                            <span className="text-2xl font-black text-zinc-900 tabular-nums">{clients.length}</span>
+                            <span className="text-xs text-zinc-400 font-medium">empresas</span>
                         </div>
                     </div>
 
-                    <div className="bg-white border border-zinc-200/70 rounded-xl p-4.5 shadow-xs hover:border-zinc-300 transition-all">
+                    <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
                         <div className="flex items-center justify-between text-zinc-500 mb-2">
-                            <span className="text-xs font-medium">Operações Ativas</span>
-                            <CheckCircle2 size={15} className="text-emerald-500" />
+                            <span className="text-xs font-mono font-bold uppercase tracking-wider">Operações Ativas</span>
+                            <div className="w-2 h-2 rounded-full bg-[#00CC6A]"></div>
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-emerald-600 tabular-nums">{activeCount}</span>
-                            <span className="text-[11px] text-emerald-600/80 font-medium">em execução</span>
+                            <span className="text-2xl font-black text-[#00CC6A] tabular-nums">{activeCount}</span>
+                            <span className="text-xs text-zinc-500 font-medium">em execução</span>
                         </div>
                     </div>
 
-                    <div className="bg-white border border-zinc-200/70 rounded-xl p-4.5 shadow-xs hover:border-zinc-300 transition-all">
+                    <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
                         <div className="flex items-center justify-between text-zinc-500 mb-2">
-                            <span className="text-xs font-medium">Em Onboarding</span>
-                            <Clock size={15} className="text-amber-500" />
+                            <span className="text-xs font-mono font-bold uppercase tracking-wider">Em Onboarding</span>
+                            <Clock size={15} className="text-zinc-400" />
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-zinc-900 tabular-nums">{onboardingCount}</span>
-                            <span className="text-[11px] text-amber-600 font-medium">em setup</span>
+                            <span className="text-2xl font-black text-zinc-900 tabular-nums">{onboardingCount}</span>
+                            <span className="text-xs text-zinc-500 font-medium">em setup</span>
                         </div>
                     </div>
 
-                    <div className="bg-white border border-zinc-200/70 rounded-xl p-4.5 shadow-xs hover:border-zinc-300 transition-all">
+                    <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
                         <div className="flex items-center justify-between text-zinc-500 mb-2">
-                            <span className="text-xs font-medium">Projetos REI</span>
+                            <span className="text-xs font-mono font-bold uppercase tracking-wider">Projetos REI</span>
                             <Zap size={15} className="text-[#00CC6A]" />
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-zinc-900 tabular-nums">{reiProjects.length}</span>
-                            <span className="text-[11px] text-zinc-400 font-normal">projetos</span>
+                            <span className="text-2xl font-black text-zinc-900 tabular-nums">{reiProjects.length}</span>
+                            <span className="text-xs text-zinc-400 font-medium">vinculados</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Search Bar & Filter Controls (Raycast/Linear Style) */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50/50 p-2 rounded-xl border border-zinc-200/60">
+                {/* Search & Filter Controls — Strict Zinc Scale */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-200">
                     <div className="relative flex-1">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                         <Input
                             placeholder="Filtrar por cliente, empresa ou segmento..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="pl-10 pr-12 h-9 bg-white border-zinc-200/80 rounded-lg text-xs placeholder:text-zinc-400 focus-visible:ring-1 focus-visible:ring-zinc-950 focus-visible:ring-offset-0 transition-all shadow-2xs"
+                            className="pl-10 pr-12 h-9 bg-white border-zinc-200 rounded-lg text-xs placeholder:text-zinc-400 focus-visible:ring-1 focus-visible:ring-zinc-950 focus-visible:ring-offset-0 transition-all shadow-none"
                         />
                         <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:block">
                             <kbd className="font-mono text-[10px] text-zinc-400 bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded">⌘K</kbd>
@@ -194,47 +190,47 @@ export const AdminClients = () => {
                     <div className="flex items-center gap-1">
                         <button
                             onClick={() => setStatusFilter('all')}
-                            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${statusFilter === 'all' ? 'bg-white text-zinc-900 shadow-2xs border border-zinc-200/80 font-semibold' : 'text-zinc-500 hover:text-zinc-900'}`}
+                            className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${statusFilter === 'all' ? 'bg-zinc-950 text-white border border-zinc-950' : 'text-zinc-600 hover:text-zinc-900'}`}
                         >
                             Todos ({clients.length})
                         </button>
                         <button
                             onClick={() => setStatusFilter('active')}
-                            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${statusFilter === 'active' ? 'bg-white text-emerald-700 shadow-2xs border border-zinc-200/80 font-semibold' : 'text-zinc-500 hover:text-zinc-900'}`}
+                            className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${statusFilter === 'active' ? 'bg-[#00CC6A] text-black border border-[#00CC6A]' : 'text-zinc-600 hover:text-zinc-900'}`}
                         >
                             Ativos ({activeCount})
                         </button>
                         <button
                             onClick={() => setStatusFilter('onboarding')}
-                            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${statusFilter === 'onboarding' ? 'bg-white text-zinc-900 shadow-2xs border border-zinc-200/80 font-semibold' : 'text-zinc-500 hover:text-zinc-900'}`}
+                            className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${statusFilter === 'onboarding' ? 'bg-zinc-900 text-white border border-zinc-900' : 'text-zinc-600 hover:text-zinc-900'}`}
                         >
                             Onboarding ({onboardingCount})
                         </button>
                     </div>
                 </div>
 
-                {/* Table View — Clean Modern SaaS Table (Linear / Vercel Layout) */}
+                {/* Table View — Strict Nobibecode Colors (Zinc Scale + #00CC6A) */}
                 {loading ? (
-                    <div className="flex justify-center items-center py-20 bg-white border border-zinc-200/70 rounded-xl">
+                    <div className="flex justify-center items-center py-20 bg-white border border-zinc-200 rounded-xl">
                         <div className="flex items-center gap-3">
                             <Loader2 className="h-5 w-5 animate-spin text-[#00CC6A]" />
-                            <span className="text-xs text-zinc-500 font-medium">Carregando dados da API GCP...</span>
+                            <span className="text-xs text-zinc-500 font-medium">Carregando carteira de clientes...</span>
                         </div>
                     </div>
                 ) : filteredClients.length > 0 ? (
-                    <div className="bg-white border border-zinc-200/70 rounded-xl overflow-hidden shadow-2xs">
+                    <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-none">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="border-b border-zinc-200/60 bg-zinc-50/60 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
-                                        <th className="py-3 px-4">Cliente & Empresa</th>
-                                        <th className="py-3 px-4">Contato</th>
-                                        <th className="py-3 px-4">Status</th>
-                                        <th className="py-3 px-4">Projetos REI</th>
-                                        <th className="py-3 px-4 text-right">Ações</th>
+                                    <tr className="border-b border-zinc-200 bg-zinc-50 text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                                        <th className="py-3.5 px-4">Cliente & Empresa</th>
+                                        <th className="py-3.5 px-4">Contato</th>
+                                        <th className="py-3.5 px-4">Status</th>
+                                        <th className="py-3.5 px-4">Projetos REI</th>
+                                        <th className="py-3.5 px-4 text-right">Ações</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-zinc-200/50 text-xs text-zinc-700">
+                                <tbody className="divide-y divide-zinc-100 text-xs text-zinc-700">
                                     {filteredClients.map((client) => {
                                         const clientProjects = reiProjects.filter(p =>
                                             p.clientEmail?.toLowerCase() === client.email?.toLowerCase() ||
@@ -243,12 +239,12 @@ export const AdminClients = () => {
                                         return (
                                             <tr
                                                 key={client.id}
-                                                className="hover:bg-zinc-50/70 transition-colors group"
+                                                className="hover:bg-zinc-50/80 transition-colors group"
                                             >
                                                 {/* Cliente & Empresa */}
                                                 <td className="py-3.5 px-4">
                                                     <div className="flex items-center gap-3">
-                                                        <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-zinc-800 to-zinc-950 flex items-center justify-center shrink-0 border border-zinc-800 text-white font-semibold text-xs shadow-2xs">
+                                                        <div className="w-9 h-9 rounded-lg bg-zinc-950 flex items-center justify-center shrink-0 border border-zinc-800 text-white font-black text-xs">
                                                             {client.logo_url ? (
                                                                 <img src={client.logo_url} alt={client.name} className="w-5 h-5 object-contain" />
                                                             ) : (
@@ -256,16 +252,16 @@ export const AdminClients = () => {
                                                             )}
                                                         </div>
                                                         <div>
-                                                            <div className="font-semibold text-zinc-900 flex items-center gap-2">
+                                                            <div className="font-bold text-zinc-900 flex items-center gap-2">
                                                                 {client.name}
                                                                 {client.segment && (
-                                                                    <span className="px-1.5 py-0.2 rounded text-[10px] font-normal bg-zinc-100 text-zinc-500 border border-zinc-200/60">
+                                                                    <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-medium bg-zinc-100 text-zinc-600 border border-zinc-200">
                                                                         {client.segment}
                                                                     </span>
                                                                 )}
                                                             </div>
                                                             {client.company && (
-                                                                <div className="text-[11px] text-zinc-500 mt-0.5">
+                                                                <div className="text-[11px] font-medium text-zinc-500 mt-0.5">
                                                                     {client.company}
                                                                 </div>
                                                             )}
@@ -276,7 +272,7 @@ export const AdminClients = () => {
                                                 {/* Contato */}
                                                 <td className="py-3.5 px-4">
                                                     <div className="space-y-0.5 text-[11px]">
-                                                        <div className="flex items-center gap-1.5 text-zinc-600">
+                                                        <div className="flex items-center gap-1.5 text-zinc-600 font-medium">
                                                             <Mail size={12} className="text-zinc-400" />
                                                             <span>{client.email}</span>
                                                         </div>
@@ -294,23 +290,19 @@ export const AdminClients = () => {
                                                     </div>
                                                 </td>
 
-                                                {/* Status */}
+                                                {/* Status — 100% Permitted Colors: #00CC6A or Zinc */}
                                                 <td className="py-3.5 px-4">
                                                     {client.status === 'active' || !client.status ? (
-                                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">
-                                                            <span className="relative flex h-1.5 w-1.5">
-                                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                                                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                                                            </span>
-                                                            Ativo
+                                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#00CC6A] text-black">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-black"></span> ATIVO
                                                         </span>
                                                     ) : client.status === 'onboarding' ? (
-                                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200/60">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Onboarding
+                                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-zinc-900 text-white">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A]"></span> ONBOARDING
                                                         </span>
                                                     ) : (
-                                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-zinc-100 text-zinc-500 border border-zinc-200">
-                                                            Inativo
+                                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-mono font-medium bg-zinc-100 text-zinc-500 border border-zinc-200">
+                                                            INATIVO
                                                         </span>
                                                     )}
                                                 </td>
@@ -319,10 +311,10 @@ export const AdminClients = () => {
                                                 <td className="py-3.5 px-4">
                                                     {clientProjects.length > 0 ? (
                                                         <div className="flex items-center gap-1.5">
-                                                            <span className="px-2 py-0.5 rounded-md bg-zinc-900 text-white text-[11px] font-mono font-medium">
+                                                            <span className="px-2 py-0.5 rounded-md bg-zinc-900 text-white text-[11px] font-mono font-bold">
                                                                 {clientProjects.length} REI
                                                             </span>
-                                                            <span className="text-[11px] text-zinc-400 truncate max-w-[150px]">
+                                                            <span className="text-[11px] text-zinc-500 font-medium truncate max-w-[150px]">
                                                                 {clientProjects[0].type}
                                                             </span>
                                                         </div>
@@ -338,7 +330,7 @@ export const AdminClients = () => {
                                                             variant="ghost"
                                                             size="sm"
                                                             onClick={() => navigate(`/admin/rei?search=${encodeURIComponent(client.email)}`)}
-                                                            className="h-8 px-2.5 rounded-md hover:bg-zinc-100 text-zinc-600 text-[11px] font-medium gap-1"
+                                                            className="h-8 px-2.5 rounded-md hover:bg-zinc-100 text-zinc-700 text-[11px] font-mono font-bold gap-1 border border-zinc-200 bg-white"
                                                             title="Ver Projetos REI"
                                                         >
                                                             <Zap size={13} className="text-[#00CC6A]" /> REI
@@ -347,7 +339,7 @@ export const AdminClients = () => {
                                                             variant="ghost"
                                                             size="sm"
                                                             onClick={() => navigate(`/admin/clients/edit/${client.id}`)}
-                                                            className="h-8 w-8 p-0 rounded-md hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900"
+                                                            className="h-8 w-8 p-0 rounded-md hover:bg-zinc-100 text-zinc-600 hover:text-zinc-900 border border-zinc-200 bg-white"
                                                             title="Editar Cliente"
                                                         >
                                                             <Edit2 size={13} />
@@ -356,7 +348,7 @@ export const AdminClients = () => {
                                                             variant="ghost"
                                                             size="sm"
                                                             onClick={() => handleDelete(client.id, client.name)}
-                                                            className="h-8 w-8 p-0 rounded-md hover:bg-rose-50 text-zinc-400 hover:text-rose-600"
+                                                            className="h-8 w-8 p-0 rounded-md hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900 border border-zinc-200 bg-white"
                                                             title="Remover"
                                                         >
                                                             <Trash2 size={13} />
@@ -371,10 +363,10 @@ export const AdminClients = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="py-16 text-center bg-white border border-zinc-200/70 rounded-xl p-8 shadow-2xs">
+                    <div className="py-16 text-center bg-white border border-zinc-200 rounded-xl p-8">
                         <Users className="h-10 w-10 text-zinc-300 mx-auto mb-3" />
-                        <p className="text-sm font-semibold text-zinc-700">Nenhum cliente encontrado</p>
-                        <p className="text-xs text-zinc-400 mt-1">Tente buscar por outro termo ou limpe os filtros de busca.</p>
+                        <p className="text-sm font-bold text-zinc-800 uppercase tracking-wider">Nenhum cliente encontrado</p>
+                        <p className="text-xs text-zinc-400 mt-1">Tente buscar por outro termo ou ajuste os filtros.</p>
                     </div>
                 )}
             </div>
