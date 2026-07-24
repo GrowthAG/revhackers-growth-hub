@@ -14,7 +14,12 @@ import {
     ExternalLink,
     MapPin,
     Briefcase,
-    ArrowLeft
+    ArrowLeft,
+    MoreHorizontal,
+    Sparkles,
+    CheckCircle2,
+    Clock,
+    XCircle
 } from 'lucide-react';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Button } from '@/components/ui/button';
@@ -88,229 +93,285 @@ export const AdminClients = () => {
     return (
         <AdminLayout>
             <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
-                {/* Header SaaS Moderno */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/80">
+                {/* Header — Linear / Vercel Benchmark */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/60">
                     <div>
-                        <button
-                            onClick={() => navigate('/admin')}
-                            className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-zinc-900 transition-colors mb-2"
-                        >
-                            <ArrowLeft size={14} /> Voltar ao Hub
-                        </button>
-                        <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
-                            Clientes & Operações
-                        </h1>
+                        <div className="flex items-center gap-2 text-xs font-medium text-zinc-400 mb-1.5">
+                            <button
+                                onClick={() => navigate('/admin')}
+                                className="hover:text-zinc-900 transition-colors flex items-center gap-1"
+                            >
+                                <ArrowLeft size={13} /> Dashboard
+                            </button>
+                            <span>/</span>
+                            <span className="text-zinc-900 font-medium">Clientes</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                                Portfolio de Clientes
+                            </h1>
+                            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-700 border border-zinc-200/60 font-mono">
+                                {clients.length} contas
+                            </span>
+                        </div>
                         <p className="text-sm text-zinc-500 mt-1">
-                            Gestão centralizada do portfólio de contas, empresas e contratos ativos.
+                            Gestão operacional de contas B2B, projetos REI e histórico sob contrato.
                         </p>
                     </div>
 
-                    <Button
-                        onClick={() => navigate('/admin/clients/novo')}
-                        className="bg-zinc-900 text-white hover:bg-zinc-800 rounded-lg h-10 px-4 text-xs font-medium tracking-wide shadow-sm gap-2 flex items-center transition-all"
-                    >
-                        <Plus size={15} className="text-[#00CC6A]" /> Novo Cliente
-                    </Button>
+                    <div className="flex items-center gap-2">
+                        <Button
+                            onClick={() => navigate('/admin/clients/novo')}
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-medium tracking-wide shadow-sm gap-2 flex items-center transition-all border border-zinc-800"
+                        >
+                            <Plus size={15} className="text-[#00CC6A]" /> Novo Cliente
+                        </Button>
+                    </div>
                 </div>
 
-                {/* Metric Cards - SaaS Style */}
+                {/* Metric Cards — High Precision SaaS UI */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs">
-                        <span className="text-xs font-medium text-zinc-500 block mb-1">Total de Contas</span>
+                    <div className="bg-white border border-zinc-200/70 rounded-xl p-4.5 shadow-xs hover:border-zinc-300 transition-all">
+                        <div className="flex items-center justify-between text-zinc-500 mb-2">
+                            <span className="text-xs font-medium">Total de Contas</span>
+                            <Building2 size={15} className="text-zinc-400" />
+                        </div>
                         <div className="flex items-baseline gap-2">
                             <span className="text-2xl font-bold text-zinc-900 tabular-nums">{clients.length}</span>
-                            <span className="text-xs text-zinc-400 font-normal">registradas</span>
+                            <span className="text-[11px] text-zinc-400 font-normal">empresas</span>
                         </div>
                     </div>
-                    <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs">
-                        <span className="text-xs font-medium text-zinc-500 block mb-1">Operações Ativas</span>
+
+                    <div className="bg-white border border-zinc-200/70 rounded-xl p-4.5 shadow-xs hover:border-zinc-300 transition-all">
+                        <div className="flex items-center justify-between text-zinc-500 mb-2">
+                            <span className="text-xs font-medium">Operações Ativas</span>
+                            <CheckCircle2 size={15} className="text-emerald-500" />
+                        </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-[#00CC6A] tabular-nums">{activeCount}</span>
-                            <span className="text-xs text-emerald-600/80 font-medium">em execução</span>
+                            <span className="text-2xl font-bold text-emerald-600 tabular-nums">{activeCount}</span>
+                            <span className="text-[11px] text-emerald-600/80 font-medium">em execução</span>
                         </div>
                     </div>
-                    <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs">
-                        <span className="text-xs font-medium text-zinc-500 block mb-1">Em Onboarding</span>
+
+                    <div className="bg-white border border-zinc-200/70 rounded-xl p-4.5 shadow-xs hover:border-zinc-300 transition-all">
+                        <div className="flex items-center justify-between text-zinc-500 mb-2">
+                            <span className="text-xs font-medium">Em Onboarding</span>
+                            <Clock size={15} className="text-amber-500" />
+                        </div>
                         <div className="flex items-baseline gap-2">
                             <span className="text-2xl font-bold text-zinc-900 tabular-nums">{onboardingCount}</span>
-                            <span className="text-xs text-amber-600 font-medium">em setup</span>
+                            <span className="text-[11px] text-amber-600 font-medium">em setup</span>
                         </div>
                     </div>
-                    <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs">
-                        <span className="text-xs font-medium text-zinc-500 block mb-1">Projetos REI</span>
+
+                    <div className="bg-white border border-zinc-200/70 rounded-xl p-4.5 shadow-xs hover:border-zinc-300 transition-all">
+                        <div className="flex items-center justify-between text-zinc-500 mb-2">
+                            <span className="text-xs font-medium">Projetos REI</span>
+                            <Zap size={15} className="text-[#00CC6A]" />
+                        </div>
                         <div className="flex items-baseline gap-2">
                             <span className="text-2xl font-bold text-zinc-900 tabular-nums">{reiProjects.length}</span>
-                            <span className="text-xs text-zinc-400 font-normal">vinculados</span>
+                            <span className="text-[11px] text-zinc-400 font-normal">projetos</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Control Bar: Search & Status Filters */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                    <div className="relative flex-1 max-w-md">
+                {/* Search Bar & Filter Controls (Raycast/Linear Style) */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50/50 p-2 rounded-xl border border-zinc-200/60">
+                    <div className="relative flex-1">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                         <Input
-                            placeholder="Buscar cliente, empresa ou segmento..."
+                            placeholder="Filtrar por cliente, empresa ou segmento..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="pl-10 h-10 bg-white border-zinc-200 rounded-lg text-sm placeholder:text-zinc-400 focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-0 transition-all shadow-xs"
+                            className="pl-10 pr-12 h-9 bg-white border-zinc-200/80 rounded-lg text-xs placeholder:text-zinc-400 focus-visible:ring-1 focus-visible:ring-zinc-950 focus-visible:ring-offset-0 transition-all shadow-2xs"
                         />
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:block">
+                            <kbd className="font-mono text-[10px] text-zinc-400 bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded">⌘K</kbd>
+                        </div>
                     </div>
 
-                    <div className="flex items-center gap-1 bg-zinc-100/80 p-1 rounded-lg border border-zinc-200/60">
+                    <div className="flex items-center gap-1">
                         <button
                             onClick={() => setStatusFilter('all')}
-                            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${statusFilter === 'all' ? 'bg-white text-zinc-900 shadow-xs' : 'text-zinc-600 hover:text-zinc-900'}`}
+                            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${statusFilter === 'all' ? 'bg-white text-zinc-900 shadow-2xs border border-zinc-200/80 font-semibold' : 'text-zinc-500 hover:text-zinc-900'}`}
                         >
                             Todos ({clients.length})
                         </button>
                         <button
                             onClick={() => setStatusFilter('active')}
-                            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${statusFilter === 'active' ? 'bg-white text-emerald-700 shadow-xs' : 'text-zinc-600 hover:text-zinc-900'}`}
+                            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${statusFilter === 'active' ? 'bg-white text-emerald-700 shadow-2xs border border-zinc-200/80 font-semibold' : 'text-zinc-500 hover:text-zinc-900'}`}
                         >
                             Ativos ({activeCount})
                         </button>
                         <button
                             onClick={() => setStatusFilter('onboarding')}
-                            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${statusFilter === 'onboarding' ? 'bg-white text-zinc-900 shadow-xs' : 'text-zinc-600 hover:text-zinc-900'}`}
+                            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${statusFilter === 'onboarding' ? 'bg-white text-zinc-900 shadow-2xs border border-zinc-200/80 font-semibold' : 'text-zinc-500 hover:text-zinc-900'}`}
                         >
                             Onboarding ({onboardingCount})
                         </button>
                     </div>
                 </div>
 
-                {/* List / Cards */}
+                {/* Table View — Clean Modern SaaS Table (Linear / Vercel Layout) */}
                 {loading ? (
-                    <div className="flex justify-center items-center py-16 bg-white border border-zinc-200/80 rounded-xl">
+                    <div className="flex justify-center items-center py-20 bg-white border border-zinc-200/70 rounded-xl">
                         <div className="flex items-center gap-3">
                             <Loader2 className="h-5 w-5 animate-spin text-[#00CC6A]" />
-                            <span className="text-xs text-zinc-500 font-medium">Carregando carteira de clientes...</span>
+                            <span className="text-xs text-zinc-500 font-medium">Carregando dados da API GCP...</span>
                         </div>
                     </div>
                 ) : filteredClients.length > 0 ? (
-                    <div className="space-y-3">
-                        {filteredClients.map((client) => {
-                            const clientProjects = reiProjects.filter(p =>
-                                p.clientEmail?.toLowerCase() === client.email?.toLowerCase() ||
-                                p.clientCompany?.toLowerCase() === client.company?.toLowerCase()
-                            );
-                            return (
-                                <div
-                                    key={client.id}
-                                    className="bg-white border border-zinc-200/80 hover:border-zinc-300 rounded-xl p-5 transition-all shadow-xs group"
-                                >
-                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                        {/* Avatar / Logo + Information */}
-                                        <div className="flex items-start gap-3.5">
-                                            <div className="w-10 h-10 rounded-lg bg-zinc-900 flex items-center justify-center shrink-0 border border-zinc-800 text-white font-bold text-sm">
-                                                {client.logo_url ? (
-                                                    <img src={client.logo_url} alt={client.name} className="w-6 h-6 object-contain" />
-                                                ) : (
-                                                    client.name.substring(0, 2).toUpperCase()
-                                                )}
-                                            </div>
+                    <div className="bg-white border border-zinc-200/70 rounded-xl overflow-hidden shadow-2xs">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse">
+                                <thead>
+                                    <tr className="border-b border-zinc-200/60 bg-zinc-50/60 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
+                                        <th className="py-3 px-4">Cliente & Empresa</th>
+                                        <th className="py-3 px-4">Contato</th>
+                                        <th className="py-3 px-4">Status</th>
+                                        <th className="py-3 px-4">Projetos REI</th>
+                                        <th className="py-3 px-4 text-right">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-zinc-200/50 text-xs text-zinc-700">
+                                    {filteredClients.map((client) => {
+                                        const clientProjects = reiProjects.filter(p =>
+                                            p.clientEmail?.toLowerCase() === client.email?.toLowerCase() ||
+                                            p.clientCompany?.toLowerCase() === client.company?.toLowerCase()
+                                        );
+                                        return (
+                                            <tr
+                                                key={client.id}
+                                                className="hover:bg-zinc-50/70 transition-colors group"
+                                            >
+                                                {/* Cliente & Empresa */}
+                                                <td className="py-3.5 px-4">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-zinc-800 to-zinc-950 flex items-center justify-center shrink-0 border border-zinc-800 text-white font-semibold text-xs shadow-2xs">
+                                                            {client.logo_url ? (
+                                                                <img src={client.logo_url} alt={client.name} className="w-5 h-5 object-contain" />
+                                                            ) : (
+                                                                client.name.substring(0, 2).toUpperCase()
+                                                            )}
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-semibold text-zinc-900 flex items-center gap-2">
+                                                                {client.name}
+                                                                {client.segment && (
+                                                                    <span className="px-1.5 py-0.2 rounded text-[10px] font-normal bg-zinc-100 text-zinc-500 border border-zinc-200/60">
+                                                                        {client.segment}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                            {client.company && (
+                                                                <div className="text-[11px] text-zinc-500 mt-0.5">
+                                                                    {client.company}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </td>
 
-                                            <div>
-                                                <div className="flex items-center gap-2.5">
-                                                    <h3 className="text-sm font-semibold text-zinc-900">
-                                                        {client.name}
-                                                    </h3>
+                                                {/* Contato */}
+                                                <td className="py-3.5 px-4">
+                                                    <div className="space-y-0.5 text-[11px]">
+                                                        <div className="flex items-center gap-1.5 text-zinc-600">
+                                                            <Mail size={12} className="text-zinc-400" />
+                                                            <span>{client.email}</span>
+                                                        </div>
+                                                        {client.website && (
+                                                            <a
+                                                                href={client.website.startsWith('http') ? client.website : `https://${client.website}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="flex items-center gap-1 text-zinc-400 hover:text-zinc-900 transition-colors"
+                                                            >
+                                                                <Globe size={12} />
+                                                                <span>{client.website.replace(/^https?:\/\//, '')}</span>
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                </td>
+
+                                                {/* Status */}
+                                                <td className="py-3.5 px-4">
                                                     {client.status === 'active' || !client.status ? (
                                                         <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Ativo
+                                                            <span className="relative flex h-1.5 w-1.5">
+                                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                                                            </span>
+                                                            Ativo
                                                         </span>
                                                     ) : client.status === 'onboarding' ? (
                                                         <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200/60">
                                                             <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Onboarding
                                                         </span>
                                                     ) : (
-                                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-zinc-100 text-zinc-600 border border-zinc-200">
+                                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-zinc-100 text-zinc-500 border border-zinc-200">
                                                             Inativo
                                                         </span>
                                                     )}
-                                                </div>
+                                                </td>
 
-                                                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-xs text-zinc-500">
-                                                    {client.company && (
-                                                        <span className="font-medium text-zinc-700">
-                                                            {client.company}
-                                                        </span>
+                                                {/* Projetos REI */}
+                                                <td className="py-3.5 px-4">
+                                                    {clientProjects.length > 0 ? (
+                                                        <div className="flex items-center gap-1.5">
+                                                            <span className="px-2 py-0.5 rounded-md bg-zinc-900 text-white text-[11px] font-mono font-medium">
+                                                                {clientProjects.length} REI
+                                                            </span>
+                                                            <span className="text-[11px] text-zinc-400 truncate max-w-[150px]">
+                                                                {clientProjects[0].type}
+                                                            </span>
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-[11px] text-zinc-400 font-normal">Sem REI ativo</span>
                                                     )}
-                                                    <span className="flex items-center gap-1">
-                                                        <Mail size={12} className="text-zinc-400" /> {client.email}
-                                                    </span>
-                                                    {client.city && (
-                                                        <span className="flex items-center gap-1">
-                                                            <MapPin size={12} className="text-zinc-400" /> {client.city}{client.state ? `, ${client.state}` : ''}
-                                                        </span>
-                                                    )}
-                                                    {client.segment && (
-                                                        <span className="px-2 py-0.5 rounded-md text-[11px] font-medium bg-zinc-100 text-zinc-600 border border-zinc-200/60">
-                                                            {client.segment}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
+                                                </td>
 
-                                        {/* Actions */}
-                                        <div className="flex items-center gap-2 self-end md:self-center">
-                                            {client.website && (
-                                                <a
-                                                    href={client.website.startsWith('http') ? client.website : `https://${client.website}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="h-8 px-3 rounded-lg border border-zinc-200 hover:border-zinc-300 text-zinc-600 hover:text-zinc-900 text-xs font-medium flex items-center gap-1.5 transition-all bg-white shadow-xs"
-                                                >
-                                                    <Globe size={13} /> Site <ExternalLink size={11} className="text-zinc-400" />
-                                                </a>
-                                            )}
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() => navigate(`/admin/rei?search=${encodeURIComponent(client.email)}`)}
-                                                className="h-8 px-3 rounded-lg border border-zinc-200 hover:border-zinc-300 text-xs font-medium gap-1.5 text-zinc-700 bg-white shadow-xs"
-                                            >
-                                                <Zap size={13} className="text-[#00CC6A]" /> REI ({clientProjects.length})
-                                            </Button>
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() => navigate(`/admin/clients/edit/${client.id}`)}
-                                                className="h-8 px-3 rounded-lg border border-zinc-200 hover:border-zinc-300 text-xs font-medium gap-1.5 text-zinc-700 bg-white shadow-xs"
-                                            >
-                                                <Edit2 size={13} /> Editar
-                                            </Button>
-                                            <Button
-                                                variant="ghost"
-                                                size="sm"
-                                                onClick={() => handleDelete(client.id, client.name)}
-                                                className="h-8 w-8 p-0 text-zinc-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
-                                            >
-                                                <Trash2 size={14} />
-                                            </Button>
-                                        </div>
-                                    </div>
-
-                                    {/* REI Projects Preview */}
-                                    {clientProjects.length > 0 && (
-                                        <div className="mt-3.5 pt-3.5 border-t border-zinc-100 flex items-center gap-2 text-xs">
-                                            <span className="text-zinc-400 font-medium">Projetos ativos:</span>
-                                            <div className="flex flex-wrap gap-1.5">
-                                                {clientProjects.map(proj => (
-                                                    <span key={proj.id} className="px-2 py-0.5 rounded-md bg-zinc-900 text-white text-[11px] font-medium tracking-tight">
-                                                        {proj.type.toUpperCase()} ({proj.quarter}/{proj.year}) — Próxima REI: {new Date(proj.nextReiDate).toLocaleDateString('pt-BR')}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
+                                                {/* Ações */}
+                                                <td className="py-3.5 px-4 text-right">
+                                                    <div className="flex items-center justify-end gap-1.5">
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() => navigate(`/admin/rei?search=${encodeURIComponent(client.email)}`)}
+                                                            className="h-8 px-2.5 rounded-md hover:bg-zinc-100 text-zinc-600 text-[11px] font-medium gap-1"
+                                                            title="Ver Projetos REI"
+                                                        >
+                                                            <Zap size={13} className="text-[#00CC6A]" /> REI
+                                                        </Button>
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() => navigate(`/admin/clients/edit/${client.id}`)}
+                                                            className="h-8 w-8 p-0 rounded-md hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900"
+                                                            title="Editar Cliente"
+                                                        >
+                                                            <Edit2 size={13} />
+                                                        </Button>
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() => handleDelete(client.id, client.name)}
+                                                            className="h-8 w-8 p-0 rounded-md hover:bg-rose-50 text-zinc-400 hover:text-rose-600"
+                                                            title="Remover"
+                                                        >
+                                                            <Trash2 size={13} />
+                                                        </Button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 ) : (
-                    <div className="py-16 text-center bg-white border border-zinc-200/80 rounded-xl p-8 shadow-xs">
+                    <div className="py-16 text-center bg-white border border-zinc-200/70 rounded-xl p-8 shadow-2xs">
                         <Users className="h-10 w-10 text-zinc-300 mx-auto mb-3" />
                         <p className="text-sm font-semibold text-zinc-700">Nenhum cliente encontrado</p>
                         <p className="text-xs text-zinc-400 mt-1">Tente buscar por outro termo ou limpe os filtros de busca.</p>
