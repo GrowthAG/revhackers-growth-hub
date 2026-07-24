@@ -117,25 +117,25 @@ const AdminProjects: React.FC = () => {
         {/* Header SaaS Moderno Benchmark */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/80">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-zinc-400 mb-1.5 uppercase tracking-wider">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 mb-1">
               <button
                 onClick={() => navigate('/admin')}
                 className="hover:text-zinc-900 transition-colors flex items-center gap-1"
               >
-                <ArrowLeft size={13} /> DASHBOARD
+                <ArrowLeft size={13} /> Dashboard
               </button>
               <span>/</span>
-              <span className="text-zinc-900">PROJETOS</span>
+              <span className="text-zinc-900 font-bold">Projetos</span>
             </div>
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
                 Projetos & Operações
               </h1>
-              <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
-                {projects.length} REGISTROS
+              <span className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-zinc-100 text-zinc-700 border border-zinc-200">
+                {projects.length} registros
               </span>
             </div>
-            <p className="text-sm font-medium text-zinc-500 mt-1">
+            <p className="text-sm text-zinc-500 mt-1">
               Gestão operacional das sprints ativas, entregáveis de clientes e acompanhamento sob contrato.
             </p>
           </div>
