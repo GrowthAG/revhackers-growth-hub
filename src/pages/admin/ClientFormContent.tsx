@@ -38,6 +38,8 @@ interface FormData {
     state?: string;
     website?: string;
     logo_url?: string;
+    segment?: string;
+    company_size?: string;
     status: 'onboarding' | 'active' | 'churned';
 }
 
@@ -56,6 +58,8 @@ const formSchema = zod.object({
     state: zod.string().optional(),
     website: zod.string().optional(),
     logo_url: zod.string().optional(),
+    segment: zod.string().optional(),
+    company_size: zod.string().optional(),
     status: zod.enum(['onboarding', 'active', 'churned'])
 });
 
@@ -91,11 +95,11 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
             const publicUrl = await uploadImageToSupabase(file);
             if (publicUrl) {
                 setValue('logo_url', publicUrl);
-                toast({ title: 'Logo atualizado' });
+                toast({ title: 'Logo atualizado com sucesso!' });
             }
         } catch (error) {
             console.error(error);
-            toast({ title: 'Erro no upload', variant: 'destructive' });
+            toast({ title: 'Erro ao fazer upload da logo', variant: 'destructive' });
         } finally {
             setUploadingLogo(false);
         }
@@ -104,7 +108,7 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
     const handleProvisionSubaccount = async () => {
         if (!clientId) return;
         setIsProvisioning(true);
-        toast({ title: 'Iniciando conectividade...', description: 'Acionando API de Provisionamento Funnels.' });
+        toast({ title: 'Iniciando conectividade...', description: 'Acionando API de Provisionamento.' });
 
         try {
             const { data, error } = await supabase.functions.invoke('ghl-create-location', {
@@ -114,7 +118,7 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
             if (error) throw new Error(error.message);
             if (data?.error) throw new Error(data.error);
 
-            toast({ title: 'SUCESSO!', description: 'Subconta provisionada e conectada ao Motor de Oauth V2.', variant: 'default' });
+            toast({ title: 'Subconta provisionada!', description: 'Infraestrutura configurada com sucesso.' });
         } catch (err: any) {
             console.error(err);
             toast({ title: 'Falha no Provisionamento', description: err.message, variant: 'destructive' });
@@ -137,8 +141,8 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
                     setValue('website', `www.${cleanDomain}`);
                 }
                 toast({
-                    title: 'ASSET LOCALIZADO',
-                    description: 'Logo e Domínio validados automaticamente.',
+                    title: 'Asset Localizado',
+                    description: 'Logo e domínio validados automaticamente.',
                 });
             };
         } catch (e) {
@@ -153,15 +157,11 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
         setIsSearchingCnpj(true);
         try {
             let data;
-
-            // Try Direct Fetch first (faster, reliable if CORS permitted)
             try {
                 const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCnpj}`);
                 if (!response.ok) throw new Error('Direct fetch failed');
                 data = await response.json();
             } catch (directError) {
-                console.warn("Direct fetch failed, trying Edge Function...", directError);
-                // Fallback to Edge Function if direct fetch fails (e.g. CORS)
                 const { data: edgeData, error } = await supabase.functions.invoke('fetch-cnpj', {
                     body: { cnpj: cleanCnpj }
                 });
@@ -171,21 +171,12 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
 
             if (!data) throw new Error('Dados não retornados');
 
-            // Map API response to Form
             if (data.razao_social) setValue('company', data.razao_social);
-
-            if (data.qsa && data.qsa.length > 0) {
-                const primaryPartner = data.qsa[0].nome_socio;
-                if (primaryPartner) setValue('name', primaryPartner);
+            if (data.qsa && data.qsa.length > 0 && data.qsa[0].nome_socio) {
+                setValue('name', data.qsa[0].nome_socio);
             }
-
-            if (data.nome_fantasia) {
-                setValue('trade_name', data.nome_fantasia);
-            }
-
+            if (data.nome_fantasia) setValue('trade_name', data.nome_fantasia);
             if (data.cep) setValue('cep', data.cep);
-
-            // Handle Address Fields
             if (data.logradouro) setValue('address', data.logradouro);
             if (data.numero) setValue('number', data.numero);
             if (data.complemento) setValue('complement', data.complemento);
@@ -205,14 +196,14 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
             }
 
             toast({
-                title: 'DADOS LOCALIZADOS',
-                description: 'Mapeamento corporativo concluído com sucesso.',
+                title: 'Dados Localizados',
+                description: 'Preenchimento corporativo automático realizado.',
             });
         } catch (error) {
             console.error('Erro ao buscar CNPJ:', error);
             toast({
-                title: 'CNPJ NÃO LOCALIZADO',
-                description: 'Verifique o número ou preencha os dados manualmente.',
+                title: 'CNPJ Não Encontrado',
+                description: 'Preencha os dados manualmente.',
                 variant: 'destructive'
             });
         } finally {
@@ -251,6 +242,8 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
                 setValue('city', client.city || '');
                 setValue('state', client.state || '');
                 setValue('logo_url', client.logo_url || '');
+                setValue('segment', client.segment || '');
+                setValue('company_size', client.company_size || '');
             } else {
                 toast({ title: 'Cliente não encontrado', variant: 'destructive' });
             }
@@ -278,6 +271,8 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
                 state: data.state || undefined,
                 website: data.website || undefined,
                 logo_url: data.logo_url || undefined,
+                segment: data.segment || undefined,
+                company_size: data.company_size || undefined,
                 status: data.status
             };
 
@@ -286,27 +281,19 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
                 result = await updateClient(clientId, clientData);
                 toast({
                     title: 'Cliente atualizado!',
-                    description: 'As informações foram salvas com sucesso.'
+                    description: 'As alterações foram salvas na API GCP.'
                 });
             } else {
                 result = await createClient(clientData);
                 toast({
                     title: 'Cliente cadastrado!',
-                    description: 'As informações foram salvas com sucesso.'
+                    description: 'Novo cliente criado na API GCP.'
                 });
             }
 
             if (onSuccess && result) {
                 onSuccess(result);
             }
-            // Logic for redirecting if onSuccess is not provided logic is handled by parent, 
-            // BUT here we should assume if onSuccess is NOT provided, we simply do nothing or let parent handle?
-            // Actually, in the original code, it navigated.
-            // Let's call onSuccess if passed, otherwise we can navigate inside this component IF we passed navigate props?
-            // To keep it clean, let's assume parent handles navigation if onSuccess is passed, 
-            // OR we can pass a 'shouldNavigate' prop?
-            // For now, let's leave navigation for the parent wrapper component if needed, or rely on onSuccess.
-
         } catch (error: any) {
             console.error('Error saving client:', error);
             toast({
@@ -321,64 +308,64 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
 
     if (loadingClient) {
         return (
-            <div className="flex h-64 items-center justify-center bg-white">
-                <Loader2 className="h-8 w-8 animate-spin text-zinc-400" />
+            <div className="flex h-64 items-center justify-center bg-white rounded-xl border border-zinc-200">
+                <div className="flex items-center gap-3">
+                    <Loader2 className="h-5 w-5 animate-spin text-[#00CC6A]" />
+                    <span className="text-xs text-zinc-500 font-medium">Carregando dados do cliente...</span>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="max-w-4xl py-6 mx-auto">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
-                <div className="bg-white border border-zinc-200 p-10 space-y-12 shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.02)]">
-                    {/* Section: NOSSA TECNOLOGIA (Control) */}
-                    <div className="space-y-6">
-                        <div className="flex items-center justify-between border-b border-zinc-100 pb-4">
-                            <h3 className="text-xxs font-black tracking-[0.4em] text-black flex items-center gap-3 uppercase">
-                                NOSSA TECNOLOGIA
+        <div className="max-w-4xl py-4 mx-auto">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <div className="bg-white border border-zinc-200 rounded-xl p-8 space-y-8 shadow-xs">
+                    {/* Section 1: Consulta & Asset */}
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between border-b border-zinc-200/80 pb-3">
+                            <h3 className="text-xs font-mono font-bold text-zinc-900 flex items-center gap-2 uppercase tracking-wider">
+                                <Search size={14} className="text-[#00CC6A]" /> Consulta Automática
                             </h3>
                             {isSearchingCnpj && (
-                                <div className="text-3xs font-bold text-black tracking-widest flex items-center gap-2">
-                                    <Loader2 className="h-3 w-3 animate-spin" /> BUSCANDO_DADOS
+                                <div className="text-xs font-medium text-zinc-500 flex items-center gap-2">
+                                    <Loader2 className="h-3.5 w-3.5 animate-spin text-[#00CC6A]" /> Consultando CNPJ...
                                 </div>
                             )}
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Consultar CNPJ</Label>
-                                <div className="relative">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-300" />
-                                    <Input
-                                        {...register('cnpj')}
-                                        placeholder="00.000.000/0000-00"
-                                        onChange={(e) => {
-                                            const val = e.target.value;
-                                            if (val.replace(/\D/g, '').length === 14) {
-                                                handleCnpjLookup(val);
-                                            }
-                                        }}
-                                        className="pl-12 !bg-white border-zinc-200 rounded-none h-12 text-sm font-bold text-black focus:ring-0 focus:border-black transition-all hover:border-zinc-400 tracking-widest"
-                                    />
-                                </div>
+                                <Label className="text-xs font-medium text-zinc-700">CNPJ Corporativo (Lookup)</Label>
+                                <Input
+                                    {...register('cnpj')}
+                                    placeholder="00.000.000/0000-00"
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        if (val.replace(/\D/g, '').length === 14) {
+                                            handleCnpjLookup(val);
+                                        }
+                                    }}
+                                    className="bg-white border-zinc-200 rounded-lg h-10 text-xs font-mono font-medium focus-visible:ring-1 focus-visible:ring-zinc-950 shadow-xs"
+                                />
                             </div>
 
                             <div className="space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Identidade Visual (Asset)</Label>
+                                <Label className="text-xs font-medium text-zinc-700">Logo do Cliente (Asset)</Label>
                                 <div
-                                    className="h-32 border-2 border-dashed border-zinc-200 bg-zinc-50/50 flex flex-col items-center justify-center relative cursor-pointer hover:bg-zinc-50 transition-all group"
+                                    className="h-24 border border-dashed border-zinc-300 rounded-lg bg-zinc-50/50 flex flex-col items-center justify-center relative cursor-pointer hover:bg-zinc-50 transition-all group"
                                     onClick={() => document.getElementById('logo-upload')?.click()}
                                 >
                                     {watch('logo_url') ? (
-                                        <div className="absolute inset-0 p-4 flex items-center justify-center">
+                                        <div className="absolute inset-0 p-3 flex items-center justify-center">
                                             <img src={watch('logo_url')} className="h-full w-full object-contain" alt="Preview" />
-                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                                                <Button type="button" variant="secondary" size="sm" className="h-7 text-3xs font-bold tracking-widest uppercase rounded-none">Substituir</Button>
+                                            <div className="absolute inset-0 bg-zinc-950/60 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                                <Button type="button" variant="secondary" size="sm" className="h-7 text-xs font-medium rounded-md">Substituir</Button>
                                                 <Button
                                                     type="button"
-                                                    variant="destructive"
+                                                    variant="ghost"
                                                     size="sm"
-                                                    className="h-7 text-3xs font-bold tracking-widest uppercase rounded-none bg-zinc-900"
+                                                    className="h-7 text-xs font-medium rounded-md text-white hover:bg-zinc-800"
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         setValue('logo_url', '');
@@ -389,15 +376,15 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="text-center space-y-2">
-                                            <Upload size={16} className="text-zinc-300 mx-auto" />
-                                            <span className="text-3xs font-black tracking-widest text-zinc-400 uppercase">Anexar Logo do Cliente</span>
+                                        <div className="text-center space-y-1.5">
+                                            <Upload size={16} className="text-zinc-400 mx-auto" />
+                                            <span className="text-xs font-medium text-zinc-500">Anexar ou Buscar Logo</span>
                                         </div>
                                     )}
                                     {uploadingLogo && (
-                                        <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-10">
-                                            <Loader2 className="h-5 w-5 animate-spin text-black" />
-                                            <span className="text-3xs font-black tracking-widest text-black mt-2">ENVIANDO_ASSET...</span>
+                                        <div className="absolute inset-0 bg-white/90 rounded-lg flex items-center justify-center gap-2">
+                                            <Loader2 className="h-4 w-4 animate-spin text-zinc-950" />
+                                            <span className="text-xs font-medium text-zinc-900">Enviando logo...</span>
                                         </div>
                                     )}
                                 </div>
@@ -412,226 +399,181 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
                         </div>
                     </div>
 
-                    {/* Section: IDENTIDADE DO CLIENTE */}
-                    <div className="space-y-6 pt-6 border-t border-zinc-50">
-                        <h3 className="text-xxs font-black tracking-[0.4em] text-black border-l-4 border-black pl-5 flex items-center gap-3 uppercase">
-                            <User size={12} className="text-black fill-black/10" /> Identidade do Cliente
+                    {/* Section 2: Identidade do Cliente */}
+                    <div className="space-y-4 pt-4 border-t border-zinc-200/80">
+                        <h3 className="text-xs font-mono font-bold text-zinc-900 flex items-center gap-2 uppercase tracking-wider">
+                            <User size={14} className="text-zinc-600" /> Responsável & Contato
                         </h3>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Nome Principal / Sócio</Label>
-                                <Input {...register('name')} placeholder="Nome completo do responsável" className="!bg-white border-zinc-200 rounded-none h-12 text-sm font-bold text-black focus:ring-0 focus:border-black transition-colors" />
-                                {errors.name && <span className="text-2xs text-red-500 font-bold uppercase tracking-widest">{errors.name.message}</span>}
+                                <Label className="text-xs font-medium text-zinc-700">Nome Principal / Sócio *</Label>
+                                <Input {...register('name')} placeholder="Nome completo do responsável" className="bg-white border-zinc-200 rounded-lg h-10 text-xs font-medium focus-visible:ring-1 focus-visible:ring-zinc-950 shadow-xs" />
+                                {errors.name && <span className="text-xs text-zinc-500 font-medium">{errors.name.message}</span>}
                             </div>
 
                             <div className="space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">E-mail Corporativo</Label>
-                                <div className="relative">
-                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-300" />
-                                    <Input
-                                        {...register('email')}
-                                        placeholder="exemplo@empresa.com.br"
-                                        className="pl-12 !bg-white border-zinc-200 rounded-none h-12 text-sm font-bold text-black focus:ring-0 focus:border-black transition-colors"
-                                        onBlur={(e) => {
-                                            const email = e.target.value;
-                                            if (email.includes('@')) {
-                                                const domain = email.split('@')[1].toLowerCase();
-                                                const generalDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'uol.com.br', 'bol.com.br', 'terra.com.br', 'icloud.com'];
-
-                                                if (!generalDomains.includes(domain)) {
-                                                    if (!watch('website')) {
-                                                        setValue('website', `www.${domain}`);
-                                                    }
-                                                    discoverLogo(domain);
-                                                }
+                                <Label className="text-xs font-medium text-zinc-700">E-mail Corporativo *</Label>
+                                <Input
+                                    {...register('email')}
+                                    placeholder="contato@empresa.com.br"
+                                    className="bg-white border-zinc-200 rounded-lg h-10 text-xs font-medium focus-visible:ring-1 focus-visible:ring-zinc-950 shadow-xs"
+                                    onBlur={(e) => {
+                                        const email = e.target.value;
+                                        if (email.includes('@')) {
+                                            const domain = email.split('@')[1].toLowerCase();
+                                            const generalDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'uol.com.br'];
+                                            if (!generalDomains.includes(domain)) {
+                                                if (!watch('website')) setValue('website', `www.${domain}`);
+                                                discoverLogo(domain);
                                             }
-                                        }}
-                                    />
-                                </div>
-                                {errors.email && <span className="text-2xs text-red-500 font-bold uppercase tracking-widest">{errors.email.message}</span>}
+                                        }
+                                    }}
+                                />
+                                {errors.email && <span className="text-xs text-zinc-500 font-medium">{errors.email.message}</span>}
                             </div>
                         </div>
                     </div>
 
-                    {/* Section: DADOS CORPORATIVOS */}
-                    <div className="space-y-6 pt-6 border-t border-zinc-50">
-                        <h3 className="text-xxs font-black tracking-[0.4em] text-black border-l-4 border-zinc-400 pl-5 flex items-center gap-3 uppercase">
-                            <Building2 size={12} className="text-zinc-600 fill-zinc-600/10" /> Dados Corporativos
+                    {/* Section 3: Dados da Empresa */}
+                    <div className="space-y-4 pt-4 border-t border-zinc-200/80">
+                        <h3 className="text-xs font-mono font-bold text-zinc-900 flex items-center gap-2 uppercase tracking-wider">
+                            <Building2 size={14} className="text-zinc-600" /> Dados da Empresa
                         </h3>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div className="space-y-2 md:col-span-1">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Razão Social</Label>
-                                <Input {...register('company')} placeholder="NOME DA EMPRESA LTDA" className="!bg-white border-zinc-200 rounded-none h-12 text-sm font-bold text-black focus:ring-0 focus:border-black transition-colors uppercase" />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div className="space-y-2">
+                                <Label className="text-xs font-medium text-zinc-700">Razão Social</Label>
+                                <Input {...register('company')} placeholder="Empresa Ltda" className="bg-white border-zinc-200 rounded-lg h-10 text-xs font-medium focus-visible:ring-1 focus-visible:ring-zinc-950 shadow-xs" />
                             </div>
 
-                            <div className="space-y-2 md:col-span-1">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Nome Fantasia (Visuals)</Label>
-                                <Input {...register('trade_name')} placeholder="Sua Marca" className="!bg-white border-zinc-200 rounded-none h-12 text-sm font-bold text-black focus:ring-0 focus:border-black transition-colors" />
+                            <div className="space-y-2">
+                                <Label className="text-xs font-medium text-zinc-700">Nome Fantasia</Label>
+                                <Input {...register('trade_name')} placeholder="Nome de marca" className="bg-white border-zinc-200 rounded-lg h-10 text-xs font-medium focus-visible:ring-1 focus-visible:ring-zinc-950 shadow-xs" />
                             </div>
 
-                            <div className="space-y-2 md:col-span-1">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Digital Hub / Website</Label>
-                                <div className="relative">
-                                    <Globe className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-300" />
-                                    <Input
-                                        {...register('website')}
-                                        placeholder="www.dominio.com.br"
-                                        className="pl-12 !bg-white border-zinc-200 rounded-none h-12 text-sm font-bold text-black focus-visible:ring-0 focus-visible:border-black transition-colors"
-                                        onBlur={(e) => discoverLogo(e.target.value)}
-                                    />
-                                </div>
+                            <div className="space-y-2">
+                                <Label className="text-xs font-medium text-zinc-700">Website</Label>
+                                <Input
+                                    {...register('website')}
+                                    placeholder="www.empresa.com.br"
+                                    className="bg-white border-zinc-200 rounded-lg h-10 text-xs font-medium focus-visible:ring-1 focus-visible:ring-zinc-950 shadow-xs"
+                                    onBlur={(e) => discoverLogo(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label className="text-xs font-medium text-zinc-700">Segmento de Mercado</Label>
+                                <Input {...register('segment')} placeholder="Ex: SaaS / Tecnologia / B2B" className="bg-white border-zinc-200 rounded-lg h-10 text-xs font-medium focus-visible:ring-1 focus-visible:ring-zinc-950 shadow-xs" />
+                            </div>
+
+                            <div className="space-y-2 col-span-2">
+                                <Label className="text-xs font-medium text-zinc-700">Tamanho da Empresa</Label>
+                                <Input {...register('company_size')} placeholder="Ex: 11-50 funcionários" className="bg-white border-zinc-200 rounded-lg h-10 text-xs font-medium focus-visible:ring-1 focus-visible:ring-zinc-950 shadow-xs" />
                             </div>
                         </div>
                     </div>
 
-                    {/* Section: LOCALIZAÇÃO CORPORATIVA (Automatic Mapping) */}
-                    <div className="space-y-6 pt-6 border-t border-zinc-50">
-                        <h3 className="text-xxs font-black tracking-[0.4em] text-black border-l-4 border-zinc-200 pl-5 flex items-center gap-3 uppercase">
-                            <div className="h-2 w-2 bg-zinc-300 "></div> Localização Corporativa
+                    {/* Section 4: Localização */}
+                    <div className="space-y-4 pt-4 border-t border-zinc-200/80">
+                        <h3 className="text-xs font-mono font-bold text-zinc-900 flex items-center gap-2 uppercase tracking-wider">
+                            Localização
                         </h3>
 
                         <div className="grid grid-cols-6 gap-4">
-                            {/* CEP */}
-                            <div className="col-span-2 md:col-span-1 space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">CEP</Label>
-                                <Input {...register('cep')} readOnly className="!bg-zinc-50 border-zinc-100 rounded-none h-10 text-xs font-medium text-zinc-500" />
+                            <div className="col-span-2 space-y-2">
+                                <Label className="text-xs font-medium text-zinc-700">CEP</Label>
+                                <Input {...register('cep')} className="bg-zinc-50 border-zinc-200 rounded-lg h-9 text-xs font-mono font-medium" />
                             </div>
-
-                            {/* Endereço */}
-                            <div className="col-span-4 md:col-span-4 space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Logradouro</Label>
-                                <Input {...register('address')} readOnly className="!bg-zinc-50 border-zinc-100 rounded-none h-10 text-xs font-medium text-zinc-500" />
+                            <div className="col-span-4 space-y-2">
+                                <Label className="text-xs font-medium text-zinc-700">Logradouro</Label>
+                                <Input {...register('address')} className="bg-zinc-50 border-zinc-200 rounded-lg h-9 text-xs font-medium" />
                             </div>
-
-                            {/* Número */}
-                            <div className="col-span-2 md:col-span-1 space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Número</Label>
-                                <Input {...register('number')} className="!bg-white border-zinc-200 rounded-none h-10 text-xs font-bold text-black focus:border-black" />
+                            <div className="col-span-2 space-y-2">
+                                <Label className="text-xs font-medium text-zinc-700">Cidade</Label>
+                                <Input {...register('city')} className="bg-zinc-50 border-zinc-200 rounded-lg h-9 text-xs font-medium" />
                             </div>
-
-                            {/* Complemento */}
-                            <div className="col-span-4 md:col-span-2 space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Complemento</Label>
-                                <Input {...register('complement')} className="!bg-white border-zinc-200 rounded-none h-10 text-xs font-bold text-black focus:border-black" />
-                            </div>
-
-                            {/* Bairro */}
-                            <div className="col-span-3 md:col-span-2 space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Bairro</Label>
-                                <Input {...register('neighborhood')} readOnly className="!bg-zinc-50 border-zinc-100 rounded-none h-10 text-xs font-medium text-zinc-500" />
-                            </div>
-
-                            {/* Cidade */}
-                            <div className="col-span-3 md:col-span-2 space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">Cidade</Label>
-                                <Input {...register('city')} readOnly className="!bg-zinc-50 border-zinc-100 rounded-none h-10 text-xs font-medium text-zinc-500" />
-                            </div>
-
-                            {/* UF */}
-                            <div className="col-span-2 md:col-span-1 space-y-2">
-                                <Label className="text-3xs font-mono-tech font-bold tracking-[0.2em] text-zinc-400 uppercase">UF</Label>
-                                <Input {...register('state')} readOnly className="!bg-zinc-50 border-zinc-100 rounded-none h-10 text-xs font-medium text-zinc-500" />
+                            <div className="col-span-2 space-y-2">
+                                <Label className="text-xs font-medium text-zinc-700">Estado / UF</Label>
+                                <Input {...register('state')} className="bg-zinc-50 border-zinc-200 rounded-lg h-9 text-xs font-medium" />
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Status (Admin Only) */}
-                {mode === 'admin' && (
-                    <div className="bg-white border border-zinc-200 p-8 space-y-6">
-                        <h3 className="text-xxs font-black tracking-[0.2em] text-black uppercase border-b border-zinc-100 pb-3">Status do Cliente</h3>
-                        <div className="space-y-2">
-                            <Label className="text-xxs uppercase font-bold tracking-wider">Estágio Atual</Label>
-                            <div className="relative">
-                                <Activity className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-300" />
+                    {/* Section 5: Status da Conta */}
+                    {mode === 'admin' && (
+                        <div className="space-y-4 pt-4 border-t border-zinc-200/80">
+                            <h3 className="text-xs font-mono font-bold text-zinc-900 flex items-center gap-2 uppercase tracking-wider">
+                                Status da Operação
+                            </h3>
+                            <div className="max-w-xs">
                                 <Select
                                     onValueChange={(value: any) => setValue('status', value)}
                                     defaultValue={watch('status')}
                                 >
-                                    <SelectTrigger className="pl-12 h-12 bg-white border border-zinc-200 rounded-none focus:ring-0 focus:border-black text-sm font-bold text-black tracking-widest transition-colors hover:border-zinc-400">
-                                        <SelectValue placeholder="SELECIONE O STATUS..." />
+                                    <SelectTrigger className="h-10 bg-white border border-zinc-200 rounded-lg text-xs font-medium text-zinc-900 focus:ring-1 focus:ring-zinc-950">
+                                        <SelectValue placeholder="Selecione o status..." />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-white border border-zinc-100 shadow-sm ">
-                                        <SelectItem value="onboarding" className="text-xs uppercase tracking-wider py-3 focus:bg-zinc-50 cursor-pointer text-zinc-600 focus:text-black font-bold">Onboarding (Em andamento)</SelectItem>
-                                        <SelectItem value="active" className="text-xs uppercase tracking-wider py-3 focus:bg-zinc-50 cursor-pointer text-zinc-600 focus:text-black font-bold">Ativo (Em operação)</SelectItem>
-                                        <SelectItem value="churned" className="text-xs uppercase tracking-wider py-3 focus:bg-zinc-50 cursor-pointer text-zinc-600 focus:text-black font-bold">Churned (Cancelado)</SelectItem>
+                                    <SelectContent className="bg-white border border-zinc-200 shadow-sm">
+                                        <SelectItem value="active" className="text-xs py-2 font-medium">Ativo (Em operação)</SelectItem>
+                                        <SelectItem value="onboarding" className="text-xs py-2 font-medium">Onboarding (Em andamento)</SelectItem>
+                                        <SelectItem value="churned" className="text-xs py-2 font-medium">Inativo / Encerrado</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
 
-                {/* Cloud Auth (Admin Only) */}
+                {/* Subconta Funnels / Cloud Auth */}
                 {mode === 'admin' && isEditing && clientId && (
-                    <div className="bg-white border border-zinc-200 p-8 space-y-6">
-                        <h3 className="text-xxs font-black tracking-[0.2em] text-black uppercase border-b border-zinc-100 pb-3 flex items-center gap-2">
-                            <Cloud size={14} className="text-zinc-500"/>
-                            Cérebro Operacional (Funnels)
-                        </h3>
-                        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between bg-zinc-50 p-6 border border-zinc-100">
-                            <div>
-                                <h4 className="text-sm font-black text-black tracking-tight uppercase">Provisionar Ambiente</h4>
-                                <p className="text-xs text-zinc-500 mt-1 max-w-sm">Crie a infraestrutura exclusiva do cliente na matriz Funnels com apenas um clique. O Hub sincronizará o cliente à Tabela Oauth V2 mestra na mesma hora.</p>
-                            </div>
-                            <Button 
-                                type="button"
-                                onClick={handleProvisionSubaccount}
-                                disabled={isProvisioning}
-                                className="bg-zinc-950 hover:bg-zinc-800 text-white font-bold h-12 px-6 whitespace-nowrap !rounded-sm uppercase tracking-widest text-xxs"
-                            >
-                                {isProvisioning ? <Loader2 className="animate-spin mr-2" size={16}/> : <Cloud className="mr-2" size={16}/>}
-                                Provisionar Subconta
-                            </Button>
+                    <div className="bg-white border border-zinc-200 rounded-xl p-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between shadow-xs">
+                        <div>
+                            <h4 className="text-sm font-semibold text-zinc-900 flex items-center gap-2">
+                                <Cloud size={16} className="text-zinc-600" /> Infraestrutura & Conectividade
+                            </h4>
+                            <p className="text-xs text-zinc-500 mt-1 max-w-lg">
+                                Dispare o provisionamento de ambiente exclusivo da conta na infraestrutura GCP.
+                            </p>
                         </div>
+                        <Button
+                            type="button"
+                            onClick={handleProvisionSubaccount}
+                            disabled={isProvisioning}
+                            className="bg-zinc-950 hover:bg-zinc-800 text-white font-medium h-9 px-4 rounded-lg text-xs tracking-wide"
+                        >
+                            {isProvisioning ? <Loader2 className="animate-spin mr-2" size={14}/> : <Cloud className="mr-2" size={14}/>}
+                            Provisionar Subconta
+                        </Button>
                     </div>
                 )}
 
-                <div className="flex flex-col md:flex-row gap-4 pt-4">
+                {/* Actions Footer */}
+                <div className="flex items-center justify-end gap-3 pt-2">
                     {onCancel && (
                         <Button
                             type="button"
                             variant="outline"
                             onClick={onCancel}
-                            className="h-14 rounded-none border-zinc-200 text-2xs font-black uppercase tracking-[0.4em] hover:bg-zinc-50 transition-all shadow-none flex-1"
+                            className="h-10 rounded-lg border-zinc-200 text-xs font-medium px-5 hover:bg-zinc-50 transition-all shadow-xs"
                             disabled={loading}
                         >
-                            CANCELAR
+                            Cancelar
                         </Button>
                     )}
                     <Button
                         type="submit"
-                        className={`h-14 rounded-none bg-black text-white hover:bg-zinc-800 transition-all font-black text-2xs uppercase tracking-[0.4em] shadow-none gap-4 group ${mode === 'admin' || onCancel ? 'flex-[2]' : 'w-full'}`}
+                        className="h-10 rounded-lg bg-zinc-950 text-white hover:bg-zinc-800 transition-all font-medium text-xs px-6 shadow-xs gap-2"
                         disabled={loading}
                     >
                         {loading ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <Loader2 className="h-4 w-4 animate-spin text-[#00CC6A]" />
                         ) : (
-                            mode === 'public' ? <span className="opacity-0 w-0"></span> : <Save size={16} />
+                            <Save size={14} className="text-[#00CC6A]" />
                         )}
-
-                        {isEditing ? 'SALVAR ALTERAÇÕES' : (mode === 'public' ? 'FINALIZAR CADASTRO' : 'CADASTRAR CLIENTE')}
-
-                        {/* Public Mode Arrow */}
-                        {mode === 'public' && !loading && (
-                            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        )}
+                        {isEditing ? 'Salvar Alterações' : 'Cadastrar Cliente'}
                     </Button>
                 </div>
-
-                {/* Security Badge */}
-                {mode === 'public' && (
-                    <div className="flex items-center justify-center gap-2 opacity-60 pt-4">
-                        <div className="h-px w-6 bg-zinc-300"></div>
-                        <div className="flex items-center gap-1.5 text-3xs font-bold uppercase tracking-widest text-zinc-400">
-                            <Lock size={10} className="text-zinc-400" />
-                            Ambiente Seguro End-to-End
-                        </div>
-                        <div className="h-px w-6 bg-zinc-300"></div>
-                    </div>
-                )}
             </form>
         </div>
     );
