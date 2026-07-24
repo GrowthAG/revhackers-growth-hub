@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { createReiProject, updateReiProject, getReiProjectById, type FocalPoint } from '@/api/reiProjects';
+import { reiProjectsGcpAdapter } from '@/api/adapters/rei-projects-gcp';
 import { supabase } from '@/integrations/supabase/client';
 import { getAllClients, type Client } from '@/api/clients';
 import type { ReiProjectInsert } from '@/api/reiProjects';
@@ -356,41 +357,53 @@ const REIProjectForm = () => {
             };
 
             if (isEditing && id) {
-                await updateReiProject(id, projectData);
-                toast({ title: 'Protocolo atualizado com sucesso' });
+                if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+                    await reiProjectsGcpAdapter.update(id, {
+                        clientName: data.client_name,
+                        clientEmail: data.client_email,
+                        clientCompany: data.client_company || null,
+                        analystEmail: data.analyst_email,
+                        quarter: data.quarter,
+                        year: Number(data.year),
+                        type: data.type as any,
+                        nextReiDate: new Date(data.next_rei_date).toISOString(),
+                    });
+                } else {
+                    await updateReiProject(id, projectData);
+                }
+                toast({ title: 'Projeto REI atualizado com sucesso!' });
                 localStorage.removeItem(DRAFT_KEY);
             } else {
-                const res = await createReiProject(projectData);
-                if (res && (res as any).error) throw new Error((res as any).error.message || 'Erro desconhecido ao criar');
+                if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+                    await reiProjectsGcpAdapter.create({
+                        clientId: data.client_id || null,
+                        clientName: data.client_name,
+                        clientEmail: data.client_email,
+                        clientCompany: data.client_company || null,
+                        analystEmail: data.analyst_email,
+                        lastReiDate: new Date().toISOString(),
+                        nextReiDate: new Date(data.next_rei_date).toISOString(),
+                        quarter: data.quarter,
+                        year: Number(data.year),
+                        status: 'active',
+                        type: data.type as any,
+                        tier: 'paid',
+                        durationDays: 90,
+                        schedulingCompleted: false,
+                        technicalEvidences: [],
+                    });
+                } else {
+                    const res = await createReiProject(projectData);
+                    if (res && (res as any).error) throw new Error((res as any).error.message || 'Erro ao criar projeto');
+                }
 
                 toast({
                     title: isLeadMode ? 'Lead criado no pipeline' : 'Novo Projeto Iniciado',
                     description: isLeadMode
-                        ? 'Oportunidade adicionada ao Deal Rooms.'
-                        : 'Projeto criado com tarefas automaticas.',
+                        ? 'Oportunidade adicionada.'
+                        : 'Projeto criado com sucesso.',
                 });
                 localStorage.removeItem(DRAFT_KEY);
-
-                // Fire-and-forget: enriquece projeto em background (CNPJ + PSI)
-                // Nao bloqueia navegacao - roda asincrono sem await
-                const projectId = (res as any)?.project?.id || (res as any)?.id;
-                if (projectId && !isLeadMode) {
-                    supabase.functions.invoke('auto-enrich-project', {
-                        body: { project_id: projectId },
-                    }).catch((err: any) => {
-                        console.warn('[REIProjectForm] auto-enrich-project falhou (nao critico):', err?.message);
-                    });
-                }
-
-                if (res && (res as any).id) {
-                    // Lead vai direto para Deal Rooms, projeto vai para jornada
-                    if (isLeadMode) {
-                        navigate('/admin/proposals');
-                        return;
-                    }
-                    navigate(`/admin/jornada/${(res as any).id}`);
-                    return;
-                }
             }
             navigate('/admin/rei');
         } catch (error: any) {
