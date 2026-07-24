@@ -17,6 +17,8 @@ export interface Client {
     state?: string;
     logo_url?: string;
     website?: string;
+    segment?: string;
+    company_size?: string;
     status: 'active' | 'onboarding' | 'churned';
     created_at?: string;
 }
