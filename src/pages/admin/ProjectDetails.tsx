@@ -4,76 +4,28 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import { ProjectDetailsSkeleton } from '@/components/ui/skeleton';
 import {
     Map,
-    Zap,
     BookOpen,
-    TrendingUp,
-    Users,
     ChevronLeft,
-    Loader2,
-    Link as LinkIcon,
-    QrCode,
-    Presentation,
-    Columns,
-        BrainCircuit,
-    CheckCircle2,
     AlertTriangle,
     Upload,
     Unlock,
     Video,
-    ArrowRight,
-    Clock,
     Target,
-    Shield,
-    Eye,
-    FileEdit,
-    Send,
-    MessageSquare,
-    Trophy,
-    Rocket,
-    Activity,
-    XCircle,
-    UserMinus,
-    UserPlus,
-    UserCheck,
+    Columns,
+    BrainCircuit,
     ClipboardCheck,
-    ChevronDown,
-    ChevronUp,
-    Gauge,
-    Lightbulb,
-    AlertCircle,
+    Presentation,
     Cpu,
-    Swords,
     FileSignature,
-    Globe,
-    Share2,
+    ArrowLeft,
+    Zap,
+    ExternalLink
 } from 'lucide-react';
-import { updateReiProject } from '@/api/reiProjects';
+import { updateReiProject, getReiProjectById, type ReiProject } from '@/api/reiProjects';
+import { reiProjectsGcpAdapter } from '@/api/adapters/rei-projects-gcp';
 import { toast as sonnerToast } from 'sonner';
-// Tabs components unmounted as they were migrated to react-router-dom NavLink
 import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { QRCodeSVG } from 'qrcode.react';
 import { supabase } from '@/integrations/supabase/client';
-import { getReiProjectById } from '@/api/reiProjects';
-import type { ReiProject } from '@/api/reiProjects';
 import OrchestratedOnboarding from '@/pages/admin/OrchestratedOnboarding';
 import { ProjectOsContainer } from '@/components/project-os/ProjectOsContainer';
 
@@ -91,7 +43,6 @@ import { ClientAccessModal } from '@/components/project-os/layout/ClientAccessMo
 import { ProjectHeaderActions } from '@/components/project-os/layout/ProjectHeaderActions';
 
 import { PipelineJourneyBar } from '@/components/project-os/layout/PipelineJourneyBar';
-import { StageTransitionButtons } from '@/components/project-os/layout/StageTransitionButtons';
 import { FocalPointsPanel } from '@/components/project-os/panels/FocalPointsPanel';
 import { IntelligencePanel } from '@/components/project-os/panels/IntelligencePanel';
 
@@ -99,23 +50,11 @@ import {
     PipelineStage,
     PIPELINE_STAGES,
     STAGE_CONFIGS,
-    STAGE_CATEGORIES,
     StageCategory,
     getStageCategory,
-    getStageIndex,
 } from '@/types/pipeline';
 import { advanceStage, getStageHistory } from '@/services/PipelineService';
 import type { StageChangeEvent } from '@/types/pipeline';
-
-
-
-// ---- Helpers ----
-
-/** Main pipeline stages (excluding terminal lost/churned) for the journey bar */
-const JOURNEY_STAGES: PipelineStage[] = PIPELINE_STAGES.filter(
-    (s) => s !== 'lost' && s !== 'churned'
-);
-
 import { getDisplayName as utilGetDisplayName } from '@/lib/projectUtils';
 
 function getDisplayName(project: ReiProject | null): string {
@@ -136,7 +75,6 @@ function getDaysInStage(history: StageChangeEvent[], currentStage: PipelineStage
     return Math.max(0, Math.ceil((now.getTime() - enteredAt.getTime()) / (1000 * 60 * 60 * 24)));
 }
 
-/** Determine which tab set to show based on stage category */
 function getVisibleTabs(category: StageCategory | null): string[] {
     switch (category) {
         case 'diagnostico':
@@ -150,16 +88,9 @@ function getVisibleTabs(category: StageCategory | null): string[] {
         case 'encerrado':
             return ['jornada', 'inteligencia', 'diagnostico', 'playbook', 'success', 'reunioes', 'biblioteca'];
         default:
-            // Fallback: show all core tabs
             return ['jornada', 'inteligencia', 'diagnostico', 'playbook', 'reunioes', 'kickoff'];
     }
 }
-
-
-
-// ---- Placeholders removed - DiagnosticResponsesPanel replaces DiagnosticoPlaceholder ----
-
-// ---- Main Component ----
 
 const ProjectDetails = () => {
     const { id } = useParams();
@@ -171,18 +102,14 @@ const ProjectDetails = () => {
     const [loading, setLoading] = useState(true);
     const [advancing, setAdvancing] = useState(false);
     const [stageHistory, setStageHistory] = useState<StageChangeEvent[]>([]);
-    const [confirmStage, setConfirmStage] = useState<PipelineStage | null>(null);
     const [editingName, setEditingName] = useState(false);
     const [editNameValue, setEditNameValue] = useState('');
 
-    // Pipeline stage (cast via any since not in typed schema)
     const currentStage = (project?.pipeline_stage as PipelineStage) || null;
     const stageCategory = currentStage ? getStageCategory(currentStage) : null;
 
-    // Determine visible tabs based on pipeline stage
     const visibleTabs = useMemo(() => {
         if (!currentStage) {
-            // Fallback for projects without pipeline_stage
             const status = project?.status;
             if (status === 'lead') return ['inteligencia', 'diagnostico', 'reunioes'];
             return ['execucao', 'jornada', 'diagnostico', 'reunioes', 'biblioteca', 'kickoff'];
@@ -190,9 +117,7 @@ const ProjectDetails = () => {
         return getVisibleTabs(stageCategory);
     }, [currentStage, stageCategory, project?.status]);
 
-    // Default tab based on stage
     const defaultTab = visibleTabs[0] || 'inteligencia';
-    const currentPathTarget = location.pathname.split('/').pop() || '';
 
     const daysInStage = useMemo(
         () => getDaysInStage(stageHistory, currentStage),
@@ -209,15 +134,42 @@ const ProjectDetails = () => {
     const loadProject = async () => {
         try {
             setLoading(true);
+            if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+                try {
+                    const gcpProject = await reiProjectsGcpAdapter.getById(id!);
+                    if (gcpProject) {
+                        const mapped = {
+                            id: gcpProject.id,
+                            client_name: gcpProject.clientName,
+                            client_email: gcpProject.clientEmail,
+                            client_company: gcpProject.clientCompany || gcpProject.clientName,
+                            trade_name: gcpProject.clientName,
+                            analyst_email: gcpProject.analystEmail,
+                            next_rei_date: gcpProject.nextReiDate,
+                            quarter: gcpProject.quarter,
+                            year: gcpProject.year,
+                            status: gcpProject.status,
+                            type: gcpProject.type,
+                            created_at: gcpProject.lastReiDate || new Date().toISOString(),
+                            updated_at: gcpProject.nextReiDate || new Date().toISOString(),
+                        } as unknown as ReiProject;
+                        setProject(mapped);
+                        setLoading(false);
+                        return;
+                    }
+                } catch (e) {
+                    console.warn('Projeto via GCP não localizado, tentando Supabase...', e);
+                }
+            }
+
             const data = await getReiProjectById(id!);
             if (!data) {
-                toast({ title: 'Projeto nao encontrado', variant: 'destructive' });
+                toast({ title: 'Projeto não encontrado', variant: 'destructive' });
                 navigate('/admin/rei');
                 return;
             }
             setProject(data);
 
-            // Tenta buscar se existe um planejamento estratégico gerado
             try {
                 const { data: planData } = await supabase
                     .from('strategic_plans')
@@ -247,29 +199,26 @@ const ProjectDetails = () => {
         setStageHistory(history);
     };
 
-
-
     const handleAdvanceStage = async (targetStage: PipelineStage) => {
         if (!project) return;
         setAdvancing(true);
         try {
             const result = await advanceStage(project.id, targetStage);
             if (!result.success) {
-                sonnerToast.error('Erro ao avancar', { description: result.error });
+                sonnerToast.error('Erro ao avançar', { description: result.error });
                 return;
             }
 
             const targetLabel = STAGE_CONFIGS[targetStage].label;
             sonnerToast.success(`Movido para ${targetLabel}`, {
-                description: `${getDisplayName(project)} agora esta em "${targetLabel}".`,
+                description: `${getDisplayName(project)} agora está em "${targetLabel}".`,
             });
             await loadProject();
             await loadHistory();
         } catch (e: any) {
-            sonnerToast.error('Erro ao avancar stage', { description: e.message });
+            sonnerToast.error('Erro ao avançar estágio', { description: e.message });
         } finally {
             setAdvancing(false);
-            setConfirmStage(null);
         }
     };
 
@@ -277,9 +226,8 @@ const ProjectDetails = () => {
         if (!project) return;
         try {
             await updateReiProject(project.id, { materials_status: 'delivered' });
-
-            sonnerToast.success('Cronograma Destravado!', {
-                description: 'Os materiais foram confirmados. Planejamento Estrategico liberado.',
+            sonnerToast.success('Cronograma Liberado!', {
+                description: 'Os materiais foram confirmados. Planejamento Estratégico liberado.',
             });
             await loadProject();
         } catch (e: any) {
@@ -293,14 +241,13 @@ const ProjectDetails = () => {
 
     if (!project) return null;
 
-    // Tab definitions with icons
     const TAB_DEFS: Record<string, { label: string; icon: React.ElementType }> = {
         execucao: { label: 'OrqFlow OS', icon: Columns },
-        inteligencia: { label: 'Inteligencia B2B', icon: BrainCircuit },
-        diagnostico: { label: 'REI', icon: ClipboardCheck },
+        inteligencia: { label: 'Inteligência B2B', icon: BrainCircuit },
+        diagnostico: { label: 'Diagnóstico REI', icon: ClipboardCheck },
         jornada: { label: 'Planejamento', icon: Map },
         proposta: { label: 'Proposta', icon: Presentation },
-        reunioes: { label: 'Reunioes', icon: Video },
+        reunioes: { label: 'Reuniões', icon: Video },
         biblioteca: { label: 'Documentos', icon: BookOpen },
         playbook: { label: 'Playbook AI', icon: Cpu },
         kickoff: { label: 'Kick-off Validação', icon: FileSignature },
@@ -309,86 +256,76 @@ const ProjectDetails = () => {
 
     return (
         <AdminLayout>
-            <div className="h-full flex flex-col">
-                {/* Project Header */}
-                <div className="bg-white border-b border-zinc-200 px-4 sm:px-8 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 z-10 w-full overflow-hidden">
-                    <div className="flex items-center gap-4 shrink-0">
-                        <Button variant="ghost" size="icon" onClick={() => navigate('/admin/rei')} className="text-zinc-400 hover:text-zinc-900 h-8 w-8">
-                            <ChevronLeft size={16} />
+            <div className="h-full flex flex-col bg-white">
+                {/* Project Header Nobibecode */}
+                <div className="bg-white border-b border-zinc-200/80 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 z-10 w-full">
+                    <div className="flex items-center gap-3 shrink-0">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => navigate('/admin/projects')}
+                            className="text-zinc-500 hover:text-zinc-900 rounded-lg h-8 w-8"
+                        >
+                            <ArrowLeft size={16} />
                         </Button>
                         <div>
-                            <h1 className="text-2xl md:text-4xl font-black text-zinc-900 tracking-tight flex items-center gap-3">
-                                {editingName ? (
-                                    <input
-                                        autoFocus
-                                        className="bg-zinc-100 border border-zinc-300 px-2 py-1 text-2xl md:text-4xl font-black text-zinc-900 tracking-tight outline-none focus:border-black transition-colors w-auto min-w-[120px]"
-                                        value={editNameValue}
-                                        onChange={(e) => setEditNameValue(e.target.value)}
-                                        onBlur={async () => {
-                                            const trimmed = editNameValue.trim();
-                                            if (trimmed && trimmed !== project.client_name) {
-                                                try {
-                                                    await updateReiProject(project.id, { client_name: trimmed });
-                                                    sonnerToast.success('Nome atualizado');
-                                                    await loadProject();
-                                                } catch (e: any) {
-                                                    sonnerToast.error('Erro ao salvar nome', { description: e.message });
+                            <div className="flex items-center gap-2">
+                                <h1 className="text-xl font-bold text-zinc-900 tracking-tight flex items-center gap-2">
+                                    {editingName ? (
+                                        <input
+                                            autoFocus
+                                            className="bg-zinc-100 border border-zinc-300 rounded-md px-2 py-0.5 text-xl font-bold text-zinc-900 tracking-tight outline-none focus:border-zinc-950 transition-all"
+                                            value={editNameValue}
+                                            onChange={(e) => setEditNameValue(e.target.value)}
+                                            onBlur={async () => {
+                                                const trimmed = editNameValue.trim();
+                                                if (trimmed && trimmed !== project.client_name) {
+                                                    try {
+                                                        await updateReiProject(project.id, { client_name: trimmed });
+                                                        sonnerToast.success('Nome atualizado');
+                                                        await loadProject();
+                                                    } catch (e: any) {
+                                                        sonnerToast.error('Erro ao salvar nome', { description: e.message });
+                                                    }
                                                 }
-                                            }
-                                            setEditingName(false);
-                                        }}
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
-                                            if (e.key === 'Escape') { setEditingName(false); }
-                                        }}
-                                    />
-                                ) : (
-                                    <span
-                                        className="cursor-pointer hover:bg-zinc-100 px-1 -mx-1 transition-colors"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            setEditNameValue(project.client_name || '');
-                                            setEditingName(true);
-                                        }}
-                                        title="Clique para editar o nome"
-                                    >
-                                        {project.client_id ? (
-                                            <Link to={`/admin/clients/${project.client_id}`} className="hover:underline transition-colors decoration-2 underline-offset-4 cursor-pointer" title="Ver Perfil do Cliente">
-                                                {getDisplayName(project)}
-                                            </Link>
-                                        ) : (
-                                            getDisplayName(project)
-                                        )}
-                                    </span>
-                                )}
-                                {currentStage && (
-                                    <span className={`text-xxs font-black uppercase tracking-widest px-3 py-1 ${
-                                        stageCategory === 'execucao'
-                                            ? 'text-[#00CC6A] bg-[#00CC6A]/10'
-                                            : stageCategory === 'encerrado'
-                                            ? 'text-zinc-400 bg-zinc-100'
-                                            : 'text-zinc-500 bg-zinc-100'
-                                    }`}>
+                                                setEditingName(false);
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+                                                if (e.key === 'Escape') { setEditingName(false); }
+                                            }}
+                                        />
+                                    ) : (
+                                        <span
+                                            className="cursor-pointer hover:bg-zinc-100 rounded-md px-1.5 py-0.5 -mx-1.5 transition-colors"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                setEditNameValue(project.client_name || '');
+                                                setEditingName(true);
+                                            }}
+                                            title="Clique para editar o nome"
+                                        >
+                                            {getDisplayName(project)}
+                                        </span>
+                                    )}
+                                </h1>
+                                {currentStage ? (
+                                    <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-md bg-[#00CC6A] text-black">
                                         {STAGE_CONFIGS[currentStage].labelShort}
                                     </span>
-                                )}
-                                {!currentStage && (
-                                    <span className={`text-xxs font-black uppercase tracking-widest px-3 py-1 ${
-                                        project.status === 'lead'
-                                            ? 'text-zinc-500 bg-zinc-100'
-                                            : 'text-[#00CC6A] bg-[#00CC6A]/10'
-                                    }`}>
-                                        {project.status === 'lead' ? 'Lead' : project.status === 'active' ? 'Ativo' : 'Onboarding'}
+                                ) : (
+                                    <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-md bg-zinc-950 text-white">
+                                        {project.status === 'active' ? 'ATIVO' : 'ONBOARDING'}
                                     </span>
                                 )}
-                            </h1>
-                            <p className="text-tiny text-zinc-400 font-medium mt-0.5">
-                                Projeto #{project.id.slice(0, 8)}
+                            </div>
+                            <p className="text-xs text-zinc-500 font-medium mt-0.5">
+                                Operação ID: {project.id.slice(0, 8)}
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0 w-full sm:w-auto shrink-0 justify-start sm:justify-end">
+                    <div className="flex items-center gap-2 shrink-0">
                         <ProjectHeaderActions
                             project={project}
                             currentStage={currentStage}
@@ -408,123 +345,69 @@ const ProjectDetails = () => {
                         currentStage={currentStage}
                         history={stageHistory}
                         daysInStage={daysInStage}
-                        onAdvance={(stage) => {
-                            const dangerStages: PipelineStage[] = ['lost', 'churned'];
-                            if (dangerStages.includes(stage)) {
-                                // Danger transitions are handled by the AlertDialog in StageTransitionButtons
-                                return;
-                            }
-                            handleAdvanceStage(stage);
-                        }}
+                        onAdvance={(stage) => handleAdvanceStage(stage)}
                         category={stageCategory || null}
                     />
                 )}
 
-                {/* ── Project Metadata Table (Notion-style) ─────────── */}
-                <div className="bg-white border-b border-zinc-200 px-4 sm:px-8 py-0">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 divide-x divide-zinc-100">
-                        {[
-                            { label: 'Cliente', value: project.client_name || '-' },
-                            { label: 'Empresa', value: project.client_company || project.trade_name || '-' },
-                            { label: 'Tipo', value: project.type === 'crm_ops' ? 'CRM & RevOps' : project.type === 'founder' ? 'Founder Led' : project.type === 'dev' ? 'Dev & Design' : project.type === 'funnels_impl' ? 'Site & Funil' : '360' },
-                            { label: 'Periodo', value: `${project.quarter || '-'} ${project.year || ''}`.trim() },
-                            { label: 'Dias no Estagio', value: currentStage ? `${daysInStage}d` : '-' },
-                            { label: 'Materiais', value: project.materials_status === 'delivered' ? 'Entregues' : project.materials_status === 'pending' ? 'Pendentes' : 'N/A' },
-                        ].map(({ label, value }) => (
-                            <div key={label} className="px-4 py-3 first:pl-0">
-                                <p className="text-xxs font-black uppercase tracking-widest text-zinc-400 mb-0.5">{label}</p>
-                                <p className="text-sm font-bold text-zinc-900 truncate">{value}</p>
-                            </div>
-                        ))}
+                {/* Metadata Strip */}
+                <div className="bg-zinc-50/50 border-b border-zinc-200/80 px-6 py-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 text-xs font-medium text-zinc-600">
+                        <div>
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 block">Cliente</span>
+                            <span className="font-semibold text-zinc-900 truncate block">{project.client_name || '-'}</span>
+                        </div>
+                        <div>
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 block">Empresa</span>
+                            <span className="font-semibold text-zinc-900 truncate block">{project.client_company || project.trade_name || '-'}</span>
+                        </div>
+                        <div>
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 block">Tipo</span>
+                            <span className="font-semibold text-zinc-900 block">{project.type === 'crm_ops' ? 'CRM & RevOps' : project.type === 'founder' ? 'Founder' : '360°'}</span>
+                        </div>
+                        <div>
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 block">Trimestre</span>
+                            <span className="font-semibold text-zinc-900 block">{project.quarter || 'Q1'} {project.year || 2026}</span>
+                        </div>
+                        <div>
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 block">Permanência</span>
+                            <span className="font-semibold text-zinc-900 block">{daysInStage} dias</span>
+                        </div>
+                        <div>
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 block">Materiais</span>
+                            <span className="font-semibold text-[#00CC6A] block">{project.materials_status === 'delivered' ? 'Liberado' : 'Em Análise'}</span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Materials lock banner */}
-                {project.materials_status === 'pending' && stageCategory === 'execucao' && (
-                    <div className="bg-zinc-50 border-b border-zinc-200 p-4 flex items-start sm:items-center justify-between gap-4 flex-col sm:flex-row">
-                        <div className="flex items-start gap-4">
-                            <div className="w-10 h-10 bg-zinc-100 flex items-center justify-center shrink-0">
-                                <AlertTriangle className="w-5 h-5 text-zinc-600" />
-                            </div>
-                            <div>
-                                <h3 className="text-xs font-black text-zinc-900 uppercase tracking-widest leading-none mb-1">Trava Estrategica Ativada</h3>
-                                <p className="text-tiny text-zinc-500 font-medium leading-relaxed max-w-2xl">
-                                    O cronograma e o Planejamento Estrategico estao suspensos. O cliente {getDisplayName(project)} deve enviar os arquivos pendentes para que a operacao prossiga.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto mt-2 sm:mt-0">
-                            <Button
-                                variant="outline"
-                                onClick={() => window.open('/admin/materials/new', '_blank')}
-                                className="flex-1 sm:flex-none bg-white hover:bg-zinc-50 border-zinc-200 text-zinc-700 text-xxs font-bold uppercase tracking-widest h-9"
-                            >
-                                <Upload className="w-3.5 h-3.5 mr-2" />
-                                Subir Arquivo
-                            </Button>
-                            <Button
-                                onClick={handleUnlockMaterials}
-                                className="flex-1 sm:flex-none border border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 text-xxs font-bold uppercase tracking-widest h-9 transition-all rounded-none"
-                            >
-                                <Unlock className="w-3.5 h-3.5 mr-2" />
-                                Sinal Verde
-                            </Button>
-                        </div>
-                    </div>
-                )}
-
-                {/* Main content area */}
+                {/* Main Content Area */}
                 <div className="flex-1 flex overflow-hidden">
-                    {/* Inner Sidebar for Desktop */}
-                    <div className="w-64 bg-[#F8F9FA] border-r border-zinc-200 hidden md:flex flex-col shrink-0 overflow-y-auto">
-                        <div className="p-6">
-                            <h2 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] mb-3">Cockpit Operacional</h2>
-                            <div className="flex flex-col gap-0.5 mb-6">
-                                {['inteligencia', 'diagnostico', 'execucao', 'success'].map(k => visibleTabs.includes(k) && TAB_DEFS[k] && (
-                                    <NavLink key={k} to={k} replace className={({ isActive }) => `flex items-center gap-2.5 px-3 py-2 text-xs font-bold uppercase tracking-widest transition-all ${isActive ? 'bg-zinc-200/50 text-black border-l-2 border-black' : 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 border-l-2 border-transparent'}`}>
-                                        {({ isActive }) => (
-                                            <>
-                                                {React.createElement(TAB_DEFS[k].icon, { size: 14, strokeWidth: isActive ? 2.5 : 2 })}
-                                                {TAB_DEFS[k].label}
-                                            </>
-                                        )}
+                    {/* Inner Sidebar */}
+                    <div className="w-56 bg-zinc-50 border-r border-zinc-200 hidden md:flex flex-col shrink-0 overflow-y-auto p-4 space-y-6">
+                        <div>
+                            <h2 className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-wider mb-2 px-2">Navegação Operacional</h2>
+                            <div className="space-y-0.5">
+                                {visibleTabs.map(k => TAB_DEFS[k] && (
+                                    <NavLink
+                                        key={k}
+                                        to={k}
+                                        replace
+                                        className={({ isActive }) =>
+                                            `flex items-center gap-2.5 px-3 py-2 text-xs font-semibold rounded-lg transition-all ${
+                                                isActive
+                                                    ? 'bg-zinc-950 text-white shadow-xs font-bold'
+                                                    : 'text-zinc-600 hover:bg-zinc-200/60 hover:text-zinc-900'
+                                            }`
+                                        }
+                                    >
+                                        {React.createElement(TAB_DEFS[k].icon, { size: 14 })}
+                                        <span>{TAB_DEFS[k].label}</span>
                                     </NavLink>
                                 ))}
                             </div>
+                        </div>
 
-                            <div className="h-px bg-zinc-200 mb-6" />
-
-                            <h2 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] mb-3">Estrategia & Pitch</h2>
-                            <div className="flex flex-col gap-0.5 mb-6">
-                                {['jornada', 'proposta', 'playbook'].map(k => visibleTabs.includes(k) && TAB_DEFS[k] && (
-                                    <NavLink key={k} to={k} replace className={({ isActive }) => `flex items-center gap-2.5 px-3 py-2 text-xs font-bold uppercase tracking-widest transition-all ${isActive ? 'bg-zinc-200/50 text-black border-l-2 border-black' : 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 border-l-2 border-transparent'}`}>
-                                        {({ isActive }) => (
-                                            <>
-                                                {React.createElement(TAB_DEFS[k].icon, { size: 14, strokeWidth: isActive ? 2.5 : 2 })}
-                                                {TAB_DEFS[k].label}
-                                            </>
-                                        )}
-                                    </NavLink>
-                                ))}
-                            </div>
-
-                            <div className="h-px bg-zinc-200 mb-6" />
-
-                            <h2 className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.25em] mb-3">Cofre & Dossie</h2>
-                            <div className="flex flex-col gap-0.5">
-                                {['reunioes', 'kickoff', 'biblioteca'].map(k => visibleTabs.includes(k) && TAB_DEFS[k] && (
-                                    <NavLink key={k} to={k} replace className={({ isActive }) => `flex items-center gap-2.5 px-3 py-2 text-xs font-bold uppercase tracking-widest transition-all ${isActive ? 'bg-zinc-200/50 text-black border-l-2 border-black' : 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 border-l-2 border-transparent'}`}>
-                                        {({ isActive }) => (
-                                            <>
-                                                {React.createElement(TAB_DEFS[k].icon, { size: 14, strokeWidth: isActive ? 2.5 : 2 })}
-                                                {TAB_DEFS[k].label}
-                                            </>
-                                        )}
-                                    </NavLink>
-                                ))}
-                            </div>
-
-                            {/* Conta unificada RevHackers + Funnels (client_accounts) */}
+                        <div className="pt-2 border-t border-zinc-200/80">
                             <ClientAccountPanel
                                 clientEmail={project.client_email}
                                 projectName={getDisplayName(project)}
@@ -532,75 +415,29 @@ const ProjectDetails = () => {
                         </div>
                     </div>
 
-                    {/* Sub-Routes content */}
+                    {/* Sub-Routes Content */}
                     <div className="flex-1 bg-white flex flex-col overflow-y-auto">
-                        <div className="flex-1 flex flex-col w-full">
-                            {/* Mobile Tab Bar (Visible only on mobile) */}
-                            <div className="w-full border-b border-zinc-100 flex justify-start md:hidden bg-zinc-50/80 backdrop-blur-md">
-                                <div className="p-0 flex flex-nowrap overflow-x-auto no-scrollbar w-full gap-4 shrink-0 px-4">
-                                    {visibleTabs.map((tabKey) => {
-                                        const def = TAB_DEFS[tabKey];
-                                        if (!def) return null;
-                                        const Icon = def.icon;
-                                        return (
-                                            <NavLink
-                                                key={tabKey}
-                                                to={tabKey}
-                                                replace={true}
-                                                className={({ isActive }) => 
-                                                    `py-3 text-[13px] font-bold uppercase tracking-widest transition-all flex gap-2 items-center shrink-0 rounded-none border-b-2 ${
-                                                        isActive 
-                                                        ? 'text-zinc-900 border-[#18181b] shadow-[0_2px_0_0_#18181b]' 
-                                                        : 'text-zinc-400 hover:text-zinc-800 border-transparent'
-                                                    }`
-                                                }
-                                            >
-                                                <Icon size={14} className="mb-0.5" strokeWidth={2} /> {def.label}
-                                            </NavLink>
-                                        );
-                                    })}
-                                </div>
-                            </div>
+                        <div className="flex-1 flex flex-col w-full max-w-7xl mx-auto px-6 py-6 space-y-6">
+                            <FocalPointsPanel project={project} />
+                            
+                            {(stageCategory === 'diagnostico' || stageCategory === 'vendas') && (
+                                <IntelligencePanel project={project} />
+                            )}
 
-                            {/* Panels Group - Always visible above tab contents */}
-                            <div className="mt-4 flex flex-col gap-4 w-full max-w-7xl mx-auto px-4 md:px-8">
-                                <FocalPointsPanel project={project} />
-                                
-                                {/* Intelligence Panel - show below tabs on diagnostico/vendas stages */}
-                                {(stageCategory === 'diagnostico' || stageCategory === 'vendas') && (
-                                    <IntelligencePanel project={project} />
-                                )}
-                            </div>
-
-                            {/* Tab Contents: Execucao is edge-to-edge, others have standard padding container */}
-                            <div className="flex-1 flex flex-col w-full relative">
-                                <Routes>
-                                    <Route path="/" element={<Navigate to={defaultTab} replace />} />
-                                    
-                                    <Route path="execucao" element={
-                                        <div className="m-0 flex-1 flex flex-col pt-4">
-                                            <ProjectOsContainer projectId={project.id} />
-                                        </div>
-                                    } />
-                                    
-                                    <Route path="*" element={
-                                        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 pb-12 flex-1 flex flex-col pt-6">
-                                            <Routes>
-                                                <Route path="inteligencia" element={<MarketIntelligenceTab project={project} onUpdateProject={loadProject} />} />
-                                                <Route path="diagnostico" element={<DiagnosticResponsesPanel projectId={project.id} projectType={project.type || undefined} />} />
-                                                <Route path="jornada" element={<OrchestratedOnboarding projectId={project.id} embedded={true} />} />
-                                                <Route path="proposta" element={<SalesRoomTab project={project} />} />
-                                                <Route path="reunioes" element={<MeetingVaultTab projectId={project.id} />} />
-                                                <Route path="biblioteca" element={<ProjectWiki projectId={project.id} projectName={project.client_name} />} />
-                                                <Route path="kickoff" element={<KickoffSignaturePanel project={project} onUpdate={loadProject} />} />
-                                                <Route path="playbook" element={<AIPlaybookGenerator projectId={project.id} projectName={project.client_name} />} />
-                                                <Route path="success" element={<SuccessPlanTab projectId={project.id} />} />
-                                                <Route path="*" element={<Navigate to={`/admin/projects/${project.id}/${defaultTab}`} replace />} />
-                                            </Routes>
-                                        </div>
-                                    } />
-                                </Routes>
-                            </div>
+                            <Routes>
+                                <Route path="/" element={<Navigate to={defaultTab} replace />} />
+                                <Route path="execucao" element={<ProjectOsContainer projectId={project.id} />} />
+                                <Route path="inteligencia" element={<MarketIntelligenceTab project={project} onUpdateProject={loadProject} />} />
+                                <Route path="diagnostico" element={<DiagnosticResponsesPanel projectId={project.id} projectType={project.type || undefined} />} />
+                                <Route path="jornada" element={<OrchestratedOnboarding projectId={project.id} embedded={true} />} />
+                                <Route path="proposta" element={<SalesRoomTab project={project} />} />
+                                <Route path="reunioes" element={<MeetingVaultTab projectId={project.id} />} />
+                                <Route path="biblioteca" element={<ProjectWiki projectId={project.id} projectName={project.client_name} />} />
+                                <Route path="kickoff" element={<KickoffSignaturePanel project={project} onUpdate={loadProject} />} />
+                                <Route path="playbook" element={<AIPlaybookGenerator projectId={project.id} projectName={project.client_name} />} />
+                                <Route path="success" element={<SuccessPlanTab projectId={project.id} />} />
+                                <Route path="*" element={<Navigate to={`/admin/projects/${project.id}/${defaultTab}`} replace />} />
+                            </Routes>
                         </div>
                     </div>
                 </div>
