@@ -1,5 +1,3 @@
-import type { TenantId } from '../../contracts/tenant';
-
 export interface ClientRecord {
   id: string;
   name: string;

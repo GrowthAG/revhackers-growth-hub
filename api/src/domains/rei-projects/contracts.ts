@@ -1,5 +1,3 @@
-import type { TenantId } from '../../contracts/tenant';
-
 export type ReiProjectType = 'consulting' | 'crm_ops' | 'site' | 'linkedin' | 'founder';
 export type ReiProjectStatus = 'active' | 'pending' | 'overdue';
 export type ReiProjectTier = 'free' | 'paid';

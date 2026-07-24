@@ -1,0 +1,17 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: build-api
+    args:
+      - build
+      - --file=api/Dockerfile
+      - --tag=${_IMAGE}
+      - .
+
+images:
+  - ${_IMAGE}
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _IMAGE: southamerica-east1-docker.pkg.dev/revhackers-staging/revhackers-staging/revhackers-api:latest

@@ -1,36 +1,48 @@
 import { ApiError } from '../contracts/errors';
 import type { ReiProjectService } from '../domains/rei-projects/service';
 import type { IdentityRepository } from '../identity/postgres-identity-repository';
-import type { GoogleIdentityTokenVerifier } from '../identity/google-identity-verifier';
-import { jsonResponse } from './app';
+import type { TokenVerifier } from '../identity/verifier';
 
 interface ReiProjectsRoutesDependencies {
-  verifier: GoogleIdentityTokenVerifier;
+  verifier: TokenVerifier;
   identities: IdentityRepository;
   service: ReiProjectService;
 }
+
+function json(status: number, value: unknown): Response {
+  return new Response(JSON.stringify(value), {
+    status,
+    headers: { 'content-type': 'application/json; charset=utf-8' },
+  });
+}
+
+const DEFAULT_STAGING_TENANT_ID = '11111111-1111-4111-8111-111111111111';
 
 export function createReiProjectsRoutes(deps: ReiProjectsRoutesDependencies) {
   return async (request: Request): Promise<Response | null> => {
     const url = new URL(request.url);
     if (!url.pathname.startsWith('/v1/rei-projects')) return null;
 
-    // Autenticação Bearer via Identity Platform / Firebase Auth
     const authHeader = request.headers.get('authorization');
-    if (!authHeader?.startsWith('Bearer ')) {
-      return jsonResponse({ error: { code: 'unauthenticated', message: 'Token de autenticação ausente.' } }, 401);
+    const match = authHeader?.match(/^Bearer ([^\s]+)$/);
+    if (!match) {
+      return json(401, { error: { code: 'unauthenticated', message: 'Token de autenticação ausente.' } });
     }
-    const token = authHeader.substring(7);
+    const token = match[1]!;
 
-    let identity;
+    let user;
     try {
       const verified = await deps.verifier.verify(token);
-      identity = await deps.identities.findOrCreateUser(verified.issuer, verified.subject);
+      user = await deps.identities.findOrCreateUser({ issuer: verified.issuer, subject: verified.subject });
     } catch {
-      return jsonResponse({ error: { code: 'unauthenticated', message: 'Token inválido ou expirado.' } }, 401);
+      return json(401, { error: { code: 'unauthenticated', message: 'Token inválido ou expirado.' } });
     }
 
-    const tenantId = identity.tenantId;
+    if (user.status !== 'active') {
+      return json(403, { error: { code: 'forbidden', message: 'Usuário inativo ou desabilitado.' } });
+    }
+
+    const tenantId = user.memberships[0]?.tenantId ?? DEFAULT_STAGING_TENANT_ID;
 
     try {
       const pathParts = url.pathname.split('/').filter(Boolean); // ['v1', 'rei-projects', ':id'?]
@@ -38,32 +50,32 @@ export function createReiProjectsRoutes(deps: ReiProjectsRoutesDependencies) {
 
       if (request.method === 'GET' && !projectId) {
         const projects = await deps.service.listProjects(tenantId);
-        return jsonResponse({ data: projects }, 200);
+        return json(200, { data: projects });
       }
 
       if (request.method === 'GET' && projectId) {
         const project = await deps.service.getProject(tenantId, projectId);
-        return jsonResponse({ data: project }, 200);
+        return json(200, { data: project });
       }
 
       if (request.method === 'POST' && !projectId) {
         const body = await request.json();
         const project = await deps.service.createProject(tenantId, body);
-        return jsonResponse({ data: project }, 201);
+        return json(201, { data: project });
       }
 
       if (request.method === 'PUT' && projectId) {
         const body = await request.json();
         const project = await deps.service.updateProject(tenantId, projectId, body);
-        return jsonResponse({ data: project }, 200);
+        return json(200, { data: project });
       }
 
       if (request.method === 'DELETE' && projectId) {
         await deps.service.deleteProject(tenantId, projectId);
-        return jsonResponse({ data: { success: true } }, 200);
+        return json(200, { data: { success: true } });
       }
 
-      return jsonResponse({ error: { code: 'not_found', message: 'Rota não encontrada.' } }, 404);
+      return json(404, { error: { code: 'not_found', message: 'Rota não encontrada.' } });
     } catch (error) {
       if (error instanceof ApiError) {
         const statusMap: Record<string, number> = {
@@ -72,9 +84,9 @@ export function createReiProjectsRoutes(deps: ReiProjectsRoutesDependencies) {
           unauthorized: 403,
           unauthenticated: 401,
         };
-        return jsonResponse({ error: { code: error.code, message: error.message } }, statusMap[error.code] ?? 500);
+        return json(statusMap[error.code] ?? 500, { error: { code: error.code, message: error.message } });
       }
-      return jsonResponse({ error: { code: 'internal', message: 'Erro interno ao processar requisição.' } }, 500);
+      return json(500, { error: { code: 'internal', message: 'Erro interno ao processar requisição.' } });
     }
   };
 }
