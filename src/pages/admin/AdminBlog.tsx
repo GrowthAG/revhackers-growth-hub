@@ -2,63 +2,49 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from '@/components/layout/AdminLayout';
-import { Plus, Trash2, FileText, Search, Download, ExternalLink, ArrowLeft } from 'lucide-react';
+import { Plus, Trash2, BookOpen, Search, ExternalLink, ArrowLeft, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { materialsData } from '@/data/materialsData';
-import { migrateMaterials } from '@/services/migrationService';
+import { blogPosts as staticBlogPosts } from '@/data/blogData';
 
-const AdminMaterials = () => {
-    const [materials, setMaterials] = useState<any[]>([]);
+export const AdminBlog = () => {
+    const [posts, setPosts] = useState<any[]>([]);
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => { fetchMaterials(); }, []);
+    useEffect(() => { fetchPosts(); }, []);
 
-    const fetchMaterials = async () => {
+    const fetchPosts = async () => {
         try {
-            const { data, error } = await supabase
-                .from('materials')
+            const { data } = await supabase
+                .from('blog_posts')
                 .select('*')
-                .order('created_at', { ascending: false });
-            
-            if (error || !data || data.length === 0) {
-                // Fallback para materialsData se banco estiver vazio
-                setMaterials(materialsData);
+                .order('date', { ascending: false });
+
+            if (data && data.length > 0) {
+                setPosts(data);
             } else {
-                setMaterials(data);
+                setPosts(staticBlogPosts);
             }
         } catch {
-            setMaterials(materialsData);
+            setPosts(staticBlogPosts);
         }
     };
 
     const handleDelete = async (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
-        if (!confirm('Excluir este material?')) return;
+        if (!confirm('Excluir este artigo?')) return;
         try {
-            await supabase.from('materials').delete().eq('id', id);
+            await supabase.from('blog_posts').delete().eq('id', id);
         } catch {}
-        toast.success('Material removido');
-        setMaterials(materials.filter(m => m.id !== id));
+        toast.success('Artigo excluído');
+        setPosts(posts.filter(p => p.id !== id));
     };
 
-    const handleMigrate = async () => {
-        toast.loading('Importando materiais oficiais...', { id: 'migrate' });
-        try {
-            const { success, failed } = await migrateMaterials();
-            toast.success(`${success} importados com sucesso!`, { id: 'migrate' });
-            fetchMaterials();
-        } catch (error) {
-            toast.error(String(error), { id: 'migrate' });
-        }
-    };
-
-    const filtered = materials.filter(m =>
-        (m.title || m.material_name || '').toLowerCase().includes(search.toLowerCase()) ||
-        (m.material_type || m.type || '').toLowerCase().includes(search.toLowerCase()) ||
-        (m.category || '').toLowerCase().includes(search.toLowerCase())
+    const filtered = posts.filter(p =>
+        (p.title || '').toLowerCase().includes(search.toLowerCase()) ||
+        (p.category || '').toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -76,34 +62,27 @@ const AdminMaterials = () => {
                                 <ArrowLeft size={13} /> DASHBOARD
                             </button>
                             <span>/</span>
-                            <span className="text-zinc-900">MATERIAIS</span>
+                            <span className="text-zinc-900">BLOG</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
-                                Materiais & Frameworks B2B
+                                Gestão de Artigos & Publicações B2B
                             </h1>
                             <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
-                                {filtered.length} DISPONÍVEIS
+                                {filtered.length} ARTIGOS
                             </span>
                         </div>
                         <p className="text-sm font-medium text-zinc-500 mt-1">
-                            Arsenal de vendas, guias operacionais, automações de IA e mídias de apoio.
+                            Central de conteúdo, estratégias de Growth, RevOps e Inteligência B2B.
                         </p>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <Button
-                            variant="outline"
-                            onClick={handleMigrate}
-                            className="bg-white border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-xs font-mono font-bold tracking-wider uppercase h-9 px-3 gap-1.5"
-                        >
-                            <Download size={14} /> RESTAURAR OFICIAIS
-                        </Button>
-                        <Button
-                            onClick={() => navigate('/admin/materials/new')}
+                            onClick={() => navigate('/admin/blog/novo')}
                             className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-800"
                         >
-                            <Plus size={15} className="text-[#00CC6A]" /> NOVO MATERIAL
+                            <Plus size={15} className="text-[#00CC6A]" /> NOVO ARTIGO
                         </Button>
                     </div>
                 </div>
@@ -113,7 +92,7 @@ const AdminMaterials = () => {
                     <div className="relative flex-1 max-w-md">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                         <Input
-                            placeholder="Buscar por título, categoria ou tipo..."
+                            placeholder="Buscar por título ou categoria..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="pl-10 pr-4 h-9 bg-white border-zinc-200 rounded-lg text-xs placeholder:text-zinc-400 focus-visible:ring-1 focus-visible:ring-zinc-950 transition-all shadow-none"
@@ -123,16 +102,16 @@ const AdminMaterials = () => {
 
                 {/* Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filtered.map(item => (
+                    {filtered.map(post => (
                         <div
-                            key={item.id}
-                            onClick={() => navigate(`/admin/materials/edit/${item.id}`)}
+                            key={post.id}
+                            onClick={() => navigate(`/blog/${post.slug}`)}
                             className="bg-white border border-zinc-200/80 rounded-xl hover:border-zinc-300 transition-all p-5 shadow-xs flex flex-col justify-between cursor-pointer group space-y-4"
                         >
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between">
                                     <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-700 border border-zinc-200">
-                                        {item.type || item.material_type || item.category || 'FRAMEWORK'}
+                                        {post.category || 'GROWTH'}
                                     </span>
                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
                                         ● PUBLICADO
@@ -140,36 +119,34 @@ const AdminMaterials = () => {
                                 </div>
 
                                 <h3 className="text-sm font-bold text-zinc-900 group-hover:text-black line-clamp-2 leading-snug">
-                                    {item.title || item.material_name || 'Sem título'}
+                                    {(post.title || '').replace(/<span>|<\/span>/g, '')}
                                 </h3>
 
-                                {item.category && (
-                                    <span className="text-xs text-zinc-500 font-medium block">
-                                        Categoria: {item.category}
-                                    </span>
+                                {post.excerpt && (
+                                    <p className="text-xs text-zinc-500 font-medium line-clamp-2 leading-relaxed">
+                                        {post.excerpt}
+                                    </p>
                                 )}
                             </div>
 
                             <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
                                 <span className="font-mono text-[11px]">
-                                    {item.created_at ? new Date(item.created_at).toLocaleDateString('pt-BR') : 'Oficial'}
+                                    {post.date ? new Date(post.date).toLocaleDateString('pt-BR') : 'Recent'}
                                 </span>
 
                                 <div className="flex items-center gap-2">
-                                    {(item.link_material || item.material_url) && (
-                                        <a
-                                            href={item.link_material || item.material_url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            onClick={(e) => e.stopPropagation()}
-                                            className="p-1 text-zinc-400 hover:text-zinc-900 transition-colors"
-                                            title="Abrir Link do Material"
-                                        >
-                                            <ExternalLink size={14} />
-                                        </a>
-                                    )}
+                                    <a
+                                        href={`/blog/${post.slug}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="p-1 text-zinc-400 hover:text-zinc-900 transition-colors"
+                                        title="Ver no site"
+                                    >
+                                        <ExternalLink size={14} />
+                                    </a>
                                     <button
-                                        onClick={(e) => handleDelete(item.id, e)}
+                                        onClick={(e) => handleDelete(post.id, e)}
                                         className="p-1 text-zinc-400 hover:text-zinc-900 transition-colors"
                                         title="Excluir"
                                     >
@@ -186,4 +163,4 @@ const AdminMaterials = () => {
     );
 };
 
-export default AdminMaterials;
+export default AdminBlog;

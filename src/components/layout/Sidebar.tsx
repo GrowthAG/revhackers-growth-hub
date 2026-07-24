@@ -26,6 +26,7 @@ const NAVIGATION: Record<string, NavItem[]> = {
     { icon: Users, label: 'Clientes', to: '/admin/clients' },
   ],
   CONTEÚDO: [
+    { icon: Book, label: 'Blog', to: '/admin/blog' },
     { icon: Book, label: 'Materiais', to: '/admin/materials' },
     { icon: Briefcase, label: 'Cases', to: '/admin/cases' },
   ],

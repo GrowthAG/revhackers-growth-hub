@@ -112,6 +112,8 @@ const GrowthCronograma = lazy(() => import("./pages/admin/GrowthCronograma"));
 
 const ProjectDetails = lazy(() => import("./pages/admin/ProjectDetails"));
 const AdminProjects = lazy(() => import("./pages/admin/AdminProjects"));
+import { AdminBlog } from "@/pages/admin/AdminBlog";
+const PostEditor = lazy(() => import("./components/admin/PostEditor"));
 const StrategicPlanGenerator = lazy(() => import("./pages/admin/StrategicPlanGenerator"));
 const KnowledgeDocument = lazy(() => import("./pages/admin/KnowledgeDocument"));
 const MeetingRecordingDoc = lazy(() => import("./pages/admin/MeetingRecordingDoc"));
@@ -278,6 +280,9 @@ const App = () => (
               <Route path="/admin/cronograma" element={<ProtectedRoute><GrowthCronograma /></ProtectedRoute>} />
               <Route path="/admin/cronograma/:id" element={<ProtectedRoute><GrowthCronograma /></ProtectedRoute>} />
               {/* Projects Listing */}
+              <Route path="/admin/blog" element={<ProtectedRoute><AdminBlog /></ProtectedRoute>} />
+              <Route path="/admin/blog/novo" element={<ProtectedRoute><PostEditor /></ProtectedRoute>} />
+              <Route path="/admin/posts" element={<ProtectedRoute><AdminBlog /></ProtectedRoute>} />
               <Route path="/admin/projects" element={<ProtectedRoute><AdminProjects /></ProtectedRoute>} />
               {/* Unified Project Workspace */}
               <Route path="/admin/projects/:id/*" element={<ProtectedRoute><ProjectDetails /></ProtectedRoute>} />
