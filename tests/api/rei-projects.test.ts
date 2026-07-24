@@ -105,10 +105,10 @@ describe('ReiProjectService & Tenant Isolation', () => {
     const projectsB = await service.listProjects(tenantB);
 
     expect(projectsA).toHaveLength(1);
-    expect(projectsA[0]!.clientName).toBe('Empresa A');
+    expect(projectsA[0]!.clientName).toBe('Cliente A');
 
     expect(projectsB).toHaveLength(1);
-    expect(projectsB[0]!.clientName).toBe('Empresa B');
+    expect(projectsB[0]!.clientName).toBe('Cliente B');
   });
 
   it('valida campos obrigatórios ao criar projeto REI', async () => {

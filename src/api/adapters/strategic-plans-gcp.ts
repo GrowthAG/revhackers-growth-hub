@@ -89,4 +89,19 @@ export const strategicPlansGcpAdapter = {
 
         return response.json();
     },
+
+    async generate(input: any): Promise<{ plan: StrategicPlanGcpRecord; generatedData: Record<string, any> }> {
+        const headers = await getAuthHeaders();
+        const response = await fetch(`${API_BASE_URL}/v1/strategic-plans/generate`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(input),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro ao gerar Plano Estratégico via IA na API GCP (${response.status})`);
+        }
+
+        return response.json();
+    },
 };

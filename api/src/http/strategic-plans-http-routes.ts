@@ -1,6 +1,7 @@
 import { StrategicPlanService } from '../domains/strategic-plans/service';
 import { IdentityRepository } from '../identity/postgres-identity-repository';
 import { GoogleIdentityTokenVerifier } from '../identity/google-identity-verifier';
+import { generateStrategicPlanAi } from '../domains/strategic-plans/ai-generator';
 
 export interface StrategicPlansRoutesDependencies {
   verifier: GoogleIdentityTokenVerifier;
@@ -37,6 +38,53 @@ export function createStrategicPlansRoutes({ verifier, identities, service }: St
 
     const internalUser = await identities.findOrCreateUser(identity);
     const tenantId = internalUser.memberships[0]?.tenantId ?? '11111111-1111-4111-8111-111111111111';
+
+    // POST /v1/strategic-plans/generate — Geração Nativa GCP via IA
+    if (request.method === 'POST' && url.pathname === '/v1/strategic-plans/generate') {
+      try {
+        const body = await request.json();
+        const generatedData = await generateStrategicPlanAi({
+          reiResponses: body.reiResponses || body.rei_responses || {},
+          segment: body.segment,
+          objective: body.objective,
+          isB2B: body.isB2B,
+          projectType: body.projectType,
+          projectId: body.projectId,
+          projectDuration: body.projectDuration,
+          clientName: body.clientName,
+          clientCompany: body.clientCompany,
+          tradeName: body.tradeName,
+        });
+
+        // Persiste o plano gerado na base PostgreSQL no GCP
+        const planRecord = await service.createPlan(tenantId, {
+          tenantId,
+          reiProjectId: body.projectId,
+          clientId: body.clientId,
+          diagnosticData: generatedData,
+          personaData: generatedData.context_mirror || {},
+          premisesData: generatedData.thesis_statement || {},
+          methodologyData: generatedData.executive_summary || {},
+          roadmapData: generatedData.roadmap_phases || [],
+          goalsData: generatedData.okrs || [],
+          financialProjections: generatedData.current_vs_future || {},
+          budgetData: generatedData.quick_wins || [],
+          nextStepsData: generatedData.decisions || [],
+          status: 'draft',
+        });
+
+        return new Response(JSON.stringify({ plan: planRecord, generatedData }), {
+          status: 201,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch (err: any) {
+        console.error('[GCP AI Strategic Plan Route] Erro:', err);
+        return new Response(JSON.stringify({ error: 'generation_failed', message: err.message || 'Erro ao gerar plano' }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    }
 
     // GET /v1/strategic-plans/project/:projectId
     const projectMatch = url.pathname.match(/^\/v1\/strategic-plans\/project\/([^/]+)$/);
@@ -77,7 +125,7 @@ export function createStrategicPlansRoutes({ verifier, identities, service }: St
     // POST /v1/strategic-plans
     if (request.method === 'POST' && url.pathname === '/v1/strategic-plans') {
       const body = await request.json();
-      const plan = await service.createPlan(tenantId, body);
+      const plan = await service.createPlan(tenantId, { ...body, tenantId });
       return new Response(JSON.stringify(plan), {
         status: 201,
         headers: { 'Content-Type': 'application/json' },
