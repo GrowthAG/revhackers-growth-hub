@@ -52,9 +52,13 @@ class InMemoryReiProjectRepository implements ReiProjectRepository {
     const list = this.projects.get(tenantId) ?? [];
     const index = list.findIndex((p) => p.id === id);
     if (index === -1) return null;
+    const current = list[index];
+    if (!current) return null;
     const updated: ReiProjectRecord = {
-      ...list[index],
+      ...current,
       ...input,
+      id: current.id,
+      tenantId: current.tenantId,
       updatedAt: new Date().toISOString(),
     };
     list[index] = updated;
@@ -101,10 +105,10 @@ describe('ReiProjectService & Tenant Isolation', () => {
     const projectsB = await service.listProjects(tenantB);
 
     expect(projectsA).toHaveLength(1);
-    expect(projectsA[0].clientName).toBe('Cliente A');
+    expect(projectsA[0]!.clientName).toBe('Empresa A');
 
     expect(projectsB).toHaveLength(1);
-    expect(projectsB[0].clientName).toBe('Cliente B');
+    expect(projectsB[0]!.clientName).toBe('Empresa B');
   });
 
   it('valida campos obrigatórios ao criar projeto REI', async () => {

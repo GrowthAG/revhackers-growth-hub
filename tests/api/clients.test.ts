@@ -43,9 +43,14 @@ class InMemoryClientRepository implements ClientRepository {
     const list = this.clients.get(tenantId) ?? [];
     const index = list.findIndex((c) => c.id === id);
     if (index === -1) return null;
+    const current = list[index];
+    if (!current) return null;
     const updated: ClientRecord = {
-      ...list[index],
+      ...current,
       ...input,
+      id: current.id,
+      name: input.name ?? current.name,
+      email: input.email ?? current.email,
       updatedAt: new Date().toISOString(),
     };
     list[index] = updated;
@@ -77,10 +82,10 @@ describe('ClientService & Tenant Isolation', () => {
     const clientsB = await service.listClients(tenantB);
 
     expect(clientsA).toHaveLength(1);
-    expect(clientsA[0].name).toBe('Empresa A');
+    expect(clientsA[0]!.name).toBe('Empresa A');
 
     expect(clientsB).toHaveLength(1);
-    expect(clientsB[0].name).toBe('Empresa B');
+    expect(clientsB[0]!.name).toBe('Empresa B');
   });
 
   it('valida campos obrigatórios na criação de cliente', async () => {

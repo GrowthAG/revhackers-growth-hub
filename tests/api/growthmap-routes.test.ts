@@ -16,6 +16,7 @@ function setup(resolveTenant: string | null = tenant) {
   const verifier: TokenVerifier = { verify: async () => ({ issuer: 'issuer', subject: 'subject', expiresAt: 2_000_000_000 }) };
   const identities: IdentityRepository = {
     findUser: async () => user,
+    findOrCreateUser: async () => user,
     resolveProjectTenant: async () => resolveTenant,
   };
   return createGrowthMapRoutes({ verifier, identities, service: new GrowthMapService(repository), idempotency: new InMemoryIdempotencyStore() });

@@ -8,10 +8,13 @@ import { PostgresGrowthMapRepository } from './domains/growthmap/postgres-reposi
 import { GrowthMapService } from './domains/growthmap/service';
 import { PostgresReiProjectRepository } from './domains/rei-projects/postgres-repository';
 import { ReiProjectService } from './domains/rei-projects/service';
+import { PostgresStrategicPlanRepository } from './domains/strategic-plans/postgres-repository';
+import { StrategicPlanService } from './domains/strategic-plans/service';
 import { createClientsRoutes } from './http/clients-routes';
 import { createGrowthMapRoutes } from './http/growthmap-routes';
 import { createIdentityRoutes } from './http/identity-routes';
 import { createReiProjectsRoutes } from './http/rei-projects-routes';
+import { createStrategicPlansRoutes } from './http/strategic-plans-http-routes';
 import { GoogleIdentityTokenVerifier } from './identity/google-identity-verifier';
 import { PostgresIdentityRepository } from './identity/postgres-identity-repository';
 import { createApiServer } from './server';
@@ -24,6 +27,7 @@ async function main(): Promise<void> {
   if (!googleProjectId) throw new Error('GOOGLE_CLOUD_PROJECT is required.');
   const verifier = new GoogleIdentityTokenVerifier({ projectId: googleProjectId });
   const identities = new PostgresIdentityRepository(postgres.pool);
+
   const identityRoutes = createIdentityRoutes({ verifier, identities });
   const clientRoutes = createClientsRoutes({
     verifier,
@@ -35,17 +39,25 @@ async function main(): Promise<void> {
     identities,
     service: new ReiProjectService(new PostgresReiProjectRepository(postgres.pool)),
   });
+  const strategicPlanRoutes = createStrategicPlansRoutes({
+    verifier,
+    identities,
+    service: new StrategicPlanService(new PostgresStrategicPlanRepository(postgres.pool)),
+  });
   const growthMapRoutes = createGrowthMapRoutes({
     verifier,
     identities,
     service: new GrowthMapService(new PostgresGrowthMapRepository(postgres.pool)),
     idempotency: new PostgresIdempotencyStore(postgres.pool),
   });
+
   const route = async (request: Request, requestId: string) =>
     (await identityRoutes(request)) ??
     (await clientRoutes(request)) ??
     (await reiProjectRoutes(request)) ??
+    (await strategicPlanRoutes(request)) ??
     growthMapRoutes(request, requestId);
+
   const api = createApiServer(config, undefined, {
     route,
     readiness: async () => {
