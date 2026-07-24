@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from '@/components/layout/AdminLayout';
-import { Plus, Edit, Trash2, Briefcase, Search, Download, TrendingUp } from 'lucide-react';
+import { Plus, Trash2, Briefcase, Search, Download, TrendingUp, ArrowLeft, ExternalLink } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { migrateCases } from '@/services/migrationService';
 
 const AdminCases = () => {
     const [cases, setCases] = useState<any[]>([]);
     const [search, setSearch] = useState('');
-    const [selected, setSelected] = useState<any | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => { fetchCases(); }, []);
@@ -31,7 +32,6 @@ const AdminCases = () => {
         else {
             toast.success('Case excluído');
             setCases(cases.filter(c => c.id !== id));
-            if (selected?.id === id) setSelected(null);
         }
     };
 
@@ -54,125 +54,138 @@ const AdminCases = () => {
 
     return (
         <AdminLayout>
-            <div className="min-h-screen bg-white">
-                <div className="max-w-7xl mx-auto px-8 md:px-12 py-10">
-                    {/* Header */}
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-10 border-b border-zinc-100 pb-6">
-                        <div>
-                            <p className="text-label text-zinc-400 mb-2 border-b border-zinc-100 pb-1 w-max">DIR / CASES</p>
-                            <h1 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tight flex items-center gap-4 uppercase mt-4">
-                                <Briefcase className="w-10 h-10 text-zinc-300" /> CASES DE SUCESSO
-                            </h1>
-                            <p className="text-label text-zinc-500 mt-4 flex items-center gap-2">
-                                <span className="w-1.5 h-1.5 bg-zinc-900 shrink-0" />
-                                GERENCIAMENTO DE PIPELINE DE CASES. <span className="text-metric text-zinc-900 tabular-nums">[{filtered.length}]</span>
-                            </p>
+            <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+                
+                {/* Header SaaS Moderno Benchmark */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/80">
+                    <div>
+                        <div className="flex items-center gap-2 text-xs font-mono font-bold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                            <button
+                                onClick={() => navigate('/admin')}
+                                className="hover:text-zinc-900 transition-colors flex items-center gap-1"
+                            >
+                                <ArrowLeft size={13} /> DASHBOARD
+                            </button>
+                            <span>/</span>
+                            <span className="text-zinc-900">CASES</span>
                         </div>
-
                         <div className="flex items-center gap-3">
-                            <div className="relative group">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-zinc-600 transition-colors" />
-                                <input
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    placeholder="BUSCAR CASES..."
-                                    className="h-10 pl-9 pr-3 w-64 text-label bg-white border border-zinc-200 rounded-none outline-none focus:border-black focus:ring-0 transition-none shadow-none"
-                                />
-                            </div>
-                            <button
-                                onClick={handleMigrate}
-                                className="h-10 px-4 flex items-center gap-2 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-label rounded-none transition-colors shadow-none"
-                                title="Importar do arquivo estático"
-                            >
-                                <Download className="w-3.5 h-3.5" /> MIGRAR
-                            </button>
-                            <button
-                                onClick={() => navigate('/admin/cases/new')}
-                                className="h-10 px-5 flex items-center gap-2 bg-black hover:bg-zinc-800 text-white text-label rounded-none transition-colors shadow-none"
-                            >
-                                <Plus className="w-3.5 h-3.5" /> NOVO CASE
-                            </button>
+                            <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                                Cases de Sucesso & Resultados
+                            </h1>
+                            <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
+                                {filtered.length} CASES
+                            </span>
                         </div>
+                        <p className="text-sm font-medium text-zinc-500 mt-1">
+                            Vitrine de resultados de crescimento, ROI e transformação de operações B2B.
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <Button
+                            variant="outline"
+                            onClick={handleMigrate}
+                            className="bg-white border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-xs font-mono font-bold tracking-wider uppercase h-9 px-3 gap-1.5"
+                        >
+                            <Download size={14} /> MIGRAR ESTÁTICO
+                        </Button>
+                        <Button
+                            onClick={() => navigate('/admin/cases/new')}
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-800"
+                        >
+                            <Plus size={15} className="text-[#00CC6A]" /> NOVO CASE
+                        </Button>
+                    </div>
                 </div>
 
-                {/* Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {/* Control Bar: Search */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-200">
+                    <div className="relative flex-1 max-w-md">
+                        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+                        <Input
+                            placeholder="Buscar por cliente ou categoria..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="pl-10 pr-4 h-9 bg-white border-zinc-200 rounded-lg text-xs placeholder:text-zinc-400 focus-visible:ring-1 focus-visible:ring-zinc-950 transition-all shadow-none"
+                        />
+                    </div>
+                </div>
+
+                {/* Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filtered.map(item => (
                         <div
                             key={item.id}
                             onClick={() => navigate(`/admin/cases/edit/${item.id}`)}
-                            className="group relative bg-white rounded-sm border border-zinc-200 hover:border-zinc-300 shadow-sm transition-all duration-300 flex flex-col h-[320px] cursor-pointer overflow-hidden"
+                            className="bg-white border border-zinc-200/80 rounded-xl hover:border-zinc-300 transition-all p-5 shadow-xs flex flex-col justify-between cursor-pointer group space-y-4"
                         >
-                            {/* Header / Logo Area */}
-                            <div className="h-32 bg-zinc-50 border-b border-zinc-100 flex items-center justify-center relative p-6">
-                                {item.client_logo ? (
-                                    <img
-                                        src={item.client_logo}
-                                        alt={item.client_name}
-                                        className="max-h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition-all opacity-80 group-hover:opacity-100"
-                                    />
-                                ) : (
-                                    <Briefcase className="w-10 h-10 text-zinc-200" />
-                                )}
-                                <div className="absolute top-3 left-3 flex gap-2">
-                                    <span className={`
-                                        text-label border px-1.5 py-0.5 rounded-none
-                                        ${item.published
-                                            ? 'bg-[#00CC6A] text-black border-[#00CC6A]'
-                                            : 'bg-white text-zinc-500 border-zinc-200'
-                                        }
-                                    `}>
-                                        {item.published ? 'PUBLISHED' : 'DRAFT'}
+                            <div className="space-y-3">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 border border-zinc-200">
+                                        {item.case_category || 'GERAL'}
                                     </span>
+                                    {item.published ? (
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
+                                            ● PUBLICADO
+                                        </span>
+                                    ) : (
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-medium bg-zinc-100 text-zinc-500 border border-zinc-200">
+                                            RASCUNHO
+                                        </span>
+                                    )}
                                 </div>
-                            </div>
 
-                            {/* Content */}
-                            <div className="p-5 flex-1 flex flex-col bg-white">
-                                <span className="text-label text-zinc-400 mb-2 block">
-                                    {item.case_category || 'GERAL'}
-                                </span>
-                                <h3 className="text-lg font-black text-black leading-snug mb-2 line-clamp-1 truncate uppercase">
-                                    {item.client_name || 'CLIENTE'}
-                                </h3>
+                                <div className="flex items-center gap-3">
+                                    {item.client_logo ? (
+                                        <img
+                                            src={item.client_logo}
+                                            alt={item.client_name}
+                                            className="h-8 w-auto object-contain"
+                                        />
+                                    ) : (
+                                        <div className="w-8 h-8 rounded-lg bg-zinc-950 text-white font-bold text-xs flex items-center justify-center">
+                                            {(item.client_name || 'C').substring(0, 2).toUpperCase()}
+                                        </div>
+                                    )}
+                                    <h3 className="text-sm font-bold text-zinc-900 group-hover:text-black truncate">
+                                        {item.client_name || 'Cliente'}
+                                    </h3>
+                                </div>
 
                                 {item.primary_metric && (
-                                    <div className="mb-4 flex items-center gap-2 text-zinc-900 border border-zinc-200 bg-zinc-50 px-2 py-1.5 rounded-none self-start mt-2">
-                                        <TrendingUp className="w-3 h-3 text-[#00CC6A]" />
-                                        <span className="text-metric">{item.primary_metric}</span>
+                                    <div className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-900 bg-zinc-50 border border-zinc-200/80 px-2.5 py-1 rounded-md">
+                                        <TrendingUp size={13} className="text-[#00CC6A]" />
+                                        <span>{item.primary_metric}</span>
                                     </div>
                                 )}
-
-                                <div className="mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between">
-                                    <span className="text-label text-zinc-400">
-                                        CREATED: {new Date(item.created_at).toLocaleDateString('pt-BR')}
-                                    </span>
-                                </div>
                             </div>
 
-                            {/* Hover Actions */}
-                            <div className="absolute inset-x-0 bottom-0 p-4 bg-zinc-900 border-t border-zinc-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-end gap-2">
+                            <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
+                                <span className="font-mono text-[11px]">
+                                    {new Date(item.created_at).toLocaleDateString('pt-BR')}
+                                </span>
+
                                 <button
                                     onClick={(e) => handleDelete(item.id, e)}
-                                    className="p-2 bg-transparent hover:bg-zinc-800 text-zinc-400 hover:text-red-500 rounded-none transition-colors border border-transparent hover:border-red-900"
+                                    className="p-1 text-zinc-400 hover:text-zinc-900 transition-colors"
                                     title="Excluir"
                                 >
-                                    <Trash2 className="w-4 h-4" />
-                                </button>
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        navigate(`/admin/cases/edit/${item.id}`);
-                                    }}
-                                    className="px-4 py-2 bg-white text-black text-label rounded-none hover:bg-zinc-200 transition-colors"
-                                >
-                                    EDIT
+                                    <Trash2 size={14} />
                                 </button>
                             </div>
                         </div>
                     ))}
-                    </div>
+
+                    {filtered.length === 0 && (
+                        <div className="col-span-full py-16 text-center bg-white border border-zinc-200 rounded-xl p-8">
+                            <Briefcase className="w-10 h-10 text-zinc-300 mx-auto mb-3" />
+                            <p className="text-sm font-bold text-zinc-800 uppercase tracking-wider">Nenhum case cadastrado</p>
+                            <p className="text-xs text-zinc-400 mt-1">Crie um novo case para enriquecer seu portfólio.</p>
+                        </div>
+                    )}
                 </div>
+
             </div>
         </AdminLayout>
     );

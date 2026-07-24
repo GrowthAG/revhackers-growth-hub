@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from '@/components/layout/AdminLayout';
-import { Plus, Edit, Trash2, FileText, Search, Download, ExternalLink } from 'lucide-react';
+import { Plus, Trash2, FileText, Search, Download, ExternalLink, ArrowLeft, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { migrateMaterials } from '@/services/migrationService';
 
 const AdminMaterials = () => {
     const [materials, setMaterials] = useState<any[]>([]);
     const [search, setSearch] = useState('');
-    const [selected, setSelected] = useState<any | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => { fetchMaterials(); }, []);
@@ -31,7 +32,6 @@ const AdminMaterials = () => {
         else {
             toast.success('Material excluído');
             setMaterials(materials.filter(m => m.id !== id));
-            if (selected?.id === id) setSelected(null);
         }
     };
 
@@ -54,134 +54,132 @@ const AdminMaterials = () => {
 
     return (
         <AdminLayout>
-            <div className="min-h-screen bg-white">
-                <div className="max-w-7xl mx-auto px-8 md:px-12 py-10">
-                    {/* Header */}
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-10 border-b border-zinc-100 pb-6">
-                        <div>
-                            <p className="text-label text-zinc-400 mb-2 border-b border-zinc-100 pb-1 w-max">DIR / MATERIALS</p>
-                            <h1 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tight flex items-center gap-4 uppercase mt-4">
-                                <FileText className="w-10 h-10 text-zinc-300" /> MATERIAIS B2B
-                            </h1>
-                            <p className="text-label text-zinc-500 mt-4 flex items-center gap-2">
-                                <span className="w-1.5 h-1.5 bg-zinc-900 shrink-0" />
-                                ARSENAL DE VENDAS E MÍDIA B2B. <span className="text-metric text-zinc-900 tabular-nums">[{filtered.length}]</span>
-                            </p>
+            <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+                
+                {/* Header SaaS Moderno Benchmark */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/80">
+                    <div>
+                        <div className="flex items-center gap-2 text-xs font-mono font-bold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                            <button
+                                onClick={() => navigate('/admin')}
+                                className="hover:text-zinc-900 transition-colors flex items-center gap-1"
+                            >
+                                <ArrowLeft size={13} /> DASHBOARD
+                            </button>
+                            <span>/</span>
+                            <span className="text-zinc-900">MATERIAIS</span>
                         </div>
-
                         <div className="flex items-center gap-3">
-                            <div className="relative group">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-zinc-600 transition-colors" />
-                                <input
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    placeholder="BUSCAR MATERIAIS..."
-                                    className="h-10 pl-9 pr-3 w-64 text-label bg-white border border-zinc-200 rounded-none outline-none focus:border-black focus:ring-0 transition-none shadow-none"
-                                />
-                            </div>
-                            <button
-                                onClick={handleMigrate}
-                                className="h-10 px-4 flex items-center gap-2 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-label rounded-none transition-colors shadow-none"
-                                title="Importar do arquivo estático"
-                            >
-                                <Download className="w-3.5 h-3.5" /> MIGRAR
-                            </button>
-                            <button
-                                onClick={() => navigate('/admin/materials/new')}
-                                className="h-10 px-5 flex items-center gap-2 bg-black hover:bg-zinc-800 text-white text-label rounded-none transition-colors shadow-none"
-                            >
-                                <Plus className="w-3.5 h-3.5" /> NOVO MODELO
-                            </button>
+                            <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                                Materiais & Modelos B2B
+                            </h1>
+                            <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
+                                {filtered.length} ATIVOS
+                            </span>
                         </div>
+                        <p className="text-sm font-medium text-zinc-500 mt-1">
+                            Arsenal de vendas, transcrições, guias operacionais e mídias de apoio.
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <Button
+                            variant="outline"
+                            onClick={handleMigrate}
+                            className="bg-white border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-xs font-mono font-bold tracking-wider uppercase h-9 px-3 gap-1.5"
+                        >
+                            <Download size={14} /> MIGRAR ESTÁTICO
+                        </Button>
+                        <Button
+                            onClick={() => navigate('/admin/materials/new')}
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-800"
+                        >
+                            <Plus size={15} className="text-[#00CC6A]" /> NOVO MATERIAL
+                        </Button>
+                    </div>
                 </div>
 
-                {/* Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {/* Control Bar: Search */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-200">
+                    <div className="relative flex-1 max-w-md">
+                        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+                        <Input
+                            placeholder="Buscar por título ou tipo de material..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="pl-10 pr-4 h-9 bg-white border-zinc-200 rounded-lg text-xs placeholder:text-zinc-400 focus-visible:ring-1 focus-visible:ring-zinc-950 transition-all shadow-none"
+                        />
+                    </div>
+                </div>
+
+                {/* Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filtered.map(item => (
                         <div
                             key={item.id}
                             onClick={() => navigate(`/admin/materials/edit/${item.id}`)}
-                            className="group relative bg-white rounded-sm border border-zinc-200 hover:border-zinc-300 shadow-sm transition-all duration-300 flex flex-col h-[320px] cursor-pointer overflow-hidden"
+                            className="bg-white border border-zinc-200/80 rounded-xl hover:border-zinc-300 transition-all p-5 shadow-xs flex flex-col justify-between cursor-pointer group space-y-4"
                         >
-                            {/* Image/Cover Placeholder */}
-                            <div className="h-40 bg-zinc-100 relative overflow-hidden flex items-center justify-center">
-                                <FileText className="w-10 h-10 text-zinc-200" />
-                                <div className="absolute top-3 left-3 flex gap-2">
-                                    <span className={`
-                                        text-label border px-1.5 py-0.5 rounded-none
-                                        ${item.published
-                                            ? 'bg-[#00CC6A] text-black border-[#00CC6A]'
-                                            : 'bg-white text-zinc-500 border-zinc-200'
-                                        }
-                                    `}>
-                                        {item.published ? 'PUBLISHED' : 'DRAFT'}
+                            <div className="space-y-2.5">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 border border-zinc-200">
+                                        {item.material_type || 'GERAL'}
                                     </span>
+                                    {item.published ? (
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
+                                            ● PUBLICADO
+                                        </span>
+                                    ) : (
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-medium bg-zinc-100 text-zinc-500 border border-zinc-200">
+                                            RASCUNHO
+                                        </span>
+                                    )}
                                 </div>
+
+                                <h3 className="text-sm font-bold text-zinc-900 group-hover:text-black line-clamp-2 leading-snug">
+                                    {item.title || item.material_name || 'Sem título'}
+                                </h3>
                             </div>
 
-                            {/* Content */}
-                            <div className="p-5 flex-1 flex flex-col bg-white">
-                                <span className="text-label text-zinc-400 mb-2 block">
-                                    {item.material_type || 'GERAL'}
+                            <div className="pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
+                                <span className="font-mono text-[11px]">
+                                    {new Date(item.created_at).toLocaleDateString('pt-BR')}
                                 </span>
-                                <h3 className="text-lg font-black text-black leading-snug mb-2 line-clamp-2 truncate uppercase">
-                                    {item.title || item.material_name || 'TITLE_MISSING'}
-                                </h3>
-                                <div className="mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between">
-                                    <span className="text-label text-zinc-400">
-                                        CREATED: {new Date(item.created_at).toLocaleDateString('pt-BR')}
-                                    </span>
+
+                                <div className="flex items-center gap-2">
                                     {(item.link_material || item.material_url) && (
                                         <a
                                             href={item.link_material || item.material_url}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             onClick={(e) => e.stopPropagation()}
-                                            className="text-zinc-400 hover:text-black transition-colors"
+                                            className="p-1 text-zinc-400 hover:text-zinc-900 transition-colors"
                                             title="Abrir Link"
                                         >
-                                            <ExternalLink className="w-4 h-4" />
+                                            <ExternalLink size={14} />
                                         </a>
                                     )}
+                                    <button
+                                        onClick={(e) => handleDelete(item.id, e)}
+                                        className="p-1 text-zinc-400 hover:text-zinc-900 transition-colors"
+                                        title="Excluir"
+                                    >
+                                        <Trash2 size={14} />
+                                    </button>
                                 </div>
-                            </div>
-
-                            {/* Hover Actions */}
-                            <div className="absolute inset-x-0 bottom-0 p-4 bg-zinc-900 border-t border-zinc-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-end gap-2">
-                                <button
-                                    onClick={(e) => handleDelete(item.id, e)}
-                                    className="p-2 bg-transparent hover:bg-zinc-800 text-zinc-400 hover:text-red-500 rounded-none transition-colors border border-transparent hover:border-red-900"
-                                    title="Excluir"
-                                >
-                                    <Trash2 className="w-4 h-4" />
-                                </button>
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        navigate(`/admin/materials/edit/${item.id}`);
-                                    }}
-                                    className="px-4 py-2 bg-white text-black text-label rounded-none hover:bg-zinc-200 transition-colors"
-                                >
-                                    EDIT
-                                </button>
                             </div>
                         </div>
                     ))}
 
                     {filtered.length === 0 && (
-                        <div className="col-span-full py-20 text-center bg-white border border-dashed border-zinc-200 rounded-none">
-                            <FileText className="w-12 h-12 text-zinc-200 mx-auto mb-4" />
-                            <h3 className="text-lg font-black text-zinc-900 uppercase">Nenhum MATERIAL ENCONTRADO</h3>
-                            <button
-                                onClick={() => navigate('/admin/materials/new')}
-                                className="mt-4 px-6 py-2 bg-black text-white text-label rounded-none hover:bg-zinc-800 transition-colors"
-                            >
-                                NOVO MATERIAL
-                            </button>
+                        <div className="col-span-full py-16 text-center bg-white border border-zinc-200 rounded-xl p-8">
+                            <FileText className="w-10 h-10 text-zinc-300 mx-auto mb-3" />
+                            <p className="text-sm font-bold text-zinc-800 uppercase tracking-wider">Nenhum material cadastrado</p>
+                            <p className="text-xs text-zinc-400 mt-1">Crie um novo modelo ou importe do estático.</p>
                         </div>
                     )}
                 </div>
-            </div>
+
             </div>
         </AdminLayout>
     );
