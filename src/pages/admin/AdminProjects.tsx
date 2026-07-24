@@ -3,52 +3,57 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import AdminLayout from '@/components/layout/AdminLayout';
-import { Plus, ChevronRight, AlertTriangle, Search } from 'lucide-react';
+import { Plus, Search, ArrowLeft, Zap, CheckCircle2, Clock, FolderKanban, ExternalLink } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { getDisplayName } from '@/lib/projectUtils';
-
-// ─── Constants ────────────────────────────────────────────────────────────────
+import { reiProjectsGcpAdapter } from '@/api/adapters/rei-projects-gcp';
 
 const TYPE_LABELS: Record<string, string> = {
-  consulting: '360',
-  founder: 'LinkedIn',
-  dev: 'Site',
+  consulting: '360°',
+  founder: 'Founder',
+  dev: 'Sites',
   crm_ops: 'RevOps',
   funnels_impl: 'Funis',
 };
 
-const STAGE_CONFIG: Record<string, { label: string; color: string }> = {
-  lead_inbound:    { label: 'Lead',           color: 'text-zinc-400 border border-zinc-200' },
-  lead_qualified:  { label: 'Qualificado',    color: 'text-zinc-500 border border-zinc-200' },
-  diagnostic_done: { label: 'Diagnóstico',    color: 'text-zinc-600 border border-zinc-200' },
-  proposal_draft:  { label: 'Em Elaboração',  color: 'text-zinc-600 border border-zinc-200 bg-zinc-50' },
-  proposal_sent:   { label: 'Proposta Env.',  color: 'text-zinc-700 border border-zinc-300 bg-zinc-50' },
-  proposal_viewed: { label: 'Visualizada',    color: 'text-zinc-800 border border-zinc-300 bg-zinc-100' },
-  negotiation:     { label: 'Negociação',     color: 'text-zinc-900 border border-zinc-400 bg-zinc-100' },
-  won:             { label: 'Aguard. Onb.',   color: 'text-white bg-zinc-900' },
-  onboarding:      { label: 'Onboarding',     color: 'text-white bg-zinc-900' },
-  active:          { label: 'Ativo',          color: 'text-white bg-[#00CC6A]' },
-  completed:       { label: 'Concluído',      color: 'text-zinc-400 bg-transparent border border-zinc-200' },
-  churned:         { label: 'Churn',          color: 'text-white bg-red-600' },
-  lost:            { label: 'Perdido',        color: 'text-zinc-500 border border-zinc-200 line-through' },
-};
-
 const PRE_SALE  = ['lead_inbound','lead_qualified','diagnostic_done','proposal_draft','proposal_sent','proposal_viewed','negotiation'];
 const EXECUTION = ['won','onboarding','active','completed'];
-const CLOSED    = ['churned']; // Removed 'lost' as it's a lead concept
+const CLOSED    = ['churned'];
 
 type FilterKey = 'todos' | 'execucao' | 'encerrado';
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
 const AdminProjects: React.FC = () => {
   const navigate = useNavigate();
-  const [search,  setSearch]  = useState('');
-  const [filter,  setFilter]  = useState<FilterKey>('todos');
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState<FilterKey>('todos');
 
   const { data: projects = [], isLoading } = useQuery({
     queryKey: ['admin-projects-list'],
     queryFn: async () => {
+      // Tenta carregar via GCP Adapter se ativo
+      if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+        try {
+          const gcpProjects = await reiProjectsGcpAdapter.getAll();
+          return gcpProjects.map(p => ({
+            id: p.id,
+            client_name: p.clientName,
+            client_company: p.clientCompany || p.clientName,
+            trade_name: p.clientName,
+            type: p.type,
+            status: p.status,
+            pipeline_stage: p.status,
+            created_at: p.lastReiDate || new Date().toISOString(),
+            updated_at: p.nextReiDate || new Date().toISOString(),
+            display_name: p.clientName,
+            tasks: { total: 0, done: 0, overdue: 0 }
+          }));
+        } catch (e) {
+          console.warn('Fallback para Supabase no AdminProjects...', e);
+        }
+      }
+
       const { data: raw, error } = await supabase
         .from('rei_projects')
         .select('id, client_name, client_company, trade_name, type, status, pipeline_stage, created_at, updated_at')
@@ -58,7 +63,6 @@ const AdminProjects: React.FC = () => {
       if (error) throw error;
       if (!raw?.length) return [];
 
-      // Task counts
       const ids = raw.map(p => p.id);
       const { data: tasks } = await supabase
         .from('orqflow_tasks')
@@ -71,26 +75,24 @@ const AdminProjects: React.FC = () => {
       return raw
         .filter((p: any) => !PRE_SALE.includes(p.pipeline_stage || '') && p.pipeline_stage !== 'lost')
         .map(p => {
-        const ptasks = (tasks || []).filter(t => t.project_id === p.id);
-        return {
-          ...p,
-          display_name: getDisplayName({ trade_name: p.trade_name, client_company: p.client_company, client_name: p.client_name }),
-          tasks: {
-            total:   ptasks.length,
-            done:    ptasks.filter(t => t.status === 'done').length,
-            overdue: ptasks.filter(t => t.due_date && t.due_date < nowIso && t.status !== 'done').length,
-          },
-        };
-      });
+          const ptasks = (tasks || []).filter(t => t.project_id === p.id);
+          return {
+            ...p,
+            display_name: getDisplayName({ trade_name: p.trade_name, client_company: p.client_company, client_name: p.client_name }),
+            tasks: {
+              total: ptasks.length,
+              done: ptasks.filter(t => t.status === 'done').length,
+              overdue: ptasks.filter(t => t.due_date && t.due_date < nowIso && t.status !== 'done').length,
+            },
+          };
+        });
     },
   });
 
-  // ── Filtering ──────────────────────────────────────────────────────────────
-
   const filtered = useMemo(() => {
     let result = projects;
-    if (filter === 'execucao')   result = result.filter(p => EXECUTION.includes(p.pipeline_stage || '') || p.status === 'active');
-    if (filter === 'encerrado')  result = result.filter(p => CLOSED.includes(p.pipeline_stage || '') || p.status === 'completed');
+    if (filter === 'execucao') result = result.filter(p => EXECUTION.includes(p.pipeline_stage || '') || p.status === 'active');
+    if (filter === 'encerrado') result = result.filter(p => CLOSED.includes(p.pipeline_stage || '') || p.status === 'completed');
     if (search.trim()) {
       const q = search.toLowerCase();
       result = result.filter(p =>
@@ -103,162 +105,205 @@ const AdminProjects: React.FC = () => {
   }, [projects, filter, search]);
 
   const counts = useMemo(() => ({
-    todos:     projects.length,
-    execucao:  projects.filter(p => EXECUTION.includes(p.pipeline_stage || '') || p.status === 'active').length,
+    todos: projects.length,
+    execucao: projects.filter(p => EXECUTION.includes(p.pipeline_stage || '') || p.status === 'active').length,
     encerrado: projects.filter(p => CLOSED.includes(p.pipeline_stage || '') || p.status === 'completed').length,
   }), [projects]);
 
-  // ── Render ─────────────────────────────────────────────────────────────────
-
   return (
     <AdminLayout>
-      <div className="min-h-screen bg-white">
-
-        {/* ── Header ──────────────────────────────────────────────────────── */}
-        <div className="border-b border-zinc-100 px-8 md:px-12 pt-10 pb-0">
-          <div className="max-w-7xl mx-auto">
-
-            <div className="flex items-start justify-between gap-6 mb-8">
-              <div>
-                <p className="text-label text-zinc-400 mb-2 border-b border-zinc-100 pb-1">DIR / ADMIN</p>
-                <h1 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tight leading-[1.05]">PROJETOS</h1>
-                <p className="text-sm font-medium text-zinc-400 mt-2 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-zinc-900" />
-                  {isLoading ? 'SYS.LOAD()' : <span className="text-metric text-zinc-900">{projects.length} REGISTROS_</span>}
-                </p>
-              </div>
+      <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+        
+        {/* Header SaaS Moderno Benchmark */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/80">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-zinc-400 mb-1.5 uppercase tracking-wider">
               <button
-                onClick={() => navigate('/admin/rei/novo')}
-                className="shrink-0 inline-flex items-center gap-2 bg-zinc-950 hover:bg-zinc-800 text-white font-black uppercase tracking-widest text-xxs h-10 px-5 transition-colors rounded-none"
+                onClick={() => navigate('/admin')}
+                className="hover:text-zinc-900 transition-colors flex items-center gap-1"
               >
-                <Plus className="w-4 h-4" /> Novo Projeto
+                <ArrowLeft size={13} /> DASHBOARD
               </button>
+              <span>/</span>
+              <span className="text-zinc-900">PROJETOS</span>
             </div>
-
-            {/* Filter tabs */}
-            <div className="flex items-center gap-6 border-t border-zinc-100">
-              {([
-                { key: 'todos',     label: 'Todos' },
-                { key: 'execucao',  label: 'Em Execução' },
-                { key: 'encerrado', label: 'Encerrados' },
-              ] as { key: FilterKey; label: string }[]).map(f => (
-                <button
-                  key={f.key}
-                  onClick={() => setFilter(f.key)}
-                  className={cn(
-                    'py-4 text-label uppercase tracking-widest border-b-2 transition-colors',
-                    filter === f.key
-                      ? 'border-zinc-900 text-zinc-900 bg-zinc-50'
-                      : 'border-transparent text-zinc-400 hover:text-zinc-600 hover:bg-zinc-50/50'
-                  )}
-                >
-                  {f.label}
-                  <span className="ml-2 text-metric text-zinc-400 px-1.5 border border-zinc-200 bg-white">{counts[f.key]}</span>
-                </button>
-              ))}
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                Projetos & Operações
+              </h1>
+              <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
+                {projects.length} REGISTROS
+              </span>
             </div>
+            <p className="text-sm font-medium text-zinc-500 mt-1">
+              Gestão operacional das sprints ativas, entregáveis de clientes e acompanhamento sob contrato.
+            </p>
+          </div>
 
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => navigate('/admin/rei/novo')}
+              className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-800"
+            >
+              <Plus size={15} className="text-[#00CC6A]" /> NOVO PROJETO
+            </Button>
           </div>
         </div>
 
-        {/* ── Content ─────────────────────────────────────────────────────── */}
-        <div className="max-w-7xl mx-auto px-8 md:px-12 py-8">
+        {/* Metric Cards — High Precision SaaS UI */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+            <div className="flex items-center justify-between text-zinc-500 mb-2">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider">Total de Projetos</span>
+              <FolderKanban size={15} className="text-zinc-400" />
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-zinc-900 tabular-nums">{counts.todos}</span>
+              <span className="text-xs text-zinc-400 font-medium">operações</span>
+            </div>
+          </div>
 
-          {/* Search */}
-          <div className="flex items-center gap-2 border border-zinc-200 bg-white mb-6 rounded-none">
-            <Search className="w-4 h-4 text-zinc-400 ml-4 shrink-0" />
-            <input
-              type="text"
-              placeholder="Buscar por cliente ou empresa..."
+          <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+            <div className="flex items-center justify-between text-zinc-500 mb-2">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider">Em Execução</span>
+              <div className="w-2 h-2 rounded-full bg-[#00CC6A]"></div>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-[#00CC6A] tabular-nums">{counts.execucao}</span>
+              <span className="text-xs text-zinc-500 font-medium">sprints ativas</span>
+            </div>
+          </div>
+
+          <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+            <div className="flex items-center justify-between text-zinc-500 mb-2">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider">Encerrados</span>
+              <CheckCircle2 size={15} className="text-zinc-400" />
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-zinc-900 tabular-nums">{counts.encerrado}</span>
+              <span className="text-xs text-zinc-400 font-medium">concluídos</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Control Bar: Search & Status Filters */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-200">
+          <div className="relative flex-1">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+            <Input
+              placeholder="Filtrar por cliente ou empresa..."
               value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="flex-1 py-3 pr-4 text-sm font-medium text-zinc-900 placeholder:text-zinc-300 bg-transparent outline-none"
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10 pr-12 h-9 bg-white border-zinc-200 rounded-lg text-xs placeholder:text-zinc-400 focus-visible:ring-1 focus-visible:ring-zinc-950 transition-all shadow-none"
             />
           </div>
 
-          {isLoading ? (
-            <div className="flex items-center justify-center py-24">
-              <div className="w-8 h-8 border-2 border-zinc-200 border-t-zinc-900 rounded-full animate-spin" />
-            </div>
-          ) : filtered.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-12 border-2 border-dashed border-zinc-300 bg-zinc-50/50 mt-4 text-center">
-              <p className="text-xl font-black text-black uppercase tracking-tight mb-2">Nenhum projeto nas trincheiras</p>
-              <p className="text-[0.65rem] font-bold text-zinc-500 uppercase tracking-widest">Ajuste os filtros ou inicie uma nova operação no cockpit.</p>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-2">
-              <div className="flex flex-col gap-2">
-                {filtered.map(project => {
-                  const pct = project.tasks.total > 0
-                    ? Math.round((project.tasks.done / project.tasks.total) * 100)
-                    : 0;
-                  const stageInfo = STAGE_CONFIG[project.pipeline_stage || project.status || '']
-                    || { label: project.status || '-', color: 'text-zinc-400 bg-zinc-100' };
-                  const isExecution = EXECUTION.includes(project.pipeline_stage || '') || project.status === 'active';
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setFilter('todos')}
+              className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${filter === 'todos' ? 'bg-zinc-950 text-white border border-zinc-950' : 'text-zinc-600 hover:text-zinc-900'}`}
+            >
+              Todos ({counts.todos})
+            </button>
+            <button
+              onClick={() => setFilter('execucao')}
+              className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${filter === 'execucao' ? 'bg-[#00CC6A] text-black border border-[#00CC6A]' : 'text-zinc-600 hover:text-zinc-900'}`}
+            >
+              Em Execução ({counts.execucao})
+            </button>
+            <button
+              onClick={() => setFilter('encerrado')}
+              className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${filter === 'encerrado' ? 'bg-zinc-900 text-white border border-zinc-900' : 'text-zinc-600 hover:text-zinc-900'}`}
+            >
+              Encerrados ({counts.encerrado})
+            </button>
+          </div>
+        </div>
 
-                  return (
-                    <div
+        {/* Content Table / Cards */}
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20 bg-white border border-zinc-200 rounded-xl">
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 border-2 border-zinc-300 border-t-[#00CC6A] rounded-full animate-spin"></div>
+              <span className="text-xs text-zinc-500 font-medium">Carregando projetos...</span>
+            </div>
+          </div>
+        ) : filtered.length > 0 ? (
+          <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-none">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-zinc-200 bg-zinc-50 text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                    <th className="py-3.5 px-4">Projeto & Cliente</th>
+                    <th className="py-3.5 px-4">Tipo</th>
+                    <th className="py-3.5 px-4">Status</th>
+                    <th className="py-3.5 px-4 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-100 text-xs text-zinc-700">
+                  {filtered.map((project) => (
+                    <tr
                       key={project.id}
                       onClick={() => navigate(`/admin/projects/${project.id}`)}
-                      className="flex items-center gap-4 px-5 py-4 bg-white border border-zinc-200 hover:bg-zinc-50 hover:border-zinc-400 cursor-pointer transition-colors group rounded-none"
+                      className="hover:bg-zinc-50/80 transition-colors cursor-pointer group"
                     >
-                      {/* Status dot */}
-                      <div className={cn(
-                        'w-2 h-2 shrink-0',
-                        project.pipeline_stage === 'active' || project.status === 'active'
-                          ? 'bg-[#00CC6A]'
-                          : 'bg-zinc-200'
-                      )} />
-
-                      {/* Info */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                          <span className="text-sm font-black text-zinc-900 truncate">{project.display_name}</span>
-                          <span className="text-label text-zinc-500 border border-zinc-200 px-1.5 py-0.5 bg-white shrink-0">
-                            {TYPE_LABELS[project.type] || project.type}
-                          </span>
-                          <span className={cn('text-label px-1.5 py-0.5 shrink-0 bg-white', stageInfo.color)}>
-                            {stageInfo.label}
-                          </span>
-                          {project.tasks.overdue > 0 && (
-                            <span className="text-label text-red-500 bg-red-50 border border-red-100 px-1.5 py-0.5 shrink-0">
-                              [ {project.tasks.overdue} DELAYED ]
-                            </span>
-                          )}
-                        </div>
-
-                        {isExecution && project.tasks.total > 0 ? (
-                          <div className="flex items-center gap-3">
-                            <div className="w-32 h-1.5 bg-zinc-200 overflow-hidden rounded-none">
-                              <div
-                                className="h-full transition-all"
-                                style={{ width: `${pct}%`, backgroundColor: pct === 100 ? '#00CC6A' : '#18181b' }}
-                              />
-                            </div>
-                            <span className="text-metric text-zinc-500 tabular-nums">
-                              {project.tasks.done}/{project.tasks.total} TAREFAS
-                            </span>
+                      <td className="py-3.5 px-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-zinc-950 flex items-center justify-center shrink-0 border border-zinc-800 text-white font-black text-xs">
+                            {project.display_name.substring(0, 2).toUpperCase()}
                           </div>
-                        ) : isExecution ? (
-                          <span className="text-label bg-zinc-900 text-white px-2 py-0.5">
-                            #SETUP_PEN
+                          <div>
+                            <div className="font-bold text-zinc-900 group-hover:text-black">
+                              {project.display_name}
+                            </div>
+                            <div className="text-[11px] font-medium text-zinc-500 mt-0.5">
+                              {project.client_company || project.client_name}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="py-3.5 px-4">
+                        <span className="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
+                          {TYPE_LABELS[project.type] || project.type}
+                        </span>
+                      </td>
+
+                      <td className="py-3.5 px-4">
+                        {project.status === 'active' || project.pipeline_stage === 'active' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#00CC6A] text-black">
+                            <span className="w-1.5 h-1.5 rounded-full bg-black"></span> EM EXECUÇÃO
                           </span>
                         ) : (
-                          <span className="text-label text-zinc-400">
-                            UPDATED: {new Date(project.updated_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-mono font-medium bg-zinc-100 text-zinc-600 border border-zinc-200">
+                            ONBOARDING / CONCLUSÃO
                           </span>
                         )}
-                      </div>
+                      </td>
 
-                      <ChevronRight className="w-3.5 h-3.5 text-zinc-300 group-hover:text-zinc-600 transition-colors shrink-0" />
-                    </div>
-                  );
-                })}
-              </div>
+                      <td className="py-3.5 px-4 text-right">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 px-3 rounded-md hover:bg-zinc-100 text-zinc-700 text-[11px] font-mono font-bold gap-1 border border-zinc-200 bg-white"
+                        >
+                          VER DETALHES <ExternalLink size={12} />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          )}
+          </div>
+        ) : (
+          <div className="py-16 text-center bg-white border border-zinc-200 rounded-xl p-8">
+            <FolderKanban className="h-10 w-10 text-zinc-300 mx-auto mb-3" />
+            <p className="text-sm font-bold text-zinc-800 uppercase tracking-wider">Nenhum projeto encontrado</p>
+            <p className="text-xs text-zinc-400 mt-1">Ajuste os filtros ou crie uma nova operação no cockpit.</p>
+          </div>
+        )}
 
-        </div>
       </div>
     </AdminLayout>
   );
