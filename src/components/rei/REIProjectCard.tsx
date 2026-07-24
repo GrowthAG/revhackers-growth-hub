@@ -64,7 +64,7 @@ const REIProjectCard = ({ project, onUpdateClick }: REIProjectCardProps) => {
             case 'pending':
                 return '#a1a1aa'; // zinc-400
             default:
-                return '#03FC3B'; // revgreen
+                return '#00CC6A'; // revgreen #00CC6A
         }
     };
 
@@ -96,10 +96,10 @@ const REIProjectCard = ({ project, onUpdateClick }: REIProjectCardProps) => {
                 </div>
 
                 {/* Status Message */}
-                <div className={`p-4 mb-4 border-2 ${
+                <div className={`p-4 mb-4 border ${
                         status === 'overdue' ? 'bg-zinc-900 border-zinc-800' :
-                        status === 'pending' ? 'bg-zinc-100 border-zinc-300' :
-                            'bg-[#03FC3B]/10 border-[#03FC3B]/40'
+                        status === 'pending' ? 'bg-zinc-100 border-zinc-200' :
+                            'bg-[#00CC6A]/10 border-[#00CC6A]/30'
                     }`}>
                     <div className="flex items-center gap-2">
                         <TrendingUp className={`h-5 w-5 ${
@@ -107,7 +107,7 @@ const REIProjectCard = ({ project, onUpdateClick }: REIProjectCardProps) => {
                                 status === 'pending' ? 'text-zinc-600' :
                                     'text-zinc-900'
                             }`} />
-                        <p className={`font-semibold ${
+                        <p className={`font-semibold text-xs ${
                                 status === 'overdue' ? 'text-white' :
                                 status === 'pending' ? 'text-zinc-700' :
                                     'text-zinc-900'
@@ -119,22 +119,22 @@ const REIProjectCard = ({ project, onUpdateClick }: REIProjectCardProps) => {
 
                 {/* Dates Grid */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="bg-zinc-50 p-4 border border-zinc-200">
+                    <div className="bg-zinc-50 p-4 border border-zinc-200 rounded-lg">
                         <div className="flex items-center gap-2 mb-2">
                             <Calendar className="h-4 w-4 text-zinc-500" />
                             <span className="text-xs text-zinc-600 font-semibold uppercase tracking-wide">Último REI</span>
                         </div>
-                        <p className="text-base font-bold text-zinc-900">
+                        <p className="text-sm font-bold text-zinc-900">
                             {project.lastREIDate.toLocaleDateString('pt-BR')}
                         </p>
                     </div>
 
-                    <div className="bg-zinc-50 p-4 border border-zinc-200">
+                    <div className="bg-zinc-50 p-4 border border-zinc-200 rounded-lg">
                         <div className="flex items-center gap-2 mb-2">
                             <Clock className="h-4 w-4 text-zinc-500" />
                             <span className="text-xs text-zinc-600 font-semibold uppercase tracking-wide">Próximo REI</span>
                         </div>
-                        <p className="text-base font-bold text-zinc-900">
+                        <p className="text-sm font-bold text-zinc-900">
                             {formatNextREIDate(project.nextREIDate)}
                         </p>
                     </div>
@@ -142,17 +142,17 @@ const REIProjectCard = ({ project, onUpdateClick }: REIProjectCardProps) => {
 
                 {/* Quarter Info */}
                 <div className="flex items-center justify-between mb-4 px-2">
-                    <span className="text-sm text-zinc-600">Período</span>
-                    <span className="text-sm font-bold text-zinc-900">{project.quarter} {project.year}</span>
+                    <span className="text-xs text-zinc-600">Período</span>
+                    <span className="text-xs font-bold text-zinc-900">{project.quarter} {project.year}</span>
                 </div>
 
                 {/* Action Button */}
                 {(status === 'pending' || status === 'overdue') && (
                     <button
                         onClick={onUpdateClick}
-                        className="w-full bg-revgreen text-black font-bold py-3 px-4 hover:bg-revgreen/90 transition-all duration-300 text-sm tracking-widest uppercase"
+                        className="w-full bg-zinc-950 text-white font-mono font-bold py-2.5 px-4 hover:bg-zinc-800 rounded-lg transition-all text-xs tracking-wider uppercase border border-zinc-800 flex items-center justify-center gap-2"
                     >
-                        {status === 'overdue' ? 'Atualizar Agora →' : 'Agendar Atualização →'}
+                        <span className="text-[#00CC6A]">●</span> {status === 'overdue' ? 'Atualizar Agora →' : 'Agendar Atualização →'}
                     </button>
                 )}
             </div>
