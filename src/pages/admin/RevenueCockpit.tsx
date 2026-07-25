@@ -1259,8 +1259,6 @@ export const RevenueCockpit: React.FC = () => {
                 vendas={vendas} 
                 execucao={execucao} 
               />
-            </>
-          )}
 
             {/* ── Sub-view switcher (vendas tab only, Notion-style) ──── */}
             {activeTab === 'vendas' && (
@@ -1674,108 +1672,114 @@ export const RevenueCockpit: React.FC = () => {
             )}
 
             {/* ── SECTION 3: EXECUÇÃO ────────────────────────────────────────── */}
-            {activeTab === 'projetos' && <div className="mb-14">
-              <SectionTitle
-                eyebrow="Projeção de Projetos"
-                title="Execução"
-                description={`${execucao.length} projeto${execucao.length !== 1 ? 's' : ''} em andamento`}
-                count={execucao.length}
-              />
+            {activeTab === 'projetos' && (
+              <div className="mb-14">
+                <SectionTitle
+                  eyebrow="Projeção de Projetos"
+                  title="Execução"
+                  description={`${execucao.length} projeto${execucao.length !== 1 ? 's' : ''} em andamento`}
+                  count={execucao.length}
+                />
 
-              {/* Execucao KPIs foram movidos para o Top Bar */}
+                {/* Execucao KPIs foram movidos para o Top Bar */}
 
-              {/* Stage sub-groups */}
-              {EXECUCAO_STAGES.map(stage => {
-                const stageProjects = execucao.filter(p => p.pipeline_stage === stage);
-                if (stageProjects.length === 0) return null;
-                return (
-                  <div key={stage} className="mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className={cn(
-                        'w-1.5 h-1.5 ',
-                        stage === 'won' ? 'bg-[#00CC6A]' : 'bg-zinc-600',
-                      )} />
-                      <p className="text-xxs font-black uppercase tracking-widest text-zinc-500">
-                        {STAGE_CONFIGS[stage].label}
-                      </p>
-                      <span className="text-xxs font-medium text-zinc-300">{stageProjects.length}</span>
-                    </div>
-                    <div className="space-y-3">
-                      {stageProjects.map(p => (
-                        <ExecucaoRow
-                          key={p.id}
-                          project={p}
-                          onAction={handleAdvance}
-                          transitioning={transitioning}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-
-              {execucao.length === 0 && (
-                <div className="bg-white border-2 border-dashed border-zinc-200 py-14 text-center">
-                  <Rocket className="w-7 h-7 text-zinc-300 mx-auto mb-2" />
-                  <p className="text-sm font-black text-zinc-400">Nenhum projeto em execução</p>
-                  <p className="text-xs font-medium text-zinc-300 mt-1">Feche vendas para iniciar projetos.</p>
-                </div>
-              )}
-            </div>}
-            {/* ── SECTION 4: NETWORK / CONTATOS ────────────────────────────────────────── */}
-            {activeTab === 'network' && <div className="mb-14">
-              <SectionTitle
-                eyebrow="Network"
-                title="Base de Contatos"
-                description={`Lista de contatos e empresas que não estão com negociações ativas no funil.`}
-                count={network.length}
-              />
-              
-              <div className="bg-white border border-zinc-200">
-                {network.length > 0 ? (
-                  <div className="divide-y divide-zinc-100">
-                    {network.map(contact => (
-                      <div key={contact.id} className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50 transition-colors group cursor-pointer" onClick={() => navigate(`/admin/projects/${contact.id}`)}>
-                        <div className="flex flex-col md:flex-row md:items-center gap-4">
-                          <div className="w-10 h-10 bg-zinc-100 flex items-center justify-center shrink-0">
-                            <UserMinus className="w-5 h-5 text-zinc-400" />
-                          </div>
-                          <div>
-                            <h4 className="text-sm font-black text-zinc-900 uppercase tracking-tight">{contact.display_name}</h4>
-                            <p className="text-xxs font-bold uppercase tracking-widest text-zinc-400 mt-0.5">{contact.type} • Estagnado há {contact.days_in_stage}d</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xs font-black uppercase tracking-widest bg-zinc-100 text-zinc-500 px-2 py-1">
-                            Lead Perdido
-                          </span>
-                          <Button
-                            variant="ghost"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if(window.confirm('Deseja reativar este lead no funil em "Diagnóstico"?')) {
-                                handleAdvance(contact.id, 'lead_inbound');
-                              }
-                            }}
-                            className="bg-zinc-100 hover:bg-black text-zinc-500 hover:text-white rounded-sm h-8 px-3 text-2xs font-black uppercase tracking-widest transition-all"
-                          >
-                            Reativar Info
-                          </Button>
-                        </div>
+                {/* Stage sub-groups */}
+                {EXECUCAO_STAGES.map(stage => {
+                  const stageProjects = execucao.filter(p => p.pipeline_stage === stage);
+                  if (stageProjects.length === 0) return null;
+                  return (
+                    <div key={stage} className="mb-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className={cn(
+                          'w-1.5 h-1.5 ',
+                          stage === 'won' ? 'bg-[#00CC6A]' : 'bg-zinc-600',
+                        )} />
+                        <p className="text-xxs font-black uppercase tracking-widest text-zinc-500">
+                          {STAGE_CONFIGS[stage].label}
+                        </p>
+                        <span className="text-xxs font-medium text-zinc-300">{stageProjects.length}</span>
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="py-20 text-center">
-                    <UserCheck className="w-8 h-8 text-zinc-200 mx-auto mb-3" />
-                    <p className="text-xs font-black text-zinc-400 uppercase tracking-widest">Nenhum contato arquivado</p>
+                      <div className="space-y-3">
+                        {stageProjects.map(p => (
+                          <ExecucaoRow
+                            key={p.id}
+                            project={p}
+                            onAction={handleAdvance}
+                            transitioning={transitioning}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {execucao.length === 0 && (
+                  <div className="bg-white border-2 border-dashed border-zinc-200 py-14 text-center">
+                    <Rocket className="w-7 h-7 text-zinc-300 mx-auto mb-2" />
+                    <p className="text-sm font-black text-zinc-400">Nenhum projeto em execução</p>
+                    <p className="text-xs font-medium text-zinc-300 mt-1">Feche vendas para iniciar projetos.</p>
                   </div>
                 )}
               </div>
-            </div>}
+            )}
+            {/* ── SECTION 4: NETWORK / CONTATOS ────────────────────────────────────────── */}
+            {activeTab === 'network' && (
+              <div className="mb-14">
+                <SectionTitle
+                  eyebrow="Network"
+                  title="Base de Contatos"
+                  description={`Lista de contatos e empresas que não estão com negociações ativas no funil.`}
+                  count={network.length}
+                />
+                
+                <div className="bg-white border border-zinc-200">
+                  {network.length > 0 ? (
+                    <div className="divide-y divide-zinc-100">
+                      {network.map(contact => (
+                        <div key={contact.id} className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50 transition-colors group cursor-pointer" onClick={() => navigate(`/admin/projects/${contact.id}`)}>
+                          <div className="flex flex-col md:flex-row md:items-center gap-4">
+                            <div className="w-10 h-10 bg-zinc-100 flex items-center justify-center shrink-0">
+                              <UserMinus className="w-5 h-5 text-zinc-400" />
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-black text-zinc-900 uppercase tracking-tight">{contact.display_name}</h4>
+                              <p className="text-xxs font-bold uppercase tracking-widest text-zinc-400 mt-0.5">{contact.type} • Estagnado há {contact.days_in_stage}d</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-2xs font-black uppercase tracking-widest bg-zinc-100 text-zinc-500 px-2 py-1">
+                              Lead Perdido
+                            </span>
+                            <Button
+                              variant="ghost"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if(window.confirm('Deseja reativar este lead no funil em "Diagnóstico"?')) {
+                                  handleAdvance(contact.id, 'lead_inbound');
+                                }
+                              }}
+                              className="bg-zinc-100 hover:bg-black text-zinc-500 hover:text-white rounded-sm h-8 px-3 text-2xs font-black uppercase tracking-widest transition-all"
+                            >
+                              Reativar Info
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="py-20 text-center">
+                      <UserCheck className="w-8 h-8 text-zinc-200 mx-auto mb-3" />
+                      <p className="text-xs font-black text-zinc-400 uppercase tracking-widest">Nenhum contato arquivado</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
+        )}
 
-          </div>
-        </AdminLayout>
+        </div>
+      </AdminLayout>
 
       {/* War Room Sheet - Lead Dossie */}
       <LeadWarRoomSheet
