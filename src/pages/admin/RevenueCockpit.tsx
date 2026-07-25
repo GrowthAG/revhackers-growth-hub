@@ -762,8 +762,8 @@ export const RevenueCockpit: React.FC = () => {
 
   const [transitioning, setTransitioning] = useState<string | null>(null);
 
-  // Tab navigation
-  const [activeTab, setActiveTab] = useState<'vendas' | 'projetos' | 'network'>('vendas');
+  // Navigation tabs state
+  const [activeTab, setActiveTab] = useState<'vendas' | 'projetos' | 'financeiro' | 'network'>('vendas');
   // Sub-view mode for vendas tab (Notion-style multi-view)
   const [vendasView, setVendasView] = useState<'list' | 'kanban' | 'followups'>('list');
 
@@ -1161,30 +1161,6 @@ export const RevenueCockpit: React.FC = () => {
             </div>
           </div>
 
-          {/* ── Conciliação de Cobranças GHL ───────────────────────────── */}
-          <div>
-            <BillingAnalyticsWidget />
-          </div>
-
-          {/* ── KPI Row ─────────────────────────────────────────────────── */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {activeTab === 'vendas' ? (
-              <>
-                <MetricCard label="Qualified Leads" value={diagnostico.length} sub="Topo de funil (Inbound & Outbound)" />
-                <MetricCard label="Active Deals" value={vendas.length} sub={totalPipelineValue > 0 ? `${formatCurrency(totalPipelineValue)} no Pipe real` : 'Pipeline ativo'} />
-                <MetricCard label="Average Cycle" value={`${avgDaysVendas}d`} sub="Dias médios em negociação" />
-                <MetricCard label="Win Rate" value={`${winRate}%`} sub="Conversão histórica apurada" />
-              </>
-            ) : (
-              <>
-                <MetricCard label="Active Portfolio" value={execucao.length} sub="Projetos vivos na base" />
-                <MetricCard label="Activation Rate" value={`${activationRate}%`} sub="Engajamento inicial Pós-Venda" />
-                <MetricCard label="Time-To-Value" value={`${avgTTV}d`} sub="Dias médios até ativação" />
-                <MetricCard label="Overdue Risk" value={totalOverdue} sub={totalOverdue > 0 ? "Tarefas cronicamente atrasadas" : "Gargalo zero"} />
-              </>
-            )}
-          </div>
-
           {/* ── Tab Navigator ───────────────────────────────────────── */}
           <div className="flex flex-wrap items-center gap-0 border-b border-zinc-200">
             <button
@@ -1196,55 +1172,95 @@ export const RevenueCockpit: React.FC = () => {
                   : 'border-transparent text-zinc-400 hover:text-zinc-700',
               )}
             >
-                Pipeline de Vendas
-              </button>
-              <button
-                onClick={() => setActiveTab('projetos')}
-                className={cn(
-                  'px-6 py-3 text-xs font-black uppercase tracking-[0.15em] border-b-2 transition-all flex items-center gap-2',
-                  activeTab === 'projetos'
-                    ? 'border-zinc-900 text-zinc-900'
-                    : 'border-transparent text-zinc-400 hover:text-zinc-600',
-                )}
-              >
-                Projeção de Projetos
-                {totalOverdue > 0 && (
-                  <span className={cn(
-                    "w-4 h-4 text-[10px] font-black flex items-center justify-center rounded-sm leading-none",
-                    activeTab === 'projetos' ? "bg-zinc-900 text-white" : "bg-zinc-200 text-zinc-500"
-                  )}>
-                    {totalOverdue}
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={() => setActiveTab('network')}
-                className={cn(
-                  'px-6 py-3 text-xs font-black uppercase tracking-[0.15em] border-b-2 transition-all flex items-center gap-2',
-                  activeTab === 'network'
-                    ? 'border-zinc-900 text-zinc-900'
-                    : 'border-transparent text-zinc-400 hover:text-zinc-600',
-                )}
-              >
-                Base de Contatos
-                {network.length > 0 && (
-                  <span className={cn(
-                    "w-auto px-1.5 h-4 text-[10px] font-black flex items-center justify-center rounded-sm leading-none",
-                    activeTab === 'network' ? "bg-zinc-100 text-zinc-600" : "bg-zinc-50 text-zinc-400"
-                  )}>
-                    {network.length}
-                  </span>
-                )}
-              </button>
-            </div>
+              Pipeline de Vendas
+            </button>
 
-            {/* ── Copilot Engine ────────────────────────────────────────── */}
-            <RevOpsCopilot 
-              activeTab={activeTab as 'vendas' | 'projetos'} 
-              diagnostico={diagnostico} 
-              vendas={vendas} 
-              execucao={execucao} 
-            />
+            <button
+              onClick={() => setActiveTab('projetos')}
+              className={cn(
+                'px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2',
+                activeTab === 'projetos'
+                  ? 'border-zinc-950 text-zinc-950'
+                  : 'border-transparent text-zinc-400 hover:text-zinc-700',
+              )}
+            >
+              Projeção de Projetos
+              {totalOverdue > 0 && (
+                <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                  {totalOverdue}
+                </span>
+              )}
+            </button>
+
+            <button
+              onClick={() => setActiveTab('financeiro')}
+              className={cn(
+                'px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2',
+                activeTab === 'financeiro'
+                  ? 'border-emerald-600 text-emerald-950 font-extrabold bg-emerald-50/60'
+                  : 'border-transparent text-zinc-400 hover:text-emerald-700',
+              )}
+            >
+              <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+              Conciliação Financeira & BPO
+            </button>
+
+            <button
+              onClick={() => setActiveTab('network')}
+              className={cn(
+                'px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2',
+                activeTab === 'network'
+                  ? 'border-zinc-950 text-zinc-950'
+                  : 'border-transparent text-zinc-400 hover:text-zinc-700',
+              )}
+            >
+              Base de Contatos
+              {network.length > 0 && (
+                <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-zinc-100 text-zinc-600">
+                  {network.length}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* ── Exibição Exclusiva: Aba Financeiro & BPO ─────────────────── */}
+          {activeTab === 'financeiro' && (
+            <div className="pt-2">
+              <BillingAnalyticsWidget />
+            </div>
+          )}
+
+          {/* ── Exibição Exclusiva: Vendas & Projetos ───────────────────── */}
+          {activeTab !== 'financeiro' && (
+            <>
+              {/* ── KPI Row ─────────────────────────────────────────────────── */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {activeTab === 'vendas' ? (
+                  <>
+                    <MetricCard label="Qualified Leads" value={diagnostico.length} sub="Topo de funil (Inbound & Outbound)" />
+                    <MetricCard label="Active Deals" value={vendas.length} sub={totalPipelineValue > 0 ? `${formatCurrency(totalPipelineValue)} no Pipe real` : 'Pipeline ativo'} />
+                    <MetricCard label="Average Cycle" value={`${avgDaysVendas}d`} sub="Dias médios em negociação" />
+                    <MetricCard label="Win Rate" value={`${winRate}%`} sub="Conversão histórica apurada" />
+                  </>
+                ) : (
+                  <>
+                    <MetricCard label="Active Portfolio" value={execucao.length} sub="Projetos vivos na base" />
+                    <MetricCard label="Activation Rate" value={`${activationRate}%`} sub="Engajamento inicial Pós-Venda" />
+                    <MetricCard label="Time-To-Value" value={`${avgTTV}d`} sub="Dias médios até ativação" />
+                    <MetricCard label="Overdue Risk" value={totalOverdue} sub={totalOverdue > 0 ? "Tarefas cronicamente atrasadas" : "Gargalo zero"} />
+                  </>
+                )}
+              </div>
+
+              {/* ── Copilot Engine ────────────────────────────────────────── */}
+              <RevOpsCopilot 
+                activeTab={activeTab as 'vendas' | 'projetos'} 
+                diagnostico={diagnostico} 
+                vendas={vendas} 
+                execucao={execucao} 
+              />
+            </>
+          )}
 
             {/* ── Sub-view switcher (vendas tab only, Notion-style) ──── */}
             {activeTab === 'vendas' && (
