@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, TrendingUp, BarChart, Users2, Database, DollarSign } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { submitPublicDiagnostic } from "@/api/publicDiagnostic";
 import { DiagnosticLayout } from '@/components/diagnostics/DiagnosticLayout';
 import { DiagnosticForm, DiagnosticFormData } from '@/components/diagnostics/DiagnosticForm';
 import { ScoreGauge } from '@/components/diagnostics/ScoreGauge';
-import { MetricCard } from '@/components/diagnostics/MetricCard';
 import { DiagnosticActionSection } from '@/components/diagnostics/DiagnosticActionSection';
 import { BenchmarkBar } from '@/components/diagnostics/BenchmarkBar';
 import { DiagnosticBookingModal } from '@/components/diagnostics/DiagnosticBookingModal';
@@ -16,7 +15,6 @@ import { getDiagnosticInsights } from '@/utils/diagnosticMapping';
 import SEO from '@/components/shared/SEO';
 import { analyzeDiagnosticAI, DiagnosticAnalysisResult } from '@/api/diagnosticAnalysis';
 
-// Questions centered on "Visão Holística (REI 360)" - 5 dimensões, total = 100pts
 const QUESTIONS = [
     {
         id: 1,
@@ -111,7 +109,7 @@ const GrowthScore = () => {
             } else {
                 setStep('results');
             }
-        }, 2000);
+        }, 1500);
     };
 
     const handleFormSubmit = async (data: DiagnosticFormData) => {
@@ -120,7 +118,7 @@ const GrowthScore = () => {
             const result = getResultMap(score);
 
             await submitPublicDiagnostic(
-                { ...data, phone: '' }, // No phone collected
+                { ...data, phone: '' },
                 { answers, diagnostic_type: 'growth', source: 'growth-score', analysis: analysisResult },
                 score,
                 {
@@ -164,9 +162,7 @@ const GrowthScore = () => {
         return { title: "Hemorragia de Caixa", msg: "Estrutura comercial travada, alta perda de leads." };
     };
 
-    const result = getResultMap(score);
     const teaserScore = score;
-
 
     return (
         <>
@@ -181,67 +177,63 @@ const GrowthScore = () => {
             ]}
         />
         <DiagnosticLayout
-            title={step === 'results' ? "" : "Diagnóstico 360"}
-            subtitle={step === 'results' ? "" : "Identifique gargalos no seu funil de Marketing e Vendas de ponta a ponta"}
+            title={step === 'results' ? "" : "Diagnóstico 360° de Growth"}
+            subtitle={step === 'results' ? "" : "Identifique gargalos no seu funil de Marketing e Vendas em 1 minuto"}
             variant={step === 'results' ? 'dark' : 'light'}
             hideHeader={step === 'results'}
             centered={step === 'results'}
             headerVariant="default"
         >
-            {/* BACKDROP DE SEGURANÇA */}
             {step === 'results' && <div className="fixed inset-0 bg-black -z-50 pointer-events-none" />}
+            
             {step === 'questions' && (
-                <div className="max-w-2xl animate-fade-in w-full mx-auto">
+                <div className="w-full bg-white border border-zinc-200/80 rounded-2xl shadow-xl p-6 md:p-10 space-y-8 animate-fade-in">
                     <QuestionProgressBar current={currentQ} total={QUESTIONS.length} variant="light" />
-                    <div className="space-y-6 mt-4">
-                        <div className="flex justify-between items-center text-xs font-mono font-semibold text-zinc-400 border-b border-zinc-200/80 pb-3">
-                            <span className="text-zinc-900 font-bold">Pergunta {currentQ + 1} de {QUESTIONS.length}</span>
-                            <span className="bg-zinc-100 text-zinc-600 px-2 py-0.5 rounded text-[10px]">ID: 0{currentQ + 1}</span>
-                        </div>
 
-                        <div className="space-y-6">
-                            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight leading-snug">
-                                {currentQData.question}
-                            </h2>
+                    <div className="space-y-6 pt-2">
+                        <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight leading-snug">
+                            {currentQData.question}
+                        </h2>
 
-                            <div className="grid grid-cols-1 gap-3">
-                                {currentQData.options.map((opt, idx) => (
-                                    <button
-                                        key={idx}
-                                        disabled={selectedOption !== null}
-                                        onClick={() => handleAnswer(opt.score, idx)}
-                                        className={`group relative flex items-center gap-4 p-4 text-left transition-all duration-200 border rounded-xl shadow-xs ${selectedOption === idx
-                                            ? "bg-zinc-950 text-white border-zinc-950 ring-2 ring-[#00CC6A]"
-                                            : "bg-white border-zinc-200/80 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/50"
-                                            } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
-                                    >
-                                        <div className={`w-7 h-7 flex-shrink-0 flex items-center justify-center text-xs font-mono font-bold rounded-lg border transition-colors ${selectedOption === idx
+                        <div className="grid grid-cols-1 gap-3.5">
+                            {currentQData.options.map((opt, idx) => (
+                                <button
+                                    key={idx}
+                                    disabled={selectedOption !== null}
+                                    onClick={() => handleAnswer(opt.score, idx)}
+                                    className={`group relative flex items-center justify-between p-4 md:p-5 text-left transition-all duration-200 border rounded-xl shadow-xs ${selectedOption === idx
+                                        ? "bg-zinc-950 text-white border-zinc-950 ring-2 ring-[#00CC6A]"
+                                        : "bg-white border-zinc-200/80 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/80 hover:shadow-sm"
+                                        } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-9 h-9 flex-shrink-0 flex items-center justify-center text-xs font-mono font-bold rounded-xl border transition-all duration-200 ${selectedOption === idx
                                             ? "bg-[#00CC6A] text-black border-[#00CC6A]"
-                                            : "bg-zinc-100 border-zinc-200 text-zinc-600 group-hover:border-zinc-300 group-hover:text-zinc-900"
+                                            : "bg-zinc-100 border-zinc-200 text-zinc-700 group-hover:bg-zinc-950 group-hover:text-white group-hover:border-zinc-950"
                                             }`}>
                                             {String.fromCharCode(65 + idx)}
                                         </div>
-                                        <span className="text-xs md:text-sm font-medium leading-relaxed">
+                                        <span className="text-xs md:text-sm font-semibold leading-relaxed">
                                             {opt.label}
                                         </span>
-                                    </button>
-                                ))}
-                            </div>
+                                    </div>
+                                    <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-opacity ${selectedOption === idx ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+                                        <ArrowRight size={16} className={selectedOption === idx ? "text-[#00CC6A]" : "text-zinc-400"} />
+                                    </div>
+                                </button>
+                            ))}
                         </div>
                     </div>
 
-                    {/* Log strip - fixed bottom */}
                     <AnimatePresence>
                         {showLog && currentQData.log && (
                             <motion.div
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: 20 }}
-                                className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-zinc-100 px-4 py-3"
+                                exit={{ opacity: 0, y: 10 }}
+                                className="bg-zinc-50 border border-zinc-200/80 rounded-xl p-4 text-xs font-medium text-zinc-600"
                             >
-                                <p className="text-xs font-medium text-zinc-500 text-center max-w-2xl mx-auto">
-                                    <span className="text-black font-bold mr-2">Info:</span>{currentQData.log}
-                                </p>
+                                <span className="text-zinc-900 font-bold mr-2">Análise Técnica:</span>{currentQData.log}
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -250,11 +242,9 @@ const GrowthScore = () => {
 
             {step === 'results' && (
                 <>
-                    {/* GATE OVERLAY - Padronizado Side-by-Side */}
                     {!hasSubmittedLead && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 overflow-y-auto animate-in fade-in duration-500">
                             <div className="bg-black border border-zinc-900 p-8 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 shadow-sm relative overflow-hidden my-auto max-h-[90vh]">
-                                {/* Coluna Esquerda: Teaser */}
                                 <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:border-r border-zinc-900 md:pr-12">
                                     <div className="inline-flex items-center gap-2 bg-zinc-950 px-3 py-1 border border-zinc-900">
                                         <div className={`w-1.5 h-1.5 ${teaserScore >= 50 ? 'bg-revgreen' : 'bg-zinc-400'} animate-pulse`}></div>
@@ -270,7 +260,6 @@ const GrowthScore = () => {
                                     </h3>
                                 </div>
 
-                                {/* Coluna Direita: Formulário */}
                                 <div className="flex-1 w-full max-w-md flex flex-col justify-center">
                                     <DiagnosticForm
                                         onSubmit={handleFormSubmit}
@@ -286,10 +275,8 @@ const GrowthScore = () => {
                     )}
 
                     <div className={`space-y-0 transition-all duration-700 ${!hasSubmittedLead ? 'blur-sm opacity-60 pointer-events-none' : ''}`}>
-
-                        {/* DASHBOARD HEADLINE */}
-                        <div className="mb-12 text-center animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-4xl mx-auto pt-8">
-                            <div className="inline-flex items-center gap-2 mb-4 bg-zinc-900 border border-zinc-800 px-3 py-1 ">
+                        <div className="mb-12 text-center max-w-4xl mx-auto pt-8">
+                            <div className="inline-flex items-center gap-2 mb-4 bg-zinc-900 border border-zinc-800 px-3 py-1">
                                 <span className="w-1.5 h-1.5 bg-revgreen shadow-[0_0_10px_#00CC6A]"></span>
                                 <span className="text-xxs font-mono font-bold text-zinc-400 uppercase tracking-widest">Status: Finalizado</span>
                             </div>
@@ -301,8 +288,7 @@ const GrowthScore = () => {
                             </p>
                         </div>
 
-                        {/* HERO: Score + AI Archetype */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch animate-in fade-in duration-700">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                             <div className="lg:col-span-4">
                                 <ScoreGauge
                                     score={score}
@@ -312,14 +298,12 @@ const GrowthScore = () => {
                             </div>
 
                             <div className="lg:col-span-8 flex flex-col">
-                                {/* AI Archetype Card */}
                                 <div className="border border-zinc-900 p-8 bg-zinc-950 h-full flex flex-col justify-center">
                                     {isAnalyzing ? (
                                         <div className="flex flex-col items-center justify-center gap-4 py-8">
                                             <div className="w-6 h-6 border-2 border-revgreen border-t-transparent rounded-full animate-spin" />
                                             <div className="text-center space-y-1">
                                                 <span className="block text-xs font-mono text-zinc-300 uppercase tracking-widest">IA Processando Análise</span>
-                                                <span className="block text-xxs font-mono text-zinc-600 uppercase tracking-widest">Aguarde alguns segundos...</span>
                                             </div>
                                         </div>
                                     ) : analysisResult ? (
@@ -344,214 +328,24 @@ const GrowthScore = () => {
                             </div>
                         </div>
 
-                        {/* SCORE BREAKDOWN: 1 card per question */}
-                        <div className="mt-8">
-                            <div className="flex items-center gap-2 mb-4">
-                                <div className="w-1 h-1 bg-zinc-600" />
-                                <span className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-500">Score por Dimensão</span>
-                            </div>
-                            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                                {QUESTIONS.map((q, i) => {
-                                    const qScore = answers[i] || 0;
-                                    const maxScore = Math.max(...q.options.map(o => o.score));
-                                    const pct = maxScore > 0 ? (qScore / maxScore) * 100 : 0;
-                                    return (
-                                        <div key={q.id} className="border border-zinc-900 p-4 bg-zinc-950">
-                                            <div className="flex justify-between items-start mb-3">
-                                                <span className="text-2xs font-bold text-zinc-500 uppercase tracking-widest leading-tight max-w-[80%]">
-                                                    {q.question.length > 30 ? q.question.slice(0, 30) + '...' : q.question}
-                                                </span>
-                                                <div className={`w-1.5 h-1.5 flex-shrink-0 ${pct >= 80 ? 'bg-revgreen' : pct >= 50 ? 'bg-zinc-400' : 'bg-zinc-700'}`} />
-                                            </div>
-                                            <div className="text-2xl font-black text-white tracking-tight">
-                                                {qScore}<span className="text-zinc-600 text-sm font-bold">/{maxScore}</span>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-
-                        {/* WHITE SECTION: AI Analysis + Benchmark */}
-                        <div className="w-[100vw] relative left-[50%] right-[50%] -ml-[50vw] bg-white px-4 md:px-0 py-20 mt-16 border-t border-zinc-200 animate-fade-in duration-1000 delay-500">
+                        <div className="w-[100vw] relative left-[50%] right-[50%] -ml-[50vw] bg-white px-4 md:px-0 py-20 mt-16 border-t border-zinc-200">
                             <div className="max-w-6xl mx-auto space-y-16">
-
-                                {/* AI STRENGTHS vs GAPS */}
-                                {analysisResult && (
-                                    <section>
-                                        <div className="space-y-6 mb-12 text-center md:text-left">
-                                            <div className="inline-block bg-black text-white px-4 py-1.5 text-2xs font-mono uppercase tracking-[0.5em] font-black">
-                                                DIAGNÓSTICO_DE_CRESCIMENTO
-                                            </div>
-                                            <h2 className="text-5xl md:text-7xl font-black text-black tracking-tighter leading-none">
-                                                {analysisResult.archetype}
-                                            </h2>
-                                        </div>
-
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                                            {/* Strengths */}
-                                            <div className="border border-zinc-200 p-8 bg-zinc-50">
-                                                <h4 className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-900 mb-6 flex items-center gap-2">
-                                                    <div className="w-2 h-2 bg-revgreen" />
-                                                    Superpoderes
-                                                </h4>
-                                                <div className="space-y-4">
-                                                    {analysisResult.strengths.map((s, i) => (
-                                                        <div key={i} className="flex gap-3">
-                                                            <span className="text-revgreen font-bold text-sm mt-0.5">✓</span>
-                                                            <p className="text-zinc-900 text-sm font-medium leading-relaxed">{s}</p>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            {/* Gaps */}
-                                            <div className="border border-zinc-200 p-8 bg-white">
-                                                <h4 className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-900 mb-6 flex items-center gap-2">
-                                                    <div className="w-2 h-2 bg-zinc-900" />
-                                                    Gaps Críticos
-                                                </h4>
-                                                <div className="space-y-4">
-                                                    {analysisResult.gaps.map((g, i) => (
-                                                        <div key={i} className="flex gap-3">
-                                                            <span className="text-zinc-400 font-bold text-sm mt-0.5">✗</span>
-                                                            <p className="text-zinc-700 text-sm font-medium leading-relaxed">{g}</p>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Immediate Action Card */}
-                                        <div className="border-l-4 border-[#00CC6A] bg-zinc-50 rounded-r-2xl p-8 mb-16">
-                                            <h4 className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-500 mb-3">
-                                                Ação Imediata Recomendada
-                                            </h4>
-                                            <p className="text-zinc-900 text-base font-semibold leading-relaxed">
-                                                {analysisResult.immediateAction}
-                                            </p>
-                                        </div>
-                                    </section>
-                                )}
-
-                                {/* Skeleton while AI processes */}
-                                {isAnalyzing && !analysisResult && (
-                                    <section>
-                                        <div className="space-y-6 mb-12 text-center md:text-left">
-                                            <div className="inline-block bg-black text-white px-4 py-1.5 text-2xs font-mono uppercase tracking-[0.5em] font-black">
-                                                DIAGNÓSTICO_DE_CRESCIMENTO
-                                            </div>
-                                            <div className="flex items-center gap-3 mt-2">
-                                                <div className="w-4 h-4 border-2 border-zinc-900 border-t-transparent rounded-full animate-spin flex-shrink-0" />
-                                                <span className="text-sm font-mono text-zinc-500 uppercase tracking-widest">IA gerando sua análise personalizada...</span>
-                                            </div>
-                                            <div className="h-14 md:h-20 bg-zinc-100 animate-pulse rounded w-2/3" />
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                                            <div className="border border-zinc-100 p-8 bg-zinc-50 space-y-4">
-                                                <div className="h-3 bg-zinc-200 animate-pulse rounded w-28" />
-                                                <div className="space-y-2 pt-2">
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-full" />
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-4/5" />
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-3/5" />
-                                                </div>
-                                                <div className="space-y-2 pt-2">
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-full" />
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-4/5" />
-                                                </div>
-                                                <div className="space-y-2 pt-2">
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-full" />
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-2/3" />
-                                                </div>
-                                            </div>
-                                            <div className="border border-zinc-100 p-8 bg-white space-y-4">
-                                                <div className="h-3 bg-zinc-200 animate-pulse rounded w-28" />
-                                                <div className="space-y-2 pt-2">
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-full" />
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-4/5" />
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-3/5" />
-                                                </div>
-                                                <div className="space-y-2 pt-2">
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-full" />
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-4/5" />
-                                                </div>
-                                                <div className="space-y-2 pt-2">
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-full" />
-                                                    <div className="h-3 bg-zinc-200 animate-pulse rounded w-2/3" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="border-l-4 border-zinc-200 bg-zinc-50 rounded-r-2xl p-8">
-                                            <div className="h-3 bg-zinc-200 animate-pulse rounded w-48 mb-4" />
-                                            <div className="space-y-2">
-                                                <div className="h-3 bg-zinc-200 animate-pulse rounded w-full" />
-                                                <div className="h-3 bg-zinc-200 animate-pulse rounded w-4/5" />
-                                                <div className="h-3 bg-zinc-200 animate-pulse rounded w-3/5" />
-                                            </div>
-                                        </div>
-                                    </section>
-                                )}
-
-                                {/* Fallback if AI failed */}
-                                {!isAnalyzing && !analysisResult && (
-                                    <section>
-                                        <div className="space-y-6 mb-12 text-center md:text-left">
-                                            <div className="inline-block bg-black text-white px-4 py-1.5 text-2xs font-mono uppercase tracking-[0.5em] font-black">
-                                                DIAGNÓSTICO_DE_CRESCIMENTO
-                                            </div>
-                                            <h2 className="text-5xl md:text-7xl font-black text-black tracking-tighter leading-none italic">
-                                                {insights.title.split(' ')[0]} <span className="text-zinc-500">{insights.title.split(' ').slice(1).join(' ')}</span>
-                                            </h2>
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16">
-                                            <div className="space-y-6 border-l border-zinc-200 pl-8">
-                                                <h4 className="text-sm font-black text-black uppercase tracking-widest flex items-center gap-3">
-                                                    <div className="w-1.5 h-1.5 bg-black " /> Perspectiva Técnica
-                                                </h4>
-                                                <p className="text-zinc-900 text-base leading-relaxed font-semibold">{insights.description}</p>
-                                            </div>
-                                            <div className="space-y-6 border-l border-zinc-200 pl-8">
-                                                <h4 className="text-sm font-black text-black uppercase tracking-widest flex items-center gap-3">
-                                                    <div className="w-1.5 h-1.5 bg-black " /> Plano de Ação
-                                                </h4>
-                                                <p className="text-zinc-900 text-base leading-relaxed font-semibold">
-                                                    Sua prioridade estratégica agora é: <strong className="bg-zinc-200 px-1 text-black">{insights.action}</strong>.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </section>
-                                )}
-
-                                {/* BENCHMARK */}
                                 <BenchmarkBar userScore={score} type="growth" variant="light" />
 
                                 <DiagnosticActionSection
-                                title="Estanque o Vazamento de Caixa."
-                                subtitle="Apenas 3 slots mensais abertos. Avaliaremos tecnicamente se sua operação é elegível para plugar a Inteligência Artificial no CRM e sanar essa perda."
-                                onCtaClick={() => setIsBookingModalOpen(true)}
-                            />
+                                    title="Estanque o Vazamento de Caixa."
+                                    subtitle="Apenas 3 slots mensais abertos. Avaliaremos tecnicamente se sua operação é elegível para plugar a Inteligência Artificial no CRM e sanar essa perda."
+                                    onCtaClick={() => setIsBookingModalOpen(true)}
+                                />
 
-                            <DiagnosticBookingModal
-                                isOpen={isBookingModalOpen}
-                                onClose={() => setIsBookingModalOpen(false)}
-                                diagnosticType="growth"
-                            />
+                                <DiagnosticBookingModal
+                                    isOpen={isBookingModalOpen}
+                                    onClose={() => setIsBookingModalOpen(false)}
+                                    diagnosticType="growth"
+                                />
 
-                            {/* Fallback MoFu CTA */}
-                                <div className="mt-8 mb-16 flex flex-col items-center justify-center text-center px-4">
-                                    <span className="text-xxs font-mono text-zinc-400 uppercase tracking-widest mb-4">MUITO CEDO PARA UMA DEEP-DIVE CALL?</span>
-                                    <button onClick={() => window.open('https://revhackers.com.br/')} className="text-xs font-semibold text-white bg-zinc-900 border border-zinc-700 px-6 py-3 hover:bg-zinc-800 transition-colors uppercase tracking-widest">Veja Nossas Aulas e Playbooks (Grátis)</button>
-                                </div>
-
-                                {/* Share + PDF */}
                                 <div className="flex justify-center pt-8">
                                     <ShareButtons score={score} type="Growth" />
-                                </div>
-
-                                <div className="pt-8 text-center">
-                                    <span className="text-xxs font-mono font-bold text-zinc-300 uppercase tracking-[0.3em]">
-                                        RevHackers // Intelligence Unit
-                                    </span>
                                 </div>
                             </div>
                         </div>

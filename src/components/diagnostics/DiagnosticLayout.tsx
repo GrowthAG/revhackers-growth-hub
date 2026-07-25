@@ -38,65 +38,59 @@ export const DiagnosticLayout = ({
                 }
             `}</style>
             <div className={cn(
-                "min-h-screen transition-colors duration-300",
-                isDark ? "bg-zinc-950 text-white" : "bg-zinc-50/50 text-zinc-900"
+                "min-h-screen transition-colors duration-300 relative overflow-hidden",
+                isDark ? "bg-zinc-950 text-white" : "bg-zinc-50/80 text-zinc-900"
             )}>
+                {/* Subtle Grid Pattern */}
+                {!isDark && (
+                    <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none" />
+                )}
+
                 <Section
                     variant={isDark ? 'dark' : 'light'}
                     className={cn(
-                        "pt-16 pb-12 min-h-screen flex flex-col",
-                        centered ? "items-center justify-start text-center" : "items-center justify-start"
+                        "pt-12 pb-16 min-h-screen flex flex-col justify-start relative z-10",
+                        centered ? "items-center" : "items-center"
                     )}
                 >
-                    <div className="container-custom max-w-5xl mx-auto relative z-10 w-full mb-auto mt-auto flex flex-col items-center">
+                    <div className="container-custom max-w-4xl mx-auto w-full my-auto flex flex-col items-center">
+                        
                         {/* Standard SaaS Header */}
                         {!hideHeader && (
-                            <div className={cn(
-                                "mb-8 w-full pb-6 border-b",
-                                isDark ? "border-zinc-800" : "border-zinc-200/80",
-                                centered && "flex flex-col items-center text-center"
-                            )}>
-                                <div className={cn("space-y-2 w-full", centered && "flex flex-col items-center")}>
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#00CC6A] text-black">
-                                            INTELIGÊNCIA B2B
-                                        </span>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <h1 className={cn(
-                                            "text-3xl md:text-4xl font-bold tracking-tight animate-fade-in w-full",
-                                            isDark ? "text-white" : "text-zinc-900",
-                                            centered && "text-center"
-                                        )}>
-                                            {title}
-                                        </h1>
-                                        <p className={cn(
-                                            "text-sm md:text-base max-w-xl leading-relaxed font-medium animate-fade-in w-full",
-                                            isDark ? "text-zinc-400" : "text-zinc-500",
-                                            centered && "text-center mx-auto"
-                                        )}>
-                                            {subtitle}
-                                        </p>
-                                    </div>
+                            <div className="mb-8 w-full text-center space-y-2">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-zinc-200 shadow-xs mb-2">
+                                    <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />
+                                    <span className="text-[11px] font-mono font-bold text-zinc-700 uppercase tracking-wider">
+                                        GROWTHHUB INTELLIGENCE
+                                    </span>
                                 </div>
+                                <h1 className={cn(
+                                    "text-3xl md:text-4xl font-bold tracking-tight text-zinc-900",
+                                    isDark && "text-white"
+                                )}>
+                                    {title}
+                                </h1>
+                                <p className={cn(
+                                    "text-sm md:text-base max-w-xl mx-auto text-zinc-500 font-medium leading-relaxed",
+                                    isDark && "text-zinc-400"
+                                )}>
+                                    {subtitle}
+                                </p>
                             </div>
                         )}
 
-                        {/* Main Content Area */}
+                        {/* Main Container Card Elevado */}
                         <div className={cn(
-                            "animate-fade-in w-full",
-                            centered && "flex flex-col items-center"
+                            "w-full transition-all duration-300",
+                            hideHeader ? "max-w-5xl" : "max-w-3xl"
                         )}>
                             {children}
                         </div>
 
                         {/* Governance Footer */}
                         {showGovernanceFooter && (
-                            <div className={cn(
-                                "mt-24 pt-8 border-t text-center flex flex-col items-center gap-4 w-full",
-                                isDark ? "border-zinc-800 text-zinc-500" : "border-zinc-200/80 text-zinc-400"
-                            )}>
-                                <p className="text-[11px] font-mono leading-relaxed max-w-xl mx-auto font-medium">
+                            <div className="mt-16 text-center w-full max-w-xl mx-auto">
+                                <p className="text-[11px] font-mono text-zinc-400 leading-relaxed font-medium">
                                     RevHackers Intelligence Unit — Diagnóstico preditivo de receita e maturidade operacional B2B.
                                 </p>
                             </div>

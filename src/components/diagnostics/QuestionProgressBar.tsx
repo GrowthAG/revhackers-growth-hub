@@ -11,23 +11,23 @@ export const QuestionProgressBar = ({ current, total, variant = 'dark' }: Questi
     const progress = total > 0 ? ((current + 1) / total) * 100 : 0;
 
     return (
-        <div className="w-full">
+        <div className="w-full space-y-2">
+            <div className="flex items-center justify-between text-xs font-mono">
+                <span className="font-bold text-zinc-900">
+                    Etapa {current + 1} de {total}
+                </span>
+                <span className="text-zinc-500 font-medium flex items-center gap-1">
+                    <span>⏱</span> ~1 min de análise
+                </span>
+            </div>
             <div className={cn(
-                "h-1.5 w-full rounded-full overflow-hidden",
-                variant === 'dark' ? "bg-zinc-900" : "bg-zinc-100"
+                "h-2 w-full rounded-full overflow-hidden p-0.5 border",
+                variant === 'dark' ? "bg-zinc-900 border-zinc-800" : "bg-zinc-100 border-zinc-200/80"
             )}>
                 <div
-                    className={cn(
-                        "h-full rounded-full transition-all duration-500 ease-out",
-                        variant === 'dark' ? "bg-revgreen" : "bg-revgreen"
-                    )}
+                    className="h-full rounded-full bg-[#00CC6A] transition-all duration-500 ease-out shadow-[0_0_10px_#00CC6A]"
                     style={{ width: `${progress}%` }}
                 />
-            </div>
-            <div className="flex justify-between mt-2">
-                <span className="text-2xs font-mono font-bold text-zinc-600 uppercase tracking-widest">
-                    {current + 1} / {total}
-                </span>
             </div>
         </div>
     );
