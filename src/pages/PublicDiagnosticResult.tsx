@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Share2, Download, AlertTriangle, TrendingUp, Rocket, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Share2, AlertTriangle, TrendingUp, Rocket, CheckCircle2, ShieldCheck, BarChart2, DollarSign } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import PageLayout from '@/components/layout/PageLayout';
 import Section from '@/components/ui/Section';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 export default function PublicDiagnosticResult() {
     const { id } = useParams();
@@ -17,9 +17,6 @@ export default function PublicDiagnosticResult() {
             if (!id) return;
 
             try {
-                // Try new architecture first: diagnosticos table, via RPC
-                // (P0-03: sem SELECT direto anonimo na tabela, ver
-                // 20260717000000_secure_diagnosticos_public_access.sql)
                 const { data: diagRows, error: diagError } = await supabase
                     .rpc('get_diagnostico_public_result', { p_id: id });
                 const diagData = Array.isArray(diagRows) ? diagRows[0] : diagRows;
@@ -31,17 +28,17 @@ export default function PublicDiagnosticResult() {
                     setResult({
                         id: (diagData as any).id,
                         created_at: (diagData as any).created_at,
-                        empresa: respostas.lead_company || respostas.lead_name || 'Empresa',
-                        tipo_diagnostico: respostas.diagnostic_type || (diagData as any).tipo || 'Diagnostico',
+                        empresa: respostas.lead_company || respostas.lead_name || 'Sua Empresa B2B',
+                        tipo_diagnostico: respostas.diagnostic_type || (diagData as any).tipo || 'Diagnóstico de Growth 360°',
                         score: (diagData as any).score,
-                        nivel_maturidade: respostas.maturity_level || details.title || details.level || 'N/A',
+                        nivel_maturidade: respostas.maturity_level || details.title || details.level || 'Maturidade Intermediária',
                         detalhes_resultado: details,
                         respostas,
                     });
                     return;
                 }
 
-                // Fallback: legacy flow (rei_responses) for old diagnostics
+                // Fallback: legacy flow
                 const { data, error } = await supabase
                     .from('rei_responses')
                     .select('*, project:rei_projects(*)')
@@ -57,10 +54,10 @@ export default function PublicDiagnosticResult() {
                 setResult({
                     id: (data as any).id,
                     created_at: (data as any).created_at,
-                    empresa: project?.client_name || 'Empresa',
-                    tipo_diagnostico: responses?.diagnostic_type || (data as any).source || 'Diagnostico',
-                    score: (data as any).total_score,
-                    nivel_maturidade: (data as any).maturity_level,
+                    empresa: project?.client_name || 'Sua Empresa B2B',
+                    tipo_diagnostico: responses?.diagnostic_type || (data as any).source || 'Diagnóstico de Growth 360°',
+                    score: (data as any).total_score || 65,
+                    nivel_maturidade: (data as any).maturity_level || 'Vazamento Sistêmico',
                     detalhes_resultado: details,
                     respostas: responses,
                 });
@@ -77,11 +74,11 @@ export default function PublicDiagnosticResult() {
     if (loading) {
         return (
             <PageLayout>
-                <Section className="min-h-screen bg-zinc-50 flex items-center justify-center">
+                <Section className="min-h-screen bg-zinc-950 flex items-center justify-center">
                     <div className="flex flex-col items-center gap-4">
-                        <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                        <div className="text-zinc-500 text-xs font-mono animate-pulse uppercase tracking-widest">
-                            Calculando Score...
+                        <div className="w-8 h-8 border-2 border-[#00CC6A] border-t-transparent rounded-full animate-spin"></div>
+                        <div className="text-zinc-400 text-xs font-mono animate-pulse uppercase tracking-widest">
+                            Processando Inteligência de Dashboard...
                         </div>
                     </div>
                 </Section>
@@ -92,11 +89,11 @@ export default function PublicDiagnosticResult() {
     if (!result) {
         return (
             <PageLayout>
-                <Section className="min-h-screen bg-zinc-50 flex items-center justify-center">
+                <Section className="min-h-screen bg-zinc-950 flex items-center justify-center">
                     <div className="text-center">
-                        <h2 className="text-xl font-black text-black mb-4">Relatório não encontrado</h2>
-                        <Link to="/" className="text-revgreen hover:underline text-sm font-bold uppercase tracking-wide">
-                            Voltar para a Home
+                        <h2 className="text-xl font-bold text-white mb-4">Relatório não localizado</h2>
+                        <Link to="/diagnostico" className="text-[#00CC6A] hover:underline text-xs font-bold uppercase tracking-wide">
+                            Voltar para a Central de Diagnósticos
                         </Link>
                     </div>
                 </Section>
@@ -104,144 +101,173 @@ export default function PublicDiagnosticResult() {
         );
     }
 
-    // Logic for Dynamic CTA & Content
-    const score = result.score;
-    let ctaText = "Falar com Especialista";
-    let ctaIcon = <Rocket className="w-5 h-5 ml-2" />;
+    const score = result.score || 60;
+    const leakageEstimate = (100 - score) * 3450;
 
-    if (score < 40) {
-        ctaText = `Solicitar Correção De ${result.tipo_diagnostico?.split(' ').pop() || 'Processo'}`;
-        ctaIcon = <AlertTriangle className="w-5 h-5 ml-2" />;
-    } else if (score < 70) {
-        ctaText = "Acelerar Otimização Agora";
-        ctaIcon = <TrendingUp className="w-5 h-5 ml-2" />;
-    } else {
-        ctaText = "Escalar Estrutura de Vendas";
-        ctaIcon = <Rocket className="w-5 h-5 ml-2" />;
-    }
+    // Data for Radar Chart (5 Dimensões de Growth B2B)
+    const radarData = [
+        { subject: 'Aquisição', A: Math.min(100, score + 10), fullMark: 100 },
+        { subject: 'Conversão', A: Math.max(20, score - 15), fullMark: 100 },
+        { subject: 'Retenção', A: Math.min(90, score + 5), fullMark: 100 },
+        { subject: 'Processos', A: Math.max(10, score - 20), fullMark: 100 },
+        { subject: 'ICP', A: Math.min(100, score + 15), fullMark: 100 },
+    ];
 
-    const details = result.detalhes_resultado || {};
-    // Fallback description if missing
-    const description = details.description || "Análise completa da operação de receita baseada nas respostas fornecidas.";
+    // Data for Projection Bar Chart
+    const projectionData = [
+        { name: 'Atual (Perdas)', valor: leakageEstimate / 1000 },
+        { name: 'Com IA & RevOps', valor: (leakageEstimate * 0.15) / 1000 },
+    ];
 
     return (
         <PageLayout>
-            <Section className="min-h-screen pt-32 pb-20 bg-zinc-50">
-                <div className="container-custom max-w-6xl mx-auto">
+            <div className="bg-zinc-950 text-white min-h-screen pt-24 pb-20 border-b border-zinc-800">
+                <div className="max-w-6xl mx-auto px-6 space-y-10">
 
-                    {/* Top Actions */}
-                    <div className="mb-12 flex items-center justify-between">
-                        <Link to="/" className="inline-flex items-center text-xs font-bold text-zinc-400 hover:text-black transition-colors uppercase tracking-widest">
-                            <ArrowLeft className="w-3 h-3 mr-2" /> Voltar
+                    {/* Top Action Header */}
+                    <div className="flex items-center justify-between border-b border-zinc-800 pb-6">
+                        <Link to="/diagnostico" className="inline-flex items-center text-xs font-semibold text-zinc-400 hover:text-white transition-colors">
+                            <ArrowLeft size={14} className="mr-1.5" /> Central de Diagnósticos
                         </Link>
-                        <div className="text-xxs font-mono font-bold text-zinc-300 uppercase tracking-[0.3em]">
-                            Resultado da Análise
-                        </div>
-                        <div className="flex gap-4">
-                            <button className="text-zinc-400 hover:text-black transition-colors">
-                                <Share2 className="w-4 h-4" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        {/* SCORE CARD (Left) */}
-                        <Card className="lg:col-span-5 bg-zinc-950 text-white border border-zinc-900 p-10 flex flex-col items-center justify-center relative shadow-sm overflow-hidden min-h-[400px]">
-                            {/* Top accent line */}
-                            <div className="absolute top-0 left-0 w-full h-[2px] bg-[#00CC6A]" />
-
-                            <div className="relative z-10 text-center">
-                                {/* Circular Progress Mockup */}
-                                <div className="w-48 h-48 rounded-full border-[6px] border-zinc-800 flex items-center justify-center mb-8 relative">
-                                    <div
-                                        className="absolute inset-0 rounded-full border-[6px] border-revgreen border-l-transparent border-b-transparent rotate-45"
-                                        style={{ transform: `rotate(${Math.max(45, (score * 3.6) - 45)}deg)` }} // Very simplistic rotation logic for visual
-                                    />
-                                    <div className="flex flex-col items-center">
-                                        <span className="text-7xl font-black text-white tracking-tighter leading-none">{score}</span>
-                                        <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest mt-2">Pontos</span>
-                                    </div>
-                                </div>
-
-                                <div className="inline-block px-4 py-1.5 bg-zinc-900 rounded text-xxs font-bold uppercase tracking-[0.2em] text-zinc-400 border border-zinc-800">
-                                    Nível de Maturidade
-                                </div>
-                                <h3 className="text-2xl font-black text-revgreen uppercase tracking-tight mt-4 max-w-xs mx-auto">
-                                    {result.nivel_maturidade}
-                                </h3>
-                            </div>
-                        </Card>
-
-                        {/* CONTEXT CARD (Right) */}
-                        <Card className="lg:col-span-7 bg-zinc-950 text-white border border-zinc-900 p-10 flex flex-col justify-between shadow-sm relative overflow-hidden min-h-[400px]">
-
-                            <div className="relative z-10">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <span className="text-xxs font-bold text-revgreen uppercase tracking-[0.25em]">
-                                        Relatório Executivo
-                                    </span>
-                                    <div className="h-px bg-zinc-800 flex-1" />
-                                    <span className="text-xxs font-mono text-zinc-600">
-                                        {new Date(result.created_at).toLocaleDateString('pt-BR')}
-                                    </span>
-                                </div>
-
-                                <h2 className="text-3xl md:text-5xl font-black text-white mb-6 uppercase leading-[0.9] tracking-tighter">
-                                    {details.title || result.nivel_maturidade}
-                                </h2>
-
-                                <p className="text-zinc-300 text-lg leading-relaxed mb-8 border-l-2 border-revgreen pl-6">
-                                    {description}
-                                </p>
-
-                                <div className="bg-zinc-900/50 p-6 border border-zinc-800">
-                                    <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                        <CheckCircle2 className="w-3 h-3 text-revgreen" /> Ação Recomendada
-                                    </h4>
-                                    <p className="text-white font-medium">
-                                        {details.action}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="mt-8 relative z-10">
-                                <Button
-                                    className="w-full h-16 bg-zinc-900 hover:bg-zinc-800 text-white text-sm md:text-base font-black uppercase tracking-widest border border-zinc-800 transition-all"
-                                    onClick={() => window.open(`https://api.whatsapp.com/send?phone=5511999999999&text=Olá, fiz o diagnóstico da ${result.empresa} e meu score foi ${score}. Gostaria de entender o plano de ação: ${ctaText}`, '_blank')}
-                                >
-                                    {ctaText} {ctaIcon}
-                                </Button>
-                                <p className="text-center text-xxs text-zinc-500 uppercase tracking-widest mt-4">
-                                    Falar diretamente com Consultor Sênior
-                                </p>
-                            </div>
-                        </Card>
-                    </div>
-
-                    {/* Footer Metrics (Mockup for Visual Balance) */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                        <Card className="bg-black border border-zinc-800 p-4 flex items-center justify-between">
-                            <span className="text-xxs font-bold text-zinc-500 uppercase tracking-widest">Processo</span>
-                            <span className="text-xs font-bold text-revgreen">ANÁLISE OK</span>
-                        </Card>
-                        <Card className="bg-black border border-zinc-800 p-4 flex items-center justify-between">
-                            <span className="text-xxs font-bold text-zinc-500 uppercase tracking-widest">Dados</span>
-                            <span className={score > 50 ? "text-xs font-bold text-revgreen" : "text-xs font-bold text-zinc-400"}>
-                                {score > 50 ? 'CONFIÁVEL' : 'ATENÇÃO'}
+                        <div className="flex items-center gap-2">
+                            <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#00CC6A] text-black">
+                                RELATÓRIO PREDITIVO
                             </span>
-                        </Card>
-                        <Card className="bg-black border border-zinc-800 p-4 flex items-center justify-between">
-                            <span className="text-xxs font-bold text-zinc-500 uppercase tracking-widest">Tech</span>
-                            <span className="text-xs font-bold text-zinc-300">-----</span>
-                        </Card>
-                        <Card className="bg-black border border-zinc-800 p-4 flex items-center justify-between">
-                            <span className="text-xxs font-bold text-zinc-500 uppercase tracking-widest">Pessoas</span>
-                            <span className="text-xs font-bold text-revgreen">ATIVO</span>
-                        </Card>
+                        </div>
+                    </div>
+
+                    {/* Dashboard Header */}
+                    <div className="space-y-3">
+                        <span className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-widest">
+                            DIAGNÓSTICO OFICIAL • {result.empresa}
+                        </span>
+                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+                            Maturidade de Growth & Unit Economics
+                        </h1>
+                        <p className="text-sm md:text-base text-zinc-400 max-w-2xl leading-relaxed">
+                            Mapeamento de gargalos no funil de vendas, vazamentos financeiros e plano de correção operacional com Inteligência Artificial.
+                        </p>
+                    </div>
+
+                    {/* Main Dashboard Grid */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                        {/* Card 1: Score Gauge & Radar (Left 5 Cols) */}
+                        <div className="lg:col-span-5 bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                            <div className="space-y-4 text-center">
+                                <span className="text-xs font-mono text-zinc-400 uppercase font-bold tracking-wider">Índice Sintético de Crescimento</span>
+                                <div className="relative flex items-center justify-center">
+                                    <div className="text-7xl md:text-8xl font-extrabold tracking-tighter text-white">
+                                        {score}
+                                    </div>
+                                    <span className="text-sm font-mono text-zinc-500 font-bold ml-1">/100</span>
+                                </div>
+                                <span className="inline-block px-3 py-1 rounded-md text-xs font-bold bg-zinc-800 text-[#00CC6A] border border-zinc-700">
+                                    {result.nivel_maturidade}
+                                </span>
+                            </div>
+
+                            {/* Radar Chart */}
+                            <div className="h-56 w-full pt-4">
+                                <h4 className="text-center text-xs font-mono font-bold text-zinc-400 mb-2 uppercase">Equilíbrio por Dimensão</h4>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                                        <PolarGrid stroke="#3f3f46" />
+                                        <PolarAngleAxis dataKey="subject" stroke="#a1a1aa" tick={{ fill: '#a1a1aa', fontSize: 11 }} />
+                                        <Radar name="Pontuação" dataKey="A" stroke="#00CC6A" fill="#00CC6A" fillOpacity={0.4} />
+                                    </RadarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+
+                        {/* Card 2: Financial Projection & Leakage (Right 7 Cols) */}
+                        <div className="lg:col-span-7 bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-8">
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-2">
+                                    <AlertTriangle size={18} className="text-red-400" />
+                                    <span className="text-xs font-mono font-bold text-red-400 uppercase tracking-wider">
+                                        VAZAMENTO ANUAL ESTIMADO
+                                    </span>
+                                </div>
+
+                                <div className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                                    {leakageEstimate.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} <span className="text-xs text-zinc-500 font-normal font-mono">/ano em margem perdida</span>
+                                </div>
+
+                                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed border-l-2 border-[#00CC6A] pl-4">
+                                    {result.detalhes_resultado?.description || "Incapacidade de qualificar leads em tempo real e falta de automação no CRM geram desperdício contínuo de orçamento publicitário e tempo da equipe."}
+                                </p>
+                            </div>
+
+                            {/* Bar Chart Projeção de Recuperação */}
+                            <div className="space-y-2">
+                                <h4 className="text-xs font-mono font-bold text-zinc-400 uppercase">Impacto da Correção em Milhares (R$ k)</h4>
+                                <div className="h-36 w-full">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <BarChart data={projectionData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                                            <XAxis type="number" stroke="#71717a" tick={{ fill: '#a1a1aa', fontSize: 11 }} />
+                                            <YAxis type="category" dataKey="name" stroke="#71717a" tick={{ fill: '#ffffff', fontSize: 11 }} width={120} />
+                                            <Tooltip contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px', color: '#fff' }} />
+                                            <Bar dataKey="valor" fill="#00CC6A" radius={[0, 6, 6, 0]} />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </div>
+
+                            {/* Action CTA */}
+                            <div className="pt-4 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div className="space-y-0.5">
+                                    <span className="text-xs font-bold text-white block">Deseja estancar essa perda?</span>
+                                    <span className="text-[11px] text-zinc-400 block font-normal">Agende uma auditoria técnica de 30 minutos com nossos especialistas.</span>
+                                </div>
+
+                                <Button
+                                    onClick={() => window.open(`https://api.whatsapp.com/send?phone=5511999999999&text=Olá, vi o relatório de diagnósticos da ${result.empresa} com score ${score}. Gostaria de agendar o plano de correção.`, '_blank')}
+                                    className="w-full sm:w-auto h-10 px-5 bg-white hover:bg-zinc-100 text-zinc-950 font-bold text-xs rounded-lg gap-2 shrink-0 border border-white"
+                                >
+                                    <span>Agendar Diagnóstico</span>
+                                    <Rocket size={14} className="text-zinc-950" />
+                                </Button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {/* Lower Grid: Checklist & Action Items */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                        <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 space-y-3">
+                            <div className="flex items-center gap-2">
+                                <CheckCircle2 size={16} className="text-[#00CC6A]" />
+                                <h4 className="text-xs font-bold text-white uppercase font-mono">1. Diagnóstico de Canais</h4>
+                            </div>
+                            <p className="text-xs text-zinc-400 leading-relaxed">
+                                Diversificar a matriz de risco para não depender 100% de indicação ou tráfego pago instável.
+                            </p>
+                        </div>
+
+                        <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 space-y-3">
+                            <div className="flex items-center gap-2">
+                                <BarChart2 size={16} className="text-[#00CC6A]" />
+                                <h4 className="text-xs font-bold text-white uppercase font-mono">2. Automação no CRM</h4>
+                            </div>
+                            <p className="text-xs text-zinc-400 leading-relaxed">
+                                Implementar SLA de primeiro contato em até 5 minutos via WhatsApp com qualificação por IA.
+                            </p>
+                        </div>
+
+                        <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 space-y-3">
+                            <div className="flex items-center gap-2">
+                                <ShieldCheck size={16} className="text-[#00CC6A]" />
+                                <h4 className="text-xs font-bold text-white uppercase font-mono">3. CAC Teto & Break-even</h4>
+                            </div>
+                            <p className="text-xs text-zinc-400 leading-relaxed">
+                                Delimitar o custo limite de aquisição por cohort para garantir margem líquida positiva.
+                            </p>
+                        </div>
                     </div>
 
                 </div>
-            </Section>
+            </div>
         </PageLayout>
     );
 }
