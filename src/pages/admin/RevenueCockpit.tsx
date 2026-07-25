@@ -16,6 +16,7 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import { LeadWarRoomSheet } from '@/components/rei/LeadWarRoomSheet';
 import { FastLeadDrawer } from '@/components/rei/FastLeadDrawer';
 import { DealClosingModal } from '@/components/admin/DealClosingModal';
+import { BillingAnalyticsWidget } from '@/components/admin/BillingAnalyticsWidget';
 import {
   PipelineStage,
   OpportunityStage,
@@ -960,6 +961,11 @@ export const RevenueCockpit: React.FC = () => {
               </div>
             </div>
 
+            {/* ── Conciliação de Cobranças GHL ───────────────────────────── */}
+            <div className="mb-10">
+              <BillingAnalyticsWidget />
+            </div>
+
             {/* ── KPI Row ─────────────────────────────────────────────────── */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
               {activeTab === 'vendas' ? (
@@ -1302,7 +1308,7 @@ export const RevenueCockpit: React.FC = () => {
                             <span className="text-xs text-zinc-300 ml-auto">{stageItems.length}</span>
                           </div>
 
-                          {/* Cards */}
+                          {/* Metric Cards Grid */}
                           <div className="space-y-2">
                             {stageItems.length === 0 ? (
                               <div className="border border-dashed border-zinc-200 p-4 text-center">
