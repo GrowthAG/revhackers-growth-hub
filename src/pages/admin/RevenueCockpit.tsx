@@ -8,7 +8,7 @@ import {
   XCircle, UserMinus, RefreshCw, Plus, ChevronRight,
   Flame, AlertTriangle, Phone, Target, Zap, BarChart3,
   CalendarCheck, ShieldAlert, TrendingUp, Clock, Radar,
-  LayoutList, Columns3, Filter, X
+  LayoutList, Columns3, Filter, X, ArrowLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -1130,25 +1130,41 @@ export const RevenueCockpit: React.FC = () => {
   return (
     <>
       <AdminLayout>
-        <div className="space-y-8">
+        <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
 
-          {/* ── Top bar ─────────────────────────────────────────────────── */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-zinc-200">
+          {/* ── Top Header SaaS Benchmark (Identico ao AdminProjects) ─────── */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/80">
             <div>
-              <p className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400 mb-1">
-                RevHackers Engine • Cockpit de Receita
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 mb-1">
+                <button
+                  onClick={() => navigate('/admin')}
+                  className="hover:text-zinc-900 transition-colors flex items-center gap-1"
+                >
+                  <ArrowLeft size={13} /> Dashboard
+                </button>
+                <span>/</span>
+                <span className="text-zinc-900 font-bold">Cockpit de Receita</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                  Pipeline & Gestão Comercial
+                </h1>
+                <span className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-zinc-100 text-zinc-700 border border-zinc-200">
+                  {vendas.length + execucao.length} operações
+                </span>
+              </div>
+              <p className="text-sm text-zinc-500 mt-1">
+                Gestão unificada do funil de vendas, conciliação BPO contábil e acompanhamento sob contrato.
               </p>
-              <h1 className="text-3xl md:text-4xl font-black text-zinc-900 tracking-tight">
-                Pipeline & Gestão
-              </h1>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
+
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => loadAll()}
-                className="w-9 h-9 border border-zinc-200 rounded-lg bg-white flex items-center justify-center hover:bg-zinc-50 text-zinc-600 transition-colors shadow-none"
+                className="h-9 px-3 border border-zinc-200 rounded-lg bg-white flex items-center justify-center hover:bg-zinc-50 text-zinc-700 transition-colors text-xs font-mono font-bold gap-1.5"
                 title="Atualizar dados"
               >
-                <RefreshCw className="w-4 h-4 text-zinc-500" />
+                <RefreshCw className="w-3.5 h-3.5 text-zinc-500" /> Atualizar
               </button>
               {activeTab === 'vendas' && (
                 <Button
@@ -1161,66 +1177,59 @@ export const RevenueCockpit: React.FC = () => {
             </div>
           </div>
 
-          {/* ── Tab Navigator ───────────────────────────────────────── */}
-          <div className="flex flex-wrap items-center gap-0 border-b border-zinc-200">
-            <button
-              onClick={() => setActiveTab('vendas')}
-              className={cn(
-                'px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all',
-                activeTab === 'vendas'
-                  ? 'border-zinc-950 text-zinc-950'
-                  : 'border-transparent text-zinc-400 hover:text-zinc-700',
-              )}
-            >
-              Pipeline de Vendas
-            </button>
+          {/* ── Control Bar / Tab Navigator (Benchmark AdminProjects) ─────── */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-200">
+            <div className="flex flex-wrap items-center gap-1">
+              <button
+                onClick={() => setActiveTab('vendas')}
+                className={`px-3.5 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${
+                  activeTab === 'vendas'
+                    ? 'bg-zinc-950 text-white border border-zinc-950 shadow-sm'
+                    : 'text-zinc-600 hover:text-zinc-900'
+                }`}
+              >
+                Pipeline de Vendas ({vendas.length})
+              </button>
 
-            <button
-              onClick={() => setActiveTab('projetos')}
-              className={cn(
-                'px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2',
-                activeTab === 'projetos'
-                  ? 'border-zinc-950 text-zinc-950'
-                  : 'border-transparent text-zinc-400 hover:text-zinc-700',
-              )}
-            >
-              Projeção de Projetos
-              {totalOverdue > 0 && (
-                <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-800 border border-amber-200">
-                  {totalOverdue}
-                </span>
-              )}
-            </button>
+              <button
+                onClick={() => setActiveTab('financeiro')}
+                className={`px-3.5 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeTab === 'financeiro'
+                    ? 'bg-emerald-600 text-white border border-emerald-600 shadow-sm'
+                    : 'text-zinc-600 hover:text-zinc-900'
+                }`}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
+                Conciliação Financeira & BPO
+              </button>
 
-            <button
-              onClick={() => setActiveTab('financeiro')}
-              className={cn(
-                'px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2',
-                activeTab === 'financeiro'
-                  ? 'border-emerald-600 text-emerald-950 font-extrabold bg-emerald-50/60'
-                  : 'border-transparent text-zinc-400 hover:text-emerald-700',
-              )}
-            >
-              <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-              Conciliação Financeira & BPO
-            </button>
+              <button
+                onClick={() => setActiveTab('projetos')}
+                className={`px-3.5 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeTab === 'projetos'
+                    ? 'bg-zinc-900 text-white border border-zinc-900 shadow-sm'
+                    : 'text-zinc-600 hover:text-zinc-900'
+                }`}
+              >
+                Projeção de Projetos ({execucao.length})
+                {totalOverdue > 0 && (
+                  <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-amber-200 text-amber-900">
+                    {totalOverdue}
+                  </span>
+                )}
+              </button>
 
-            <button
-              onClick={() => setActiveTab('network')}
-              className={cn(
-                'px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2',
-                activeTab === 'network'
-                  ? 'border-zinc-950 text-zinc-950'
-                  : 'border-transparent text-zinc-400 hover:text-zinc-700',
-              )}
-            >
-              Base de Contatos
-              {network.length > 0 && (
-                <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-zinc-100 text-zinc-600">
-                  {network.length}
-                </span>
-              )}
-            </button>
+              <button
+                onClick={() => setActiveTab('network')}
+                className={`px-3.5 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${
+                  activeTab === 'network'
+                    ? 'bg-zinc-900 text-white border border-zinc-900 shadow-sm'
+                    : 'text-zinc-600 hover:text-zinc-900'
+                }`}
+              >
+                Base de Contatos ({network.length})
+              </button>
+            </div>
           </div>
 
           {/* ── Exibição Exclusiva: Aba Financeiro & BPO ─────────────────── */}
