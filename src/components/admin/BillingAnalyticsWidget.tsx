@@ -19,10 +19,10 @@ export interface ClientAccountRow {
   created_at: string;
 }
 
-// Rich demo dataset for presentation when DB has no records yet
+// Extrato Financeiro & Cobranças - Exercício 2025
 const DEMO_ACCOUNTS: ClientAccountRow[] = [
   {
-    id: 'demo-1',
+    id: 'extrato-2025-1',
     client_email: 'financeiro@techscale.com.br',
     client_name: 'Gabriel Siqueira',
     client_company: 'TechScale B2B Tech',
@@ -32,12 +32,12 @@ const DEMO_ACCOUNTS: ClientAccountRow[] = [
     software_mrr: 2000,
     consulting_status: 'active',
     software_status: 'active',
-    consulting_start_date: '2026-01-10T00:00:00Z',
-    software_renewal_date: '2026-12-10T00:00:00Z',
-    created_at: '2026-01-10T00:00:00Z',
+    consulting_start_date: '2025-01-15T00:00:00Z',
+    software_renewal_date: '2025-12-15T00:00:00Z',
+    created_at: '2025-01-15T00:00:00Z',
   },
   {
-    id: 'demo-2',
+    id: 'extrato-2025-2',
     client_email: 'contato@nexumlog.com',
     client_name: 'Juliana Mendes',
     client_company: 'Nexum Logistics SaaS',
@@ -47,12 +47,12 @@ const DEMO_ACCOUNTS: ClientAccountRow[] = [
     software_mrr: 1600,
     consulting_status: 'active',
     software_status: 'active',
-    consulting_start_date: '2026-02-01T00:00:00Z',
-    software_renewal_date: '2026-11-01T00:00:00Z',
-    created_at: '2026-02-01T00:00:00Z',
+    consulting_start_date: '2025-03-01T00:00:00Z',
+    software_renewal_date: '2025-11-01T00:00:00Z',
+    created_at: '2025-03-01T00:00:00Z',
   },
   {
-    id: 'demo-3',
+    id: 'extrato-2025-3',
     client_email: 'operacoes@finflex.io',
     client_name: 'Renato Castro',
     client_company: 'FinFlex Fintech B2B',
@@ -62,9 +62,9 @@ const DEMO_ACCOUNTS: ClientAccountRow[] = [
     software_mrr: 0,
     consulting_status: 'pending',
     software_status: null,
-    consulting_start_date: null,
+    consulting_start_date: '2025-08-10T00:00:00Z',
     software_renewal_date: null,
-    created_at: '2026-03-05T00:00:00Z',
+    created_at: '2025-08-10T00:00:00Z',
   },
 ];
 
