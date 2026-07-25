@@ -63,11 +63,11 @@ const AdminPageLayout = ({
                 </div>
 
                 <div className="space-y-1">
-                    <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                    <h1 className="text-2xl sm:text-3xl font-serif font-semibold tracking-tight text-zinc-900">
                         {title}
                     </h1>
                     {description && (
-                        <p className="text-sm text-zinc-500 font-normal">
+                        <p className="text-sm text-zinc-500 font-normal leading-relaxed">
                             {description}
                         </p>
                     )}

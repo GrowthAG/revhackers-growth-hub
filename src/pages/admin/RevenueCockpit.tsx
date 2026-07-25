@@ -1142,10 +1142,10 @@ export const RevenueCockpit: React.FC = () => {
                 <span className="text-zinc-900 font-bold">Cockpit de Receita</span>
               </div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                <h1 className="text-2xl md:text-3xl font-serif font-semibold tracking-tight text-zinc-900">
                   Pipeline & Gestão Comercial
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-md text-xs font-medium bg-zinc-100 text-zinc-700 border border-zinc-200">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-700 border border-zinc-200/80">
                   {vendas.length + execucao.length} operações
                 </span>
               </div>
