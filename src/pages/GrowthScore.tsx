@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle2, Command } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { submitPublicDiagnostic } from "@/api/publicDiagnostic";
 import { DiagnosticLayout } from '@/components/diagnostics/DiagnosticLayout';
@@ -87,12 +87,33 @@ const GrowthScore = () => {
     const [showLog, setShowLog] = useState(false);
     const [analysisResult, setAnalysisResult] = useState<DiagnosticAnalysisResult | null>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [hasSubmittedLead, setHasSubmittedLead] = useState(false);
+
     const insights = getDiagnosticInsights('growth', score);
     const currentQData = QUESTIONS[currentQ];
 
-    const [hasSubmittedLead, setHasSubmittedLead] = useState(false);
+    // ClickUp / Linear style keyboard navigation (A, B, C, D)
+    useEffect(() => {
+        if (step !== 'questions' || selectedOption !== null) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            const key = e.key.toUpperCase();
+            const optionMap: Record<string, number> = { 'A': 0, 'B': 1, 'C': 2, 'D': 3, '1': 0, '2': 1, '3': 2, '4': 3 };
+
+            if (key in optionMap) {
+                const optIndex = optionMap[key];
+                if (currentQData.options[optIndex]) {
+                    handleAnswer(currentQData.options[optIndex].score, optIndex);
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [step, currentQ, selectedOption]);
 
     const handleAnswer = (optionScore: number, optionIndex: number) => {
+        if (selectedOption !== null) return;
         setSelectedOption(optionIndex);
         setShowLog(true);
 
@@ -109,7 +130,7 @@ const GrowthScore = () => {
             } else {
                 setStep('results');
             }
-        }, 1500);
+        }, 1200);
     };
 
     const handleFormSubmit = async (data: DiagnosticFormData) => {
@@ -134,7 +155,7 @@ const GrowthScore = () => {
             toast({
                 className: "bg-zinc-900 border-zinc-800 text-white",
                 title: "DIAGNÓSTICO PROCESSADO",
-                description: "Seu relatório oficial foi gerado."
+                description: "Seu relatório oficial foi gerado com sucesso."
             });
             
             setIsAnalyzing(true);
@@ -178,7 +199,7 @@ const GrowthScore = () => {
         />
         <DiagnosticLayout
             title={step === 'results' ? "" : "Diagnóstico 360° de Growth"}
-            subtitle={step === 'results' ? "" : "Identifique gargalos no seu funil de Marketing e Vendas em 1 minuto"}
+            subtitle={step === 'results' ? "" : "Identifique vazamentos no seu funil de Vendas e Marketing em 1 minuto"}
             variant={step === 'results' ? 'dark' : 'light'}
             hideHeader={step === 'results'}
             centered={step === 'results'}
@@ -187,56 +208,101 @@ const GrowthScore = () => {
             {step === 'results' && <div className="fixed inset-0 bg-black -z-50 pointer-events-none" />}
             
             {step === 'questions' && (
-                <div className="w-full bg-white border border-zinc-200/80 rounded-2xl shadow-xl p-6 md:p-10 space-y-8 animate-fade-in">
-                    <QuestionProgressBar current={currentQ} total={QUESTIONS.length} variant="light" />
+                <div className="w-full max-w-3xl mx-auto space-y-6">
+                    {/* Main Linear / Notion Card Container */}
+                    <div className="bg-white border border-zinc-200/90 rounded-2xl shadow-xl p-6 sm:p-10 space-y-8 relative overflow-hidden backdrop-blur-xl">
+                        {/* Question Header & Progress Bar */}
+                        <div className="space-y-4">
+                            <QuestionProgressBar current={currentQ} total={QUESTIONS.length} variant="light" />
+                        </div>
 
-                    <div className="space-y-6 pt-2">
-                        <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight leading-snug">
-                            {currentQData.question}
-                        </h2>
+                        {/* Animated Question Content */}
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentQ}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.25, ease: "easeOut" }}
+                                className="space-y-6"
+                            >
+                                <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight leading-snug">
+                                    {currentQData.question}
+                                </h2>
 
-                        <div className="grid grid-cols-1 gap-3.5">
-                            {currentQData.options.map((opt, idx) => (
-                                <button
-                                    key={idx}
-                                    disabled={selectedOption !== null}
-                                    onClick={() => handleAnswer(opt.score, idx)}
-                                    className={`group relative flex items-center justify-between p-4 md:p-5 text-left transition-all duration-200 border rounded-xl shadow-xs ${selectedOption === idx
-                                        ? "bg-zinc-950 text-white border-zinc-950 ring-2 ring-[#00CC6A]"
-                                        : "bg-white border-zinc-200/80 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/80 hover:shadow-sm"
-                                        } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
+                                <div className="grid grid-cols-1 gap-3">
+                                    {currentQData.options.map((opt, idx) => {
+                                        const letter = String.fromCharCode(65 + idx);
+                                        const isSelected = selectedOption === idx;
+
+                                        return (
+                                            <button
+                                                key={idx}
+                                                disabled={selectedOption !== null}
+                                                onClick={() => handleAnswer(opt.score, idx)}
+                                                className={`group relative flex items-center justify-between p-4 sm:p-5 text-left transition-all duration-200 border rounded-xl shadow-xs ${
+                                                    isSelected
+                                                        ? "bg-zinc-950 text-white border-zinc-950 ring-2 ring-[#00CC6A] ring-offset-1"
+                                                        : "bg-white border-zinc-200/90 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/80 hover:shadow-xs"
+                                                } ${selectedOption !== null && !isSelected ? "opacity-40" : "opacity-100"}`}
+                                            >
+                                                <div className="flex items-center gap-4">
+                                                    <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center text-xs font-mono font-bold rounded-lg border transition-all duration-200 ${
+                                                        isSelected
+                                                            ? "bg-[#00CC6A] text-black border-[#00CC6A]"
+                                                            : "bg-zinc-100 border-zinc-200 text-zinc-700 group-hover:bg-zinc-950 group-hover:text-white group-hover:border-zinc-950"
+                                                    }`}>
+                                                        {letter}
+                                                    </div>
+                                                    <span className="text-xs sm:text-sm font-semibold leading-relaxed">
+                                                        {opt.label}
+                                                    </span>
+                                                </div>
+
+                                                <div className="flex items-center gap-2 shrink-0">
+                                                    {/* Keyboard Badge [A], [B], [C], [D] style Notion/ClickUp */}
+                                                    <span className={`hidden sm:inline-flex items-center justify-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded border transition-colors ${
+                                                        isSelected
+                                                            ? "bg-zinc-800 text-zinc-300 border-zinc-700"
+                                                            : "bg-zinc-100 text-zinc-500 border-zinc-200 group-hover:border-zinc-300 group-hover:text-zinc-700"
+                                                    }`}>
+                                                        {letter}
+                                                    </span>
+                                                    <ArrowRight size={15} className={`transition-all ${isSelected ? "text-[#00CC6A] translate-x-0.5" : "text-zinc-300 group-hover:text-zinc-600 group-hover:translate-x-0.5"}`} />
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </motion.div>
+                        </AnimatePresence>
+
+                        {/* Notion Callout Box ao responder */}
+                        <AnimatePresence>
+                            {showLog && currentQData.log && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 8 }}
+                                    className="bg-zinc-50 border border-zinc-200/90 rounded-xl p-4 flex items-start gap-3 text-xs text-zinc-600"
                                 >
-                                    <div className="flex items-center gap-4">
-                                        <div className={`w-9 h-9 flex-shrink-0 flex items-center justify-center text-xs font-mono font-bold rounded-xl border transition-all duration-200 ${selectedOption === idx
-                                            ? "bg-[#00CC6A] text-black border-[#00CC6A]"
-                                            : "bg-zinc-100 border-zinc-200 text-zinc-700 group-hover:bg-zinc-950 group-hover:text-white group-hover:border-zinc-950"
-                                            }`}>
-                                            {String.fromCharCode(65 + idx)}
-                                        </div>
-                                        <span className="text-xs md:text-sm font-semibold leading-relaxed">
-                                            {opt.label}
-                                        </span>
+                                    <div className="w-2 h-2 rounded-full bg-[#00CC6A] mt-1 shrink-0 animate-pulse" />
+                                    <div>
+                                        <span className="font-bold text-zinc-900 block mb-0.5">Insight de Inteligência B2B</span>
+                                        <p className="leading-relaxed text-zinc-600">{currentQData.log}</p>
                                     </div>
-                                    <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-opacity ${selectedOption === idx ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
-                                        <ArrowRight size={16} className={selectedOption === idx ? "text-[#00CC6A]" : "text-zinc-400"} />
-                                    </div>
-                                </button>
-                            ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        {/* Keyboard shortcut hint footer (Linear / Notion UX) */}
+                        <div className="pt-2 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                            <span className="flex items-center gap-1.5">
+                                <Command size={12} /> Pressione <kbd className="bg-zinc-100 border border-zinc-200 px-1 rounded text-zinc-700 font-bold">A</kbd> <kbd className="bg-zinc-100 border border-zinc-200 px-1 rounded text-zinc-700 font-bold">B</kbd> <kbd className="bg-zinc-100 border border-zinc-200 px-1 rounded text-zinc-700 font-bold">C</kbd> ou <kbd className="bg-zinc-100 border border-zinc-200 px-1 rounded text-zinc-700 font-bold">D</kbd> para responder
+                            </span>
+                            <span className="hidden sm:inline-block">100% Privado</span>
                         </div>
                     </div>
-
-                    <AnimatePresence>
-                        {showLog && currentQData.log && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: 10 }}
-                                className="bg-zinc-50 border border-zinc-200/80 rounded-xl p-4 text-xs font-medium text-zinc-600"
-                            >
-                                <span className="text-zinc-900 font-bold mr-2">Análise Técnica:</span>{currentQData.log}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
                 </div>
             )}
 
