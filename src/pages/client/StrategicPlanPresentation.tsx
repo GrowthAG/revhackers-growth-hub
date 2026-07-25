@@ -707,12 +707,12 @@ export default function StrategicPlanPresentation() {
 
                         {/* Floating Navigation Controls (Bottom Center) - hidden in fullscreen */}
                         {!isFullscreen && (
-                        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 bg-white/80 backdrop-blur-md border border-zinc-200/80 p-1.5 shadow-sm print:hidden transition-all duration-300 hover:bg-white">
+                        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 bg-white/90 backdrop-blur-md border border-zinc-200/80 p-2 rounded-full shadow-lg print:hidden transition-all duration-300">
                             {/* Sidebar toggle */}
                             {!sidebarOpen && (
                                 <button
                                     onClick={() => setSidebarOpen(true)}
-                                    className="p-2.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all"
+                                    className="p-2 rounded-full text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all"
                                     title="Abrir menu"
                                 >
                                     <PanelLeftOpen className="w-4 h-4" />
@@ -722,17 +722,17 @@ export default function StrategicPlanPresentation() {
                             <button
                                 onClick={goPrev}
                                 disabled={currentIndex === 0}
-                                className="p-2.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                                className="p-2 rounded-full text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                                 title="Voltar"
                             >
                                 <ArrowLeft className="w-4 h-4" />
                             </button>
 
-                            <div className="px-3 flex items-center gap-3">
+                            <div className="px-3 flex items-center gap-2">
                                 {currentChapter && (
-                                    <span className="hidden sm:inline-flex text-xxs font-bold text-zinc-500 bg-zinc-100/80 px-2 py-1 uppercase tracking-[0.2em]">{currentChapter}</span>
+                                    <span className="hidden sm:inline-flex text-[10px] font-mono font-bold text-zinc-600 bg-zinc-100 px-2.5 py-0.5 rounded-full border border-zinc-200">{currentChapter}</span>
                                 )}
-                                <span className="text-tiny font-mono text-zinc-900 font-bold tracking-widest whitespace-nowrap">
+                                <span className="text-xs font-mono text-zinc-900 font-bold tracking-wider whitespace-nowrap">
                                     {currentIndex + 1} <span className="text-zinc-300 mx-1">/</span> {sections.length}
                                 </span>
                             </div>
@@ -740,17 +740,17 @@ export default function StrategicPlanPresentation() {
                             <button
                                 onClick={goNext}
                                 disabled={currentIndex === sections.length - 1 || (sections[currentIndex]?.id === 'contract_overview' && !contractAccepted)}
-                                className="p-2.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                                className="p-2 rounded-full text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                                 title="Avançar"
                             >
-                                <ArrowRight className="w-4 h-4" />
+                                <ArrowRight className="w-4 h-4 text-[#00CC6A]" />
                             </button>
 
-                            <div className="w-px h-5 bg-zinc-200 mx-1" />
+                            <div className="w-px h-4 bg-zinc-200 mx-0.5" />
 
                             <button
                                 onClick={() => setIsEditing(prev => !prev)}
-                                className={`p-2.5 transition-all ${isEditing ? 'bg-zinc-900 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100'}`}
+                                className={`p-2 rounded-full transition-all ${isEditing ? 'bg-zinc-950 text-white shadow-xs' : 'text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100'}`}
                                 title={isEditing ? 'Desativar Edição' : 'Ativar Edição'}
                             >
                                 <Pencil className="w-4 h-4" />
@@ -758,7 +758,7 @@ export default function StrategicPlanPresentation() {
 
                             <button
                                 onClick={() => handlePrint()}
-                                className="p-2.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all"
+                                className="p-2 rounded-full text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all"
                                 title="Baixar PDF"
                             >
                                 <Printer className="w-4 h-4" />
@@ -766,7 +766,7 @@ export default function StrategicPlanPresentation() {
 
                             <button
                                 onClick={toggleFullscreen}
-                                className="p-2.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all"
+                                className="p-2 rounded-full text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all"
                                 title="Tela Cheia"
                             >
                                 <Maximize2 className="w-4 h-4" />
