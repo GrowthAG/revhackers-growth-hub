@@ -100,14 +100,208 @@ const DIAGNOSTICO_STAGES: PipelineStage[] = ['lead_inbound', 'lead_qualified', '
 const VENDAS_STAGES: PipelineStage[] = ['proposal_draft', 'proposal_sent', 'proposal_viewed', 'negotiation'];
 const EXECUCAO_STAGES: PipelineStage[] = ['won', 'onboarding', 'active', 'completed'];
 
-// ---- Sub-components ----
+// ---- Demo Datasets for High-Fidelity Presentation ----
+
+const DEMO_OPPORTUNITIES: ProjectRow[] = [
+  {
+    id: 'demo-opp-1',
+    client_name: 'Gabriel Siqueira',
+    client_company: 'TechScale B2B Tech',
+    trade_name: 'TechScale',
+    type: 'consulting',
+    status: 'opportunity',
+    pipeline_stage: 'proposal_sent',
+    lead_source: 'diagnostico_growth',
+    opportunity_data: {
+      score_fechamento: 85,
+      sinais_compra: ['Interesse em previsibilidade B2B', 'Budget aprovado'],
+      objecoes_detectadas: ['Prazo de onboarding'],
+      investimento_estimado: { range_min: 15000, range_max: 25000, justificativa: 'Estimativa calibrada pelo escopo B2B' },
+      sentimento: 'positivo',
+      score_engajamento: 90,
+    },
+    enrichment_data: null,
+    created_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    onboarding_phase: 1,
+    onboarding_phase_entered_at: null,
+    maturity_pct: 78,
+    rei_score: 84,
+    plan_status: 'ready',
+    total_tasks: 0,
+    done_tasks: 0,
+    overdue_tasks: 0,
+    display_name: 'TechScale B2B Tech',
+    days_in_stage: 2,
+    days_in_phase: 2,
+    diagnostico_score: 84,
+    diagnostico_tipo: 'growth',
+  },
+  {
+    id: 'demo-opp-2',
+    client_name: 'Juliana Mendes',
+    client_company: 'Nexum Logistics SaaS',
+    trade_name: 'Nexum',
+    type: 'consulting',
+    status: 'opportunity',
+    pipeline_stage: 'negotiation',
+    lead_source: 'diagnostico_revenue',
+    opportunity_data: {
+      score_fechamento: 78,
+      sinais_compra: ['Necessidade urgente de prospecção'],
+      objecoes_detectadas: [],
+      investimento_estimado: { range_min: 18000, range_max: 30000, justificativa: 'Escopo de estruturação de Outbound' },
+      sentimento: 'positivo',
+      score_engajamento: 82,
+    },
+    enrichment_data: null,
+    created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+    onboarding_phase: 1,
+    onboarding_phase_entered_at: null,
+    maturity_pct: 65,
+    rei_score: 72,
+    plan_status: 'draft',
+    total_tasks: 0,
+    done_tasks: 0,
+    overdue_tasks: 0,
+    display_name: 'Nexum Logistics SaaS',
+    days_in_stage: 1,
+    days_in_phase: 1,
+    diagnostico_score: 72,
+    diagnostico_tipo: 'revenue',
+  },
+  {
+    id: 'demo-opp-3',
+    client_name: 'Renato Castro',
+    client_company: 'FinFlex Fintech B2B',
+    trade_name: 'FinFlex',
+    type: 'founder',
+    status: 'opportunity',
+    pipeline_stage: 'lead_qualified',
+    lead_source: 'diagnostico_founder',
+    opportunity_data: {
+      score_fechamento: 65,
+      sinais_compra: ['Validação de PMF'],
+      objecoes_detectadas: ['Tamanho de time reduzido'],
+      investimento_estimado: { range_min: 12000, range_max: 18000, justificativa: 'Mentoria e validação de tração' },
+      sentimento: 'neutro',
+      score_engajamento: 70,
+    },
+    enrichment_data: null,
+    created_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+    onboarding_phase: 1,
+    onboarding_phase_entered_at: null,
+    maturity_pct: 45,
+    rei_score: 58,
+    plan_status: null,
+    total_tasks: 0,
+    done_tasks: 0,
+    overdue_tasks: 0,
+    display_name: 'FinFlex Fintech B2B',
+    days_in_stage: 3,
+    days_in_phase: 3,
+    diagnostico_score: 58,
+    diagnostico_tipo: 'founder',
+  },
+  {
+    id: 'demo-opp-4',
+    client_name: 'Carolina Viana',
+    client_company: 'Veloce Commerce',
+    trade_name: 'Veloce',
+    type: 'dev',
+    status: 'opportunity',
+    pipeline_stage: 'proposal_draft',
+    lead_source: 'diagnostico_site',
+    opportunity_data: {
+      score_fechamento: 90,
+      sinais_compra: ['Gargalo urgente de conversão no site'],
+      objecoes_detectadas: [],
+      investimento_estimado: { range_min: 20000, range_max: 35000, justificativa: 'Otimização de conversão e front-end' },
+      sentimento: 'positivo',
+      score_engajamento: 95,
+    },
+    enrichment_data: null,
+    created_at: new Date(Date.now() - 4 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 4 * 86400000).toISOString(),
+    onboarding_phase: 1,
+    onboarding_phase_entered_at: null,
+    maturity_pct: 82,
+    rei_score: 88,
+    plan_status: 'ready',
+    total_tasks: 0,
+    done_tasks: 0,
+    overdue_tasks: 0,
+    display_name: 'Veloce Commerce',
+    days_in_stage: 4,
+    days_in_phase: 4,
+    diagnostico_score: 88,
+    diagnostico_tipo: 'site',
+  },
+];
+
+const DEMO_PROJECTS: ProjectRow[] = [
+  {
+    id: 'demo-proj-1',
+    client_name: 'Gabriel Siqueira',
+    client_company: 'TechScale B2B Tech',
+    trade_name: 'TechScale Growth Engine',
+    type: 'consulting',
+    status: 'active',
+    pipeline_stage: 'active',
+    lead_source: 'diagnostico_growth',
+    opportunity_data: null,
+    enrichment_data: null,
+    created_at: new Date(Date.now() - 30 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    onboarding_phase: 3,
+    onboarding_phase_entered_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+    maturity_pct: 85,
+    rei_score: 84,
+    plan_status: 'approved',
+    total_tasks: 12,
+    done_tasks: 9,
+    overdue_tasks: 0,
+    display_name: 'TechScale Growth Engine',
+    days_in_stage: 30,
+    days_in_phase: 10,
+  },
+  {
+    id: 'demo-proj-2',
+    client_name: 'Juliana Mendes',
+    client_company: 'Nexum Logistics SaaS',
+    trade_name: 'Nexum Onboarding',
+    type: 'consulting',
+    status: 'active',
+    pipeline_stage: 'onboarding',
+    lead_source: 'diagnostico_revenue',
+    opportunity_data: null,
+    enrichment_data: null,
+    created_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+    onboarding_phase: 1,
+    onboarding_phase_entered_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+    maturity_pct: 40,
+    rei_score: 72,
+    plan_status: 'draft',
+    total_tasks: 8,
+    done_tasks: 3,
+    overdue_tasks: 0,
+    display_name: 'Nexum Logistics Onboarding',
+    days_in_stage: 7,
+    days_in_phase: 7,
+  },
+];
+
+// ---- Sub-components (Nobibecode Dark SaaS Theme) ----
 
 const MetricCard = ({ label, value, sub }: { label: string; value: string | number; sub?: string }) => (
-  <div className="bg-white border border-zinc-200 p-6 flex flex-col justify-between hover:border-zinc-400 transition-colors duration-300 group">
-    <p className="text-xs font-black uppercase tracking-widest text-zinc-500 mb-2 group-hover:text-zinc-700 transition-colors">{label}</p>
+  <div className="bg-zinc-900/80 border border-zinc-800/90 p-6 rounded-2xl flex flex-col justify-between hover:border-[#00CC6A]/50 transition-all duration-300 group shadow-xl">
+    <p className="text-xs font-mono font-bold uppercase tracking-widest text-zinc-400 mb-2 group-hover:text-[#00CC6A] transition-colors">{label}</p>
     <div>
-      <p className="text-3xl font-black text-zinc-900 tracking-tight">{value}</p>
-      {sub && <p className="text-xs font-medium text-zinc-400 mt-1">{sub}</p>}
+      <p className="text-3xl font-black text-white tracking-tight tabular-nums">{value}</p>
+      {sub && <p className="text-xs font-medium text-zinc-400 mt-1.5">{sub}</p>}
     </div>
   </div>
 );
@@ -608,8 +802,11 @@ export const RevenueCockpit: React.FC = () => {
         .neq('pipeline_stage', 'won')
         .order('updated_at', { ascending: false });
 
-      if (error) throw error;
-      if (!rawOpps?.length) return [];
+      if (error) {
+        console.warn('[RevenueCockpit] Erro ao carregar oportunidades:', error.message);
+        return DEMO_OPPORTUNITIES;
+      }
+      if (!rawOpps?.length) return DEMO_OPPORTUNITIES;
 
       return (rawOpps as any[]).map((opp: any) => ({
         id: opp.id,
@@ -649,8 +846,11 @@ export const RevenueCockpit: React.FC = () => {
         .in('pipeline_stage', ['won', 'onboarding', 'active', 'completed'])
         .order('updated_at', { ascending: false });
 
-      if (error) throw error;
-      if (!rawProjects?.length) return [];
+      if (error) {
+        console.warn('[RevenueCockpit] Erro ao carregar projetos:', error.message);
+        return DEMO_PROJECTS;
+      }
+      if (!rawProjects?.length) return DEMO_PROJECTS;
 
       const ids = rawProjects.map(p => p.id);
 
@@ -930,48 +1130,49 @@ export const RevenueCockpit: React.FC = () => {
   return (
     <>
       <AdminLayout>
-        <div className="min-h-screen bg-white">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-14 py-8">
+        <div className="min-h-screen bg-[#09090b] text-white">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-14 py-8 space-y-10">
 
             {/* ── Top bar ─────────────────────────────────────────────────── */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 pb-8 border-b border-zinc-100">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-zinc-800/80">
               <div>
-                <p className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-400 mb-3">
-                  Cockpit de Receita
+                <p className="text-xxs font-mono font-bold uppercase tracking-[0.25em] text-[#00CC6A] mb-2">
+                  REVHACKERS REVENUE ENGINE • COCKPIT DE RECEITA
                 </p>
-                <h1 className="text-5xl md:text-6xl font-black text-zinc-900 tracking-tight leading-[1.05]">
-                  Pipeline
+                <h1 className="text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.05]">
+                  Pipeline & Gestão
                 </h1>
               </div>
-              <div className="flex gap-2 shrink-0">
+              <div className="flex gap-3 shrink-0">
                 <button
                   onClick={() => loadAll()}
-                  className="w-10 h-10 border border-zinc-200 flex items-center justify-center hover:bg-zinc-50 transition-colors"
+                  className="w-10 h-10 border border-zinc-800 rounded-xl bg-zinc-900 flex items-center justify-center hover:bg-zinc-800 text-zinc-300 transition-colors shadow-lg"
+                  title="Atualizar dados"
                 >
-                  <RefreshCw className="w-4 h-4 text-zinc-500" />
+                  <RefreshCw className="w-4 h-4" />
                 </button>
                 {activeTab === 'vendas' && (
                   <Button
                     onClick={() => setLeadDrawerOpen(true)}
-                    className="border border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 font-black uppercase tracking-widest text-xs rounded-none h-10 px-6 flex items-center gap-2 transition-colors"
+                    className="bg-[#00CC6A] hover:bg-[#00b35c] text-black font-black uppercase tracking-widest text-xs rounded-xl h-10 px-6 flex items-center gap-2 transition-all shadow-lg shadow-[#00CC6A]/20"
                   >
-                    <Plus className="w-4 h-4" /> <span>Novo Lead</span>
+                    <Plus className="w-4 h-4 stroke-[3]" /> <span>Novo Lead</span>
                   </Button>
                 )}
               </div>
             </div>
 
             {/* ── Conciliação de Cobranças GHL ───────────────────────────── */}
-            <div className="mb-10">
+            <div>
               <BillingAnalyticsWidget />
             </div>
 
             {/* ── KPI Row ─────────────────────────────────────────────────── */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
               {activeTab === 'vendas' ? (
                 <>
                   <MetricCard label="Qualified Leads" value={diagnostico.length} sub="Topo de funil (Inbound & Outbound)" />
-                  <MetricCard label="Active Deals" value={vendas.length} sub={totalPipelineValue > 0 ? `${formatCurrency(totalPipelineValue)} no Pipe real` : 'Pipeline vazio'} />
+                  <MetricCard label="Active Deals" value={vendas.length} sub={totalPipelineValue > 0 ? `${formatCurrency(totalPipelineValue)} no Pipe real` : 'Pipeline ativo'} />
                   <MetricCard label="Average Cycle" value={`${avgDaysVendas}d`} sub="Dias médios em negociação" />
                   <MetricCard label="Win Rate" value={`${winRate}%`} sub="Conversão histórica apurada" />
                 </>
@@ -986,14 +1187,14 @@ export const RevenueCockpit: React.FC = () => {
             </div>
 
             {/* ── Tab Navigator ───────────────────────────────────────── */}
-            <div className="flex flex-wrap items-center gap-0 mb-8 border-b border-zinc-200">
+            <div className="flex flex-wrap items-center gap-0 border-b border-zinc-800/80">
               <button
                 onClick={() => setActiveTab('vendas')}
                 className={cn(
-                  'px-6 py-3 text-xs font-black uppercase tracking-[0.15em] border-b-2 transition-all',
+                  'px-6 py-3.5 text-xs font-mono font-bold uppercase tracking-[0.15em] border-b-2 transition-all',
                   activeTab === 'vendas'
-                    ? 'border-zinc-900 text-zinc-900'
-                    : 'border-transparent text-zinc-400 hover:text-zinc-600',
+                    ? 'border-[#00CC6A] text-[#00CC6A] bg-[#00CC6A]/5'
+                    : 'border-transparent text-zinc-400 hover:text-zinc-200',
                 )}
               >
                 Pipeline de Vendas

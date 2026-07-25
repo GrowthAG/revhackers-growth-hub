@@ -61,39 +61,39 @@ export const DashboardSkeleton = () => (
   </div>
 );
 
-// Skeleton para RevenueCockpit
+// Skeleton para RevenueCockpit (Nobibecode Dark SaaS)
 export const PipelineSkeleton = () => (
-  <div className="min-h-screen bg-white px-6 md:px-10 lg:px-14 py-8 space-y-8">
+  <div className="min-h-screen bg-[#09090b] px-6 md:px-10 lg:px-14 py-8 space-y-8">
     {/* Header */}
     <div className="space-y-3">
-      <Skeleton className="h-8 w-56" />
-      <Skeleton className="h-4 w-80" />
+      <Skeleton className="h-8 w-56 bg-zinc-900" />
+      <Skeleton className="h-4 w-80 bg-zinc-900" />
     </div>
     {/* KPI cards */}
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {[...Array(4)].map((_, i) => (
-        <div key={i} className="border border-zinc-100 p-4 space-y-2">
-          <Skeleton className="h-3 w-20" />
-          <Skeleton className="h-8 w-14" />
-          <Skeleton className="h-3 w-24" />
+        <div key={i} className="border border-zinc-800 bg-zinc-950 p-6 space-y-3 rounded-2xl">
+          <Skeleton className="h-3 w-20 bg-zinc-900" />
+          <Skeleton className="h-8 w-24 bg-zinc-900" />
+          <Skeleton className="h-3 w-32 bg-zinc-900" />
         </div>
       ))}
     </div>
     {/* Tabs */}
     <div className="flex gap-2">
-      <Skeleton className="h-8 w-28" />
-      <Skeleton className="h-8 w-28" />
-      <Skeleton className="h-8 w-28" />
+      <Skeleton className="h-10 w-32 bg-zinc-900 rounded-lg" />
+      <Skeleton className="h-10 w-32 bg-zinc-900 rounded-lg" />
+      <Skeleton className="h-10 w-32 bg-zinc-900 rounded-lg" />
     </div>
     {/* Lead rows */}
-    <div className="space-y-2">
+    <div className="space-y-3">
       {[...Array(5)].map((_, i) => (
-        <div key={i} className="flex items-center gap-4 p-4 border border-zinc-100">
-          <Skeleton className="h-3 w-3 rounded-full" />
-          <Skeleton className="h-4 w-36" />
-          <Skeleton className="h-4 w-20" />
-          <Skeleton className="h-4 w-16 ml-auto" />
-          <Skeleton className="h-6 w-24" />
+        <div key={i} className="flex items-center gap-4 p-4 border border-zinc-800 bg-zinc-950/80 rounded-xl">
+          <Skeleton className="h-3 w-3 rounded-full bg-[#00CC6A]" />
+          <Skeleton className="h-4 w-44 bg-zinc-900" />
+          <Skeleton className="h-4 w-24 bg-zinc-900" />
+          <Skeleton className="h-4 w-20 ml-auto bg-zinc-900" />
+          <Skeleton className="h-8 w-28 bg-zinc-900 rounded-lg" />
         </div>
       ))}
     </div>

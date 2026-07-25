@@ -16,18 +16,18 @@ const Breadcrumbs = () => {
     const crumbs = useBreadcrumbs();
     if (crumbs.length <= 1) return null;
     return (
-        <nav className="flex items-center gap-1.5 mb-4">
+        <nav className="flex items-center gap-1.5 mb-6">
             {crumbs.map((crumb, i) => (
                 <div key={i} className="flex items-center gap-1.5">
                     {crumb.to ? (
-                        <Link to={crumb.to} className="text-sm text-zinc-400 font-medium hover:text-zinc-900 transition-colors">
+                        <Link to={crumb.to} className="text-xs font-mono uppercase tracking-widest text-zinc-400 hover:text-[#00CC6A] transition-colors">
                             {crumb.label}
                         </Link>
                     ) : (
-                        <span className="text-sm text-zinc-900 font-bold">{crumb.label}</span>
+                        <span className="text-xs font-mono uppercase tracking-widest text-white font-bold">{crumb.label}</span>
                     )}
                     {i < crumbs.length - 1 && (
-                        <ChevronRight className="w-3.5 h-3.5 text-zinc-300" />
+                        <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
                     )}
                 </div>
             ))}
@@ -53,7 +53,7 @@ const AdminLayoutInner = ({ children }: AdminLayoutProps) => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-zinc-50 flex relative">
+        <div className="min-h-screen bg-[#09090b] text-white flex relative">
             <Sidebar />
             <CommandPalette />
             <main className={cn(
