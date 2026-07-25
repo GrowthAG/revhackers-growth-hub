@@ -1,64 +1,49 @@
+// Utility function to get framework image based on category & article slug
 
-// Utility function to get framework image based on category
-// Updated to use the new 3D minimalist glassmorphism icons
-
-const frameworkImages: Record<string, string[]> = {
-  // Geometric Depth (Favorite - 71) for Strategy & RevOps (Solid, Structural)
-  "RevOps": ["/images/blog-v2/bg_geometric.png"],
-  "Estratégia": ["/images/blog-v2/bg_geometric.png"],
-
-  // Liquid Flow for PLG & Growth (Organic, Dynamic)
-  "PLG": ["/images/blog-v2/bg_flow.png"],
-  "Growth": ["/images/blog-v2/bg_flow.png"],
-
-  // Glassmorphism for Tech & Data (Modern, Sharp)
-  "ABM": ["/images/blog-v2/bg_glass.png"],
-  "MarTech": ["/images/blog-v2/bg_glass.png"],
-  "Dados": ["/images/blog-v2/bg_glass.png"],
-
-  // Default fallback
-  "Defaults": ["/images/blog-v2/bg_geometric.png"]
+export const articleImageMap: Record<string, string> = {
+  "polemic-led-growth-metodo-linkedin-maquina-oportunidades": "/images/blog-v2/blog_polemic_growth.png",
+  "chatgpt-para-growth-15-prompts-produtividade-marketing": "/images/blog-v2/blog_growth_chatgpt.png",
+  "cold-email-2025-7-estrategias-que-funcionam": "/images/blog-v2/blog_cold_email_2025.png",
+  "ltv-vs-cac-calcular-otimizar-crescimento-sustentavel": "/images/blog-v2/blog_ltv_cac_balance.png",
+  "product-market-fit-5-sinais-encontrou-3-que-nao": "/images/blog-v2/blog_pmf_fit.png",
+  "linkedin-sales-navigator-guia-completo-prospeccao-b2b": "/images/blog-v2/blog_sales_nav.png",
+  "o-funil-que-realmente-funciona-para-empresas-b2b": "/images/blog-v2/blog_efficient_funnel.png",
+  "o-que-e-plg-e-como-aplicar-em-startups-brasileiras": "/images/blog-v2/blog_plg_startups.png",
+  "cro-na-pratica-como-dobrar-sua-taxa-de-conversao": "/images/blog-v2/blog_cro_practical.png",
+  "7-automacoes-de-marketing-que-escalam-sua-operacao": "/images/blog-v2/blog_marketing_automation.png",
+  "como-construir-um-funil-de-aquisicao-usando-seu-proprio-produto": "/images/blog-v2/blog_product_led_funnel.png",
+  "estrategias-de-inteligencia-artificial-aplicadas-a-pre-vendas": "/images/blog-v2/blog_ai_presales.png",
+  "diagnostico-de-marketing-orientado-por-dados": "/images/blog-v2/blog_ai_marketing.png",
+  "playbooks-de-vendas-e-marketing-que-escalam-resultados": "/images/blog-v2/blog_dept_integration.png",
+  "como-combinar-inbound-outbound-e-plg": "/images/blog-v2/blog_gtm_strategy.png",
+  "canais-de-aquisicao-com-roi-imediato-para-startups": "/images/blog-v2/blog_saas_trial_growth.png",
+  "como-estruturar-um-time-de-growth-com-poucos-recursos": "/images/blog-v2/blog_dept_integration.png",
+  "analise-de-dados-para-fundadores-quais-metricas-importam": "/images/blog-v2/blog_revops_core.png",
+  "os-melhores-crms-e-automacoes-para-crescimento-b2b": "/images/blog-v2/blog_saas_pipeline.png",
+  "saas-trial-pipeline-optimization": "/images/blog-v2/blog_saas_pipeline_cover.png",
+  "como-desenhar-uma-jornada-do-usuario-que-ativa-e-converte": "/images/blog-v2/blog_user_journey_cover.png",
+  "integracao-marketing-vendas-sucesso-cliente": "/images/blog-v2/blog_dept_integration.png",
+  "estrategia-gtm-go-to-market-para-novos-produtos": "/images/blog-v2/blog_gtm_strategy_cover.png",
+  "anatomia-da-demo-perfeita-vendas-b2b": "/images/blog-v2/blog_demo_perfeita_cover.png",
+  "revops-framework-definitivo-revenue-operations": "/images/blog-v2/blog_revops_frame_cover.png",
+  "psicologia-pricing-b2b-estrategia-precos": "/images/blog-v2/blog_pricing_psychology_cover.png",
+  "comissionamento-vendas-sdr-closer-modelos": "/images/blog-v2/blog_sales_commission.png",
+  "manual-anti-churn-retencao-clientes-cs": "/images/blog-v2/blog_antichurn_manual.png",
+  "saas-plg-como-usar-seu-trial-gratuito-para-gerar-pipeline": "/images/blog-v2/blog_saas_trial_growth.png",
+  "ia-generativa-marketing-alem-do-hype": "/images/blog-v2/blog_ai_marketing_cover.png",
+  "diagnostico-360-descobrir-gargalos-funil": "/images/blog-v2/blog_diagnostico_360.png",
+  "abm-na-pratica-escolher-contas-alvo": "/images/blog-v2/blog_abm_strategy_cover.png",
+  "diagnostico-funil-comercial-identificar-gargalos": "/images/blog-v2/blog_funnel_comercial.png",
+  "crm-2025-por-que-toda-empresa-b2b-precisa": "/images/blog-v2/blog_saas_pipeline.png"
 };
 
-// Helper: Deterministic hash from string
-const getHash = (str: string) => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return Math.abs(hash);
+export const getArticleImageBySlug = (slug: string): string => {
+  return articleImageMap[slug] || "/images/blog-v2/blog_revops_core.png";
 };
 
 export const getFrameworkImage = (category: string, slug?: string): string => {
-  // Normalize category key
-  let key = category;
-  if (['Account Based Marketing'].includes(category)) key = "ABM";
-  if (['Strategy', 'Management'].includes(category)) key = "Estratégia";
-  if (['Growth', 'Geração de Demanda', 'Vendas', 'Automação', 'CRO', 'Dados', 'CS', 'Customer Success', 'SaaS', 'Polemic Led Growth'].includes(category)) {
-    key = "Defaults";
+  if (slug && articleImageMap[slug]) {
+    return articleImageMap[slug];
   }
-
-  const images = frameworkImages[key] || frameworkImages["Defaults"];
-
-  if (!slug) return images[0];
-
-  const index = getHash(slug) % images.length;
-  return images[index];
-};
-
-// Function to get specific image for article by slug (Prioritized)
-export const getArticleImageBySlug = (slug: string): string => {
-  // We prefer the image defined in blogData.ts, but keeping this for any dynamic overrides
-  const articleImageMap: Record<string, string> = {
-    "polemic-led-growth-metodo-linkedin-maquina-oportunidades": "/images/blog-v2/blog_polemic_growth.png",
-    "ia-generativa-marketing-alem-do-hype": "/images/blog-v2/blog_ai_marketing.png",
-    "estrategia-gtm-go-to-market-para-novos-produtos": "/images/blog-v2/blog_gtm_strategy.png",
-    "diagnostico-360-descobrir-gargalos-funil": "/images/blog-v2/blog_diagnostico_360.png",
-    "abm-na-pratica-escolher-contas-alvo": "/images/blog-v2/blog_abm_practical.png",
-    "diagnostico-funil-comercial-identificar-gargalos": "/images/blog-v2/blog_funil_comercial.png"
-  };
-
-  return articleImageMap[slug] || "";
+  return "/images/blog-v2/blog_revops_core.png";
 };

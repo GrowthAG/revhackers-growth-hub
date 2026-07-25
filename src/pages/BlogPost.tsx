@@ -306,7 +306,7 @@ const BlogPostPage = () => {
               </div>
 
               <h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-12 leading-snug tracking-tight text-balance max-w-5xl mx-auto [&>span]:text-revgreen"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight tracking-tight max-w-5xl mx-auto [&>span]:text-[#00CC6A]"
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(
                     post.title.includes('<')
@@ -317,6 +317,17 @@ const BlogPostPage = () => {
                   )
                 }}
               />
+
+              {/* Authentic Visual Banner */}
+              {heroImgSrc && (
+                <div className="my-8 max-w-4xl mx-auto rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 shadow-2xl">
+                  <img
+                    src={heroImgSrc}
+                    alt={post.title}
+                    className="w-full h-auto max-h-[420px] object-cover"
+                  />
+                </div>
+              )}
             </motion.div>
           </header>
 
