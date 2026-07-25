@@ -440,8 +440,8 @@ const REIProjectForm = () => {
 
                         {/* 1. SELEÇÃO DE CLIENTE */}
                         <div className="space-y-6">
-                            <h3 className="text-xxs font-black uppercase tracking-widest text-zinc-400 border-b border-zinc-200 pb-2">
-                                01. Vincular Cliente
+                            <h3 className="text-sm font-semibold text-zinc-900 border-b border-zinc-200/80 pb-2.5">
+                                1. Vinculação do Cliente
                             </h3>
 
                             <div className="space-y-4">
@@ -449,10 +449,10 @@ const REIProjectForm = () => {
                                     <div className="space-y-6">
                                         <div className="space-y-1.5">
                                             <div className="flex justify-between items-center px-1">
-                                                <Label className={labelClasses}>Selecione do Portfólio</Label>
+                                                <Label className="text-xs font-medium text-zinc-700">Selecione do Portfólio de Clientes</Label>
                                                 <Dialog open={mode === 'new'} onOpenChange={(open) => setMode(open ? 'new' : 'existing')}>
                                                     <DialogTrigger asChild>
-                                                        <button type="button" className="text-xxs uppercase font-bold text-zinc-500 hover:underline">
+                                                        <button type="button" className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
                                                             + Novo Cliente
                                                         </button>
                                                     </DialogTrigger>

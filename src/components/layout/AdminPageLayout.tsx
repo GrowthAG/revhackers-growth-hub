@@ -41,42 +41,42 @@ const AdminPageLayout = ({
     };
 
     return (
-        <div className="min-h-screen bg-white py-10 transition-colors duration-300 relative border-b border-zinc-100">
-            <div className={`container mx-auto px-8 md:px-12 max-w-7xl`}>
-                {/* Header - OS Console Standard */}
-                <div className="mb-20">
-                    <div className="flex items-center justify-between mb-16">
-                        {showBackButton ? (
-                            <button
-                                onClick={() => navigate(backTo)}
-                                className="text-label text-zinc-400 hover:text-black transition-all flex items-center gap-2 group"
-                            >
-                                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" strokeWidth={1.5} />
-                                [ {backLabel} ]
-                            </button>
-                        ) : <div className="text-label text-zinc-400">DIR / ROOT</div>}
-                        <div className="flex items-center gap-6">
+        <div className="space-y-6 pb-12">
+            {/* Header - Enterprise Standard */}
+            <div className="pb-6 border-b border-zinc-200/80">
+                <div className="flex items-center justify-between gap-4 mb-2">
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400">
+                        <button
+                            onClick={() => navigate(backTo)}
+                            className="hover:text-zinc-900 transition-colors flex items-center gap-1"
+                        >
+                            <ArrowLeft className="h-3.5 w-3.5" /> {backLabel}
+                        </button>
+                        <span>/</span>
+                        <span className="text-zinc-900 font-semibold">{title}</span>
+                    </div>
+                    {actions && (
+                        <div className="flex items-center gap-3">
                             {actions}
                         </div>
-                    </div>
-
-                    <div className="space-y-4">
-                        <h1 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tight leading-[1.05] uppercase">
-                            {title}
-                        </h1>
-                        {description && (
-                            <p className="text-label text-zinc-500 max-w-2xl leading-relaxed mt-2 flex items-center gap-2">
-                                <span className="w-1.5 h-1.5 bg-zinc-900 shrink-0" />
-                                {description}
-                            </p>
-                        )}
-                    </div>
+                    )}
                 </div>
 
-                {/* Content */}
-                <div>
-                    {children}
+                <div className="space-y-1">
+                    <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                        {title}
+                    </h1>
+                    {description && (
+                        <p className="text-sm text-zinc-500 font-normal">
+                            {description}
+                        </p>
+                    )}
                 </div>
+            </div>
+
+            {/* Content */}
+            <div>
+                {children}
             </div>
         </div>
     );
