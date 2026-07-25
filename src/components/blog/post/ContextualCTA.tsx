@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, UserCircle, Gauge, Globe } from 'lucide-react';
+import { ArrowRight, UserCircle, Gauge, Globe, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
@@ -9,10 +9,8 @@ interface ContextualCTAProps {
 }
 
 const ContextualCTA = ({ title, category }: ContextualCTAProps) => {
-    // Normalize string for checking
     const text = (title + ' ' + category).toLowerCase();
 
-    // Determine Logic
     let type: 'founder' | 'revenue' | 'site' | 'general' = 'general';
 
     if (text.includes('linkedin') || text.includes('founder') || text.includes('marca pessoal') || text.includes('social selling')) {
@@ -23,62 +21,60 @@ const ContextualCTA = ({ title, category }: ContextualCTAProps) => {
         type = 'revenue';
     }
 
-    if (type === 'general') return null; // Or render a generic one if desired, but user asked for specific connection
+    if (type === 'general') return null;
 
     const data = {
         founder: {
             title: "Audite sua Autoridade no LinkedIn",
-            desc: "Descubra se seu perfil de Founder está gerando leads ou afastando investidores. Diagnóstico gratuito com IA.",
-            btn: "Rodar Founder Score",
-            link: "/founder-score",
-            icon: <UserCircle className="w-8 h-8 text-black" />
+            desc: "Descubra se seu perfil de Founder está gerando leads ou afastando oportunidades. Diagnóstico preditivo gratuito.",
+            btn: "Iniciar Founder Score",
+            link: "/score-founder",
+            icon: <UserCircle className="w-6 h-6 text-zinc-800" />
         },
         revenue: {
             title: "Diagnóstico de Receita B2B",
-            desc: "Identifique onde estão os gargalos que impedem sua operação de escalar para os próximos 7 dígitos.",
+            desc: "Identifique onde estão os gargalos que impedem sua operação de escalar previsivelmente.",
             btn: "Análise de Revenue Ops",
-            link: "/revenue-score",
-            icon: <Gauge className="w-8 h-8 text-black" />
+            link: "/score-revenue",
+            icon: <Gauge className="w-6 h-6 text-zinc-800" />
         },
         site: {
-            title: "Seu Site Vende ou Só Ocupa Espaço?",
-            desc: "Descubra em 2 minutos se sua infraestrutura digital está pronta para converter tráfego em receita.",
+            title: "Seu Site Converte ou Só Ocupa Espaço?",
+            desc: "Descubra em 2 minutos se sua infraestrutura digital está otimizada para tráfego e conversão.",
             btn: "Verificar Site Score",
-            link: "/site-score",
-            icon: <Globe className="w-8 h-8 text-black" />
+            link: "/score-site",
+            icon: <Globe className="w-6 h-6 text-zinc-800" />
         },
         general: { title: "", desc: "", btn: "", link: "", icon: null }
     }[type];
 
     return (
-        <div className="my-16 w-full">
-            <div className="relative bg-[#F5F5F7] border border-zinc-200 p-8 md:p-10 overflow-hidden group hover:border-black/20 transition-all duration-500">
-                {/* Background Decoration */}
-                <div className="absolute right-0 top-0 w-64 h-64 bg-zinc-200/50 rounded-bl-full pointer-events-none -mr-16 -mt-16"></div>
-
-                <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
-                    <div className="flex-shrink-0 bg-white p-6 rounded-full shadow-sm border border-zinc-100 group-hover:scale-110 transition-transform duration-500">
+        <div className="my-10 w-full">
+            <div className="bg-zinc-50 border border-zinc-200/80 rounded-2xl p-6 md:p-8 hover:border-zinc-300 transition-all duration-300 shadow-xs">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <div className="w-12 h-12 rounded-xl bg-white border border-zinc-200 flex items-center justify-center shrink-0">
                         {data.icon}
                     </div>
 
-                    <div className="flex-1 text-center md:text-left">
-                        <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
-                            <span className="w-2 h-2 bg-revgreen rounded-full animate-pulse"></span>
-                            <span className="text-xxs uppercase font-bold tracking-[0.2em] text-zinc-400">Recomendado para você</span>
+                    <div className="flex-1 space-y-1">
+                        <div className="flex items-center gap-2 mb-1">
+                            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
+                                RECOMENDADO
+                            </span>
                         </div>
-                        <h3 className="text-2xl font-black text-black mb-2 uppercase tracking-tight">
+                        <h3 className="text-lg font-bold text-zinc-900 tracking-tight">
                             {data.title}
                         </h3>
-                        <p className="text-zinc-600 font-medium leading-relaxed max-w-xl">
+                        <p className="text-xs text-zinc-500 font-normal leading-relaxed max-w-xl">
                             {data.desc}
                         </p>
                     </div>
 
-                    <div className="flex-shrink-0">
+                    <div className="shrink-0 w-full md:w-auto">
                         <Link to={data.link}>
-                            <Button className="h-14 px-8 bg-black hover:bg-revgreen hover:text-black text-white rounded-none uppercase font-bold text-xs tracking-widest transition-all duration-300 shadow-sm">
-                                {data.btn}
-                                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            <Button className="w-full md:w-auto h-9 px-4 bg-zinc-950 hover:bg-zinc-800 text-white rounded-lg font-bold text-xs shadow-none gap-2 flex items-center border border-zinc-800 transition-all">
+                                <span>{data.btn}</span>
+                                <ArrowRight size={14} className="text-[#00CC6A]" />
                             </Button>
                         </Link>
                     </div>
