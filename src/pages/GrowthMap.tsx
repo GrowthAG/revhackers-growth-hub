@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Play, X, Loader2, RefreshCw, BarChart2, ShieldCheck, Zap, Layers, Target, Compass, Users, Sparkles, ArrowRight, Share2 } from 'lucide-react';
+import { Play, X, Loader2, RefreshCw, BarChart2, ShieldCheck, Zap, Layers, Target, Compass, Users, Sparkles, ArrowRight, Share2, TrendingUp, CheckCircle2 } from 'lucide-react';
 import FrameworkCard from '@/components/growthmap/FrameworkCard';
 import REIBridge from '@/components/growthmap/REIBridge';
 import {
@@ -17,11 +17,11 @@ import AdminLayout from '@/components/layout/AdminLayout';
 
 type PillarKey = 'inteligencia_estrategica' | 'concepcao_valor' | 'mvp_validacao' | 'escalabilidade';
 
-const PILLAR_META: Record<PillarKey, { label: string; description: string }> = {
-  inteligencia_estrategica: { label: 'Inteligência Estratégica', description: 'Mercado, concorrência e posicionamento' },
-  concepcao_valor:          { label: 'Concepção de Valor',       description: 'ICP, jornada, proposta e diferenciais' },
-  mvp_validacao:            { label: 'MVP & Validação Ágil',      description: 'Modelo de negócio enxuto e priorização' },
-  escalabilidade:           { label: 'Escalabilidade',           description: 'Crescimento, canais e métricas de tração' },
+const PILLAR_META: Record<PillarKey, { label: string; description: string; badge: string }> = {
+  inteligencia_estrategica: { label: 'Inteligência Estratégica', description: 'TAM, concorrência, posicionamento e vetores de mercado', badge: 'PILAR 1' },
+  concepcao_valor:          { label: 'Concepção de Valor',       description: 'ICP, proposta de valor e diferenciais competitivos', badge: 'PILAR 2' },
+  mvp_validacao:            { label: 'MVP & Validação Ágil',      description: 'Priorização de experimentos e matriz ICE Score', badge: 'PILAR 3' },
+  escalabilidade:           { label: 'Escalabilidade & Tração',   description: 'Funil AARRR, canais de aquisição e North Star Metric', badge: 'PILAR 4' },
 };
 
 function FrameworkDataView({ fw }: { fw: FrameworkResult }) {
@@ -169,22 +169,26 @@ export default function GrowthMap() {
 
   return (
     <AdminLayout>
-      <div className="min-h-screen bg-zinc-950 text-white font-sans">
-        <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <div className="min-h-screen bg-zinc-950 text-white font-sans relative overflow-hidden">
+        {/* Subtle radial glow background */}
+        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[#00CC6A]/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-6 py-8 space-y-8 relative z-10">
           
-          {/* Header Superior The GrowthHub Style */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
-            <div className="space-y-1">
+          {/* Header Superior Nobibecode SaaS Moderno de Elite */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-800/80">
+            <div className="space-y-1.5">
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
-                  GROWTHMAP & INTELIGÊNCIA
+                  GROWTHHUB ENGINE
                 </span>
+                <span className="text-xs text-zinc-500 font-mono">ID: {activeProjectId.slice(0, 8)}</span>
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white flex items-center gap-3">
+              <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-white flex items-center gap-3">
                 {gState.company_name}
               </h1>
-              <p className="text-xs text-zinc-400">
-                Análise profunda do mercado, concorrência, posicionamento e frameworks operacionais de receita.
+              <p className="text-xs md:text-sm text-zinc-400 max-w-2xl leading-relaxed">
+                Central de Inteligência Estratégica: análise preditiva de mercado, TAM/SAM/SOM, concorrência e matrizes de validação executiva.
               </p>
             </div>
 
@@ -192,102 +196,105 @@ export default function GrowthMap() {
               <button
                 onClick={handleGenerateAll}
                 disabled={isGeneratingAll}
-                className="bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-800 rounded-lg h-9 px-4 text-xs font-bold gap-2 flex items-center transition-all"
+                className="bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-800 rounded-xl h-10 px-5 text-xs font-bold gap-2 flex items-center transition-all shadow-xs"
               >
                 {isGeneratingAll ? <Loader2 size={14} className="animate-spin text-[#00CC6A]" /> : <Sparkles size={14} className="text-[#00CC6A]" />}
-                <span>{isGeneratingAll ? "Gerando Frameworks..." : "Regenerar com IA"}</span>
+                <span>{isGeneratingAll ? "Processando Frameworks..." : "Rodar Inteligência Completa"}</span>
               </button>
             </div>
           </div>
 
-          {/* Navegação por Pilares (GrowthHub Sidebar Tabs) */}
-          <div className="flex items-center gap-2 border-b border-zinc-800 overflow-x-auto pb-1">
-            {(Object.entries(PILLAR_META) as [PillarKey, { label: string; description: string }][]).map(([key, meta], i) => {
+          {/* Navegação por Pilares (Pills estilo Vercel / Linear) */}
+          <div className="flex items-center gap-2 border-b border-zinc-800/80 pb-2 overflow-x-auto">
+            {(Object.entries(PILLAR_META) as [PillarKey, { label: string; description: string; badge: string }][]).map(([key, meta]) => {
               const isActive = activeTab === key;
               return (
                 <button
                   key={key}
                   onClick={() => setActiveTab(key)}
-                  className={`px-4 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
+                  className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 border ${
                     isActive
-                      ? "bg-white text-zinc-950 font-bold shadow-xs"
-                      : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+                      ? "bg-white text-zinc-950 border-white shadow-sm"
+                      : "bg-zinc-900/40 text-zinc-400 border-zinc-800/80 hover:text-white hover:border-zinc-700"
                   }`}
                 >
                   <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-[#00CC6A]" : "bg-zinc-600"}`} />
-                  <span>PILAR {i + 1} • {meta.label}</span>
+                  <span>{meta.badge} • {meta.label}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* INDUSTRY INSIGHTS CARD (Idêntico ao print do The GrowthHub) */}
-          <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 md:p-8 space-y-6">
-            <div className="flex items-center justify-between">
+          {/* INDUSTRY INSIGHTS CARD (Design Elevado de Elite) */}
+          <div className="bg-zinc-900/50 border border-zinc-800/80 backdrop-blur-xl rounded-2xl p-6 md:p-8 space-y-6 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00CC6A]/40 to-transparent" />
+
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800/60 pb-4">
               <div>
                 <span className="text-[10px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">
-                  PILAR 1 • INTELIGÊNCIA ESTRATÉGICA
+                  {PILLAR_META[activeTab].badge} • INSIGHTS DE MERCADO & VETORES
                 </span>
-                <h2 className="text-xl font-bold text-white tracking-tight mt-1">
-                  Industry Insights & Métricas de Mercado
+                <h2 className="text-xl font-bold text-white tracking-tight mt-0.5">
+                  {PILLAR_META[activeTab].label}
                 </h2>
                 <p className="text-xs text-zinc-400 mt-0.5">
-                  Panorama do setor, vetores de crescimento e desafios de escala.
+                  {PILLAR_META[activeTab].description}
                 </p>
               </div>
+              <span className="text-[11px] font-mono text-zinc-500">Mapeamento em Tempo Real</span>
             </div>
 
-            {/* Grid de Métricas Principais (Print Reference) */}
+            {/* Grid de Métricas Preditivas com Design Superior */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-zinc-950 border border-zinc-800/80 rounded-xl p-5 space-y-2 text-center">
-                <span className="text-2xl font-black text-white tracking-tight block">R$ 2,8 bi</span>
-                <span className="text-[11px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">TAM CRM/MARTECH BRASIL 2025</span>
-                <p className="text-[11px] text-zinc-400 leading-relaxed">
-                  Mercado crescendo ~18% a.a., impulsionado pela digitalização acelerada pós-pandemia.
+              <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2 text-center group hover:border-zinc-700 transition-colors">
+                <span className="text-3xl font-extrabold text-white tracking-tight block">R$ 2,8 bi</span>
+                <span className="text-[10px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">TAM CRM/MARTECH BRASIL 2025</span>
+                <p className="text-xs text-zinc-400 leading-relaxed font-normal">
+                  Mercado em expansão acelerada (~18% a.a.), impulsionado pela digitalização de PMEs pós-pandemia.
                 </p>
               </div>
 
-              <div className="bg-zinc-950 border border-zinc-800/80 rounded-xl p-5 space-y-2 text-center">
-                <span className="text-2xl font-black text-white tracking-tight block">68%</span>
-                <span className="text-[11px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">PMES SEM CRM ESTRUTURADO</span>
-                <p className="text-[11px] text-zinc-400 leading-relaxed">
-                  Maioria das PMEs brasileiras ainda usa planilhas — janela de captura enorme para soluções nativas.
+              <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2 text-center group hover:border-zinc-700 transition-colors">
+                <span className="text-3xl font-extrabold text-white tracking-tight block">68%</span>
+                <span className="text-[10px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">PMES SEM CRM ESTRUTURADO</span>
+                <p className="text-xs text-zinc-400 leading-relaxed font-normal">
+                  Maioria das PMEs ainda utiliza planilhas manuais — oportunidade maciça de migração para soluções nativas.
                 </p>
               </div>
 
-              <div className="bg-zinc-950 border border-zinc-800/80 rounded-xl p-5 space-y-2 text-center">
-                <span className="text-2xl font-black text-white tracking-tight block">3x</span>
-                <span className="text-[11px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">CUSTO HUBSPOT VS ALTERNATIVA LOCAL</span>
-                <p className="text-[11px] text-zinc-400 leading-relaxed">
-                  Planos HubSpot custam até 3x mais que plataformas nacionais, criando um gap direto de preço.
+              <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2 text-center group hover:border-zinc-700 transition-colors">
+                <span className="text-3xl font-extrabold text-white tracking-tight block">3x</span>
+                <span className="text-[10px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">CUSTO HUBSPOT VS LOCAL</span>
+                <p className="text-xs text-zinc-400 leading-relaxed font-normal">
+                  Softwares globais custam até 3x mais que plataformas nacionais, gerando gap direto de aquisição.
                 </p>
               </div>
             </div>
 
             {/* Vetores de Crescimento & Desafios */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-              <div className="bg-zinc-950 border border-zinc-800/80 rounded-xl p-5 space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+              <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2">
                 <span className="text-[11px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block flex items-center gap-1.5">
-                  <Zap size={14} /> VETORES DE CRESCIMENTO
+                  <Zap size={14} /> VETORES DE CRESCIMENTO PREDITIVO
                 </span>
-                <p className="text-xs text-zinc-300 leading-relaxed">
-                  <strong className="text-white">Digitalização acelerada de PMEs:</strong> +2,5 mi de novos CNPJs abertos no Brasil; a maioria busca ferramentas de automação e vendas integradas.
+                <p className="text-xs text-zinc-300 leading-relaxed font-medium">
+                  <strong className="text-white">Adoção de Automações por IA:</strong> +2,5 mi de novos CNPJs abertos buscam processos automatizados para operar com times enxutos.
                 </p>
               </div>
 
-              <div className="bg-zinc-950 border border-zinc-800/80 rounded-xl p-5 space-y-2">
+              <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2">
                 <span className="text-[11px] font-mono font-bold text-amber-400 uppercase tracking-wider block flex items-center gap-1.5">
-                  <ShieldCheck size={14} /> DESAFIOS DO SETOR
+                  <ShieldCheck size={14} /> DESAFIOS & GAPS DE RETENÇÃO
                 </span>
-                <p className="text-xs text-zinc-300 leading-relaxed">
-                  <strong className="text-white">Churn early-stage elevado:</strong> Plataformas sem onboarding assistido sofrem perda de clientes nos primeiros 90 dias.
+                <p className="text-xs text-zinc-300 leading-relaxed font-medium">
+                  <strong className="text-white">Churn de Onboarding Early-Stage:</strong> Plataformas de vendas sem onboarding assistido enfrentam perda de clientes nos primeiros 90 dias.
                 </p>
               </div>
             </div>
 
-            {/* Barra de Compartilhamento Inferior */}
-            <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-3 px-5 flex items-center justify-between text-xs">
-              <span className="text-zinc-400 font-medium">Compartilhe este <strong className="text-white">GrowthMap</strong> com seus sócios e time executivo!</span>
+            {/* Action Strip Inferior */}
+            <div className="bg-zinc-950 border border-zinc-800/80 rounded-xl p-3.5 px-5 flex items-center justify-between text-xs">
+              <span className="text-zinc-400 font-medium">Compartilhe este relatório <strong className="text-white">GrowthMap</strong> com seu time executivo!</span>
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
@@ -295,17 +302,18 @@ export default function GrowthMap() {
                 }}
                 className="text-[#00CC6A] hover:underline font-bold flex items-center gap-1.5"
               >
-                <span>Copiar Link</span>
+                <span>Copiar Link do Diagnóstico</span>
                 <Share2 size={13} />
               </button>
             </div>
           </div>
 
-          {/* Grid de Frameworks do Pilar Ativo */}
+          {/* Grid de Frameworks do Pilar Selecionado */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-white tracking-tight">
-                Frameworks do Pilar: {PILLAR_META[activeTab].label}
+              <h3 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+                <Layers size={18} className="text-[#00CC6A]" />
+                <span>Frameworks Operacionais do {PILLAR_META[activeTab].badge}</span>
               </h3>
             </div>
 
@@ -328,7 +336,7 @@ export default function GrowthMap() {
 
         </div>
 
-        {/* Drawer Lateral para Detalhes do Framework */}
+        {/* Drawer Lateral com Detalhes do Framework */}
         {selectedId && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-end" onClick={() => setSelectedId(null)}>
             <div className="w-full max-w-2xl bg-zinc-950 border-l border-zinc-800 h-full p-6 space-y-6 overflow-y-auto" onClick={e => e.stopPropagation()}>
