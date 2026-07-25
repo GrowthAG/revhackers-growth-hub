@@ -53,7 +53,7 @@ const AdminLayoutInner = ({ children }: AdminLayoutProps) => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-zinc-50 flex relative">
+        <div className="min-h-screen bg-white flex relative">
             <Sidebar />
             <CommandPalette />
             <main className={cn(

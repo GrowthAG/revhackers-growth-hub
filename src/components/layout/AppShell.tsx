@@ -7,7 +7,7 @@ const AppShellInner = ({ children }: { children: React.ReactNode }) => {
   const { collapsed } = useSidebar();
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-white">
       <Sidebar />
       <CommandPalette />
       <main

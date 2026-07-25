@@ -1173,8 +1173,8 @@ export const RevenueCockpit: React.FC = () => {
             </div>
           </div>
 
-          {/* ── Control Bar / Tab Navigator (Benchmark AdminProjects) ─────── */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-200">
+          {/* ── Control Bar / Tab Navigator (SaaS Gringo JuriAI Standard) ─────── */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-1.5 rounded-xl border border-zinc-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
             <div className="flex flex-wrap items-center gap-1">
               <button
                 onClick={() => setActiveTab('vendas')}

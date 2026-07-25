@@ -347,7 +347,7 @@ export function BillingAnalyticsWidget() {
       {/* Filters Bar & Data Table */}
       <div className="space-y-4">
         {/* Table Filter Controls */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50/70 p-3 rounded-xl border border-zinc-200/60">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-2.5 rounded-xl border border-zinc-200/80 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-400" />
             <Input
