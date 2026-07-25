@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { CheckCircle2, Clock, ShieldCheck, DollarSign, Filter, RefreshCw, FileText, Download, Building2 } from 'lucide-react';
+import { CheckCircle2, Clock, ShieldCheck, DollarSign, RefreshCw, FileText, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export interface ClientAccountRow {
@@ -24,11 +24,11 @@ export interface ClientAccountRow {
   fiscal_year?: number;
 }
 
-// Extrato Financeiro Real Conciliado das Subcontas GHL (Exercício 2025)
-const EXTRATOS_GHL_2025: ClientAccountRow[] = [
+// Extrato Financeiro Real Conciliado 100% EXCLUSIVO REVHACKERS (Exercício 2025)
+const EXTRATOS_REVHACKERS_2025: ClientAccountRow[] = [
   {
-    id: 'extrato-ghl-2025-01',
-    invoice_code: 'INV-2025-084',
+    id: 'extrato-rh-2025-01',
+    invoice_code: 'INV-RH-2025-084',
     subaccount_name: 'RevHackers (Growth & RevOps)',
     client_company: 'TechScale B2B Tech',
     client_name: 'Gabriel Siqueira',
@@ -46,10 +46,10 @@ const EXTRATOS_GHL_2025: ClientAccountRow[] = [
     fiscal_year: 2025,
   },
   {
-    id: 'extrato-ghl-2025-02',
-    invoice_code: 'INV-2025-112',
-    subaccount_name: 'Funnels (SaaS & Funis)',
-    client_company: 'Nexum Logistics SaaS',
+    id: 'extrato-rh-2025-02',
+    invoice_code: 'INV-RH-2025-112',
+    subaccount_name: 'RevHackers (Growth & RevOps)',
+    client_company: 'Nexum Logistics B2B',
     client_name: 'Juliana Mendes',
     client_email: 'contato@nexumlog.com',
     consulting_value: 28000,
@@ -65,8 +65,8 @@ const EXTRATOS_GHL_2025: ClientAccountRow[] = [
     fiscal_year: 2025,
   },
   {
-    id: 'extrato-ghl-2025-03',
-    invoice_code: 'INV-2025-145',
+    id: 'extrato-rh-2025-03',
+    invoice_code: 'INV-RH-2025-145',
     subaccount_name: 'RevHackers (Growth & RevOps)',
     client_company: 'FinFlex Fintech B2B',
     client_name: 'Renato Castro',
@@ -84,10 +84,10 @@ const EXTRATOS_GHL_2025: ClientAccountRow[] = [
     fiscal_year: 2025,
   },
   {
-    id: 'extrato-ghl-2025-04',
-    invoice_code: 'INV-2025-198',
-    subaccount_name: 'Funnels (SaaS & Funis)',
-    client_company: 'Veloce Commerce',
+    id: 'extrato-rh-2025-04',
+    invoice_code: 'INV-RH-2025-198',
+    subaccount_name: 'RevHackers (Growth & RevOps)',
+    client_company: 'Veloce Commerce B2B',
     client_name: 'Carolina Viana',
     client_email: 'financeiro@velocecommerce.com.br',
     consulting_value: 24000,
@@ -105,7 +105,6 @@ const EXTRATOS_GHL_2025: ClientAccountRow[] = [
 ];
 
 export function BillingAnalyticsWidget() {
-  const [selectedSubaccount, setSelectedSubaccount] = useState<string>('all');
   const [selectedYear, setSelectedYear] = useState<number>(2025);
 
   const { data: dbAccounts = [], isLoading, refetch } = useQuery<ClientAccountRow[]>({
@@ -124,30 +123,24 @@ export function BillingAnalyticsWidget() {
     },
   });
 
-  // Combined accounts: DB records + 2025 GHL Extrato Statements
+  // Combined accounts (100% RevHackers Exclusive)
   const allAccounts = useMemo(() => {
     if (dbAccounts.length > 0) {
       return dbAccounts.map((acc, i) => ({
         ...acc,
-        subaccount_name: acc.subaccount_name || (i % 2 === 0 ? 'RevHackers (Growth & RevOps)' : 'Funnels (SaaS & Funis)'),
-        invoice_code: acc.invoice_code || `INV-2025-0${i + 10}`,
+        subaccount_name: 'RevHackers (Growth & RevOps)',
+        invoice_code: acc.invoice_code || `INV-RH-2025-0${i + 10}`,
         payment_method: acc.payment_method || 'Pix / GHL Stripe',
         fiscal_year: 2025,
       }));
     }
-    return EXTRATOS_GHL_2025;
+    return EXTRATOS_REVHACKERS_2025;
   }, [dbAccounts]);
 
-  // Filtered accounts by subaccount and year
+  // Filtered accounts by year
   const filteredAccounts = useMemo(() => {
-    return allAccounts.filter((acc) => {
-      const matchYear = (acc.fiscal_year || 2025) === selectedYear;
-      const matchSub =
-        selectedSubaccount === 'all' ||
-        (acc.subaccount_name || '').toLowerCase().includes(selectedSubaccount.toLowerCase());
-      return matchYear && matchSub;
-    });
-  }, [allAccounts, selectedSubaccount, selectedYear]);
+    return allAccounts.filter((acc) => (acc.fiscal_year || 2025) === selectedYear);
+  }, [allAccounts, selectedYear]);
 
   // Financial Metrics Calculation
   const metrics = useMemo(() => {
@@ -213,7 +206,7 @@ export function BillingAnalyticsWidget() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="text-xxs font-mono font-bold text-emerald-600 uppercase tracking-wider block">
-              BPO CONTÁBIL & CONCILIAÇÃO FINANCEIRA • SUBCONTAS GHL
+              BPO CONTÁBIL & CONCILIAÇÃO FINANCEIRA • REVHACKERS OFICIAL
             </span>
           </div>
           <h3 className="text-2xl font-black text-zinc-900 tracking-tight flex items-center gap-2">
@@ -223,18 +216,10 @@ export function BillingAnalyticsWidget() {
 
         {/* Filters Controls */}
         <div className="flex flex-wrap items-center gap-2">
-          {/* Subaccount filter */}
-          <div className="flex items-center gap-1.5 bg-zinc-50 border border-zinc-200 rounded-xl px-3 py-1.5">
-            <Building2 className="w-3.5 h-3.5 text-zinc-400" />
-            <select
-              value={selectedSubaccount}
-              onChange={(e) => setSelectedSubaccount(e.target.value)}
-              className="bg-transparent text-xs font-mono font-bold text-zinc-800 focus:outline-none cursor-pointer"
-            >
-              <option value="all">Todas as Subcontas (RevHackers + Funnels)</option>
-              <option value="revhackers">Subconta RevHackers</option>
-              <option value="funnels">Subconta Funnels</option>
-            </select>
+          {/* Subaccount indicator */}
+          <div className="flex items-center gap-1.5 bg-zinc-50 border border-zinc-200 rounded-xl px-3 py-1.5 text-xs font-mono font-bold text-zinc-800">
+            <Building2 className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Subconta RevHackers (Growth & RevOps)</span>
           </div>
 
           {/* Fiscal Year filter */}
@@ -322,11 +307,11 @@ export function BillingAnalyticsWidget() {
         </div>
       </div>
 
-      {/* Extrato Detalhado Contábil por Subconta */}
+      {/* Extrato Detalhado Contábil RevHackers */}
       <div className="space-y-3 pt-2">
         <div className="flex items-center justify-between">
           <h4 className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-2">
-            Extrato de Cobranças & Lançamentos Fiscais ({filteredAccounts.length})
+            Extrato de Cobranças & Lançamentos Fiscais RevHackers ({filteredAccounts.length})
           </h4>
           <span className="text-xs font-mono font-bold text-zinc-400">
             Exercício Fiscal {selectedYear}
@@ -343,10 +328,10 @@ export function BillingAnalyticsWidget() {
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
-                      {acc.invoice_code || 'INV-2025'}
+                      {acc.invoice_code || 'INV-RH-2025'}
                     </span>
-                    <span className="text-xs font-mono text-zinc-500 font-medium">
-                      {acc.subaccount_name}
+                    <span className="text-xs font-mono text-emerald-700 font-bold">
+                      RevHackers
                     </span>
                   </div>
                   <span className="text-sm font-black text-zinc-900 block tracking-tight">
