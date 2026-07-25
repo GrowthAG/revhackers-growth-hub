@@ -140,23 +140,27 @@ const BlogPostContent = ({ content, category, authorName, authorRole, authorAvat
           </div>
         )}
 
-        {/* Author Footer - Fixed Visuals */}
-        <div className="mt-32 pt-16 border-t border-zinc-100 flex flex-col md:flex-row items-center md:items-start gap-8 bg-zinc-50/50 p-8 ">
+        {/* Author Footer - Nobibecode SaaS Executive Style */}
+        <div className="mt-20 pt-10 border-t border-zinc-200/80 flex flex-col md:flex-row items-center md:items-start gap-6 bg-zinc-50 p-6 rounded-2xl border border-zinc-200">
           <img
-              src={fixedAvatar}
-              alt={authorName}
-              loading="lazy"
-              className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-sm"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = '/uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png';
-              }}
-            />
+            src={fixedAvatar}
+            alt={authorName}
+            loading="lazy"
+            className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-xs shrink-0"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = '/uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png';
+            }}
+          />
 
-          <div className="flex-1 text-center md:text-left">
-            <h4 className="text-2xl font-black text-black tracking-tighter mb-1 uppercase italic">{authorName}</h4>
-            <p className="text-revgreen font-bold uppercase tracking-[0.3em] text-xxs mb-4">{authorRole}</p>
-            <p className="text-zinc-500 text-sm leading-relaxed font-medium uppercase tracking-wider opacity-80">
-              Especialista Sênior em Growth e Estratégia de Receita. Focado em transformar operações complexas em máquinas de crescimento previsíveis e escaláveis.
+          <div className="flex-1 text-center md:text-left space-y-1.5">
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <h4 className="text-base font-bold text-zinc-900 tracking-tight">{authorName}</h4>
+              <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#00CC6A] text-black w-fit mx-auto md:mx-0">
+                {authorRole}
+              </span>
+            </div>
+            <p className="text-xs text-zinc-500 leading-relaxed font-normal">
+              Especialista em Growth e Estratégia de Receita B2B. Focado em transformar operações complexas em máquinas de crescimento previsíveis e escaláveis.
             </p>
           </div>
         </div>

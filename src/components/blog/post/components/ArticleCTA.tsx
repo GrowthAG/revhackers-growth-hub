@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 interface ArticleCTAProps {
     title?: string;
@@ -11,56 +12,50 @@ interface ArticleCTAProps {
 }
 
 const ArticleCTA = ({
-    title = "Ready to run?",
-    description = "Transforme sua operação comercial com a nossa infraestrutura de Growth.",
+    title = "Pronto para escalar sua operação?",
+    description = "Transforme sua operação comercial com nossa infraestrutura de Growth e inteligência de receita.",
     primaryBtnText = "Agendar Diagnóstico",
     secondaryBtnText,
     onPrimaryClick,
     onSecondaryClick
 }: ArticleCTAProps) => {
     return (
-        <div className="bg-white border-y-2 border-black/5 p-8 md:p-12 text-left relative overflow-hidden group my-16">
-            {/* Gamification Accent */}
-            <div className="absolute top-0 left-0 w-1 h-full bg-revgreen group-hover:w-2 transition-all duration-300"></div>
+        <div className="bg-zinc-50 border border-zinc-200/80 rounded-2xl p-8 md:p-10 text-left relative overflow-hidden my-12 shadow-xs space-y-6">
+            <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-[#00CC6A] text-black">
+                    <Sparkles size={12} /> PRÓXIMO PASSO
+                </span>
+            </div>
 
-            <div className="relative z-10 pl-6">
-                <div className="flex items-center gap-3 mb-4">
-                    <span className="text-xxs font-mono uppercase tracking-[0.2em] text-revgreen font-bold">
-                        Next Step
-                    </span>
-                    <div className="h-px w-8 bg-revgreen/30"></div>
-                </div>
-
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-zinc-900 tracking-tight leading-none">
+            <div className="space-y-3 max-w-2xl">
+                <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 tracking-tight leading-snug">
                     {title}
                 </h2>
 
-                <p className="text-lg text-zinc-600 mb-10 max-w-3xl font-light leading-relaxed text-balance">
+                <p className="text-sm md:text-base text-zinc-600 font-normal leading-relaxed">
                     {description}
                 </p>
-
-                <div className="flex flex-col md:flex-row justify-start gap-4 items-stretch md:items-center">
-                    <Button
-                        className="bg-black text-white px-8 py-6 text-xs uppercase tracking-[0.15em] hover:bg-revgreen hover:text-black rounded-none font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
-                        onClick={onPrimaryClick}
-                    >
-                        {primaryBtnText}
-                    </Button>
-
-                    {secondaryBtnText && (
-                        <Button
-                            variant="outline"
-                            className="border-2 border-black text-black px-8 py-6 text-xs uppercase tracking-[0.15em] bg-transparent hover:bg-black hover:text-white rounded-none font-bold transition-all"
-                            onClick={onSecondaryClick}
-                        >
-                            {secondaryBtnText}
-                        </Button>
-                    )}
-                </div>
             </div>
 
-            {/* Minimalist Background Decoration */}
-            <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-zinc-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                <Button
+                    className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-10 px-5 text-xs font-bold tracking-wide shadow-none gap-2 flex items-center transition-all border border-zinc-800"
+                    onClick={onPrimaryClick}
+                >
+                    <span>{primaryBtnText}</span>
+                    <ArrowRight size={15} className="text-[#00CC6A]" />
+                </Button>
+
+                {secondaryBtnText && (
+                    <Button
+                        variant="outline"
+                        className="bg-white border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg h-10 px-5 text-xs font-bold tracking-wide transition-all"
+                        onClick={onSecondaryClick}
+                    >
+                        {secondaryBtnText}
+                    </Button>
+                )}
+            </div>
         </div>
     );
 };
