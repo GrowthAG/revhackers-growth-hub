@@ -294,14 +294,14 @@ const DEMO_PROJECTS: ProjectRow[] = [
   },
 ];
 
-// ---- Sub-components (Nobibecode Dark SaaS Theme) ----
+// ---- Sub-components (Clean SaaS Theme) ----
 
 const MetricCard = ({ label, value, sub }: { label: string; value: string | number; sub?: string }) => (
-  <div className="bg-zinc-900/80 border border-zinc-800/90 p-6 rounded-2xl flex flex-col justify-between hover:border-[#00CC6A]/50 transition-all duration-300 group shadow-xl">
-    <p className="text-xs font-mono font-bold uppercase tracking-widest text-zinc-400 mb-2 group-hover:text-[#00CC6A] transition-colors">{label}</p>
+  <div className="bg-white border border-zinc-200 p-6 rounded-xl flex flex-col justify-between hover:border-zinc-300 transition-all duration-200 shadow-sm">
+    <p className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 mb-2">{label}</p>
     <div>
-      <p className="text-3xl font-black text-white tracking-tight tabular-nums">{value}</p>
-      {sub && <p className="text-xs font-medium text-zinc-400 mt-1.5">{sub}</p>}
+      <p className="text-3xl font-black text-zinc-900 tracking-tight tabular-nums">{value}</p>
+      {sub && <p className="text-xs font-medium text-zinc-500 mt-1.5">{sub}</p>}
     </div>
   </div>
 );
@@ -1130,73 +1130,72 @@ export const RevenueCockpit: React.FC = () => {
   return (
     <>
       <AdminLayout>
-        <div className="min-h-screen bg-[#09090b] text-white">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-14 py-8 space-y-10">
+        <div className="space-y-8">
 
-            {/* ── Top bar ─────────────────────────────────────────────────── */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-zinc-800/80">
-              <div>
-                <p className="text-xxs font-mono font-bold uppercase tracking-[0.25em] text-[#00CC6A] mb-2">
-                  REVHACKERS REVENUE ENGINE • COCKPIT DE RECEITA
-                </p>
-                <h1 className="text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.05]">
-                  Pipeline & Gestão
-                </h1>
-              </div>
-              <div className="flex gap-3 shrink-0">
-                <button
-                  onClick={() => loadAll()}
-                  className="w-10 h-10 border border-zinc-800 rounded-xl bg-zinc-900 flex items-center justify-center hover:bg-zinc-800 text-zinc-300 transition-colors shadow-lg"
-                  title="Atualizar dados"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                </button>
-                {activeTab === 'vendas' && (
-                  <Button
-                    onClick={() => setLeadDrawerOpen(true)}
-                    className="bg-[#00CC6A] hover:bg-[#00b35c] text-black font-black uppercase tracking-widest text-xs rounded-xl h-10 px-6 flex items-center gap-2 transition-all shadow-lg shadow-[#00CC6A]/20"
-                  >
-                    <Plus className="w-4 h-4 stroke-[3]" /> <span>Novo Lead</span>
-                  </Button>
-                )}
-              </div>
-            </div>
-
-            {/* ── Conciliação de Cobranças GHL ───────────────────────────── */}
+          {/* ── Top bar ─────────────────────────────────────────────────── */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-zinc-200">
             <div>
-              <BillingAnalyticsWidget />
+              <p className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400 mb-1">
+                RevHackers Engine • Cockpit de Receita
+              </p>
+              <h1 className="text-3xl md:text-4xl font-black text-zinc-900 tracking-tight">
+                Pipeline & Gestão
+              </h1>
             </div>
-
-            {/* ── KPI Row ─────────────────────────────────────────────────── */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-              {activeTab === 'vendas' ? (
-                <>
-                  <MetricCard label="Qualified Leads" value={diagnostico.length} sub="Topo de funil (Inbound & Outbound)" />
-                  <MetricCard label="Active Deals" value={vendas.length} sub={totalPipelineValue > 0 ? `${formatCurrency(totalPipelineValue)} no Pipe real` : 'Pipeline ativo'} />
-                  <MetricCard label="Average Cycle" value={`${avgDaysVendas}d`} sub="Dias médios em negociação" />
-                  <MetricCard label="Win Rate" value={`${winRate}%`} sub="Conversão histórica apurada" />
-                </>
-              ) : (
-                <>
-                  <MetricCard label="Active Portfolio" value={execucao.length} sub="Projetos vivos na base" />
-                  <MetricCard label="Activation Rate" value={`${activationRate}%`} sub="Engajamento inicial Pós-Venda" />
-                  <MetricCard label="Time-To-Value" value={`${avgTTV}d`} sub="Dias médios até ativação" />
-                  <MetricCard label="Overdue Risk" value={totalOverdue} sub={totalOverdue > 0 ? "Tarefas cronicamente atrasadas" : "Gargalo zero"} />
-                </>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => loadAll()}
+                className="w-9 h-9 border border-zinc-200 rounded-lg bg-white flex items-center justify-center hover:bg-zinc-50 text-zinc-600 transition-colors shadow-none"
+                title="Atualizar dados"
+              >
+                <RefreshCw className="w-4 h-4 text-zinc-500" />
+              </button>
+              {activeTab === 'vendas' && (
+                <Button
+                  onClick={() => setLeadDrawerOpen(true)}
+                  className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold uppercase tracking-wider shadow-none border border-zinc-800 flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4 text-[#00CC6A]" /> <span>Novo Lead</span>
+                </Button>
               )}
             </div>
+          </div>
 
-            {/* ── Tab Navigator ───────────────────────────────────────── */}
-            <div className="flex flex-wrap items-center gap-0 border-b border-zinc-800/80">
-              <button
-                onClick={() => setActiveTab('vendas')}
-                className={cn(
-                  'px-6 py-3.5 text-xs font-mono font-bold uppercase tracking-[0.15em] border-b-2 transition-all',
-                  activeTab === 'vendas'
-                    ? 'border-[#00CC6A] text-[#00CC6A] bg-[#00CC6A]/5'
-                    : 'border-transparent text-zinc-400 hover:text-zinc-200',
-                )}
-              >
+          {/* ── Conciliação de Cobranças GHL ───────────────────────────── */}
+          <div>
+            <BillingAnalyticsWidget />
+          </div>
+
+          {/* ── KPI Row ─────────────────────────────────────────────────── */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {activeTab === 'vendas' ? (
+              <>
+                <MetricCard label="Qualified Leads" value={diagnostico.length} sub="Topo de funil (Inbound & Outbound)" />
+                <MetricCard label="Active Deals" value={vendas.length} sub={totalPipelineValue > 0 ? `${formatCurrency(totalPipelineValue)} no Pipe real` : 'Pipeline ativo'} />
+                <MetricCard label="Average Cycle" value={`${avgDaysVendas}d`} sub="Dias médios em negociação" />
+                <MetricCard label="Win Rate" value={`${winRate}%`} sub="Conversão histórica apurada" />
+              </>
+            ) : (
+              <>
+                <MetricCard label="Active Portfolio" value={execucao.length} sub="Projetos vivos na base" />
+                <MetricCard label="Activation Rate" value={`${activationRate}%`} sub="Engajamento inicial Pós-Venda" />
+                <MetricCard label="Time-To-Value" value={`${avgTTV}d`} sub="Dias médios até ativação" />
+                <MetricCard label="Overdue Risk" value={totalOverdue} sub={totalOverdue > 0 ? "Tarefas cronicamente atrasadas" : "Gargalo zero"} />
+              </>
+            )}
+          </div>
+
+          {/* ── Tab Navigator ───────────────────────────────────────── */}
+          <div className="flex flex-wrap items-center gap-0 border-b border-zinc-200">
+            <button
+              onClick={() => setActiveTab('vendas')}
+              className={cn(
+                'px-5 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all',
+                activeTab === 'vendas'
+                  ? 'border-zinc-950 text-zinc-950'
+                  : 'border-transparent text-zinc-400 hover:text-zinc-700',
+              )}
+            >
                 Pipeline de Vendas
               </button>
               <button
@@ -1760,8 +1759,7 @@ export const RevenueCockpit: React.FC = () => {
             </div>}
 
           </div>
-        </div>
-      </AdminLayout>
+        </AdminLayout>
 
       {/* War Room Sheet - Lead Dossie */}
       <LeadWarRoomSheet
