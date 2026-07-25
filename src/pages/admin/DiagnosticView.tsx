@@ -39,17 +39,17 @@ export default function DiagnosticView() {
         }
     }
 
-    if (loading) return <div className="h-screen flex items-center justify-center bg-zinc-50"><span className="text-zinc-400 font-mono text-xs animate-pulse">CARREGANDO DIAGNÓSTICO...</span></div>;
+    if (loading) return <div className="h-screen flex items-center justify-center bg-white shadow-sm"><span className="text-zinc-400 font-mono text-xs animate-pulse">CARREGANDO DIAGNÓSTICO...</span></div>;
 
     if (!diagnostic) return (
-        <div className="h-screen flex flex-col items-center justify-center bg-zinc-50 gap-4">
+        <div className="h-screen flex flex-col items-center justify-center bg-white shadow-sm gap-4">
             <span className="text-zinc-400 font-mono text-xs">DIAGNÓSTICO NÃO DISPONÍVEL</span>
             <Button onClick={() => navigate(`/admin/planejamento/${id}`)} variant="outline">Ir para Gerador</Button>
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-zinc-50 font-sans text-zinc-900 pb-20">
+        <div className="min-h-screen bg-white shadow-sm font-sans text-zinc-900 pb-20">
             {/* HEADER */}
             <header className="bg-white border-b border-zinc-200 sticky top-0 z-10 print:hidden">
                 <div className="max-w-[1600px] mx-auto px-10 md:px-16 lg:px-20 py-4 flex items-center justify-between">
@@ -72,7 +72,7 @@ export default function DiagnosticView() {
                         <Button onClick={() => window.print()} variant="outline" className="bg-white text-black font-bold uppercase tracking-widest text-xs h-9 px-4">
                             Exportar PDF
                         </Button>
-                        <Button onClick={() => navigate(`/admin/planejamento/${id}`)} className="bg-black text-white hover:bg-revgreen hover:text-black transition-colors h-9 text-xxs font-black uppercase tracking-widest rounded-none">
+                        <Button onClick={() => navigate(`/admin/planejamento/${id}`)} className="bg-black text-white hover:bg-revgreen hover:text-black transition-colors h-9 text-xs font-medium rounded-none">
                             Ver Planejamento Final
                             <ArrowRight className="w-3 h-3 ml-2" />
                         </Button>
@@ -86,7 +86,7 @@ export default function DiagnosticView() {
                 <section className="space-y-6 print:break-inside-avoid">
                     <div className="flex items-center gap-4 border-b border-zinc-200 pb-4">
                         <div className="h-8 w-8 bg-zinc-100 flex items-center justify-center text-zinc-400 font-bold">01</div>
-                        <h2 className="text-xl font-black tracking-tight text-black">O que entendemos (Espelho)</h2>
+                        <h2 className="text-xl font-semibold tracking-tight text-black">O que entendemos (Espelho)</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <ContextCard label="Segmento" value={diagnostic.context_mirror.segment} />
@@ -100,7 +100,7 @@ export default function DiagnosticView() {
                 <section className="space-y-6 mt-16 print:mt-10 print:break-inside-avoid">
                     <div className="flex items-center gap-4 border-b border-zinc-200 pb-4">
                         <div className="h-8 w-8 bg-zinc-100 flex items-center justify-center text-zinc-400 font-bold">02</div>
-                        <h2 className="text-xl font-black tracking-tight text-black">Sinais & Riscos Detectados</h2>
+                        <h2 className="text-xl font-semibold tracking-tight text-black">Sinais & Riscos Detectados</h2>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -141,7 +141,7 @@ export default function DiagnosticView() {
                     <div className="flex items-center gap-4 border-b border-zinc-200 pb-4">
                         <div className="h-8 w-8 bg-black text-white flex items-center justify-center font-bold">03</div>
                         <div className="flex-1">
-                            <h2 className="text-2xl font-black tracking-tight text-black">Decisões Estratégicas</h2>
+                            <h2 className="text-2xl font-semibold tracking-tight text-black">Decisões Estratégicas</h2>
                             <p className="text-sm font-medium text-zinc-500">Justificativas técnicas e implicações do escopo recomendado.</p>
                         </div>
                     </div>
@@ -160,7 +160,7 @@ export default function DiagnosticView() {
                         Este documento serve como base técnica e mercadológica inquestionável.
                         Ao avançar, o algoritmo formulará o Plano de Ação Estratégica.
                     </p>
-                    <Button onClick={() => navigate(`/admin/planejamento/${id}`)} className="bg-white text-black hover:bg-revgreen hover:text-black font-black uppercase tracking-widest h-12 px-8 rounded-none transition-colors">
+                    <Button onClick={() => navigate(`/admin/planejamento/${id}`)} className="bg-white text-black hover:bg-revgreen hover:text-black font-semibold uppercase tracking-widest h-12 px-8 rounded-none transition-colors">
                         Aprovar e Ver Roadmap
                     </Button>
                 </section>
@@ -201,7 +201,7 @@ const DecisionBlock = ({ decision }: { decision: StrategicDecision }) => (
             </ul>
         </div>
 
-        <div className="md:w-1/3 border-t md:border-t-0 md:border-l border-zinc-100 md:pl-8 pt-4 md:pt-0 bg-zinc-50/50 -mr-6 -my-6 p-6 flex flex-col justify-center">
+        <div className="md:w-1/3 border-t md:border-t-0 md:border-l border-zinc-100 md:pl-8 pt-4 md:pt-0 bg-white shadow-sm/50 -mr-6 -my-6 p-6 flex flex-col justify-center">
             <p className="text-xxs text-zinc-400 font-bold uppercase tracking-widest mb-2">Implicação Real</p>
             <p className="text-xs text-zinc-800 font-medium leading-relaxed">
                 "{decision.implication}"

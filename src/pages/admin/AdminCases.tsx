@@ -86,13 +86,13 @@ const AdminCases = () => {
                         <Button
                             variant="outline"
                             onClick={handleMigrate}
-                            className="bg-white border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-xs font-mono font-bold tracking-wider uppercase h-9 px-3 gap-1.5"
+                            className="bg-white border-zinc-200 hover:bg-white shadow-sm text-zinc-700 text-xs font-mono font-bold tracking-wider uppercase h-9 px-3 gap-1.5"
                         >
                             <Download size={14} /> MIGRAR ESTÁTICO
                         </Button>
                         <Button
                             onClick={() => navigate('/admin/cases/new')}
-                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-800"
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-200"
                         >
                             <Plus size={15} className="text-[#00CC6A]" /> NOVO CASE
                         </Button>
@@ -100,7 +100,7 @@ const AdminCases = () => {
                 </div>
 
                 {/* Control Bar: Search */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-200">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-sm p-2 rounded-xl border border-zinc-200">
                     <div className="relative flex-1 max-w-md">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                         <Input
@@ -154,7 +154,7 @@ const AdminCases = () => {
                                 </div>
 
                                 {item.primary_metric && (
-                                    <div className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-900 bg-zinc-50 border border-zinc-200/80 px-2.5 py-1 rounded-md">
+                                    <div className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-900 bg-white shadow-sm border border-zinc-200/80 px-2.5 py-1 rounded-md">
                                         <TrendingUp size={13} className="text-[#00CC6A]" />
                                         <span>{item.primary_metric}</span>
                                     </div>

@@ -193,7 +193,7 @@ const AdminSync = () => {
                 <div className="container-custom py-12">
                     <div className="max-w-4xl mx-auto">
                         <div className="mb-8">
-                            <h1 className="text-4xl font-black uppercase tracking-wider mb-2">Sincronização</h1>
+                            <h1 className="text-4xl font-semibold uppercase tracking-wider mb-2">Sincronização</h1>
                             <p className="text-zinc-600">Popular dados estáticos no Supabase</p>
                         </div>
 
@@ -225,7 +225,7 @@ const AdminSync = () => {
                                     </div>
 
                                     {syncing && (
-                                        <div className="p-4 bg-zinc-50 border border-zinc-200 ">
+                                        <div className="p-4 bg-white shadow-sm border border-zinc-200 ">
                                             <div className="flex items-center gap-2 mb-2">
                                                 <RefreshCw className="w-4 h-4 animate-spin text-zinc-900" />
                                                 <span className="font-medium text-zinc-900">Sincronizando {progress.type}...</span>

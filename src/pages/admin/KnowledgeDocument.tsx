@@ -383,7 +383,7 @@ const KnowledgeDocumentEditor = () => {
                     />
 
                     {/* Cover Image Area */}
-                    <div className="group relative mb-8 overflow-hidden bg-zinc-50 border-zinc-100 min-h-[60px] hover:bg-zinc-100 transition-all flex flex-col justify-end">
+                    <div className="group relative mb-8 overflow-hidden bg-white shadow-sm border-zinc-100 min-h-[60px] hover:bg-zinc-100 transition-all flex flex-col justify-end">
                         <input
                             type="file"
                             ref={coverInputRef}
@@ -433,7 +433,7 @@ const KnowledgeDocumentEditor = () => {
                             <select 
                                 value={visibility} 
                                 onChange={e => setVisibility(e.target.value)}
-                                className="text-xs bg-zinc-50 border border-zinc-200 text-zinc-700 px-3 py-1.5 focus:ring-black focus:border-black outline-none font-medium"
+                                className="text-xs bg-white shadow-sm border border-zinc-200 text-zinc-700 px-3 py-1.5 focus:ring-black focus:border-black outline-none font-medium"
                             >
                                 <option value="internal">Interno (Somente Admin)</option>
                                 <option value="shared">Compartilhável (Visível no Hub)</option>
@@ -446,7 +446,7 @@ const KnowledgeDocumentEditor = () => {
                             <select 
                                 value={category} 
                                 onChange={e => setCategory(e.target.value)}
-                                className="text-xs bg-zinc-50 border border-zinc-200 text-zinc-700 px-3 py-1.5 focus:ring-black focus:border-black outline-none font-medium"
+                                className="text-xs bg-white shadow-sm border border-zinc-200 text-zinc-700 px-3 py-1.5 focus:ring-black focus:border-black outline-none font-medium"
                             >
                                 <option value="geral">Geral</option>
                                 <option value="kickoff">Kickoff & Alinhamento</option>
@@ -510,7 +510,7 @@ const KnowledgeDocumentEditor = () => {
                                                         <div key={`table-${i}`} className="my-6 overflow-x-auto border border-zinc-200 shadow-sm">
                                                             <table className="w-full text-sm text-left">
                                                                 <thead>
-                                                                    <tr className="bg-zinc-50 border-b border-zinc-200">
+                                                                    <tr className="bg-white shadow-sm border-b border-zinc-200">
                                                                         {tableLines[0].split('|').filter(c => c.trim()).map((h, k) => (
                                                                             <th key={k} className="px-4 py-3 font-semibold text-zinc-700">{h.trim()}</th>
                                                                         ))}
@@ -518,7 +518,7 @@ const KnowledgeDocumentEditor = () => {
                                                                 </thead>
                                                                 <tbody>
                                                                     {tableLines.slice(2).map((row, k) => ( // Skip header and separator
-                                                                        <tr key={k} className="border-b border-zinc-100 last:border-0 hover:bg-zinc-50/50 transition-colors">
+                                                                        <tr key={k} className="border-b border-zinc-100 last:border-0 hover:bg-white shadow-sm/50 transition-colors">
                                                                             {row.split('|').filter(c => c.trim()).map((c, j) => (
                                                                                 <td key={j} className="px-4 py-2.5 text-zinc-600">{c.trim()}</td>
                                                                             ))}
@@ -558,7 +558,7 @@ const KnowledgeDocumentEditor = () => {
                                                         i++;
                                                     }
                                                     elements.push(
-                                                        <div key={`banner-${i}`} className="my-6 bg-zinc-50 border-l-4 border-zinc-900 p-4 rounded-r-lg flex items-start gap-4">
+                                                        <div key={`banner-${i}`} className="my-6 bg-white shadow-sm border-l-4 border-zinc-900 p-4 rounded-r-lg flex items-start gap-4">
                                                             <div className="mt-1"><FileText className="w-5 h-5 text-zinc-900" /></div>
                                                             <div className="flex-1">
                                                                 <h4 className="font-bold text-zinc-900 text-sm uppercase tracking-wider mb-1">Nota</h4>
@@ -584,7 +584,7 @@ const KnowledgeDocumentEditor = () => {
 
                                                 // 6. Simple Blockquotes
                                                 if (line.startsWith('> ')) {
-                                                    elements.push(<blockquote key={i} className="border-l-4 border-zinc-300 pl-4 py-1 my-2 text-zinc-500 italic bg-zinc-50/30 rounded-r">{line.replace('> ', '')}</blockquote>);
+                                                    elements.push(<blockquote key={i} className="border-l-4 border-zinc-300 pl-4 py-1 my-2 text-zinc-500 italic bg-white shadow-sm/30 rounded-r">{line.replace('> ', '')}</blockquote>);
                                                     i++; continue;
                                                 }
 
@@ -632,7 +632,7 @@ const KnowledgeDocumentEditor = () => {
                                 (commandType === 'task') // Task handles its own empty state or filtering
                             ) && (
                                     <div className="absolute top-20 left-10 z-50 w-64 bg-white shadow-sm border border-zinc-200 animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
-                                        <div className="bg-zinc-50/50 px-3 py-2 border-b border-zinc-50">
+                                        <div className="bg-white shadow-sm/50 px-3 py-2 border-b border-zinc-50">
                                             <span className="text-xxs font-bold uppercase tracking-widest text-zinc-400">
                                                 {commandType === 'slash' ? 'Comandos' : commandType === 'task' ? 'Vincular Tarefa' : 'Mencionar'}
                                             </span>
@@ -640,7 +640,7 @@ const KnowledgeDocumentEditor = () => {
                                         <div className="p-1 max-h-60 overflow-y-auto">
                                             {commandType === 'task' ? (
                                                 filteredTasks.length > 0 ? filteredTasks.map(task => (
-                                                    <button key={task.id} onClick={() => insertText(`[task:${task.id}:${task.title}] `)} className="w-full flex items-center gap-3 p-2 hover:bg-zinc-50 transition-colors group text-left border-b border-zinc-50 last:border-0 relative">
+                                                    <button key={task.id} onClick={() => insertText(`[task:${task.id}:${task.title}] `)} className="w-full flex items-center gap-3 p-2 hover:bg-white shadow-sm transition-colors group text-left border-b border-zinc-50 last:border-0 relative">
                                                         <div className="w-1 absolute left-0 top-2 bottom-2 bg-zinc-900 rounded-r-lg" />
                                                         <div className="pl-4">
                                                             <span className="text-sm font-bold text-zinc-800 group-hover:text-black block">{task.title}</span>
@@ -649,14 +649,14 @@ const KnowledgeDocumentEditor = () => {
                                                     </button>
                                                 )) : <div className="p-4 text-xs text-zinc-400 text-center">Nenhuma tarefa encontrada.</div>
                                             ) : commandType === 'slash' ? filteredCommands.map(cmd => (
-                                                <button key={cmd.id} onClick={cmd.action} className="w-full flex items-center gap-3 p-2 hover:bg-zinc-50 transition-colors group text-left">
+                                                <button key={cmd.id} onClick={cmd.action} className="w-full flex items-center gap-3 p-2 hover:bg-white shadow-sm transition-colors group text-left">
                                                     <div className="w-8 h-8 bg-white border border-zinc-100 flex items-center justify-center text-zinc-400 group-hover:border-zinc-300 group-hover:text-black transition-all">
                                                         <cmd.icon size={14} />
                                                     </div>
                                                     <span className="text-sm font-medium text-zinc-600 group-hover:text-black">{cmd.label}</span>
                                                 </button>
                                             )) : filteredUsers.map(user => (
-                                                <button key={user.id} onClick={() => insertText(`@${user.name}`)} className="w-full flex items-center gap-3 p-2 hover:bg-zinc-50 transition-colors group text-left">
+                                                <button key={user.id} onClick={() => insertText(`@${user.name}`)} className="w-full flex items-center gap-3 p-2 hover:bg-white shadow-sm transition-colors group text-left">
                                                     <div className="w-8 h-8 bg-zinc-100 flex items-center justify-center text-xs font-bold text-zinc-500 group-hover:bg-black group-hover:text-white transition-all">
                                                         {user.name.charAt(0)}
                                                     </div>

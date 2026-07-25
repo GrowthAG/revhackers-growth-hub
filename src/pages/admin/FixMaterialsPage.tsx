@@ -116,7 +116,7 @@ const FixMaterialsPage = () => {
                         <p className="text-sm text-zinc-500 text-center">Isso vai apagar os dados incorretos e inserir os materiais oficiais automaticamente.</p>
                     </div>
 
-                    <div className="bg-zinc-950 text-green-400 p-6 shadow-inner min-h-[400px] font-mono text-sm leading-relaxed whitespace-pre-wrap border border-zinc-800">
+                    <div className="bg-zinc-950 text-green-400 p-6 shadow-inner min-h-[400px] font-mono text-sm leading-relaxed whitespace-pre-wrap border border-zinc-200">
                         {status}
                     </div>
                 </div>

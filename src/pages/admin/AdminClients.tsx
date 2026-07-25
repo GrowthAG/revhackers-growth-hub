@@ -118,7 +118,7 @@ export const AdminClients = () => {
                     <div className="flex items-center gap-2">
                         <Button
                             onClick={() => navigate('/admin/clients/novo')}
-                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-800"
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-200"
                         >
                             <Plus size={15} className="text-[#00CC6A]" /> NOVO CLIENTE
                         </Button>
@@ -133,7 +133,7 @@ export const AdminClients = () => {
                             <Building2 size={15} className="text-zinc-400" />
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-black text-zinc-900 tabular-nums">{clients.length}</span>
+                            <span className="text-2xl font-semibold text-zinc-900 tabular-nums">{clients.length}</span>
                             <span className="text-xs text-zinc-400 font-medium">empresas</span>
                         </div>
                     </div>
@@ -144,7 +144,7 @@ export const AdminClients = () => {
                             <div className="w-2 h-2 rounded-full bg-[#00CC6A]"></div>
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-black text-[#00CC6A] tabular-nums">{activeCount}</span>
+                            <span className="text-2xl font-semibold text-[#00CC6A] tabular-nums">{activeCount}</span>
                             <span className="text-xs text-zinc-500 font-medium">em execução</span>
                         </div>
                     </div>
@@ -155,7 +155,7 @@ export const AdminClients = () => {
                             <Clock size={15} className="text-zinc-400" />
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-black text-zinc-900 tabular-nums">{onboardingCount}</span>
+                            <span className="text-2xl font-semibold text-zinc-900 tabular-nums">{onboardingCount}</span>
                             <span className="text-xs text-zinc-500 font-medium">em setup</span>
                         </div>
                     </div>
@@ -166,14 +166,14 @@ export const AdminClients = () => {
                             <Zap size={15} className="text-[#00CC6A]" />
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-black text-zinc-900 tabular-nums">{reiProjects.length}</span>
+                            <span className="text-2xl font-semibold text-zinc-900 tabular-nums">{reiProjects.length}</span>
                             <span className="text-xs text-zinc-400 font-medium">vinculados</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Search & Filter Controls — Strict Zinc Scale */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-200">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-sm p-2 rounded-xl border border-zinc-200">
                     <div className="relative flex-1">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                         <Input
@@ -222,7 +222,7 @@ export const AdminClients = () => {
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="border-b border-zinc-200 bg-zinc-50 text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                                    <tr className="border-b border-zinc-200 bg-white shadow-sm text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
                                         <th className="py-3.5 px-4">Cliente & Empresa</th>
                                         <th className="py-3.5 px-4">Contato</th>
                                         <th className="py-3.5 px-4">Status</th>
@@ -239,12 +239,12 @@ export const AdminClients = () => {
                                         return (
                                             <tr
                                                 key={client.id}
-                                                className="hover:bg-zinc-50/80 transition-colors group"
+                                                className="hover:bg-white shadow-sm/80 transition-colors group"
                                             >
                                                 {/* Cliente & Empresa */}
                                                 <td className="py-3.5 px-4">
                                                     <div className="flex items-center gap-3">
-                                                        <div className="w-9 h-9 rounded-lg bg-zinc-950 flex items-center justify-center shrink-0 border border-zinc-800 text-white font-black text-xs">
+                                                        <div className="w-9 h-9 rounded-lg bg-zinc-950 flex items-center justify-center shrink-0 border border-zinc-200 text-white font-semibold text-xs">
                                                             {client.logo_url ? (
                                                                 <img src={client.logo_url} alt={client.name} className="w-5 h-5 object-contain" />
                                                             ) : (

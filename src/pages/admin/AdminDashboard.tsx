@@ -114,7 +114,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="flex items-center gap-2">
             <Button
               onClick={() => navigate('/admin/clients/novo')}
-              className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-medium tracking-wide shadow-xs gap-2 flex items-center transition-all border border-zinc-800"
+              className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-medium tracking-wide shadow-xs gap-2 flex items-center transition-all border border-zinc-200"
             >
               <Plus size={15} className="text-[#00CC6A]" /> Novo Cliente
             </Button>
@@ -203,7 +203,7 @@ export const AdminDashboard: React.FC = () => {
                     <div
                       key={client.id}
                       onClick={() => navigate('/admin/clients')}
-                      className="py-3.5 flex items-center justify-between hover:bg-zinc-50/60 px-2 rounded-lg transition-colors cursor-pointer group"
+                      className="py-3.5 flex items-center justify-between hover:bg-white shadow-sm/60 px-2 rounded-lg transition-colors cursor-pointer group"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-lg bg-zinc-950 flex items-center justify-center text-white font-bold text-xs">
@@ -283,7 +283,7 @@ export const AdminDashboard: React.FC = () => {
                     <div
                       key={proj.id}
                       onClick={() => navigate(`/admin/rei?search=${encodeURIComponent(proj.clientEmail)}`)}
-                      className="p-3 border border-zinc-200/60 rounded-lg hover:border-zinc-300 transition-all cursor-pointer bg-zinc-50/50 hover:bg-white"
+                      className="p-3 border border-zinc-200/60 rounded-lg hover:border-zinc-300 transition-all cursor-pointer bg-white shadow-sm/50 hover:bg-white"
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-zinc-900">{proj.clientName}</span>

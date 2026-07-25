@@ -117,7 +117,7 @@ const MeetingRecordingDoc = () => {
                     {/* Page Icon & Title Layer */}
                     <div className="mb-4">
                         <div className="text-5xl mb-6">🎥</div> {/* Emoji Ícone estilo Notion */}
-                        <h1 className="text-4xl lg:text-5xl font-black tracking-tight text-zinc-900 leading-[1.15] outline-none">
+                        <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight text-zinc-900 leading-[1.15] outline-none">
                             {documentTitle}
                         </h1>
                     </div>
@@ -144,9 +144,9 @@ const MeetingRecordingDoc = () => {
 
                     {/* Subheadline Context (Quote / Summary block) */}
                     {recording.ai_summary && (
-                        <div className="mb-10 p-5 border-l-4 border-zinc-900 bg-zinc-50/50">
+                        <div className="mb-10 p-5 border-l-4 border-zinc-900 bg-white shadow-sm/50">
                             <p className="text-lg leading-relaxed text-zinc-600 font-serif">
-                                <strong className="text-sm uppercase tracking-widest font-sans font-black text-zinc-900 block mb-2 opacity-60">Contexto Geral</strong>
+                                <strong className="text-sm uppercase tracking-widest font-sans font-semibold text-zinc-900 block mb-2 opacity-60">Contexto Geral</strong>
                                 "{recording.ai_summary}"
                             </p>
                         </div>
@@ -177,7 +177,7 @@ const MeetingRecordingDoc = () => {
                     <article className="prose prose-zinc max-w-none">
                         
                         {/* Extracted Intelligence / AI Notes */}
-                        <h2 className="flex items-center gap-2 font-black text-2xl tracking-tight mb-6">
+                        <h2 className="flex items-center gap-2 font-semibold text-2xl tracking-tight mb-6">
                             <Cpu className="w-6 h-6 text-[#00E5FF] -mt-1" fill="currentColor" /> 
                             Notas Extraídas (AI)
                         </h2>
@@ -194,7 +194,7 @@ const MeetingRecordingDoc = () => {
                                     <div className="bg-[#f0fdf4] border border-[#bbf7d0] p-6 ">
                                         <div className="flex items-center gap-2 mb-4">
                                             <Target className="w-5 h-5 text-emerald-600" />
-                                            <h4 className="text-tiny font-black uppercase tracking-widest text-emerald-800 m-0">Sinais de Compra</h4>
+                                            <h4 className="text-tiny font-semibold uppercase tracking-widest text-emerald-800 m-0">Sinais de Compra</h4>
                                         </div>
                                         <ul className="space-y-3 m-0 p-0 list-none">
                                             {insights.proposta.sinais_compra.map((s: string, i: number) => (
@@ -211,7 +211,7 @@ const MeetingRecordingDoc = () => {
                                     <div className="bg-[#fef2f2] border border-[#fecaca] p-6 ">
                                         <div className="flex items-center gap-2 mb-4">
                                             <BrainCircuit className="w-5 h-5 text-red-600" />
-                                            <h4 className="text-tiny font-black uppercase tracking-widest text-red-800 m-0">Preocupações/Objeções</h4>
+                                            <h4 className="text-tiny font-semibold uppercase tracking-widest text-red-800 m-0">Preocupações/Objeções</h4>
                                         </div>
                                         <ul className="space-y-3 m-0 p-0 list-none">
                                             {insights.proposta.objecoes_detectadas.map((o: string, i: number) => (
@@ -225,15 +225,15 @@ const MeetingRecordingDoc = () => {
 
                                 {/* Next Actions */}
                                 {insights?.acoes_proximas && insights.acoes_proximas.length > 0 && (
-                                    <div className="bg-zinc-50 border border-zinc-200 p-6 md:col-span-2">
+                                    <div className="bg-white shadow-sm border border-zinc-200 p-6 md:col-span-2">
                                         <div className="flex items-center gap-2 mb-4">
                                             <Users className="w-5 h-5 text-zinc-600" />
-                                            <h4 className="text-tiny font-black uppercase tracking-widest text-zinc-800 m-0">Combinados / Próximos Passos</h4>
+                                            <h4 className="text-tiny font-semibold uppercase tracking-widest text-zinc-800 m-0">Combinados / Próximos Passos</h4>
                                         </div>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             {insights.acoes_proximas.map((a: string, i: number) => (
                                                 <div key={i} className="flex items-center gap-3 bg-white border border-zinc-200 p-3 shadow-sm">
-                                                    <div className="w-6 h-6 rounded border border-zinc-200 bg-zinc-50 flex items-center justify-center shrink-0" />
+                                                    <div className="w-6 h-6 rounded border border-zinc-200 bg-white shadow-sm flex items-center justify-center shrink-0" />
                                                     <span className="text-sm text-zinc-800 font-semibold leading-tight">{a}</span>
                                                 </div>
                                             ))}
@@ -246,7 +246,7 @@ const MeetingRecordingDoc = () => {
                         <div className="h-px bg-zinc-200 w-16 mb-12" />
 
                         {/* Raw Transcript */}
-                        <h2 className="flex items-center gap-2 font-black text-2xl tracking-tight mb-6">
+                        <h2 className="flex items-center gap-2 font-semibold text-2xl tracking-tight mb-6">
                             <FileText className="w-6 h-6 text-zinc-400 -mt-1" /> 
                             Transcrição Bruta
                         </h2>
@@ -255,7 +255,7 @@ const MeetingRecordingDoc = () => {
                             {recording.transcript ? (
                                 // Notion text style parsing
                                 recording.transcript.split(/(?<=[.!?])\s+(?=[A-Z])/).map((paragraph, idx) => (
-                                    <p key={idx} className="mb-6 hover:bg-zinc-50 transition-colors px-2 -mx-2">
+                                    <p key={idx} className="mb-6 hover:bg-white shadow-sm transition-colors px-2 -mx-2">
                                         {paragraph}
                                     </p>
                                 ))

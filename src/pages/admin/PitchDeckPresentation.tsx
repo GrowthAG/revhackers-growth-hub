@@ -21,15 +21,15 @@ export default function PitchDeckPresentation() {
 
     if (!project) {
         return (
-            <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center">
+            <div className="min-h-screen bg-white shadow-sm flex flex-col items-center justify-center">
                 <Loader2 className="w-12 h-12 text-[#FF004D] animate-spin mb-4" />
-                <p className="text-zinc-400 font-black uppercase tracking-widest text-xs">Carregando Motor de ROI...</p>
+                <p className="text-zinc-400 font-semibold uppercase tracking-widest text-xs">Carregando Motor de ROI...</p>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-zinc-50 text-zinc-900 relative">
+        <div className="min-h-screen bg-white shadow-sm text-zinc-900 relative">
             <Button 
                 variant="ghost" 
                 className="fixed top-6 left-6 z-50 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-200/50 font-bold uppercase tracking-widest text-2xs" 

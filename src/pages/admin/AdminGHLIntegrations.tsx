@@ -153,7 +153,7 @@ const AdminGHLIntegrations = () => {
                                 <span className="h-1.5 w-1.5 bg-[#00CC6A]" />
                                 <span className="text-xxs font-bold text-zinc-500 uppercase tracking-widest">Multi-Tenant Routing</span>
                             </div>
-                            <h1 className="text-4xl font-black tracking-tight text-zinc-900">
+                            <h1 className="text-4xl font-semibold tracking-tight text-zinc-900">
                                 Funnels Sub-Contas
                             </h1>
                             <p className="text-zinc-500 text-sm max-w-md">
@@ -163,7 +163,7 @@ const AdminGHLIntegrations = () => {
                         <div className="flex items-center gap-4">
                             <Button 
                                 onClick={startOAuthFlow}
-                                className="bg-[#00CC6A] text-black hover:bg-black hover:text-white transition-all font-black uppercase text-xs tracking-widest h-12 px-6 rounded-none shadow-none"
+                                className="bg-[#00CC6A] text-black hover:bg-black hover:text-white transition-all font-semibold uppercase text-xs tracking-widest h-12 px-6 rounded-none shadow-none"
                             >
                                 <KeyRound size={18} className="mr-2" />
                                 AUTORIZAR FUNNELS
@@ -180,7 +180,7 @@ const AdminGHLIntegrations = () => {
                                 <AlertCircle className="text-red-500" size={24} />
                             </div>
                             <div>
-                                <h4 className="font-black text-sm uppercase tracking-widest text-red-600">Alerta de Infraestrutura</h4>
+                                <h4 className="font-semibold text-sm uppercase tracking-widest text-red-600">Alerta de Infraestrutura</h4>
                                 <p className="text-xs font-bold text-zinc-500 mt-2">
                                     Para ativar o Handshake transparente, sua variável de ambiente <code>VITE_GHL_CLIENT_ID</code> precisa estar configurada.
                                 </p>
@@ -210,30 +210,30 @@ const AdminGHLIntegrations = () => {
                                             {/* Info Col */}
                                             <div className="w-full lg:w-1/4">
                                                 <div className="flex items-center gap-3 mb-2">
-                                                    <div className={cn("p-2 border-2", isMaster ? "bg-black text-white border-black" : "bg-zinc-50 text-zinc-500 border-zinc-200")}>
+                                                    <div className={cn("p-2 border-2", isMaster ? "bg-black text-white border-black" : "bg-white shadow-sm text-zinc-500 border-zinc-200")}>
                                                         <Building2 size={18} />
                                                     </div>
                                                     <div>
-                                                        <h3 className="font-black text-lg text-zinc-900 uppercase tracking-tight">{org.name}</h3>
-                                                        <span className="text-xxs font-black text-zinc-400 uppercase tracking-widest">{org.slug}</span>
+                                                        <h3 className="font-semibold text-lg text-zinc-900 uppercase tracking-tight">{org.name}</h3>
+                                                        <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest">{org.slug}</span>
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-wrap gap-2 mt-3">
                                                     {isMaster ? (
-                                                        <Badge className="bg-black text-[#00CC6A] text-[0.6rem] font-black tracking-widest uppercase rounded-none border-none py-1">
+                                                        <Badge className="bg-black text-[#00CC6A] text-[0.6rem] font-semibold tracking-widest uppercase rounded-none border-none py-1">
                                                             NÓ MASTER
                                                         </Badge>
                                                     ) : (
-                                                        <Badge variant="outline" className="text-zinc-500 border-2 border-zinc-200 bg-white text-[0.6rem] font-black tracking-widest uppercase rounded-none py-1">
+                                                        <Badge variant="outline" className="text-zinc-500 border-2 border-zinc-200 bg-white text-[0.6rem] font-semibold tracking-widest uppercase rounded-none py-1">
                                                             WORKER
                                                         </Badge>
                                                     )}
                                                     {hasAccessToken ? (
-                                                        <Badge className="bg-[#00CC6A] text-black text-[0.6rem] font-black tracking-widest uppercase rounded-none border-none py-1">
+                                                        <Badge className="bg-[#00CC6A] text-black text-[0.6rem] font-semibold tracking-widest uppercase rounded-none border-none py-1">
                                                             OAUTH ATIVO
                                                         </Badge>
                                                     ) : (
-                                                        <Badge variant="outline" className="bg-zinc-100 text-zinc-400 border-none text-[0.6rem] font-black tracking-widest uppercase rounded-none py-1">
+                                                        <Badge variant="outline" className="bg-zinc-100 text-zinc-400 border-none text-[0.6rem] font-semibold tracking-widest uppercase rounded-none py-1">
                                                             S/ CONEXÃO
                                                         </Badge>
                                                     )}
@@ -243,12 +243,12 @@ const AdminGHLIntegrations = () => {
                                             {/* Inputs Col */}
                                             <div className="w-full lg:flex-1 grid grid-cols-1 gap-6 pt-1 lg:pt-0">
                                                 <div className="space-y-2">
-                                                    <label className="text-[0.65rem] font-black text-zinc-500 uppercase tracking-widest">Location ID (Funnels)</label>
+                                                    <label className="text-[0.65rem] font-semibold text-zinc-500 uppercase tracking-widest">Location ID (Funnels)</label>
                                                     <Input 
                                                         value={editState.ghl_location_id}
                                                         onChange={(e) => handleChange(org.id, 'ghl_location_id', e.target.value)}
                                                         placeholder="Ex: oFTw9DcsKRU..."
-                                                        className="font-mono text-sm bg-zinc-50 border-2 border-zinc-200 focus-visible:ring-black focus-visible:border-black rounded-none"
+                                                        className="font-mono text-sm bg-white shadow-sm border-2 border-zinc-200 focus-visible:ring-black focus-visible:border-black rounded-none"
                                                     />
                                                     <p className="text-[0.65rem] font-bold text-zinc-400">Chave estrutural de orquestração via OAuth.</p>
                                                 </div>
@@ -258,7 +258,7 @@ const AdminGHLIntegrations = () => {
                                                 <Button 
                                                     onClick={() => handleSave(org.id, org.name)}
                                                     disabled={savingId === org.id}
-                                                    className="w-full bg-black text-white hover:bg-[#00CC6A] hover:text-black transition-all font-black uppercase text-[0.65rem] tracking-widest px-8 h-10 mt-auto rounded-none"
+                                                    className="w-full bg-black text-white hover:bg-[#00CC6A] hover:text-black transition-all font-semibold uppercase text-[0.65rem] tracking-widest px-8 h-10 mt-auto rounded-none"
                                                 >
                                                     {savingId === org.id ? <Loader2 className="animate-spin" size={16} /> : <><Save size={16} className="mr-2" /> SALVAR</>}
                                                 </Button>

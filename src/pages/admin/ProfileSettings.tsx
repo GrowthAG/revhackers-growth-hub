@@ -73,7 +73,7 @@ const ProfileSettings = () => {
         return (
             <AdminLayout>
                 <AdminPageLayout title="Meu Perfil" description="Acesso Restrito">
-                    <div className="bg-zinc-50 border border-zinc-200 text-zinc-800 p-8 text-center space-y-4">
+                    <div className="bg-white shadow-sm border border-zinc-200 text-zinc-800 p-8 text-center space-y-4">
                         <h2 className="text-xl font-bold">⚠️ MODO DE DESENVOLVIMENTO (DEV BYPASS)</h2>
                         <p>Você está usando um usuário simulado que NÃO tem permissão de escrita no banco de dados.</p>
                         <p className="font-bold">Para salvar fotos ou dados, você precisa fazer login com uma conta real.</p>
@@ -83,7 +83,7 @@ const ProfileSettings = () => {
                                 window.location.reload();
                             }}
                             variant="destructive"
-                            className="mt-4 rounded-none font-black tracking-widest text-xs uppercase"
+                            className="mt-4 rounded-none font-semibold tracking-widest text-xs uppercase"
                         >
                             SAIR E FAZER LOGIN REAL
                         </Button>
@@ -199,7 +199,7 @@ const ProfileSettings = () => {
                                     )}
                                     <label
                                         htmlFor="avatar-upload"
-                                        className="absolute inset-0 bg-black/90 flex items-center justify-center text-white text-xxs font-black uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                                        className="absolute inset-0 bg-black/90 flex items-center justify-center text-white text-xs font-medium uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                                     >
                                         Alterar Foto
                                     </label>
@@ -218,7 +218,7 @@ const ProfileSettings = () => {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-black">Fotografia</h3>
+                                    <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-black">Fotografia</h3>
                                     <p className="text-xxs text-zinc-400 uppercase tracking-widest leading-relaxed">
                                         Usada em artigos e identificação interna. Use uma foto profissional.
                                     </p>
@@ -228,7 +228,7 @@ const ProfileSettings = () => {
                                     <Button
                                         type="submit"
                                         disabled={saving || uploading}
-                                        className="w-full bg-[#00CC6A] text-black hover:bg-black hover:text-white font-black uppercase tracking-[0.2em] h-12 text-xxs rounded-none shadow-none border-none transition-all"
+                                        className="w-full bg-[#00CC6A] text-black hover:bg-black hover:text-white font-semibold uppercase tracking-[0.2em] h-12 text-xxs rounded-none shadow-none border-none transition-all"
                                     >
                                         {saving ? <Loader2 className="animate-spin h-4 w-4" /> : "Salvar Dados"}
                                     </Button>
@@ -242,24 +242,24 @@ const ProfileSettings = () => {
                                     {/* ROW 1 */}
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <Label htmlFor="full_name" className="text-xxs font-black uppercase tracking-[0.2em] text-zinc-400">Nome Completo</Label>
+                                            <Label htmlFor="full_name" className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">Nome Completo</Label>
                                             <Input
                                                 id="full_name"
                                                 name="full_name"
                                                 value={formData.full_name}
                                                 onChange={handleChange}
-                                                className="h-11 bg-zinc-50/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
+                                                className="h-11 bg-white shadow-sm/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
                                                 placeholder="EX: JOÃO SILVA"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="username" className="text-xxs font-black uppercase tracking-[0.2em] text-zinc-400">Username</Label>
+                                            <Label htmlFor="username" className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">Username</Label>
                                             <Input
                                                 id="username"
                                                 name="username"
                                                 value={formData.username}
                                                 onChange={handleChange}
-                                                className="h-11 bg-zinc-50/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
+                                                className="h-11 bg-white shadow-sm/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
                                                 placeholder="EX: JOAOSILVA"
                                             />
                                         </div>
@@ -268,24 +268,24 @@ const ProfileSettings = () => {
                                     {/* ROW 2 */}
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <Label htmlFor="job_title" className="text-xxs font-black uppercase tracking-[0.2em] text-zinc-400">Cargo / Função</Label>
+                                            <Label htmlFor="job_title" className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">Cargo / Função</Label>
                                             <Input
                                                 id="job_title"
                                                 name="job_title"
                                                 value={formData.job_title}
                                                 onChange={handleChange}
-                                                className="h-11 bg-zinc-50/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
+                                                className="h-11 bg-white shadow-sm/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
                                                 placeholder="EX: HEAD DE MARKETING"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label htmlFor="cpf" className="text-xxs font-black uppercase tracking-[0.2em] text-zinc-400">CPF / Registro</Label>
+                                            <Label htmlFor="cpf" className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">CPF / Registro</Label>
                                             <Input
                                                 id="cpf"
                                                 name="cpf"
                                                 value={formData.cpf}
                                                 onChange={handleChange}
-                                                className="h-11 bg-zinc-50/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
+                                                className="h-11 bg-white shadow-sm/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
                                                 placeholder="000.000.000-00"
                                             />
                                         </div>
@@ -293,39 +293,39 @@ const ProfileSettings = () => {
 
                                     {/* ROW 3 */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="personal_email" className="text-xxs font-black uppercase tracking-[0.2em] text-zinc-400">E-mail de Contato</Label>
+                                        <Label htmlFor="personal_email" className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">E-mail de Contato</Label>
                                         <Input
                                             id="personal_email"
                                             name="personal_email"
                                             value={formData.personal_email}
                                             onChange={handleChange}
-                                            className="h-11 bg-zinc-50/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
+                                            className="h-11 bg-white shadow-sm/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all placeholder:text-zinc-200"
                                             placeholder="JOAO@CLIENTE.COM"
                                         />
                                     </div>
 
                                     {/* ROW 4 */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="address" className="text-xxs font-black uppercase tracking-[0.2em] text-zinc-400">Endereço</Label>
+                                        <Label htmlFor="address" className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">Endereço</Label>
                                         <Textarea
                                             id="address"
                                             name="address"
                                             value={formData.address}
                                             onChange={handleChange}
-                                            className="min-h-[60px] bg-zinc-50/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all py-3 placeholder:text-zinc-200 shadow-none resize-none"
+                                            className="min-h-[60px] bg-white shadow-sm/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all py-3 placeholder:text-zinc-200 shadow-none resize-none"
                                             placeholder="RUA, NÚMERO, BAIRRO..."
                                         />
                                     </div>
 
                                     {/* ROW 5 */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="bio" className="text-xxs font-black uppercase tracking-[0.2em] text-zinc-400">Bio</Label>
+                                        <Label htmlFor="bio" className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">Bio</Label>
                                         <Textarea
                                             id="bio"
                                             name="bio"
                                             value={formData.bio}
                                             onChange={handleChange}
-                                            className="min-h-[80px] bg-zinc-50/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all py-3 placeholder:text-zinc-200 shadow-none resize-none"
+                                            className="min-h-[80px] bg-white shadow-sm/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all py-3 placeholder:text-zinc-200 shadow-none resize-none"
                                             placeholder="BREVE DESCRIÇÃO..."
                                         />
                                     </div>

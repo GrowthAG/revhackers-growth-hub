@@ -8,7 +8,7 @@ import {
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useSidebarBadges } from '@/hooks/useSidebarBadges';
 
-const LOGO_URL = '/brand/revhackers-wordmark-white.png';
+const LOGO_URL = '/brand/revhackers-wordmark.png'; // Updated to non-white logo
 
 interface NavItem {
   icon: LucideIcon;
@@ -43,43 +43,43 @@ export const Sidebar = () => {
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 h-screen bg-zinc-950 border-r border-zinc-800',
+        'fixed left-0 top-0 h-screen bg-white border-r border-zinc-200 shadow-[2px_0_8px_-4px_rgba(0,0,0,0.05)]',
         'transition-all duration-200 ease-out z-50',
         collapsed ? 'w-16' : 'w-64'
       )}
     >
       {/* Header com Logo */}
-      <div className="h-16 flex items-center justify-between px-3 border-b border-zinc-800">
+      <div className="h-16 flex items-center justify-between px-3 border-b border-zinc-100">
         {!collapsed ? (
           <>
             <Link to="/admin" className="flex items-center gap-2 pl-2">
               <img 
                 src={LOGO_URL}
                 alt="RevHackers" 
-                className="w-32 max-w-full h-auto brightness-0 invert opacity-100"
+                className="w-28 max-w-full h-auto"
               />
             </Link>
             <button
               onClick={() => setCollapsed(true)}
-              className="p-1.5 hover:bg-zinc-800 rounded-md transition-colors"
+              className="p-1.5 hover:bg-zinc-100 text-zinc-400 hover:text-zinc-600 rounded-md transition-colors"
               aria-label="Colapsar sidebar"
             >
-              <ChevronLeft className="w-4 h-4 text-zinc-400" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
           </>
         ) : (
           <button
             onClick={() => setCollapsed(false)}
-            className="p-1.5 hover:bg-zinc-800 rounded-md transition-colors mx-auto"
+            className="p-1.5 hover:bg-zinc-100 text-zinc-400 hover:text-zinc-600 rounded-md transition-colors mx-auto"
             aria-label="Expandir sidebar"
           >
-            <ChevronRight className="w-4 h-4 text-zinc-400" />
+            <ChevronRight className="w-4 h-4" />
           </button>
         )}
       </div>
 
       {/* Navigation */}
-      <nav className="p-2 overflow-y-auto h-[calc(100vh-4rem)]">
+      <nav className="p-3 overflow-y-auto h-[calc(100vh-4rem)]">
         {Object.entries(NAVIGATION).map(([section, items]) => (
           <SidebarSection key={section} title={collapsed ? '' : section}>
             {items.map((item) => (
@@ -110,9 +110,9 @@ const SidebarSection = ({ title, children }: SidebarSectionProps) => {
   if (!title) return <div className="space-y-0.5">{children}</div>;
   
   return (
-    <div className="space-y-0.5 mt-4 first:mt-0">
-      <div className="px-3 mb-1">
-        <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+    <div className="space-y-1 mt-6 first:mt-0">
+      <div className="px-3 mb-2">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
           {title}
         </span>
       </div>
@@ -136,22 +136,22 @@ const SidebarItem = ({ icon: Icon, label, to, active, collapsed, badge }: Sideba
     <Link
       to={to}
       className={cn(
-        'flex items-center gap-3 px-3 py-1.5 rounded-md',
+        'flex items-center gap-3 px-3 py-2 rounded-lg',
         'transition-colors duration-150',
         'text-sm font-medium',
         active
-          ? 'bg-zinc-800 text-white'
-          : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200',
+          ? 'bg-zinc-100/80 text-zinc-900 font-semibold'
+          : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900',
         collapsed && 'justify-center'
       )}
       title={collapsed ? label : undefined}
     >
-      <Icon className="w-4 h-4 flex-shrink-0" />
+      <Icon className={cn("w-4 h-4 flex-shrink-0", active ? "text-zinc-900" : "text-zinc-400")} />
       {!collapsed && (
         <>
           <span className="flex-1">{label}</span>
           {badge != null && badge > 0 && (
-            <span className="min-w-[18px] h-[18px] text-[10px] font-black flex items-center justify-center bg-zinc-800 text-zinc-400 px-1 rounded-sm">
+            <span className="min-w-[20px] h-[20px] text-[11px] font-semibold flex items-center justify-center bg-zinc-100 text-zinc-600 px-1.5 rounded-full border border-zinc-200">
               {badge}
             </span>
           )}

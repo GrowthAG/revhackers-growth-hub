@@ -96,7 +96,7 @@ const GrowthCronograma = () => {
                                 className={`flex flex-col md:flex-row gap-8 p-8 border ${step.isHighlight ? 'border-black bg-black text-white' : 'border-zinc-100 bg-white'} transition-all group`}
                             >
                                 <div className="md:w-48 shrink-0">
-                                    <span className={`text-xxs font-black uppercase tracking-widest px-3 py-1 ${step.isHighlight ? 'bg-[#00CC6A] text-black' : 'bg-zinc-100 text-zinc-400'}`}>
+                                    <span className={`text-xs font-medium px-3 py-1 ${step.isHighlight ? 'bg-[#00CC6A] text-black' : 'bg-zinc-100 text-zinc-400'}`}>
                                         {step.days}
                                     </span>
                                 </div>
@@ -104,7 +104,7 @@ const GrowthCronograma = () => {
                                 <div className="flex-1 space-y-4">
                                     <div className="flex items-start justify-between">
                                         <div className="space-y-2">
-                                            <h3 className={`text-xl font-black uppercase tracking-tight ${step.isHighlight ? 'text-[#00CC6A]' : 'text-black'}`}>
+                                            <h3 className={`text-xl font-semibold uppercase tracking-tight ${step.isHighlight ? 'text-[#00CC6A]' : 'text-black'}`}>
                                                 {step.title}
                                             </h3>
                                             <p className={`text-xs font-medium uppercase tracking-widest leading-relaxed ${step.isHighlight ? 'text-zinc-400' : 'text-zinc-500'}`}>
@@ -114,11 +114,11 @@ const GrowthCronograma = () => {
                                         <step.icon size={20} className={step.isHighlight ? 'text-[#00CC6A]' : 'text-zinc-200'} />
                                     </div>
 
-                                    <div className={`flex flex-wrap gap-x-6 gap-y-2 pt-4 border-t ${step.isHighlight ? 'border-zinc-800' : 'border-zinc-50'}`}>
+                                    <div className={`flex flex-wrap gap-x-6 gap-y-2 pt-4 border-t ${step.isHighlight ? 'border-zinc-200' : 'border-zinc-50'}`}>
                                         {step.tasks.map((task, idx) => (
                                             <div key={idx} className="flex items-center gap-2">
                                                 <div className={`w-1 h-1 ${step.isHighlight ? 'bg-[#00CC6A]' : 'bg-black'}`} />
-                                                <span className={`text-2xs font-black uppercase tracking-widest ${step.isHighlight ? 'text-zinc-500' : 'text-zinc-400'}`}>
+                                                <span className={`text-xs font-medium text-zinc-500 ${step.isHighlight ? 'text-zinc-500' : 'text-zinc-400'}`}>
                                                     {task}
                                                 </span>
                                             </div>
@@ -130,9 +130,9 @@ const GrowthCronograma = () => {
                     </motion.div>
 
                     {/* Agendas Section */}
-                    <section className="bg-zinc-50 border border-zinc-200 p-12 space-y-12">
+                    <section className="bg-white shadow-sm border border-zinc-200 p-12 space-y-12">
                         <div className="space-y-2">
-                            <h2 className="text-2xl font-black uppercase tracking-tight">Rituais de Performance</h2>
+                            <h2 className="text-2xl font-semibold uppercase tracking-tight">Rituais de Performance</h2>
                             <p className="text-xs text-zinc-400 font-medium uppercase tracking-widest">Reuniões de Apresentação de Resultados (R.A.R).</p>
                         </div>
 
@@ -143,11 +143,11 @@ const GrowthCronograma = () => {
                             ].map((rit, i) => (
                                 <div key={i} className="bg-white border border-zinc-200 p-10 space-y-6 hover:border-black transition-all group">
                                     <div className="space-y-1">
-                                        <h3 className="text-3xl font-black tracking-tighter uppercase group-hover:text-[#00CC6A] transition-colors">{rit.title}</h3>
-                                        <p className="text-xxs font-black uppercase tracking-widest text-zinc-300">{rit.subtitle}</p>
+                                        <h3 className="text-3xl font-semibold tracking-tighter uppercase group-hover:text-[#00CC6A] transition-colors">{rit.title}</h3>
+                                        <p className="text-xs font-medium text-zinc-300">{rit.subtitle}</p>
                                     </div>
                                     <p className="text-xxs font-medium uppercase tracking-widest text-zinc-400 leading-relaxed">{rit.desc}</p>
-                                    <Button variant="ghost" className="p-0 h-auto text-xxs font-black uppercase tracking-widest text-black hover:bg-transparent hover:text-[#00CC6A] group/btn">
+                                    <Button variant="ghost" className="p-0 h-auto text-xs font-medium text-black hover:bg-transparent hover:text-[#00CC6A] group/btn">
                                         Agendar Ritual <ChevronRight size={14} className="ml-1 group-hover/btn:translate-x-1 transition-transform" />
                                     </Button>
                                 </div>

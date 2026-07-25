@@ -16,15 +16,15 @@ const Breadcrumbs = () => {
     const crumbs = useBreadcrumbs();
     if (crumbs.length <= 1) return null;
     return (
-        <nav className="flex items-center gap-1.5 mb-4">
+        <nav className="flex items-center gap-2 mb-6">
             {crumbs.map((crumb, i) => (
-                <div key={i} className="flex items-center gap-1.5">
+                <div key={i} className="flex items-center gap-2">
                     {crumb.to ? (
-                        <Link to={crumb.to} className="text-xs font-mono uppercase tracking-wider text-zinc-400 font-bold hover:text-zinc-900 transition-colors">
+                        <Link to={crumb.to} className="text-[13px] font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
                             {crumb.label}
                         </Link>
                     ) : (
-                        <span className="text-xs font-mono uppercase tracking-wider text-zinc-900 font-extrabold">{crumb.label}</span>
+                        <span className="text-[13px] font-semibold text-zinc-900">{crumb.label}</span>
                     )}
                     {i < crumbs.length - 1 && (
                         <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />

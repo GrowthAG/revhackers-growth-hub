@@ -268,7 +268,7 @@ const AdminUsers = () => {
                     <div className="flex items-center gap-2">
                         <Button
                             onClick={() => setIsInviteModalOpen(true)}
-                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-bold tracking-wide uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-800"
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-bold tracking-wide uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-200"
                         >
                             <Plus size={15} className="text-[#00CC6A]" /> ADICIONAR MEMBRO
                         </Button>
@@ -276,7 +276,7 @@ const AdminUsers = () => {
                 </div>
 
                 {/* Control Bar & Search */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-zinc-50 p-2 rounded-xl border border-zinc-200">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-sm p-2 rounded-xl border border-zinc-200">
                     <div className="relative flex-1 max-w-md">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                         <Input
@@ -300,7 +300,7 @@ const AdminUsers = () => {
                     <div className="bg-white border border-zinc-200/80 rounded-xl overflow-hidden shadow-xs">
                         <Table>
                             <TableHeader>
-                                <TableRow className="bg-zinc-50 border-b border-zinc-200 text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                                <TableRow className="bg-white shadow-sm border-b border-zinc-200 text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
                                     <TableHead className="py-3.5 px-4">Membro & E-mail</TableHead>
                                     <TableHead className="py-3.5 px-4">Função</TableHead>
                                     <TableHead className="py-3.5 px-4">Status</TableHead>
@@ -309,7 +309,7 @@ const AdminUsers = () => {
                             </TableHeader>
                             <TableBody className="divide-y divide-zinc-100 text-xs text-zinc-700">
                                 {filteredUsers.map((user) => (
-                                    <TableRow key={user.id} className="hover:bg-zinc-50/80 transition-colors">
+                                    <TableRow key={user.id} className="hover:bg-white shadow-sm/80 transition-colors">
                                         <TableCell className="py-3.5 px-4">
                                             <div className="flex items-center gap-3">
                                                 <Avatar className="h-8 w-8 rounded-lg border border-zinc-200 bg-zinc-950">

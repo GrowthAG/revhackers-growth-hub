@@ -928,32 +928,32 @@ export default function StrategicPlanGenerator() {
     if (!reiProject || !client) return <div>Projeto não encontrado.</div>;
 
     return (
-        <div className="min-h-screen bg-zinc-50 p-8 font-sans">
+        <div className="min-h-screen bg-white shadow-sm p-8 font-sans">
             <div className="max-w-7xl mx-auto">
                 <ProjectTimeline currentStage={existingPlan ? (existingPlan.status === 'sent' ? 3 : 2) : 2} reiDate={reiProject?.created_at} planDate={existingPlan?.created_at} />
 
                 {/* Header */}
                 <div className="flex justify-between items-center mb-8">
                     <div>
-                        <Button variant="ghost" onClick={() => navigate(`/admin/jornada/${reiProjectId}`)} className="text-[0.65rem] font-black uppercase tracking-widest text-zinc-500 hover:text-black mb-2 pl-0">
+                        <Button variant="ghost" onClick={() => navigate(`/admin/jornada/${reiProjectId}`)} className="text-[0.65rem] font-semibold uppercase tracking-widest text-zinc-500 hover:text-black mb-2 pl-0">
                             <ArrowLeft className="w-3 h-3 mr-2" /> Voltar para Jornada
                         </Button>
-                        <h1 className="text-4xl font-black text-black tracking-tighter uppercase">Painel Estratégico</h1>
-                        <p className="text-zinc-500 font-bold tracking-tight mt-1">CLIENTE: <span className="font-black text-black uppercase">{client.trade_name || client.company || client.company_name || client.name || 'N/A'}</span></p>
+                        <h1 className="text-4xl font-semibold text-black tracking-tighter uppercase">Painel Estratégico</h1>
+                        <p className="text-zinc-500 font-bold tracking-tight mt-1">CLIENTE: <span className="font-semibold text-black uppercase">{client.trade_name || client.company || client.company_name || client.name || 'N/A'}</span></p>
                     </div>
                     <div className="flex gap-3">
                         {existingPlan && (
-                            <Button variant="outline" onClick={() => setEditMode(!editMode)} className="uppercase font-black text-[0.65rem] tracking-widest rounded-none border-2 border-zinc-200 hover:border-black h-12 px-6">
+                            <Button variant="outline" onClick={() => setEditMode(!editMode)} className="uppercase font-semibold text-[0.65rem] tracking-widest rounded-none border-2 border-zinc-200 hover:border-black h-12 px-6">
                                 {editMode ? 'Cancelar Edição' : 'Editar Plano'}
                             </Button>
                         )}
                         {editMode ? (
-                            <Button onClick={handleSaveEdits} disabled={sending} className="bg-black text-white hover:bg-zinc-800 rounded-none uppercase font-black text-[0.65rem] tracking-widest h-12 px-6 border-none shadow-[0_4px_0_0_#00CC6A] hover:-translate-y-1 hover:shadow-[0_6px_0_0_#00CC6A] transition-all">
+                            <Button onClick={handleSaveEdits} disabled={sending} className="bg-black text-white hover:bg-zinc-800 rounded-none uppercase font-semibold text-[0.65rem] tracking-widest h-12 px-6 border-none shadow-[0_4px_0_0_#00CC6A] hover:-translate-y-1 hover:shadow-[0_6px_0_0_#00CC6A] transition-all">
                                 {sending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ShieldAlert className="w-4 h-4 mr-2" />}
                                 Salvar Alterações
                             </Button>
                         ) : (
-                            <Button onClick={handleGenerate} disabled={generating || !!pendingJob} className="bg-black text-white hover:bg-zinc-800 rounded-none uppercase font-black text-[0.65rem] tracking-widest h-12 px-6 border-none shadow-[0_4px_0_0_#00CC6A] hover:-translate-y-1 hover:shadow-[0_6px_0_0_#00CC6A] transition-all">
+                            <Button onClick={handleGenerate} disabled={generating || !!pendingJob} className="bg-black text-white hover:bg-zinc-800 rounded-none uppercase font-semibold text-[0.65rem] tracking-widest h-12 px-6 border-none shadow-[0_4px_0_0_#00CC6A] hover:-translate-y-1 hover:shadow-[0_6px_0_0_#00CC6A] transition-all">
                                 {(generating || pendingJob) ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <BrainCircuit className="w-4 h-4 mr-2" />}
                                 {(generating || pendingJob) ? 'PROCESSANDO HARDWARE...' : (existingPlan ? 'REGENAR INTELIGÊNCIA BASE' : 'GERAR PLANEJAMENTO')}
                             </Button>
@@ -962,7 +962,7 @@ export default function StrategicPlanGenerator() {
                 </div>
 
                 {errorLog && (
-                    <div className="bg-zinc-50 border border-zinc-200 text-zinc-600 p-4 mb-8 shadow-sm">
+                    <div className="bg-white shadow-sm border border-zinc-200 text-zinc-600 p-4 mb-8 shadow-sm">
                         <h3 className="font-bold mb-2">Erro Crítico Reportado Pelo Sistema:</h3>
                         <p className="whitespace-pre-wrap font-mono text-sm">{errorLog}</p>
                     </div>
@@ -973,11 +973,11 @@ export default function StrategicPlanGenerator() {
                     <div className="flex items-center justify-between mb-6 border-b-2 border-zinc-100 pb-4">
                         <div className="flex items-center gap-2">
                             <FileText className="w-4 h-4 text-black" />
-                            <h3 className="text-[0.7rem] font-black uppercase tracking-widest text-zinc-400">
+                            <h3 className="text-[0.7rem] font-semibold uppercase tracking-widest text-zinc-400">
                                 MATERIAIS DO CLIENTE
                             </h3>
                             {materials.length > 0 && (
-                                <span className="text-[0.65rem] font-black tracking-widest bg-black text-[#00CC6A] px-2 py-0.5 ml-2">
+                                <span className="text-[0.65rem] font-semibold tracking-widest bg-black text-[#00CC6A] px-2 py-0.5 ml-2">
                                     {materials.length} ARQUIVOS
                                 </span>
                             )}
@@ -987,7 +987,7 @@ export default function StrategicPlanGenerator() {
                                 onClick={() => {
                                     window.open(`/upload-materiais/${reiProjectId}`, '_blank');
                                 }}
-                                className="flex items-center gap-1.5 px-4 py-2.5 bg-black text-white text-[0.65rem] font-black uppercase tracking-widest hover:bg-[#00CC6A] hover:text-black transition-colors"
+                                className="flex items-center gap-1.5 px-4 py-2.5 bg-black text-white text-[0.65rem] font-semibold uppercase tracking-widest hover:bg-[#00CC6A] hover:text-black transition-colors"
                             >
                                 <ExternalLink className="w-3.5 h-3.5" />
                                 FAZER UPLOAD
@@ -999,7 +999,7 @@ export default function StrategicPlanGenerator() {
                                     setCopiedLink(true);
                                     setTimeout(() => setCopiedLink(false), 2000);
                                 }}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-zinc-200 text-xxs font-bold uppercase tracking-widest text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 transition-colors"
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-zinc-200 text-xxs font-bold uppercase tracking-widest text-zinc-600 hover:bg-white shadow-sm hover:text-zinc-900 transition-colors"
                             >
                                 {copiedLink ? <Check className="w-3 h-3 text-[#00CC6A]" /> : <Copy className="w-3 h-3" />}
                                 {copiedLink ? 'Link Copiado!' : 'Copiar Link'}
@@ -1008,7 +1008,7 @@ export default function StrategicPlanGenerator() {
                     </div>
 
                     {materials.length === 0 ? (
-                        <div className="text-center py-6 text-sm text-zinc-400 border border-dashed border-zinc-200 bg-zinc-50/50">
+                        <div className="text-center py-6 text-sm text-zinc-400 border border-dashed border-zinc-200 bg-white shadow-sm/50">
                             Nenhum material adicionado. Clique em &quot;Fazer Upload Agora&quot; ou envie o link para o cliente.
                         </div>
                     ) : (
@@ -1021,7 +1021,7 @@ export default function StrategicPlanGenerator() {
                                     onClick={() => {
                                         if (isReadableText) setSelectedMaterial(mat);
                                     }}
-                                    className={`flex items-center gap-3 px-3 py-2.5 bg-zinc-50 border border-transparent ${isReadableText ? 'cursor-pointer hover:bg-white hover:border-zinc-200 hover:shadow-sm transition-all' : ''}`}
+                                    className={`flex items-center gap-3 px-3 py-2.5 bg-white shadow-sm border border-transparent ${isReadableText ? 'cursor-pointer hover:bg-white hover:border-zinc-200 hover:shadow-sm transition-all' : ''}`}
                                 >
                                     {mat.source_type === 'link' ? (
                                         <ExternalLink className={`w-4 h-4 shrink-0 ${isReadableText ? 'text-zinc-600' : 'text-zinc-400'}`} />
@@ -1047,7 +1047,7 @@ export default function StrategicPlanGenerator() {
                 </div>
 
                 {editMode && (
-                    <div className="bg-zinc-50 border border-zinc-200 p-4 mb-8 flex items-center justify-between">
+                    <div className="bg-white shadow-sm border border-zinc-200 p-4 mb-8 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <ShieldAlert className="text-zinc-500" />
                             <div>
@@ -1184,7 +1184,7 @@ export default function StrategicPlanGenerator() {
                                             { label: 'SAM', meaning: '(Serviceable Available Market)', value: enrichedData.market.tam_sam_som?.sam },
                                             { label: 'SOM', meaning: '(Serviceable Obtainable Market)', value: enrichedData.market.tam_sam_som?.som },
                                         ].map(({ label, meaning, value }) => (
-                                            <div key={label} className="bg-zinc-50 p-3 border border-zinc-100">
+                                            <div key={label} className="bg-white shadow-sm p-3 border border-zinc-100">
                                                 <p className="text-xxs font-semibold text-zinc-400 uppercase tracking-wider mb-1">
                                                     <span className="text-zinc-500 font-bold">{label}</span> <span className="font-medium text-zinc-300 ml-0.5">{meaning}</span>
                                                 </p>
@@ -1209,7 +1209,7 @@ export default function StrategicPlanGenerator() {
                                 {editMode && editedData?.personas?.personas ? (
                                     <div className="space-y-3">
                                         {editedData.personas.personas.map((persona: any, idx: number) => (
-                                            <div key={idx} className="flex items-center gap-3 p-3 bg-zinc-50 border border-zinc-100">
+                                            <div key={idx} className="flex items-center gap-3 p-3 bg-white shadow-sm border border-zinc-100">
                                                 <img src={`https://ui-avatars.com/api/?name=${persona.name || persona.nome}&size=32`} alt="" className="w-8 h-8 object-cover" />
                                                 <input type="text" value={persona.name || persona.nome || ''} onChange={(e) => { const n = [...editedData.personas.personas]; n[idx].name = e.target.value; setEditedData({ ...editedData, personas: { ...editedData.personas, personas: n } }); }} className="bg-transparent border-b border-zinc-200 hover:border-black focus:border-[#00CC6A] outline-none rounded-none px-0 py-1 text-xs font-semibold flex-1 transition-all" />
                                                 <input type="text" value={persona.role || persona.cargo || ''} onChange={(e) => { const n = [...editedData.personas.personas]; n[idx].role = e.target.value; setEditedData({ ...editedData, personas: { ...editedData.personas, personas: n } }); }} className="bg-transparent border-b border-zinc-200 hover:border-black focus:border-[#00CC6A] outline-none rounded-none px-0 py-1 text-xs flex-1 transition-all" />
@@ -1219,7 +1219,7 @@ export default function StrategicPlanGenerator() {
                                 ) : (
                                     <div className="flex flex-wrap gap-3">
                                         {(existingPlan?.persona_data?.personas || enrichedData?.personas?.personas || []).map((persona: any, idx: number) => (
-                                            <div key={idx} className="flex items-center gap-3 px-4 py-2.5 bg-zinc-50 border border-zinc-100 min-w-[200px]">
+                                            <div key={idx} className="flex items-center gap-3 px-4 py-2.5 bg-white shadow-sm border border-zinc-100 min-w-[200px]">
                                                 <img src={`https://ui-avatars.com/api/?name=${persona.name || persona.nome}&size=32`} alt="" className="w-8 h-8 object-cover" />
                                                 <div>
                                                     <p className="text-xs font-semibold text-zinc-900">{persona.name || persona.nome}</p>
@@ -1267,7 +1267,7 @@ export default function StrategicPlanGenerator() {
                                                 { label: 'Ciclo', value: enrichedData.benchmark.ciclo_vendas, accent: false },
                                                 { label: 'LTV:CAC', value: enrichedData.benchmark.ltv_cac_ratio, accent: false },
                                             ].map(({ label, value, accent }) => (
-                                                <div key={label} className="bg-zinc-800/50 p-3 border border-zinc-800">
+                                                <div key={label} className="bg-zinc-800/50 p-3 border border-zinc-200">
                                                     <p className={`text-xxs uppercase tracking-widest font-semibold mb-1.5 ${accent ? 'text-[#00CC6A]' : 'text-zinc-500'}`}>{label}</p>
                                                     <p className={`text-xs font-medium leading-snug line-clamp-3 ${accent ? 'text-[#00CC6A]' : 'text-white/80'}`}>{value || 'N/A'}</p>
                                                 </div>
@@ -1299,7 +1299,7 @@ export default function StrategicPlanGenerator() {
                             </DialogDescription>
                         </DialogHeader>
                         <div className="flex-1 overflow-y-auto pr-2 pb-4">
-                            <div className="text-sm text-zinc-700 leading-relaxed font-mono bg-zinc-50 border border-zinc-100 p-5 whitespace-pre-wrap">
+                            <div className="text-sm text-zinc-700 leading-relaxed font-mono bg-white shadow-sm border border-zinc-100 p-5 whitespace-pre-wrap">
                                 {selectedMaterial?.extracted_text || selectedMaterial?.description || 'Nenhum texto extraído localizado.'}
                             </div>
                         </div>

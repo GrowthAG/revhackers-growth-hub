@@ -145,28 +145,28 @@ const AdminProposals = () => {
             >
                 {/* 1. Stats Overview */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-zinc-200 bg-white mb-10 divide-y md:divide-y-0 md:divide-x divide-zinc-200">
-                    <div className="p-6 flex items-start justify-between group hover:bg-zinc-50 transition-colors">
+                    <div className="p-6 flex items-start justify-between group hover:bg-white shadow-sm transition-colors">
                         <div>
                             <p className="text-label text-zinc-400 mb-2">TOTAL PROPOSTAS</p>
-                            <h3 className="text-3xl font-black text-zinc-900 tabular-nums">{stats.total}</h3>
+                            <h3 className="text-3xl font-semibold text-zinc-900 tabular-nums">{stats.total}</h3>
                         </div>
                         <div className="w-8 h-8 bg-zinc-100 flex items-center justify-center border border-zinc-200 group-hover:border-zinc-300">
                             <Rocket className="w-4 h-4 text-zinc-500" />
                         </div>
                     </div>
-                    <div className="p-6 flex items-start justify-between group hover:bg-zinc-50 transition-colors">
+                    <div className="p-6 flex items-start justify-between group hover:bg-white shadow-sm transition-colors">
                         <div>
                             <p className="text-label text-zinc-400 mb-2">STATUS: APPROVED</p>
-                            <h3 className="text-3xl font-black text-[#00CC6A] tabular-nums">{stats.approved}</h3>
+                            <h3 className="text-3xl font-semibold text-[#00CC6A] tabular-nums">{stats.approved}</h3>
                         </div>
                         <div className="w-8 h-8 bg-[#00CC6A]/10 flex items-center justify-center border border-[#00CC6A]/20">
                             <CheckCircle2 className="w-4 h-4 text-[#00CC6A]" />
                         </div>
                     </div>
-                    <div className="p-6 flex items-start justify-between group hover:bg-zinc-50 transition-colors">
+                    <div className="p-6 flex items-start justify-between group hover:bg-white shadow-sm transition-colors">
                         <div>
                             <p className="text-label text-zinc-400 mb-2">IN NEGOTIATION</p>
-                            <h3 className="text-3xl font-black text-zinc-900 tabular-nums">{stats.active}</h3>
+                            <h3 className="text-3xl font-semibold text-zinc-900 tabular-nums">{stats.active}</h3>
                         </div>
                         <div className="w-8 h-8 bg-zinc-100 flex items-center justify-center border border-zinc-200 group-hover:border-zinc-300">
                             <Clock className="w-4 h-4 text-zinc-500" />
@@ -196,7 +196,7 @@ const AdminProposals = () => {
                             <p className="text-zinc-400 text-xs uppercase tracking-widest">Carregando Hub...</p>
                         </div>
                     ) : Object.keys(groupedProposals).length === 0 ? (
-                        <div className="text-center py-20 border border-dashed border-zinc-200 bg-zinc-50/50">
+                        <div className="text-center py-20 border border-dashed border-zinc-200 bg-white shadow-sm/50">
                             <p className="text-zinc-400 text-sm">Nenhuma proposta encontrada.</p>
                         </div>
                     ) : (
@@ -207,15 +207,15 @@ const AdminProposals = () => {
                                 onOpenChange={() => toggleClient(clientName)}
                                 className="bg-white border border-zinc-200 shadow-sm transition-all group overflow-hidden"
                             >
-                                <div className="flex items-center justify-between p-6 cursor-pointer bg-white group-hover:bg-zinc-50/50 transition-colors" onClick={() => toggleClient(clientName)}>
+                                <div className="flex items-center justify-between p-6 cursor-pointer bg-white group-hover:bg-white shadow-sm/50 transition-colors" onClick={() => toggleClient(clientName)}>
                                     <div className="flex items-center gap-6">
                                         <div className="w-12 h-12 flex items-center justify-center bg-zinc-100 text-zinc-500 font-bold text-lg rounded-none group-hover:bg-black group-hover:text-white transition-colors">
                                             {clientName.substring(0, 2).toUpperCase()}
                                         </div>
                                         <div>
-                                            <h3 className="text-lg font-black text-black tracking-tight uppercase">{clientName}</h3>
+                                            <h3 className="text-lg font-semibold text-black tracking-tight uppercase">{clientName}</h3>
                                             <div className="flex items-center gap-2 mt-1.5">
-                                                <span className="inline-flex items-center text-label text-zinc-500 bg-zinc-50 border border-zinc-200 px-1.5 h-5 tabular-nums">
+                                                <span className="inline-flex items-center text-label text-zinc-500 bg-white shadow-sm border border-zinc-200 px-1.5 h-5 tabular-nums">
                                                     [{clientProposals.length} PROPOSTAS]
                                                 </span>
                                             </div>
@@ -252,7 +252,7 @@ const AdminProposals = () => {
                                 </div>
 
                                 <CollapsibleContent>
-                                    <div className="border-t border-zinc-100 bg-zinc-50/30">
+                                    <div className="border-t border-zinc-100 bg-white shadow-sm/30">
                                         {clientProposals.map((item) => (
                                             <div key={item.id} className="flex items-center justify-between p-4 pl-[88px] hover:bg-white border-b border-zinc-100 last:border-0 transition-colors group/item">
                                                 <div className="flex items-center gap-4">

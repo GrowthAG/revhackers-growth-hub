@@ -353,7 +353,7 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
                             <div className="space-y-2">
                                 <Label className="text-xs font-medium text-zinc-700">Logo do Cliente (Asset)</Label>
                                 <div
-                                    className="h-24 border border-dashed border-zinc-300 rounded-lg bg-zinc-50/50 flex flex-col items-center justify-center relative cursor-pointer hover:bg-zinc-50 transition-all group"
+                                    className="h-24 border border-dashed border-zinc-300 rounded-lg bg-white shadow-sm/50 flex flex-col items-center justify-center relative cursor-pointer hover:bg-white shadow-sm transition-all group"
                                     onClick={() => document.getElementById('logo-upload')?.click()}
                                 >
                                     {watch('logo_url') ? (
@@ -483,19 +483,19 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
                         <div className="grid grid-cols-6 gap-4">
                             <div className="col-span-2 space-y-2">
                                 <Label className="text-xs font-medium text-zinc-700">CEP</Label>
-                                <Input {...register('cep')} className="bg-zinc-50 border-zinc-200 rounded-lg h-9 text-xs font-mono font-medium" />
+                                <Input {...register('cep')} className="bg-white shadow-sm border-zinc-200 rounded-lg h-9 text-xs font-mono font-medium" />
                             </div>
                             <div className="col-span-4 space-y-2">
                                 <Label className="text-xs font-medium text-zinc-700">Logradouro</Label>
-                                <Input {...register('address')} className="bg-zinc-50 border-zinc-200 rounded-lg h-9 text-xs font-medium" />
+                                <Input {...register('address')} className="bg-white shadow-sm border-zinc-200 rounded-lg h-9 text-xs font-medium" />
                             </div>
                             <div className="col-span-2 space-y-2">
                                 <Label className="text-xs font-medium text-zinc-700">Cidade</Label>
-                                <Input {...register('city')} className="bg-zinc-50 border-zinc-200 rounded-lg h-9 text-xs font-medium" />
+                                <Input {...register('city')} className="bg-white shadow-sm border-zinc-200 rounded-lg h-9 text-xs font-medium" />
                             </div>
                             <div className="col-span-2 space-y-2">
                                 <Label className="text-xs font-medium text-zinc-700">Estado / UF</Label>
-                                <Input {...register('state')} className="bg-zinc-50 border-zinc-200 rounded-lg h-9 text-xs font-medium" />
+                                <Input {...register('state')} className="bg-white shadow-sm border-zinc-200 rounded-lg h-9 text-xs font-medium" />
                             </div>
                         </div>
                     </div>
@@ -555,7 +555,7 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
                             type="button"
                             variant="outline"
                             onClick={onCancel}
-                            className="h-10 rounded-lg border-zinc-200 text-xs font-medium px-5 hover:bg-zinc-50 transition-all shadow-xs"
+                            className="h-10 rounded-lg border-zinc-200 text-xs font-medium px-5 hover:bg-white shadow-sm transition-all shadow-xs"
                             disabled={loading}
                         >
                             Cancelar

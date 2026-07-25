@@ -36,7 +36,7 @@ function MessageContent({ content }: { content: string }) {
       {parts.map((part, i) => {
         if (part.startsWith('@')) {
           return (
-            <span key={i} className="inline-flex items-center bg-[#00CC6A]/10 text-[#00CC6A] font-black px-1.5 rounded text-[13px]">
+            <span key={i} className="inline-flex items-center bg-[#00CC6A]/10 text-[#00CC6A] font-semibold px-1.5 rounded text-[13px]">
               {part}
             </span>
           );
@@ -49,13 +49,13 @@ function MessageContent({ content }: { content: string }) {
                        tipo === 'tarefa' ? <CheckSquare className="w-3 h-3" /> :
                        tipo === 'sprint' ? <GitBranch className="w-3 h-3" /> : null;
           return (
-            <span key={i} className="inline-flex items-center gap-1 bg-zinc-100 text-zinc-700 font-black px-1.5 py-0.5 rounded text-xs cursor-pointer hover:bg-zinc-200 transition-colors">
+            <span key={i} className="inline-flex items-center gap-1 bg-zinc-100 text-zinc-700 font-semibold px-1.5 py-0.5 rounded text-xs cursor-pointer hover:bg-zinc-200 transition-colors">
               {icon}{label}
             </span>
           );
         }
         if (part.startsWith('#')) {
-          return <span key={i} className="inline-flex items-center bg-zinc-100 text-zinc-700 font-black px-1.5 rounded text-xs">{part}</span>;
+          return <span key={i} className="inline-flex items-center bg-zinc-100 text-zinc-700 font-semibold px-1.5 rounded text-xs">{part}</span>;
         }
         return <span key={i}>{part}</span>;
       })}
@@ -67,7 +67,7 @@ function MessageContent({ content }: { content: string }) {
 function Avatar({ name, size = 'sm' }: { name: string; size?: 'sm' | 'xs' }) {
   const sz = size === 'sm' ? 'w-8 h-8 text-[11px]' : 'w-6 h-6 text-[9px]';
   return (
-    <div className={cn('rounded-full bg-zinc-200 border border-zinc-300 flex items-center justify-center font-black text-zinc-600 uppercase shrink-0', sz)}>
+    <div className={cn('rounded-full bg-zinc-200 border border-zinc-300 flex items-center justify-center font-semibold text-zinc-600 uppercase shrink-0', sz)}>
       {(name || '?').charAt(0)}
     </div>
   );
@@ -89,17 +89,17 @@ function MentionPicker({ members, query, onSelect }: {
   return (
     <div className="absolute bottom-full mb-2 left-0 bg-white border border-zinc-200 shadow-sm rounded-xl w-72 max-h-52 overflow-y-auto z-50">
       <div className="px-3 py-2 border-b border-zinc-100">
-        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Mencionar membro</p>
+        <p className="text-xs font-medium text-zinc-400">Mencionar membro</p>
       </div>
       {filtered.map(m => (
         <button
           key={m.id}
           onClick={() => onSelect(m)}
-          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-zinc-50 text-left transition-colors"
+          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-white shadow-sm text-left transition-colors"
         >
           <Avatar name={m.full_name || m.email} size="xs" />
           <div className="min-w-0">
-            <p className="text-xs font-black text-zinc-900 truncate">{m.full_name || m.email}</p>
+            <p className="text-xs font-semibold text-zinc-900 truncate">{m.full_name || m.email}</p>
             {m.job_title && <p className="text-[10px] text-zinc-400 truncate">{m.job_title}</p>}
           </div>
         </button>
@@ -125,20 +125,20 @@ function EntityPicker({ entities, onSelect }: {
   return (
     <div className="absolute bottom-full mb-2 left-0 bg-white border border-zinc-200 shadow-sm rounded-xl w-80 max-h-52 overflow-y-auto z-50">
       <div className="px-3 py-2 border-b border-zinc-100">
-        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Referenciar entidade</p>
+        <p className="text-xs font-medium text-zinc-400">Referenciar entidade</p>
       </div>
       {entities.map(e => (
         <button
           key={`${e.type}-${e.id}`}
           onClick={() => onSelect(e)}
-          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-zinc-50 text-left transition-colors"
+          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-white shadow-sm text-left transition-colors"
         >
           {typeIcon(e.type)}
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-black text-zinc-900 truncate">{e.label}</p>
+            <p className="text-xs font-semibold text-zinc-900 truncate">{e.label}</p>
             {e.sublabel && <p className="text-[10px] text-zinc-400 capitalize truncate">{e.sublabel}</p>}
           </div>
-          <span className="text-[10px] font-black uppercase tracking-widest text-zinc-300 shrink-0">{e.type}</span>
+          <span className="text-xs font-medium text-zinc-300 shrink-0">{e.type}</span>
         </button>
       ))}
     </div>
@@ -307,11 +307,11 @@ export default function HubMessaging() {
       <div className="flex h-[calc(100vh-140px)] border border-zinc-200 overflow-hidden bg-white">
 
         {/* ---- Sidebar ---- */}
-        <aside className="w-64 shrink-0 bg-zinc-950 flex flex-col border-r border-zinc-800">
+        <aside className="w-64 shrink-0 bg-zinc-950 flex flex-col border-r border-zinc-200">
 
           {/* Header */}
-          <div className="px-4 py-4 border-b border-zinc-800">
-            <p className="text-xs font-black uppercase tracking-widest text-white">RevHackers Hub</p>
+          <div className="px-4 py-4 border-b border-zinc-200">
+            <p className="text-[13px] font-medium text-white">RevHackers Hub</p>
             <p className="text-[10px] text-zinc-500 mt-0.5">Comunicacao interna do time</p>
           </div>
 
@@ -324,7 +324,7 @@ export default function HubMessaging() {
                 className="w-full flex items-center gap-1.5 px-4 py-1 text-left"
               >
                 {teamExpanded ? <ChevronDown className="w-3 h-3 text-zinc-500" /> : <ChevronRight className="w-3 h-3 text-zinc-500" />}
-                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Canais do Time</span>
+                <span className="text-xs font-medium text-zinc-500">Canais do Time</span>
               </button>
               {teamExpanded && teamConvs.map(conv => (
                 <button
@@ -351,7 +351,7 @@ export default function HubMessaging() {
                   className="w-full flex items-center gap-1.5 px-4 py-1 text-left"
                 >
                   {projectsExpanded ? <ChevronDown className="w-3 h-3 text-zinc-500" /> : <ChevronRight className="w-3 h-3 text-zinc-500" />}
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Projetos</span>
+                  <span className="text-xs font-medium text-zinc-500">Projetos</span>
                 </button>
                 {projectsExpanded && projectConvs.map(conv => (
                   <button
@@ -373,10 +373,10 @@ export default function HubMessaging() {
           </div>
 
           {/* Usuario */}
-          <div className="px-4 py-3 border-t border-zinc-800 flex items-center gap-2.5">
+          <div className="px-4 py-3 border-t border-zinc-200 flex items-center gap-2.5">
             <Avatar name={senderName} size="xs" />
             <div className="min-w-0">
-              <p className="text-xs font-black text-zinc-300 truncate">{senderName}</p>
+              <p className="text-xs font-semibold text-zinc-300 truncate">{senderName}</p>
               <p className="text-[10px] text-zinc-500 truncate">{user?.email}</p>
             </div>
           </div>
@@ -393,7 +393,7 @@ export default function HubMessaging() {
                   : <Hash className="w-4 h-4 text-zinc-400 shrink-0" />
                 }
                 <div>
-                  <h2 className="text-sm font-black text-zinc-900">{activeConv.name}</h2>
+                  <h2 className="text-sm font-semibold text-zinc-900">{activeConv.name}</h2>
                   {activeConv.description && (
                     <p className="text-[11px] text-zinc-400">{activeConv.description}</p>
                   )}
@@ -414,7 +414,7 @@ export default function HubMessaging() {
                         : <MessageSquare className="w-5 h-5 text-zinc-300" strokeWidth={1.5} />
                       }
                     </div>
-                    <p className="text-sm font-black text-zinc-900 uppercase tracking-widest mb-1">
+                    <p className="text-sm font-semibold text-zinc-900 uppercase tracking-widest mb-1">
                       {activeConv.type === 'project' ? activeConv.name : `#${activeConv.name.toLowerCase()}`}
                     </p>
                     <p className="text-xs text-zinc-400 max-w-xs leading-relaxed">
@@ -431,7 +431,7 @@ export default function HubMessaging() {
                         {/* Separador de data */}
                         <div className="flex items-center gap-3 mb-3">
                           <div className="flex-1 h-px bg-zinc-100" />
-                          <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 shrink-0">{group.date}</span>
+                          <span className="text-xs font-medium text-zinc-400 shrink-0">{group.date}</span>
                           <div className="flex-1 h-px bg-zinc-100" />
                         </div>
 
@@ -452,14 +452,14 @@ export default function HubMessaging() {
                             }
 
                             return (
-                              <div key={msg.id} className={cn('flex gap-3 group px-1 py-0.5 rounded hover:bg-zinc-50 transition-colors', isSame ? '' : 'mt-3')}>
+                              <div key={msg.id} className={cn('flex gap-3 group px-1 py-0.5 rounded hover:bg-white shadow-sm transition-colors', isSame ? '' : 'mt-3')}>
                                 <div className="w-8 shrink-0 flex justify-center pt-0.5">
                                   {!isSame && <Avatar name={msg.sender_name || '?'} />}
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   {!isSame && (
                                     <div className="flex items-baseline gap-2 mb-0.5">
-                                      <span className="text-[13px] font-black text-zinc-900">{msg.sender_name || 'Membro'}</span>
+                                      <span className="text-[13px] font-semibold text-zinc-900">{msg.sender_name || 'Membro'}</span>
                                       <span className="text-[11px] text-zinc-400">{formatTime(msg.created_at)}</span>
                                     </div>
                                   )}
@@ -514,7 +514,7 @@ export default function HubMessaging() {
                   />
                   <div className="flex items-center justify-between px-3 pb-2">
                     <p className="text-[10px] text-zinc-400">
-                      <span className="font-black">@</span> mencionar  <span className="font-black ml-2">#</span> referenciar  <span className="ml-2 text-zinc-300">Enter para enviar</span>
+                      <span className="font-semibold">@</span> mencionar  <span className="font-semibold ml-2">#</span> referenciar  <span className="ml-2 text-zinc-300">Enter para enviar</span>
                     </p>
                     <button
                       onClick={handleSend}
@@ -534,7 +534,7 @@ export default function HubMessaging() {
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
                 <MessageSquare className="w-10 h-10 text-zinc-200 mx-auto mb-3" strokeWidth={1} />
-                <p className="text-sm font-black text-zinc-400 uppercase tracking-widest">Selecione um canal</p>
+                <p className="text-sm font-semibold text-zinc-400 uppercase tracking-widest">Selecione um canal</p>
               </div>
             </div>
           )}

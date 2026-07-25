@@ -175,8 +175,8 @@ const AdminClientAccounts: React.FC = () => {
           <div className="max-w-7xl mx-auto">
             <div className="flex items-start justify-between gap-6 mb-8">
               <div>
-                <p className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-400 mb-2">Hub - Contas</p>
-                <h1 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tight leading-[1.05]">
+                <p className="text-xs font-medium text-zinc-400 mb-2">Hub - Contas</p>
+                <h1 className="text-4xl md:text-5xl font-semibold text-zinc-900 tracking-tight leading-[1.05]">
                   Contas Unificadas
                 </h1>
                 <p className="text-sm font-medium text-zinc-400 mt-2">
@@ -187,7 +187,7 @@ const AdminClientAccounts: React.FC = () => {
                 <select
                   value={orgFilter}
                   onChange={(e) => setOrgFilter(e.target.value as any)}
-                  className="bg-transparent border border-zinc-200 text-zinc-600 hover:border-zinc-900 focus:outline-none focus:border-zinc-900 font-black uppercase tracking-widest text-xxs h-10 px-4 transition-colors cursor-pointer"
+                  className="bg-transparent border border-zinc-200 text-zinc-600 hover:border-zinc-900 focus:outline-none focus:border-zinc-900 font-semibold uppercase tracking-widest text-xxs h-10 px-4 transition-colors cursor-pointer"
                 >
                   <option value="all">Todas as Contas</option>
                   <option value="revhackers">Org: RevHackers</option>
@@ -196,7 +196,7 @@ const AdminClientAccounts: React.FC = () => {
                 <button
                   onClick={() => refetch()}
                   disabled={isFetching}
-                  className="shrink-0 inline-flex items-center gap-2 border border-zinc-200 text-zinc-600 hover:border-zinc-900 hover:text-zinc-900 font-black uppercase tracking-widest text-xxs h-10 px-5 transition-colors disabled:opacity-50"
+                  className="shrink-0 inline-flex items-center gap-2 border border-zinc-200 text-zinc-600 hover:border-zinc-900 hover:text-zinc-900 font-semibold uppercase tracking-widest text-xxs h-10 px-5 transition-colors disabled:opacity-50"
                 >
                   <RefreshCw className={cn('w-3.5 h-3.5', isFetching && 'animate-spin')} />
                   Atualizar
@@ -214,8 +214,8 @@ const AdminClientAccounts: React.FC = () => {
                 { label: 'Sem Vinculo', value: semVinculo, icon: AlertTriangle },
               ].map(({ label, value, icon: Icon }) => (
                 <div key={label} className="px-6 py-5 first:pl-0">
-                  <p className="text-xxs font-black uppercase tracking-widest text-zinc-400 mb-1">{label}</p>
-                  <p className={cn("text-xl md:text-2xl font-black", label === 'MRR Base' ? 'text-[#00CC6A]' : 'text-zinc-900')}>
+                  <p className="text-xs font-medium text-zinc-400 mb-1">{label}</p>
+                  <p className={cn("text-xl md:text-2xl font-semibold", label === 'MRR Base' ? 'text-[#00CC6A]' : 'text-zinc-900')}>
                      {value}
                   </p>
                 </div>
@@ -235,7 +235,7 @@ const AdminClientAccounts: React.FC = () => {
                   key={f.key}
                   onClick={() => setFilter(f.key)}
                   className={cn(
-                    'py-4 text-xxs font-black uppercase tracking-widest border-b-2 transition-colors',
+                    'py-4 text-xs font-medium border-b-2 transition-colors',
                     filter === f.key
                       ? 'border-zinc-900 text-zinc-900'
                       : 'border-transparent text-zinc-400 hover:text-zinc-600'
@@ -269,7 +269,7 @@ const AdminClientAccounts: React.FC = () => {
           ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center p-12 border-2 border-dashed border-zinc-200 mt-4 text-center">
               <Building2 className="w-10 h-10 text-zinc-200 mb-4" />
-              <p className="text-sm font-black text-zinc-900 uppercase tracking-tight mb-1">Nenhuma conta encontrada</p>
+              <p className="text-sm font-semibold text-zinc-900 uppercase tracking-tight mb-1">Nenhuma conta encontrada</p>
               <p className="text-xs text-zinc-400 font-medium">
                 Contas sao criadas automaticamente quando um deal e ganho no CRM.
               </p>
@@ -277,21 +277,21 @@ const AdminClientAccounts: React.FC = () => {
           ) : (
             <div className="flex flex-col gap-0 border border-zinc-200 divide-y divide-zinc-100">
               {/* Header row */}
-              <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-zinc-50">
+              <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-white shadow-sm">
                 <div className="col-span-3">
-                  <p className="text-xxs font-black uppercase tracking-widest text-zinc-400">Cliente</p>
+                  <p className="text-xs font-medium text-zinc-400">Cliente</p>
                 </div>
                 <div className="col-span-2">
-                  <p className="text-xxs font-black uppercase tracking-widest text-zinc-400">Consultoria</p>
+                  <p className="text-xs font-medium text-zinc-400">Consultoria</p>
                 </div>
                 <div className="col-span-2">
-                  <p className="text-xxs font-black uppercase tracking-widest text-zinc-400">Software</p>
+                  <p className="text-xs font-medium text-zinc-400">Software</p>
                 </div>
                 <div className="col-span-2">
-                  <p className="text-xxs font-black uppercase tracking-widest text-zinc-400">Financeiro</p>
+                  <p className="text-xs font-medium text-zinc-400">Financeiro</p>
                 </div>
                 <div className="col-span-3">
-                  <p className="text-xxs font-black uppercase tracking-widest text-zinc-400">Vinculos CRM</p>
+                  <p className="text-xs font-medium text-zinc-400">Vinculos CRM</p>
                 </div>
               </div>
 
@@ -312,11 +312,11 @@ const AdminClientAccounts: React.FC = () => {
                 return (
                   <div
                     key={account.id}
-                    className="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-zinc-50/50 transition-colors group"
+                    className="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-white shadow-sm/50 transition-colors group"
                   >
                     {/* Cliente */}
                     <div className="col-span-3 min-w-0">
-                      <p className="text-sm font-black text-zinc-900 truncate">
+                      <p className="text-sm font-semibold text-zinc-900 truncate">
                         {account.client_name || '-'}
                       </p>
                       <p className="text-[11px] text-zinc-400 font-medium truncate">
@@ -351,7 +351,7 @@ const AdminClientAccounts: React.FC = () => {
                     <div className="col-span-2">
                       {ltv > 0 || mrr > 0 ? (
                         <div className="flex flex-col gap-0.5">
-                           {mrr > 0 && <span className="text-sm font-black text-[#00CC6A] tracking-tight">{formatBRL(mrr)}/mês</span>}
+                           {mrr > 0 && <span className="text-sm font-semibold text-[#00CC6A] tracking-tight">{formatBRL(mrr)}/mês</span>}
                            {ltv > 0 && <span className="text-[11px] font-bold text-zinc-400">TCV: {formatBRL(ltv)}</span>}
                         </div>
                       ) : (

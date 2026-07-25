@@ -177,7 +177,7 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
 
     if (!wikiLibrary) {
         return (
-            <div className="flex flex-col items-center justify-center h-[50vh] border-2 border-dashed border-zinc-200 bg-zinc-50/50">
+            <div className="flex flex-col items-center justify-center h-[50vh] border-2 border-dashed border-zinc-200 bg-white shadow-sm/50">
                 <div className="w-16 h-16 bg-white flex items-center justify-center shadow-sm mb-6">
                     <BookOpen className="w-8 h-8 text-zinc-400" />
                 </div>
@@ -188,7 +188,7 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
                 <Button
                     onClick={handleInitializeWiki}
                     disabled={isCreating}
-                    className="border border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 px-8 h-12 font-black uppercase tracking-widest text-xs transition-all rounded-none"
+                    className="border border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 px-8 h-12 font-semibold uppercase tracking-widest text-xs transition-all rounded-none"
                 >
                     {isCreating ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" strokeWidth={2.5} />}
                     INICIALIZAR WIKI
@@ -202,7 +202,7 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
             {/* Header / Stats */}
             <div className="flex items-center justify-between border-b border-zinc-100 pb-4">
                 <div>
-                    <h2 className="text-xl font-black text-black tracking-tight mb-1 uppercase">Wiki & Documentos</h2>
+                    <h2 className="text-xl font-semibold text-black tracking-tight mb-1 uppercase">Wiki & Documentos</h2>
                     <p className="text-xs text-zinc-500 font-medium tracking-wide">
                         {docs.length} documentos • Repositório central do projeto
                     </p>
@@ -256,7 +256,7 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
                                 </div>
                             </div>
                             <DialogFooter>
-                                <Button className="w-full border border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 font-black uppercase tracking-widest text-xs rounded-none transition-all h-12" onClick={handleSaveLink} disabled={isSavingLink}>
+                                <Button className="w-full border border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 font-semibold uppercase tracking-widest text-xs rounded-none transition-all h-12" onClick={handleSaveLink} disabled={isSavingLink}>
                                     {isSavingLink ? <Loader2 className="w-4 h-4 animate-spin" /> : 'SALVAR LINK'}
                                 </Button>
                             </DialogFooter>
@@ -265,7 +265,7 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
                     
                     <Button
                         onClick={() => navigate(`/admin/knowledge/${wikiLibrary.id}/doc/new`)}
-                        className="border border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 px-5 h-10 font-black uppercase tracking-widest text-xxs transition-all rounded-none gap-1.5"
+                        className="border border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-950 hover:text-white hover:border-zinc-950 px-5 h-10 font-semibold uppercase tracking-widest text-xxs transition-all rounded-none gap-1.5"
                     >
                         <Plus className="w-3.5 h-3.5" strokeWidth={2.5} />
                         CRIAR DOCUMENTO
@@ -299,7 +299,7 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
                                                 {mat.material_type}
                                             </span>
                                             {isReadableText && (
-                                                <span className="px-2 py-0.5 bg-[#00CC6A]/10 border border-[#00CC6A]/20 text-3xs font-black uppercase tracking-wider text-[#00CC6A] flex items-center gap-1">
+                                                <span className="px-2 py-0.5 bg-[#00CC6A]/10 border border-[#00CC6A]/20 text-3xs font-semibold uppercase tracking-wider text-[#00CC6A] flex items-center gap-1">
                                                     <Eye size={10} /> Extraído
                                                 </span>
                                             )}
@@ -347,13 +347,13 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
                     >
                         {/* Status/Meta Badge */}
                         <div className="flex justify-between items-start z-10 relative">
-                            <div className="w-10 h-10 bg-zinc-50 flex items-center justify-center text-zinc-400 group-hover:bg-zinc-900 group-hover:text-white transition-colors">
+                            <div className="w-10 h-10 bg-white shadow-sm flex items-center justify-center text-zinc-400 group-hover:bg-zinc-900 group-hover:text-white transition-colors">
                                 {doc.metadata?.type === 'external_link' ? <ExternalLink size={20} /> : <FileText size={20} />}
                             </div>
                             <div className="flex flex-col items-end gap-1">
                                 {doc.metadata?.visibility && (
                                     <span className={cn(
-                                        "px-2 py-0.5 border text-3xs font-black uppercase tracking-widest",
+                                        "px-2 py-0.5 border text-3xs font-semibold uppercase tracking-widest",
                                         doc.metadata.visibility === 'internal' ? "bg-zinc-100 text-zinc-500 border-zinc-200" :
                                         doc.metadata.visibility === 'shared' ? "bg-zinc-100 text-zinc-700 border-zinc-200" :
                                         "bg-[#00CC6A]/10 text-[#00CC6A] border-[#00CC6A]/20"
@@ -362,7 +362,7 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
                                     </span>
                                 )}
                                 {doc.metadata?.category && (
-                                    <span className="px-2 py-0.5 bg-zinc-50 border border-zinc-100 text-3xs font-bold uppercase tracking-wider text-zinc-400">
+                                    <span className="px-2 py-0.5 bg-white shadow-sm border border-zinc-100 text-3xs font-bold uppercase tracking-wider text-zinc-400">
                                         {doc.metadata.category}
                                     </span>
                                 )}
@@ -389,7 +389,7 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
                         </div>
                     </div>
                 )) : (
-                    <div className="col-span-full py-12 text-center border border-dashed border-zinc-200 bg-zinc-50/50">
+                    <div className="col-span-full py-12 text-center border border-dashed border-zinc-200 bg-white shadow-sm/50">
                         <p className="text-sm font-medium text-zinc-400 mb-4">Nenhum documento criado ainda.</p>
                         <Button
                             variant="link"
@@ -416,9 +416,9 @@ const ProjectWiki = ({ projectId, projectName }: ProjectWikiProps) => {
                         </DialogDescription>
                     </DialogHeader>
                     <div className="flex-1 overflow-y-auto pr-2 pb-4 pt-4">
-                        <div className="text-sm text-zinc-700 leading-relaxed bg-zinc-50 border border-zinc-100 p-8 
-                            [&>h1]:font-black [&>h1]:text-xl [&>h1]:uppercase [&>h1]:tracking-tight [&>h1]:mb-5 [&>h1]:text-zinc-950
-                            [&>h2]:font-black [&>h2]:text-base [&>h2]:uppercase [&>h2]:tracking-wider [&>h2]:mt-8 [&>h2]:mb-4 [&>h2]:text-zinc-900 [&>h2]:border-b [&>h2]:border-zinc-200 [&>h2]:pb-2
+                        <div className="text-sm text-zinc-700 leading-relaxed bg-white shadow-sm border border-zinc-100 p-8 
+                            [&>h1]:font-semibold [&>h1]:text-xl [&>h1]:uppercase [&>h1]:tracking-tight [&>h1]:mb-5 [&>h1]:text-zinc-950
+                            [&>h2]:font-semibold [&>h2]:text-base [&>h2]:uppercase [&>h2]:tracking-wider [&>h2]:mt-8 [&>h2]:mb-4 [&>h2]:text-zinc-900 [&>h2]:border-b [&>h2]:border-zinc-200 [&>h2]:pb-2
                             [&>h3]:font-bold [&>h3]:text-sm [&>h3]:mt-6 [&>h3]:mb-3 [&>h3]:text-zinc-800
                             [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-2 [&>ul]:mb-6
                             [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-2 [&>ol]:mb-6

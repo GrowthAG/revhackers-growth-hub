@@ -445,7 +445,7 @@ const StageActionButton = ({
     onClick={(e) => { e.stopPropagation(); onClick(); }}
     disabled={loading}
     className={cn(
-      'text-2xs font-black uppercase tracking-widest px-2.5 py-1 border transition-all disabled:opacity-50',
+      'text-xs font-medium text-zinc-500 px-2.5 py-1 border transition-all disabled:opacity-50',
       variant === 'accent' && 'bg-[#00CC6A]/10 text-zinc-900 border-[#00CC6A]/30 hover:bg-[#00CC6A]/20',
       variant === 'danger' && 'bg-zinc-100 text-zinc-400 border-zinc-200 hover:text-zinc-600',
       variant === 'default' && 'border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-950 hover:text-white hover:border-zinc-950',
@@ -478,12 +478,12 @@ const DiagnosticoRow = ({
       className="bg-white border border-zinc-200 p-4 cursor-pointer hover:border-zinc-400 transition-all group"
     >
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 bg-zinc-50 border border-zinc-200 flex items-center justify-center shrink-0">
+        <div className="w-9 h-9 bg-white shadow-sm border border-zinc-200 flex items-center justify-center shrink-0">
           <Icon className="w-4 h-4 text-zinc-900" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-sm font-black text-zinc-900 truncate">{project.display_name}</span>
+            <span className="text-sm font-semibold text-zinc-900 truncate">{project.display_name}</span>
             <StageBadge stage={project.pipeline_stage || 'lead_inbound'} />
           </div>
           <div className="flex items-center gap-3 text-xxs font-medium text-zinc-400">
@@ -498,7 +498,7 @@ const DiagnosticoRow = ({
             onChange={(e) => onAction(project.id, e.target.value as PipelineStage)}
             value={project.pipeline_stage || 'lead_inbound'}
             disabled={transitioning === project.id}
-            className="text-xs font-black uppercase tracking-widest text-zinc-700 bg-zinc-50 border border-zinc-200 outline-none p-1.5 focus:border-zinc-900 cursor-pointer disabled:opacity-50"
+            className="text-[13px] font-medium text-zinc-700 bg-white shadow-sm border border-zinc-200 outline-none p-1.5 focus:border-zinc-900 cursor-pointer disabled:opacity-50"
           >
             <option value="lead_inbound">Lead Inbound</option>
             <option value="lead_qualified">Qualificado</option>
@@ -547,30 +547,30 @@ const VendasRow = ({
       className="bg-white border border-zinc-200 p-4 cursor-pointer hover:border-zinc-400 transition-all group"
     >
       <div className="flex items-start gap-3">
-        <div className="w-9 h-9 bg-zinc-50 border border-zinc-200 flex items-center justify-center shrink-0 mt-0.5">
+        <div className="w-9 h-9 bg-white shadow-sm border border-zinc-200 flex items-center justify-center shrink-0 mt-0.5">
           <Icon className="w-4 h-4 text-zinc-900" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-sm font-black text-zinc-900 truncate">{project.display_name}</span>
+            <span className="text-sm font-semibold text-zinc-900 truncate">{project.display_name}</span>
             <StageBadge stage={project.pipeline_stage || 'proposal_draft'} />
           </div>
           <div className="grid grid-cols-4 gap-3 mt-2">
             <div>
-              <p className="text-2xs font-black uppercase tracking-widest text-zinc-400">Fechamento</p>
-              <p className="text-sm font-black text-zinc-900">{opp?.score_fechamento ?? '-'}%</p>
+              <p className="text-xs font-medium text-zinc-500 text-zinc-400">Fechamento</p>
+              <p className="text-sm font-semibold text-zinc-900">{opp?.score_fechamento ?? '-'}%</p>
             </div>
             <div>
-              <p className="text-2xs font-black uppercase tracking-widest text-zinc-400">Objeções</p>
-              <p className="text-sm font-black text-zinc-900">{opp?.objecoes_detectadas?.length ?? 0}</p>
+              <p className="text-xs font-medium text-zinc-500 text-zinc-400">Objeções</p>
+              <p className="text-sm font-semibold text-zinc-900">{opp?.objecoes_detectadas?.length ?? 0}</p>
             </div>
             <div>
-              <p className="text-2xs font-black uppercase tracking-widest text-zinc-400">Sinais</p>
-              <p className="text-sm font-black text-zinc-900">{opp?.sinais_compra?.length ?? 0}</p>
+              <p className="text-xs font-medium text-zinc-500 text-zinc-400">Sinais</p>
+              <p className="text-sm font-semibold text-zinc-900">{opp?.sinais_compra?.length ?? 0}</p>
             </div>
             <div>
-              <p className="text-2xs font-black uppercase tracking-widest text-zinc-400">Investimento</p>
-              <p className="text-sm font-black text-zinc-900">{investAvg > 0 ? formatCurrency(investAvg) : '-'}</p>
+              <p className="text-xs font-medium text-zinc-500 text-zinc-400">Investimento</p>
+              <p className="text-sm font-semibold text-zinc-900">{investAvg > 0 ? formatCurrency(investAvg) : '-'}</p>
             </div>
           </div>
         </div>
@@ -590,7 +590,7 @@ const VendasRow = ({
             }}
             value={project.pipeline_stage || 'proposal_draft'}
             disabled={transitioning === project.id}
-            className="text-xs font-black uppercase tracking-widest text-zinc-700 bg-zinc-50 border border-zinc-200 outline-none p-1.5 focus:border-zinc-900 cursor-pointer disabled:opacity-50"
+            className="text-[13px] font-medium text-zinc-700 bg-white shadow-sm border border-zinc-200 outline-none p-1.5 focus:border-zinc-900 cursor-pointer disabled:opacity-50"
           >
             <option value="proposal_draft">Em Elaboração</option>
             <option value="proposal_sent">Enviada</option>
@@ -648,7 +648,7 @@ const ExecucaoRow = ({
           'w-9 h-9 flex items-center justify-center shrink-0',
           project.pipeline_stage === 'won'
             ? 'border border-[#00CC6A]/20'
-            : 'bg-zinc-50 border border-zinc-200',
+            : 'bg-white shadow-sm border border-zinc-200',
         )}>
           <Icon className={cn(
             'w-4 h-4',
@@ -657,15 +657,15 @@ const ExecucaoRow = ({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className="text-sm font-black text-zinc-900 truncate">{project.display_name}</span>
+            <span className="text-sm font-semibold text-zinc-900 truncate">{project.display_name}</span>
             <StageBadge stage={project.pipeline_stage || 'active'} />
             {project.pipeline_stage !== 'won' && project.pipeline_stage !== 'completed' && (
-              <span className="text-[10px] font-black uppercase tracking-widest text-[#00CC6A] bg-[#00CC6A]/10 px-2 py-0.5">
+              <span className="text-xs font-medium text-[#00CC6A] bg-[#00CC6A]/10 px-2 py-0.5">
                 {PHASE_LABELS[phase] || `Fase ${phase}`}
               </span>
             )}
             {isStuck && (
-              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-900 bg-zinc-100 border border-zinc-300 px-2 py-0.5 flex items-center gap-1">
+              <span className="text-xs font-medium text-zinc-900 bg-zinc-100 border border-zinc-300 px-2 py-0.5 flex items-center gap-1">
                 <AlertTriangle className="w-2.5 h-2.5" />
                 Parado {daysInPhase}d
               </span>
@@ -679,13 +679,13 @@ const ExecucaoRow = ({
                   style={{ width: `${pctDone}%` }}
                 />
               </div>
-              <span className="text-xxs font-black text-zinc-500">{pctDone}%</span>
+              <span className="text-xs font-medium text-zinc-500">{pctDone}%</span>
             </div>
             <span className="text-xxs font-medium text-zinc-400">
               {project.done_tasks}/{project.total_tasks} tarefas
             </span>
             {project.overdue_tasks > 0 && (
-              <span className="text-xxs font-black text-zinc-900 flex items-center gap-0.5">
+              <span className="text-xs font-medium text-zinc-900 flex items-center gap-0.5">
                 <AlertTriangle className="w-2.5 h-2.5" /> {project.overdue_tasks} atrasada(s)
               </span>
             )}
@@ -705,7 +705,7 @@ const ExecucaoRow = ({
             onChange={(e) => onAction(project.id, e.target.value as PipelineStage)}
             value={project.pipeline_stage || 'active'}
             disabled={transitioning === project.id}
-            className="text-xs font-black uppercase tracking-widest text-zinc-700 bg-zinc-50 border border-zinc-200 outline-none p-1.5 focus:border-zinc-900 cursor-pointer disabled:opacity-50"
+            className="text-[13px] font-medium text-zinc-700 bg-white shadow-sm border border-zinc-200 outline-none p-1.5 focus:border-zinc-900 cursor-pointer disabled:opacity-50"
           >
             <option value="won">Aguardando Onboarding</option>
             <option value="onboarding">Em Onboarding</option>
@@ -734,11 +734,11 @@ const SectionTitle = ({
   count?: number;
 }) => (
   <div className="mb-6">
-    <p className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-400 mb-2">{eyebrow}</p>
+    <p className="text-xs font-medium text-zinc-400 mb-2">{eyebrow}</p>
     <div className="flex items-baseline gap-3">
-      <h2 className="text-3xl font-black tracking-tight text-zinc-900">{title}</h2>
+      <h2 className="text-3xl font-semibold tracking-tight text-zinc-900">{title}</h2>
       {count !== undefined && (
-        <span className="text-lg font-black text-zinc-300">{count}</span>
+        <span className="text-lg font-semibold text-zinc-300">{count}</span>
       )}
     </div>
     {description && (
@@ -1157,7 +1157,7 @@ export const RevenueCockpit: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => loadAll()}
-                className="h-9 px-3 border border-zinc-200 rounded-lg bg-white flex items-center justify-center hover:bg-zinc-50 text-zinc-700 transition-colors text-xs font-mono font-bold gap-1.5"
+                className="h-9 px-3 border border-zinc-200 rounded-lg bg-white flex items-center justify-center hover:bg-white shadow-sm text-zinc-700 transition-colors text-xs font-mono font-bold gap-1.5"
                 title="Atualizar dados"
               >
                 <RefreshCw className="w-3.5 h-3.5 text-zinc-500" /> Atualizar
@@ -1165,7 +1165,7 @@ export const RevenueCockpit: React.FC = () => {
               {activeTab === 'vendas' && (
                 <Button
                   onClick={() => setLeadDrawerOpen(true)}
-                  className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold uppercase tracking-wider shadow-none border border-zinc-800 flex items-center gap-2"
+                  className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold uppercase tracking-wider shadow-none border border-zinc-200 flex items-center gap-2"
                 >
                   <Plus className="w-4 h-4 text-[#00CC6A]" /> <span>Novo Lead</span>
                 </Button>
@@ -1303,7 +1303,7 @@ export const RevenueCockpit: React.FC = () => {
                     'text-xs font-bold border px-3 py-1.5 transition-colors cursor-pointer',
                     filterSource
                       ? 'bg-zinc-900 text-white border-zinc-900'
-                      : 'text-zinc-400 border-zinc-200 hover:bg-zinc-50'
+                      : 'text-zinc-400 border-zinc-200 hover:bg-white shadow-sm'
                   )}
                 >
                   <option value="">Fonte do Lead</option>
@@ -1319,7 +1319,7 @@ export const RevenueCockpit: React.FC = () => {
                     'text-xs font-bold border px-3 py-1.5 transition-colors cursor-pointer',
                     filterMinDays
                       ? 'bg-zinc-900 text-white border-zinc-900'
-                      : 'text-zinc-400 border-zinc-200 hover:bg-zinc-50'
+                      : 'text-zinc-400 border-zinc-200 hover:bg-white shadow-sm'
                   )}
                 >
                   <option value="">Dias no Estagio</option>
@@ -1336,7 +1336,7 @@ export const RevenueCockpit: React.FC = () => {
                     'text-xs font-bold border px-3 py-1.5 transition-colors cursor-pointer',
                     filterMinInvestment
                       ? 'bg-zinc-900 text-white border-zinc-900'
-                      : 'text-zinc-400 border-zinc-200 hover:bg-zinc-50'
+                      : 'text-zinc-400 border-zinc-200 hover:bg-white shadow-sm'
                   )}
                 >
                   <option value="">Investimento</option>
@@ -1362,7 +1362,7 @@ export const RevenueCockpit: React.FC = () => {
               <div className="bg-white border border-zinc-200 p-5 mb-10">
                 <div className="flex items-center gap-2 mb-4">
                   <BarChart3 className="w-4 h-4 text-zinc-400" />
-                  <p className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-500">
+                  <p className="text-xs font-medium text-zinc-500">
                     {activeTab === 'vendas' ? 'Funil de Vendas' : 'Funil de Execução'}
                   </p>
                 </div>
@@ -1408,11 +1408,11 @@ export const RevenueCockpit: React.FC = () => {
               {sourceBreakdown.length > 0 && (
                 <div className="flex flex-wrap gap-3 mb-5">
                   {sourceBreakdown.map(([src, count]) => (
-                    <div key={src} className="flex items-center gap-1.5 bg-zinc-50 border border-zinc-200 px-3 py-1.5">
-                      <span className="text-xxs font-black uppercase tracking-widest text-zinc-500">
+                    <div key={src} className="flex items-center gap-1.5 bg-white shadow-sm border border-zinc-200 px-3 py-1.5">
+                      <span className="text-xs font-medium text-zinc-500">
                         {LEAD_SOURCE_LABELS[src as LeadSource] || src}
                       </span>
-                      <span className="text-xxs font-black text-zinc-900">{count}</span>
+                      <span className="text-xs font-medium text-zinc-900">{count}</span>
                     </div>
                   ))}
                 </div>
@@ -1426,7 +1426,7 @@ export const RevenueCockpit: React.FC = () => {
                   <div key={stage} className="mb-6">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-1.5 h-1.5 bg-zinc-400" />
-                      <p className="text-xxs font-black uppercase tracking-widest text-zinc-500">
+                      <p className="text-xs font-medium text-zinc-500">
                         {STAGE_CONFIGS[stage].label}
                       </p>
                       <span className="text-xxs font-medium text-zinc-300">{stageProjects.length}</span>
@@ -1450,7 +1450,7 @@ export const RevenueCockpit: React.FC = () => {
               {diagnostico.length === 0 && (
                 <div className="bg-white border-2 border-dashed border-zinc-200 py-14 text-center">
                   <UserPlus className="w-7 h-7 text-zinc-300 mx-auto mb-2" />
-                  <p className="text-sm font-black text-zinc-400">Nenhum lead no funil</p>
+                  <p className="text-sm font-semibold text-zinc-400">Nenhum lead no funil</p>
                   <p className="text-xs font-medium text-zinc-300 mt-1">Crie um novo lead para comecar.</p>
                 </div>
               )}
@@ -1473,7 +1473,7 @@ export const RevenueCockpit: React.FC = () => {
                   <div key={stage} className="mb-6">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-1.5 h-1.5 bg-zinc-500" />
-                      <p className="text-xxs font-black uppercase tracking-widest text-zinc-500">
+                      <p className="text-xs font-medium text-zinc-500">
                         {STAGE_CONFIGS[stage].label}
                       </p>
                       <span className="text-xxs font-medium text-zinc-300">{stageProjects.length}</span>
@@ -1497,7 +1497,7 @@ export const RevenueCockpit: React.FC = () => {
               {vendas.length === 0 && (
                 <div className="bg-white border-2 border-dashed border-zinc-200 py-14 text-center">
                   <Send className="w-7 h-7 text-zinc-300 mx-auto mb-2" />
-                  <p className="text-sm font-black text-zinc-400">Nenhuma oportunidade ativa</p>
+                  <p className="text-sm font-semibold text-zinc-400">Nenhuma oportunidade ativa</p>
                   <p className="text-xs font-medium text-zinc-300 mt-1">Mova leads qualificados para vendas.</p>
                 </div>
               )}
@@ -1521,7 +1521,7 @@ export const RevenueCockpit: React.FC = () => {
                               'w-2 h-2 rounded-full',
                               isVendasStage ? 'bg-zinc-900' : 'bg-zinc-400',
                             )} />
-                            <span className="text-xs font-black uppercase tracking-widest text-zinc-500">
+                            <span className="text-[13px] font-medium text-zinc-500">
                               {STAGE_CONFIGS[stage].labelShort}
                             </span>
                             <span className="text-xs text-zinc-300 ml-auto">{stageItems.length}</span>
@@ -1551,7 +1551,7 @@ export const RevenueCockpit: React.FC = () => {
                                         {p.days_in_stage}d neste estagio
                                       </span>
                                       {investAvg > 0 && (
-                                        <span className="text-xxs font-black text-zinc-600">
+                                        <span className="text-xs font-medium text-zinc-600">
                                           {formatCurrency(investAvg)}
                                         </span>
                                       )}
@@ -1590,18 +1590,18 @@ export const RevenueCockpit: React.FC = () => {
                 {followups.length === 0 ? (
                   <div className="bg-white border-2 border-dashed border-zinc-200 py-14 text-center">
                     <CheckCircle2 className="w-7 h-7 text-[#00CC6A] mx-auto mb-2" />
-                    <p className="text-sm font-black text-zinc-900">Tudo em dia</p>
+                    <p className="text-sm font-semibold text-zinc-900">Tudo em dia</p>
                     <p className="text-xs font-medium text-zinc-400 mt-1">Nenhum lead precisa de follow-up agora.</p>
                   </div>
                 ) : (
                   <div className="border border-zinc-200 overflow-hidden">
                     {/* Table header */}
-                    <div className="grid grid-cols-12 gap-4 px-5 py-3 border-b border-zinc-100 bg-zinc-50">
-                      <div className="col-span-4 text-xxs font-black uppercase tracking-widest text-zinc-400">Lead</div>
-                      <div className="col-span-2 text-xxs font-black uppercase tracking-widest text-zinc-400">Estagio</div>
-                      <div className="col-span-2 text-xxs font-black uppercase tracking-widest text-zinc-400">Dias Parado</div>
-                      <div className="col-span-2 text-xxs font-black uppercase tracking-widest text-zinc-400">Investimento</div>
-                      <div className="col-span-2 text-xxs font-black uppercase tracking-widest text-zinc-400">Acao</div>
+                    <div className="grid grid-cols-12 gap-4 px-5 py-3 border-b border-zinc-100 bg-white shadow-sm">
+                      <div className="col-span-4 text-xs font-medium text-zinc-400">Lead</div>
+                      <div className="col-span-2 text-xs font-medium text-zinc-400">Estagio</div>
+                      <div className="col-span-2 text-xs font-medium text-zinc-400">Dias Parado</div>
+                      <div className="col-span-2 text-xs font-medium text-zinc-400">Investimento</div>
+                      <div className="col-span-2 text-xs font-medium text-zinc-400">Acao</div>
                     </div>
                     {/* Table rows */}
                     <div className="divide-y divide-zinc-50">
@@ -1614,7 +1614,7 @@ export const RevenueCockpit: React.FC = () => {
                           <div
                             key={p.id}
                             onClick={() => openWarRoom(p)}
-                            className="grid grid-cols-12 gap-4 px-5 py-3.5 hover:bg-zinc-50 cursor-pointer transition-colors items-center"
+                            className="grid grid-cols-12 gap-4 px-5 py-3.5 hover:bg-white shadow-sm cursor-pointer transition-colors items-center"
                           >
                             <div className="col-span-4">
                               <p className="text-sm font-bold text-zinc-900 truncate">{p.display_name}</p>
@@ -1627,7 +1627,7 @@ export const RevenueCockpit: React.FC = () => {
                             </div>
                             <div className="col-span-2">
                               <span className={cn(
-                                'text-sm font-black tabular-nums',
+                                'text-sm font-semibold tabular-nums',
                                 p.days_in_stage >= 7 ? 'text-zinc-900' : 'text-zinc-500',
                               )}>
                                 {p.days_in_stage}d
@@ -1641,7 +1641,7 @@ export const RevenueCockpit: React.FC = () => {
                             <div className="col-span-2">
                               <button
                                 onClick={(e) => { e.stopPropagation(); openWarRoom(p); }}
-                                className="text-xxs font-black uppercase tracking-widest text-zinc-500 hover:text-zinc-900 transition-colors"
+                                className="text-xs font-medium text-zinc-500 hover:text-zinc-900 transition-colors"
                               >
                                 Abrir Dossie
                               </button>
@@ -1660,7 +1660,7 @@ export const RevenueCockpit: React.FC = () => {
               <div className="bg-white border border-zinc-200 p-5 mb-10">
                 <div className="flex items-center gap-2 mb-4">
                   <BarChart3 className="w-4 h-4 text-zinc-400" />
-                  <p className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-500">Funil de Execução</p>
+                  <p className="text-xs font-medium text-zinc-500">Funil de Execução</p>
                 </div>
                 <div className="space-y-2">
                   {EXECUCAO_STAGES.map(s => (
@@ -1699,7 +1699,7 @@ export const RevenueCockpit: React.FC = () => {
                           'w-1.5 h-1.5 ',
                           stage === 'won' ? 'bg-[#00CC6A]' : 'bg-zinc-600',
                         )} />
-                        <p className="text-xxs font-black uppercase tracking-widest text-zinc-500">
+                        <p className="text-xs font-medium text-zinc-500">
                           {STAGE_CONFIGS[stage].label}
                         </p>
                         <span className="text-xxs font-medium text-zinc-300">{stageProjects.length}</span>
@@ -1721,7 +1721,7 @@ export const RevenueCockpit: React.FC = () => {
                 {execucao.length === 0 && (
                   <div className="bg-white border-2 border-dashed border-zinc-200 py-14 text-center">
                     <Rocket className="w-7 h-7 text-zinc-300 mx-auto mb-2" />
-                    <p className="text-sm font-black text-zinc-400">Nenhum projeto em execução</p>
+                    <p className="text-sm font-semibold text-zinc-400">Nenhum projeto em execução</p>
                     <p className="text-xs font-medium text-zinc-300 mt-1">Feche vendas para iniciar projetos.</p>
                   </div>
                 )}
@@ -1741,18 +1741,18 @@ export const RevenueCockpit: React.FC = () => {
                   {network.length > 0 ? (
                     <div className="divide-y divide-zinc-100">
                       {network.map(contact => (
-                        <div key={contact.id} className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50 transition-colors group cursor-pointer" onClick={() => navigate(`/admin/projects/${contact.id}`)}>
+                        <div key={contact.id} className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-white shadow-sm transition-colors group cursor-pointer" onClick={() => navigate(`/admin/projects/${contact.id}`)}>
                           <div className="flex flex-col md:flex-row md:items-center gap-4">
                             <div className="w-10 h-10 bg-zinc-100 flex items-center justify-center shrink-0">
                               <UserMinus className="w-5 h-5 text-zinc-400" />
                             </div>
                             <div>
-                              <h4 className="text-sm font-black text-zinc-900 uppercase tracking-tight">{contact.display_name}</h4>
+                              <h4 className="text-sm font-semibold text-zinc-900 uppercase tracking-tight">{contact.display_name}</h4>
                               <p className="text-xxs font-bold uppercase tracking-widest text-zinc-400 mt-0.5">{contact.type} • Estagnado há {contact.days_in_stage}d</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-2xs font-black uppercase tracking-widest bg-zinc-100 text-zinc-500 px-2 py-1">
+                            <span className="text-xs font-medium text-zinc-500 bg-zinc-100 text-zinc-500 px-2 py-1">
                               Lead Perdido
                             </span>
                             <Button
@@ -1763,7 +1763,7 @@ export const RevenueCockpit: React.FC = () => {
                                   handleAdvance(contact.id, 'lead_inbound');
                                 }
                               }}
-                              className="bg-zinc-100 hover:bg-black text-zinc-500 hover:text-white rounded-sm h-8 px-3 text-2xs font-black uppercase tracking-widest transition-all"
+                              className="bg-zinc-100 hover:bg-black text-zinc-500 hover:text-white rounded-sm h-8 px-3 text-xs font-medium text-zinc-500 transition-all"
                             >
                               Reativar Info
                             </Button>
@@ -1774,7 +1774,7 @@ export const RevenueCockpit: React.FC = () => {
                   ) : (
                     <div className="py-20 text-center">
                       <UserCheck className="w-8 h-8 text-zinc-200 mx-auto mb-3" />
-                      <p className="text-xs font-black text-zinc-400 uppercase tracking-widest">Nenhum contato arquivado</p>
+                      <p className="text-[13px] font-medium text-zinc-500">Nenhum contato arquivado</p>
                     </div>
                   )}
                 </div>

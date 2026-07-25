@@ -143,8 +143,8 @@ const REIProjectForm = () => {
     }, [watchedType, isEditing]);
 
     // Styling Constants (Diagnostic Standard)
-    const inputClasses = "bg-transparent border-0 border-b h-14 rounded-none transition-all font-medium text-base px-4 focus:ring-0 w-full border-zinc-200 text-black focus:border-black placeholder:text-zinc-300 hover:bg-zinc-50/50";
-    const labelClasses = "text-xxs font-black uppercase tracking-widest pl-0.5 text-zinc-400";
+    const inputClasses = "bg-transparent border-0 border-b h-14 rounded-none transition-all font-medium text-base px-4 focus:ring-0 w-full border-zinc-200 text-black focus:border-black placeholder:text-zinc-300 hover:bg-white shadow-sm/50";
+    const labelClasses = "text-xs font-medium pl-0.5 text-zinc-400";
     const sectionTitleClasses = "text-xs font-semibold text-zinc-900 border-b border-zinc-200 pb-2 flex items-center gap-2 mb-6";
 
     // ... CNPJ Logic (Keep same) ...
@@ -457,14 +457,14 @@ const REIProjectForm = () => {
                                                         </button>
                                                     </DialogTrigger>
                                                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0 border-0 bg-transparent shadow-none">
-                                                        <div className="bg-zinc-50 overflow-hidden">
+                                                        <div className="bg-white shadow-sm overflow-hidden">
                                                             <div className="bg-white border-b border-zinc-100 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
                                                                 <div>
                                                                     <h2 className="text-sm font-bold text-black">Cadastrar Novo Cliente</h2>
                                                                     <p className="text-xxs text-zinc-400 font-medium tracking-wide">Preencha os dados completos para iniciar o protocolo.</p>
                                                                 </div>
                                                             </div>
-                                                            <div className="p-4 bg-zinc-50">
+                                                            <div className="p-4 bg-white shadow-sm">
                                                                 <ClientFormContent
                                                                     mode="admin"
                                                                     onCancel={() => setMode('existing')}
@@ -540,7 +540,7 @@ const REIProjectForm = () => {
                         {/* PONTOS FOCAIS */}
                         <div className="space-y-6">
                             <div className="flex items-center justify-between border-b border-zinc-200 pb-2">
-                                <h3 className="text-xxs font-black uppercase tracking-widest text-zinc-400">
+                                <h3 className="text-xs font-medium text-zinc-400">
                                     Pontos Focais (Contatos)
                                 </h3>
                                 <Button
@@ -559,7 +559,7 @@ const REIProjectForm = () => {
                                 {focalPoints.map((field, index) => {
                                     const isMain = index === 0;
                                     return (
-                                    <div key={field.id} className={`p-5 relative group border transition-all ${isMain ? 'border-zinc-200 bg-zinc-50/10 shadow-sm' : 'border-zinc-200 bg-white'}`}>
+                                    <div key={field.id} className={`p-5 relative group border transition-all ${isMain ? 'border-zinc-200 bg-white shadow-sm/10 shadow-sm' : 'border-zinc-200 bg-white'}`}>
                                         <div className="mb-4 flex items-center gap-2">
                                             {isMain ? (
                                                 <div className="flex items-center gap-2">
@@ -617,7 +617,7 @@ const REIProjectForm = () => {
 
                         {/* 2. PARAMETROS DO PROJETO */}
                         <div className="space-y-6">
-                            <h3 className="text-xxs font-black uppercase tracking-widest text-zinc-400 border-b border-zinc-200 pb-2">
+                            <h3 className="text-xs font-medium text-zinc-400 border-b border-zinc-200 pb-2">
                                 02. Parâmetros de Execução
                             </h3>
 
@@ -707,12 +707,12 @@ const REIProjectForm = () => {
                                         <div className="border border-zinc-200 overflow-hidden">
                                             <button
                                                 type="button"
-                                                className="w-full flex items-center justify-between px-4 py-3 bg-zinc-50 hover:bg-zinc-100 transition-colors"
+                                                className="w-full flex items-center justify-between px-4 py-3 bg-white shadow-sm hover:bg-zinc-100 transition-colors"
                                                 onClick={() => setSiteAnalysisExpanded(!siteAnalysisExpanded)}
                                             >
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-2 h-2 bg-[#00CC6A]" />
-                                                    <span className="text-xxs font-black uppercase tracking-widest text-zinc-500">Analise do Site</span>
+                                                    <span className="text-xs font-medium text-zinc-500">Analise do Site</span>
                                                 </div>
                                                 {siteAnalysisExpanded ? (
                                                     <ChevronUp className="w-3.5 h-3.5 text-zinc-400" />
@@ -825,8 +825,8 @@ const REIProjectForm = () => {
                                     const end = new Date(start.getTime() + days * 86_400_000);
                                     const fmt = end.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
                                     return (
-                                        <div className="flex items-center justify-between px-3 py-2.5 bg-zinc-50 border border-zinc-200">
-                                            <span className="text-xxs font-black uppercase tracking-widest text-zinc-400">Previsão de Encerramento</span>
+                                        <div className="flex items-center justify-between px-3 py-2.5 bg-white shadow-sm border border-zinc-200">
+                                            <span className="text-xs font-medium text-zinc-400">Previsão de Encerramento</span>
                                             <span className="text-xs font-bold text-zinc-800 font-mono">{fmt}</span>
                                         </div>
                                     );
@@ -836,10 +836,10 @@ const REIProjectForm = () => {
 
                         {/* 3. COLETA DE ATIVOS */}
                         <div className="space-y-6">
-                            <h3 className="text-xxs font-black uppercase tracking-widest text-zinc-400 border-b border-zinc-200 pb-2 flex items-center gap-2">
+                            <h3 className="text-xs font-medium text-zinc-400 border-b border-zinc-200 pb-2 flex items-center gap-2">
                                 <FileText className="w-3.5 h-3.5" /> 03. Coleta de Ativos
                             </h3>
-                            <div className="p-6 bg-zinc-50 border border-zinc-200 space-y-6">
+                            <div className="p-6 bg-white shadow-sm border border-zinc-200 space-y-6">
                                 <div className="space-y-3">
                                     <Label className={labelClasses}>Status dos Materiais (Brandbook, Acessos, Arquivos)</Label>
                                     <div className="flex gap-4">
@@ -859,7 +859,7 @@ const REIProjectForm = () => {
                                         <label className="flex items-start gap-3 cursor-pointer">
                                             <input type="checkbox" {...register('materials_delay_accepted')} className="mt-1 w-4 h-4 border-red-300 text-red-600 focus:ring-red-600" />
                                             <div>
-                                                <p className="text-tiny font-black text-red-800 uppercase tracking-widest leading-none">Termo de Retenção de Cronograma (Assinatura)</p>
+                                                <p className="text-tiny font-semibold text-red-800 uppercase tracking-widest leading-none">Termo de Retenção de Cronograma (Assinatura)</p>
                                                 <p className="text-xs text-red-600/80 mt-1 font-medium leading-relaxed">Declaro estar totalmente ciente de que o Hub do projeto ficará bloqueado e o Planejamento Estratégico suspenso até que a totalidade dos ativos e materiais sensíveis seja inserida oficialmente na plataforma.</p>
                                             </div>
                                         </label>
@@ -870,7 +870,7 @@ const REIProjectForm = () => {
 
                         {/* 4. CHAVE DE OURO */}
                         <div className="space-y-6">
-                            <h3 className="text-xxs font-black uppercase tracking-widest text-[#00CC6A] border-b border-[#00CC6A]/30 pb-2 flex items-center gap-2">
+                            <h3 className="text-xs font-medium text-[#00CC6A] border-b border-[#00CC6A]/30 pb-2 flex items-center gap-2">
                                 <Target className="w-3.5 h-3.5" /> 04. Pergunta de Ouro
                             </h3>
                             <div className="space-y-2">
@@ -878,7 +878,7 @@ const REIProjectForm = () => {
                                 <textarea
                                     {...register('final_expectations')}
                                     placeholder="Insights finais, medos do decisor, omissões importantes da call..."
-                                    className="w-full bg-zinc-50 border border-zinc-200 p-4 text-sm font-medium focus:ring-2 focus:ring-[#00CC6A]/20 focus:border-[#00CC6A] focus:outline-none min-h-[120px] transition-all resize-none mt-2"
+                                    className="w-full bg-white shadow-sm border border-zinc-200 p-4 text-sm font-medium focus:ring-2 focus:ring-[#00CC6A]/20 focus:border-[#00CC6A] focus:outline-none min-h-[120px] transition-all resize-none mt-2"
                                 />
                             </div>
                         </div>
@@ -895,7 +895,7 @@ const REIProjectForm = () => {
                             </Button>
                             <Button
                                 type="submit"
-                                className="h-14 px-10 rounded-none bg-black text-white hover:bg-zinc-800 transition-all font-black text-xxs uppercase tracking-[0.2em] ml-auto"
+                                className="h-14 px-10 rounded-none bg-black text-white hover:bg-zinc-800 transition-all font-semibold text-xxs uppercase tracking-[0.2em] ml-auto"
                                 disabled={loading}
                             >
                                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : (isEditing ? 'SALVAR ALTERAÇÕES' : 'CADASTRAR PROJETO')}
@@ -935,7 +935,7 @@ const ProposalListByClient = ({ clientName }: { clientName: string }) => {
     return (
         <div className="space-y-2">
             {proposals.map((doc) => (
-                <div key={doc.id} className="flex items-center justify-between p-3 bg-zinc-50 border border-zinc-100 hover:border-zinc-300 transition-all group">
+                <div key={doc.id} className="flex items-center justify-between p-3 bg-white shadow-sm border border-zinc-100 hover:border-zinc-300 transition-all group">
                     <div className="flex items-center gap-3">
                         <div className="h-8 w-8 bg-white border border-zinc-200 flex items-center justify-center rounded text-zinc-500">
                             <FileText size={16} />
