@@ -653,12 +653,20 @@ export const RevenueCockpit: React.FC = () => {
 
       const ids = rawProjects.map(p => p.id);
 
-      // Tasks for execution projects
-      const { data: tasks } = await supabase
-        .from('orqflow_tasks')
-        .select('id, project_id, status, due_date')
-        .in('project_id', ids)
-        .not('status', 'eq', 'archived');
+      // Tasks for execution projects (com fallback seguro contra erros de schema)
+      let tasks: any[] = [];
+      try {
+        const { data: fetchedTasks, error: tasksErr } = await supabase
+          .from('orqflow_tasks' as any)
+          .select('id, project_id, status, due_date')
+          .in('project_id', ids)
+          .not('status', 'eq', 'archived');
+        if (!tasksErr && fetchedTasks) {
+          tasks = fetchedTasks;
+        }
+      } catch (e) {
+        console.warn('[RevenueCockpit] Tabela de tarefas legada nao disponivel, usando fallback seguro');
+      }
 
       const todayIso = new Date().toISOString();
 
