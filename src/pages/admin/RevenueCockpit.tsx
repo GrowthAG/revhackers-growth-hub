@@ -297,11 +297,11 @@ const DEMO_PROJECTS: ProjectRow[] = [
 // ---- Sub-components (Tier-1 Enterprise SaaS Theme) ----
 
 const MetricCard = ({ label, value, sub }: { label: string; value: string | number; sub?: string }) => (
-  <div className="bg-white border border-zinc-200/80 p-5 rounded-xl flex flex-col justify-between hover:border-zinc-300 transition-all duration-200 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
-    <p className="text-xs font-semibold text-zinc-500 mb-1">{label}</p>
+  <div className="bg-white border border-zinc-200/60 p-4 rounded-xl flex flex-col justify-between hover:border-zinc-300 transition-all duration-200 shadow-sm relative overflow-hidden group">
+    <p className="text-[13px] font-medium text-zinc-500 mb-2">{label}</p>
     <div>
-      <p className="text-2xl font-bold text-zinc-900 tracking-tight tabular-nums">{value}</p>
-      {sub && <p className="text-xs text-zinc-500 font-normal mt-1 border-t border-zinc-100 pt-1.5">{sub}</p>}
+      <p className="text-[26px] font-semibold text-zinc-900 tracking-tight tabular-nums leading-none mb-1">{value}</p>
+      {sub && <p className="text-[11px] text-zinc-400 font-medium">{sub}</p>}
     </div>
   </div>
 );
@@ -322,7 +322,7 @@ const FunnelBar = ({ label, count, max, accent }: { label: string; count: number
           }}
         />
       </div>
-      <span className={cn('text-xs font-bold w-8 tabular-nums', count === 0 ? 'text-zinc-300' : 'text-zinc-900')}>
+      <span className={cn('text-xs font-semibold w-8 tabular-nums', count === 0 ? 'text-zinc-300' : 'text-zinc-900')}>
         {count}
       </span>
     </div>
@@ -406,19 +406,19 @@ const RevOpsCopilot = ({
   }
 
   return (
-    <div className="bg-white border border-zinc-200/80 rounded-xl p-4.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-start gap-3.5 mb-6 relative overflow-hidden">
+    <div className="bg-white border border-zinc-200/60 rounded-xl p-4 shadow-sm flex items-start gap-3.5 mb-6 relative overflow-hidden">
       <div className={cn(
         "absolute top-0 left-0 w-1 h-full",
-        type === 'alert' ? 'bg-amber-500' : type === 'success' ? 'bg-emerald-500' : 'bg-zinc-300'
+        type === 'alert' ? 'bg-amber-400' : type === 'success' ? 'bg-[#00CC6A]' : 'bg-zinc-300'
       )} />
-      <div className="p-2 rounded-lg bg-zinc-100/80 text-zinc-700 shrink-0 mt-0.5">
+      <div className="p-1.5 rounded-md bg-zinc-50 text-zinc-600 shrink-0 mt-0.5 border border-zinc-100">
         <Radar className="w-4 h-4" />
       </div>
       <div>
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold text-zinc-900">Análise de Inteligência Operacional</span>
+          <span className="text-xs font-semibold text-zinc-900">Análise Operacional</span>
           <span className={cn(
-            "text-[10px] font-semibold px-2 py-0.5 rounded-full border",
+            "text-[10px] font-medium px-1.5 py-0.5 rounded-sm border",
             type === 'alert' ? "bg-amber-50 text-amber-800 border-amber-200/80" : type === 'success' ? "bg-emerald-50 text-emerald-800 border-emerald-200/80" : "bg-zinc-100 text-zinc-700 border-zinc-200/80"
           )}>
             {type === 'alert' ? 'Atenção' : type === 'success' ? 'Oportunidade' : 'Estável'}
@@ -681,7 +681,7 @@ const ExecucaoRow = ({
               </div>
               <span className="text-xs font-medium text-zinc-500">{pctDone}%</span>
             </div>
-            <span className="text-xxs font-medium text-zinc-400">
+            <span className="text-[11px] font-medium text-zinc-400">
               {project.done_tasks}/{project.total_tasks} tarefas
             </span>
             {project.overdue_tasks > 0 && (
@@ -1139,10 +1139,10 @@ export const RevenueCockpit: React.FC = () => {
                   <ArrowLeft size={13} /> Dashboard
                 </button>
                 <span>/</span>
-                <span className="text-zinc-900 font-bold">Cockpit de Receita</span>
+                <span className="text-zinc-900 font-semibold">Cockpit de Receita</span>
               </div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl md:text-3xl font-serif font-semibold tracking-tight text-zinc-900">
+                <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
                   Pipeline & Gestão Comercial
                 </h1>
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-700 border border-zinc-200/80">
@@ -1157,7 +1157,7 @@ export const RevenueCockpit: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => loadAll()}
-                className="h-9 px-3 border border-zinc-200 rounded-lg bg-white flex items-center justify-center hover:bg-white shadow-sm text-zinc-700 transition-colors text-xs font-mono font-bold gap-1.5"
+                className="h-9 px-3 border border-zinc-200 rounded-lg bg-white flex items-center justify-center hover:bg-white shadow-sm text-zinc-700 transition-colors text-xs font-mono font-semibold gap-1.5"
                 title="Atualizar dados"
               >
                 <RefreshCw className="w-3.5 h-3.5 text-zinc-500" /> Atualizar
@@ -1165,7 +1165,7 @@ export const RevenueCockpit: React.FC = () => {
               {activeTab === 'vendas' && (
                 <Button
                   onClick={() => setLeadDrawerOpen(true)}
-                  className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold uppercase tracking-wider shadow-none border border-zinc-200 flex items-center gap-2"
+                  className="bg-white text-zinc-900 shadow-sm border-zinc-200 hover:bg-zinc-50 rounded-lg h-9 px-4 text-[13px] font-medium tracking-tight shadow-none border border-zinc-200 flex items-center gap-2"
                 >
                   <Plus className="w-4 h-4 text-[#00CC6A]" /> <span>Novo Lead</span>
                 </Button>
@@ -1178,9 +1178,9 @@ export const RevenueCockpit: React.FC = () => {
             <div className="flex flex-wrap items-center gap-1">
               <button
                 onClick={() => setActiveTab('vendas')}
-                className={`px-3.5 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${
+                className={`px-3.5 py-1.5 text-[13px] font-medium tracking-tight rounded-lg transition-all ${
                   activeTab === 'vendas'
-                    ? 'bg-zinc-950 text-white border border-zinc-950 shadow-sm'
+                    ? 'bg-white text-zinc-900 shadow-sm border-zinc-200 border border-zinc-950 shadow-sm'
                     : 'text-zinc-600 hover:text-zinc-900'
                 }`}
               >
@@ -1189,9 +1189,9 @@ export const RevenueCockpit: React.FC = () => {
 
               <button
                 onClick={() => setActiveTab('financeiro')}
-                className={`px-3.5 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all flex items-center gap-1.5 ${
+                className={`px-3.5 py-1.5 text-[13px] font-medium tracking-tight rounded-lg transition-all flex items-center gap-1.5 ${
                   activeTab === 'financeiro'
-                    ? 'bg-emerald-600 text-white border border-emerald-600 shadow-sm'
+                    ? 'bg-white text-emerald-700 shadow-sm border border-emerald-200/50 shadow-sm'
                     : 'text-zinc-600 hover:text-zinc-900'
                 }`}
               >
@@ -1201,15 +1201,15 @@ export const RevenueCockpit: React.FC = () => {
 
               <button
                 onClick={() => setActiveTab('projetos')}
-                className={`px-3.5 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all flex items-center gap-1.5 ${
+                className={`px-3.5 py-1.5 text-[13px] font-medium tracking-tight rounded-lg transition-all flex items-center gap-1.5 ${
                   activeTab === 'projetos'
-                    ? 'bg-zinc-900 text-white border border-zinc-900 shadow-sm'
+                    ? 'bg-white text-zinc-900 shadow-sm shadow-sm'
                     : 'text-zinc-600 hover:text-zinc-900'
                 }`}
               >
                 Projeção de Projetos ({execucao.length})
                 {totalOverdue > 0 && (
-                  <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-amber-200 text-amber-900">
+                  <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-semibold bg-amber-200 text-amber-900">
                     {totalOverdue}
                   </span>
                 )}
@@ -1217,9 +1217,9 @@ export const RevenueCockpit: React.FC = () => {
 
               <button
                 onClick={() => setActiveTab('network')}
-                className={`px-3.5 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${
+                className={`px-3.5 py-1.5 text-[13px] font-medium tracking-tight rounded-lg transition-all ${
                   activeTab === 'network'
-                    ? 'bg-zinc-900 text-white border border-zinc-900 shadow-sm'
+                    ? 'bg-white text-zinc-900 shadow-sm shadow-sm'
                     : 'text-zinc-600 hover:text-zinc-900'
                 }`}
               >
@@ -1268,7 +1268,7 @@ export const RevenueCockpit: React.FC = () => {
             {/* ── Sub-view switcher (vendas tab only, Notion-style) ──── */}
             {activeTab === 'vendas' && (
               <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-1 border border-zinc-200 p-0.5">
+                <div className="flex items-center gap-1 border border-zinc-200/60 p-1 bg-zinc-50 rounded-lg">
                   {([
                     { key: 'list' as const,      icon: LayoutList, label: 'Lista' },
                     { key: 'kanban' as const,     icon: Columns3,  label: 'Kanban' },
@@ -1278,9 +1278,9 @@ export const RevenueCockpit: React.FC = () => {
                       key={key}
                       onClick={() => setVendasView(key)}
                       className={cn(
-                        'flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold transition-colors',
+                        'flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition-colors',
                         vendasView === key
-                          ? 'bg-zinc-900 text-white'
+                          ? 'bg-white text-zinc-900 shadow-sm'
                           : 'text-zinc-400 hover:text-zinc-600',
                       )}
                     >
@@ -1300,9 +1300,9 @@ export const RevenueCockpit: React.FC = () => {
                   value={filterSource || ''}
                   onChange={(e) => setFilterSource(e.target.value || null)}
                   className={cn(
-                    'text-xs font-bold border px-3 py-1.5 transition-colors cursor-pointer',
+                    'text-[13px] font-medium border rounded-md px-3 py-1.5 transition-colors cursor-pointer outline-none focus:ring-2 focus:ring-zinc-900/10',
                     filterSource
-                      ? 'bg-zinc-900 text-white border-zinc-900'
+                      ? 'bg-white text-zinc-900 shadow-sm border-zinc-900'
                       : 'text-zinc-400 border-zinc-200 hover:bg-white shadow-sm'
                   )}
                 >
@@ -1316,9 +1316,9 @@ export const RevenueCockpit: React.FC = () => {
                   value={filterMinDays || ''}
                   onChange={(e) => setFilterMinDays(e.target.value ? Number(e.target.value) : null)}
                   className={cn(
-                    'text-xs font-bold border px-3 py-1.5 transition-colors cursor-pointer',
+                    'text-[13px] font-medium border rounded-md px-3 py-1.5 transition-colors cursor-pointer outline-none focus:ring-2 focus:ring-zinc-900/10',
                     filterMinDays
-                      ? 'bg-zinc-900 text-white border-zinc-900'
+                      ? 'bg-white text-zinc-900 shadow-sm border-zinc-900'
                       : 'text-zinc-400 border-zinc-200 hover:bg-white shadow-sm'
                   )}
                 >
@@ -1333,9 +1333,9 @@ export const RevenueCockpit: React.FC = () => {
                   value={filterMinInvestment || ''}
                   onChange={(e) => setFilterMinInvestment(e.target.value ? Number(e.target.value) : null)}
                   className={cn(
-                    'text-xs font-bold border px-3 py-1.5 transition-colors cursor-pointer',
+                    'text-[13px] font-medium border rounded-md px-3 py-1.5 transition-colors cursor-pointer outline-none focus:ring-2 focus:ring-zinc-900/10',
                     filterMinInvestment
-                      ? 'bg-zinc-900 text-white border-zinc-900'
+                      ? 'bg-white text-zinc-900 shadow-sm border-zinc-900'
                       : 'text-zinc-400 border-zinc-200 hover:bg-white shadow-sm'
                   )}
                 >
@@ -1348,7 +1348,7 @@ export const RevenueCockpit: React.FC = () => {
                 {activeFilterCount > 0 && (
                   <button
                     onClick={clearFilters}
-                    className="flex items-center gap-1 text-xs font-bold text-zinc-400 hover:text-zinc-900 px-2 py-1.5 transition-colors"
+                    className="flex items-center gap-1 text-xs font-semibold text-zinc-400 hover:text-zinc-900 px-2 py-1.5 transition-colors"
                   >
                     <X className="w-3 h-3" />
                     Limpar ({activeFilterCount})
@@ -1543,15 +1543,15 @@ export const RevenueCockpit: React.FC = () => {
                                   <div
                                     key={p.id}
                                     onClick={() => openWarRoom(p)}
-                                    className="bg-white border border-zinc-200 p-3 hover:shadow-sm transition-shadow cursor-pointer"
+                                    className="bg-white border border-zinc-200/80 rounded-lg p-3 hover:border-zinc-300 hover:shadow-sm transition-all cursor-pointer"
                                   >
-                                    <p className="text-sm font-bold text-zinc-900 truncate mb-1">{p.display_name}</p>
+                                    <p className="text-[13px] font-semibold text-zinc-900 truncate mb-1">{p.display_name}</p>
                                     <div className="flex items-center justify-between">
-                                      <span className="text-xxs font-medium text-zinc-400">
+                                      <span className="text-[11px] font-medium text-zinc-400">
                                         {p.days_in_stage}d neste estagio
                                       </span>
                                       {investAvg > 0 && (
-                                        <span className="text-xs font-medium text-zinc-600">
+                                        <span className="text-[11px] font-medium text-zinc-600">
                                           {formatCurrency(investAvg)}
                                         </span>
                                       )}
@@ -1559,7 +1559,7 @@ export const RevenueCockpit: React.FC = () => {
                                     {p.days_in_stage >= 5 && (
                                       <div className="mt-2 flex items-center gap-1">
                                         <Clock className="w-3 h-3 text-zinc-400" />
-                                        <span className="text-xxs font-bold text-zinc-500">Precisa de follow-up</span>
+                                        <span className="text-xxs font-semibold text-zinc-500">Precisa de follow-up</span>
                                       </div>
                                     )}
                                   </div>
@@ -1617,7 +1617,7 @@ export const RevenueCockpit: React.FC = () => {
                             className="grid grid-cols-12 gap-4 px-5 py-3.5 hover:bg-white shadow-sm cursor-pointer transition-colors items-center"
                           >
                             <div className="col-span-4">
-                              <p className="text-sm font-bold text-zinc-900 truncate">{p.display_name}</p>
+                              <p className="text-sm font-semibold text-zinc-900 truncate">{p.display_name}</p>
                               <p className="text-xxs font-medium text-zinc-400 truncate mt-0.5">
                                 {p.lead_source ? LEAD_SOURCE_LABELS[p.lead_source as LeadSource] || p.lead_source : '-'}
                               </p>
@@ -1634,7 +1634,7 @@ export const RevenueCockpit: React.FC = () => {
                               </span>
                             </div>
                             <div className="col-span-2">
-                              <span className="text-sm font-bold text-zinc-600">
+                              <span className="text-sm font-semibold text-zinc-600">
                                 {investAvg > 0 ? formatCurrency(investAvg) : '-'}
                               </span>
                             </div>
@@ -1748,7 +1748,7 @@ export const RevenueCockpit: React.FC = () => {
                             </div>
                             <div>
                               <h4 className="text-sm font-semibold text-zinc-900 uppercase tracking-tight">{contact.display_name}</h4>
-                              <p className="text-xxs font-bold uppercase tracking-widest text-zinc-400 mt-0.5">{contact.type} • Estagnado há {contact.days_in_stage}d</p>
+                              <p className="text-xxs font-semibold uppercase tracking-widest text-zinc-400 mt-0.5">{contact.type} • Estagnado há {contact.days_in_stage}d</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3">
