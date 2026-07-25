@@ -108,6 +108,7 @@ const DiagnosticView = lazy(() => import("./pages/admin/DiagnosticView"));
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const REIProjectForm = lazy(() => import("./pages/admin/REIProjectForm"));
 const GrowthCronograma = lazy(() => import("./pages/admin/GrowthCronograma"));
+const RevenueCockpit = lazy(() => import("./pages/admin/RevenueCockpit"));
 // Dead import removed: OrchestratedOnboarding (no route defined)
 
 const ProjectDetails = lazy(() => import("./pages/admin/ProjectDetails"));
@@ -284,6 +285,11 @@ const App = () => (
               <Route path="/admin/blog/novo" element={<ProtectedRoute><PostEditor /></ProtectedRoute>} />
               <Route path="/admin/posts" element={<ProtectedRoute><AdminBlog /></ProtectedRoute>} />
               <Route path="/admin/projects" element={<ProtectedRoute><AdminProjects /></ProtectedRoute>} />
+              
+              {/* Revenue Cockpit — Pipeline & Billing Analytics */}
+              <Route path="/admin/cockpit" element={<ProtectedRoute><RevenueCockpit /></ProtectedRoute>} />
+              <Route path="/admin/revenue-cockpit" element={<ProtectedRoute><RevenueCockpit /></ProtectedRoute>} />
+              <Route path="/cockpit" element={<ProtectedRoute><RevenueCockpit /></ProtectedRoute>} />
               {/* Unified Project Workspace */}
               <Route path="/admin/projects/:id/*" element={<ProtectedRoute><ProjectDetails /></ProtectedRoute>} />
               
