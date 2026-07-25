@@ -8,7 +8,7 @@ import {
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useSidebarBadges } from '@/hooks/useSidebarBadges';
 
-const LOGO_URL = '/brand/revhackers-wordmark.png'; // Updated to non-white logo
+const LOGO_URL = '/brand/revhackers-wordmark-white.png';
 
 interface NavItem {
   icon: LucideIcon;
@@ -56,7 +56,7 @@ export const Sidebar = () => {
               <img 
                 src={LOGO_URL}
                 alt="RevHackers" 
-                className="w-28 max-w-full h-auto"
+                className="w-28 max-w-full h-auto invert opacity-90"
               />
             </Link>
             <button
