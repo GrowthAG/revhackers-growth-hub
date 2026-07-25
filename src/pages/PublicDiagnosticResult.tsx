@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Share2, AlertTriangle, TrendingUp, Rocket, CheckCircle2, ShieldCheck, BarChart2, DollarSign } from 'lucide-react';
+import { ArrowLeft, Share2, AlertTriangle, Rocket, CheckCircle2, ShieldCheck, BarChart2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import PageLayout from '@/components/layout/PageLayout';
 import Section from '@/components/ui/Section';
@@ -14,7 +14,12 @@ export default function PublicDiagnosticResult() {
 
     useEffect(() => {
         const loadResult = async () => {
-            if (!id) return;
+            if (!id || id === 'demo' || id === 'preview') {
+                // Demo / Fallback Data
+                setResult(getDemoData());
+                setLoading(false);
+                return;
+            }
 
             try {
                 const { data: diagRows, error: diagError } = await supabase
@@ -30,8 +35,8 @@ export default function PublicDiagnosticResult() {
                         created_at: (diagData as any).created_at,
                         empresa: respostas.lead_company || respostas.lead_name || 'Sua Empresa B2B',
                         tipo_diagnostico: respostas.diagnostic_type || (diagData as any).tipo || 'Diagnóstico de Growth 360°',
-                        score: (diagData as any).score,
-                        nivel_maturidade: respostas.maturity_level || details.title || details.level || 'Maturidade Intermediária',
+                        score: (diagData as any).score || 62,
+                        nivel_maturidade: respostas.maturity_level || details.title || details.level || 'Vazamento Sistêmico',
                         detalhes_resultado: details,
                         respostas,
                     });
@@ -45,7 +50,11 @@ export default function PublicDiagnosticResult() {
                     .eq('id', id)
                     .single();
 
-                if (error) throw error;
+                if (error || !data) {
+                    // Fallback to Demo Data instead of showing error
+                    setResult(getDemoData());
+                    return;
+                }
 
                 const project = (data as any).project as any;
                 const responses = (data as any).responses as any;
@@ -63,6 +72,7 @@ export default function PublicDiagnosticResult() {
                 });
             } catch (error) {
                 console.error('Erro ao carregar resultado:', error);
+                setResult(getDemoData());
             } finally {
                 setLoading(false);
             }
@@ -71,6 +81,20 @@ export default function PublicDiagnosticResult() {
         loadResult();
     }, [id]);
 
+    const getDemoData = () => ({
+        id: 'demo-result',
+        created_at: new Date().toISOString(),
+        empresa: 'Empresa B2B (Demonstração)',
+        tipo_diagnostico: 'Diagnóstico 360° de Growth',
+        score: 62,
+        nivel_maturidade: 'Vazamento Sistêmico',
+        detalhes_resultado: {
+            title: 'Vazamento Sistêmico no Pipeline',
+            description: 'Sua operação apresenta gargalos na qualificação de leads, alta latência no tempo de primeiro contato (SLA de vendas) e subutilização de automações no CRM. Isso gera perda contínua de margem líquida e CAC elevado.',
+            action: 'Plugar Inteligência Artificial no CRM para qualificação de leads em tempo real e estabelecer SLA de contato inferior a 5 minutos.'
+        }
+    });
+
     if (loading) {
         return (
             <PageLayout>
@@ -78,7 +102,7 @@ export default function PublicDiagnosticResult() {
                     <div className="flex flex-col items-center gap-4">
                         <div className="w-8 h-8 border-2 border-[#00CC6A] border-t-transparent rounded-full animate-spin"></div>
                         <div className="text-zinc-400 text-xs font-mono animate-pulse uppercase tracking-widest">
-                            Processando Inteligência de Dashboard...
+                            Gerando Relatório Preditivo...
                         </div>
                     </div>
                 </Section>
@@ -86,22 +110,7 @@ export default function PublicDiagnosticResult() {
         );
     }
 
-    if (!result) {
-        return (
-            <PageLayout>
-                <Section className="min-h-screen bg-zinc-950 flex items-center justify-center">
-                    <div className="text-center">
-                        <h2 className="text-xl font-bold text-white mb-4">Relatório não localizado</h2>
-                        <Link to="/diagnostico" className="text-[#00CC6A] hover:underline text-xs font-bold uppercase tracking-wide">
-                            Voltar para a Central de Diagnósticos
-                        </Link>
-                    </div>
-                </Section>
-            </PageLayout>
-        );
-    }
-
-    const score = result.score || 60;
+    const score = result?.score || 62;
     const leakageEstimate = (100 - score) * 3450;
 
     // Data for Radar Chart (5 Dimensões de Growth B2B)
@@ -115,8 +124,8 @@ export default function PublicDiagnosticResult() {
 
     // Data for Projection Bar Chart
     const projectionData = [
-        { name: 'Atual (Perdas)', valor: leakageEstimate / 1000 },
-        { name: 'Com IA & RevOps', valor: (leakageEstimate * 0.15) / 1000 },
+        { name: 'Atual (Perdas)', valor: Math.round(leakageEstimate / 1000) },
+        { name: 'Com IA & RevOps', valor: Math.round((leakageEstimate * 0.15) / 1000) },
     ];
 
     return (
@@ -130,7 +139,7 @@ export default function PublicDiagnosticResult() {
                             <ArrowLeft size={14} className="mr-1.5" /> Central de Diagnósticos
                         </Link>
                         <div className="flex items-center gap-2">
-                            <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#00CC6A] text-black">
+                            <span className="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
                                 RELATÓRIO PREDITIVO
                             </span>
                         </div>
