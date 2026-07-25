@@ -38,8 +38,8 @@ export const DiagnosticLayout = ({
                 }
             `}</style>
             <div className={cn(
-                "min-h-screen transition-colors duration-500",
-                isDark ? "bg-black text-white" : "bg-white text-black"
+                "min-h-screen transition-colors duration-300",
+                isDark ? "bg-zinc-950 text-white" : "bg-zinc-50/50 text-zinc-900"
             )}>
                 <Section
                     variant={isDark ? 'dark' : 'light'}
@@ -48,35 +48,31 @@ export const DiagnosticLayout = ({
                         centered ? "items-center justify-start text-center" : "items-center justify-start"
                     )}
                 >
-                    <div className="container-custom max-w-6xl mx-auto relative z-10 w-full mb-auto mt-auto flex flex-col items-center">
-                        {/* Standard Header */}
+                    <div className="container-custom max-w-5xl mx-auto relative z-10 w-full mb-auto mt-auto flex flex-col items-center">
+                        {/* Standard SaaS Header */}
                         {!hideHeader && (
                             <div className={cn(
-                                "mb-6 w-full",
-                                isDark ? "border-zinc-900" : "border-zinc-100",
+                                "mb-8 w-full pb-6 border-b",
+                                isDark ? "border-zinc-800" : "border-zinc-200/80",
                                 centered && "flex flex-col items-center text-center"
                             )}>
-                                <div className={cn("space-y-3 w-full", centered && "flex flex-col items-center")}>
-                                    <div className="flex items-center gap-3 animate-fade-in">
-                                        <div className={cn(
-                                            "w-1 h-1 rounded-full",
-                                            isDark ? "bg-revgreen shadow-[0_0_15px_rgba(0,204,106,0.8)]" : "bg-zinc-900"
-                                        )} />
-                                        <span className="text-xxs font-mono font-black uppercase tracking-[0.5em] text-zinc-400">
-                                            RevHackers // Intelligence Unit
+                                <div className={cn("space-y-2 w-full", centered && "flex flex-col items-center")}>
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#00CC6A] text-black">
+                                            INTELIGÊNCIA B2B
                                         </span>
                                     </div>
-                                    <div className="space-y-4">
+                                    <div className="space-y-2">
                                         <h1 className={cn(
-                                            "text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter leading-[0.9] animate-fade-in w-full",
-                                            isDark ? "text-white" : "text-black",
+                                            "text-3xl md:text-4xl font-bold tracking-tight animate-fade-in w-full",
+                                            isDark ? "text-white" : "text-zinc-900",
                                             centered && "text-center"
                                         )}>
                                             {title}
                                         </h1>
                                         <p className={cn(
-                                            "text-lg md:text-xl max-w-2xl leading-relaxed font-medium tracking-tight animate-fade-in [animation-delay:200ms] w-full",
-                                            isDark ? "text-zinc-500" : "text-zinc-600",
+                                            "text-sm md:text-base max-w-xl leading-relaxed font-medium animate-fade-in w-full",
+                                            isDark ? "text-zinc-400" : "text-zinc-500",
                                             centered && "text-center mx-auto"
                                         )}>
                                             {subtitle}
@@ -88,22 +84,20 @@ export const DiagnosticLayout = ({
 
                         {/* Main Content Area */}
                         <div className={cn(
-                            "animate-fade-in [animation-delay:400ms] w-full",
+                            "animate-fade-in w-full",
                             centered && "flex flex-col items-center"
                         )}>
                             {children}
                         </div>
 
-                        {/* Governance Footer - Surgical Minimalist */}
+                        {/* Governance Footer */}
                         {showGovernanceFooter && (
                             <div className={cn(
-                                "mt-32 pt-12 border-t text-center flex flex-col items-center gap-6",
-                                isDark ? "border-zinc-900" : "border-zinc-100"
+                                "mt-24 pt-8 border-t text-center flex flex-col items-center gap-4 w-full",
+                                isDark ? "border-zinc-800 text-zinc-500" : "border-zinc-200/80 text-zinc-400"
                             )}>
-                                <div className={cn("w-8 h-px", isDark ? "bg-zinc-800" : "bg-zinc-100")} />
-                                <p className="text-2xs text-zinc-500 font-mono uppercase tracking-[0.2em] leading-relaxed max-w-2xl mx-auto font-bold">
-                                    ESTA ANÁLISE UTILIZA EXCLUSIVAMENTE DADOS PÚBLICOS OU FORNECIDOS PELO USUÁRIO NO MOMENTO DA COLETA.
-                                    <br />OS DADOS PODEM VARIAR AO LONGO DO TEMPO E NÃO REPRESENTAM AVALIAÇÃO DE AUTORIDADE, REPUTAÇÃO OU PERFORMANCE PROFISSIONAL.
+                                <p className="text-[11px] font-mono leading-relaxed max-w-xl mx-auto font-medium">
+                                    RevHackers Intelligence Unit — Diagnóstico preditivo de receita e maturidade operacional B2B.
                                 </p>
                             </div>
                         )}

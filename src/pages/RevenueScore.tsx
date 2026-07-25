@@ -194,35 +194,35 @@ const RevenueScore = () => {
             {step === 'questions' && (
                 <div className="max-w-2xl animate-fade-in w-full mx-auto">
                     <QuestionProgressBar current={currentQ} total={QUESTIONS.length} variant="light" />
-                    <div className="space-y-4 mt-4">
-                        <div className="flex justify-between items-center text-xxs font-mono text-zinc-400 uppercase tracking-widest font-black border-b border-zinc-100 pb-2">
-                            <span>Questão {currentQ + 1} de {QUESTIONS.length}</span>
-                            <span>ID: 0{currentQ + 1}</span>
+                    <div className="space-y-6 mt-4">
+                        <div className="flex justify-between items-center text-xs font-mono font-semibold text-zinc-400 border-b border-zinc-200/80 pb-3">
+                            <span className="text-zinc-900 font-bold">Pergunta {currentQ + 1} de {QUESTIONS.length}</span>
+                            <span className="bg-zinc-100 text-zinc-600 px-2 py-0.5 rounded text-[10px]">ID: 0{currentQ + 1}</span>
                         </div>
 
-                        <div className="space-y-4">
-                            <h2 className="text-2xl md:text-3xl font-black text-black tracking-tighter leading-tight">
+                        <div className="space-y-6">
+                            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight leading-snug">
                                 {QUESTIONS[currentQ].question}
                             </h2>
 
-                            <div className="grid grid-cols-1 gap-2">
+                            <div className="grid grid-cols-1 gap-3">
                                 {currentQData.options.map((opt, idx) => (
                                     <button
                                         key={idx}
                                         disabled={selectedOption !== null}
                                         onClick={() => handleAnswer(opt.score, idx)}
-                                        className={`group relative flex items-center gap-4 p-4 text-left transition-all duration-300 border ${selectedOption === idx
-                                            ? "bg-zinc-900 text-white border-zinc-900 scale-[1.01]"
-                                            : "bg-white border-zinc-200 text-zinc-900 hover:border-zinc-400 hover:bg-zinc-50"
+                                        className={`group relative flex items-center gap-4 p-4 text-left transition-all duration-200 border rounded-xl shadow-xs ${selectedOption === idx
+                                            ? "bg-zinc-950 text-white border-zinc-950 ring-2 ring-[#00CC6A]"
+                                            : "bg-white border-zinc-200/80 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/50"
                                             } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
                                     >
-                                        <div className={`w-6 h-6 flex-shrink-0 flex items-center justify-center text-xxs font-mono font-bold border rounded transition-colors ${selectedOption === idx
-                                            ? "bg-white text-zinc-900 border-white"
-                                            : "bg-zinc-100 border-zinc-200 text-zinc-500 group-hover:border-zinc-400 group-hover:text-zinc-900"
+                                        <div className={`w-7 h-7 flex-shrink-0 flex items-center justify-center text-xs font-mono font-bold rounded-lg border transition-colors ${selectedOption === idx
+                                            ? "bg-[#00CC6A] text-black border-[#00CC6A]"
+                                            : "bg-zinc-100 border-zinc-200 text-zinc-600 group-hover:border-zinc-300 group-hover:text-zinc-900"
                                             }`}>
                                             {String.fromCharCode(65 + idx)}
                                         </div>
-                                        <span className="text-sm font-medium">
+                                        <span className="text-xs md:text-sm font-medium leading-relaxed">
                                             {opt.label}
                                         </span>
                                     </button>
