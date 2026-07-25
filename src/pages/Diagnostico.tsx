@@ -1,7 +1,6 @@
-
 import PageLayout from '@/components/layout/PageLayout';
 import Section from '@/components/ui/Section';
-import { ArrowRight, BarChart2, Globe, TrendingUp, User } from 'lucide-react';
+import { ArrowUpRight, BarChart2, Globe, TrendingUp, User, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '@/components/shared/SEO';
 
@@ -11,25 +10,33 @@ const DiagnosticoGateway = () => {
   const diagnostics = [
     {
       id: 'growth',
-      title: 'Diagnóstico 360',
+      title: 'Diagnóstico 360º de Growth',
+      description: 'Avaliação completa dos canais de aquisição, retenção, tração e métricas de receita.',
+      badge: 'POPULAR',
       icon: TrendingUp,
       path: '/score',
     },
     {
       id: 'revenue',
-      title: 'Diagnóstico CRM',
+      title: 'Diagnóstico CRM & Revenue Ops',
+      description: 'Mapeamento de gargalos no pipeline comercial, SLA de vendas e automações com IA.',
+      badge: 'REVOPS',
       icon: BarChart2,
       path: '/score-revenue',
     },
     {
       id: 'founder',
-      title: 'Diagnóstico do Fundador',
+      title: 'Diagnóstico de Autoridade do Fundador',
+      description: 'Análise preditiva de presença digital, Social Selling e autoridade no LinkedIn.',
+      badge: 'FOUNDER',
       icon: User,
       path: '/score-founder',
     },
     {
       id: 'site',
-      title: 'Diagnóstico Site / LP',
+      title: 'Diagnóstico de Site & Landing Page',
+      description: 'Auditoria de taxa de conversão (CRO), velocidade, SEO e infraestrutura digital.',
+      badge: 'CRO',
       icon: Globe,
       path: '/score-site',
     },
@@ -37,43 +44,70 @@ const DiagnosticoGateway = () => {
 
   return (
     <PageLayout>
-      <SEO title="Diagnóstico 360" description="Descubra onde estão os vazamentos na sua operação B2B com diagnósticos gratuitos de Growth, CRM, Founder e Site." canonical="https://revhackers.com.br/diagnostico" />
-      <Section variant="light" className="py-24 md:py-32 bg-white min-h-[90vh] flex flex-col justify-center">
-        <div className="container-custom max-w-5xl">
+      <SEO title="Central de Diagnósticos GrowthHub" description="Descubra onde estão os vazamentos na sua operação B2B com diagnósticos gratuitos de Growth, CRM, Founder e Site." canonical="https://revhackers.com.br/diagnostico" />
+      
+      <section className="bg-zinc-950 py-24 md:py-32 relative overflow-hidden border-b border-zinc-800">
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
 
-          <div className="text-center mb-20">
-            <h1 className="text-4xl md:text-5xl lg:text-5xl font-black text-black tracking-tight mb-6 uppercase">
-              Descubra onde o seu <span className="text-revgreen bg-revgreen/10 px-2 py-1 mx-2">caixa vaza</span>
-            </h1>
-            <p className="text-xl text-zinc-500 font-medium max-w-3xl mx-auto leading-relaxed">
-              Responda a perguntas hiper-qualificadas sobre sua estrutura em 1 minuto. Nossa IA calcula o seu gargalo principal e como a ineficiência técnica sabota suas metas.
-            </p>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 space-y-6 text-center">
+          <div className="flex items-center justify-center gap-2">
+            <span className="px-3 py-1 rounded-md text-xs font-mono font-bold bg-[#00CC6A] text-black inline-flex items-center gap-1.5">
+              <Sparkles size={13} /> GROWTHHUB INTELLIGENCE
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {diagnostics.map((diag) => (
-              <div
-                key={diag.id}
-                onClick={() => navigate(diag.path)}
-                className="group cursor-pointer bg-white border border-zinc-200 p-8 md:p-10 hover:border-black hover:bg-zinc-50 transition-all duration-300 relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0 duration-300">
-                  <ArrowRight className="w-6 h-6 text-black" />
-                </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-tight max-w-4xl mx-auto">
+            Central de Diagnósticos Preditivos
+          </h1>
 
-                <div className="mb-6">
-                  <diag.icon className="w-8 h-8 text-black" strokeWidth={1} />
-                </div>
-
-                <h3 className="text-2xl font-bold text-black group-hover:translate-x-1 transition-transform duration-300">
-                  {diag.title}
-                </h3>
-              </div>
-            ))}
-          </div>
-
+          <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed">
+            Avalie a maturidade da sua operação B2B em 1 minuto. Nossa IA calcula os vazamentos financeiros e entrega seu plano de ação imediato.
+          </p>
         </div>
-      </Section>
+      </section>
+
+      <section className="py-20 bg-zinc-50/50 min-h-[60vh]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {diagnostics.map((diag) => {
+              const Icon = diag.icon;
+              return (
+                <div
+                  key={diag.id}
+                  onClick={() => navigate(diag.path)}
+                  className="group cursor-pointer bg-white border border-zinc-200/80 rounded-2xl p-8 hover:border-zinc-300 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between space-y-6"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="w-12 h-12 rounded-xl bg-zinc-950 text-white flex items-center justify-center border border-zinc-800">
+                        <Icon size={22} className="text-[#00CC6A]" />
+                      </div>
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-zinc-100 text-zinc-700 border border-zinc-200">
+                        {diag.badge}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-zinc-900 group-hover:text-black tracking-tight leading-snug">
+                      {diag.title}
+                    </h3>
+
+                    <p className="text-xs md:text-sm text-zinc-500 font-normal leading-relaxed">
+                      {diag.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-zinc-100 flex items-center justify-between text-xs font-bold text-zinc-900 group-hover:text-black">
+                    <span>Iniciar Diagnóstico Gratuito</span>
+                    <div className="w-7 h-7 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-center group-hover:bg-zinc-950 group-hover:text-white transition-all">
+                      <ArrowUpRight size={14} className="text-zinc-500 group-hover:text-[#00CC6A]" />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
     </PageLayout>
   );
 };
