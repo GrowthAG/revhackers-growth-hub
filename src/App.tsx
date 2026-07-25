@@ -308,8 +308,10 @@ const App = () => (
               <Route path="/plan/:token" element={<StrategicPlanPresentation />} />
               <Route path="/success/:token" element={<SuccessPlanPresentation />} />
 
-              {/* GrowthMap — Strategic Intelligence Layer */}
+              {/* GrowthMap — Strategic Intelligence Layer (The GrowthHub) */}
               <Route path="/growthmap/:projectId" element={<ProtectedRoute><GrowthMapPage /></ProtectedRoute>} />
+              <Route path="/growthmap" element={<ProtectedRoute><GrowthMapPage /></ProtectedRoute>} />
+              <Route path="/dashboard" element={<ProtectedRoute><GrowthMapPage /></ProtectedRoute>} />
               {/* Rota PlanSignPage removida */}
               <Route path="/hub/:id" element={<ClientProjectHub />} />
 
