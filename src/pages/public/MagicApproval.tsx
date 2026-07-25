@@ -202,7 +202,7 @@ export default function MagicApproval() {
          {!isPending && (
            <div className="mt-12 text-center text-zinc-500 text-sm border-t border-zinc-800/50 pt-8">
              Esta peça já foi avaliada e a decisão foi registrada em nossa central de operações de Growth. <br/>
-             A automação Orqflow moveu automaticamente a tarefa para os responsáveis.
+             A automação moveu automaticamente a tarefa para os responsáveis.
            </div>
          )}
       </main>

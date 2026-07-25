@@ -147,7 +147,7 @@ const ClientProjectHub = () => {
                     if (docs) setClientDocs(docs);
                 }
 
-                // 4. Fetch Live Orqflow Secure Data (The Heartbeat)
+                // 4. Fetch Live RevHackers Secure Data (The Heartbeat)
                 // RPCs publicas escopadas por project_id (as tabelas nao tem
                 // policy anonima - ver 20260718000000_secure_hub_public_access.sql)
                 const { data: sprintsData } = await (supabase as any)

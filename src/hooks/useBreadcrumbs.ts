@@ -39,7 +39,7 @@ export function useBreadcrumbs(dynamicLabel?: string): Breadcrumb[] {
     const subPath = projectMatch[2];
     if (subPath === '/execucao') {
       crumbs.push({ label: dynamicLabel || 'Projeto', to: `/admin/projects/${projectMatch[1]}` });
-      crumbs.push({ label: 'OrqFlow OS' });
+      crumbs.push({ label: 'Project OS' });
     } else if (subPath === '/wiki') {
       crumbs.push({ label: dynamicLabel || 'Projeto', to: `/admin/projects/${projectMatch[1]}` });
       crumbs.push({ label: 'Wiki' });

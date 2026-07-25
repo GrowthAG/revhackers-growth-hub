@@ -242,7 +242,7 @@ const ProjectDetails = () => {
     if (!project) return null;
 
     const TAB_DEFS: Record<string, { label: string; icon: React.ElementType }> = {
-        execucao: { label: 'OrqFlow OS', icon: Columns },
+        execucao: { label: 'Execution OS', icon: Columns },
         inteligencia: { label: 'Inteligência B2B', icon: BrainCircuit },
         diagnostico: { label: 'Diagnóstico REI', icon: ClipboardCheck },
         jornada: { label: 'Planejamento', icon: Map },
