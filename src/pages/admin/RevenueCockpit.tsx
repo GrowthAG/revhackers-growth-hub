@@ -294,14 +294,14 @@ const DEMO_PROJECTS: ProjectRow[] = [
   },
 ];
 
-// ---- Sub-components (Clean SaaS Theme) ----
+// ---- Sub-components (Tier-1 Enterprise SaaS Theme) ----
 
 const MetricCard = ({ label, value, sub }: { label: string; value: string | number; sub?: string }) => (
-  <div className="bg-white border border-zinc-200 p-6 rounded-xl flex flex-col justify-between hover:border-zinc-300 transition-all duration-200 shadow-sm">
-    <p className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 mb-2">{label}</p>
+  <div className="bg-white border border-zinc-200/80 p-5 rounded-xl flex flex-col justify-between hover:border-zinc-300 transition-all duration-200 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+    <p className="text-xs font-semibold text-zinc-500 mb-1">{label}</p>
     <div>
-      <p className="text-3xl font-black text-zinc-900 tracking-tight tabular-nums">{value}</p>
-      {sub && <p className="text-xs font-medium text-zinc-500 mt-1.5">{sub}</p>}
+      <p className="text-2xl font-bold text-zinc-900 tracking-tight tabular-nums">{value}</p>
+      {sub && <p className="text-xs text-zinc-500 font-normal mt-1 border-t border-zinc-100 pt-1.5">{sub}</p>}
     </div>
   </div>
 );
@@ -310,19 +310,19 @@ const FunnelBar = ({ label, count, max, accent }: { label: string; count: number
   const pct = max > 0 ? (count / max) * 100 : 0;
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xxs font-black uppercase tracking-widest text-zinc-500 w-24 text-right shrink-0">
+      <span className="text-xs font-semibold text-zinc-500 w-28 text-right shrink-0">
         {label}
       </span>
-      <div className="flex-1 h-3 bg-zinc-100 overflow-hidden rounded-r-sm">
+      <div className="flex-1 h-2.5 bg-zinc-100 overflow-hidden rounded-full border border-zinc-200/40">
         <div
-          className="h-full transition-all duration-1000 ease-in-out"
+          className="h-full rounded-full transition-all duration-700 ease-out"
           style={{
-            width: `${Math.max(pct, count > 0 ? 4 : 0)}%`,
-            backgroundColor: accent ? '#00CC6A' : '#18181b',
+            width: `${Math.max(pct, count > 0 ? 5 : 0)}%`,
+            backgroundColor: accent ? '#10b981' : '#18181b',
           }}
         />
       </div>
-      <span className={cn('text-sm font-black w-8', count === 0 ? 'text-zinc-300' : 'text-zinc-900')}>
+      <span className={cn('text-xs font-bold w-8 tabular-nums', count === 0 ? 'text-zinc-300' : 'text-zinc-900')}>
         {count}
       </span>
     </div>
@@ -334,10 +334,10 @@ const StageBadge = ({ stage }: { stage: PipelineStage }) => {
   const isWon = stage === 'won';
   return (
     <span className={cn(
-      'text-2xs font-black uppercase tracking-widest px-2 py-0.5 inline-flex items-center gap-1',
+      'text-xs font-medium px-2.5 py-0.5 rounded-full inline-flex items-center gap-1.5 border',
       isWon
-        ? 'bg-[#00CC6A]/10 text-zinc-900 border border-[#00CC6A]/30'
-        : 'bg-zinc-100 text-zinc-500 border border-zinc-200',
+        ? 'bg-emerald-50 text-emerald-800 border-emerald-200/80 font-semibold'
+        : 'bg-zinc-100 text-zinc-600 border-zinc-200/80',
     )}>
       {config.labelShort}
     </span>
@@ -363,10 +363,10 @@ const RevOpsCopilot = ({
     const stagnant = vendas.filter(v => v.pipeline_stage === 'proposal_sent' && v.days_in_stage > 7);
     if (stagnant.length > 0) {
       const riskValue = pipelineValue(stagnant);
-      insight = `Atenção Crítica: Você tem ${stagnant.length} proposta(s) parada(s) há mais de 7 dias. Risco estimado de ${formatCurrency(riskValue)} de vazamento no pipeline.`;
+      insight = `Atenção Crítica: Você tem ${stagnant.length} proposta(s) parada(s) há mais de 7 dias. Risco estimado de ${formatCurrency(riskValue)} em negociação.`;
       type = 'alert';
     } else if (diagnostico.length < 3) {
-      insight = 'Topo do Funil reduzido: Apenas captação orgânica insuficiente para bater metas de fechamento. Aumente geração de Inbound.';
+      insight = 'Volume inicial reduzido: Apenas captação orgânica insuficiente para atingir metas de expansão. Aumente prospecção inbound.';
       type = 'alert';
     } else {
       const biggestDeal = vendas.reduce((max, v) => {
@@ -376,10 +376,10 @@ const RevOpsCopilot = ({
       }, vendas[0]);
 
       if (biggestDeal && pipelineValue([biggestDeal]) > 0) {
-        insight = `Ação Ouro: A oportunidade "${biggestDeal.display_name}" tem o maior impacto esperado atual (${formatCurrency(pipelineValue([biggestDeal]))}). Dê máxima atenção em follow-up hoje.`;
+        insight = `Oportunidade de Alto Impacto: O projeto "${biggestDeal.display_name}" possui maior potencial de contrato (${formatCurrency(pipelineValue([biggestDeal]))}). Priorize alinhamento contratual hoje.`;
         type = 'success';
       } else {
-        insight = 'Pipeline de Vendas operando dentro da normalidade rotineira. Explore prospecção outbound (Hunting).';
+        insight = 'Pipeline de vendas operando com cadência estável dentro da normalidade rotineira.';
         type = 'neutral';
       }
     }
@@ -388,47 +388,43 @@ const RevOpsCopilot = ({
   else {
     const churnRisk = execucao.find(p => p.pipeline_stage === 'onboarding' && p.overdue_tasks > 0 && p.days_in_stage > 10);
     if (churnRisk) {
-      insight = `Risco de Atrito/Churn: O projeto "${churnRisk.display_name}" travou no Onboarding há ${churnRisk.days_in_stage} dias com tarefas crônicas atrasadas.`;
+      insight = `Gargalo de Onboarding: O projeto "${churnRisk.display_name}" requer atenção no alinhamento inicial (${churnRisk.days_in_stage} dias em etapa inicial).`;
       type = 'alert';
     } else {
       const totalOverdue = execucao.reduce((sum, p) => sum + p.overdue_tasks, 0);
       if (totalOverdue === 0 && execucao.length > 0) {
-        insight = `Excepcional: Todos os ${execucao.length} projetos base ativos estão 100% em dia. TTV (Time-to-Value) acelerado e retenção blindada.`;
+        insight = `Execução Excelente: Todos os ${execucao.length} projetos sob contrato estão rigorosamente em dia.`;
         type = 'success';
       } else if (totalOverdue > 5) {
-        insight = `Queda de Velocidade: A base total acumula ${totalOverdue} tarefas pendentes. Realoque os times de backoffice para destravar a infra.`;
+        insight = `Atenção Operacional: A carteira acumula ${totalOverdue} pendências técnicas. Direcione esforços para destravar entregáveis.`;
         type = 'alert';
       } else {
-         insight = 'Acompanhamento base operando sem gargalos de serviço catastróficos sistêmicos.';
+         insight = 'Acompanhamento de entregáveis operando sem pendências catastróficas.';
          type = 'neutral';
       }
     }
   }
 
   return (
-    <div className="bg-white border border-zinc-200 p-6 flex items-start gap-4 mb-10 relative overflow-hidden">
-      {/* Accent line */}
+    <div className="bg-white border border-zinc-200/80 rounded-xl p-4.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-start gap-3.5 mb-6 relative overflow-hidden">
       <div className={cn(
         "absolute top-0 left-0 w-1 h-full",
-        type === 'alert' ? 'bg-zinc-900' : type === 'success' ? 'bg-[#00CC6A]' : 'bg-zinc-200'
+        type === 'alert' ? 'bg-amber-500' : type === 'success' ? 'bg-emerald-500' : 'bg-zinc-300'
       )} />
-      
-      <div className="mt-0.5 shrink-0">
-        <Radar className={cn(
-          "w-5 h-5",
-          type === 'alert' ? 'text-zinc-900' : type === 'success' ? 'text-[#00CC6A]' : 'text-zinc-400'
-        )} />
+      <div className="p-2 rounded-lg bg-zinc-100/80 text-zinc-700 shrink-0 mt-0.5">
+        <Radar className="w-4 h-4" />
       </div>
       <div>
-        <h4 className="flex items-center gap-2 text-xxs font-black uppercase tracking-[0.25em] text-zinc-900 mb-2">
-          CRO Copilot Analytics
-          {type === 'alert' && (
-            <span className="text-3xs font-black uppercase tracking-widest text-white bg-zinc-900 px-1.5 py-0.5">
-              Attention
-            </span>
-          )}
-        </h4>
-        <p className="text-sm font-medium text-zinc-500 leading-relaxed max-w-4xl">{insight}</p>
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-semibold text-zinc-900">Análise de Inteligência Operacional</span>
+          <span className={cn(
+            "text-[10px] font-semibold px-2 py-0.5 rounded-full border",
+            type === 'alert' ? "bg-amber-50 text-amber-800 border-amber-200/80" : type === 'success' ? "bg-emerald-50 text-emerald-800 border-emerald-200/80" : "bg-zinc-100 text-zinc-700 border-zinc-200/80"
+          )}>
+            {type === 'alert' ? 'Atenção' : type === 'success' ? 'Oportunidade' : 'Estável'}
+          </span>
+        </div>
+        <p className="text-xs text-zinc-600 font-medium mt-1 leading-relaxed">{insight}</p>
       </div>
     </div>
   );
