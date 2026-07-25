@@ -318,54 +318,40 @@ const BlogPostPage = () => {
                 }}
               />
 
-              {/* Authentic Visual Banner */}
+              {/* Authentic Visual Banner - NUNCA CORTA A IMAGEM (object-contain) */}
               {heroImgSrc && (
-                <div className="my-8 max-w-4xl mx-auto rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 shadow-2xl">
+                <div className="my-8 max-w-4xl mx-auto rounded-2xl overflow-hidden border border-zinc-800/90 bg-zinc-950/90 p-3 sm:p-6 shadow-2xl flex items-center justify-center">
                   <img
                     src={heroImgSrc}
                     alt={post.title}
-                    className="w-full h-auto max-h-[420px] object-cover"
+                    className="w-auto max-w-full max-h-[500px] object-contain mx-auto rounded-lg"
                   />
                 </div>
               )}
             </motion.div>
           </header>
 
-          {/* Subheadline/Excerpt - Matching Hero Description */}
+          {/* Subheadline/Excerpt */}
           {updatedPost.excerpt && (
-            <p className="text-lg md:text-xl text-zinc-300 mb-16 max-w-4xl leading-relaxed font-normal text-balance mx-auto">
+            <p className="text-lg md:text-xl text-zinc-300 mb-10 max-w-4xl leading-relaxed font-normal text-balance mx-auto">
               {updatedPost.excerpt.replace(/<[^>]*>?/gm, "")}
             </p>
           )}
 
-          {/* Metadata - Logic from HeroSection pillars */}
-          <div className="w-full border-t border-white/10 pt-8 mt-4 animate-fade-in-up delay-300">
-            <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-xxs md:text-xs font-mono text-zinc-500 uppercase tracking-[0.3em]">
-              <div className="flex items-center gap-2 hover:text-revgreen transition-colors cursor-default group">
-                <span className="text-revgreen group-hover:animate-pulse">•</span> {formatDate(updatedPost.date)}
+          {/* Metadata */}
+          <div className="w-full border-t border-white/10 pt-8 mt-4 animate-fade-in-up">
+            <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-xxs md:text-xs font-mono text-zinc-400 uppercase tracking-[0.3em]">
+              <div className="flex items-center gap-2 hover:text-[#00CC6A] transition-colors cursor-default group">
+                <span className="text-[#00CC6A] group-hover:animate-pulse">•</span> {formatDate(updatedPost.date)}
               </div>
-              <div className="flex items-center gap-2 hover:text-revgreen transition-colors cursor-default group">
-                <span className="text-revgreen group-hover:animate-pulse">•</span> {updatedPost.readTime}
+              <div className="flex items-center gap-2 hover:text-[#00CC6A] transition-colors cursor-default group">
+                <span className="text-[#00CC6A] group-hover:animate-pulse">•</span> {updatedPost.readTime}
               </div>
-              <div className="flex items-center gap-2 hover:text-revgreen transition-colors cursor-default group">
-                <span className="text-revgreen group-hover:animate-pulse">•</span> {updatedPost.author.name}
+              <div className="flex items-center gap-2 hover:text-[#00CC6A] transition-colors cursor-default group">
+                <span className="text-[#00CC6A] group-hover:animate-pulse">•</span> {updatedPost.author.name}
               </div>
             </div>
           </div>
-
-          {/* Scroll Trigger - Minimalist & Visible */}
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            onClick={() => contentRef.current?.scrollIntoView({ behavior: 'smooth' })}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 text-white hover:text-revgreen transition-colors cursor-pointer group z-50 pt-16"
-          >
-            <span className="text-xxs uppercase tracking-[0.3em] font-bold text-revgreen bg-black/80 px-4 py-2 rounded-sm border border-revgreen/20 backdrop-blur-md shadow-sm hover:bg-revgreen hover:text-black transition-all duration-300">
-              Ler Artigo
-            </span>
-            <div className="w-px h-12 bg-revgreen/50 group-hover:h-20 transition-all duration-500"></div>
-          </motion.button>
         </div>
       </section>
 

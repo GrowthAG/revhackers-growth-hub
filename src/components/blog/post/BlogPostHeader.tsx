@@ -90,13 +90,13 @@ const BlogPostHeader = ({
       </div>
     </div>
 
-    {/* Featured Image */}
-    <div className="max-w-3xl mx-auto mb-10">
-      <figure className="overflow-hidden shadow-sm">
+    {/* Featured Image - NUNCA CORTA IMAGENS (object-contain) */}
+    <div className="max-w-4xl mx-auto mb-10">
+      <figure className="overflow-hidden rounded-2xl bg-zinc-950 border border-zinc-800/90 p-2 sm:p-4 shadow-2xl flex items-center justify-center">
         <img
           src={post.image}
           alt={cleanTitle()}
-          className="w-full h-[500px] object-cover"
+          className="w-auto max-w-full max-h-[500px] object-contain mx-auto rounded-xl"
         />
       </figure>
     </div>

@@ -242,3 +242,23 @@
     background: #00b35c;
     transform: translateY(-1px);
 }
+
+/* ============================================
+   Image Formatting (Strict No-Crop & High-Contrast Frame)
+   ============================================ */
+
+.article-content img,
+.article-body img,
+figure img {
+    max-width: 100%;
+    height: auto;
+    max-height: 550px;
+    object-fit: contain;
+    display: block;
+    margin: 2rem auto;
+    border-radius: 0.875rem;
+    border: 1px solid #27272a;
+    background-color: #09090b;
+    padding: 0.5rem;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25);
+}
