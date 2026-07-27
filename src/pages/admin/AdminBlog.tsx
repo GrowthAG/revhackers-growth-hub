@@ -37,7 +37,9 @@ export const AdminBlog = () => {
         if (!confirm('Excluir este artigo?')) return;
         try {
             await supabase.from('blog_posts').delete().eq('id', id);
-        } catch {}
+        } catch (err) {
+            console.error('Erro ao excluir artigo:', err);
+        }
         toast.success('Artigo excluído');
         setPosts(posts.filter(p => p.id !== id));
     };

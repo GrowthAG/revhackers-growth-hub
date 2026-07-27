@@ -39,7 +39,9 @@ const AdminMaterials = () => {
         if (!confirm('Excluir este material?')) return;
         try {
             await supabase.from('materials').delete().eq('id', id);
-        } catch {}
+        } catch (err) {
+            console.error('Erro ao deletar material', err);
+        }
         toast.success('Material removido');
         setMaterials(materials.filter(m => m.id !== id));
     };
