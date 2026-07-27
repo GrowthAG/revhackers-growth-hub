@@ -80,6 +80,7 @@ const REIWizardPage = lazy(() => import("./pages/REIWizardPage"));
 const REIResult = lazy(() => import("./pages/REIResult"));
 // Dead imports removed: REIDashboard, REIOnboarding (routes are redirects to /admin/projects)
 const GrowthMapPage = lazy(() => import("./pages/GrowthMap"));
+const PublicGrowthMap = lazy(() => import("./pages/PublicGrowthMap"));
 
 // Auth Pages
 const Login = lazy(() => import("./pages/auth/Login"));
@@ -109,6 +110,8 @@ const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const REIProjectForm = lazy(() => import("./pages/admin/REIProjectForm"));
 const GrowthCronograma = lazy(() => import("./pages/admin/GrowthCronograma"));
 const RevenueCockpit = lazy(() => import("./pages/admin/RevenueCockpit"));
+const FinanceCockpit = lazy(() => import("./pages/admin/FinanceCockpit").then(m => ({ default: m.FinanceCockpit })));
+const REICockpit = lazy(() => import("./pages/admin/REICockpit"));
 // Dead import removed: OrchestratedOnboarding (no route defined)
 
 const ProjectDetails = lazy(() => import("./pages/admin/ProjectDetails"));
@@ -118,6 +121,8 @@ const PostEditor = lazy(() => import("./components/admin/PostEditor"));
 const StrategicPlanGenerator = lazy(() => import("./pages/admin/StrategicPlanGenerator"));
 const KnowledgeDocument = lazy(() => import("./pages/admin/KnowledgeDocument"));
 const MeetingRecordingDoc = lazy(() => import("./pages/admin/MeetingRecordingDoc"));
+const IntelligenceDashboard = lazy(() => import("./pages/admin/IntelligenceDashboard"));
+const LifecycleTimeline = lazy(() => import("./pages/admin/LifecycleTimeline"));
 
 // Client Pages
 const StrategicPlanPresentation = lazy(() => import("./pages/client/StrategicPlanPresentation"));
@@ -158,8 +163,9 @@ const App = () => (
               <ErrorBoundary>
                 <Routes>
                   {/* Public Routes */}
-              <Route path="/" element={<Index />} />
-              <Route path="/p/:slug" element={<ProposalPresentation />} /> {/* Proposal Slide Presentation */}
+                  <Route path="/" element={<Index />} />
+                  <Route path="/public/growthmap/:share_token" element={<PublicGrowthMap />} />
+                  <Route path="/p/:slug" element={<ProposalPresentation />} /> {/* Proposal Slide Presentation */}
               <Route path="/p/:slug/legacy" element={<PublicDealRoom />} /> {/* Legacy Deal Room Route */}
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
@@ -246,9 +252,13 @@ const App = () => (
               <Route path="/admin/jornada/:id" element={<JornadaRedirect />} />
 
               <Route path="/admin/profile" element={<ProtectedRoute><ProfileSettings /></ProtectedRoute>} />
+              <Route path="/admin/finance" element={<ProtectedRoute><FinanceCockpit /></ProtectedRoute>} />
+              <Route path="/admin/rei" element={<ProtectedRoute><REICockpit /></ProtectedRoute>} />
               <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
               <Route path="/admin/mensagens" element={<ProtectedRoute><HubMessaging /></ProtectedRoute>} />
               <Route path="/admin/settings" element={<Navigate to="/admin/profile" replace />} />
+              <Route path="/admin/intelligence" element={<ProtectedRoute><IntelligenceDashboard /></ProtectedRoute>} />
+              <Route path="/admin/intelligence/:projectId" element={<ProtectedRoute><IntelligenceDashboard /></ProtectedRoute>} />
 
               {/* Admin - Clients (legado - tabela clients) */}
               <Route path="/admin/clients" element={<ProtectedRoute><AdminClients /></ProtectedRoute>} />
@@ -309,6 +319,10 @@ const App = () => (
 
               {/* Admin - Strategic Plan Generator */}
               <Route path="/admin/planejamento/:reiProjectId" element={<ProtectedRoute><StrategicPlanGenerator /></ProtectedRoute>} />
+
+              {/* Admin - Lifecycle Timeline */}
+              <Route path="/admin/lifecycle" element={<ProtectedRoute><LifecycleTimeline /></ProtectedRoute>} />
+              <Route path="/admin/lifecycle/:contactId" element={<ProtectedRoute><LifecycleTimeline /></ProtectedRoute>} />
 
               {/* Client - Strategic Plan Presentation (Public with token) */}
               <Route path="/plan/:token" element={<StrategicPlanPresentation />} />

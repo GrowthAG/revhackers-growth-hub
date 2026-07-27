@@ -1,7 +1,7 @@
 import { useLocation, Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import {
-  Home, LayoutDashboard, Users,
+  Home, LayoutDashboard, Users, Activity, Building2, Clock,
   Book, Briefcase, ChevronLeft, ChevronRight,
   type LucideIcon
 } from 'lucide-react';
@@ -21,6 +21,9 @@ const NAVIGATION: Record<string, NavItem[]> = {
   WORKSPACE: [
     { icon: Home, label: 'Dashboard', to: '/admin' },
     { icon: LayoutDashboard, label: 'Projetos', to: '/admin/projects' },
+    { icon: Activity, label: 'Cockpit REI', to: '/admin/rei' },
+    { icon: Building2, label: 'Inteligência', to: '/admin/intelligence' },
+    { icon: Clock, label: 'Lifecycle', to: '/admin/lifecycle' },
   ],
   CLIENTES: [
     { icon: Users, label: 'Clientes', to: '/admin/clients' },
