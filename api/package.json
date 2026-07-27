@@ -4,6 +4,12 @@
   "private": true,
   "type": "commonjs",
   "description": "Cloud Run API for the Supabase to Google Cloud migration",
+  "overrides": {
+    "gaxios": "^7.3.0",
+    "rimraf": "^6.0.0",
+    "glob": "^11.0.0",
+    "brace-expansion": "^5.0.8"
+  },
   "dependencies": {
     "@google-cloud/cloud-sql-connector": "^1.11.2",
     "@google/generative-ai": "^0.24.1",
