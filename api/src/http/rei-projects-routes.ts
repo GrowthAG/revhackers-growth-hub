@@ -2,6 +2,7 @@ import { ApiError } from '../contracts/errors';
 import type { ReiProjectService } from '../domains/rei-projects/service';
 import type { IdentityRepository } from '../identity/postgres-identity-repository';
 import type { TokenVerifier } from '../identity/verifier';
+import { AuthMiddleware } from './auth-middleware';
 
 interface ReiProjectsRoutesDependencies {
   verifier: TokenVerifier;
@@ -16,33 +17,16 @@ function json(status: number, value: unknown): Response {
   });
 }
 
-const DEFAULT_STAGING_TENANT_ID = '11111111-1111-4111-8111-111111111111';
-
 export function createReiProjectsRoutes(deps: ReiProjectsRoutesDependencies) {
+  const auth = new AuthMiddleware(deps);
+
   return async (request: Request): Promise<Response | null> => {
     const url = new URL(request.url);
     if (!url.pathname.startsWith('/v1/rei-projects')) return null;
 
-    const authHeader = request.headers.get('authorization');
-    const match = authHeader?.match(/^Bearer ([^\s]+)$/);
-    if (!match) {
-      return json(401, { error: { code: 'unauthenticated', message: 'Token de autenticação ausente.' } });
-    }
-    const token = match[1]!;
-
-    let user;
-    try {
-      const verified = await deps.verifier.verify(token);
-      user = await deps.identities.findOrCreateUser({ issuer: verified.issuer, subject: verified.subject });
-    } catch {
-      return json(401, { error: { code: 'unauthenticated', message: 'Token inválido ou expirado.' } });
-    }
-
-    if (user.status !== 'active') {
-      return json(403, { error: { code: 'forbidden', message: 'Usuário inativo ou desabilitado.' } });
-    }
-
-    const tenantId = user.memberships[0]?.tenantId ?? DEFAULT_STAGING_TENANT_ID;
+    const authResult = await auth.authenticate(request);
+    if (authResult instanceof Response) return authResult;
+    const { tenantId } = authResult;
 
     try {
       const pathParts = url.pathname.split('/').filter(Boolean); // ['v1', 'rei-projects', ':id'?]

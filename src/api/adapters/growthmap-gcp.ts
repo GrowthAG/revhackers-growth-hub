@@ -1,4 +1,4 @@
-import { requireGoogleIdToken } from '@/integrations/firebase/client';
+import { authenticatedRequest } from './_base';
 import type { FrameworkResult, GrowthMapState } from '@/types/growthmap';
 
 interface GrowthMapResponse {
@@ -12,20 +12,8 @@ interface GrowthMapResponse {
   generatedAt: string | null;
 }
 
-function apiBase(): string {
-  const value = import.meta.env.VITE_GCP_API_URL?.trim();
-  if (!value) throw new Error('VITE_GCP_API_URL não configurada.');
-  return value.replace(/\/$/, '');
-}
-
 async function request(projectId: string, init?: RequestInit): Promise<Response> {
-  const token = await requireGoogleIdToken();
-  const response = await fetch(`${apiBase()}/v1/growthmaps/${encodeURIComponent(projectId)}`, {
-    ...init,
-    headers: { authorization: `Bearer ${token}`, ...init?.headers },
-  });
-  if (!response.ok) throw new Error(`GrowthMap GCP request failed (${response.status}).`);
-  return response;
+  return authenticatedRequest(`/v1/growthmaps/${encodeURIComponent(projectId)}`, init);
 }
 
 function toState(value: GrowthMapResponse): GrowthMapState {

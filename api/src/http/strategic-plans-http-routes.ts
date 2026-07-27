@@ -2,6 +2,7 @@ import { StrategicPlanService } from '../domains/strategic-plans/service';
 import { IdentityRepository } from '../identity/postgres-identity-repository';
 import { GoogleIdentityTokenVerifier } from '../identity/google-identity-verifier';
 import { generateStrategicPlanAi } from '../domains/strategic-plans/ai-generator';
+import { AuthMiddleware } from './auth-middleware';
 
 export interface StrategicPlansRoutesDependencies {
   verifier: GoogleIdentityTokenVerifier;
@@ -10,6 +11,8 @@ export interface StrategicPlansRoutesDependencies {
 }
 
 export function createStrategicPlansRoutes({ verifier, identities, service }: StrategicPlansRoutesDependencies) {
+  const auth = new AuthMiddleware({ verifier, identities });
+
   return async (request: Request): Promise<Response | null> => {
     const url = new URL(request.url);
 
@@ -17,27 +20,9 @@ export function createStrategicPlansRoutes({ verifier, identities, service }: St
       return null;
     }
 
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader?.startsWith('Bearer ')) {
-      return new Response(JSON.stringify({ error: 'unauthorized', message: 'Missing Authorization header' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    const token = authHeader.substring(7);
-    let identity;
-    try {
-      identity = await verifier.verify(token);
-    } catch {
-      return new Response(JSON.stringify({ error: 'unauthorized', message: 'Invalid token' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    const internalUser = await identities.findOrCreateUser(identity);
-    const tenantId = internalUser.memberships[0]?.tenantId ?? '11111111-1111-4111-8111-111111111111';
+    const authResult = await auth.authenticate(request);
+    if (authResult instanceof Response) return authResult;
+    const { tenantId } = authResult;
 
     // POST /v1/strategic-plans/generate — Geração Nativa GCP via IA
     if (request.method === 'POST' && url.pathname === '/v1/strategic-plans/generate') {

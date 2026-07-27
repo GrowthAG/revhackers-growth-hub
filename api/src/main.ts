@@ -10,14 +10,39 @@ import { PostgresReiProjectRepository } from './domains/rei-projects/postgres-re
 import { ReiProjectService } from './domains/rei-projects/service';
 import { PostgresStrategicPlanRepository } from './domains/strategic-plans/postgres-repository';
 import { StrategicPlanService } from './domains/strategic-plans/service';
+import { PostgresOpportunityRepository } from './domains/opportunities/postgres-repository';
+import { FonteDataService } from './domains/opportunities/fontedata-service';
 import { createClientsRoutes } from './http/clients-routes';
 import { createGrowthMapRoutes } from './http/growthmap-routes';
 import { createIdentityRoutes } from './http/identity-routes';
+import { createOpportunitiesRoutes } from './http/opportunities-routes';
 import { createReiProjectsRoutes } from './http/rei-projects-routes';
 import { createStrategicPlansRoutes } from './http/strategic-plans-http-routes';
 import { GoogleIdentityTokenVerifier } from './identity/google-identity-verifier';
 import { PostgresIdentityRepository } from './identity/postgres-identity-repository';
 import { createApiServer } from './server';
+
+import { PostgresFinanceRepository } from './domains/finance/postgres-repository';
+import { InfinitePayConnector } from './domains/finance/connectors/infinitepay-connector';
+import { PagBankConnector } from './domains/finance/connectors/pagbank-connector';
+import { PluggyConnector } from './domains/finance/connectors/pluggy-connector';
+import { StripeConnector } from './domains/finance/connectors/stripe-connector';
+import { createFinanceRoutes } from './http/finance-routes';
+import { PostgresREIRepository } from './domains/rei/postgres-repository';
+import { createREIRoutes } from './http/rei-routes';
+import { PostgresIntelligenceRepository } from './domains/intelligence/postgres-repository';
+import { PostgresIntelligenceJobsRepository } from './domains/intelligence/postgres-repository-jobs';
+import { FonteDataIntelligenceConnector } from './domains/intelligence/fonte-data-connector';
+import { createIntelligenceRoutes } from './http/intelligence-routes';
+
+import {
+  handleProcessLifecycle,
+  handleCalendarWebhook,
+  handleGHLWebhook,
+  handleListHooks,
+  handleCreateHook,
+  handleContactJourney,
+} from './http/lifecycle-routes';
 
 async function main(): Promise<void> {
   const config = loadConfig();
@@ -28,7 +53,34 @@ async function main(): Promise<void> {
   const verifier = new GoogleIdentityTokenVerifier({ projectId: googleProjectId });
   const identities = new PostgresIdentityRepository(postgres.pool);
 
+  const opportunityRepository = new PostgresOpportunityRepository(postgres.pool);
+  const financeRepository = new PostgresFinanceRepository(postgres.pool);
+  const reiRepository = new PostgresREIRepository(postgres.pool);
+  const intelligenceRepository = new PostgresIntelligenceRepository(postgres.pool);
+  const intelligenceJobsRepository = new PostgresIntelligenceJobsRepository(postgres.pool);
+  const fonteDataConnector = new FonteDataIntelligenceConnector();
+  const fonteDataService = new FonteDataService();
+
   const identityRoutes = createIdentityRoutes({ verifier, identities });
+  const intelligenceRoutes = createIntelligenceRoutes({
+    repository: intelligenceRepository,
+    jobsRepository: intelligenceJobsRepository,
+    fonteDataConnector,
+  });
+  const reiRoutes = createREIRoutes({ repository: reiRepository });
+  const financeRoutes = createFinanceRoutes({
+    repository: financeRepository,
+    connectors: {
+      stripe: new StripeConnector(),
+      infinitepay: new InfinitePayConnector(),
+      pagbank: new PagBankConnector(),
+      pluggy: new PluggyConnector(),
+    },
+  });
+  const opportunityRoutes = createOpportunitiesRoutes({
+    repository: opportunityRepository,
+    fonteDataService,
+  });
   const clientRoutes = createClientsRoutes({
     verifier,
     identities,
@@ -51,7 +103,22 @@ async function main(): Promise<void> {
     idempotency: new PostgresIdempotencyStore(postgres.pool),
   });
 
+  const envVars = process.env as Record<string, string>;
+  const lifecycleRoute = async (request: Request) =>
+    (await handleProcessLifecycle(request, envVars, postgres.pool as any)) ??
+    (await handleCalendarWebhook(request, envVars, postgres.pool as any)) ??
+    (await handleGHLWebhook(request, envVars, postgres.pool as any)) ??
+    (await handleListHooks(request, envVars, postgres.pool as any)) ??
+    (await handleCreateHook(request, envVars, postgres.pool as any)) ??
+    (await handleContactJourney(request, envVars, postgres.pool as any)) ??
+    null;
+
   const route = async (request: Request, requestId: string) =>
+    (await lifecycleRoute(request)) ??
+    (await intelligenceRoutes(request)) ??
+    (await reiRoutes(request)) ??
+    (await financeRoutes(request)) ??
+    (await opportunityRoutes(request)) ??
     (await identityRoutes(request)) ??
     (await clientRoutes(request)) ??
     (await reiProjectRoutes(request)) ??

@@ -1,4 +1,4 @@
-import { requireGoogleIdToken } from '@/integrations/firebase/client';
+import { authenticatedRequest } from './_base';
 
 export interface ReiProject {
   id: string;
@@ -30,20 +30,8 @@ export interface ReiProject {
 export type ReiProjectInsert = Omit<ReiProject, 'id' | 'tenantId' | 'createdAt' | 'updatedAt' | 'clickupSpaceId' | 'clickupFolderId' | 'clickupDocId' | 'clickupSprintFolderId' | 'clickupProvisionedAt'>;
 export type ReiProjectUpdate = Partial<ReiProjectInsert>;
 
-function apiBase(): string {
-  const value = import.meta.env.VITE_GCP_API_URL?.trim();
-  if (!value) throw new Error('VITE_GCP_API_URL não configurada.');
-  return value.replace(/\/$/, '');
-}
-
 async function request(path: string, init?: RequestInit): Promise<Response> {
-  const token = await requireGoogleIdToken();
-  const response = await fetch(`${apiBase()}${path}`, {
-    ...init,
-    headers: { authorization: `Bearer ${token}`, ...init?.headers },
-  });
-  if (!response.ok) throw new Error(`API GCP REI Projects request failed (${response.status}).`);
-  return response;
+  return authenticatedRequest(path, init);
 }
 
 export const reiProjectsGcpAdapter = {

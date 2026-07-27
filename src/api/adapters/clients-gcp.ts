@@ -1,20 +1,8 @@
-import { requireGoogleIdToken } from '@/integrations/firebase/client';
+import { authenticatedRequest } from './_base';
 import type { Client, ClientInsert, ClientUpdate } from '../clients';
 
-function apiBase(): string {
-  const value = import.meta.env.VITE_GCP_API_URL?.trim();
-  if (!value) throw new Error('VITE_GCP_API_URL não configurada.');
-  return value.replace(/\/$/, '');
-}
-
 async function request(path: string, init?: RequestInit): Promise<Response> {
-  const token = await requireGoogleIdToken();
-  const response = await fetch(`${apiBase()}${path}`, {
-    ...init,
-    headers: { authorization: `Bearer ${token}`, ...init?.headers },
-  });
-  if (!response.ok) throw new Error(`API GCP Clients request failed (${response.status}).`);
-  return response;
+  return authenticatedRequest(path, init);
 }
 
 export const clientsGcpAdapter = {
