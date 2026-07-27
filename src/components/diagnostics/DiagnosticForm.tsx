@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from 'framer-motion';
-import { Linkedin } from 'lucide-react';
+import { Linkedin, Sparkles, RefreshCw } from 'lucide-react';
 
 export interface DiagnosticFormData {
     name: string;
@@ -12,6 +12,7 @@ export interface DiagnosticFormData {
     company: string;
     role: string;
     linkedin: string;
+    cnpj?: string;
 }
 
 interface DiagnosticFormProps {
@@ -38,13 +39,84 @@ export const DiagnosticForm = ({
         email: '',
         company: '',
         role: '',
-        linkedin: ''
+        linkedin: '',
+        cnpj: ''
     });
+    const [isQueryingCnpj, setIsQueryingCnpj] = useState(false);
+    const [cnpjChecked, setCnpjChecked] = useState(false);
+    const [emailError, setEmailError] = useState('');
 
     const isDark = variant === 'dark';
 
+    const isCorporateEmail = (email: string) => {
+        const publicDomains = [
+            'gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com', 'live.com', 
+            'aol.com', 'icloud.com', 'protonmail.com', 'zoho.com', 'bol.com.br', 
+            'uol.com.br', 'terra.com.br', 'ig.com.br', 'yandex.com'
+        ];
+        const domain = email.split('@')[1]?.toLowerCase().trim();
+        if (!domain) return false;
+        return !publicDomains.includes(domain);
+    };
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const val = e.target.value;
+        setForm(prev => ({ ...prev, email: val }));
+        
+        if (val && !isCorporateEmail(val)) {
+            setEmailError('Por favor, utilize o seu e-mail corporativo. Não aceitamos e-mails públicos (como Gmail, Outlook ou Yahoo) para diagnósticos oficiais da RevHackers.');
+        } else {
+            setEmailError('');
+        }
+    };
+
+    const formatCNPJ = (value: string) => {
+        const cleaned = value.replace(/\D/g, '');
+        if (cleaned.length <= 2) return cleaned;
+        if (cleaned.length <= 5) return `${cleaned.slice(0, 2)}.${cleaned.slice(2)}`;
+        if (cleaned.length <= 8) return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(5)}`;
+        if (cleaned.length <= 12) return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(5, 8)}/${cleaned.slice(8)}`;
+        return `${cleaned.slice(0, 2)}.${cleaned.slice(2, 5)}.${cleaned.slice(5, 8)}/${cleaned.slice(8, 12)}-${cleaned.slice(12, 14)}`;
+    };
+
+    const handleCnpjChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value;
+        const formatted = formatCNPJ(rawValue);
+        const cleanCnpj = formatted.replace(/\D/g, '');
+
+        setForm(prev => ({ ...prev, cnpj: formatted }));
+
+        if (cleanCnpj.length === 14) {
+            setIsQueryingCnpj(true);
+            try {
+                const baseUrl = import.meta.env.VITE_GCP_API_URL || 'https://api.revhackers.com';
+                const response = await fetch(`${baseUrl}/v1/opportunities/lookup?cnpj=${cleanCnpj}`);
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.data && result.data.company_name) {
+                        setForm(prev => ({
+                            ...prev,
+                            company: result.data.company_name,
+                        }));
+                        setCnpjChecked(true);
+                    }
+                }
+            } catch (err) {
+                console.error('[DiagnosticForm] Falha ao buscar CNPJ:', err);
+            } finally {
+                setIsQueryingCnpj(false);
+            }
+        } else {
+            setCnpjChecked(false);
+        }
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (!isCorporateEmail(form.email)) {
+            setEmailError('Por favor, utilize o seu e-mail corporativo. Não aceitamos e-mails públicos para diagnósticos oficiais.');
+            return;
+        }
         onSubmit({ ...form, role: form.role || diagnosticType });
     };
 
@@ -70,7 +142,41 @@ export const DiagnosticForm = ({
                         </div>
                         <div className="space-y-1.5">
                             <Label className={labelClasses}>E-mail Corporativo</Label>
-                            <Input required type="email" className={inputClasses} value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="nome@empresa.com" />
+                            <Input 
+                                required 
+                                type="email" 
+                                className={`${inputClasses} ${emailError ? 'border-red-500 focus:border-red-500' : ''}`} 
+                                value={form.email} 
+                                onChange={handleEmailChange} 
+                                placeholder="nome@empresa.com" 
+                            />
+                            {emailError && (
+                                <p className="text-xxs text-red-500 font-medium pl-0.5 mt-1 leading-normal">
+                                    {emailError}
+                                </p>
+                            )}
+                        </div>
+                        <div className="space-y-1.5">
+                            <div className="flex items-center justify-between">
+                                <Label className={labelClasses}>CNPJ da Empresa (Preenchimento Automático)</Label>
+                                {isQueryingCnpj && (
+                                    <span className="text-[10px] font-mono text-zinc-400 flex items-center gap-1">
+                                        <RefreshCw className="w-2.5 h-2.5 animate-spin" /> BUSCANDO...
+                                    </span>
+                                )}
+                                {cnpjChecked && (
+                                    <span className="text-[9px] font-mono font-bold text-black bg-[#00CC6A] px-1.5 py-0.5 rounded-sm flex items-center gap-1">
+                                        <Sparkles size={10} /> GROWTH INTEL
+                                    </span>
+                                )}
+                            </div>
+                            <Input
+                                className={inputClasses}
+                                value={form.cnpj || ''}
+                                onChange={handleCnpjChange}
+                                maxLength={18}
+                                placeholder="00.000.000/0000-00"
+                            />
                         </div>
                         <div className="space-y-1.5">
                             <Label className={labelClasses}>Nome da Empresa</Label>
@@ -118,7 +224,7 @@ export const DiagnosticForm = ({
                     <div className="pt-4 flex flex-col items-center gap-4">
                         <Button
                             type="submit"
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || !!emailError}
                             className={`w-full px-16 h-14 font-black tracking-[0.3em] uppercase text-tiny rounded-sm transition-all duration-500 border ${isDark
                                 ? "bg-revgreen text-black hover:bg-white hover:text-black border-transparent"
                                 : "bg-black text-white hover:bg-revgreen hover:text-black shadow-sm shadow-zinc-200 border-black"

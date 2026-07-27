@@ -1,25 +1,28 @@
-import { supabase } from "@/integrations/supabase/client";
 import { sendToGHL, GHLEventType } from "@/lib/ghlRelay";
 
 export interface DiagnosticLead {
     name: string;
     email: string;
     company: string;
+    cnpj?: string;
+    phone?: string;
+    role?: string;
+    linkedin?: string;
 }
+
+const API_BASE_URL = (import.meta.env.VITE_GCP_API_URL as string)?.replace(/\/$/, '') || 'https://api.revhackers.com';
 
 /**
  * submitPublicDiagnostic
  *
- * Fluxo correto (v2 - sem poluir rei_projects):
- *   1. Cria registro em `diagnosticos` (tabela de assessments)
- *   2. Cria `opportunity` vinculada ao diagnostico (pipeline pre-venda)
- *   3. Registra historico de stage
- *   4. Dispara relay para GHL
- *
- * A pagina de resultado le de `diagnosticos` via ID retornado.
+ * Fluxo migrado para a API Cloud Run (GCP):
+ *   1. Envia a submissão de diagnóstico e lead para a API GCP (`POST /v1/opportunities`)
+ *   2. A API GCP salva a oportunidade e dispara em background o enriquecimento FonteData se houver CNPJ
+ *   3. Dispara o relay de automação do GoHighLevel (GHL)
+ *   4. Retorna a URL de resultado gerada (`/diagnostico/resultado/{diagnosticoId}`)
  */
 export const submitPublicDiagnostic = async (
-    lead: DiagnosticLead & { phone?: string, role?: string, linkedin?: string },
+    lead: DiagnosticLead,
     answers: Record<string, any>,
     score: number,
     maturity: { level: string; description: string; action: string; color: string; title?: string },
@@ -34,12 +37,13 @@ export const submitPublicDiagnostic = async (
             phone: lead.phone,
             role: lead.role,
             linkedin: lead.linkedin,
+            cnpj: lead.cnpj,
         },
         result_details: maturity,
         diagnostic_type: diagnosticType,
     };
 
-    // Mapeamento correto dos protocolos REI oficiais
+    // Mapeamento dos tipos REI oficiais
     type OfficialREIType = 'consulting' | 'crm_ops' | 'founder' | 'site';
     const diagToProjectMap: Record<string, OfficialREIType> = {
         growth: 'consulting',
@@ -49,26 +53,6 @@ export const submitPublicDiagnostic = async (
     };
     const officialProjectType = diagToProjectMap[diagnosticType] || 'consulting';
 
-    // 1. Criar registro em `diagnosticos` via RPC (P0-03: sem INSERT/SELECT
-    // direto anonimo na tabela, ver 20260717000000_secure_diagnosticos_public_access.sql)
-    const { data: diagnosticoId, error: diagError } = await supabase.rpc('submit_diagnostico', {
-        p_email: lead.email || 'sem-email@lead.local',
-        p_tipo: diagnosticType,
-        p_score: score,
-        p_respostas: {
-            ...fullResponses,
-            lead_name: lead.name,
-            lead_company: lead.company,
-            maturity_level: maturity.title || maturity.level,
-        },
-    });
-
-    if (diagError) {
-        console.error('[publicDiagnostic] Erro ao criar diagnostico:', diagError);
-        throw diagError;
-    }
-
-    // 2. Criar opportunity vinculada (pipeline pre-venda)
     const DIAG_TYPE_TO_SOURCE: Record<string, string> = {
         growth: 'diagnostico_growth',
         revenue: 'diagnostico_revenue',
@@ -76,80 +60,43 @@ export const submitPublicDiagnostic = async (
         site: 'diagnostico_site',
     };
     const leadSource = DIAG_TYPE_TO_SOURCE[diagnosticType] || 'diagnostico_growth';
+    const generatedDiagnosticoId = `diag_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
 
-    // Check se ja existe opportunity para este email
-    let opportunityId: string | null = null;
+    let diagnosticoId = generatedDiagnosticoId;
 
-    if (lead.email && lead.email !== 'sem-email@lead.local') {
-        const { data: existing } = await supabase
-            .from('opportunities')
-            .select('id')
-            .eq('client_email', lead.email.toLowerCase())
-            .not('pipeline_stage', 'eq', 'lost')
-            .limit(1)
-            .maybeSingle();
+    try {
+        const response = await fetch(`${API_BASE_URL}/v1/opportunities`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: lead.name || lead.company || 'Novo Lead B2B',
+                email: lead.email?.toLowerCase() || null,
+                company: lead.company || null,
+                cnpj: lead.cnpj || null,
+                diagnosticoId: generatedDiagnosticoId,
+                officialProjectType,
+                leadSource,
+                score,
+                maturity,
+                responses: fullResponses,
+            }),
+        });
 
-        if (existing) {
-            // Atualizar opportunity existente com o novo diagnostico
-            opportunityId = (existing as any).id;
-            await supabase
-                .from('opportunities')
-                .update({
-                    diagnostico_id: diagnosticoId,
-                    pipeline_stage: 'diagnostic_done',
-                    updated_at: new Date().toISOString(),
-                })
-                .eq('id', opportunityId);
-
-            // Historico
-            await supabase.from('opportunity_stage_history').insert({
-                opportunity_id: opportunityId,
-                from_stage: null,
-                to_stage: 'diagnostic_done',
-                changed_at: new Date().toISOString(),
-                changed_by: 'public_diagnostic',
-                notes: `Diagnostico ${diagnosticType} vinculado - score ${score}`,
-            });
-        }
-    }
-
-    if (!opportunityId) {
-        // Criar nova opportunity com a tipagem oficial e o intelligence data (handoff)
-        const { data: oppData, error: oppError } = await supabase
-            .from('opportunities')
-            .insert({
-                client_name: lead.name || lead.company || 'Novo Lead B2B',
-                client_email: lead.email?.toLowerCase() || null,
-                client_company: lead.company || null,
-                type: officialProjectType,
-                lead_source: leadSource,
-                pipeline_stage: 'diagnostic_done',
-                diagnostico_id: diagnosticoId,
-                analyst_email: 'giulliano@revhackers.com.br',
-                opportunity_data: fullResponses // Injeção inteligente para pre-fill automático futuro
-            })
-            .select('id')
-            .single();
-
-        if (oppError) {
-            console.error('[publicDiagnostic] Erro ao criar opportunity:', oppError);
-            // Nao throw - diagnostico ja foi salvo, opportunity e secundaria
+        if (response.ok) {
+            const resData = await response.json();
+            if (resData.data?.diagnosticoId) {
+                diagnosticoId = resData.data.diagnosticoId;
+            }
         } else {
-            opportunityId = (oppData as any).id;
-
-            // Historico inicial
-            await supabase.from('opportunity_stage_history').insert({
-                opportunity_id: opportunityId,
-                from_stage: null,
-                to_stage: 'diagnostic_done',
-                changed_at: new Date().toISOString(),
-                changed_by: 'public_diagnostic',
-                notes: `Opportunity criada via diagnostico publico ${diagnosticType} - score ${score}`,
-            });
+            console.warn('[publicDiagnostic] Resposta com status não-200 da API GCP:', response.status);
         }
+    } catch (err) {
+        console.error('[publicDiagnostic] Erro ao enviar submissão para a API GCP:', err);
     }
 
-    // 3. GHL relay
+    // 2. GHL relay para automação de marketing
     const resultUrl = `${window.location.origin}/diagnostico/resultado/${diagnosticoId}`;
 
     if (ghlEventType) {
@@ -164,6 +111,6 @@ export const submitPublicDiagnostic = async (
         });
     }
 
-    // Retorna diagnostico_id como ID do resultado (a pagina de resultado le de diagnosticos)
+    // Retorna o ID do resultado para redirecionar o usuário
     return { response: { id: diagnosticoId }, resultUrl };
 };

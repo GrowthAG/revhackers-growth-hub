@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RefreshCw, Link2, CheckCircle2, AlertCircle, Clock, Loader2 } from 'lucide-react';
 import type { FrameworkResult } from '@/types/growthmap';
 
@@ -70,6 +70,7 @@ function PreviewContent({ framework }: { framework: FrameworkResult }) {
 }
 
 export default function FrameworkCard({ framework, onRegenerate, onClick }: FrameworkCardProps) {
+  const [isRegenerating, setIsRegenerating] = useState(false);
   const { status } = framework;
   const isDone = status === 'done';
   const isGenerating = status === 'generating';
@@ -124,16 +125,23 @@ export default function FrameworkCard({ framework, onRegenerate, onClick }: Fram
             </span>
           )}
 
-          {/* Regenerate button — visible on hover */}
-          <button
-            onClick={(e) => { e.stopPropagation(); onRegenerate(e); }}
-            title="Regenerar análise"
-            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded text-zinc-600 hover:text-lime-400"
-          >
-            <RefreshCw size={13} />
-          </button>
         </div>
       </div>
+      
+      {/* Regenerate button — visible on hover */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onRegenerate(e); }}
+        disabled={framework.status === 'generating'}
+        title="Regenerar este framework com dados atualizados"
+        aria-label="Regenerar análise"
+        className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md text-zinc-500 hover:text-emerald-400 hover:bg-zinc-800/50 disabled:opacity-30 transition-colors"
+      >
+        {framework.status === 'generating' ? (
+          <Loader2 size={14} className="animate-spin" />
+        ) : (
+          <RefreshCw size={14} />
+        )}
+      </button>
 
       {/* Title + subtitle */}
       <h3 className="text-base font-semibold text-white mt-3 leading-tight">{framework.title}</h3>

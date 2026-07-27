@@ -156,36 +156,66 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
 
         setIsSearchingCnpj(true);
         try {
-            let data;
+            let data: any = null;
+            const baseUrl = import.meta.env.VITE_GCP_API_URL || 'https://api.revhackers.com';
+
+            // 1. Tenta buscar primeiro na nossa API GCP (Integra Pré-Vendas + FonteData)
             try {
-                const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCnpj}`);
-                if (!response.ok) throw new Error('Direct fetch failed');
-                data = await response.json();
-            } catch (directError) {
-                const { data: edgeData, error } = await supabase.functions.invoke('fetch-cnpj', {
-                    body: { cnpj: cleanCnpj }
-                });
-                if (error || !edgeData) throw error || new Error('Edge function failed');
-                data = edgeData;
+                const gcpResponse = await fetch(`${baseUrl}/v1/opportunities/lookup?cnpj=${cleanCnpj}`);
+                if (gcpResponse.ok) {
+                    const resJson = await gcpResponse.json();
+                    data = resJson.data;
+                }
+            } catch (gcpError) {
+                console.warn('[ClientFormContent] GCP Lookup indisponível, tentando fallback...', gcpError);
+            }
+
+            // 2. Fallback para BrasilAPI se a API GCP não trouxer dados
+            if (!data) {
+                try {
+                    const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCnpj}`);
+                    if (response.ok) {
+                        const raw = await response.json();
+                        data = {
+                            company_name: raw.razao_social,
+                            lead_name: raw.qsa?.[0]?.nome_socio || '',
+                            email: raw.email || '',
+                            trade_name: raw.nome_fantasia || '',
+                            cep: raw.cep,
+                            address: raw.logradouro,
+                            number: raw.numero,
+                            complement: raw.complemento,
+                            neighborhood: raw.bairro,
+                            city: raw.municipio,
+                            state: raw.uf,
+                        };
+                    }
+                } catch (fallbackErr) {
+                    console.error('[ClientFormContent] Fallback falhou:', fallbackErr);
+                }
             }
 
             if (!data) throw new Error('Dados não retornados');
 
-            if (data.razao_social) setValue('company', data.razao_social);
-            if (data.qsa && data.qsa.length > 0 && data.qsa[0].nome_socio) {
-                setValue('name', data.qsa[0].nome_socio);
+            // Auto-preenchimento dos campos corporativos
+            if (data.company_name || data.razao_social) {
+                setValue('company', data.company_name || data.razao_social);
             }
-            if (data.nome_fantasia) setValue('trade_name', data.nome_fantasia);
+            if (data.lead_name || data.name) {
+                setValue('name', data.lead_name || data.name);
+            }
+            if (data.trade_name) setValue('trade_name', data.trade_name);
             if (data.cep) setValue('cep', data.cep);
-            if (data.logradouro) setValue('address', data.logradouro);
-            if (data.numero) setValue('number', data.numero);
-            if (data.complemento) setValue('complement', data.complemento);
-            if (data.bairro) setValue('neighborhood', data.bairro);
-            if (data.municipio) setValue('city', data.municipio);
-            if (data.uf) setValue('state', data.uf);
+            if (data.address) setValue('address', data.address);
+            if (data.number) setValue('number', data.number);
+            if (data.complement) setValue('complement', data.complement);
+            if (data.neighborhood) setValue('neighborhood', data.neighborhood);
+            if (data.city) setValue('city', data.city);
+            if (data.state) setValue('state', data.state);
 
+            // Auto-preenchimento inteligente do E-mail vindo da pré-venda ou FonteData
             if (data.email) {
-                setValue('email', data.email.toLowerCase());
+                setValue('email', data.email.toLowerCase().trim());
                 if (data.email.includes('@')) {
                     const domain = data.email.split('@')[1];
                     const generalDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'uol.com.br', 'bol.com.br', 'terra.com.br'];
@@ -196,8 +226,10 @@ const ClientFormContent = ({ initialData, isEditing = false, mode = 'admin', cli
             }
 
             toast({
-                title: 'Dados Localizados',
-                description: 'Preenchimento corporativo automático realizado.',
+                title: data.opportunity_found ? 'Lead da Pré-Venda Localizado! 🚀' : 'Dados Corporativos Localizados',
+                description: data.opportunity_found
+                    ? 'E-mail, nome e dados do cliente importados automaticamente da jornada de vendas.'
+                    : 'Preenchimento corporativo automático realizado via CNPJ.',
             });
         } catch (error) {
             console.error('Erro ao buscar CNPJ:', error);
