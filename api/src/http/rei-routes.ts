@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { ApiError } from '../contracts/errors';
 import type { PostgresREIRepository } from '../domains/rei/postgres-repository';
 import {
@@ -5,7 +6,84 @@ import {
   buildKickoffDoc,
   buildWrapUpEmail,
 } from '../domains/rei/templates';
-import type { CreateREIOnboardingParams, QuickWinPayload } from '../domains/rei/types';
+import type { CreateREIOnboardingParams } from '../domains/rei/types';
+
+// ============================================================================
+// ZOD SCHEMAS — Input validation para cada endpoint REI
+// ============================================================================
+
+const EmailSchema = z.string().trim().email('E-mail inválido').max(254);
+// IDs aceitam qualquer string não-vazia (validação de formato fica a cargo do banco)
+const IdSchema = z.string().trim().min(1, 'ID é obrigatório').max(128);
+const UrlSchema = z.string().url('URL inválida').max(2000);
+const String256 = z.string().trim().max(256);
+
+const CreateOnboardingSchema = z.object({
+  rei_project_id: IdSchema,
+  client_email: EmailSchema,
+  cs_lead_email: EmailSchema,
+  client_name: z.string().trim().min(1).max(256).optional(),
+  client_company: z.string().trim().max(256).optional(),
+  product_name: String256.optional(),
+  product_slug: String256.optional(),
+  duration_days: z.number().int().min(1).max(365).optional(),
+});
+
+const WelcomeSchema = z.object({
+  onboarding_id: IdSchema,
+  kickoff_link: UrlSchema,
+});
+
+const KickoffSchema = z.object({
+  onboarding_id: IdSchema,
+  goal_sentence: z.string().trim().min(10, 'Goal sentence precisa de pelo menos 10 caracteres').max(1024),
+});
+
+const QuickWinSchema = z.object({
+  onboarding_id: IdSchema,
+  description: z.string().trim().min(1).max(1024),
+  url: UrlSchema,
+  loom_url: UrlSchema.optional(),
+});
+
+const NpsSchema = z.object({
+  onboarding_id: IdSchema,
+  score: z.number().int().min(0, 'Score NPS mínimo é 0').max(10, 'Score NPS máximo é 10'),
+});
+
+const ExpansionSuggestionSchema = z.object({
+  product_name: z.string().trim().min(1).max(256),
+  product_description: z.string().trim().max(1024).optional(),
+  estimated_value_brl: z.number().positive().max(999999999).optional(),
+  ai_reasoning: z.string().trim().max(2048).optional(),
+  opportunity_type: z.enum(['upsell', 'cross_sell', 'renewal', 'expansion_service', 'referral']).optional(),
+});
+
+const WrapUpSchema = z.object({
+  onboarding_id: IdSchema,
+  milestone1Result: z.string().trim().min(1).max(2048),
+  quickWinResult: z.string().trim().min(1).max(2048),
+  metricResult: z.string().trim().min(1).max(2048),
+  nextPhaseAligned: z.string().trim().min(1).max(2048),
+  npsLink: UrlSchema,
+  expansion_suggestions: z.array(ExpansionSuggestionSchema).max(10).optional(),
+});
+
+const ExpansionSchema = z.object({
+  tenant_id: IdSchema,
+  rei_onboarding_id: IdSchema.optional(),
+  project_id: IdSchema.optional(),
+  opportunity_type: z.enum(['upsell', 'cross_sell', 'renewal', 'expansion_service', 'referral']),
+  product_name: z.string().trim().min(1).max(256),
+  product_description: z.string().trim().max(1024).optional(),
+  estimated_value_brl: z.number().positive().max(999999999).optional(),
+  ai_reasoning: z.string().trim().max(2048).optional(),
+  created_by: EmailSchema,
+});
+
+// ============================================================================
+// ROUTES
+// ============================================================================
 
 interface REIRoutesDependencies {
   repository: PostgresREIRepository;
@@ -18,6 +96,30 @@ function json(status: number, value: unknown): Response {
   });
 }
 
+function parseBody<T>(raw: unknown, schema: z.ZodType<T>): { data: T } | { error: { code: string; message: string; details?: Record<string, string[]> } } {
+  const result = schema.safeParse(raw);
+  if (!result.success) {
+    const fieldErrors = result.error.flatten().fieldErrors;
+    const flat: Record<string, string[]> = {};
+    for (const k of Object.keys(fieldErrors)) {
+      const v = (fieldErrors as Record<string, unknown>)[k];
+      if (Array.isArray(v)) flat[k] = v as string[];
+    }
+    return {
+      error: {
+        code: 'validation_failed',
+        message: 'Payload inválido.',
+        details: flat,
+      },
+    };
+  }
+  return { data: result.data };
+}
+
+function safeJsonParse(request: Request): Promise<unknown> {
+  return request.json().catch(() => null);
+}
+
 export function createREIRoutes(deps: REIRoutesDependencies) {
   return async (request: Request): Promise<Response | null> => {
     const url = new URL(request.url);
@@ -26,22 +128,20 @@ export function createREIRoutes(deps: REIRoutesDependencies) {
     try {
       // POST /v1/rei/onboarding — Inicia o onboarding de um novo cliente REI
       if (request.method === 'POST' && url.pathname === '/v1/rei/onboarding') {
-        const body = (await request.json()) as CreateREIOnboardingParams;
-        if (!body.rei_project_id || !body.client_email || !body.cs_lead_email) {
-          throw ApiError.validation(
-            'Campos obrigatórios: rei_project_id, client_email, cs_lead_email.'
-          );
-        }
-        const record = await deps.repository.createOnboarding(body);
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, CreateOnboardingSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const body = parsed.data;
+        const record = await deps.repository.createOnboarding(body as unknown as CreateREIOnboardingParams);
         return json(201, { data: record });
       }
 
       // POST /v1/rei/welcome — Dispara o Milestone 0 (Welcome email Hormozi)
       if (request.method === 'POST' && url.pathname === '/v1/rei/welcome') {
-        const { onboarding_id, kickoff_link } = (await request.json()) as {
-          onboarding_id: string;
-          kickoff_link: string;
-        };
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, WelcomeSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const { onboarding_id, kickoff_link } = parsed.data;
         const record = await deps.repository.findById(onboarding_id);
         if (!record) throw ApiError.validation('Onboarding não encontrado.');
 
@@ -68,10 +168,10 @@ export function createREIRoutes(deps: REIRoutesDependencies) {
 
       // POST /v1/rei/kickoff — Registra o Milestone 1 (Kickoff call)
       if (request.method === 'POST' && url.pathname === '/v1/rei/kickoff') {
-        const { onboarding_id, goal_sentence } = (await request.json()) as {
-          onboarding_id: string;
-          goal_sentence: string;
-        };
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, KickoffSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const { onboarding_id, goal_sentence } = parsed.data;
         const record = await deps.repository.findById(onboarding_id);
         if (!record) throw ApiError.validation('Onboarding não encontrado.');
 
@@ -95,14 +195,14 @@ export function createREIRoutes(deps: REIRoutesDependencies) {
 
       // POST /v1/rei/quick-win — Registra o Milestone 2 (Quick Win D7)
       if (request.method === 'POST' && url.pathname === '/v1/rei/quick-win') {
-        const body = (await request.json()) as { onboarding_id: string } & QuickWinPayload;
-        if (!body.onboarding_id || !body.description || !body.url) {
-          throw ApiError.validation('Campos obrigatórios: onboarding_id, description, url.');
-        }
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, QuickWinSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const body = parsed.data;
         await deps.repository.deliverQuickWin(body.onboarding_id, {
           description: body.description,
           url: body.url,
-          loom_url: body.loom_url ?? undefined,
+          loom_url: body.loom_url,
         });
         return json(200, {
           data: { onboarding_id: body.onboarding_id, quick_win_delivered: true },
@@ -111,13 +211,10 @@ export function createREIRoutes(deps: REIRoutesDependencies) {
 
       // POST /v1/rei/nps — Registra o NPS do Milestone 3 (D14)
       if (request.method === 'POST' && url.pathname === '/v1/rei/nps') {
-        const { onboarding_id, score } = (await request.json()) as {
-          onboarding_id: string;
-          score: number;
-        };
-        if (typeof score !== 'number' || score < 0 || score > 10) {
-          throw ApiError.validation('Score NPS deve ser um número entre 0 e 10.');
-        }
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, NpsSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const { onboarding_id, score } = parsed.data;
         await deps.repository.recordNPS(onboarding_id, score);
         const churn_risk = score < 7 ? 'high' : score < 8 ? 'medium' : 'low';
         return json(200, {
@@ -141,24 +238,10 @@ export function createREIRoutes(deps: REIRoutesDependencies) {
 
       // POST /v1/rei/wrap-up — Milestone 5 (D30 Wrap-up + NPS formal)
       if (request.method === 'POST' && url.pathname === '/v1/rei/wrap-up') {
-        const body = (await request.json()) as {
-          onboarding_id: string;
-          milestone1Result: string;
-          quickWinResult: string;
-          metricResult: string;
-          nextPhaseAligned: string;
-          npsLink: string;
-          expansion_suggestions?: Array<{
-            product_name: string;
-            product_description?: string;
-            estimated_value_brl?: number;
-            ai_reasoning?: string;
-            opportunity_type?: 'upsell' | 'cross_sell' | 'renewal' | 'expansion_service' | 'referral';
-          }>;
-        };
-        if (!body.onboarding_id) {
-          return json(400, { error: { code: 'validation', message: 'onboarding_id é obrigatório.' } });
-        }
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, WrapUpSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const body = parsed.data;
 
         const record = await deps.repository.findById(body.onboarding_id);
         if (!record) {
@@ -209,20 +292,11 @@ export function createREIRoutes(deps: REIRoutesDependencies) {
 
       // POST /v1/rei/expansion
       if (request.method === 'POST' && url.pathname === '/v1/rei/expansion') {
-        const body = (await request.json()) as {
-          tenant_id: string;
-          rei_onboarding_id?: string;
-          project_id?: string;
-          opportunity_type: 'upsell' | 'cross_sell' | 'renewal' | 'expansion_service' | 'referral';
-          product_name: string;
-          product_description?: string;
-          estimated_value_brl?: number;
-          ai_reasoning?: string;
-          created_by: string;
-        };
-        if (!body.tenant_id || !body.opportunity_type || !body.product_name || !body.created_by) {
-          return json(400, { error: { code: 'validation', message: 'Campos obrigatórios: tenant_id, opportunity_type, product_name, created_by.' } });
-        }
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, ExpansionSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const body = parsed.data;
+
         await deps.repository.createExpansionOpportunity({
           tenant_id: body.tenant_id,
           rei_onboarding_id: body.rei_onboarding_id || null,
