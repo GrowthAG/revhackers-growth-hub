@@ -270,16 +270,14 @@ describe('Finance HTTP Routes - /v1/finance', () => {
       expect(mockRepo.reconcileMatch).not.toHaveBeenCalled();
     });
 
-    it('returns 400 if statements is not a valid format', async () => {
+    it('rejects when statements is not a valid format', async () => {
       const req = new Request('https://api.test/v1/finance/statements/import', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ statements: 'not-an-array' }),
       });
-      // Route accepts string format but treats it as malformed; verify it processes without crashing
-      const res = await route(req);
-      expect(res).not.toBeNull();
-      expect(res?.status).toBe(201);
+      // Zod throws ApiError when statements is not an array
+      await expect(route(req)).rejects.toMatchObject({ code: 'validation' });
     });
   });
 

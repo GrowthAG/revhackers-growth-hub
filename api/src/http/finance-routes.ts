@@ -18,22 +18,103 @@
  *   POST   /v1/finance/webhooks/:provider             -> receiver de webhook assinado
  */
 
+import { z } from 'zod';
 import { ApiError } from '../contracts/errors';
 import { InfinitePayConnector } from '../domains/finance/connectors/infinitepay-connector';
 import { PagBankConnector } from '../domains/finance/connectors/pagbank-connector';
 import { PluggyConnector } from '../domains/finance/connectors/pluggy-connector';
 import { StripeConnector } from '../domains/finance/connectors/stripe-connector';
 import type { ConnectorNormalizedTxn, FinanceConnector } from '../domains/finance/connectors/types';
-import { CsvParser, type CsvParseOptions } from '../domains/finance/parsers/csv-parser';
+import { CsvParser } from '../domains/finance/parsers/csv-parser';
 import { OfxParser } from '../domains/finance/parsers/ofx-parser';
 import { PostgresFinanceRepository } from '../domains/finance/postgres-repository';
 import { ReconciliationEngine } from '../domains/finance/reconciliation-engine';
 import type {
-  CreateBankStatementParams,
-  CreateLedgerEntryParams,
   EntityKind,
   FinancialEntityRecord,
 } from '../domains/finance/types';
+
+// ============================================================================
+// ZOD SCHEMAS
+// ============================================================================
+
+const LedgerCategorySchema = z.enum([
+  'mrr_revenue', 'services_revenue', 'taxes',
+  'operational_costs', 'net_margin', 'other',
+]);
+const IdSchema = z.string().trim().min(1, 'ID é obrigatório').max(128).nullable().optional().or(z.literal('').transform(() => undefined));
+const RequiredIdSchema = z.string().trim().min(1, 'ID é obrigatório').max(128);
+// Aceita ISO 8601 datetime ou date-only (YYYY-MM-DD)
+const DateLike = z.string().regex(/^\d{4}-\d{2}-\d{2}(T.*)?$/, 'Data inválida');
+
+const CreateEntitySchema = z.object({
+  name: z.string().trim().min(1, 'Nome da entidade é obrigatório').max(256),
+  legal_name: z.string().trim().max(256).optional(),
+  cnpj: z.string().trim().max(20).optional(),
+  kind: z.enum(['holding', 'brand', 'project']).optional(),
+  parent_id: IdSchema.optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
+});
+
+const CreateLedgerEntrySchema = z.object({
+  category: LedgerCategorySchema,
+  cost_center: z.string().trim().max(128).optional(),
+  opportunity_id: IdSchema.optional(),
+  rei_project_id: IdSchema.optional(),
+  client_id: IdSchema.optional(),
+  description: z.string().trim().min(1, 'Descrição é obrigatória').max(512),
+  amount: z.number(),
+  competence_date: DateLike,
+  due_date: DateLike.optional(),
+  is_paid: z.boolean().optional(),
+  paid_at: DateLike.optional(),
+  entity_id: IdSchema.optional(),
+});
+
+const CreateStatementSchema = z.object({
+  bank_account_id: IdSchema.optional(),
+  transaction_date: DateLike,
+  amount: z.number(),
+  type: z.enum(['CREDIT', 'DEBIT', 'fee', 'chargeback', 'refund']),
+  description: z.string().trim().min(1).max(512),
+  bank_transaction_id: z.string().trim().max(256).optional(),
+  payer_document: z.string().trim().max(20).optional(),
+  payer_name: z.string().trim().max(256).optional(),
+  source: z.string().trim().max(64).optional(),
+  entity_id: IdSchema.optional(),
+  raw_payload: z.record(z.string(), z.unknown()).optional(),
+});
+
+const ImportStatementsSchema = z.union([
+  z.array(CreateStatementSchema),
+  z.object({ statements: z.array(CreateStatementSchema) }),
+]);
+
+const OfxImportSchema = z.object({
+  raw: z.string().min(1, 'raw OFX é obrigatório'),
+  bank_account_id: IdSchema.optional(),
+  entity_id: IdSchema.optional(),
+});
+
+const CsvImportSchema = z.object({
+  raw: z.string().min(1, 'raw CSV é obrigatório'),
+  options: z.record(z.string(), z.unknown()).optional(),
+  bank_account_id: IdSchema.optional(),
+  entity_id: IdSchema.optional(),
+});
+
+const ReconcileSchema = z.object({
+  statement_id: RequiredIdSchema,
+  ledger_entry_id: IdSchema.optional(),
+  opportunity_id: IdSchema.optional(),
+  notes: z.string().trim().max(1024).optional(),
+});
+
+const ConnectorSyncSchema = z.object({
+  start_date: DateLike.optional(),
+  end_date: DateLike.optional(),
+  entity_id: IdSchema.optional(),
+});
 
 export interface FinanceRouteDeps {
   repository: PostgresFinanceRepository;
@@ -139,6 +220,24 @@ export function createFinanceRoutes(deps: FinanceRouteDeps) {
       headers: { 'Content-Type': 'application/json' },
     });
 
+  function parseBody<T>(raw: unknown, schema: z.ZodType<T>): T {
+    const result = schema.safeParse(raw);
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+      const flat = {} as Record<string, string[]>;
+      for (const k of Object.keys(fieldErrors)) {
+        const v = (fieldErrors as Record<string, unknown>)[k];
+        if (Array.isArray(v)) flat[k] = v as string[];
+      }
+      throw ApiError.validation(`Payload inválido: ${JSON.stringify(flat)}`);
+    }
+    return result.data;
+  }
+
+  function safeJsonParse(req: Request): Promise<unknown> {
+    return req.json().catch(() => null);
+  }
+
   return async (req: Request): Promise<Response | null> => {
     const url = new URL(req.url);
     const path = url.pathname;
@@ -161,15 +260,16 @@ export function createFinanceRoutes(deps: FinanceRouteDeps) {
     }
     if (entitySlugMatch && method === 'POST') {
       const slug = entitySlugMatch[1]!;
-      const body = await req.json();
+      const raw = await safeJsonParse(req);
+      const entityParams = parseBody(raw, CreateEntitySchema);
       const entity = await deps.repository.createEntity({
         slug,
-        name: String(body.name ?? ''),
-        legal_name: body.legal_name || null,
-        cnpj: body.cnpj || null,
-        kind: (body.kind as EntityKind) ?? 'brand',
-        parent_id: body.parent_id || null,
-        metadata: body.metadata ?? {},
+        name: entityParams.name,
+        legal_name: entityParams.legal_name ?? null,
+        cnpj: entityParams.cnpj ?? null,
+        kind: (entityParams.kind ?? 'brand') as EntityKind,
+        parent_id: entityParams.parent_id ?? null,
+        metadata: entityParams.metadata ?? {},
       });
       return json(201, { success: true, entity });
     }
@@ -194,7 +294,8 @@ export function createFinanceRoutes(deps: FinanceRouteDeps) {
     // -------- LEDGER --------
 
     if (path === '/v1/finance/ledger' && method === 'POST') {
-      const body = (await req.json()) as CreateLedgerEntryParams;
+      const raw = await safeJsonParse(req);
+      const body = parseBody(raw, CreateLedgerEntrySchema) as any;
       const entry = await deps.repository.createLedgerEntry(body);
       return json(201, { success: true, entry });
     }
@@ -202,12 +303,9 @@ export function createFinanceRoutes(deps: FinanceRouteDeps) {
     // -------- STATEMENTS --------
 
     if (path === '/v1/finance/statements/import' && method === 'POST') {
-      const body = await req.json();
-      const statementsToImport: CreateBankStatementParams[] = Array.isArray(body)
-        ? body
-        : body.statements
-        ? body.statements
-        : [body];
+      const raw = await safeJsonParse(req);
+      const parsed = parseBody(raw, ImportStatementsSchema);
+      const statementsToImport: any[] = Array.isArray(parsed) ? parsed : parsed.statements;
 
       const imported: unknown[] = [];
       for (const stmt of statementsToImport) {
@@ -223,8 +321,8 @@ export function createFinanceRoutes(deps: FinanceRouteDeps) {
     }
 
     if (path === '/v1/finance/statements/import/ofx' && method === 'POST') {
-      const body = (await req.json()) as { raw: string; bank_account_id?: string; entity_id?: string };
-      if (!body.raw) throw ApiError.validation('raw OFX é obrigatório.');
+      const raw = await safeJsonParse(req);
+      const body = parseBody(raw, OfxImportSchema);
       const parser = new OfxParser();
       const result = parser.parse(body.raw);
       const ingest = await ingestNormalized(
@@ -246,8 +344,8 @@ export function createFinanceRoutes(deps: FinanceRouteDeps) {
     }
 
     if (path === '/v1/finance/statements/import/csv' && method === 'POST') {
-      const body = (await req.json()) as { raw: string; options?: CsvParseOptions; bank_account_id?: string; entity_id?: string };
-      if (!body.raw) throw ApiError.validation('raw CSV é obrigatório.');
+      const raw = await safeJsonParse(req);
+      const body = parseBody(raw, CsvImportSchema);
       const parser = new CsvParser();
       const result = parser.parse(body.raw, body.options);
       const ingest = await ingestNormalized(
@@ -276,9 +374,8 @@ export function createFinanceRoutes(deps: FinanceRouteDeps) {
     }
 
     if (path === '/v1/finance/reconcile' && method === 'POST') {
-      const body = await req.json();
-      const { statement_id, ledger_entry_id, opportunity_id, notes } = body;
-      if (!statement_id) throw ApiError.validation('statement_id é obrigatório para reconciliação.');
+      const raw = await safeJsonParse(req);
+      const { statement_id, ledger_entry_id, opportunity_id, notes } = parseBody(raw, ReconcileSchema) as any;
       const reconciled = await deps.repository.reconcileMatch(
         statement_id,
         ledger_entry_id ?? null,
@@ -300,7 +397,8 @@ export function createFinanceRoutes(deps: FinanceRouteDeps) {
       if (!connector?.isConfigured()) {
         throw ApiError.validation(`Connector ${provider} não está configurado.`);
       }
-      const body = (await req.json().catch(() => ({}))) as { start_date?: string; end_date?: string; entity_id?: string };
+      const raw = await safeJsonParse(req);
+      const body = parseBody(raw, ConnectorSyncSchema);
       const endDate = body.end_date ?? new Date().toISOString().substring(0, 10);
       const startDate = body.start_date ?? new Date(Date.now() - 30 * 86_400_000).toISOString().substring(0, 10);
 
