@@ -1,11 +1,59 @@
+import { z } from 'zod';
 import { ApiError } from '../contracts/errors';
 import type { PostgresIntelligenceJobsRepository } from '../domains/intelligence/postgres-repository-jobs';
 import type { PostgresIntelligenceRepository } from '../domains/intelligence/postgres-repository';
 import type { FonteDataIntelligenceConnector } from '../domains/intelligence/fonte-data-connector';
-import type { 
-  CreateCompetitorParams,
-  CreateMarketSignalParams,
-} from '../domains/intelligence/types';
+
+// ============================================================================
+// ZOD SCHEMAS
+// ============================================================================
+
+const IdSchema = z.string().trim().min(1, 'ID é obrigatório').max(128);
+const String512 = z.string().trim().max(512);
+
+const CreateCompetitorSchema = z.object({
+  tenant_id: IdSchema,
+  project_id: IdSchema.optional(),
+  name: z.string().trim().min(1, 'Nome do concorrente é obrigatório').max(256),
+  cnpj: z.string().trim().max(20).optional(),
+  website: String512.optional(),
+  segment: String512.optional(),
+  cnae_primary: z.string().trim().max(20).optional(),
+  notes: z.string().trim().max(2048).optional(),
+  is_priority: z.boolean().optional(),
+  added_by: z.string().trim().max(256).optional(),
+});
+
+const CreateSignalSchema = z.object({
+  tenant_id: IdSchema,
+  competitor_id: IdSchema.optional(),
+  signal_type: z.enum(['news', 'funding', 'launch', 'pricing_change', 'hiring', 'partnership', 'acquisition', 'other']),
+  title: z.string().trim().min(1, 'Título do sinal é obrigatório').max(512),
+  summary: z.string().trim().max(2048).optional(),
+  source_url: String512.optional(),
+  source_name: z.string().trim().max(256).optional(),
+  sentiment: z.enum(['positive', 'neutral', 'negative']).optional(),
+  impact_level: z.enum(['low', 'medium', 'high', 'critical']).optional(),
+  detected_at: z.string().datetime().optional(),
+  detected_by: z.string().trim().max(256).optional(),
+});
+
+const CreateJobSchema = z.object({
+  tenant_id: IdSchema,
+  job_type: z.enum(['competitor_enrichment', 'comparison_generation', 'signal_detection', 'framework_regeneration', 'market_scan']),
+  competitor_id: IdSchema.optional(),
+  project_id: IdSchema.optional(),
+  input_payload: z.record(z.string(), z.unknown()).optional(),
+  scheduled_for: z.string().datetime().optional(),
+  max_attempts: z.number().int().min(1).max(10).optional(),
+});
+
+const CreateShareSchema = z.object({
+  tenant_id: IdSchema,
+  project_id: IdSchema,
+  created_by: z.string().trim().min(1).max(256),
+  expires_at: z.string().datetime().optional(),
+});
 
 // Tokens de compartilhamento (in-memory store, suficiente para o escopo atual)
 const shareTokens = new Map<string, {
@@ -29,6 +77,30 @@ function json(status: number, value: unknown): Response {
     status,
     headers: { 'content-type': 'application/json; charset=utf-8' },
   });
+}
+
+function parseBody<T>(raw: unknown, schema: z.ZodType<T>): { data: T } | { error: { code: string; message: string; details?: Record<string, string[]> } } {
+  const result = schema.safeParse(raw);
+  if (!result.success) {
+    const fieldErrors = result.error.flatten().fieldErrors;
+    const flat = {} as Record<string, string[]>;
+    for (const k of Object.keys(fieldErrors)) {
+      const v = (fieldErrors as Record<string, unknown>)[k];
+      if (Array.isArray(v)) flat[k] = v as string[];
+    }
+    return {
+      error: {
+        code: 'validation_failed',
+        message: 'Payload inválido.',
+        details: flat,
+      },
+    };
+  }
+  return { data: result.data };
+}
+
+function safeJsonParse(request: Request): Promise<unknown> {
+  return request.json().catch(() => null);
 }
 
 export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
@@ -69,13 +141,13 @@ export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
 
       // POST /v1/intelligence/competitors — Create + async FonteData enrichment
       if (request.method === 'POST' && url.pathname === '/v1/intelligence/competitors') {
-        const body = (await request.json()) as CreateCompetitorParams & { cnpj?: string };
-        if (!body.tenant_id || !body.project_id || !body.name || !body.added_by) {
-          return json(400, { error: { code: 'validation', message: 'Campos obrigatórios: tenant_id, project_id, name, added_by.' } });
-        }
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, CreateCompetitorSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const body = parsed.data;
         const competitor = await deps.repository.createCompetitor({
           tenant_id: body.tenant_id,
-          project_id: body.project_id,
+          project_id: body.project_id ?? null,
           name: body.name,
           cnpj: body.cnpj ?? null,
           website: body.website ?? null,
@@ -83,7 +155,7 @@ export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
           cnae_primary: body.cnae_primary ?? null,
           notes: body.notes ?? null,
           is_priority: body.is_priority ?? false,
-          added_by: body.added_by,
+          added_by: body.added_by ?? null,
         });
         if (body.cnpj) {
           setImmediate(async () => {
@@ -108,10 +180,10 @@ export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
 
       // POST /v1/intelligence/signals — Manual signal entry
       if (request.method === 'POST' && url.pathname === '/v1/intelligence/signals') {
-        const body = (await request.json()) as CreateMarketSignalParams;
-        if (!body.tenant_id || !body.signal_type || !body.title) {
-          return json(400, { error: { code: 'validation', message: 'Campos obrigatórios: tenant_id, signal_type, title.' } });
-        }
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, CreateSignalSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const body = parsed.data;
         const signal = await deps.repository.createSignal({
           tenant_id: body.tenant_id,
           competitor_id: body.competitor_id ?? null,
@@ -120,8 +192,8 @@ export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
           summary: body.summary ?? '',
           source_url: body.source_url ?? null,
           source_name: body.source_name ?? null,
-          sentiment: body.sentiment ?? 'neutral',
-          impact_level: body.impact_level ?? 'medium',
+          sentiment: (body.sentiment ?? 'neutral') as 'positive' | 'neutral' | 'negative',
+          impact_level: (body.impact_level ?? 'medium') as 'low' | 'medium' | 'high' | 'critical',
           detected_by: body.detected_by ?? 'manual',
         });
         return json(201, { data: signal });
@@ -129,18 +201,10 @@ export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
 
       // POST /v1/intelligence/jobs
       if (request.method === 'POST' && url.pathname === '/v1/intelligence/jobs') {
-        const body = (await request.json()) as {
-          tenant_id: string;
-          job_type: 'competitor_enrichment' | 'comparison_generation' | 'signal_detection' | 'framework_regeneration' | 'market_scan';
-          competitor_id?: string;
-          project_id?: string;
-          input_payload?: Record<string, any>;
-          scheduled_for?: string;
-          max_attempts?: number;
-        };
-        if (!body.tenant_id || !body.job_type) {
-          return json(400, { error: { code: 'validation', message: 'Campos obrigatórios: tenant_id, job_type.' } });
-        }
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, CreateJobSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const body = parsed.data;
         const job = await deps.jobsRepository.createJob({
           tenant_id: body.tenant_id,
           job_type: body.job_type,
@@ -175,15 +239,10 @@ export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
 
       // POST /v1/intelligence/share — Gerar token de compartilhamento
       if (request.method === 'POST' && url.pathname === '/v1/intelligence/share') {
-        const body = (await request.json()) as {
-          tenant_id: string;
-          project_id: string;
-          created_by: string;
-          expires_at?: string | null;
-        };
-        if (!body.tenant_id || !body.project_id || !body.created_by) {
-          return json(400, { error: { code: 'validation', message: 'Campos obrigatórios: tenant_id, project_id, created_by.' } });
-        }
+        const raw = await safeJsonParse(request);
+        const parsed = parseBody(raw, CreateShareSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const body = parsed.data;
         const shareToken = `shr_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
         shareTokens.set(shareToken, {
           share_token: shareToken,
