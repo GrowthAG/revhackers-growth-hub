@@ -62,6 +62,33 @@ describe('/v1/opportunities (HTTP Routes)', () => {
     expect(body.error.code).toBe('validation_failed');
   });
 
+  test('POST /v1/opportunities - Retorna 400 quando body está vazio (sem nome/email/empresa)', async () => {
+    const response = await route(
+      new Request('https://api.test/v1/opportunities', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      })
+    );
+    expect(response?.status).toBe(400);
+    const body = await response?.json() as any;
+    expect(body.error.code).toBe('validation_failed');
+  });
+
+  test('POST /v1/opportunities - Retorna 400 quando campo name tem tipo inválido', async () => {
+    const response = await route(
+      new Request('https://api.test/v1/opportunities', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: ['array', 'não é string'], email: 'teste@teste.com' }),
+      })
+    );
+    expect(response?.status).toBe(400);
+    const body = await response?.json() as any;
+    expect(body.error.code).toBe('validation_failed');
+    expect(body.error.details).toBeDefined();
+  });
+
   test('POST /v1/opportunities - Salva oportunidade de lead com sucesso', async () => {
     // Mock do insert no banco de dados
     vi.spyOn(mockPool, 'query').mockResolvedValueOnce({

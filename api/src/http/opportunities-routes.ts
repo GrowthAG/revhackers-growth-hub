@@ -1,6 +1,24 @@
+import { z } from 'zod';
 import { ApiError } from '../contracts/errors';
 import type { PostgresOpportunityRepository } from '../domains/opportunities/postgres-repository';
 import type { FonteDataService } from '../domains/opportunities/fontedata-service';
+
+const CreateOpportunityBodySchema = z
+  .object({
+    name: z.string().trim().min(1).max(200).optional(),
+    email: z.string().trim().max(200).optional(),
+    company: z.string().trim().min(1).max(200).optional(),
+    cnpj: z.string().trim().max(30).optional(),
+    diagnosticoId: z.string().trim().max(100).optional(),
+    officialProjectType: z.string().trim().max(100).optional(),
+    leadSource: z.string().trim().max(100).optional(),
+    responses: z.record(z.string(), z.unknown()).optional(),
+    score: z.union([z.number(), z.string(), z.record(z.string(), z.unknown())]).optional(),
+    maturity: z.union([z.string(), z.record(z.string(), z.unknown())]).optional(),
+  })
+  .refine((data) => Boolean(data.name || data.email || data.company), {
+    message: 'Ao menos um dado de contato (nome, email ou empresa) deve ser fornecido.',
+  });
 
 interface OpportunitiesRoutesDependencies {
   repository: PostgresOpportunityRepository;
@@ -69,13 +87,24 @@ export function createOpportunitiesRoutes(deps: OpportunitiesRoutesDependencies)
 
       // POST /v1/opportunities (Submissão pública de diagnósticos/leads)
       if (request.method === 'POST') {
-        const body = await request.json();
-
-        if (!body.name && !body.email && !body.company) {
+        const rawBody = await request.json().catch(() => null);
+        if (rawBody === null || typeof rawBody !== 'object') {
           return json(400, {
-            error: { code: 'validation_failed', message: 'Ao menos um dado de contato (nome, email ou empresa) deve ser fornecido.' },
+            error: { code: 'validation_failed', message: 'Corpo da requisição deve ser um JSON válido.' },
           });
         }
+
+        const parsed = CreateOpportunityBodySchema.safeParse(rawBody);
+        if (!parsed.success) {
+          return json(400, {
+            error: {
+              code: 'validation_failed',
+              message: 'Dados inválidos na submissão do diagnóstico.',
+              details: parsed.error.flatten().fieldErrors,
+            },
+          });
+        }
+        const body = parsed.data;
 
         const clientEmail = body.email ? String(body.email).toLowerCase().trim() : null;
         const diagnosticoId = body.diagnosticoId || `diag_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
