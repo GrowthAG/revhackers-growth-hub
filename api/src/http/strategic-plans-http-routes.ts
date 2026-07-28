@@ -1,8 +1,63 @@
+import { z } from 'zod';
 import { StrategicPlanService } from '../domains/strategic-plans/service';
 import { IdentityRepository } from '../identity/postgres-identity-repository';
 import { GoogleIdentityTokenVerifier } from '../identity/google-identity-verifier';
 import { generateStrategicPlanAi } from '../domains/strategic-plans/ai-generator';
 import { AuthMiddleware } from './auth-middleware';
+
+// ============================================================================
+// ZOD SCHEMAS
+// ============================================================================
+
+const IdSchema = z.string().trim().min(1).max(128);
+const OptionalString = (max = 256) => z.string().trim().max(max).optional();
+
+const GeneratePlanSchema = z.object({
+  reiResponses: z.record(z.string(), z.unknown()).optional(),
+  rei_responses: z.record(z.string(), z.unknown()).optional(),
+  segment: OptionalString(128),
+  objective: z.string().trim().max(2048).optional(),
+  isB2B: z.boolean().optional(),
+  projectType: OptionalString(64),
+  projectId: IdSchema.optional(),
+  projectDuration: OptionalString(64),
+  clientName: OptionalString(256),
+  clientCompany: OptionalString(256),
+  tradeName: OptionalString(256),
+  clientId: IdSchema.optional(),
+});
+
+const CreatePlanSchema = z.object({
+  reiProjectId: IdSchema.optional(),
+  clientId: IdSchema.optional(),
+  diagnosticData: z.record(z.string(), z.unknown()).optional(),
+  personaData: z.record(z.string(), z.unknown()).optional(),
+  premisesData: z.record(z.string(), z.unknown()).optional(),
+  methodologyData: z.record(z.string(), z.unknown()).optional(),
+  roadmapData: z.union([z.array(z.unknown()), z.record(z.string(), z.unknown())]).optional(),
+  goalsData: z.union([z.array(z.unknown()), z.record(z.string(), z.unknown())]).optional(),
+  financialProjections: z.record(z.string(), z.unknown()).optional(),
+  budgetData: z.union([z.array(z.unknown()), z.record(z.string(), z.unknown())]).optional(),
+  nextStepsData: z.union([z.array(z.unknown()), z.record(z.string(), z.unknown())]).optional(),
+  status: z.enum(['draft', 'sent', 'viewed', 'approved', 'rejected']).optional(),
+});
+
+const UpdatePlanSchema = CreatePlanSchema.partial();
+
+function parseBody<T>(raw: unknown, schema: z.ZodType<T>): T {
+  const result = schema.safeParse(raw);
+  if (!result.success) {
+    return { error: { code: 'validation_failed', message: 'Payload inválido.', details: result.error.flatten().fieldErrors } } as any;
+  }
+  return { data: result.data } as any;
+}
+
+function json(status: number, body: unknown): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
 
 export interface StrategicPlansRoutesDependencies {
   verifier: GoogleIdentityTokenVerifier;
@@ -27,7 +82,10 @@ export function createStrategicPlansRoutes({ verifier, identities, service }: St
     // POST /v1/strategic-plans/generate — Geração Nativa GCP via IA
     if (request.method === 'POST' && url.pathname === '/v1/strategic-plans/generate') {
       try {
-        const body = await request.json();
+        const raw = await request.json().catch(() => null);
+        const parsed = parseBody(raw, GeneratePlanSchema);
+        if ('error' in parsed) return json(400, { error: parsed.error });
+        const body = parsed as any;
         const generatedData = await generateStrategicPlanAi({
           reiResponses: body.reiResponses || body.rei_responses || {},
           segment: body.segment,
@@ -109,7 +167,10 @@ export function createStrategicPlansRoutes({ verifier, identities, service }: St
 
     // POST /v1/strategic-plans
     if (request.method === 'POST' && url.pathname === '/v1/strategic-plans') {
-      const body = await request.json();
+      const raw = await request.json().catch(() => null);
+      const parsed = parseBody(raw, CreatePlanSchema);
+      if ('error' in parsed) return json(400, { error: parsed.error });
+      const body = parsed as any;
       const plan = await service.createPlan(tenantId, { ...body, tenantId });
       return new Response(JSON.stringify(plan), {
         status: 201,
@@ -121,7 +182,10 @@ export function createStrategicPlansRoutes({ verifier, identities, service }: St
     if (request.method === 'PATCH' && idMatch) {
       const id = idMatch[1];
       if (!id) return null;
-      const body = await request.json();
+      const raw = await request.json().catch(() => null);
+      const parsed = parseBody(raw, UpdatePlanSchema);
+      if ('error' in parsed) return json(400, { error: parsed.error });
+      const body = parsed as any;
       const updated = await service.updatePlan(id, tenantId, body);
       return new Response(JSON.stringify(updated), {
         status: 200,
