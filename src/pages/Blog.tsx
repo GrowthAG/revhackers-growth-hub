@@ -206,7 +206,7 @@ const Blog = () => {
 
       <section className="pt-0 pb-12 bg-zinc-50 min-h-screen relative">
         <div className="absolute top-0 left-0 right-0 h-16 bg-black/70 pointer-events-none z-20" />
-        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none" />
+        
 
         <div className="container-custom relative z-10">
 
