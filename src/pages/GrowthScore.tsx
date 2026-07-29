@@ -368,19 +368,10 @@ const GrowthScore = () => {
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-between">
-                <div className="flex items-center gap-4 text-xs text-zinc-400 font-medium">
-                  <span>✓ 6 Dimensões Auditadas</span>
-                  <span>•</span>
-                  <span>✓ Algoritmo de IA</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setIsBookingModalOpen(true)}
-                  className="text-xs font-bold text-zinc-700 hover:text-[#00CC6A] underline underline-offset-4 transition-colors"
-                >
-                  Falar com Especialista →
-                </button>
+              <div className="pt-2 flex items-center gap-4 text-xs text-zinc-400 font-medium">
+                <span>✓ 6 Dimensões Auditadas</span>
+                <span>•</span>
+                <span>✓ Algoritmo de IA</span>
               </div>
             </div>
 
