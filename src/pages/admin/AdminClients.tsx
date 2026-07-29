@@ -118,18 +118,18 @@ export const AdminClients = () => {
                     <div className="flex items-center gap-2">
                         <Button
                             onClick={() => navigate('/admin/clients/novo')}
-                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-200"
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-semibold tracking-wide shadow-xs gap-2 flex items-center transition-all border border-zinc-200"
                         >
-                            <Plus size={15} className="text-[#00CC6A]" /> NOVO CLIENTE
+                            <Plus size={15} className="text-[#00CC6A]" /> Novo Cliente
                         </Button>
                     </div>
                 </div>
 
                 {/* Metric Cards — 100% Zinc Scale + #00CC6A */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+                    <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs hover:border-zinc-300 transition-all">
                         <div className="flex items-center justify-between text-zinc-500 mb-2">
-                            <span className="text-xs font-mono font-bold uppercase tracking-wider">Total de Contas</span>
+                            <span className="text-xs font-medium text-zinc-500">Total de Contas</span>
                             <Building2 size={15} className="text-zinc-400" />
                         </div>
                         <div className="flex items-baseline gap-2">
@@ -138,42 +138,42 @@ export const AdminClients = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+                    <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs hover:border-zinc-300 transition-all">
                         <div className="flex items-center justify-between text-zinc-500 mb-2">
-                            <span className="text-xs font-mono font-bold uppercase tracking-wider">Operações Ativas</span>
+                            <span className="text-xs font-medium text-zinc-500">Operações Ativas</span>
                             <div className="w-2 h-2 rounded-full bg-[#00CC6A]"></div>
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-semibold text-[#00CC6A] tabular-nums">{activeCount}</span>
+                            <span className="text-2xl font-bold text-[#00CC6A] tabular-nums">{activeCount}</span>
                             <span className="text-xs text-zinc-500 font-medium">em execução</span>
                         </div>
                     </div>
 
-                    <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+                    <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs hover:border-zinc-300 transition-all">
                         <div className="flex items-center justify-between text-zinc-500 mb-2">
-                            <span className="text-xs font-mono font-bold uppercase tracking-wider">Em Onboarding</span>
+                            <span className="text-xs font-medium text-zinc-500">Em Onboarding</span>
                             <Clock size={15} className="text-zinc-400" />
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-semibold text-zinc-900 tabular-nums">{onboardingCount}</span>
+                            <span className="text-2xl font-bold text-zinc-900 tabular-nums">{onboardingCount}</span>
                             <span className="text-xs text-zinc-500 font-medium">em setup</span>
                         </div>
                     </div>
 
-                    <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+                    <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs hover:border-zinc-300 transition-all">
                         <div className="flex items-center justify-between text-zinc-500 mb-2">
-                            <span className="text-xs font-mono font-bold uppercase tracking-wider">Projetos REI</span>
+                            <span className="text-xs font-medium text-zinc-500">Projetos REI</span>
                             <Zap size={15} className="text-[#00CC6A]" />
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-semibold text-zinc-900 tabular-nums">{reiProjects.length}</span>
+                            <span className="text-2xl font-bold text-zinc-900 tabular-nums">{reiProjects.length}</span>
                             <span className="text-xs text-zinc-400 font-medium">vinculados</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Search & Filter Controls — Strict Zinc Scale */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-sm p-2 rounded-xl border border-zinc-200">
+                {/* Search & Filter Controls */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-xs p-2 rounded-xl border border-zinc-200/80">
                     <div className="relative flex-1">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                         <Input
@@ -183,33 +183,33 @@ export const AdminClients = () => {
                             className="pl-10 pr-12 h-9 bg-white border-zinc-200 rounded-lg text-xs placeholder:text-zinc-400 focus-visible:ring-1 focus-visible:ring-zinc-950 focus-visible:ring-offset-0 transition-all shadow-none"
                         />
                         <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:block">
-                            <kbd className="font-mono text-[10px] text-zinc-400 bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded">⌘K</kbd>
+                            <kbd className="font-sans text-[10px] text-zinc-400 bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded">⌘K</kbd>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-1">
                         <button
                             onClick={() => setStatusFilter('all')}
-                            className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${statusFilter === 'all' ? 'bg-zinc-950 text-white border border-zinc-950' : 'text-zinc-600 hover:text-zinc-900'}`}
+                            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'all' ? 'bg-zinc-950 text-white border border-zinc-950' : 'text-zinc-600 hover:text-zinc-900'}`}
                         >
                             Todos ({clients.length})
                         </button>
                         <button
                             onClick={() => setStatusFilter('active')}
-                            className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${statusFilter === 'active' ? 'bg-[#00CC6A] text-black border border-[#00CC6A]' : 'text-zinc-600 hover:text-zinc-900'}`}
+                            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'active' ? 'bg-[#00CC6A] text-black border border-[#00CC6A]' : 'text-zinc-600 hover:text-zinc-900'}`}
                         >
                             Ativos ({activeCount})
                         </button>
                         <button
                             onClick={() => setStatusFilter('onboarding')}
-                            className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${statusFilter === 'onboarding' ? 'bg-zinc-900 text-white border border-zinc-900' : 'text-zinc-600 hover:text-zinc-900'}`}
+                            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'onboarding' ? 'bg-zinc-900 text-white border border-zinc-900' : 'text-zinc-600 hover:text-zinc-900'}`}
                         >
                             Onboarding ({onboardingCount})
                         </button>
                     </div>
                 </div>
 
-                {/* Table View — Strict Nobibecode Colors (Zinc Scale + #00CC6A) */}
+                {/* Table View */}
                 {loading ? (
                     <div className="flex justify-center items-center py-20 bg-white border border-zinc-200 rounded-xl">
                         <div className="flex items-center gap-3">
@@ -218,11 +218,11 @@ export const AdminClients = () => {
                         </div>
                     </div>
                 ) : filteredClients.length > 0 ? (
-                    <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-none">
+                    <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-xs">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="border-b border-zinc-200 bg-white shadow-sm text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                                    <tr className="border-b border-zinc-200 bg-zinc-50/50 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
                                         <th className="py-3.5 px-4">Cliente & Empresa</th>
                                         <th className="py-3.5 px-4">Contato</th>
                                         <th className="py-3.5 px-4">Status</th>
