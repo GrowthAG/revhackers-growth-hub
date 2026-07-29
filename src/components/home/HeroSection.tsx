@@ -33,7 +33,7 @@ const HeroSection = () => {
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="font-sans text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center text-balance"
         >
-          Eu encontro R$50k a R$150k em{' '}
+          Nós encontramos R$50k a R$150k em{' '}
           <span className="text-[#00CC6A]">
             receita travada no seu funil.
           </span>
