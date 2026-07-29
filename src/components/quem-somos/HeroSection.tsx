@@ -17,7 +17,8 @@ const HeroSection = () => {
           Quem Somos
         </p>
         <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center">
-          Não entregamos apresentações de slides. Instalamos sistemas de engenharia de receita.
+          Não entregamos apresentações de slides.{' '}
+          <span className="text-[#00CC6A]">Instalamos sistemas de engenharia de receita.</span>
         </h1>
         <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center mb-8">
           Combinamos engenharia de dados, IA e estratégia Go-To-Market para transformar vendas B2B. Claude Partner, Google for Startups, Funnels Partner.

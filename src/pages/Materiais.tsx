@@ -115,7 +115,12 @@ const Materiais = () => {
       />
       <DarkHeroSection
         eyebrow="Materiais"
-        title="Copie os frameworks de RevOps e IA que usamos para escalar operações B2B."
+        title={
+          <>
+            Copie os frameworks de RevOps e IA{' '}
+            <span className="text-[#00CC6A]">que usamos para escalar operações B2B.</span>
+          </>
+        }
         subtitle="Blueprints de arquitetura, scripts de automação e templates de Go-To-Market prontos para rodar no seu CRM hoje."
         searchPlaceholder="BUSCAR MATERIAIS..."
         searchQuery={searchQuery}

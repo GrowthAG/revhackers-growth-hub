@@ -26,7 +26,12 @@ const Comunidade = () => {
       {/* Hero - Standardized DarkHeroSection */}
       <DarkHeroSection
         eyebrow="Comunidade"
-        title="Acelere o crescimento da sua empresa B2B junto a 500+ líderes de receita."
+        title={
+          <>
+            Acelere o crescimento da sua empresa B2B{' '}
+            <span className="text-[#00CC6A]">junto a 500+ líderes de receita.</span>
+          </>
+        }
         subtitle="Rede fechada de diretores, founders e líderes de RevOps com troca direta de playbooks e benchmarks."
       />
 
