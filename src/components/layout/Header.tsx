@@ -38,7 +38,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
   const NavLink = ({ to, children }: { to: string, children: React.ReactNode }) => (
     <Link
       to={to}
-      className={`px-4 py-2 text-xs font-black uppercase tracking-[0.08em] transition-colors whitespace-nowrap ${textColor} ${hoverBg}`}
+      className={`px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-lg ${textColor} ${hoverBg}`}
       onClick={() => window.scrollTo(0, 0)}
     >
       {children}
@@ -143,39 +143,39 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
 
           {/* Center: Navigation */}
           <nav className="hidden xl:flex items-center justify-center flex-1">
-            <div className="flex items-center px-3 py-1.5 border border-zinc-200">
+            <div className="flex items-center rounded-xl px-2 py-1 border border-zinc-200 bg-zinc-50/50">
               <div className="flex items-center space-x-1">
                 <NavLink to="/">Home</NavLink>
                 <div className="w-px h-3 mx-1 bg-zinc-200" />
 
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="px-4 py-2 text-xs font-black tracking-[0.08em] uppercase transition-colors flex items-center gap-1.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 focus:outline-none data-[state=open]:text-[#00CC6A]">
+                  <DropdownMenuTrigger className="px-4 py-2 text-sm font-medium transition-colors flex items-center gap-1.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg focus:outline-none data-[state=open]:text-[#00CC6A]">
                     Auditoria <ChevronDown className="w-3 h-3" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent sideOffset={8} className="bg-white border-zinc-200 border-2 p-2 w-[260px] z-[70] rounded-none">
+                  <DropdownMenuContent sideOffset={8} className="bg-white border border-zinc-200 p-1.5 w-[260px] z-[70] rounded-xl shadow-lg">
                     <DropdownMenuItem asChild>
-                      <Link to="/score" className="flex items-center gap-2.5 text-zinc-700 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                      <Link to="/score" className="flex items-center gap-2.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 cursor-pointer px-3 py-2 rounded-lg text-sm font-medium" onClick={scrollToTop}>
                         <Activity className="w-4 h-4 text-zinc-400" /> Diagnóstico 360
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/score-revenue" className="flex items-center gap-2.5 text-zinc-700 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                      <Link to="/score-revenue" className="flex items-center gap-2.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 cursor-pointer px-3 py-2 rounded-lg text-sm font-medium" onClick={scrollToTop}>
                         <TrendingUp className="w-4 h-4 text-zinc-400" /> Diagnóstico CRM
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/score-founder" className="flex items-center gap-2.5 text-zinc-700 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                      <Link to="/score-founder" className="flex items-center gap-2.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 cursor-pointer px-3 py-2 rounded-lg text-sm font-medium" onClick={scrollToTop}>
                         <Users className="w-4 h-4 text-zinc-400" /> Diagnóstico do Fundador
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/score-site" className="flex items-center gap-2.5 text-zinc-700 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                      <Link to="/score-site" className="flex items-center gap-2.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 cursor-pointer px-3 py-2 rounded-lg text-sm font-medium" onClick={scrollToTop}>
                         <Globe className="w-4 h-4 text-zinc-400" /> Diagnóstico Site / LP
                       </Link>
                     </DropdownMenuItem>
-                    <div className="h-px bg-zinc-200 my-1.5" />
+                    <div className="h-px bg-zinc-100 my-1" />
                     <DropdownMenuItem asChild>
-                      <Link to="/diagnostico" className="flex items-center gap-2.5 text-zinc-900 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                      <Link to="/diagnostico" className="flex items-center gap-2.5 text-zinc-900 hover:bg-zinc-50 cursor-pointer px-3 py-2 rounded-lg text-sm font-semibold" onClick={scrollToTop}>
                         <BarChart2 className="w-4 h-4 text-zinc-900" /> Ver Todas as Auditorias
                       </Link>
                     </DropdownMenuItem>
@@ -198,37 +198,37 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
           <div className="hidden xl:flex items-center justify-end gap-4 z-10 flex-shrink-0">
             {user ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-2 text-xs font-black uppercase tracking-wider transition-colors focus:outline-none text-zinc-600 hover:text-zinc-900">
+                <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-medium transition-colors focus:outline-none text-zinc-600 hover:text-zinc-900">
                   {avatarUrl ? (
-                    <div className="w-8 h-8 border-2 border-zinc-200 overflow-hidden">
+                    <div className="w-8 h-8 rounded-full border border-zinc-200 overflow-hidden">
                       <img src={avatarUrl} alt="User Avatar" className="w-full h-full object-cover" />
                     </div>
                   ) : (
-                    <div className="w-8 h-8 bg-zinc-100 border-2 border-zinc-200 flex items-center justify-center text-zinc-900 font-black text-xs">
+                    <div className="w-8 h-8 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-600 font-semibold text-xs">
                       {user.email?.charAt(0).toUpperCase()}
                     </div>
                   )}
                   <ChevronDown className="w-3 h-3 opacity-50" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-white border-2 border-zinc-200 p-2 w-[200px] z-[70] rounded-none">
+                <DropdownMenuContent align="end" className="bg-white border border-zinc-200 p-1.5 w-[200px] z-[70] rounded-xl shadow-lg">
                   <DropdownMenuItem asChild className="focus:bg-zinc-50">
-                    <Link to="/admin/profile" className="flex items-center gap-2 text-zinc-700 cursor-pointer px-3 py-2 text-xs font-black uppercase tracking-wider outline-none">
+                    <Link to="/admin/profile" className="flex items-center gap-2 text-zinc-600 cursor-pointer px-3 py-2 rounded-lg text-sm font-medium outline-none">
                       <User className="w-4 h-4 text-zinc-400" /> Meu Perfil
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="focus:bg-zinc-50">
-                    <Link to="/admin" className="flex items-center gap-2 text-zinc-700 cursor-pointer px-3 py-2 text-xs font-black uppercase tracking-wider outline-none">
+                    <Link to="/admin" className="flex items-center gap-2 text-zinc-600 cursor-pointer px-3 py-2 rounded-lg text-sm font-medium outline-none">
                       <Lock className="w-4 h-4 text-zinc-400" /> Admin Hub
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="focus:bg-zinc-50">
-                    <Link to="/admin/settings" className="flex items-center gap-2 text-zinc-700 cursor-pointer px-3 py-2 text-xs font-black uppercase tracking-wider outline-none">
+                    <Link to="/admin/settings" className="flex items-center gap-2 text-zinc-600 cursor-pointer px-3 py-2 rounded-lg text-sm font-medium outline-none">
                       <Settings className="w-4 h-4 text-zinc-400" /> Configurações
                     </Link>
                   </DropdownMenuItem>
-                  <div className="h-px bg-zinc-200 my-1" />
+                  <div className="h-px bg-zinc-100 my-1" />
                   <DropdownMenuItem
-                    className="flex items-center gap-2 text-red-500 hover:text-red-600 hover:bg-zinc-50 cursor-pointer px-3 py-2 text-xs font-black uppercase tracking-wider"
+                    className="flex items-center gap-2 text-red-500 hover:text-red-600 hover:bg-zinc-50 cursor-pointer px-3 py-2 rounded-lg text-sm font-medium"
                     onClick={handleLogout}
                   >
                     <ArrowRight className="w-4 h-4" /> Sair
@@ -237,10 +237,10 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
               </DropdownMenu>
             ) : (
               <Link to="/login"
-                className="text-xs font-black tracking-[0.15em] uppercase transition-colors text-zinc-400 hover:text-zinc-900 px-3 py-2"
+                className="text-sm font-medium transition-colors text-zinc-500 hover:text-zinc-900 px-3 py-2"
                 onClick={scrollToTop}
               >
-                LOGIN
+                Login
               </Link>
             )}
 
@@ -248,9 +248,9 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
               onClick={() => setIsLeadModalOpen(true)}
               variant="default"
               size="default"
-              className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-black text-xs uppercase tracking-[0.2em] rounded-none h-11 px-6 border-2 border-black transition-colors flex items-center gap-2"
+              className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-bold text-sm rounded-lg h-10 px-5 border-none transition-colors flex items-center gap-2"
             >
-              <span>SOLICITAR AUDITORIA</span>
+              <span>Falar com especialista</span>
               <ArrowRight className="w-4 h-4" strokeWidth={2} />
             </Button>
           </div>
