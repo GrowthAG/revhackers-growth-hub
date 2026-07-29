@@ -89,7 +89,7 @@ const Footer = () => {
               <img
                 src="/brand/claude-partner-badge.png"
                 alt="Claude Partner Network"
-                className="h-5 opacity-40 group-hover:opacity-70 transition-opacity brightness-0 invert"
+                className="h-5 opacity-50 group-hover:opacity-90 transition-opacity"
               />
             </a>
 

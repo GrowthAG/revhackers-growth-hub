@@ -10,7 +10,7 @@ const partners = [
   { name: "Agence", logo: "/uploads/6c09375e-5298-4672-9226-27eb60a6b038.png" },
   { name: "BLDN", logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c77062fe4f1854fadf797.svg", scale: 1.1 },
   { name: "Idee Seguros", logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c73dcdda192452a508485.png" },
-  { name: "Emagrecentro", logo: "/uploads/emagrecentro-logo-new.png", scale: 1.5, customOpacity: 1 },
+  { name: "Emagrecentro", logo: "/uploads/emagrecentro-logo-new.png", scale: 1.5 },
   { name: "BT", logo: "/uploads/bt-logo-new.png" },
   { name: "Tegra", logo: "/uploads/tegra-logo-new.png", scale: 1.4 },
   { name: "Tikpag", logo: "/uploads/tikpag-logo-final.png", scale: 1.4 },
@@ -22,10 +22,10 @@ const partners = [
 const PartnersSection = () => {
   const renderLogos = () => (
     <>
-      {partners.map((partner: any, index) => (
+      {partners.map((partner, index) => (
         <div
           key={index}
-          className="flex-shrink-0 flex items-center justify-center w-40 h-20 transition-opacity duration-300"
+          className="flex-shrink-0 flex items-center justify-center w-36 h-16 transition-opacity duration-300"
         >
           <img
             src={partner.logo}
@@ -33,7 +33,7 @@ const PartnersSection = () => {
             style={{
               transform: partner.scale ? `scale(${partner.scale})` : 'scale(1)',
             }}
-            className="max-h-12 w-auto object-contain grayscale opacity-60 hover:opacity-100 mix-blend-multiply transition-all duration-300"
+            className="max-h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
           />
         </div>
       ))}
@@ -41,34 +41,34 @@ const PartnersSection = () => {
   );
 
   return (
-    <Section variant="light" className="bg-white pt-16 md:pt-24 pb-0 overflow-hidden">
-      <div className="text-center mb-12">
-        <span className="font-mono text-xs text-zinc-900 uppercase tracking-[0.3em] font-black">
-          Líderes de Mercado Que Confiam No Ecossistema
+    <Section variant="light" className="bg-white py-12 md:py-16 overflow-hidden">
+      <div className="text-center mb-8">
+        <span className="text-zinc-400 text-xs font-medium tracking-wider">
+          Empresas que confiam na RevHackers
         </span>
       </div>
 
-      <div className="relative border-y-2 border-black bg-zinc-50 py-10 flex overflow-hidden">
+      <div
+        className="relative flex overflow-hidden"
+        style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
+      >
         <style>{`
           @keyframes marquee {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-100%); }
           }
           .animate-marquee-infinite {
-            animation: marquee 40s linear infinite;
+            animation: marquee 45s linear infinite;
           }
         `}</style>
 
-        {/* Track 1 */}
-        <div className="flex min-w-fit animate-marquee-infinite items-center gap-24 px-12">
+        <div className="flex min-w-fit animate-marquee-infinite items-center gap-16 px-8">
           {renderLogos()}
         </div>
-        {/* Track 2 - Clone para Infinite Loop */}
-        <div className="flex min-w-fit animate-marquee-infinite items-center gap-24 px-12" aria-hidden="true">
+        <div className="flex min-w-fit animate-marquee-infinite items-center gap-16 px-8" aria-hidden="true">
           {renderLogos()}
         </div>
-        {/* Track 3 - Garantia de preenchimento em telas ultrawide */}
-        <div className="flex min-w-fit animate-marquee-infinite items-center gap-24 px-12 hidden 2xl:flex" aria-hidden="true">
+        <div className="flex min-w-fit animate-marquee-infinite items-center gap-16 px-8 hidden 2xl:flex" aria-hidden="true">
           {renderLogos()}
         </div>
       </div>

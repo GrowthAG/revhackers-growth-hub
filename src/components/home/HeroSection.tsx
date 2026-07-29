@@ -57,11 +57,11 @@ const HeroSection = () => {
           transition={{ duration: 0.5, delay: 0.14, ease: 'easeOut' }}
           className="flex items-center justify-center gap-6 sm:gap-8 mb-8 flex-wrap"
         >
-          {/* Claude Partner Network */}
+          {/* Claude Partner Network — cores originais */}
           <img
-            src="/brand/claude-partner-badge.png"
+            src="/brand/claude-partner-network.svg"
             alt="Claude Partner Network"
-            className="h-5 sm:h-6 opacity-50 hover:opacity-80 transition-opacity brightness-0 invert"
+            className="h-5 sm:h-6 opacity-60 hover:opacity-100 transition-opacity"
           />
           <div className="w-px h-4 bg-zinc-700" />
           {/* Google for Startups — texto estilizado com ícone Google */}
