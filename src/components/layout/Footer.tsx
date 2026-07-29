@@ -51,7 +51,7 @@ const Footer = () => {
 
           {/* Navigation Links */}
           <div className="lg:col-span-2 space-y-8">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-zinc-300 mb-2">Navegação Core</h3>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-300 mb-2">Navegação Core</h3>
             <ul className="space-y-4 text-mini font-medium text-zinc-500">
               <li><Link to={APP_ROUTES.PUBLIC.HOME} className="hover:text-white transition-colors">Home (O Funil)</Link></li>
               <li><Link to={APP_ROUTES.PUBLIC.SERVICOS} className="hover:text-white transition-colors">Ecossistema IA + CRM</Link></li>
@@ -62,7 +62,7 @@ const Footer = () => {
           </div>
 
           <div className="lg:col-span-2 space-y-8">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-zinc-300 mb-2">Auditorias Rápidas</h3>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-300 mb-2">Auditorias Rápidas</h3>
             <ul className="space-y-4 text-mini font-medium text-zinc-500">
               <li><Link to="/score" className="hover:text-white transition-colors">Vazamento 360 do Crescimento</Link></li>
               <li><Link to="/score-revenue" className="hover:text-white transition-colors">Diagnóstico do CRM</Link></li>
@@ -73,7 +73,7 @@ const Footer = () => {
 
           {/* Newsletter Section */}
           <div className="lg:col-span-4 space-y-8">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-zinc-300 mb-2">Newsletter</h3>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-300 mb-2">Newsletter</h3>
             <NewsletterForm variant="footer" />
           </div>
         </div>

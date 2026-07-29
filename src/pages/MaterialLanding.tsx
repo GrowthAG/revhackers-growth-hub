@@ -76,7 +76,7 @@ export default function MaterialLanding() {
     if (!material) {
         return (
             <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6">
-                <h1 className="text-4xl font-semibold text-zinc-900 tracking-tight mb-4">Material não encontrado</h1>
+                <h1 className="text-3xl font-semibold text-zinc-900 tracking-tight mb-4">Material não encontrado</h1>
                 <p className="text-zinc-500 mb-8">O link pode estar incorreto ou o material foi removido.</p>
                 <Link to="/materiais" className="text-zinc-900 font-medium flex items-center gap-2 hover:gap-3 transition-all">
                     <ArrowLeft className="w-4 h-4" />

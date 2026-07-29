@@ -54,7 +54,7 @@ const PartnerDetail = () => {
               <div className="inline-block px-3 py-1 mb-4 bg-green-500/20 text-green-300 text-sm font-medium">
                 {partner.category}
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">{partner.name}</h1>
+              <h1 className="text-3xl md:text-3xl font-bold mb-6">{partner.name}</h1>
               <p className="text-xl text-zinc-300 mb-6">
                 {partner.description}
               </p>

@@ -199,7 +199,7 @@ const CasesDetalhe = () => {
 
               <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-revgreen">
                 <div className="mb-16">
-                  <h2 className="text-3xl font-bold text-black mb-6 flex items-center gap-3">
+                  <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
                     <span className="w-2 h-8 bg-revgreen block rounded-sm"></span>
                     O Desafio
                   </h2>
@@ -209,7 +209,7 @@ const CasesDetalhe = () => {
                 </div>
 
                 <div className="mb-16">
-                  <h2 className="text-3xl font-bold text-black mb-6 flex items-center gap-3">
+                  <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
                     <span className="w-2 h-8 bg-black block rounded-sm"></span>
                     A Estratégia
                   </h2>
@@ -219,7 +219,7 @@ const CasesDetalhe = () => {
                 </div>
 
                 <div className="mb-16">
-                  <h2 className="text-3xl font-bold text-black mb-8 flex items-center gap-3">
+                  <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
                     <span className="w-2 h-8 bg-zinc-300 block rounded-sm"></span>
                     Resultados Alcançados
                   </h2>
@@ -257,7 +257,7 @@ const CasesDetalhe = () => {
                       </p>
                       <footer className="flex items-center gap-4">
                         {caseData.authorImage && (
-                          <img src={caseData.authorImage} alt={caseData.author} className="w-12 h-12 rounded-full border-2 border-zinc-800" />
+                          <img src={caseData.authorImage} alt={caseData.author} className="w-12 h-12 rounded-lg border-2 border-zinc-800" />
                         )}
                         <div>
                           <cite className="not-italic font-bold text-white block uppercase tracking-wider text-sm">{caseData.author}</cite>
@@ -272,7 +272,7 @@ const CasesDetalhe = () => {
 
               <div className="mt-20 pt-12 border-t border-zinc-200">
                 <div className="bg-zinc-50 border border-zinc-200 p-8 md:p-12 rounded-sm text-center">
-                  <h3 className="text-2xl font-bold text-black mb-4">Pronto para escrever sua história de sucesso?</h3>
+                  <h3 className="text-base md:text-lg font-bold text-zinc-900">Pronto para escrever sua história de sucesso?</h3>
                   <p className="text-zinc-600 mb-8 max-w-xl mx-auto">
                     Nossa metodologia já gerou mais de R$ 500M em receita para nossos clientes. Vamos descobrir como aplicar no seu negócio.
                   </p>

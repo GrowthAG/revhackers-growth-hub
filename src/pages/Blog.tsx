@@ -212,8 +212,8 @@ const Blog = () => {
 
           {isLoading ? (
             <div className="text-center py-20">
-              <div className="mx-auto w-16 h-16 rounded-full border-4 border-zinc-100 border-t-black animate-spin mb-4"></div>
-              <h3 className="text-xl font-bold uppercase mb-4 text-black">Carregando artigos...</h3>
+              <div className="mx-auto w-16 h-16 rounded-lg border-4 border-zinc-100 border-t-black animate-spin mb-4"></div>
+              <h3 className="text-base md:text-lg font-bold text-zinc-900">Carregando artigos...</h3>
             </div>
           ) : filteredPosts.length > 0 ? (
             <>
@@ -233,7 +233,7 @@ const Blog = () => {
 
               {isLoadingMore && (
                 <div className="py-8 text-center flex justify-center">
-                  <div className="w-8 h-8 rounded-full border-4 border-zinc-700 border-t-revgreen animate-spin"></div>
+                  <div className="w-8 h-8 rounded-lg border-4 border-zinc-700 border-t-revgreen animate-spin"></div>
                 </div>
               )}
 
@@ -245,10 +245,10 @@ const Blog = () => {
             </>
           ) : (
             <div className="text-center py-20 border border-dashed border-zinc-200 bg-zinc-50/30">
-              <div className="mx-auto w-16 h-16 bg-black/5 rounded-full flex items-center justify-center mb-4 border border-black/5">
+              <div className="mx-auto w-16 h-16 bg-black/5 rounded-lg flex items-center justify-center mb-4 border border-black/5">
                 <BookOpen className="h-8 w-8 text-zinc-300" />
               </div>
-              <h3 className="text-xl font-bold uppercase mb-4 text-black">Nenhum artigo encontrado</h3>
+              <h3 className="text-base md:text-lg font-bold text-zinc-900">Nenhum artigo encontrado</h3>
               <p className="text-zinc-500 max-w-md mx-auto text-xs font-bold uppercase">
                 Tente ajustar seus filtros ou termos de busca.
               </p>

@@ -75,20 +75,20 @@ const Servicos = () => {
         ]}
       />
       {/* Hero Section - Standard White Minimal (Match Metodologia/Home) */}
-      <section className="pt-32 pb-20 md:pt-48 md:pb-32 bg-white">
+      <section className="py-24 md:py-32 bg-black">
         <div className="container-custom text-center relative z-10">
           <div className="max-w-4xl mx-auto">
-            <span className="font-bold text-revgreen bg-revgreen/10 px-3 py-1 text-xxs border border-revgreen/20 uppercase tracking-[0.2em] mb-6 inline-block">
+            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
               Ecossistema RevOps
-            </span>
-            <h1 className="text-2xl md:text-3xl font-bold text-black mb-8 tracking-tight text-balance leading-[1.05]">
-              O Mecanismo<span className="text-revgreen">.</span>
+            </p>
+            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto text-center mb-8">
+              O Mecanismo<span className="text-[#00CC6A]">.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-zinc-500 font-medium leading-relaxed max-w-3xl mx-auto tracking-tight">
+            <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed text-center">
               Nós não prestamos "serviços". Nós alugamos nossa infraestrutura de IA e CRM para o seu B2B.
             </p>
             <div className="mt-12 flex justify-center gap-4">
-                <Button asChild className="bg-revgreen text-black hover:bg-black hover:text-white h-16 px-12 rounded-sm text-sm font-bold uppercase shadow-sm transition-all">
+                <Button asChild className="bg-[#00CC6A] text-black hover:bg-white hover:text-black rounded-lg px-8 py-3 text-sm font-semibold transition-all">
                     <Link to="/booking">Auditar Minha Operação</Link>
                 </Button>
             </div>
@@ -105,7 +105,7 @@ const Servicos = () => {
               <span className="font-sans text-xs text-zinc-400 uppercase tracking-[0.2em] mb-4 block">
                 // The Capabilities Matrix
               </span>
-              <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 tracking-tight text-balance leading-tight">
+              <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
                 Sistemas de Crescimento. <br />
                 <span className="text-zinc-300 font-light italic">Peça por peça.</span>
               </h2>
@@ -134,7 +134,7 @@ const Servicos = () => {
 
                 {/* Content */}
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-zinc-900 mb-6 tracking-tight group-hover:translate-x-1 transition-transform duration-500">
+                  <h3 className="text-base md:text-lg font-bold text-zinc-900">
                     {item.title}
                   </h3>
                   <p className="text-body text-zinc-500 leading-relaxed mb-10 font-normal">
@@ -146,7 +146,7 @@ const Servicos = () => {
                 <div className="pt-8 border-t border-zinc-50">
                   <div className="flex flex-wrap gap-2 mb-10">
                     {item.tech.map((tech) => (
-                      <span key={tech} className="text-2xs font-bold text-zinc-400 uppercase bg-zinc-50 border border-zinc-100 px-2.5 py-1 rounded-full">
+                      <span key={tech} className="text-2xs font-bold text-zinc-400 uppercase bg-zinc-50 border border-zinc-100 px-2.5 py-1 rounded-lg">
                         {tech}
                       </span>
                     ))}
@@ -161,7 +161,7 @@ const Servicos = () => {
                 </div>
 
                 {/* Subtle Hover Gradient */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-zinc-50 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-3xl -z-10" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-zinc-50 rounded-lg -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-3xl -z-10" />
               </div>
             ))}
           </div>
@@ -172,13 +172,13 @@ const Servicos = () => {
       <Section variant="light" className="py-32 bg-zinc-50 border-t border-zinc-200">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-black mb-8 tracking-tight uppercase">
+            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
               Está pronto para a Máquina?
             </h2>
             <p className="text-zinc-500 mb-12 text-lg font-bold max-w-xl mx-auto">
               Vagas de implementação restritas. Vamos auditar suas finanças e plugar a Automação se houver fit com a RevHackers.
             </p>
-            <Button asChild className="bg-black text-white hover:bg-revgreen hover:text-black border-none rounded-sm px-10 py-8 text-sm uppercase tracking-[0.2em] font-bold transition-all transform hover:-translate-y-1">
+            <Button asChild className="bg-black text-white hover:bg-revgreen hover:text-black border-none rounded-lg px-10 py-8 text-sm uppercase tracking-[0.2em] font-bold transition-all transform hover:-translate-y-1">
               <Link to="/booking">
                 Auditar Minha Operação
               </Link>

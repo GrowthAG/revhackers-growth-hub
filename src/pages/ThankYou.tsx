@@ -16,7 +16,7 @@ const ThankYou = () => {
           </div>
           
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-bold text-revgreen mb-6">
+          <h1 className="text-3xl md:text-3xl font-bold text-revgreen mb-6">
             Obrigado pelo agendamento!
           </h1>
           

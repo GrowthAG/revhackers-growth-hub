@@ -247,7 +247,7 @@ const GrowthScore = () => {
                                                 } ${selectedOption !== null && !isSelected ? "opacity-40" : "opacity-100"}`}
                                             >
                                                 <div className="flex items-center gap-4">
-                                                    <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center text-xs font-mono font-bold rounded-lg border transition-all duration-200 ${
+                                                    <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center text-xs font-sans font-bold rounded-lg border transition-all duration-200 ${
                                                         isSelected
                                                             ? "bg-[#00CC6A] text-black border-[#00CC6A]"
                                                             : "bg-zinc-100 border-zinc-200 text-zinc-700 group-hover:bg-zinc-950 group-hover:text-white group-hover:border-zinc-950"
@@ -261,7 +261,7 @@ const GrowthScore = () => {
 
                                                 <div className="flex items-center gap-2 shrink-0">
                                                     {/* Keyboard Badge [A], [B], [C], [D] style Notion/ClickUp */}
-                                                    <span className={`hidden sm:inline-flex items-center justify-center font-mono text-[10px] font-bold px-1.5 py-0.5 rounded border transition-colors ${
+                                                    <span className={`hidden sm:inline-flex items-center justify-center font-sans text-[10px] font-bold px-1.5 py-0.5 rounded border transition-colors ${
                                                         isSelected
                                                             ? "bg-zinc-800 text-zinc-300 border-zinc-700"
                                                             : "bg-zinc-100 text-zinc-500 border-zinc-200 group-hover:border-zinc-300 group-hover:text-zinc-700"
@@ -296,7 +296,7 @@ const GrowthScore = () => {
                         </AnimatePresence>
 
                         {/* Keyboard shortcut hint footer (Linear / Notion UX) */}
-                        <div className="pt-2 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                        <div className="pt-2 border-t border-zinc-100 flex items-center justify-between text-[11px] font-sans text-zinc-400">
                             <span className="flex items-center gap-1.5">
                                 <Command size={12} /> Pressione <kbd className="bg-zinc-100 border border-zinc-200 px-1 rounded text-zinc-700 font-bold">A</kbd> <kbd className="bg-zinc-100 border border-zinc-200 px-1 rounded text-zinc-700 font-bold">B</kbd> <kbd className="bg-zinc-100 border border-zinc-200 px-1 rounded text-zinc-700 font-bold">C</kbd> ou <kbd className="bg-zinc-100 border border-zinc-200 px-1 rounded text-zinc-700 font-bold">D</kbd> para responder
                             </span>
@@ -314,15 +314,15 @@ const GrowthScore = () => {
                                 <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:border-r border-zinc-900 md:pr-12">
                                     <div className="inline-flex items-center gap-2 bg-zinc-950 px-3 py-1 border border-zinc-900">
                                         <div className={`w-1.5 h-1.5 ${teaserScore >= 50 ? 'bg-revgreen' : 'bg-zinc-400'} animate-pulse`}></div>
-                                        <span className="text-2xs font-mono font-bold text-zinc-500 tracking-wider uppercase">Análise Finalizada</span>
+                                        <span className="text-2xs font-sans font-bold text-zinc-500 tracking-wider uppercase">Análise Finalizada</span>
                                     </div>
 
                                     <div className="relative">
-                                        <div className="text-8xl md:text-9xl font-black text-white tracking-tighter leading-none shadow-black drop-shadow-2xl">{teaserScore}</div>
+                                        <div className="text-3xl md:text-3xl font-bold text-white tracking-tight leading-none shadow-black drop-shadow-2xl">{teaserScore}</div>
                                     </div>
 
                                     <h3 className="text-sm font-medium text-zinc-400 leading-relaxed max-w-xs">
-                                        O nível técnico da sua operação comercial projeta um vazamento de <span className="text-zinc-900 font-bold font-mono text-base whitespace-nowrap bg-zinc-100 px-2 py-1 border border-zinc-200">{( (100 - teaserScore) * 3450 ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}/ano</span>.
+                                        O nível técnico da sua operação comercial projeta um vazamento de <span className="text-zinc-900 font-bold font-sans text-base whitespace-nowrap bg-zinc-100 px-2 py-1 border border-zinc-200">{( (100 - teaserScore) * 3450 ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}/ano</span>.
                                     </h3>
                                 </div>
 
@@ -344,9 +344,9 @@ const GrowthScore = () => {
                         <div className="mb-12 text-center max-w-4xl mx-auto pt-8">
                             <div className="inline-flex items-center gap-2 mb-4 bg-zinc-900 border border-zinc-800 px-3 py-1">
                                 <span className="w-1.5 h-1.5 bg-revgreen shadow-[0_0_10px_#00CC6A]"></span>
-                                <span className="text-xxs font-mono font-bold text-zinc-400 uppercase tracking-widest">Status: Finalizado</span>
+                                <span className="text-xxs font-sans font-bold text-zinc-400 uppercase">Status: Finalizado</span>
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-2">
+                            <h1 className="text-3xl md:text-3xl font-bold text-white tracking-tight mb-2">
                                 Diagnóstico <span className="text-zinc-600">360</span>
                             </h1>
                             <p className="text-zinc-500 font-medium max-w-xl mx-auto">
@@ -369,13 +369,13 @@ const GrowthScore = () => {
                                         <div className="flex flex-col items-center justify-center gap-4 py-8">
                                             <div className="w-6 h-6 border-2 border-revgreen border-t-transparent rounded-full animate-spin" />
                                             <div className="text-center space-y-1">
-                                                <span className="block text-xs font-mono text-zinc-300 uppercase tracking-widest">IA Processando Análise</span>
+                                                <span className="block text-xs font-sans text-zinc-300 uppercase">IA Processando Análise</span>
                                             </div>
                                         </div>
                                     ) : analysisResult ? (
                                         <>
                                             <div className="flex items-center gap-2 mb-4">
-                                                <span className="text-xxs font-black uppercase tracking-[0.25em] text-red-500 bg-red-500/10 px-3 py-1.5 border border-red-500/20">
+                                                <span className="text-xxs font-bold uppercase tracking-[0.25em] text-red-500 bg-red-500/10 px-3 py-1.5 border border-red-500/20">
                                                     VAZAMENTO CRÍTICO DETECTADO
                                                 </span>
                                             </div>
@@ -385,7 +385,7 @@ const GrowthScore = () => {
                                         </>
                                     ) : (
                                         <div className="flex flex-col justify-center py-8">
-                                            <p className="text-zinc-400 text-sm font-mono uppercase tracking-widest text-center">
+                                            <p className="text-zinc-400 text-sm font-sans uppercase text-center">
                                                 Análise será gerada após identificação
                                             </p>
                                         </div>

@@ -36,7 +36,7 @@ function FrameworkDataView({ fw }: { fw: FrameworkResult }) {
           if (!s) return null;
           return (
             <div key={stage} className="shrink-0 w-48 rounded-xl p-4 border border-zinc-800 bg-zinc-900/60">
-              <div className="text-2xl font-black mb-1 text-[#00CC6A]">{stage.charAt(0).toUpperCase()}</div>
+              <div className="text-2xl font-bold mb-1 text-[#00CC6A]">{stage.charAt(0).toUpperCase()}</div>
               <div className="text-xs font-bold text-white uppercase tracking-wider mb-2">{stage}</div>
               <div className="mb-2">
                 <div className="text-[10px] text-zinc-500 uppercase">Métrica</div>
@@ -44,7 +44,7 @@ function FrameworkDataView({ fw }: { fw: FrameworkResult }) {
               </div>
               <div className="mb-2">
                 <div className="text-[10px] text-zinc-500 uppercase">Atual / Meta</div>
-                <div className="text-xs font-mono font-bold text-white">{s.current_value ?? '—'} / {s.meta}</div>
+                <div className="text-xs font-sans font-bold text-white">{s.current_value ?? '—'} / {s.meta}</div>
               </div>
               <span className="text-[10px] px-2 py-0.5 rounded-md font-bold uppercase tracking-wide bg-zinc-800 text-[#00CC6A] border border-zinc-700">
                 {s.status}
@@ -57,7 +57,7 @@ function FrameworkDataView({ fw }: { fw: FrameworkResult }) {
   }
 
   return (
-    <pre className="text-xs bg-zinc-950 p-4 rounded-xl overflow-x-auto text-zinc-300 border border-zinc-800 leading-relaxed font-mono">
+    <pre className="text-xs bg-zinc-950 p-4 rounded-xl overflow-x-auto text-zinc-300 border border-zinc-800 leading-relaxed font-sans">
       {JSON.stringify(d, null, 2)}
     </pre>
   );
@@ -179,12 +179,10 @@ export default function GrowthMap() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-800/80">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
-                  GROWTHHUB ENGINE
-                </span>
-                <span className="text-xs text-zinc-500 font-mono">ID: {activeProjectId.slice(0, 8)}</span>
+                
+                <span className="text-xs text-zinc-500 font-sans">ID: {activeProjectId.slice(0, 8)}</span>
               </div>
-              <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-white flex items-center gap-3">
+              <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
                 {gState.company_name}
               </h1>
               <p className="text-xs md:text-sm text-zinc-400 max-w-2xl leading-relaxed">
@@ -198,7 +196,7 @@ export default function GrowthMap() {
                 disabled={isGeneratingAll}
                 className="bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-800 rounded-xl h-10 px-5 text-xs font-bold gap-2 flex items-center transition-all shadow-xs"
               >
-                {isGeneratingAll ? <Loader2 size={14} className="animate-spin text-[#00CC6A]" /> : <Sparkles size={14} className="text-[#00CC6A]" />}
+                {isGeneratingAll ? <Loader2 size={14} className="animate-spin text-[#00CC6A]" /> : }
                 <span>{isGeneratingAll ? "Processando Frameworks..." : "Rodar Inteligência Completa"}</span>
               </button>
             </div>
@@ -231,7 +229,7 @@ export default function GrowthMap() {
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800/60 pb-4">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">
+                <span className="text-[10px] font-sans font-bold text-[#00CC6A] uppercase tracking-wider block">
                   {PILLAR_META[activeTab].badge} • INSIGHTS DE MERCADO & VETORES
                 </span>
                 <h2 className="text-xl font-bold text-white tracking-tight mt-0.5">
@@ -241,14 +239,14 @@ export default function GrowthMap() {
                   {PILLAR_META[activeTab].description}
                 </p>
               </div>
-              <span className="text-[11px] font-mono text-zinc-500">Mapeamento em Tempo Real</span>
+              <span className="text-[11px] font-sans text-zinc-500">Mapeamento em Tempo Real</span>
             </div>
 
             {/* Grid de Métricas Preditivas com Design Superior */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2 text-center group hover:border-zinc-700 transition-colors">
                 <span className="text-3xl font-extrabold text-white tracking-tight block">R$ 2,8 bi</span>
-                <span className="text-[10px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">TAM CRM/MARTECH BRASIL 2025</span>
+                <span className="text-[10px] font-sans font-bold text-[#00CC6A] uppercase tracking-wider block">TAM CRM/MARTECH BRASIL 2025</span>
                 <p className="text-xs text-zinc-400 leading-relaxed font-normal">
                   Mercado em expansão acelerada (~18% a.a.), impulsionado pela digitalização de PMEs pós-pandemia.
                 </p>
@@ -256,7 +254,7 @@ export default function GrowthMap() {
 
               <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2 text-center group hover:border-zinc-700 transition-colors">
                 <span className="text-3xl font-extrabold text-white tracking-tight block">68%</span>
-                <span className="text-[10px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">PMES SEM CRM ESTRUTURADO</span>
+                <span className="text-[10px] font-sans font-bold text-[#00CC6A] uppercase tracking-wider block">PMES SEM CRM ESTRUTURADO</span>
                 <p className="text-xs text-zinc-400 leading-relaxed font-normal">
                   Maioria das PMEs ainda utiliza planilhas manuais — oportunidade maciça de migração para soluções nativas.
                 </p>
@@ -264,7 +262,7 @@ export default function GrowthMap() {
 
               <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2 text-center group hover:border-zinc-700 transition-colors">
                 <span className="text-3xl font-extrabold text-white tracking-tight block">3x</span>
-                <span className="text-[10px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block">CUSTO HUBSPOT VS LOCAL</span>
+                <span className="text-[10px] font-sans font-bold text-[#00CC6A] uppercase tracking-wider block">CUSTO HUBSPOT VS LOCAL</span>
                 <p className="text-xs text-zinc-400 leading-relaxed font-normal">
                   Softwares globais custam até 3x mais que plataformas nacionais, gerando gap direto de aquisição.
                 </p>
@@ -274,7 +272,7 @@ export default function GrowthMap() {
             {/* Vetores de Crescimento & Desafios */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
               <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2">
-                <span className="text-[11px] font-mono font-bold text-[#00CC6A] uppercase tracking-wider block flex items-center gap-1.5">
+                <span className="text-[11px] font-sans font-bold text-[#00CC6A] uppercase tracking-wider block flex items-center gap-1.5">
                   <Zap size={14} /> VETORES DE CRESCIMENTO PREDITIVO
                 </span>
                 <p className="text-xs text-zinc-300 leading-relaxed font-medium">
@@ -283,7 +281,7 @@ export default function GrowthMap() {
               </div>
 
               <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2">
-                <span className="text-[11px] font-mono font-bold text-amber-400 uppercase tracking-wider block flex items-center gap-1.5">
+                <span className="text-[11px] font-sans font-bold text-amber-400 uppercase tracking-wider block flex items-center gap-1.5">
                   <ShieldCheck size={14} /> DESAFIOS & GAPS DE RETENÇÃO
                 </span>
                 <p className="text-xs text-zinc-300 leading-relaxed font-medium">

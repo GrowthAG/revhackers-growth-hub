@@ -18,7 +18,7 @@ const SchedulingSuccess = () => {
                         <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                             <CheckCircle2 className="w-10 h-10 text-green-600" />
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-black text-black tracking-tighter mb-4">
+                        <h1 className="text-3xl md:text-3xl font-bold text-black tracking-tight mb-4">
                             Agendamento Confirmado
                         </h1>
                         <p className="text-xl text-zinc-500 max-w-2xl mx-auto leading-relaxed">
@@ -29,7 +29,7 @@ const SchedulingSuccess = () => {
                     {/* Educational / Connection Section */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
                         <div className="bg-zinc-50 p-8 border border-zinc-200 rounded-sm">
-                            <h3 className="text-lg font-black uppercase tracking-wide mb-6 flex items-center gap-2">
+                            <h3 className="text-lg font-bold uppercase tracking-wide mb-6 flex items-center gap-2">
                                 <BrainCircuit className="w-5 h-5" /> Por que pedimos tantos dados?
                             </h3>
                             <div className="space-y-6">
@@ -73,7 +73,7 @@ const SchedulingSuccess = () => {
 
                             <Button
                                 onClick={() => navigate('/rei')}
-                                className="bg-black hover:bg-zinc-800 text-white rounded-none px-8 py-6 uppercase tracking-widest font-bold text-xs w-full md:w-auto"
+                                className="bg-black hover:bg-zinc-800 text-white rounded-lg px-8 py-6 uppercase font-bold text-xs w-full md:w-auto"
                             >
                                 Voltar para o Hub <LayoutDashboard className="ml-2 w-4 h-4" />
                             </Button>

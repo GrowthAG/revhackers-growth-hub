@@ -132,19 +132,19 @@ const Materiais = () => {
 
           {loading ? (
             <div className="text-center py-20">
-              <div className="mx-auto w-12 h-12 rounded-full border-2 border-zinc-100 border-t-black animate-spin mb-4"></div>
-              <p className="text-xxs font-black uppercase tracking-widest text-zinc-400">Carregando Hub...</p>
+              <div className="mx-auto w-12 h-12 rounded-lg border-2 border-zinc-100 border-t-black animate-spin mb-4"></div>
+              <p className="text-xxs font-bold uppercase tracking-tight text-zinc-400">Carregando Hub...</p>
             </div>
           ) : filteredMaterials.length === 0 ? (
             <div className="text-center py-20 border border-dashed border-zinc-200 bg-zinc-50/50 max-w-2xl mx-auto">
-              <div className="mx-auto w-16 h-16 bg-zinc-100 rounded-full flex items-center justify-center mb-6">
+              <div className="mx-auto w-16 h-16 bg-zinc-100 rounded-lg flex items-center justify-center mb-6">
                 <BookOpen className="h-8 w-8 text-zinc-300" />
               </div>
-              <h3 className="text-xl font-black uppercase tracking-tight text-black mb-2">Nenhum material encontrado</h3>
-              <p className="text-zinc-500 text-xxs font-bold uppercase tracking-widest">Tente ajustar seus termos de busca.</p>
+              <h3 className="text-base md:text-lg font-bold text-zinc-900">Nenhum material encontrado</h3>
+              <p className="text-zinc-500 text-xxs font-bold uppercase tracking-tight">Tente ajustar seus termos de busca.</p>
               <Button
                 variant="link"
-                className="text-black uppercase text-xxs font-black tracking-widest mt-6 hover:text-revgreen transition-colors"
+                className="text-black uppercase text-xxs font-bold tracking-tight mt-6 hover:text-revgreen transition-colors"
                 onClick={() => { setSearchQuery(''); setActiveCategory('Todos'); }}
               >
                 Limpar filtros
@@ -173,14 +173,14 @@ const Materiais = () => {
                   >
                     <div className="h-full flex flex-col p-8 rounded-sm border border-zinc-200 bg-white shadow-sm hover:-translate-y-1 transition-all duration-500 relative cursor-pointer group">
                       <div className="flex justify-between items-start mb-6">
-                        <span className="text-2xs font-black uppercase tracking-widest text-black bg-white px-2 py-1 rounded-sm border border-zinc-200">
+                        <span className="text-2xs font-bold uppercase tracking-tight text-black bg-white px-2 py-1 rounded-sm border border-zinc-200">
                           {type}
                         </span>
                         <IconComponent className="h-5 w-5 text-zinc-200 group-hover:text-black transition-all duration-500" />
                       </div>
 
                       <h3
-                        className="text-lg md:text-xl font-bold text-black mb-3 group-hover:text-revgreen transition-colors line-clamp-2 leading-tight"
+                        className="text-base md:text-lg font-bold text-zinc-900"
                         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(removeEmojis(title)) }}
                       ></h3>
 
@@ -192,7 +192,7 @@ const Materiais = () => {
                       />
 
                       <div className="mt-auto pt-6 border-t border-zinc-50 flex items-center justify-between">
-                        <span className="text-xxs font-black text-black uppercase tracking-widest transition-all flex items-center group-hover:gap-2">
+                        <span className="text-xxs font-bold text-black uppercase tracking-tight transition-all flex items-center group-hover:gap-2">
                           Baixar Material
                           <ArrowRight className="ml-2 h-3 w-3 transition-all" />
                         </span>
@@ -211,7 +211,7 @@ const Materiais = () => {
         <div className="container-custom">
           <div className="flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="max-w-2xl text-center md:text-left">
-              <h2 className="text-3xl md:text-5xl font-black mb-6 text-black tracking-tighter uppercase leading-tight">
+              <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
                 Identificou a Dor?
               </h2>
               <p className="text-xl text-zinc-500 font-bold tracking-tight leading-relaxed">
@@ -222,7 +222,7 @@ const Materiais = () => {
               <Button
                 size="lg"
                 onClick={() => setIsBookingOpen(true)}
-                className="bg-black text-white hover:bg-revgreen hover:text-black font-black tracking-widest uppercase px-10 h-16 rounded-sm text-xs transition-all duration-500 shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:shadow-revgreen/20"
+                className="bg-black text-white hover:bg-revgreen hover:text-black font-bold tracking-tight uppercase px-10 h-16 rounded-sm text-xs transition-all duration-500 shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:shadow-revgreen/20"
               >
                 Auditar Minha Operação
               </Button>

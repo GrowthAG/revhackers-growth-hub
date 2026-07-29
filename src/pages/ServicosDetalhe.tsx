@@ -247,7 +247,7 @@ const ServicosDetalhe = () => {
       {/* 2. O QUE FAZEMOS (What We Do) */}
       <Section variant="light" className="py-24 bg-white">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-2xl md:text-3xl font-bold mb-16 text-black tracking-tight text-center uppercase">
+          <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
             A Engenharia (Como funciona)
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -275,7 +275,7 @@ const ServicosDetalhe = () => {
       {/* 3. COMO FUNCIONA (How It Works) */}
       <Section variant="light" className="py-24 bg-zinc-50 border-y border-zinc-200">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-2xl md:text-3xl font-bold mb-16 text-black tracking-tight text-center uppercase">
+          <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
             Teardown Logístico
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
@@ -285,11 +285,11 @@ const ServicosDetalhe = () => {
             {service.howItWorks.map((step, i) => (
               <div key={i} className="relative group">
                 {/* Number Bubble */}
-                <div className={`w-12 h-12 bg-white border-2 border-revgreen rounded-full flex items-center justify-center font-sans text-black font-bold mb-6 mx-auto z-10 group-hover:bg-revgreen group-hover:text-white transition-colors shadow-sm`}>
+                <div className={`w-12 h-12 bg-white border-2 border-revgreen rounded-lg flex items-center justify-center font-sans text-black font-bold mb-6 mx-auto z-10 group-hover:bg-revgreen group-hover:text-white transition-colors shadow-sm`}>
                   {step.step}
                 </div>
                 <div className="text-center px-4">
-                  <h3 className="text-lg font-bold text-black mb-3">{step.title}</h3>
+                  <h3 className="text-base md:text-lg font-bold text-zinc-900">{step.title}</h3>
                   <p className="text-sm text-zinc-500 font-light">{step.description}</p>
                 </div>
               </div>
@@ -301,7 +301,7 @@ const ServicosDetalhe = () => {
       {/* 4. RESULTADOS (Results) */}
       <Section variant="dark" className="py-24 bg-black border-t border-white/5">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-2xl md:text-3xl font-bold mb-16 text-white tracking-tight text-center uppercase">
+          <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
             Eficiência Pós-Implementação
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -323,7 +323,7 @@ const ServicosDetalhe = () => {
       <Section variant="light" className="py-24 bg-white">
         <div className="container-custom text-center">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black tracking-tight uppercase">Está com o caixa sangrando?</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">Está com o caixa sangrando?</h2>
             <p className="text-xl text-zinc-500 mb-10 font-bold">
               Avaliaremos sua operação tecnicamente e te diremos exatamente porque seu marketing não fecha a conta. Call bruta e pontual.
             </p>
@@ -360,13 +360,13 @@ const ServicosDetalhe = () => {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-2xl bg-white rounded-none shadow-sm overflow-hidden border border-zinc-200"
+            className="relative w-full max-w-2xl bg-white rounded-lg shadow-sm overflow-hidden border border-zinc-200"
           >
             {/* Header - Same as CallDiagnosticModal */}
             <div className="p-8 md:p-12 border-b border-zinc-100 flex justify-between items-start">
               <div className="space-y-2">
                 <span className="text-xxs font-sans font-bold text-revgreen uppercase tracking-wider">{service?.number} // {service?.title}</span>
-                <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black tracking-tight leading-none italic uppercase">
+                <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
                   {selectedService.title}
                 </h2>
               </div>
@@ -394,7 +394,7 @@ const ServicosDetalhe = () => {
                   setSelectedService(null);
                   setIsBookingOpen(true);
                 }}
-                className="w-full h-20 bg-black text-white hover:bg-revgreen hover:text-black font-bold uppercase tracking-[0.2em] text-xs transition-all duration-500 cursor-pointer rounded-none"
+                className="w-full h-20 bg-black text-white hover:bg-revgreen hover:text-black font-bold uppercase tracking-[0.2em] text-xs transition-all duration-500 cursor-pointer rounded-lg"
               >
                 <Calendar className="w-5 h-5 mr-4" />
                 Agendar Diagnóstico de {selectedService.title}

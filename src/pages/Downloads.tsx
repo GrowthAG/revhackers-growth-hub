@@ -175,7 +175,7 @@ const Downloads = () => {
         </div>
         <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Materiais Gratuitos</h1>
+            <h1 className="text-3xl md:text-3xl font-bold mb-6">Materiais Gratuitos</h1>
             <p className="text-xl text-zinc-300 mb-8">
               Baixe nossos conteúdos exclusivos sobre Revenue Operations,
               Account Based Marketing e estratégias de crescimento para empresas B2B
@@ -256,7 +256,7 @@ const Downloads = () => {
                 <img
                   src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
                   alt="Análise personalizada"
-                  className="w-full h-auto "
+                  className="w-full h-auto"
                 />
               </div>
             </div>

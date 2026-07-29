@@ -23,18 +23,18 @@ const DarkHeroSection = ({
   onCategoryChange
 }: DarkHeroSectionProps) => {
   return (
-    <section className="bg-zinc-950 py-24 md:py-32 relative overflow-hidden">
+    <section className="bg-black py-24 md:py-32 relative overflow-hidden">
       {/* Sophisticated Dark Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
       {/* Overlay solido - gradientes proibidos pelo design system */}
-      <div className="absolute inset-0 bg-zinc-950/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
       <div className="container-custom relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 text-white tracking-tighter text-balance">
+          <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto text-center mb-8">
             {title}<span className="text-revgreen">.</span>
           </h1>
-          <p className="text-lg md:text-xl text-zinc-400 font-medium leading-relaxed max-w-2xl mx-auto text-balance">
+          <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed text-center">
             {subtitle}
           </p>
         </div>
@@ -45,7 +45,7 @@ const DarkHeroSection = ({
             <Input
               type="search"
               placeholder={searchPlaceholder}
-              className="h-14 pl-14 pr-6 bg-zinc-900/50 border-zinc-800 text-white placeholder:text-zinc-500 rounded-none shadow-sm text-tiny font-black uppercase tracking-widest focus-visible:ring-1 focus-visible:ring-revgreen focus-visible:border-revgreen transition-all"
+              className="h-14 pl-14 pr-6 bg-zinc-900/50 border-zinc-800 text-white placeholder:text-zinc-500 rounded-lg shadow-sm text-tiny font-bold uppercase tracking-tight focus-visible:ring-1 focus-visible:ring-revgreen focus-visible:border-revgreen transition-all"
               value={searchQuery}
               onChange={e => onSearchChange(e.target.value)}
             />
@@ -58,7 +58,7 @@ const DarkHeroSection = ({
               <button
                 key={category}
                 onClick={() => onCategoryChange(category)}
-                className={`text-xxs uppercase tracking-[0.2em] font-black font-sans transition-all duration-300 relative py-2 ${
+                className={`text-xxs uppercase tracking-tight font-bold font-sans transition-all duration-300 relative py-2 ${
                   activeCategory === category
                     ? "text-revgreen"
                     : "text-zinc-500 hover:text-zinc-300"

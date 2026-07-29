@@ -159,7 +159,7 @@ const ComparisonSection = () => {
           <p className="text-sm text-zinc-500 mb-6 font-medium max-w-lg mx-auto">
             Veja quanto sua operação está perdendo agora — antes de contratar qualquer pessoa.
           </p>
-          <Button asChild size="lg" className="bg-zinc-900 text-white hover:bg-revgreen hover:text-black font-bold uppercase tracking-[0.12em] text-xs h-14 px-10 rounded-none transition-all">
+          <Button asChild size="lg" className="bg-zinc-900 text-white hover:bg-revgreen hover:text-black font-bold uppercase tracking-[0.12em] text-xs h-14 px-10 rounded-lg transition-all">
             <Link to={buildBookingUrl('homepage', 'comparison_cta')}>
               Auditar Minha Operação
             </Link>

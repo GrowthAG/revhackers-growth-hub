@@ -30,7 +30,7 @@ const Comunidade = () => {
       />
 
       {/* CTA Bar */}
-      <Section variant="dark" className="py-12 bg-zinc-950 border-b border-zinc-900">
+      <Section variant="dark" className="py-12 bg-black border-b border-zinc-900">
         <div className="container-custom text-center">
           <a href="https://academy.revhackers.com.br/" target="_blank" rel="noopener noreferrer">
             <Button className="btn-green-flat h-14 px-8 text-sm">
@@ -47,7 +47,7 @@ const Comunidade = () => {
             <span className="font-sans text-xs text-zinc-500 uppercase tracking-[0.2em] mb-4 block">
               // Por que participar
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
               Uma rede que <span className="text-revgreen">acelera</span> resultados.
             </h2>
           </div>
@@ -62,7 +62,7 @@ const Comunidade = () => {
                 <div className="mb-8 text-zinc-600 group-hover:text-revgreen transition-colors duration-500">
                   <item.icon size={36} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-white tracking-tight">{item.title}</h3>
+                <h3 className="text-base md:text-lg font-bold text-zinc-900">{item.title}</h3>
                 <p className="text-zinc-500 font-light text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
@@ -71,7 +71,7 @@ const Comunidade = () => {
       </Section>
 
       {/* Features - Logo + List */}
-      <Section variant="dark" className="py-24 bg-zinc-950 border-b border-zinc-900">
+      <Section variant="dark" className="py-24 bg-black border-b border-zinc-900">
         <div className="container-custom">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -91,7 +91,7 @@ const Comunidade = () => {
                   <span className="font-sans text-xs text-zinc-500 uppercase tracking-[0.2em] mb-4 block">
                     // Benefícios Exclusivos
                   </span>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                  <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
                     Plataforma completa para sua carreira<span className="text-revgreen">.</span>
                   </h2>
                 </div>
@@ -108,7 +108,7 @@ const Comunidade = () => {
                         <item.icon className="text-zinc-500 group-hover:text-revgreen transition-colors" size={18} />
                       </div>
                       <div>
-                        <h3 className="text-base font-bold mb-1 text-white">{item.title}</h3>
+                        <h3 className="text-base md:text-lg font-bold text-zinc-900">{item.title}</h3>
                         <p className="text-zinc-500 text-sm font-light">{item.desc}</p>
                       </div>
                     </div>
@@ -125,7 +125,7 @@ const Comunidade = () => {
       <Section variant="dark" className="py-24 bg-black border-t border-zinc-900">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-white tracking-tight">
+            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
               Faça parte da elite<span className="text-revgreen">.</span>
             </h2>
             <p className="text-xl text-zinc-500 mb-12 font-light">

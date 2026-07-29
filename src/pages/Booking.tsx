@@ -49,18 +49,16 @@ const BookingPage = () => {
         description="Agende uma auditoria técnica com a RevHackers para mapear vazamentos na sua operação B2B."
         canonical="https://revhackers.com.br/booking"
       />
-      <section className="pt-32 pb-24 bg-white min-h-screen">
+      <section className="py-24 md:py-32 bg-black min-h-screen">
         <div className="w-full max-w-6xl mx-auto px-6">
 
           {/* Header */}
           <div className="text-center mb-16">
-            <span className="inline-block border border-zinc-800 text-zinc-900 px-3 py-1 font-sans font-bold uppercase tracking-wider mb-6 text-xs bg-transparent">
+            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
               [ Vagas Restritas: 3 / mês ]
             </span>
-            <h1 className="text-2xl md:text-3xl font-bold text-zinc-900 tracking-tight mb-6 uppercase">
-              Auditoria de Receita
-            </h1>
-            <p className="text-lg text-zinc-600 max-w-2xl mx-auto font-medium leading-relaxed">
+            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto text-center mb-8">Auditoria de Receita</h1>
+            <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed text-center">
               Não fazemos "calls para nos conhecer". Esta é uma agenda técnica focada em achar vazamentos no seu LTV e CAC. Se nossa Engenharia não puder dobrar a eficiência da sua máquina comercial em 90 dias, não faremos proposta.
             </p>
           </div>

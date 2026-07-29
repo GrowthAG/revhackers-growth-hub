@@ -19,7 +19,7 @@ const NotFound = () => {
     <PageLayout>
       <div className="min-h-[70vh] flex flex-col items-center justify-center py-20">
         <div className="text-center max-w-2xl mx-auto px-4">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">404</h1>
+          <h1 className="text-3xl md:text-3xl font-bold mb-4">404</h1>
           <p className="text-xl md:text-2xl text-zinc-600 mb-8">
             Oops! Página não encontrada
           </p>
