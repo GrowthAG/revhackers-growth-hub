@@ -1,101 +1,47 @@
 
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-
-/* ── Ilustracoes SVG por servico - estilo abstrato Supabase ── */
-const illustrations = {
-  tracao: (
-    <svg viewBox="0 0 160 120" fill="none" className="w-full h-full opacity-30">
-      <path d="M20 100 Q60 20 140 40" stroke="#00C060" strokeWidth="1.5" strokeDasharray="4 4"/>
-      <circle cx="140" cy="40" r="4" fill="#00C060"/>
-      <circle cx="20" cy="100" r="3" fill="#00C060" opacity="0.5"/>
-      <circle cx="80" cy="55" r="2" fill="#00C060" opacity="0.4"/>
-      <circle cx="110" cy="44" r="2" fill="#00C060" opacity="0.3"/>
-      <line x1="0" y1="100" x2="160" y2="100" stroke="#ffffff" strokeWidth="0.5" opacity="0.1"/>
-      <line x1="0" y1="70"  x2="160" y2="70"  stroke="#ffffff" strokeWidth="0.5" opacity="0.07"/>
-      <line x1="0" y1="40"  x2="160" y2="40"  stroke="#ffffff" strokeWidth="0.5" opacity="0.07"/>
-    </svg>
-  ),
-  crm: (
-    <svg viewBox="0 0 160 120" fill="none" className="w-full h-full opacity-30">
-      <rect x="20" y="20" width="36" height="26" rx="4" stroke="#00C060" strokeWidth="1.2"/>
-      <rect x="66" y="20" width="36" height="26" rx="4" stroke="#ffffff" strokeWidth="0.8" opacity="0.3"/>
-      <rect x="112" y="20" width="36" height="26" rx="4" stroke="#ffffff" strokeWidth="0.8" opacity="0.3"/>
-      <rect x="43" y="72" width="36" height="26" rx="4" stroke="#00C060" strokeWidth="1.2" opacity="0.7"/>
-      <rect x="89" y="72" width="36" height="26" rx="4" stroke="#ffffff" strokeWidth="0.8" opacity="0.3"/>
-      <line x1="38" y1="46" x2="61" y2="72" stroke="#00C060" strokeWidth="0.8" opacity="0.5"/>
-      <line x1="84" y1="46" x2="61" y2="72" stroke="#ffffff" strokeWidth="0.8" opacity="0.2"/>
-      <line x1="84" y1="46" x2="107" y2="72" stroke="#ffffff" strokeWidth="0.8" opacity="0.2"/>
-    </svg>
-  ),
-  automacao: (
-    <svg viewBox="0 0 160 120" fill="none" className="w-full h-full opacity-30">
-      <circle cx="80" cy="60" r="28" stroke="#00C060" strokeWidth="1.2" strokeDasharray="4 3"/>
-      <circle cx="80" cy="60" r="16" stroke="#ffffff" strokeWidth="0.8" opacity="0.2"/>
-      <circle cx="80" cy="60" r="5" fill="#00C060" opacity="0.8"/>
-      <line x1="80" y1="20" x2="80" y2="32" stroke="#00C060" strokeWidth="1.2"/>
-      <line x1="80" y1="88" x2="80" y2="100" stroke="#00C060" strokeWidth="1.2" opacity="0.5"/>
-      <line x1="40" y1="60" x2="52" y2="60" stroke="#00C060" strokeWidth="1.2" opacity="0.5"/>
-      <line x1="108" y1="60" x2="120" y2="60" stroke="#00C060" strokeWidth="1.2" opacity="0.5"/>
-      <circle cx="80" cy="20" r="3" fill="#00C060"/>
-      <circle cx="40" cy="60" r="2.5" fill="#00C060" opacity="0.6"/>
-    </svg>
-  ),
-  founder: (
-    <svg viewBox="0 0 160 120" fill="none" className="w-full h-full opacity-30">
-      <circle cx="80" cy="40" r="18" stroke="#00C060" strokeWidth="1.2"/>
-      <path d="M44 100 C44 76 116 76 116 100" stroke="#00C060" strokeWidth="1.2"/>
-      <circle cx="35" cy="50" r="12" stroke="#ffffff" strokeWidth="0.8" opacity="0.3"/>
-      <circle cx="125" cy="50" r="12" stroke="#ffffff" strokeWidth="0.8" opacity="0.3"/>
-      <path d="M25 95 C25 79 45 79 45 95" stroke="#ffffff" strokeWidth="0.8" opacity="0.3"/>
-      <path d="M115 95 C115 79 135 79 135 95" stroke="#ffffff" strokeWidth="0.8" opacity="0.3"/>
-    </svg>
-  ),
-};
+import { Cpu, Database, Zap, Bot } from 'lucide-react';
 
 const services = [
   {
-    id: '01',
+    icon: Bot,
     title: 'IA + Vendas',
-    subtitle: '& Personalização',
-    desc: 'Usamos inteligência artificial para mandar a mensagem certa, para o decisor certo, na hora em que ele quer comprar.',
+    desc: 'Seu SDR manda 200 emails genéricos por dia. Nós colocamos IA para enviar a mensagem certa, pro decisor certo, na hora que ele abre o LinkedIn.',
+    result: '3x mais respostas qualificadas em 30 dias',
     link: '/servicos/tracao-midia-paga',
-    visual: illustrations.tracao,
   },
   {
-    id: '02',
+    icon: Database,
     title: 'CRM Inteligente',
-    subtitle: '& Dados',
-    desc: 'Organizamos a casa. Fim das planilhas perdidas e achismos. Seu CRM passa a rastrear cada passo do lead sozinho.',
+    desc: 'Seu CRM tem 12.000 contatos e ninguém sabe quem é lead quente. Nós organizamos, pontuamos e priorizamos — o vendedor só abre o que vai fechar.',
+    result: 'Pipeline limpo e acionável em 14 dias',
     link: '/servicos/ecossistema-crm',
-    visual: illustrations.crm,
   },
   {
-    id: '03',
+    icon: Zap,
     title: 'Automação B2B',
-    subtitle: '& Eficiência',
-    desc: 'Tiramos o trabalho braçal do vendedor. O sistema faz o follow-up; seu time só entra na ligação para fechar negócio.',
+    desc: 'Seu closer gasta 4 horas por dia em follow-up manual. Nós automatizamos. Ele só entra na ligação para fechar negócio.',
+    result: '70% menos trabalho operacional por vendedor',
     link: '/servicos/automacao-inteligente',
-    visual: illustrations.automacao,
   },
   {
-    id: '04',
-    title: 'Treinamento',
-    subtitle: '& Prática Conjunta',
-    desc: 'Não entregamos um PDF e sumimos. Sentamos junto com a sua equipe e ensinamos a operar a estratégia na vida real.',
+    icon: Cpu,
+    title: 'Treinamento Operacional',
+    desc: 'Não entregamos um PDF e sumimos. Sentamos junto com a equipe e ensinamos a operar a estratégia na vida real. Com dados, não com achismo.',
+    result: 'Equipe autônoma operando o sistema em 21 dias',
     link: '/servicos/founder-led-growth',
-    visual: illustrations.founder,
   },
 ];
 
-const fadeUp: any = {
-  hidden: { opacity: 0, y: 20 },
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.1, ease: 'easeOut' },
+    transition: { duration: 0.4, delay: i * 0.08, ease: 'easeOut' },
   }),
 };
 
@@ -107,106 +53,80 @@ const ServicesSection = () => {
   return (
     <section
       ref={ref}
-      className="relative py-24 border-b border-white/6"
-      style={{ background: '#0a0a0a' }}
+      className="py-20 bg-zinc-50 border-b border-zinc-200"
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6">
 
-        {/* Header */}
-        <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <motion.p
-              variants={fadeUp}
-              custom={0}
-              initial="hidden"
-              animate={inView ? 'visible' : 'hidden'}
-              className="text-label text-revgreen mb-4"
-            >
-              Como a Máquina Funciona
-            </motion.p>
-            <motion.h2
-              variants={fadeUp}
-              custom={1}
-              initial="hidden"
-              animate={inView ? 'visible' : 'hidden'}
-              className="text-white text-balance"
-              style={{ fontSize: 'clamp(1.75rem, 2.5vw, 2.5rem)', fontWeight: 700, letterSpacing: '-0.02em', maxWidth: '30ch' }}
-            >
-              Tecnologia que elimina trabalho chato.{' '}
-              <span style={{ color: '#00C060' }}>Nós construímos e fazemos rodar.</span>
-            </motion.h2>
-          </div>
-          <motion.div
+        {/* Header — Hormozi: confrontação direta */}
+        <div className="mb-14 max-w-2xl">
+          <motion.p
+            variants={fadeUp}
+            custom={0}
+            initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+            className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-3"
+          >
+            Como funciona
+          </motion.p>
+          <motion.h2
+            variants={fadeUp}
+            custom={1}
+            initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+            className="text-zinc-900 text-2xl md:text-3xl font-bold tracking-tight leading-tight mb-4"
+          >
+            Você contratou SDRs, comprou ferramentas e postou no LinkedIn por 6 meses.{' '}
+            <span className="text-zinc-400">Quanto disso virou receita auditada?</span>
+          </motion.h2>
+          <motion.p
             variants={fadeUp}
             custom={2}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
+            className="text-zinc-500 text-base leading-relaxed"
           >
-            <Link
-              to="/servicos"
-              onClick={scrollToTop}
-              className="text-tiny font-medium text-zinc-500 hover:text-zinc-300 transition-colors flex items-center gap-2"
-              style={{ letterSpacing: '0.04em' }}
-            >
-              Ver todos <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.5} />
-            </Link>
-          </motion.div>
+            Nós não vendemos horas de consultoria. Nós instalamos 4 sistemas que encontram e fecham receita travada na sua operação.
+          </motion.p>
         </div>
 
-        {/* Bento Grid Brutalista - Zero gaps, border-only, rounded-none */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-white/10 mt-12 bg-black">
+        {/* Grid 2x2 — Cards limpos, fundo branco */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {services.map((service, i) => {
-            // Assimetria de Bento Grid: 1º e 4º card ocupam 2 colunas, 2º e 3º ocupam 1.
-            const isLarge = i === 0 || i === 3;
+            const Icon = service.icon;
             return (
               <motion.div
-                key={service.id}
+                key={service.title}
                 variants={fadeUp}
                 custom={3 + i}
                 initial="hidden"
                 animate={inView ? 'visible' : 'hidden'}
-                className={`border-b border-r border-white/10 ${isLarge ? 'md:col-span-2' : 'md:col-span-1'}`}
               >
                 <Link
                   to={service.link}
                   onClick={scrollToTop}
-                  className="group flex flex-col h-full p-8 lg:p-12 hover:bg-white/[0.02] transition-all duration-300 rounded-none relative overflow-hidden"
-                  style={{ minHeight: isLarge ? '360px' : '320px' }}
+                  className="group flex flex-col h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/30 hover:shadow-sm transition-all"
                 >
-                  {/* Número estilo painel */}
-                  <span
-                    className="absolute top-6 right-6 text-zinc-800 text-metric text-xs group-hover:text-revgreen transition-colors"
-                  >
-                    [{service.id}]
-                  </span>
-
-                  {/* Ilustração SVG geométrica */}
-                  <div className="h-24 mb-10 flex items-center justify-start opacity-70 group-hover:opacity-100 transition-opacity">
-                    <div className="w-32 h-full"> 
-                      {service.visual}
-                    </div>
+                  {/* Ícone — sem sparkles, sem emojis */}
+                  <div className="w-10 h-10 bg-zinc-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#00CC6A]/10 transition-colors">
+                    <Icon className="w-5 h-5 text-zinc-600 group-hover:text-[#00CC6A] transition-colors" strokeWidth={1.5} />
                   </div>
 
                   {/* Título */}
-                  <h3
-                    className="text-white font-black mb-2 uppercase tracking-widest group-hover:text-revgreen transition-colors duration-200"
-                    style={{ fontSize: '1.25rem' }}
-                  >
+                  <h3 className="text-zinc-900 font-bold text-base mb-2 group-hover:text-[#00CC6A] transition-colors">
                     {service.title}
                   </h3>
-                  <span className="text-label text-zinc-500 mb-4 block">
-                    {service.subtitle}
-                  </span>
 
-                  {/* Descrição */}
-                  <p className="text-zinc-400 text-[0.875rem] leading-[1.6] text-reading flex-1">
+                  {/* Descrição — Hormozi: plain language, número + verbo */}
+                  <p className="text-zinc-500 text-sm leading-relaxed flex-1 mb-4">
                     {service.desc}
                   </p>
 
-                  {/* CTA do card - Terminal arrow */}
-                  <div className="mt-8 flex items-center gap-2 text-zinc-500 group-hover:text-revgreen transition-colors text-label">
-                    <span>Acessar</span>
-                    <ArrowUpRight className="w-4 h-4" strokeWidth={2} />
+                  {/* Resultado concreto — Hormozi: dream outcome quantificado */}
+                  <div className="flex items-center justify-between pt-4 border-t border-zinc-100">
+                    <span className="text-xs font-mono font-semibold text-[#00CC6A]">
+                      {service.result}
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-zinc-300 group-hover:text-[#00CC6A] transition-colors" strokeWidth={1.5} />
                   </div>
                 </Link>
               </motion.div>

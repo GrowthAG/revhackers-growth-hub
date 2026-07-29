@@ -10,7 +10,7 @@ import { NumberTicker } from '@/components/ui/NumberTicker';
 
 const stats = [
   { value: 47, suffix: '+',    label: 'Empresas B2B' },
-  { value: 48, prefix: 'R$', suffix: 'M+', label: 'Em vendas geradas' },
+  { value: 48, prefix: 'R$', suffix: 'M+', label: 'Pipeline gerado' },
   { prefix: 'NPS ', value: 94, label: 'Satisfação' },
 ];
 
@@ -26,54 +26,74 @@ const HeroSection = () => {
     >
       <div className="relative z-10 w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
 
-        {/* Headline — tamanho Funnels: 2.25rem mobile, 3rem desktop */}
+        {/* Headline — Hormozi: número + verbo + dream outcome */}
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="font-sans text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center text-balance"
         >
-          Escale suas vendas.{' '}
+          Eu encontro R$50k a R$150k em{' '}
           <span className="text-[#00CC6A]">
-            Simplifique a operação.
+            receita travada no seu funil.
           </span>
         </motion.h1>
 
-        {/* Subheadline — 1rem / 1.125rem, normal weight */}
+        {/* Subheadline — mecanismo + timeframe + risk reversal */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
-          className="text-zinc-400 mb-8 text-base md:text-lg font-normal leading-relaxed max-w-xl mx-auto text-center"
+          className="text-zinc-400 mb-4 text-base md:text-lg font-normal leading-relaxed max-w-xl mx-auto text-center"
         >
-          A única assessoria B2B que unifica Processos, Automações, IA e CRM para transformar sua operação comercial em uma máquina de receita previsível.
+          Sem contratar mais SDRs. Sem torrar caixa com anúncios genéricos. Usando a Auditoria de Receita Integrada RevHackers em 90 dias.
         </motion.p>
 
-        {/* CTAs — rounded-lg, tamanho médio */}
+        {/* Hammer line — ≤5 palavras, isolada */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.14, ease: 'easeOut' }}
+          className="text-zinc-500 text-sm font-normal mb-8 italic"
+        >
+          Ou você não paga um centavo.
+        </motion.p>
+
+        {/* CTAs — Hormozi: Command CTA com consequência */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.16, ease: 'easeOut' }}
+          transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
           className="flex flex-col sm:flex-row gap-3 mb-12 w-full sm:w-auto"
         >
           <Button asChild size="lg" className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 w-full sm:w-auto rounded-lg transition-colors">
             <Link to={buildBookingUrl('homepage', 'hero_primary')} onClick={scrollToTop}>
-              Começar agora
+              Instalar a Auditoria de Escala
               <ArrowRight className="w-4 h-4 ml-2" strokeWidth={2} />
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="bg-transparent border border-zinc-700 text-zinc-300 hover:bg-zinc-900 hover:text-white font-medium text-sm h-11 px-6 w-full sm:w-auto rounded-lg transition-colors">
             <Link to="/cases" onClick={scrollToTop}>
-              Ver resultados
+              Ver resultados reais
             </Link>
           </Button>
         </motion.div>
 
-        {/* Métricas — Estilo Funnels: números mono, labels pequenos */}
+        {/* Microcopy — Hormozi: objection killer */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.26, ease: 'easeOut' }}
+          className="text-zinc-600 text-xs font-normal mb-8"
+        >
+          Sem contrato de 12 meses. Sem taxa de setup. Restam 4 vagas este mês.
+        </motion.p>
+
+        {/* Métricas */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.28, ease: 'easeOut' }}
+          transition={{ duration: 0.5, delay: 0.32, ease: 'easeOut' }}
           className="flex justify-center items-center gap-0 w-full max-w-md border-t border-zinc-800 pt-8"
         >
           {stats.map((stat, i) => (
