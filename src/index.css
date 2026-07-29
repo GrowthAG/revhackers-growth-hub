@@ -47,48 +47,48 @@
   }
 
   :root {
-    /* ─── Surface ─── */
-    --background:   0 0% 100%;    /* #FFFFFF */
-    --foreground:   0 0% 4%;      /* #0A0A0A */
+    /* ─── Surface Dark High-Tech ─── */
+    --background:   240 10% 4%;    /* #09090b */
+    --foreground:   0 0% 98%;      /* #FAFAFA */
 
-    /* ─── Brand Action - SINGLE GREEN ─── */
-    --primary:          150 100% 38%;   /* #00C060 */
+    /* ─── Brand Action - ESMERALDA NEON ─── */
+    --primary:          151 100% 40%;   /* #00CC6A */
     --primary-foreground: 0 0% 0%;      /* #000000 */
 
     /* ─── Cards / Panels ─── */
-    --card:           0 0% 100%;
-    --card-foreground: 0 0% 4%;
+    --card:           240 10% 6%;    /* #0e0e11 */
+    --card-foreground: 0 0% 98%;
 
     /* ─── Secondary ─── */
-    --secondary:          0 0% 96%;    /* zinc-100 */
-    --secondary-foreground: 0 0% 9%;
+    --secondary:          240 6% 10%;   /* zinc-900 */
+    --secondary-foreground: 0 0% 98%;
 
     /* ─── Muted ─── */
-    --muted:          0 0% 96%;
-    --muted-foreground: 0 0% 45%;      /* zinc-500 */
+    --muted:          240 6% 10%;
+    --muted-foreground: 240 5% 65%;      /* zinc-400 */
 
     /* ─── Accent ─── */
-    --accent:          0 0% 96%;
-    --accent-foreground: 0 0% 9%;
+    --accent:          240 6% 10%;
+    --accent-foreground: 0 0% 98%;
 
     /* ─── Borders & Inputs ─── */
-    --border: 0 0% 89%;   /* zinc-200 */
-    --input:  0 0% 89%;
-    --ring:   150 100% 38%;  /* matches primary */
+    --border: 240 6% 15%;   /* zinc-800 */
+    --input:  240 6% 15%;
+    --ring:   151 100% 40%;  /* #00CC6A */
 
     /* ─── Semantic ─── */
     --destructive:          0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     /* ─── Popover ─── */
-    --popover:          0 0% 100%;
-    --popover-foreground: 0 0% 4%;
+    --popover:          240 10% 6%;
+    --popover-foreground: 0 0% 98%;
 
-    /* ─── Radius Scale - B: 4px base ─── */
-    --radius-sm: 0.125rem;   /* 2px  - badges, tags */
-    --radius:    0.25rem;    /* 4px  - buttons, inputs (base) */
-    --radius-lg: 0.5rem;     /* 8px  - cards, panels */
-    --radius-xl: 0.75rem;    /* 12px - modals, sheets */
+    /* ─── Radius Scale ─── */
+    --radius-sm: 0.25rem;   /* 4px */
+    --radius:    0.5rem;    /* 8px */
+    --radius-lg: 0.75rem;   /* 12px */
+    --radius-xl: 1rem;      /* 16px */
   }
 }
 
@@ -100,25 +100,28 @@
   html {
     font-size: 16px;
     scroll-behavior: smooth;
+    background-color: #09090b;
+    color: #fafafa;
   }
 
   /* Ultrawide scaling for REM sizing */
   @media (min-width: 1536px) {
     html {
-      font-size: 17px; /* 106.25% factor on wide monitors */
+      font-size: 17px;
     }
   }
 
   @media (min-width: 1920px) {
     html {
-      font-size: 18px; /* 112.5% factor on ultra-wide / full hd full screen */
+      font-size: 18px;
     }
   }
 
   body {
-    @apply bg-white text-foreground font-sans antialiased;
-    @apply selection:bg-revgreen selection:text-black;
+    @apply bg-[#09090b] text-white font-sans antialiased;
+    @apply selection:bg-[#00CC6A] selection:text-black;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-color: #09090b !important;
   }
 
   /* ─── Tipografia Global - Hierarquia de 5 niveis ─── */
