@@ -1,36 +1,35 @@
 
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Workflow, Database, Sliders, GraduationCap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Cpu, Database, Zap, Bot } from 'lucide-react';
 
 const services = [
   {
-    icon: Bot,
-    title: 'IA + Vendas',
-    desc: 'Seu SDR manda 200 emails genéricos por dia. Nós colocamos IA para enviar a mensagem certa, pro decisor certo, na hora que ele abre o LinkedIn.',
+    icon: Workflow,
+    title: 'Engenharia de Vendas',
+    desc: 'Eliminamos disparos genéricos e automações cegas. Construímos réguas de prospecção inteligente direcionadas estritamente aos decisores certos no momento exato.',
     result: '3x mais respostas qualificadas em 30 dias',
     link: '/servicos/tracao-midia-paga',
   },
   {
     icon: Database,
-    title: 'CRM Inteligente',
-    desc: 'Seu CRM tem 12.000 contatos e ninguém sabe quem é lead quente. Nós organizamos, pontuamos e priorizamos — o vendedor só abre o que vai fechar.',
+    title: 'CRM & Arquitetura de Dados',
+    desc: 'Seu CRM limpo, organizado e pontuado por intenção. O vendedor deixa de perder tempo organizando contatos e passa a focar apenas nas contas prontas para fechar.',
     result: 'Pipeline limpo e acionável em 14 dias',
     link: '/servicos/ecossistema-crm',
   },
   {
-    icon: Zap,
-    title: 'Automação B2B',
-    desc: 'Seu closer gasta 4 horas por dia em follow-up manual. Nós automatizamos. Ele só entra na ligação para fechar negócio.',
+    icon: Sliders,
+    title: 'Automação de Processos B2B',
+    desc: 'Eliminamos até 80% da rotina operacional e follow-up manual dos closers. A tecnologia executa as etapas de registro enquanto o time foca na negociação.',
     result: '70% menos trabalho operacional por vendedor',
     link: '/servicos/automacao-inteligente',
   },
   {
-    icon: Cpu,
-    title: 'Treinamento Operacional',
-    desc: 'Não entregamos um PDF e sumimos. Sentamos junto com a equipe e ensinamos a operar a estratégia na vida real. Com dados, não com achismo.',
+    icon: GraduationCap,
+    title: 'Habilitação Operacional',
+    desc: 'Não entregamos apresentações ou PDFs teóricos. Sentamos junto com a sua equipe comercial e garantimos a execução autônoma do motor de receita na prática.',
     result: 'Equipe autônoma operando o sistema em 21 dias',
     link: '/servicos/founder-led-growth',
   },
@@ -57,8 +56,8 @@ const ServicesSection = () => {
     >
       <div className="max-w-5xl mx-auto px-6">
 
-        {/* Header — Hormozi: confrontação direta */}
-        <div className="mb-14 max-w-2xl">
+        {/* Header — Centralizado */}
+        <div className="mb-14 max-w-3xl mx-auto text-center">
           <motion.p
             variants={fadeUp}
             custom={0}
@@ -83,13 +82,13 @@ const ServicesSection = () => {
             custom={2}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            className="text-zinc-500 text-base leading-relaxed"
+            className="text-zinc-500 text-base leading-relaxed max-w-2xl mx-auto"
           >
             Nós não vendemos horas de consultoria. Nós instalamos 4 sistemas que encontram e fecham receita travada na sua operação.
           </motion.p>
         </div>
 
-        {/* Grid 2x2 — Cards limpos, fundo branco */}
+        {/* Grid 2x2 — Cards limpos SaaS */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {services.map((service, i) => {
             const Icon = service.icon;
@@ -104,11 +103,11 @@ const ServicesSection = () => {
                 <Link
                   to={service.link}
                   onClick={scrollToTop}
-                  className="group flex flex-col h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/30 hover:shadow-sm transition-all"
+                  className="group flex flex-col h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 hover:shadow-sm transition-all"
                 >
-                  {/* Ícone — sem sparkles, sem emojis */}
+                  {/* Ícones de Engenharia & Processos */}
                   <div className="w-10 h-10 bg-zinc-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#00CC6A]/10 transition-colors">
-                    <Icon className="w-5 h-5 text-zinc-600 group-hover:text-[#00CC6A] transition-colors" strokeWidth={1.5} />
+                    <Icon className="w-5 h-5 text-zinc-700 group-hover:text-[#00CC6A] transition-colors" strokeWidth={1.5} />
                   </div>
 
                   {/* Título */}
@@ -116,14 +115,14 @@ const ServicesSection = () => {
                     {service.title}
                   </h3>
 
-                  {/* Descrição — Hormozi: plain language, número + verbo */}
+                  {/* Descrição */}
                   <p className="text-zinc-500 text-sm leading-relaxed flex-1 mb-4">
                     {service.desc}
                   </p>
 
-                  {/* Resultado concreto — Hormozi: dream outcome quantificado */}
+                  {/* Resultado concreto */}
                   <div className="flex items-center justify-between pt-4 border-t border-zinc-100">
-                    <span className="text-xs font-mono font-semibold text-[#00CC6A]">
+                    <span className="text-xs font-sans font-bold text-[#00CC6A]">
                       {service.result}
                     </span>
                     <ArrowRight className="w-4 h-4 text-zinc-300 group-hover:text-[#00CC6A] transition-colors" strokeWidth={1.5} />
