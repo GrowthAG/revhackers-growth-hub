@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    base: "/",
+    base: process.env.VITE_BASE_PATH || "/",
     ...(offlineMode ? { envDir: offlineEnvDir } : {}),
     server: {
       host: "::",
