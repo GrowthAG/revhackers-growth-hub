@@ -26,27 +26,37 @@ const HeroSection = () => {
     >
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
 
-        {/* Headline */}
+        {/* Headline — WHY + HOW (Hormozi) */}
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center"
         >
-          Montamos a sua estrutura de{' '}
+          Nós não vendemos consultoria.{' '}
           <span className="text-[#00CC6A]">
-            GTM Engineer e ABM com Inteligência Artificial.
+            Instalamos sua máquina de receita B2B com ABM e IA em 45 dias.
           </span>
         </motion.h1>
 
-        {/* Subheadline — alinhada à esquerda com a headline */}
+        {/* Subheadline — mecanismo + risk reversal */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
-          className="text-zinc-400 mb-4 text-base md:text-lg font-normal leading-relaxed max-w-xl mx-auto text-center"
+          className="text-zinc-400 mb-3 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center"
         >
-          Engenharia de receita B2B que integra CRM, automações e inteligência artificial para escalar operações comerciais sem aumentar headcount.
+          Construímos a engenharia de GTM e ABM dentro do seu CRM para colocar seus executivos na mesa das maiores contas do seu setor.
+        </motion.p>
+
+        {/* Hammer line — confrontação direta */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.12, ease: 'easeOut' }}
+          className="text-zinc-500 text-sm font-normal mb-6 italic text-center"
+        >
+          Agência vende relatório em PDF. Nós instalamos código e processos que colocam dinheiro em caixa.
         </motion.p>
 
         {/* Hammer line — ≤5 palavras, isolada */}
@@ -92,7 +102,7 @@ const HeroSection = () => {
         >
           <Button asChild size="lg" className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 w-full sm:w-auto rounded-lg transition-colors">
             <Link to={buildBookingUrl('homepage', 'hero_primary')} onClick={scrollToTop}>
-              Instalar a Auditoria de Escala
+              Instalar Engenharia de Receita
               <ArrowRight className="w-4 h-4 ml-2" strokeWidth={2} />
             </Link>
           </Button>
@@ -110,7 +120,7 @@ const HeroSection = () => {
           transition={{ duration: 0.5, delay: 0.26, ease: 'easeOut' }}
           className="text-zinc-600 text-xs font-normal mb-8"
         >
-          Sem contrato de 12 meses. Sem taxa de setup. Restam 4 vagas este mês.
+          Risco 100% nosso. Se não gerar oportunidades em 60 dias, devolvemos 100% do valor.
         </motion.p>
 
         {/* Métricas */}
