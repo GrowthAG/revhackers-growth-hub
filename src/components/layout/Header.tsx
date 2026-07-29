@@ -30,15 +30,15 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
   // Helper variables for styling based on variant/scroll state
   const isLightMode = variant === 'light' && !scrolled;
 
-  const textColor = isLightMode ? "text-zinc-600 hover:text-black" : "text-zinc-300 hover:text-white";
-  const navBg = isLightMode ? "bg-white border-zinc-200/50 shadow-sm" : "bg-white/5 border-white/10";
-  const hoverBg = isLightMode ? "hover:bg-zinc-100" : "hover:bg-white/5";
-  const logoClass = isLightMode ? "invert" : "";
+  const textColor = "text-zinc-600 hover:text-zinc-900";
+  const navBg = "bg-white border-zinc-200";
+  const hoverBg = "hover:bg-zinc-50";
+  const logoClass = "invert";
 
   const NavLink = ({ to, children }: { to: string, children: React.ReactNode }) => (
     <Link
       to={to}
-      className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 whitespace-nowrap ${textColor} ${hoverBg}`}
+      className={`px-4 py-2 text-xs font-black uppercase tracking-[0.08em] transition-colors whitespace-nowrap ${textColor} ${hoverBg}`}
       onClick={() => window.scrollTo(0, 0)}
     >
       {children}
@@ -48,7 +48,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
   const MobileNavLink = ({ to, onClick, children }: { to: string, onClick: () => void, children: React.ReactNode }) => (
     <Link
       to={to}
-      className={`text-xl font-medium transition-colors py-2 border-b block ${isLightMode ? "text-zinc-800 border-zinc-100" : "text-zinc-300 border-white/5 hover:text-revgreen"}`}
+      className="text-xl font-medium transition-colors py-2 border-b block text-zinc-800 border-zinc-100 hover:text-[#00CC6A]"
       onClick={onClick}
     >
       {children}
@@ -123,10 +123,10 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
     <>
       <header
         className={cn(
-          "w-full fixed top-0 left-0 right-0 z-[60] transition-all duration-300 border-b selection:bg-[#00CC6A] selection:text-black",
+          "w-full fixed top-0 left-0 right-0 z-[60] transition-all duration-300 border-b border-zinc-200",
           scrolled
-            ? "bg-[#09090b]/95 backdrop-blur-xl border-zinc-800/80 shadow-2xl py-4"
-            : "bg-[#09090b]/80 backdrop-blur-lg border-zinc-900/60 py-5"
+            ? "bg-white py-4"
+            : "bg-white py-5"
         )}
       >
         <div className="container-custom flex justify-between items-center relative gap-4">
@@ -136,47 +136,47 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
               <img
                 src="/brand/revhackers-wordmark-white.png"
                 alt="RevHackers Logo"
-                className="w-44 sm:w-48 lg:w-52 max-w-full h-auto transition-all duration-300 group-hover:opacity-90"
+                className={`w-44 sm:w-48 lg:w-52 max-w-full h-auto transition-all duration-300 group-hover:opacity-90 ${logoClass}`}
               />
             </Link>
           </div>
 
           {/* Center: Navigation */}
           <nav className="hidden xl:flex items-center justify-center flex-1">
-            <div className="flex items-center rounded-full px-3 py-1.5 backdrop-blur-xl bg-zinc-900/60 border border-zinc-800/80 shadow-lg">
+            <div className="flex items-center px-3 py-1.5 border border-zinc-200">
               <div className="flex items-center space-x-1">
                 <NavLink to="/">Home</NavLink>
-                <div className="w-px h-3 mx-1 bg-zinc-800" />
+                <div className="w-px h-3 mx-1 bg-zinc-200" />
 
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="px-4 py-2 text-xs font-mono font-bold tracking-wider uppercase rounded-full transition-all duration-200 flex items-center gap-1.5 text-zinc-300 hover:text-white hover:bg-zinc-800/50 focus:outline-none data-[state=open]:text-[#00CC6A] data-[state=open]:bg-zinc-800">
-                    Auditoria <ChevronDown className="w-3 h-3 text-[#00CC6A]" />
+                  <DropdownMenuTrigger className="px-4 py-2 text-xs font-black tracking-[0.08em] uppercase transition-colors flex items-center gap-1.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 focus:outline-none data-[state=open]:text-[#00CC6A]">
+                    Auditoria <ChevronDown className="w-3 h-3" />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent sideOffset={8} className="bg-zinc-950/95 border-zinc-800 p-2 backdrop-blur-2xl w-[260px] z-[70] shadow-2xl rounded-xl">
+                  <DropdownMenuContent sideOffset={8} className="bg-white border-zinc-200 border-2 p-2 w-[260px] z-[70] rounded-none">
                     <DropdownMenuItem asChild>
-                      <Link to="/score" className="flex items-center gap-2.5 text-zinc-300 hover:text-[#00CC6A] hover:bg-zinc-900 cursor-pointer px-3 py-2.5 rounded-lg text-xs font-mono font-semibold" onClick={scrollToTop}>
-                        <Activity className="w-4 h-4 text-[#00CC6A]" /> Diagnóstico 360
+                      <Link to="/score" className="flex items-center gap-2.5 text-zinc-700 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                        <Activity className="w-4 h-4 text-zinc-400" /> Diagnóstico 360
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/score-revenue" className="flex items-center gap-2.5 text-zinc-300 hover:text-[#00CC6A] hover:bg-zinc-900 cursor-pointer px-3 py-2.5 rounded-lg text-xs font-mono font-semibold" onClick={scrollToTop}>
-                        <TrendingUp className="w-4 h-4 text-[#00CC6A]" /> Diagnóstico CRM
+                      <Link to="/score-revenue" className="flex items-center gap-2.5 text-zinc-700 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                        <TrendingUp className="w-4 h-4 text-zinc-400" /> Diagnóstico CRM
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/score-founder" className="flex items-center gap-2.5 text-zinc-300 hover:text-[#00CC6A] hover:bg-zinc-900 cursor-pointer px-3 py-2.5 rounded-lg text-xs font-mono font-semibold" onClick={scrollToTop}>
-                        <Users className="w-4 h-4 text-[#00CC6A]" /> Diagnóstico do Fundador
+                      <Link to="/score-founder" className="flex items-center gap-2.5 text-zinc-700 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                        <Users className="w-4 h-4 text-zinc-400" /> Diagnóstico do Fundador
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/score-site" className="flex items-center gap-2.5 text-zinc-300 hover:text-[#00CC6A] hover:bg-zinc-900 cursor-pointer px-3 py-2.5 rounded-lg text-xs font-mono font-semibold" onClick={scrollToTop}>
-                        <Globe className="w-4 h-4 text-[#00CC6A]" /> Diagnóstico Site / LP
+                      <Link to="/score-site" className="flex items-center gap-2.5 text-zinc-700 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                        <Globe className="w-4 h-4 text-zinc-400" /> Diagnóstico Site / LP
                       </Link>
                     </DropdownMenuItem>
-                    <div className="h-px bg-zinc-800/80 my-1.5" />
+                    <div className="h-px bg-zinc-200 my-1.5" />
                     <DropdownMenuItem asChild>
-                      <Link to="/diagnostico" className="flex items-center gap-2.5 text-white hover:text-[#00CC6A] hover:bg-zinc-900 cursor-pointer px-3 py-2.5 rounded-lg text-xs font-mono font-bold" onClick={scrollToTop}>
-                        <BarChart2 className="w-4 h-4 text-white" /> Ver Todas as Auditorias
+                      <Link to="/diagnostico" className="flex items-center gap-2.5 text-zinc-900 hover:text-[#00CC6A] hover:bg-zinc-50 cursor-pointer px-3 py-2.5 text-xs font-black uppercase tracking-wider" onClick={scrollToTop}>
+                        <BarChart2 className="w-4 h-4 text-zinc-900" /> Ver Todas as Auditorias
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -198,37 +198,37 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
           <div className="hidden xl:flex items-center justify-end gap-4 z-10 flex-shrink-0">
             {user ? (
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-2 text-xs font-mono font-semibold transition-colors focus:outline-none text-zinc-300 hover:text-white">
+                <DropdownMenuTrigger className="flex items-center gap-2 text-xs font-black uppercase tracking-wider transition-colors focus:outline-none text-zinc-600 hover:text-zinc-900">
                   {avatarUrl ? (
-                    <div className="w-8 h-8 rounded-full border border-[#00CC6A]/40 overflow-hidden">
+                    <div className="w-8 h-8 border-2 border-zinc-200 overflow-hidden">
                       <img src={avatarUrl} alt="User Avatar" className="w-full h-full object-cover" />
                     </div>
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-[#00CC6A]/10 border border-[#00CC6A]/30 flex items-center justify-center text-[#00CC6A] font-bold font-mono text-xs">
+                    <div className="w-8 h-8 bg-zinc-100 border-2 border-zinc-200 flex items-center justify-center text-zinc-900 font-black text-xs">
                       {user.email?.charAt(0).toUpperCase()}
                     </div>
                   )}
                   <ChevronDown className="w-3 h-3 opacity-50" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-zinc-950/95 border-zinc-800 p-2 backdrop-blur-2xl w-[200px] z-[70] shadow-2xl rounded-xl">
-                  <DropdownMenuItem asChild className="focus:bg-zinc-900 focus:text-[#00CC6A]">
-                    <Link to="/admin/profile" className="flex items-center gap-2 text-zinc-300 cursor-pointer px-3 py-2 rounded-lg font-mono text-xs font-semibold outline-none">
-                      <User className="w-4 h-4 text-[#00CC6A]" /> Meu Perfil
+                <DropdownMenuContent align="end" className="bg-white border-2 border-zinc-200 p-2 w-[200px] z-[70] rounded-none">
+                  <DropdownMenuItem asChild className="focus:bg-zinc-50">
+                    <Link to="/admin/profile" className="flex items-center gap-2 text-zinc-700 cursor-pointer px-3 py-2 text-xs font-black uppercase tracking-wider outline-none">
+                      <User className="w-4 h-4 text-zinc-400" /> Meu Perfil
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="focus:bg-zinc-900 focus:text-[#00CC6A]">
-                    <Link to="/admin" className="flex items-center gap-2 text-zinc-300 cursor-pointer px-3 py-2 rounded-lg font-mono text-xs font-semibold outline-none">
-                      <Lock className="w-4 h-4 text-[#00CC6A]" /> Admin Hub
+                  <DropdownMenuItem asChild className="focus:bg-zinc-50">
+                    <Link to="/admin" className="flex items-center gap-2 text-zinc-700 cursor-pointer px-3 py-2 text-xs font-black uppercase tracking-wider outline-none">
+                      <Lock className="w-4 h-4 text-zinc-400" /> Admin Hub
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="focus:bg-zinc-900 focus:text-[#00CC6A]">
-                    <Link to="/admin/settings" className="flex items-center gap-2 text-zinc-300 cursor-pointer px-3 py-2 rounded-lg font-mono text-xs font-semibold outline-none">
-                      <Settings className="w-4 h-4 text-[#00CC6A]" /> Configurações
+                  <DropdownMenuItem asChild className="focus:bg-zinc-50">
+                    <Link to="/admin/settings" className="flex items-center gap-2 text-zinc-700 cursor-pointer px-3 py-2 text-xs font-black uppercase tracking-wider outline-none">
+                      <Settings className="w-4 h-4 text-zinc-400" /> Configurações
                     </Link>
                   </DropdownMenuItem>
-                  <div className="h-px bg-zinc-800/80 my-1" />
+                  <div className="h-px bg-zinc-200 my-1" />
                   <DropdownMenuItem
-                    className="flex items-center gap-2 text-red-400 hover:text-red-300 hover:bg-zinc-900 cursor-pointer px-3 py-2 rounded-lg font-mono text-xs font-semibold"
+                    className="flex items-center gap-2 text-red-500 hover:text-red-600 hover:bg-zinc-50 cursor-pointer px-3 py-2 text-xs font-black uppercase tracking-wider"
                     onClick={handleLogout}
                   >
                     <ArrowRight className="w-4 h-4" /> Sair
@@ -237,10 +237,10 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
               </DropdownMenu>
             ) : (
               <Link to="/login"
-                className="text-xs font-mono font-bold tracking-widest uppercase transition-colors text-zinc-400 hover:text-[#00CC6A] px-3 py-2"
+                className="text-xs font-black tracking-[0.15em] uppercase transition-colors text-zinc-400 hover:text-zinc-900 px-3 py-2"
                 onClick={scrollToTop}
               >
-                Admin OS
+                LOGIN
               </Link>
             )}
 
@@ -248,16 +248,16 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
               onClick={() => setIsLeadModalOpen(true)}
               variant="default"
               size="default"
-              className="bg-[#00CC6A] text-black hover:bg-[#00E577] font-black text-xs uppercase tracking-[0.2em] rounded-full h-11 px-6 shadow-lg shadow-[#00CC6A]/10 border-none transition-all duration-300 hover:shadow-[#00CC6A]/20 flex items-center gap-2 group/btn"
+              className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-black text-xs uppercase tracking-[0.2em] rounded-none h-11 px-6 border-2 border-black transition-colors flex items-center gap-2"
             >
-              <span>Solicitar Auditoria</span>
-              <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" strokeWidth={2} />
+              <span>SOLICITAR AUDITORIA</span>
+              <ArrowRight className="w-4 h-4" strokeWidth={2} />
             </Button>
           </div>
 
           <button
             onClick={toggleMenu}
-            className={`xl:hidden p-2 transition-colors ml-auto z-10 ${isLightMode ? "text-black hover:text-revgreen" : "text-white hover:text-revgreen"}`}
+            className="xl:hidden p-2 transition-colors ml-auto z-10 text-zinc-900 hover:text-[#00CC6A]"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -266,9 +266,9 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
         {/* Mobile menu */}
         {
           isMenuOpen && (
-            <div className="xl:hidden bg-black border-t border-white/10 absolute top-full left-0 w-full h-screen animate-fade-in z-50 p-6 overflow-y-auto pb-20">
+            <div className="xl:hidden bg-white border-t border-zinc-200 absolute top-full left-0 w-full h-screen animate-fade-in z-50 p-6 overflow-y-auto pb-20">
               <div className="flex flex-col space-y-6">
-                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div className="flex items-center justify-between pb-4 border-b border-zinc-200">
                   <Link to="/" onClick={scrollToTop} className="block">
                     <img
                       src="/brand/revhackers-wordmark-white.png"

@@ -9,7 +9,7 @@ interface PageLayoutProps {
 
 const PageLayout = ({ children, headerVariant = 'default' }: PageLayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden bg-[#09090b] text-white selection:bg-[#00CC6A] selection:text-black">
+    <div className="flex flex-col min-h-screen overflow-x-hidden bg-white text-zinc-900">
       <Header variant={headerVariant} />
       <main className="flex-grow w-full">
         {children}

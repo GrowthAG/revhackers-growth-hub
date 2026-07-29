@@ -9,9 +9,9 @@ import { buildBookingUrl } from '@/utils/utm';
 import { NumberTicker } from '@/components/ui/NumberTicker';
 
 const stats = [
-  { value: 47, suffix: '+',    label: 'empresas B2B' },
-  { value: 48, prefix: 'R$', suffix: 'M+', label: 'em vendas geradas' },
-  { prefix: 'NPS ', value: 94, label: 'satisfação de clientes' },
+  { value: 47, suffix: '+',    label: 'EMPRESAS B2B' },
+  { value: 48, prefix: 'R$', suffix: 'M+', label: 'EM VENDAS GERADAS' },
+  { prefix: 'NPS ', value: 94, label: 'SATISFAÇÃO' },
 ];
 
 const HeroSection = () => {
@@ -22,99 +22,93 @@ const HeroSection = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden border-b border-zinc-800/80 pt-36 pb-24 bg-[#09090b] text-white selection:bg-[#00CC6A] selection:text-black"
+      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden border-b border-zinc-200 pt-32 pb-20 bg-white"
     >
-      {/* Grid Cyber Background & Radial Glow */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b20_1px,transparent_1px),linear-gradient(to_bottom,#18181b20_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_35%,#000_70%,transparent_100%)] pointer-events-none" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00CC6A]/10 blur-[140px] rounded-full pointer-events-none" />
-
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center mt-auto mb-auto">
 
-        {/* Badge superior (Micro Label Tech) */}
+        {/* Micro Label — Seca, industrial, sem badge arredondado */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, ease: 'easeOut' }}
           className="flex justify-center mb-8 relative z-10"
         >
-          <div className="inline-flex items-center gap-3 border border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
-            <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />
-            <span className="font-mono text-3xs font-black tracking-[0.25em] text-zinc-300 uppercase">
-              REVENUE OPERATIONS // B2B ARCHITECTURE
+          <div className="flex items-center gap-3">
+            <div className="w-2 h-2 bg-[#00CC6A]" />
+            <span className="text-[0.65rem] font-black tracking-[0.25em] text-zinc-900 uppercase">
+              REVENUE OPERATIONS // B2B
             </span>
           </div>
         </motion.div>
 
-        {/* Headline com posicionamento RevOps */}
+        {/* Headline — Grande, preta, seca */}
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, delay: 0.08, ease: 'easeOut' }}
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-[1.02] tracking-tighter w-full max-w-5xl mx-auto text-center text-balance relative z-10"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-zinc-900 mb-6 leading-[1.05] tracking-tight w-full max-w-5xl mx-auto text-center text-balance relative z-10"
         >
-          Escale as suas vendas. <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00CC6A] via-[#00E577] to-white">
-            Simplifique a operação.
-          </span>
+          Escale suas vendas.<br />
+          Simplifique a operação.
         </motion.h1>
 
-        {/* Subheadline — Dark High-End */}
+        {/* Subheadline — Limpa, focada, sem excesso */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, delay: 0.16, ease: 'easeOut' }}
-          className="text-zinc-400 mb-10 text-lg md:text-xl font-light leading-relaxed max-w-3xl mx-auto text-center relative z-10"
+          className="text-zinc-500 mb-10 text-lg md:text-xl font-medium leading-relaxed max-w-2xl mx-auto text-center relative z-10"
         >
-          A única assessoria estratégica B2B que unifica <strong className="text-white font-semibold">Processos, Automações, IA e CRM</strong>.<br className="hidden md:block"/>
-          Abandone a força bruta operacional e conquiste previsibilidade via Engenharia de Receita pura.
+          A única assessoria B2B que unifica <strong className="text-zinc-900 font-bold">Processos, Automações, IA e CRM</strong>. Abandone a força bruta operacional e conquiste previsibilidade via Engenharia de Receita.
         </motion.p>
 
-        {/* CTAs */}
+        {/* CTAs — Botões retos (rounded-none), sem sombra suave */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, delay: 0.24, ease: 'easeOut' }}
           className="flex flex-col sm:flex-row gap-4 mb-16 w-full sm:w-auto px-6 sm:px-0"
         >
-          <Button asChild size="lg" className="bg-[#00CC6A] text-black hover:bg-[#00E577] font-black uppercase tracking-[0.2em] text-xs h-14 px-8 w-full sm:w-auto rounded-xl shadow-lg shadow-[#00CC6A]/20 transition-all duration-300 group/btn">
+          <Button asChild size="lg" className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-black uppercase tracking-[0.2em] text-xs h-14 px-8 w-full sm:w-auto rounded-none border-2 border-black transition-colors">
             <Link to={buildBookingUrl('homepage', 'hero_primary')} onClick={scrollToTop}>
-              Auditar Minha Operação
-              <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" strokeWidth={2} />
+              AUDITAR MINHA OPERAÇÃO
+              <ArrowRight className="w-4 h-4 ml-2" strokeWidth={2} />
             </Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="bg-zinc-950/60 border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-900/80 font-bold uppercase tracking-[0.2em] text-xs h-14 px-8 w-full sm:w-auto rounded-xl backdrop-blur-md transition-all">
+          <Button asChild size="lg" variant="outline" className="bg-white border-2 border-zinc-900 text-zinc-900 hover:bg-zinc-50 font-black uppercase tracking-[0.2em] text-xs h-14 px-8 w-full sm:w-auto rounded-none transition-colors">
             <Link to="/cases" onClick={scrollToTop}>
-              Ver Resultados Reais
+              VER RESULTADOS
             </Link>
           </Button>
         </motion.div>
 
-        {/* Social proof - Metricas estilo Terminal / Console */}
+        {/* Métricas — Secas, sem card, só bordas finas */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.40, ease: 'easeOut' }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-6 border border-zinc-800/80 bg-zinc-950/70 backdrop-blur-xl p-6 rounded-2xl w-full max-w-3xl shadow-2xl relative"
+          className="flex justify-center items-center border-t border-zinc-200 pt-8 w-full max-w-2xl"
         >
-          <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-[#00CC6A]/40 to-transparent" />
-          
           {stats.map((stat, i) => (
-            <div key={stat.label} className="flex flex-col items-center justify-center p-3 relative">
-              {typeof stat.value === 'number' ? (
-                <NumberTicker 
-                  value={stat.value} 
-                  suffix={stat.suffix} 
-                  prefix={stat.prefix} 
-                  className="text-white font-mono font-black text-3xl leading-none tracking-tight" 
-                />
-              ) : (
-                <span className="text-white font-mono font-black text-3xl leading-none tracking-tight">
-                  {stat.value}
+            <div key={stat.label} className="flex items-center">
+              <div className="flex flex-col items-center px-8 py-2">
+                {typeof stat.value === 'number' ? (
+                  <NumberTicker 
+                    value={stat.value} 
+                    suffix={stat.suffix} 
+                    prefix={stat.prefix} 
+                    className="text-zinc-900 font-black text-2xl leading-none tracking-tight" 
+                  />
+                ) : (
+                  <span className="text-zinc-900 font-black text-2xl leading-none tracking-tight">
+                    {stat.value}
+                  </span>
+                )}
+                <span className="text-[0.6rem] font-black text-zinc-400 uppercase tracking-[0.2em] mt-2.5 text-center block">
+                  {stat.label}
                 </span>
-              )}
-              <span className="font-mono text-3xs font-semibold text-zinc-400 uppercase tracking-widest mt-2.5 text-center block">
-                {stat.label}
-              </span>
+              </div>
+              {i < stats.length - 1 && <div className="w-px h-10 bg-zinc-200" />}
             </div>
           ))}
         </motion.div>
