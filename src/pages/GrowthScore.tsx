@@ -313,41 +313,41 @@ const GrowthScore = () => {
           <div className="bg-white border border-zinc-200 rounded-2xl p-8 sm:p-12 shadow-sm flex flex-col lg:flex-row items-stretch gap-10 lg:gap-14">
             
             {/* Lado Esquerdo: Diagnóstico e Métricas */}
-            <div className="flex-1 flex flex-col justify-between space-y-8 lg:border-r border-zinc-100 lg:pr-12">
-              <div className="space-y-4">
+            <div className="flex-1 flex flex-col justify-between space-y-6 lg:border-r border-zinc-100 lg:pr-10">
+              <div className="space-y-2">
                 <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
                   Diagnóstico de Growth • Análise Concluída
                 </p>
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 leading-tight">
+                <h2 className="text-lg sm:text-xl font-bold tracking-tight text-zinc-900 leading-snug">
                   Identificamos vazamentos significativos na sua operação comercial.
                 </h2>
-                <p className="text-sm text-zinc-500 leading-relaxed">
-                  Com base no algoritmo de IA e nas respostas declaradas, calculamos o nível de maturidade e o impacto financeiro acumulado.
+                <p className="text-xs text-zinc-500 leading-relaxed">
+                  Com base no algoritmo de IA e nas respostas declaradas, calculamos a maturidade e o impacto financeiro.
                 </p>
               </div>
 
               {/* Cards de Métricas alinhados verticalmente no lado esquerdo */}
-              <div className="space-y-4">
-                <div className="bg-zinc-50 border border-zinc-200/80 rounded-xl p-5 flex items-center justify-between">
+              <div className="space-y-3">
+                <div className="bg-zinc-50 border border-zinc-200/80 rounded-xl p-4 flex items-center justify-between">
                   <div>
-                    <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider block">Score de Maturidade</span>
+                    <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider block">Score de Maturidade</span>
                     <span className="text-xs text-zinc-600 font-medium pt-0.5 block">
                       {teaserScore >= 70 ? 'Operação Estruturada' : teaserScore >= 40 ? 'Vazamento de Processos' : 'Gargalo Crítico de Receita'}
                     </span>
                   </div>
                   <div className="flex items-baseline gap-0.5">
-                    <span className="text-3xl font-extrabold text-zinc-900 tracking-tight">{teaserScore}</span>
+                    <span className="text-2xl font-extrabold text-zinc-900 tracking-tight">{teaserScore}</span>
                     <span className="text-xs font-bold text-zinc-400">/100</span>
                   </div>
                 </div>
 
-                <div className="bg-zinc-50 border border-zinc-200/80 rounded-xl p-5 space-y-1">
-                  <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider block">Vazamento Anual Projetado</span>
-                  <div className="text-2xl font-extrabold text-zinc-900 tracking-tight">
+                <div className="bg-zinc-50 border border-zinc-200/80 rounded-xl p-4 space-y-1">
+                  <span className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider block">Vazamento Anual Projetado</span>
+                  <div className="text-xl font-extrabold text-zinc-900 tracking-tight">
                     {( Math.max(120000, (100 - teaserScore) * 4850 + (answers[0] === 0 ? 140000 : 0) + (answers[1] === 0 ? 95000 : 0)) ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                     <span className="text-xs font-normal text-zinc-500 ml-1">/ano</span>
                   </div>
-                  <p className="text-xs text-zinc-600 leading-relaxed pt-1">
+                  <p className="text-xs text-zinc-600 leading-relaxed pt-0.5">
                     {answers[0] === 0 
                       ? "Gargalo operacional centralizado no fundador e processos manuais que consomem margem líquida." 
                       : answers[2] === 0 
@@ -357,15 +357,15 @@ const GrowthScore = () => {
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center gap-4 text-xs text-zinc-400 font-medium">
+              <div className="pt-1 flex items-center gap-4 text-xs text-zinc-400 font-medium">
                 <span>✓ 5 Dimensões Auditadas</span>
                 <span>•</span>
                 <span>✓ Algoritmo de IA</span>
               </div>
             </div>
 
-            {/* Lado Direito: Formulário Corporativo */}
-            <div className="flex-1 w-full max-w-md flex flex-col justify-center">
+            {/* Lado Direito: Formulário Corporativo com alinhamento otimizado */}
+            <div className="flex-1 w-full max-w-md flex flex-col justify-start">
               <DiagnosticForm
                 onSubmit={handleFormSubmit}
                 isSubmitting={isSubmitting}
