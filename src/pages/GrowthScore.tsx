@@ -309,62 +309,68 @@ const GrowthScore = () => {
   {step === 'results' && (
     <>
       {!hasSubmittedLead && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/60 backdrop-blur-md p-4 overflow-y-auto animate-in fade-in duration-300">
-          <div className="bg-white border border-zinc-200 rounded-2xl p-6 sm:p-10 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 shadow-2xl relative overflow-hidden my-auto max-h-[90vh]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/80 backdrop-blur-sm p-4 overflow-y-auto animate-in fade-in duration-300">
+          <div className="bg-white border border-zinc-200 rounded-xl w-full max-w-4xl flex flex-col md:flex-row items-stretch shadow-2xl relative overflow-hidden my-auto max-h-[90vh]">
             
-            {/* Lado Esquerdo: Diagnóstico e Cálculo de Vazamento Real */}
-            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:border-r border-zinc-100 md:pr-10 w-full">
-              <div className="flex items-center gap-2 bg-zinc-100 px-3 py-1 rounded-full border border-zinc-200">
-                <span className={`w-2 h-2 rounded-full ${teaserScore >= 70 ? 'bg-[#00CC6A]' : teaserScore >= 40 ? 'bg-amber-500' : 'bg-red-500'} animate-pulse`} />
-                <span className="text-xs font-semibold text-zinc-700 uppercase tracking-wider">Diagnóstico Preditivo Concluído</span>
-              </div>
+            {/* Lado Esquerdo: Resumo Executivo & Perda Auditada */}
+            <div className="flex-1 bg-zinc-950 text-white p-6 sm:p-10 flex flex-col justify-between space-y-8">
+              <div className="space-y-6">
+                <div>
+                  <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-1">
+                    Auditoria de Growth Concluída
+                  </p>
+                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                    Relatório de Maturidade & Unit Economics
+                  </h3>
+                </div>
 
-              {/* Placa do Score */}
-              <div className="space-y-1">
-                <span className="text-xs font-medium text-zinc-400 block uppercase tracking-wider">Score Geral de Maturidade</span>
-                <div className="flex items-baseline justify-center gap-1">
-                  <span className={`text-6xl sm:text-7xl font-extrabold tracking-tight ${teaserScore >= 70 ? 'text-[#00CC6A]' : teaserScore >= 40 ? 'text-amber-500' : 'text-red-500'}`}>
-                    {teaserScore}
-                  </span>
-                  <span className="text-xl font-bold text-zinc-400">/100</span>
+                {/* Bloco de Métricas Chave */}
+                <div className="grid grid-cols-2 gap-4 pt-2">
+                  <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
+                    <span className="text-xs text-zinc-400 font-medium block mb-1">Score da Operação</span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-3xl sm:text-4xl font-bold text-white tracking-tight">{teaserScore}</span>
+                      <span className="text-xs text-zinc-500 font-semibold">/100</span>
+                    </div>
+                  </div>
+
+                  <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
+                    <span className="text-xs text-zinc-400 font-medium block mb-1">Status Técnico</span>
+                    <span className={`text-xs font-semibold block mt-1 ${teaserScore >= 70 ? 'text-[#00CC6A]' : teaserScore >= 40 ? 'text-amber-400' : 'text-red-400'}`}>
+                      {teaserScore >= 70 ? 'Operação Escalável' : teaserScore >= 40 ? 'Vazamento Sistêmico' : 'Hemorragia de Caixa'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Perda Financeira Auditada */}
+                <div className="border-l-2 border-[#00CC6A] pl-4 space-y-1 py-1">
+                  <span className="text-xs text-zinc-400 uppercase font-semibold tracking-wider block">Vazamento Anual Projetado</span>
+                  <div className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                    {( Math.max(120000, (100 - teaserScore) * 4850 + (answers[0] === 0 ? 140000 : 0) + (answers[1] === 0 ? 95000 : 0)) ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                  </div>
+                  <p className="text-xs text-zinc-400 leading-relaxed pt-1">
+                    {answers[0] === 0 
+                      ? "Gargalo operacional centralizado no fundador e ausência de processos escaláveis no CRM." 
+                      : answers[2] === 0 
+                      ? "Vulnerabilidade de receita por dependência de indicação ou canal único de aquisição."
+                      : "Desperdício de margem líquida por falta de controle estrito de CAC Teto e triagem preditiva."}
+                  </p>
                 </div>
               </div>
 
-              {/* Caixa de Perda Financeira Projetada Dinâmica por respostas */}
-              <div className="w-full bg-zinc-50 border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-2 text-left">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded uppercase tracking-wider">
-                    Perda Estimada
-                  </span>
-                  <span className="text-xs text-zinc-400">Projeção 12 meses</span>
-                </div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight">
-                  {( Math.max(120000, (100 - teaserScore) * 4850 + (answers[0] === 0 ? 140000 : 0) + (answers[1] === 0 ? 95000 : 0)) ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                  <span className="text-xs font-normal text-zinc-500 ml-1">/ano</span>
-                </div>
-                <p className="text-xs text-zinc-600 leading-relaxed">
-                  {answers[0] === 0 
-                    ? "Gargalo centralizador na operação e processos manuais que consomem margem líquida." 
-                    : answers[2] === 0 
-                    ? "Vulnerabilidade crítica por dependência de indicação ou canal único de aquisição."
-                    : "Desperdício de orçamento por ausência de teto rígido de CAC e triagem por IA."}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-center gap-4 text-xs text-zinc-400 font-medium">
-                <span>✓ 5 Dimensões Auditadas</span>
-                <span>•</span>
-                <span>✓ Algoritmo de IA</span>
+              <div className="pt-4 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-400">
+                <span>5 Dimensões Analisadas</span>
+                <span>Dados 100% Criptografados</span>
               </div>
             </div>
 
-            {/* Lado Direito: Formulário Limpo */}
-            <div className="flex-1 w-full max-w-md flex flex-col justify-center">
+            {/* Lado Direito: Formulário Corporativo Limpo */}
+            <div className="flex-1 bg-white p-6 sm:p-10 flex flex-col justify-center">
               <DiagnosticForm
                 onSubmit={handleFormSubmit}
                 isSubmitting={isSubmitting}
-                title="Estancar Perda de Receita"
-                subtitle="Informe seus dados para liberar o Relatório Completo de Ação."
+                title="Acessar Relatório Completo"
+                subtitle="Preencha os dados corporativos para desbloquear o plano de ação detalhado."
                 variant="light"
                 diagnosticType="Growth"
               />
