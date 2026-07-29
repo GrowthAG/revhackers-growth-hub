@@ -86,29 +86,51 @@ export const DiagnosticForm = ({
 
  setForm(prev => ({ ...prev, cnpj: formatted }));
 
- if (cleanCnpj.length === 14) {
- setIsQueryingCnpj(true);
- try {
- const baseUrl = import.meta.env.VITE_GCP_API_URL || 'https://api.revhackers.com';
- const response = await fetch(`${baseUrl}/v1/opportunities/lookup?cnpj=${cleanCnpj}`);
- if (response.ok) {
- const result = await response.json();
- if (result.data && result.data.company_name) {
- setForm(prev => ({
- ...prev,
- company: result.data.company_name,
- }));
- setCnpjChecked(true);
- }
- }
- } catch (err) {
- console.error('[DiagnosticForm] Falha ao buscar CNPJ:', err);
- } finally {
- setIsQueryingCnpj(false);
- }
- } else {
- setCnpjChecked(false);
- }
+  if (cleanCnpj.length === 14) {
+    setIsQueryingCnpj(true);
+    let companyFound = false;
+
+    // 1. Tenta API Interna RevHackers
+    try {
+      const baseUrl = import.meta.env.VITE_GCP_API_URL || 'https://api.revhackers.com';
+      const response = await fetch(`${baseUrl}/v1/opportunities/lookup?cnpj=${cleanCnpj}`);
+      if (response.ok) {
+        const result = await response.json();
+        if (result.data && (result.data.company_name || result.data.razao_social)) {
+          setForm(prev => ({
+            ...prev,
+            company: result.data.company_name || result.data.razao_social,
+          }));
+          setCnpjChecked(true);
+          companyFound = true;
+        }
+      }
+    } catch (err) {
+      console.warn('[DiagnosticForm] Falha na API interna, tentando BrasilAPI fallback:', err);
+    }
+
+    // 2. Fallback público (BrasilAPI)
+    if (!companyFound) {
+      try {
+        const fallbackRes = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCnpj}`);
+        if (fallbackRes.ok) {
+          const fallbackData = await fallbackRes.json();
+          const name = fallbackData.nome_fantasia || fallbackData.razao_social;
+          if (name) {
+            setForm(prev => ({ ...prev, company: name }));
+            setCnpjChecked(true);
+            companyFound = true;
+          }
+        }
+      } catch (err) {
+        console.error('[DiagnosticForm] Falha na BrasilAPI:', err);
+      }
+    }
+
+    setIsQueryingCnpj(false);
+  } else {
+    setCnpjChecked(false);
+  }
  };
 
  const handleSubmit = (e: React.FormEvent) => {
