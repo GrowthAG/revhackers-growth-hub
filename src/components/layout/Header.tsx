@@ -37,7 +37,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
   const NavLink = ({ to, children }: { to: string, children: React.ReactNode }) => (
     <Link
       to={to}
-      className={`px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-lg ${textColor} ${hoverBg}`}
+      className="px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap rounded-lg text-zinc-300 hover:text-white hover:bg-white/10"
       onClick={() => window.scrollTo(0, 0)}
     >
       {children}
@@ -120,14 +120,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
 
   return (
     <>
-      <header
-        className={cn(
-          "w-full fixed top-0 left-0 right-0 z-[60] transition-all duration-300",
-          scrolled
-            ? "bg-white border-b border-zinc-200 py-3"
-            : "bg-black border-b border-zinc-800 py-3"
-        )}
-      >
+      <header className="w-full fixed top-0 left-0 right-0 z-[60] bg-black border-b border-zinc-800 py-3 transition-all duration-300">
         <div className="container-custom flex justify-between items-center relative gap-4">
           {/* Left: Logo */}
           <div className="flex items-center gap-4 z-10 flex-shrink-0">
@@ -135,26 +128,20 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
               <img
                 src="/brand/revhackers-wordmark-white.png"
                 alt="RevHackers Logo"
-                className={`w-44 sm:w-48 lg:w-52 max-w-full h-auto transition-all duration-300 group-hover:opacity-90 ${logoClass}`}
+                className="w-44 sm:w-48 lg:w-52 max-w-full h-auto transition-all duration-300 group-hover:opacity-90"
               />
             </Link>
           </div>
 
           {/* Center: Navigation */}
           <nav className="hidden xl:flex items-center justify-center flex-1">
-            <div className={cn(
-              "flex items-center rounded-xl px-2 py-1 border transition-colors",
-              scrolled ? "border-zinc-200 bg-zinc-50/50" : "border-zinc-700 bg-white/5"
-            )}>
+            <div className="flex items-center rounded-xl px-2 py-1 border border-zinc-800 bg-zinc-900/60 backdrop-blur-sm">
               <div className="flex items-center space-x-1">
                 <NavLink to="/">Home</NavLink>
                 <div className="w-px h-3 mx-1 bg-zinc-200" />
 
                 <DropdownMenu>
-                  <DropdownMenuTrigger className={cn(
-                    "px-4 py-2 text-sm font-medium transition-colors flex items-center gap-1.5 rounded-lg focus:outline-none data-[state=open]:text-[#00CC6A]",
-                    scrolled ? "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100" : "text-zinc-300 hover:text-white hover:bg-white/10"
-                  )}>
+                  <DropdownMenuTrigger className="px-4 py-2 text-sm font-medium transition-colors flex items-center gap-1.5 rounded-lg focus:outline-none data-[state=open]:text-[#00CC6A] text-zinc-300 hover:text-white hover:bg-white/10">
                     Auditoria <ChevronDown className="w-3 h-3" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent sideOffset={8} className="bg-white border border-zinc-200 p-1.5 w-[260px] z-[70] rounded-xl shadow-lg">
