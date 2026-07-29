@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import crypto from 'node:crypto';
 import {
   handleProcessLifecycle,
   handleCalendarWebhook,
@@ -111,7 +112,28 @@ describe('Lifecycle Routes', () => {
   // POST /v1/lifecycle/webhook/ghl
   // ============================================
   describe('POST /v1/lifecycle/webhook/ghl', () => {
-    it('processes a GHL webhook successfully', async () => {
+    const GHL_SECRET = 'test-secret';
+    function signGhlPayload(payload: string): string {
+      return crypto.createHmac('sha256', GHL_SECRET).update(payload).digest('hex');
+    }
+
+    it('processes a GHL webhook with valid HMAC signature', async () => {
+      const payload = JSON.stringify({ event_type: 'contact_updated', contact_id: 'c-1' });
+      const signature = signGhlPayload(payload);
+      const res = await handleGHLWebhook(
+        request('/v1/lifecycle/webhook/ghl', {
+          method: 'POST',
+          body: payload,
+          headers: { 'x-ghl-signature': signature },
+        }),
+        mockEnv,
+        pool,
+      );
+
+      expect(res?.status).toBe(200);
+    });
+
+    it('returns 401 when signature header is missing', async () => {
       const res = await handleGHLWebhook(
         request('/v1/lifecycle/webhook/ghl', {
           method: 'POST',
@@ -121,7 +143,36 @@ describe('Lifecycle Routes', () => {
         pool,
       );
 
-      expect(res?.status).toBe(200);
+      expect(res?.status).toBe(401);
+    });
+
+    it('returns 401 when signature is invalid', async () => {
+      const res = await handleGHLWebhook(
+        request('/v1/lifecycle/webhook/ghl', {
+          method: 'POST',
+          body: JSON.stringify({ event_type: 'contact_updated', contact_id: 'c-1' }),
+          headers: { 'x-ghl-signature': 'deadbeef'.repeat(8) }, // 64 hex chars válidos mas signature errada
+        }),
+        mockEnv,
+        pool,
+      );
+
+      expect(res?.status).toBe(401);
+    });
+
+    it('returns 500 when GHL_WEBHOOK_SECRET is not configured', async () => {
+      const envNoSecret = { ...mockEnv, GHL_WEBHOOK_SECRET: undefined } as any;
+      const res = await handleGHLWebhook(
+        request('/v1/lifecycle/webhook/ghl', {
+          method: 'POST',
+          body: JSON.stringify({ event_type: 'contact_updated', contact_id: 'c-1' }),
+          headers: { 'x-ghl-signature': 'deadbeef'.repeat(8) },
+        }),
+        envNoSecret,
+        pool,
+      );
+
+      expect(res?.status).toBe(500);
     });
 
     it('returns null for non-POST methods (not its route)', async () => {

@@ -15,6 +15,7 @@
  */
 
 import { Pool } from 'pg';
+import crypto from 'node:crypto';
 import { z } from 'zod';
 import { processLifecycleEvent, pollLifecycleHistory } from '../services/lifecycle-hook';
 import { handleMediaOrchestrator, orchestrateMedia } from '../services/media-orchestrator';
@@ -63,6 +64,41 @@ function methodNotAllowed(): Response {
     status: 405,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
+}
+
+/**
+ * Verify HMAC SHA-256 signature of an incoming webhook.
+ * Uses constant-time comparison to prevent timing attacks.
+ *
+ * @param rawBody - exact raw request body (must be the same string sent by GHL)
+ * @param signature - signature provided in the header (hex-encoded)
+ * @param secret - shared secret configured in GHL webhook
+ * @returns true if signature is valid
+ */
+function verifyWebhookSignature(
+  rawBody: string,
+  signature: string | null,
+  secret: string,
+): boolean {
+  if (!signature) return false;
+
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(rawBody)
+    .digest('hex');
+
+  // Both buffers must be the same length to use timingSafeEqual
+  if (signature.length !== expected.length) return false;
+
+  try {
+    return crypto.timingSafeEqual(
+      Buffer.from(signature, 'hex'),
+      Buffer.from(expected, 'hex'),
+    );
+  } catch {
+    // Invalid hex input from the header → reject
+    return false;
+  }
 }
 
 // ============================================================================
@@ -156,6 +192,9 @@ export async function handleCalendarWebhook(
 }
 
 // POST /v1/lifecycle/webhook/ghl - receive GHL webhook
+// PROTEGIDO por HMAC SHA-256 — alinhado ao padrão de ghl-service.ts:verifyWebhookSignature.
+// GHL envia o header "x-ghl-signature" com o hex digest do body usando o secret compartilhado.
+// O secret vem de env.GHL_WEBHOOK_SECRET (injetado via Secret Manager no Cloud Run).
 export async function handleGHLWebhook(
   request: Request,
   env: Record<string, string>,
@@ -169,8 +208,42 @@ export async function handleGHLWebhook(
   if (request.method !== 'POST') return methodNotAllowed();
 
   try {
-    const payload = await request.json();
-    console.log('[LifecycleRoutes] Received GHL webhook:', payload);
+    // 1. Ler o body raw (text) para verificar a assinatura antes de parsear JSON.
+    const rawBody = await request.text();
+    const signature =
+      request.headers.get('x-ghl-signature')
+      ?? request.headers.get('ghl-signature')
+      ?? request.headers.get('x-signature')
+      ?? null;
+    const secret = env.GHL_WEBHOOK_SECRET;
+
+    if (!secret) {
+      console.error('[LifecycleRoutes] GHL_WEBHOOK_SECRET não configurado. Rejeitando webhook por segurança.');
+      return new Response(
+        JSON.stringify({ success: false, error: 'webhook_secret_not_configured' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
+    }
+
+    if (!verifyWebhookSignature(rawBody, signature, secret)) {
+      console.warn('[LifecycleRoutes] GHL webhook com assinatura inválida rejeitado.');
+      return new Response(
+        JSON.stringify({ success: false, error: 'invalid_signature' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
+    }
+
+    // 2. Parse seguro do JSON após validação da assinatura.
+    let payload: unknown;
+    try {
+      payload = JSON.parse(rawBody);
+    } catch {
+      return new Response(
+        JSON.stringify({ success: false, error: 'invalid_json' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      );
+    }
+    console.log('[LifecycleRoutes] Received GHL webhook (verified):', payload);
 
     // Process GHL event (e.g., contact updated, opportunity created)
     // In real impl, map GHL event types to lifecycle actions
