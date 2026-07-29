@@ -33,9 +33,9 @@ const HeroSection = () => {
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="font-sans text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center text-balance"
         >
-          Nós encontramos R$50k a R$150k em{' '}
+          Nós montamos a estrutura de{' '}
           <span className="text-[#00CC6A]">
-            receita travada no seu funil.
+            RevOps, GTM e ABM com IA.
           </span>
         </motion.h1>
 
@@ -46,7 +46,7 @@ const HeroSection = () => {
           transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
           className="text-zinc-400 mb-4 text-base md:text-lg font-normal leading-relaxed max-w-xl mx-auto text-center"
         >
-          Sem contratar mais SDRs. Sem torrar caixa com anúncios genéricos. Usando a Auditoria de Receita Integrada RevHackers em 90 dias.
+          Engenharia de receita B2B que integra CRM, automações e inteligência artificial para escalar operações comerciais sem aumentar headcount.
         </motion.p>
 
         {/* Hammer line — ≤5 palavras, isolada */}
@@ -56,7 +56,7 @@ const HeroSection = () => {
           transition={{ duration: 0.5, delay: 0.14, ease: 'easeOut' }}
           className="text-zinc-500 text-sm font-normal mb-8 italic"
         >
-          Ou você não paga um centavo.
+          Claude Partner · Google Partner · Funnels Partner
         </motion.p>
 
         {/* CTAs — Hormozi: Command CTA com consequência */}
