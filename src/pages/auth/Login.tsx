@@ -61,32 +61,56 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white text-zinc-900 flex flex-col justify-between p-6 relative selection:bg-[#00CC6A] selection:text-white">
+        <div className="min-h-screen bg-black text-white flex flex-col justify-between relative selection:bg-[#00CC6A] selection:text-black">
             
-            {/* Header Brand */}
-            <div className="w-full max-w-7xl mx-auto flex items-center justify-between z-10 pt-4">
-                <Link to="/" className="flex items-center gap-2 group">
-                    <img
-                        src="/brand/revhackers-wordmark-white.png"
-                        alt="RevHackers"
-                        className="h-7 max-w-[160px] invert group-hover:opacity-80 transition-opacity"
-                    />
-                </Link>
-            </div>
+            {/* Header de Navegação Padronizado (bg-black) */}
+            <header className="w-full border-b border-zinc-800 py-5 px-6 sm:px-12 bg-black">
+                <div className="max-w-7xl mx-auto flex items-center justify-between">
+                    <Link to="/" className="block group">
+                        <img
+                            src="/brand/revhackers-wordmark-white.png"
+                            alt="RevHackers Logo"
+                            className="w-40 sm:w-48 h-auto object-contain transition-opacity group-hover:opacity-90"
+                        />
+                    </Link>
+                    <Link 
+                        to="/" 
+                        className="text-xs font-semibold text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-lg"
+                    >
+                        Voltar ao site →
+                    </Link>
+                </div>
+            </header>
 
-            {/* Login Card Component */}
-            <div className="w-full max-w-[400px] mx-auto z-10 my-auto py-12 animate-in fade-in zoom-in-95 duration-500">
-                <div className="bg-white border border-zinc-200 p-8 rounded-2xl shadow-sm relative group">
-                    
-                    {/* Header Section */}
-                    <div className="flex flex-col items-center mb-8 text-center">
-                        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 mb-2">
-                            Acesse sua conta
-                        </h1>
-                        <p className="text-zinc-500 text-sm">
-                            Bem-vindo de volta! Por favor, insira seus dados.
-                        </p>
-                    </div>
+            {/* Conteúdo Principal — Hero Copy + Card de Autenticação */}
+            <main className="w-full max-w-7xl mx-auto px-6 py-12 sm:py-16 flex-1 flex flex-col justify-center items-center">
+                
+                {/* Headline & Subheadline no padrão da Home */}
+                <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
+                    <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
+                        Painel de Operações & Inteligência
+                    </p>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                        Acesse seu motor de <span className="text-[#00CC6A]">Revenue Engineering</span>
+                    </h1>
+                    <p className="text-zinc-400 text-sm sm:text-base font-normal leading-relaxed max-w-xl mx-auto">
+                        Ambiente restrito de gestão operacional, inteligência de contas B2B e relatórios de auditoria.
+                    </p>
+                </div>
+
+                {/* Login Card Component em Fundo Branco Clean */}
+                <div className="w-full max-w-md mx-auto animate-fade-in">
+                    <div className="bg-white text-zinc-900 border border-zinc-200 p-8 sm:p-10 rounded-2xl shadow-xl space-y-6">
+                        
+                        {/* Subcabeçalho do Card */}
+                        <div className="text-center space-y-1">
+                            <h2 className="text-xl font-bold tracking-tight text-zinc-900">
+                                Identificação de Acesso
+                            </h2>
+                            <p className="text-xs text-zinc-500">
+                                Insira suas credenciais corporativas autorizadas
+                            </p>
+                        </div>
 
                     {/* Form Section */}
                     <div className="space-y-6">
@@ -190,16 +214,18 @@ const Login = () => {
                         </form>
                     </div>
                 </div>
-            </div>
+            </main>
 
-            {/* Bottom Footer */}
-            <div className="w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 z-10 pt-4 pb-2 text-zinc-500 text-sm border-t border-zinc-100">
-                <span>&copy; {new Date().getFullYear()} RevHackers. Todos os direitos reservados.</span>
-                <div className="flex items-center gap-6">
-                    <Link to="/privacidade" className="hover:text-zinc-900 transition-colors">Privacidade</Link>
-                    <Link to="/termos" className="hover:text-zinc-900 transition-colors">Termos de Uso</Link>
+            {/* Bottom Footer Padronizado Escuro */}
+            <footer className="w-full border-t border-zinc-900 py-6 px-6 sm:px-12 bg-black text-xs text-zinc-500">
+                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <span>&copy; {new Date().getFullYear()} RevHackers. Todos os direitos reservados.</span>
+                    <div className="flex items-center gap-6">
+                        <Link to="/privacidade" className="hover:text-zinc-300 transition-colors">Privacidade</Link>
+                        <Link to="/termos" className="hover:text-zinc-300 transition-colors">Termos de Uso</Link>
+                    </div>
                 </div>
-            </div>
+            </footer>
         </div>
     );
 };
