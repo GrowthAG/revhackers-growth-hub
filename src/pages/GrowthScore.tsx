@@ -306,39 +306,72 @@ const GrowthScore = () => {
  </div>
  )}
 
- {step === 'results' && (
- <>
- {!hasSubmittedLead && (
- <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/95 backdrop-blur-sm p-4 overflow-y-auto animate-in fade-in duration-500">
- <div className="bg-white border border-zinc-200 p-8 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 shadow-sm relative overflow-hidden my-auto max-h-[90vh]">
- <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:border-r border-zinc-200 md:pr-12">
- <div className="inline-flex items-center gap-2 bg-white px-3 py-1 border border-zinc-200">
- <div className={`w-1.5 h-1.5 ${teaserScore >= 50 ? 'bg-revgreen' : 'bg-zinc-400'} animate-pulse`}></div>
- <span className="text-xs font-sans font-bold text-zinc-500 ">Análise Finalizada</span>
- </div>
+  {step === 'results' && (
+    <>
+      {!hasSubmittedLead && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/60 backdrop-blur-md p-4 overflow-y-auto animate-in fade-in duration-300">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 sm:p-10 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 shadow-2xl relative overflow-hidden my-auto max-h-[90vh]">
+            
+            {/* Lado Esquerdo: Diagnóstico e Cálculo de Vazamento Real */}
+            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:border-r border-zinc-100 md:pr-10 w-full">
+              <div className="flex items-center gap-2 bg-zinc-100 px-3 py-1 rounded-full border border-zinc-200">
+                <span className={`w-2 h-2 rounded-full ${teaserScore >= 70 ? 'bg-[#00CC6A]' : teaserScore >= 40 ? 'bg-amber-500' : 'bg-red-500'} animate-pulse`} />
+                <span className="text-xs font-semibold text-zinc-700 uppercase tracking-wider">Diagnóstico Preditivo Concluído</span>
+              </div>
 
- <div className="relative">
- <div className="text-3xl md:text-3xl font-bold text-zinc-900 leading-none shadow-black drop-shadow-2xl">{teaserScore}</div>
- </div>
+              {/* Placa do Score */}
+              <div className="space-y-1">
+                <span className="text-xs font-medium text-zinc-400 block uppercase tracking-wider">Score Geral de Maturidade</span>
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className={`text-6xl sm:text-7xl font-extrabold tracking-tight ${teaserScore >= 70 ? 'text-[#00CC6A]' : teaserScore >= 40 ? 'text-amber-500' : 'text-red-500'}`}>
+                    {teaserScore}
+                  </span>
+                  <span className="text-xl font-bold text-zinc-400">/100</span>
+                </div>
+              </div>
 
- <h3 className="text-sm font-medium text-zinc-500 leading-relaxed max-w-xs">
- O nível técnico da sua operação comercial projeta um vazamento de <span className="text-zinc-900 font-bold font-sans text-base whitespace-nowrap bg-zinc-100 px-2 py-1 border border-zinc-200">{( (100 - teaserScore) * 3450 ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}/ano</span>.
- </h3>
- </div>
+              {/* Caixa de Perda Financeira Projetada Dinâmica por respostas */}
+              <div className="w-full bg-zinc-50 border border-zinc-200 rounded-xl p-4 sm:p-5 space-y-2 text-left">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded uppercase tracking-wider">
+                    Perda Estimada
+                  </span>
+                  <span className="text-xs text-zinc-400">Projeção 12 meses</span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 tracking-tight">
+                  {( Math.max(120000, (100 - teaserScore) * 4850 + (answers[0] === 0 ? 140000 : 0) + (answers[1] === 0 ? 95000 : 0)) ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                  <span className="text-xs font-normal text-zinc-500 ml-1">/ano</span>
+                </div>
+                <p className="text-xs text-zinc-600 leading-relaxed">
+                  {answers[0] === 0 
+                    ? "Gargalo centralizador na operação e processos manuais que consomem margem líquida." 
+                    : answers[2] === 0 
+                    ? "Vulnerabilidade crítica por dependência de indicação ou canal único de aquisição."
+                    : "Desperdício de orçamento por ausência de teto rígido de CAC e triagem por IA."}
+                </p>
+              </div>
 
- <div className="flex-1 w-full max-w-md flex flex-col justify-center">
- <DiagnosticForm
- onSubmit={handleFormSubmit}
- isSubmitting={isSubmitting}
- title="Estancar Bleeding Cost"
- subtitle="Libere o acesso ao seu mapeamento financeiro."
- variant="dark"
- diagnosticType="Growth"
- />
- </div>
- </div>
- </div>
- )}
+              <div className="flex items-center justify-center gap-4 text-xs text-zinc-400 font-medium">
+                <span>✓ 5 Dimensões Auditadas</span>
+                <span>•</span>
+                <span>✓ Algoritmo de IA</span>
+              </div>
+            </div>
+
+            {/* Lado Direito: Formulário Limpo */}
+            <div className="flex-1 w-full max-w-md flex flex-col justify-center">
+              <DiagnosticForm
+                onSubmit={handleFormSubmit}
+                isSubmitting={isSubmitting}
+                title="Estancar Perda de Receita"
+                subtitle="Informe seus dados para liberar o Relatório Completo de Ação."
+                variant="light"
+                diagnosticType="Growth"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
  <div className={`space-y-0 transition-all duration-700 ${!hasSubmittedLead ? 'blur-sm opacity-60 pointer-events-none' : ''}`}>
  <div className="mb-12 text-center max-w-4xl mx-auto pt-8">
