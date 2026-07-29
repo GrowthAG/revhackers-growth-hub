@@ -62,8 +62,9 @@ export const DiagnosticForm = ({
     setCustomCrm(val);
     setForm(prev => ({ ...prev, crm: `Outros (${val})` }));
   };
- const [cnpjChecked, setCnpjChecked] = useState(false);
- const [emailError, setEmailError] = useState('');
+  const [isQueryingCnpj, setIsQueryingCnpj] = useState(false);
+  const [cnpjChecked, setCnpjChecked] = useState(false);
+  const [emailError, setEmailError] = useState('');
 
  const isDark = variant === 'dark';
 
