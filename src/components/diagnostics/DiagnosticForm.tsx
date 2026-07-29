@@ -162,9 +162,9 @@ export const DiagnosticForm = ({
  onSubmit({ ...form, role: form.role || diagnosticType });
  };
 
- const inputClasses = "h-11 w-full text-sm bg-white border border-zinc-200 rounded-lg px-3 focus:border-zinc-400 focus:ring-0 transition-all text-zinc-900 placeholder:text-zinc-400";
+ const inputClasses = "h-10 w-full text-sm bg-white border border-zinc-200 rounded-lg px-3 focus:border-zinc-400 focus:ring-0 transition-all text-zinc-900 placeholder:text-zinc-400";
 
- const labelClasses = "text-sm font-medium text-zinc-700 block mb-2";
+ const labelClasses = "text-xs font-semibold text-zinc-700 block mb-1";
 
  return (
  <motion.div
@@ -173,8 +173,8 @@ export const DiagnosticForm = ({
  className="w-full max-w-xl mx-auto"
  >
  <div className="p-0 animate-fade-in box-content">
- <form onSubmit={handleSubmit} className="space-y-3">
- <div className="flex flex-col gap-y-3">
+ <form onSubmit={handleSubmit} className="space-y-2.5">
+ <div className="flex flex-col gap-y-2.5">
  <div className="space-y-1.5">
  <Label className={labelClasses}>Nome Completo</Label>
  <Input required className={inputClasses} value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Ex: João Silva" />

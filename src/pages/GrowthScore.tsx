@@ -320,8 +320,8 @@ const GrowthScore = () => {
   {step === 'results' && (
     <>
       {!hasSubmittedLead && (
-        <div className="w-full max-w-5xl mx-auto my-12 animate-fade-in">
-          <div className="bg-white border border-zinc-200 rounded-2xl p-8 sm:p-12 shadow-sm flex flex-col lg:flex-row items-stretch gap-10 lg:gap-14">
+        <div className="w-full max-w-6xl mx-auto my-8 sm:my-12 animate-fade-in px-4 sm:px-6">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-6 sm:p-10 lg:p-12 shadow-sm flex flex-col lg:flex-row items-stretch gap-8 lg:gap-12">
             
             {/* Lado Esquerdo: Diagnóstico e Métricas */}
             <div className="flex-1 flex flex-col justify-between space-y-6 lg:border-r border-zinc-100 lg:pr-10">
@@ -369,14 +369,14 @@ const GrowthScore = () => {
               </div>
 
               <div className="pt-2 flex items-center gap-4 text-xs text-zinc-400 font-medium">
-                <span>✓ 5 Dimensões Auditadas</span>
+                <span>✓ 6 Dimensões Auditadas</span>
                 <span>•</span>
                 <span>✓ Algoritmo de IA</span>
               </div>
             </div>
 
-            {/* Lado Direito: Formulário Corporativo com alinhamento otimizado */}
-            <div className="flex-1 w-full max-w-md flex flex-col justify-between">
+            {/* Lado Direito: Formulário Corporativo Expandido */}
+            <div className="flex-1 w-full max-w-xl flex flex-col justify-start">
               <DiagnosticForm
                 onSubmit={handleFormSubmit}
                 isSubmitting={isSubmitting}
