@@ -48,8 +48,8 @@ export const CallDiagnosticModal = ({ isOpen, onClose, source = 'diagnostic' }: 
                 {/* Header Context */}
                 <div className="p-8 md:p-12 border-b border-zinc-100 flex justify-between items-start">
                     <div className="space-y-2">
-                        <span className="text-xxs font-mono font-black text-zinc-400 uppercase tracking-[0.4em]">DEBRIEFING // QUALIFICAÇÃO</span>
-                        <h2 className="text-3xl md:text-5xl font-black text-black tracking-tighter leading-none italic uppercase">
+                        <span className="text-xxs font-sans font-bold text-zinc-400 uppercase tracking-wider">DEBRIEFING // QUALIFICAÇÃO</span>
+                        <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black tracking-tight leading-none italic uppercase">
                             {step === 'form' ? 'Contexto de Negócio' : step === 'calendar' ? 'Seleção de Agenda' : 'Confirmado'}
                         </h2>
                     </div>
@@ -71,15 +71,15 @@ export const CallDiagnosticModal = ({ isOpen, onClose, source = 'diagnostic' }: 
                             >
                                 <div className="space-y-6">
                                     <div className="space-y-4">
-                                        <Label className="text-xxs font-black uppercase tracking-widest text-zinc-400">Qual o faturamento mensal aproximado da operação?</Label>
+                                        <Label className="text-xxs font-bold uppercase tracking-wider text-zinc-400">Qual o faturamento mensal aproximado da operação?</Label>
                                         <Input required placeholder="Ex: R$ 100k - 500k" className="rounded-none border-0 border-b border-zinc-100 px-0 h-14 bg-transparent focus:border-black text-lg font-bold placeholder:text-zinc-200" />
                                     </div>
                                     <div className="space-y-4">
-                                        <Label className="text-xxs font-black uppercase tracking-widest text-zinc-400">Qual o maior gargalo técnico identificado hoje?</Label>
+                                        <Label className="text-xxs font-bold uppercase tracking-wider text-zinc-400">Qual o maior gargalo técnico identificado hoje?</Label>
                                         <Input required placeholder="Ex: Baixa conversão no tráfego pago" className="rounded-none border-0 border-b border-zinc-100 px-0 h-14 bg-transparent focus:border-black text-lg font-bold placeholder:text-zinc-200" />
                                     </div>
                                     <div className="space-y-4">
-                                        <Label className="text-xxs font-black uppercase tracking-widest text-zinc-400">Quem é o tomador de decisão que participará da call?</Label>
+                                        <Label className="text-xxs font-bold uppercase tracking-wider text-zinc-400">Quem é o tomador de decisão que participará da call?</Label>
                                         <Input required placeholder="Nome e Cargo" className="rounded-none border-0 border-b border-zinc-100 px-0 h-14 bg-transparent focus:border-black text-lg font-bold placeholder:text-zinc-200" />
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@ export const CallDiagnosticModal = ({ isOpen, onClose, source = 'diagnostic' }: 
                                     <Button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="w-full h-20 bg-black text-white hover:bg-zinc-800 font-black uppercase tracking-[0.3em] text-xs transition-all duration-500"
+                                        className="w-full h-20 bg-black text-white hover:bg-zinc-800 font-bold uppercase tracking-wider text-xs transition-all duration-500"
                                     >
                                         {isSubmitting ? 'VALIDANDO_CONTEXTO...' : 'LIBERAR AGENDAMENTO'} <ArrowRight className="ml-4 w-5 h-5" />
                                     </Button>
@@ -114,12 +114,12 @@ export const CallDiagnosticModal = ({ isOpen, onClose, source = 'diagnostic' }: 
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={() => setTimeout(() => setStep('success'), 2000)}
-                                        className="flex items-center justify-center gap-4 w-full h-20 bg-zinc-900 text-white font-black uppercase tracking-[0.3em] text-xs hover:bg-zinc-800 transition-all duration-500"
+                                        className="flex items-center justify-center gap-4 w-full h-20 bg-zinc-900 text-white font-bold uppercase tracking-wider text-xs hover:bg-zinc-800 transition-all duration-500"
                                     >
                                         <Calendar className="w-5 h-5" /> ABRIR CALENDÁRIO OFICIAL
                                     </a>
                                 </div>
-                                <p className="text-xxs text-zinc-400 font-bold uppercase tracking-widest">
+                                <p className="text-xxs text-zinc-400 font-bold uppercase tracking-wider">
                                     * VOCÊ SERÁ REDIRECIONADO PARA O CAL.COM
                                 </p>
                             </motion.div>
@@ -136,14 +136,14 @@ export const CallDiagnosticModal = ({ isOpen, onClose, source = 'diagnostic' }: 
                                     <ClipboardCheck className="w-10 h-10 text-white" />
                                 </div>
                                 <div className="space-y-4">
-                                    <h3 className="text-4xl font-black text-black tracking-tighter italic uppercase">Solicitação Enviada</h3>
+                                    <h3 className="text-2xl md:text-3xl font-bold text-black tracking-tight italic uppercase">Solicitação Enviada</h3>
                                     <p className="text-zinc-500 font-medium max-w-sm mx-auto leading-relaxed">
                                         Seu debriefing foi pré-agendado. Verifique seu e-mail para a confirmação final e link da sala.
                                     </p>
                                 </div>
                                 <Button
                                     onClick={onClose}
-                                    className="px-12 h-16 border-2 border-black bg-transparent text-black hover:bg-black hover:text-white font-black uppercase tracking-widest text-xxs transition-all"
+                                    className="px-12 h-16 border-2 border-black bg-transparent text-black hover:bg-black hover:text-white font-bold uppercase tracking-wider text-xxs transition-all"
                                 >
                                     FECHAR DIAGNÓSTICO
                                 </Button>

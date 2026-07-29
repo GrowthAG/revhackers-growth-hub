@@ -13,10 +13,10 @@ const CTASection = () => {
         <div className="bg-black p-12 md:p-24 overflow-hidden relative group rounded-none">
           <div className="relative z-10 max-w-4xl space-y-12">
             <div className="space-y-6">
-              <span className="text-zinc-500 font-mono text-xxs uppercase tracking-[0.5em] font-black">
+              <span className="text-zinc-500 font-sans text-xxs uppercase tracking-wider font-bold">
                 // PRONTO_PARA_ESCALAR?
               </span>
-              <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none italic uppercase">
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-none italic uppercase">
                 VAMOS MONTAR SUA <br />
                 <span className="text-revgreen">ARQUITETURA.</span>
               </h2>
@@ -28,7 +28,7 @@ const CTASection = () => {
 
             <Button
               asChild
-              className="bg-white text-black font-black text-xs uppercase tracking-[0.3em] h-16 px-12 rounded-none hover:bg-revgreen hover:text-black transition-all duration-300"
+              className="bg-white text-black font-bold text-xs uppercase tracking-wider h-16 px-12 rounded-none hover:bg-revgreen hover:text-black transition-all duration-300"
             >
               <Link to="/diagnostico" onClick={scrollToTop}>
                 Diagnóstico Grátis //

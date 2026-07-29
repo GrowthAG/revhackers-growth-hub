@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from 'framer-motion';
-import { Linkedin, Sparkles, RefreshCw } from 'lucide-react';
+import { Linkedin, RefreshCw } from 'lucide-react';
 
 export interface DiagnosticFormData {
     name: string;
@@ -125,7 +125,7 @@ export const DiagnosticForm = ({
         : "border-zinc-200 text-black focus:border-black placeholder:text-zinc-300 hover:bg-zinc-50/50"
         }`;
 
-    const labelClasses = `text-xxs font-black uppercase tracking-widest pl-0.5 ${isDark ? "text-zinc-300" : "text-zinc-500"}`;
+    const labelClasses = `text-xxs font-bold uppercase tracking-wider pl-0.5 ${isDark ? "text-zinc-300" : "text-zinc-500"}`;
 
     return (
         <motion.div
@@ -160,14 +160,12 @@ export const DiagnosticForm = ({
                             <div className="flex items-center justify-between">
                                 <Label className={labelClasses}>CNPJ da Empresa (Preenchimento Automático)</Label>
                                 {isQueryingCnpj && (
-                                    <span className="text-[10px] font-mono text-zinc-400 flex items-center gap-1">
+                                    <span className="text-[10px] font-sans text-zinc-400 flex items-center gap-1">
                                         <RefreshCw className="w-2.5 h-2.5 animate-spin" /> BUSCANDO...
                                     </span>
                                 )}
                                 {cnpjChecked && (
-                                    <span className="text-[9px] font-mono font-bold text-black bg-[#00CC6A] px-1.5 py-0.5 rounded-sm flex items-center gap-1">
-                                        <Sparkles size={10} /> GROWTH INTEL
-                                    </span>
+                                    <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">GROWTHHUB INTELLIGENCE</p>
                                 )}
                             </div>
                             <Input
@@ -188,7 +186,7 @@ export const DiagnosticForm = ({
                                 <SelectTrigger className={`${inputClasses} shadow-none ring-0 focus:ring-offset-0 border-b`}>
                                     <SelectValue placeholder="Selecione seu papel" />
                                 </SelectTrigger>
-                                <SelectContent className={isDark ? "bg-zinc-950 border-zinc-800 text-zinc-50 rounded-none shadow-sm" : "bg-white border-zinc-100 text-black rounded-none shadow-sm"}>
+                                <SelectContent className={isDark ? "bg-black border-zinc-800 text-zinc-50 rounded-none shadow-sm" : "bg-white border-zinc-100 text-black rounded-none shadow-sm"}>
                                     <SelectItem value="executivo-senior" className={isDark ? "text-zinc-100 focus:bg-zinc-900 focus:text-white cursor-pointer" : "cursor-pointer"}>Executivo sênior</SelectItem>
                                     <SelectItem value="socio-vp" className={isDark ? "text-zinc-100 focus:bg-zinc-900 focus:text-white cursor-pointer" : "cursor-pointer"}>Sócio / VP</SelectItem>
                                     <SelectItem value="chefe-diretor" className={isDark ? "text-zinc-100 focus:bg-zinc-900 focus:text-white cursor-pointer" : "cursor-pointer"}>Chefe / Diretor</SelectItem>
@@ -205,9 +203,9 @@ export const DiagnosticForm = ({
                             <div className="space-y-1.5">
                                 <Label className={labelClasses}>Perfil LinkedIn</Label>
                                 <div className={`flex items-stretch border-b transition-all overflow-hidden ${isDark ? "border-zinc-800 focus-within:border-revgreen" : "border-zinc-200 focus-within:border-black"}`}>
-                                    <div className={`px-4 flex items-center gap-2.5 border-r select-none ${isDark ? "bg-zinc-950/50 border-zinc-800 text-zinc-500" : "bg-zinc-50 border-zinc-200 text-zinc-400"}`}>
+                                    <div className={`px-4 flex items-center gap-2.5 border-r select-none ${isDark ? "bg-black/50 border-zinc-800 text-zinc-500" : "bg-zinc-50 border-zinc-200 text-zinc-400"}`}>
                                         <Linkedin className="w-3.5 h-3.5" />
-                                        <span className="text-xxs font-mono font-bold tracking-tight">linkedin.com/in/</span>
+                                        <span className="text-xxs font-sans font-bold tracking-tight">linkedin.com/in/</span>
                                     </div>
                                     <Input
                                         required
@@ -225,7 +223,7 @@ export const DiagnosticForm = ({
                         <Button
                             type="submit"
                             disabled={isSubmitting || !!emailError}
-                            className={`w-full px-16 h-14 font-black tracking-[0.3em] uppercase text-tiny rounded-sm transition-all duration-500 border ${isDark
+                            className={`w-full px-16 h-14 font-bold tracking-wider uppercase text-tiny rounded-sm transition-all duration-500 border ${isDark
                                 ? "bg-revgreen text-black hover:bg-white hover:text-black border-transparent"
                                 : "bg-black text-white hover:bg-revgreen hover:text-black shadow-sm shadow-zinc-200 border-black"
                                 }`}

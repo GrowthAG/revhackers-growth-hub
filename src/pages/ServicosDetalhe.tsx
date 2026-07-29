@@ -201,7 +201,7 @@ const ServicosDetalhe = () => {
     return (
       <PageLayout>
         <Section variant="dark" className="py-32 min-h-screen flex flex-col justify-center items-center">
-          <h1 className="text-4xl text-white font-bold mb-4">Serviço não encontrado</h1>
+          <h1 className="text-2xl md:text-3xl text-white font-bold mb-4">Serviço não encontrado</h1>
           <Button asChild className="btn-green-flat">
             <Link to="/servicos">Voltar para Serviços</Link>
           </Button>
@@ -229,14 +229,14 @@ const ServicosDetalhe = () => {
             <span className="font-bold text-revgreen bg-revgreen/10 px-3 py-1 text-xxs border border-revgreen/20 uppercase tracking-[0.2em] mb-6 inline-block">
               {service.number} // {service.title}
             </span>
-            <h1 className="text-5xl md:text-7xl font-black text-black mb-8 tracking-tighter text-balance leading-[1.05]">
+            <h1 className="text-2xl md:text-3xl font-bold text-black mb-8 tracking-tight text-balance leading-[1.05]">
               {service.title}<span className="text-revgreen">.</span>
             </h1>
             <p className="text-xl md:text-2xl text-zinc-500 font-medium leading-relaxed max-w-3xl mx-auto tracking-tight mb-12">
               {service.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button onClick={() => setIsBookingOpen(true)} className="bg-revgreen text-black hover:bg-black hover:text-white h-16 px-12 rounded-sm text-sm font-black uppercase tracking-widest shadow-sm transition-all focus:outline-none">
+              <Button onClick={() => setIsBookingOpen(true)} className="bg-revgreen text-black hover:bg-black hover:text-white h-16 px-12 rounded-sm text-sm font-bold uppercase tracking-wider shadow-sm transition-all focus:outline-none">
                 Auditar Minha Operação
               </Button>
             </div>
@@ -247,7 +247,7 @@ const ServicosDetalhe = () => {
       {/* 2. O QUE FAZEMOS (What We Do) */}
       <Section variant="light" className="py-24 bg-white">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-5xl font-black mb-16 text-black tracking-tighter text-center uppercase">
+          <h2 className="text-3xl md:text-2xl md:text-3xl font-bold mb-16 text-black tracking-tight text-center uppercase">
             A Engenharia (Como funciona)
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -262,7 +262,7 @@ const ServicosDetalhe = () => {
                   <CardDescription className="text-zinc-600 font-light leading-relaxed">
                     {item.description}
                   </CardDescription>
-                  <div className="mt-4 flex items-center text-revgreen text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="mt-4 flex items-center text-revgreen text-xs font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
                     Saiba mais <ArrowRight className="w-3 h-3 ml-1" />
                   </div>
                 </CardHeader>
@@ -275,7 +275,7 @@ const ServicosDetalhe = () => {
       {/* 3. COMO FUNCIONA (How It Works) */}
       <Section variant="light" className="py-24 bg-zinc-50 border-y border-zinc-200">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-5xl font-black mb-16 text-black tracking-tighter text-center uppercase">
+          <h2 className="text-3xl md:text-2xl md:text-3xl font-bold mb-16 text-black tracking-tight text-center uppercase">
             Teardown Logístico
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
@@ -285,7 +285,7 @@ const ServicosDetalhe = () => {
             {service.howItWorks.map((step, i) => (
               <div key={i} className="relative group">
                 {/* Number Bubble */}
-                <div className={`w-12 h-12 bg-white border-2 border-revgreen rounded-full flex items-center justify-center font-mono-tech text-black font-bold mb-6 mx-auto z-10 group-hover:bg-revgreen group-hover:text-white transition-colors shadow-sm`}>
+                <div className={`w-12 h-12 bg-white border-2 border-revgreen rounded-full flex items-center justify-center font-sans text-black font-bold mb-6 mx-auto z-10 group-hover:bg-revgreen group-hover:text-white transition-colors shadow-sm`}>
                   {step.step}
                 </div>
                 <div className="text-center px-4">
@@ -301,13 +301,13 @@ const ServicosDetalhe = () => {
       {/* 4. RESULTADOS (Results) */}
       <Section variant="dark" className="py-24 bg-black border-t border-white/5">
         <div className="container-custom">
-          <h2 className="text-3xl md:text-5xl font-black mb-16 text-white tracking-tighter text-center uppercase">
+          <h2 className="text-3xl md:text-2xl md:text-3xl font-bold mb-16 text-white tracking-tight text-center uppercase">
             Eficiência Pós-Implementação
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {service.results.map((result, i) => (
               <div key={i} className="p-8 border border-white/10 rounded-sm bg-white/5 text-center hover:bg-white/10 transition-colors group">
-                <div className={`text-4xl md:text-5xl font-bold ${service.accent} mb-4 font-mono-tech group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`text-2xl md:text-3xl font-bold ${service.accent} mb-4 font-sans group-hover:scale-110 transition-transform duration-300`}>
                   {result.value}
                 </div>
                 <p className="text-zinc-400 font-light uppercase tracking-wider text-sm">
@@ -323,13 +323,13 @@ const ServicosDetalhe = () => {
       <Section variant="light" className="py-24 bg-white">
         <div className="container-custom text-center">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-black tracking-tighter uppercase">Está com o caixa sangrando?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black tracking-tight uppercase">Está com o caixa sangrando?</h2>
             <p className="text-xl text-zinc-500 mb-10 font-bold">
               Avaliaremos sua operação tecnicamente e te diremos exatamente porque seu marketing não fecha a conta. Call bruta e pontual.
             </p>
             <Button
               onClick={() => setIsBookingOpen(true)}
-              className="bg-black text-white hover:bg-revgreen hover:text-black h-16 px-12 rounded-sm text-sm font-black tracking-widest uppercase transition-all shadow-sm cursor-pointer"
+              className="bg-black text-white hover:bg-revgreen hover:text-black h-16 px-12 rounded-sm text-sm font-bold tracking-wider uppercase transition-all shadow-sm cursor-pointer"
             >
               Auditar Minha Operação
             </Button>
@@ -365,12 +365,12 @@ const ServicosDetalhe = () => {
             {/* Header - Same as CallDiagnosticModal */}
             <div className="p-8 md:p-12 border-b border-zinc-100 flex justify-between items-start">
               <div className="space-y-2">
-                <span className="text-xxs font-mono font-black text-revgreen uppercase tracking-[0.4em]">{service?.number} // {service?.title}</span>
-                <h2 className="text-3xl md:text-5xl font-black text-black tracking-tighter leading-none italic uppercase">
+                <span className="text-xxs font-sans font-bold text-revgreen uppercase tracking-wider">{service?.number} // {service?.title}</span>
+                <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black tracking-tight leading-none italic uppercase">
                   {selectedService.title}
                 </h2>
               </div>
-              <button onClick={() => setSelectedService(null)} className="p-2 hover:bg-zinc-100 transition-colors ">
+              <button onClick={() => setSelectedService(null)} className="p-2 hover:bg-zinc-100 transition-colors">
                 <X className="w-6 h-6 text-black" />
               </button>
             </div>
@@ -384,7 +384,7 @@ const ServicosDetalhe = () => {
 
               {/* Context Badge */}
               <div className="border-l-2 border-revgreen pl-6 py-2">
-                <span className="text-xxs font-black uppercase tracking-[0.3em] text-zinc-400 block mb-1">Parte do Projeto</span>
+                <span className="text-xxs font-bold uppercase tracking-wider text-zinc-400 block mb-1">Parte do Projeto</span>
                 <span className="text-lg font-bold text-black tracking-tight">{service?.title}</span>
               </div>
 
@@ -394,7 +394,7 @@ const ServicosDetalhe = () => {
                   setSelectedService(null);
                   setIsBookingOpen(true);
                 }}
-                className="w-full h-20 bg-black text-white hover:bg-revgreen hover:text-black font-black uppercase tracking-[0.2em] text-xs transition-all duration-500 cursor-pointer rounded-none"
+                className="w-full h-20 bg-black text-white hover:bg-revgreen hover:text-black font-bold uppercase tracking-[0.2em] text-xs transition-all duration-500 cursor-pointer rounded-none"
               >
                 <Calendar className="w-5 h-5 mr-4" />
                 Agendar Diagnóstico de {selectedService.title}

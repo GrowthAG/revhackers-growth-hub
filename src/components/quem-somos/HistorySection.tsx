@@ -11,17 +11,17 @@ const HistorySection = () => {
             <div className="space-y-6 lg:col-span-8">
               <div className="flex items-center gap-3">
                 <span className="text-revgreen text-xs">•</span>
-                <span className="font-mono text-xxs text-zinc-400 uppercase tracking-[0.4em] font-black">
+                <span className="font-sans text-xxs text-zinc-400 uppercase tracking-wider font-bold">
                   REVHACKERS // INTELLIGENCE UNIT
                 </span>
               </div>
-              <h2 className="text-6xl md:text-[6rem] font-black tracking-tighter text-black leading-[0.85] mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-black leading-[0.85] mb-6">
                 ARQUITETURA <br />
                 DE RECEITA<span className="text-revgreen">.</span>
               </h2>
             </div>
             <div className="lg:col-span-4 lg:pt-8 animate-fade-in [animation-delay:200ms]">
-              <p className="text-xl md:text-2xl text-zinc-900 font-bold tracking-tighter leading-[1.1]">
+              <p className="text-xl md:text-2xl text-zinc-900 font-bold tracking-tight leading-[1.1]">
                 Substituímos o "achismo" por uma estrutura de vendas previsível e automatizada.
               </p>
             </div>
@@ -34,7 +34,7 @@ const HistorySection = () => {
             {/* Era 01 */}
             <div className="bg-white p-12 space-y-8 animate-fade-in [animation-delay:400ms] group hover:bg-zinc-50 transition-colors duration-500">
               <div className="flex justify-between items-start">
-                <span className="text-2xs font-mono text-zinc-300 font-black uppercase tracking-widest">
+                <span className="text-2xs font-sans text-zinc-300 font-bold uppercase tracking-wider">
                   [ RH_LOG.01 // ORIGEM ]
                 </span>
                 <div className="w-1 h-1 bg-zinc-200 group-hover:bg-black transition-colors" />
@@ -47,7 +47,7 @@ const HistorySection = () => {
             {/* Era 02 */}
             <div className="bg-white p-12 space-y-8 animate-fade-in [animation-delay:600ms] group hover:bg-zinc-50 transition-colors duration-500">
               <div className="flex justify-between items-start">
-                <span className="text-2xs font-mono text-zinc-300 font-black uppercase tracking-widest">
+                <span className="text-2xs font-sans text-zinc-300 font-bold uppercase tracking-wider">
                   [ RH_LOG.02 // LAB ]
                 </span>
                 <div className="w-1 h-1 bg-zinc-200 group-hover:bg-revgreen transition-colors" />
@@ -61,12 +61,12 @@ const HistorySection = () => {
 
         {/* Minimal Metadata Footer */}
         <div className="max-w-6xl mx-auto mt-20 pt-8 border-t border-zinc-50 flex justify-between items-center opacity-30">
-          <span className="text-3xs font-mono text-black font-black uppercase tracking-[0.5em]">
+          <span className="text-3xs font-sans text-black font-bold uppercase tracking-wider">
             SYST_SECURE // ARCH_STABLE
           </span>
           <div className="flex gap-8">
-            <span className="text-3xs font-mono font-bold uppercase tracking-widest">LATENCY: NULL</span>
-            <span className="text-3xs font-mono font-bold uppercase tracking-widest">SYNC: 2026.RH</span>
+            <span className="text-3xs font-sans font-bold uppercase tracking-wider">LATENCY: NULL</span>
+            <span className="text-3xs font-sans font-bold uppercase tracking-wider">SYNC: 2026.RH</span>
           </div>
         </div>
       </div>

@@ -82,7 +82,7 @@ const ComparisonSection = () => {
 
         {/* Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
-          <span className="font-mono text-xs text-zinc-400 uppercase tracking-[0.2em] mb-6 block">
+          <span className="font-sans text-xs text-zinc-400 uppercase tracking-[0.2em] mb-6 block">
             Por que RevHackers
           </span>
           <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 tracking-tight leading-[1.05] mb-6 text-balance">
@@ -106,15 +106,15 @@ const ComparisonSection = () => {
                 alt="RevHackers" 
                 className="w-28 md:w-36 max-w-full h-auto mx-auto mb-3 opacity-100"
               />
-              <span className="text-revgreen/60 text-[10px] font-mono tracking-widest uppercase">Consultoria RevOps</span>
+              <span className="text-revgreen/60 text-[10px] font-sans tracking-wider uppercase">Consultoria RevOps</span>
             </div>
             <div className="col-span-1 bg-zinc-50 border-x border-t border-zinc-200 px-6 py-5 text-center">
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-700 block">Time Interno</span>
-              <span className="text-zinc-400 text-xxs font-mono">RevOps Manager + Ops</span>
+              <span className="text-zinc-400 text-xxs font-sans">RevOps Manager + Ops</span>
             </div>
             <div className="col-span-1 bg-zinc-50 border-t border-r border-zinc-200 px-6 py-5 text-center">
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-700 block">Agência Digital</span>
-              <span className="text-zinc-400 text-xxs font-mono">Marketing / Growth</span>
+              <span className="text-zinc-400 text-xxs font-sans">Marketing / Growth</span>
             </div>
           </div>
 

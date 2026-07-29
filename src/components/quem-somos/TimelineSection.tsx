@@ -42,11 +42,11 @@ const TimelineSection = () => {
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-1 h-1 bg-black rounded-full" />
-                <span className="font-mono text-xxs text-zinc-400 uppercase tracking-[0.4em] font-black">
+                <span className="font-sans text-xxs text-zinc-400 uppercase tracking-wider font-bold">
                   // Evolutionary_Roadmap
                 </span>
               </div>
-              <h2 className="text-5xl md:text-7xl font-black text-black tracking-tighter leading-[0.85]">
+              <h2 className="text-2xl md:text-3xl font-bold text-black tracking-tight leading-[0.85]">
                 JORNADA <br />
                 EVOLUTIVA<span className="text-revgreen">.</span>
               </h2>
@@ -70,13 +70,13 @@ const TimelineSection = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-2">
-                  <span className="text-4xl md:text-5xl font-black text-black tracking-tighter leading-none">
+                  <span className="text-2xl md:text-3xl font-bold text-black tracking-tight leading-none">
                     {event.year}
                   </span>
                 </div>
                 <div className="lg:col-span-10">
                   <div className="p-8 border border-zinc-100 rounded-none bg-white hover:border-black transition-all duration-500">
-                    <h3 className="text-sm font-mono font-black text-zinc-400 uppercase tracking-widest mb-4">
+                    <h3 className="text-sm font-sans font-bold text-zinc-400 uppercase tracking-wider mb-4">
                       PROTOCOL :: {event.title}
                     </h3>
                     <p className="text-zinc-600 font-medium leading-relaxed text-base max-w-3xl">

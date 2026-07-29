@@ -12,7 +12,7 @@ export const QuestionProgressBar = ({ current, total, variant = 'dark' }: Questi
 
     return (
         <div className="w-full space-y-2">
-            <div className="flex items-center justify-between text-xs font-mono">
+            <div className="flex items-center justify-between text-xs font-sans">
                 <span className="font-bold text-zinc-900">
                     Etapa {current + 1} de {total}
                 </span>

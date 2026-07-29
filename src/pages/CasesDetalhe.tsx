@@ -95,7 +95,7 @@ const CasesDetalhe = () => {
         </div>
 
         <div className="container-custom flex flex-col items-center text-center max-w-6xl relative z-10">
-          <Link to="/cases" className="absolute top-0 left-0 text-zinc-400 hover:text-black flex items-center gap-2 text-xxs font-bold uppercase tracking-widest transition-colors mb-8 md:mb-0 md:static self-start md:self-center bg-zinc-50 px-4 py-2 border border-zinc-100">
+          <Link to="/cases" className="absolute top-0 left-0 text-zinc-400 hover:text-black flex items-center gap-2 text-xxs font-bold uppercase tracking-wider transition-colors mb-8 md:mb-0 md:static self-start md:self-center bg-zinc-50 px-4 py-2 border border-zinc-100">
             <ArrowLeft className="w-3 h-3" /> Voltar para Cases
           </Link>
 
@@ -110,17 +110,17 @@ const CasesDetalhe = () => {
                     className="h-16 md:h-20 w-auto object-contain" // Removed brightness-0 invert
                   />
                 ) : (
-                  <span className="text-3xl font-bold text-black tracking-tighter">{caseData.title}</span>
+                  <span className="text-3xl font-bold text-black tracking-tight">{caseData.title}</span>
                 )}
               </div>
 
               <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
-                <span className="text-xxs font-mono font-bold uppercase tracking-widest text-zinc-400">
+                <span className="text-xxs font-sans font-bold uppercase tracking-wider text-zinc-400">
                   {caseData.category}
                 </span>
               </div>
 
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-black mb-8 leading-tight tracking-tighter text-balance max-w-5xl mx-auto">
+              <h1 className="text-2xl md:text-3xl font-bold text-black mb-8 leading-tight tracking-tight text-balance max-w-5xl mx-auto">
                 {caseData.title}
               </h1>
             </motion.div>
@@ -136,7 +136,7 @@ const CasesDetalhe = () => {
             <div className="flex flex-wrap justify-center gap-12 md:gap-24 border-t border-zinc-100 pt-12 mt-4 animate-fade-in-up delay-300 w-full">
               {caseData.metrics.slice(0, 3).map((metric, idx) => (
                 <div key={idx} className="text-center group">
-                  <div className="text-4xl md:text-5xl font-bold text-black tracking-tighter mb-2 relative inline-block group-hover:scale-110 transition-transform duration-500 origin-center">
+                  <div className="text-2xl md:text-3xl font-bold text-black tracking-tight mb-2 relative inline-block group-hover:scale-110 transition-transform duration-500 origin-center">
                     {metric.value}
                     <span className="absolute -top-2 -right-4 text-zinc-300 text-2xl font-light">+</span>
                   </div>
@@ -166,7 +166,7 @@ const CasesDetalhe = () => {
               <div className="sticky top-32 space-y-12">
 
                 <div>
-                  <h4 className="font-bold text-black mb-6 border-l-4 border-black pl-4 uppercase tracking-widest text-xs">Sobre o Cliente</h4>
+                  <h4 className="font-bold text-black mb-6 border-l-4 border-black pl-4 uppercase tracking-wider text-xs">Sobre o Cliente</h4>
                   <p className="text-sm text-zinc-600 leading-relaxed mb-4">
                     Projeto desenvolvido para <strong>{caseData.title}</strong>, focado em estratégias de {caseData.category}.
                   </p>
@@ -174,7 +174,7 @@ const CasesDetalhe = () => {
 
                 {caseData.techStack && caseData.techStack.length > 0 && (
                   <div>
-                    <h4 className="font-bold text-black mb-6 border-l-4 border-black pl-4 uppercase tracking-widest text-xs">Tech Stack</h4>
+                    <h4 className="font-bold text-black mb-6 border-l-4 border-black pl-4 uppercase tracking-wider text-xs">Tech Stack</h4>
                     <div className="flex flex-wrap gap-2">
                       {caseData.techStack.map((tech) => (
                         <span key={tech} className="bg-zinc-100 text-zinc-600 px-3 py-1 rounded-sm text-xs font-medium border border-zinc-200">
@@ -188,7 +188,7 @@ const CasesDetalhe = () => {
                 <div className="bg-zinc-50 p-6 border border-zinc-100 rounded-sm">
                   <h5 className="font-bold text-black text-sm mb-2">Precisa de resultados assim?</h5>
                   <p className="text-xs text-zinc-500 mb-4">Agende um diagnóstico gratuito da sua operação.</p>
-                  <Button asChild className="w-full bg-black hover:bg-revgreen hover:text-black text-white text-xs font-bold uppercase tracking-widest">
+                  <Button asChild className="w-full bg-black hover:bg-revgreen hover:text-black text-white text-xs font-bold uppercase tracking-wider">
                     <Link to="/booking">Agendar Agora</Link>
                   </Button>
                 </div>
@@ -228,8 +228,8 @@ const CasesDetalhe = () => {
                     {caseData.metrics && caseData.metrics.map((metric, idx) => (
                       <div key={idx} className="bg-zinc-50 p-8 border border-zinc-100 rounded-sm hover:border-revgreen/50 transition-colors">
                         <TrendingUp className="w-6 h-6 text-revgreen mb-4" />
-                        <div className="text-4xl font-black text-black tracking-tighter mb-2">{metric.value}</div>
-                        <p className="text-sm font-bold uppercase tracking-widest text-zinc-500">{metric.label}</p>
+                        <div className="text-2xl md:text-3xl font-bold text-black tracking-tight mb-2">{metric.value}</div>
+                        <p className="text-sm font-bold uppercase tracking-wider text-zinc-500">{metric.label}</p>
                       </div>
                     ))}
                   </div>
@@ -261,7 +261,7 @@ const CasesDetalhe = () => {
                         )}
                         <div>
                           <cite className="not-italic font-bold text-white block uppercase tracking-wider text-sm">{caseData.author}</cite>
-                          <span className="text-zinc-500 text-xs font-mono uppercase tracking-widest">{caseData.role}</span>
+                          <span className="text-zinc-500 text-xs font-sans uppercase tracking-wider">{caseData.role}</span>
                         </div>
                       </footer>
                     </blockquote>

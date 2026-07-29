@@ -274,12 +274,12 @@ const ReiConsultingPage = () => {
                 <div className="container-custom max-w-4xl mx-auto">
 
                     <div className="mb-12">
-                        <Link to="/rei" className="inline-flex items-center text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-black mb-8 transition-colors">
+                        <Link to="/rei" className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-black mb-8 transition-colors">
                             <ArrowLeft className="w-4 h-4 mr-2" /> Voltar para o Hub
                         </Link>
 
                         {/* White Minimal Header */}
-                        <h1 className="text-4xl md:text-6xl font-black text-black mb-4 tracking-tighter leading-none">
+                        <h1 className="text-2xl md:text-3xl font-bold text-black mb-4 tracking-tight leading-none">
                             REI Consulting<span className="text-revgreen">.</span>
                         </h1>
                         <p className="text-xl text-zinc-500 font-normal tracking-tight">
@@ -294,7 +294,7 @@ const ReiConsultingPage = () => {
                                 transition={{ duration: 0.5, ease: "easeInOut" }}
                             />
                         </div>
-                        <div className="flex justify-between mt-3 text-xxs font-bold font-mono text-zinc-400 uppercase tracking-widest">
+                        <div className="flex justify-between mt-3 text-xxs font-bold font-sans text-zinc-400 uppercase tracking-wider">
                             <span>Seção {currentStep} de {STEPS.length}</span>
                             <span>{STEPS[currentStep - 1].title}</span>
                         </div>
@@ -460,7 +460,7 @@ const ReiConsultingPage = () => {
 
                                 {currentStep === 5 && (
                                     <div className="text-center py-20 bg-zinc-50 rounded-sm border border-zinc-200 border-dashed">
-                                        <h3 className="text-xl text-black font-mono font-bold mb-2">Aguardando Input</h3>
+                                        <h3 className="text-xl text-black font-sans font-bold mb-2">Aguardando Input</h3>
                                         <p className="text-zinc-500">Conteúdo da Seção {currentStep} em breve.</p>
                                         <p className="text-xs text-zinc-400 mt-4">Clique em "Próximo" para avançar para as seções já implementadas.</p>
                                     </div>
@@ -535,14 +535,14 @@ const ReiConsultingPage = () => {
                             <button
                                 onClick={handleBack}
                                 disabled={currentStep === 1}
-                                className={`text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-black transition-colors flex items-center gap-2 ${currentStep === 1 ? 'opacity-0 pointer-events-none' : ''}`}
+                                className={`text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-black transition-colors flex items-center gap-2 ${currentStep === 1 ? 'opacity-0 pointer-events-none' : ''}`}
                             >
                                 <ArrowLeft className="w-4 h-4" /> Anterior
                             </button>
 
                             <Button
                                 onClick={currentStep === STEPS.length ? form.handleSubmit(onSubmit) : handleNext}
-                                className="bg-black text-white hover:bg-revgreen hover:text-black h-12 px-8 rounded-sm text-xs font-bold uppercase tracking-widest"
+                                className="bg-black text-white hover:bg-revgreen hover:text-black h-12 px-8 rounded-sm text-xs font-bold uppercase tracking-wider"
                             >
                                 {currentStep === STEPS.length ? 'Gerar Diagnóstico' : 'Próximo'} <ArrowRight className="ml-2 w-4 h-4" />
                             </Button>

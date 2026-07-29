@@ -386,7 +386,7 @@ const SiteScore = () => {
                             {/* URL Input Action Area */}
                             <div className="mb-16 w-full">
                                 <div className="flex flex-col md:flex-row gap-0 w-full border border-zinc-200 bg-white group-hover:border-zinc-300 transition-colors overflow-hidden shadow-sm mb-4">
-                                    <span className="hidden md:flex items-center px-6 font-mono text-xs text-zinc-400 bg-zinc-50 border-r border-zinc-200 select-none gap-2">
+                                    <span className="hidden md:flex items-center px-6 font-sans text-xs text-zinc-400 bg-zinc-50 border-r border-zinc-200 select-none gap-2">
                                         <Globe className="w-4 h-4" />
                                         https://
                                     </span>
@@ -405,7 +405,7 @@ const SiteScore = () => {
                                         INICIAR <ArrowRight className="w-3 h-3" />
                                     </button>
                                 </div>
-                                <p className="text-xxs uppercase tracking-widest text-zinc-400 font-mono">
+                                <p className="text-xxs uppercase tracking-wider text-zinc-400 font-sans">
                                     *Iniciaremos a análise técnica de infraestrutura
                                 </p>
 
@@ -419,7 +419,7 @@ const SiteScore = () => {
                                     <div className="space-y-3">
                                         {competitorUrls.map((url, idx) => (
                                             <div key={idx} className="flex items-center gap-2">
-                                                <span className="text-xxs font-mono text-zinc-400 w-24">Concorrente {idx + 1}</span>
+                                                <span className="text-xxs font-sans text-zinc-400 w-24">Concorrente {idx + 1}</span>
                                                 <input
                                                     type="text"
                                                     value={url}
@@ -429,7 +429,7 @@ const SiteScore = () => {
                                                         setCompetitorUrls(newUrls);
                                                     }}
                                                     placeholder="concorrente.com"
-                                                    className="flex-1 bg-zinc-50 border border-zinc-100 text-black h-10 px-4 text-sm focus:ring-0 outline-none focus:border-zinc-300 "
+                                                    className="flex-1 bg-zinc-50 border border-zinc-100 text-black h-10 px-4 text-sm focus:ring-0 outline-none focus:border-zinc-300"
                                                 />
                                             </div>
                                         ))}
@@ -444,7 +444,7 @@ const SiteScore = () => {
                                         <Zap className="w-5 h-5" />
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <span className="text-xxs font-mono font-black text-zinc-400 uppercase tracking-widest">01 // Speed</span>
+                                        <span className="text-xxs font-sans font-bold text-zinc-400 uppercase tracking-wider">01 // Speed</span>
                                         <span className="text-sm font-bold text-zinc-900">Performance</span>
                                     </div>
                                 </div>
@@ -454,7 +454,7 @@ const SiteScore = () => {
                                         <Search className="w-5 h-5" />
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <span className="text-xxs font-mono font-black text-zinc-400 uppercase tracking-widest">02 // SEO</span>
+                                        <span className="text-xxs font-sans font-bold text-zinc-400 uppercase tracking-wider">02 // SEO</span>
                                         <span className="text-sm font-bold text-zinc-900">Visibilidade</span>
                                     </div>
                                 </div>
@@ -464,7 +464,7 @@ const SiteScore = () => {
                                         <Terminal className="w-5 h-5" />
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <span className="text-xxs font-mono font-black text-zinc-400 uppercase tracking-widest">03 // Tech</span>
+                                        <span className="text-xxs font-sans font-bold text-zinc-400 uppercase tracking-wider">03 // Tech</span>
                                         <span className="text-sm font-bold text-zinc-900">Conformidade</span>
                                     </div>
                                 </div>
@@ -488,9 +488,9 @@ const SiteScore = () => {
                     <div className="w-full flex items-center justify-between mb-8 border-b border-zinc-100 pb-2">
                         <div className="flex items-center gap-3">
                             <span className="w-2 h-2 bg-black rounded-full animate-pulse"></span>
-                            <span className="text-xs font-mono font-medium text-zinc-500 tracking-wider">Protocolo de Diagnóstico</span>
+                            <span className="text-xs font-sans font-medium text-zinc-500 tracking-wider">Protocolo de Diagnóstico</span>
                         </div>
-                        <span className="text-xs font-mono font-medium text-zinc-400">0{currentQ + 1} / 0{QUESTIONS.length}</span>
+                        <span className="text-xs font-sans font-medium text-zinc-400">0{currentQ + 1} / 0{QUESTIONS.length}</span>
                     </div>
 
                     <div className="w-full animate-fade-in flex flex-col items-center relative">
@@ -502,7 +502,7 @@ const SiteScore = () => {
                                 exit={{ opacity: 0, y: -10 }}
                                 className="w-full flex flex-col items-center space-y-6"
                             >
-                                <h2 className="text-3xl md:text-4xl font-bold text-black tracking-tight leading-tight text-center max-w-2xl">
+                                <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black tracking-tight leading-tight text-center max-w-2xl">
                                     {question.question}
                                 </h2>
 
@@ -517,7 +517,7 @@ const SiteScore = () => {
                                                 : "bg-white border-zinc-200 text-zinc-900 hover:border-zinc-400 hover:bg-zinc-50"
                                                 } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
                                         >
-                                            <div className={`w-6 h-6 flex items-center justify-center text-xxs font-mono font-bold border rounded transition-colors ${selectedOption === idx
+                                            <div className={`w-6 h-6 flex items-center justify-center text-xxs font-sans font-bold border rounded transition-colors ${selectedOption === idx
                                                 ? "bg-white text-zinc-900 border-white"
                                                 : "bg-zinc-100 border-zinc-200 text-zinc-500 group-hover:border-zinc-400 group-hover:text-zinc-900"
                                                 }`}>
@@ -563,11 +563,11 @@ const SiteScore = () => {
                             <div className="absolute inset-0 border-2 border-zinc-100 rounded-full"></div>
                             <div className="absolute inset-0 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
                             {/* <Gauge className="w-5 h-5 text-black" /> REMOVIDO PARA DAR LUGAR A PORCENTAGEM */}
-                            <span className="text-xs font-bold font-mono min-w-[3ch] text-center">{progress}%</span>
+                            <span className="text-xs font-bold font-sans min-w-[3ch] text-center">{progress}%</span>
                         </div>
                         <div className="space-y-4">
-                            <span className="text-xs font-mono text-zinc-400 tracking-widest font-medium block">{loadingStatus}</span>
-                            <div className="w-full max-w-xs mx-auto bg-zinc-100 h-[2px] relative overflow-hidden ">
+                            <span className="text-xs font-sans text-zinc-400 tracking-wider font-medium block">{loadingStatus}</span>
+                            <div className="w-full max-w-xs mx-auto bg-zinc-100 h-[2px] relative overflow-hidden">
                                 <motion.div
                                     className="absolute top-0 left-0 bg-black h-full"
                                     initial={{ width: 0 }}
@@ -608,13 +608,13 @@ const SiteScore = () => {
                             {/* Coluna Esquerda: Resultado (Visual) */}
                             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:border-r border-zinc-900 md:pr-12">
                                 {/* Teaser Pill */}
-                                <div className="inline-flex items-center gap-2 bg-zinc-950 px-3 py-1 border border-zinc-900">
+                                <div className="inline-flex items-center gap-2 bg-black px-3 py-1 border border-zinc-900">
                                     <div className={`w-1.5 h-1.5 rounded-full ${psiResults?.mobile?.vitals?.score >= 70 ? 'bg-revgreen' : 'bg-red-500'} animate-pulse shadow-[0_0_10px_currentColor]`}></div>
-                                    <span className="text-2xs font-mono font-bold text-zinc-500 tracking-wider uppercase">Análise Finalizada</span>
+                                    <span className="text-2xs font-sans font-bold text-zinc-500 tracking-wider uppercase">Análise Finalizada</span>
                                 </div>
 
                                 <div className="relative">
-                                    <div className="text-8xl md:text-9xl font-black text-white tracking-tighter leading-none shadow-black drop-shadow-2xl">{finalScore}</div>
+                                    <div className="text-3xl font-bold text-white tracking-tight leading-none shadow-black drop-shadow-2xl">{finalScore}</div>
                                 </div>
 
                                 <h3 className="text-sm font-medium text-zinc-400 leading-relaxed max-w-xs">
@@ -648,11 +648,11 @@ const SiteScore = () => {
 
                     {/* DASHBOARD HEADLINE - Adicionado por solicitação */}
                     <div className="mb-12 text-center animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-4xl mx-auto">
-                        <div className="inline-flex items-center gap-2 mb-4 bg-zinc-900 border border-zinc-800 px-3 py-1 ">
+                        <div className="inline-flex items-center gap-2 mb-4 bg-zinc-900 border border-zinc-800 px-3 py-1">
                             <span className="w-1.5 h-1.5 bg-revgreen shadow-[0_0_10px_#00CC6A]"></span>
-                            <span className="text-xxs font-mono font-bold text-zinc-400 uppercase tracking-widest">Status: Finalizado</span>
+                            <span className="text-xxs font-sans font-bold text-zinc-400 uppercase tracking-wider">Status: Finalizado</span>
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-2">
+                        <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-2">
                             Diagnóstico <span className="text-zinc-600">Site</span>
                         </h1>
                         <p className="text-zinc-500 font-medium max-w-xl mx-auto">
@@ -673,10 +673,10 @@ const SiteScore = () => {
                         {/* Right Column: Detailed Grid */}
                         <div className="lg:col-span-8 flex flex-col gap-px bg-zinc-800 border border-zinc-900 overflow-hidden">
                             {/* Header Row with Toggle */}
-                            <div className="bg-zinc-950 p-6 border-b border-zinc-900 flex justify-between items-center bg-white/5">
+                            <div className="bg-black p-6 border-b border-zinc-900 flex justify-between items-center bg-white/5">
                                 <div className="flex items-center gap-3">
                                     <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${viewMode === 'mobile' ? 'bg-revgreen' : 'bg-zinc-400'}`} />
-                                    <span className="text-xxs font-mono font-bold text-zinc-400 uppercase tracking-widest">
+                                    <span className="text-xxs font-sans font-bold text-zinc-400 uppercase tracking-wider">
                                         INFRAESTRUTURA // WEB VITALS
                                     </span>
                                 </div>
@@ -747,25 +747,25 @@ const SiteScore = () => {
                             </div>
 
                             {/* Tech Stack & SEO Meta Row */}
-                            <div className="bg-zinc-950 p-6 border-t border-zinc-900 grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="bg-black p-6 border-t border-zinc-900 grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div>
-                                    <span className="text-xxs font-mono text-zinc-500 uppercase tracking-widest block mb-4">Clareza Estratégica (SEO)</span>
+                                    <span className="text-xxs font-sans text-zinc-500 uppercase tracking-wider block mb-4">Clareza Estratégica (SEO)</span>
                                     <div className="space-y-3">
                                         <div>
-                                            <span className="text-2xs font-black text-zinc-600 uppercase tracking-tighter block">Title Tag</span>
+                                            <span className="text-2xs font-bold text-zinc-600 uppercase tracking-tight block">Title Tag</span>
                                             <p className="text-sm font-bold text-white line-clamp-1">{psiResults?.seoMetadata?.title}</p>
                                         </div>
                                         <div>
-                                            <span className="text-2xs font-black text-zinc-600 uppercase tracking-tighter block">Meta Description</span>
+                                            <span className="text-2xs font-bold text-zinc-600 uppercase tracking-tight block">Meta Description</span>
                                             <p className="text-xs text-zinc-400 line-clamp-2 italic">"{psiResults?.seoMetadata?.description}"</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <span className="text-xxs font-mono text-zinc-500 uppercase tracking-widest block mb-4">Tecnologias Identificadas</span>
+                                    <span className="text-xxs font-sans text-zinc-500 uppercase tracking-wider block mb-4">Tecnologias Identificadas</span>
                                     <div className="flex flex-wrap gap-2">
                                         {[...(psiResults?.techStack || []), ...(psiResults?.pixels || [])].map((tech, i) => (
-                                            <span key={i} className="text-xxs font-bold bg-zinc-900 text-zinc-300 border border-zinc-800 px-3 py-1 ">
+                                            <span key={i} className="text-xxs font-bold bg-zinc-900 text-zinc-300 border border-zinc-800 px-3 py-1">
                                                 {tech}
                                             </span>
                                         ))}
@@ -782,18 +782,18 @@ const SiteScore = () => {
                             {/* PSI AUDIT DETAILS */}
                             <section>
                                 <div className="space-y-6 mb-20">
-                                    <div className="inline-block bg-black text-white px-4 py-1.5 text-2xs font-mono uppercase tracking-[0.5em] font-black">
+                                    <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
                                         AUDITORIA_ESTRATÉGICA
-                                    </div>
-                                    <h2 className="text-3xl md:text-5xl font-black text-black tracking-tighter leading-none italic">
+                                    </p>
+                                    <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black tracking-tight leading-none italic">
                                         Sua infraestrutura <span className="text-zinc-500">trabalha para você?</span>
                                     </h2>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                                     <div className="space-y-6 border-l border-zinc-200 pl-8">
-                                        <h4 className="text-sm font-black text-black uppercase tracking-widest flex items-center gap-3">
-                                            <div className="w-1.5 h-1.5 bg-black " />
+                                        <h4 className="text-sm font-bold text-black uppercase tracking-wider flex items-center gap-3">
+                                            <div className="w-1.5 h-1.5 bg-black" />
                                             Perspectiva Técnica
                                         </h4>
                                         <p className="text-black text-base leading-relaxed font-semibold">
@@ -809,8 +809,8 @@ const SiteScore = () => {
                                     </div>
 
                                     <div className="space-y-6 border-l border-zinc-200 pl-8">
-                                        <h4 className="text-sm font-black text-black uppercase tracking-widest flex items-center gap-3">
-                                            <div className="w-1.5 h-1.5 bg-black " />
+                                        <h4 className="text-sm font-bold text-black uppercase tracking-wider flex items-center gap-3">
+                                            <div className="w-1.5 h-1.5 bg-black" />
                                             Plano de Ação
                                         </h4>
                                         <p className="text-black text-base leading-relaxed font-semibold">
@@ -827,10 +827,10 @@ const SiteScore = () => {
                             {(benchmarkResult || isBenchmarking) && (
                                 <section className="mt-32">
                                     <div className="space-y-6 mb-12">
-                                        <div className="inline-block bg-revgreen text-black px-4 py-1.5 text-2xs font-mono uppercase tracking-[0.5em] font-black">
+                                        <div className="inline-block bg-revgreen text-black px-4 py-1.5 text-2xs font-sans uppercase tracking-wider font-bold">
                                             BENCHMARK_COMPETITIVO
                                         </div>
-                                        <h2 className="text-3xl md:text-5xl font-black text-black tracking-tighter leading-none italic">
+                                        <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black tracking-tight leading-none italic">
                                             Você vs. <span className="text-zinc-500">Concorrentes</span>
                                         </h2>
                                         <p className="text-sm text-zinc-500 max-w-xl">
@@ -848,11 +848,11 @@ const SiteScore = () => {
                                             <table className="w-full border-collapse">
                                                 <thead>
                                                     <tr className="border-b-2 border-black">
-                                                        <th className="text-left py-4 px-4 text-xs font-mono font-black text-zinc-500 uppercase tracking-wider">Site</th>
-                                                        <th className="text-center py-4 px-4 text-xs font-mono font-black text-zinc-500 uppercase tracking-wider">LCP</th>
-                                                        <th className="text-center py-4 px-4 text-xs font-mono font-black text-zinc-500 uppercase tracking-wider">CLS</th>
-                                                        <th className="text-center py-4 px-4 text-xs font-mono font-black text-zinc-500 uppercase tracking-wider">INP</th>
-                                                        <th className="text-center py-4 px-4 text-xs font-mono font-black text-zinc-500 uppercase tracking-wider">Status</th>
+                                                        <th className="text-left py-4 px-4 text-xs font-sans font-bold text-zinc-500 uppercase tracking-wider">Site</th>
+                                                        <th className="text-center py-4 px-4 text-xs font-sans font-bold text-zinc-500 uppercase tracking-wider">LCP</th>
+                                                        <th className="text-center py-4 px-4 text-xs font-sans font-bold text-zinc-500 uppercase tracking-wider">CLS</th>
+                                                        <th className="text-center py-4 px-4 text-xs font-sans font-bold text-zinc-500 uppercase tracking-wider">INP</th>
+                                                        <th className="text-center py-4 px-4 text-xs font-sans font-bold text-zinc-500 uppercase tracking-wider">Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -863,22 +863,22 @@ const SiteScore = () => {
                                                                 <Trophy className="w-4 h-4 text-revgreen" />
                                                                 <div>
                                                                     <span className="font-bold text-black text-sm block">{new URL(benchmarkResult.clientSite.url).hostname}</span>
-                                                                    <span className="text-xxs text-zinc-400 font-mono">SEU SITE</span>
+                                                                    <span className="text-xxs text-zinc-400 font-sans">SEU SITE</span>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td className="text-center py-4 px-4">
-                                                            <span className="font-mono font-bold" style={{ color: getCategoryColor(benchmarkResult.clientSite.lcp.category) }}>
+                                                            <span className="font-sans font-bold" style={{ color: getCategoryColor(benchmarkResult.clientSite.lcp.category) }}>
                                                                 {formatMetricValue('lcp', benchmarkResult.clientSite.lcp.p75)}
                                                             </span>
                                                         </td>
                                                         <td className="text-center py-4 px-4">
-                                                            <span className="font-mono font-bold" style={{ color: getCategoryColor(benchmarkResult.clientSite.cls.category) }}>
+                                                            <span className="font-sans font-bold" style={{ color: getCategoryColor(benchmarkResult.clientSite.cls.category) }}>
                                                                 {formatMetricValue('cls', benchmarkResult.clientSite.cls.p75)}
                                                             </span>
                                                         </td>
                                                         <td className="text-center py-4 px-4">
-                                                            <span className="font-mono font-bold" style={{ color: getCategoryColor(benchmarkResult.clientSite.inp.category) }}>
+                                                            <span className="font-sans font-bold" style={{ color: getCategoryColor(benchmarkResult.clientSite.inp.category) }}>
                                                                 {formatMetricValue('inp', benchmarkResult.clientSite.inp.p75)}
                                                             </span>
                                                         </td>
@@ -897,7 +897,7 @@ const SiteScore = () => {
                                                                     <Users className="w-4 h-4 text-zinc-300" />
                                                                     <div>
                                                                         <span className="font-medium text-zinc-700 text-sm block">{new URL(competitor.url).hostname}</span>
-                                                                        <span className="text-xxs text-zinc-400 font-mono">CONCORRENTE {idx + 1}</span>
+                                                                        <span className="text-xxs text-zinc-400 font-sans">CONCORRENTE {idx + 1}</span>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -905,7 +905,7 @@ const SiteScore = () => {
                                                                 {competitor.error ? (
                                                                     <span className="text-xs text-zinc-400">N/A</span>
                                                                 ) : (
-                                                                    <span className="font-mono font-bold" style={{ color: getCategoryColor(competitor.lcp.category) }}>
+                                                                    <span className="font-sans font-bold" style={{ color: getCategoryColor(competitor.lcp.category) }}>
                                                                         {formatMetricValue('lcp', competitor.lcp.p75)}
                                                                     </span>
                                                                 )}
@@ -914,7 +914,7 @@ const SiteScore = () => {
                                                                 {competitor.error ? (
                                                                     <span className="text-xs text-zinc-400">N/A</span>
                                                                 ) : (
-                                                                    <span className="font-mono font-bold" style={{ color: getCategoryColor(competitor.cls.category) }}>
+                                                                    <span className="font-sans font-bold" style={{ color: getCategoryColor(competitor.cls.category) }}>
                                                                         {formatMetricValue('cls', competitor.cls.p75)}
                                                                     </span>
                                                                 )}
@@ -923,7 +923,7 @@ const SiteScore = () => {
                                                                 {competitor.error ? (
                                                                     <span className="text-xs text-zinc-400">N/A</span>
                                                                 ) : (
-                                                                    <span className="font-mono font-bold" style={{ color: getCategoryColor(competitor.inp.category) }}>
+                                                                    <span className="font-sans font-bold" style={{ color: getCategoryColor(competitor.inp.category) }}>
                                                                         {formatMetricValue('inp', competitor.inp.p75)}
                                                                     </span>
                                                                 )}
@@ -941,7 +941,7 @@ const SiteScore = () => {
                                             </table>
 
                                             {/* Legenda */}
-                                            <div className="flex items-center justify-center gap-6 mt-6 text-xxs font-mono text-zinc-400">
+                                            <div className="flex items-center justify-center gap-6 mt-6 text-xxs font-sans text-zinc-400">
                                                 <div className="flex items-center gap-2">
                                                     <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#00C853' }} />
                                                     <span>Bom</span>
@@ -962,10 +962,10 @@ const SiteScore = () => {
 
                             <section>
                                 <div className="space-y-6 mb-20 text-right">
-                                    <div className="inline-block bg-black text-white px-4 py-1.5 text-2xs font-mono uppercase tracking-[0.5em] font-black">
+                                    <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
                                         MARKET_INTELLIGENCE
-                                    </div>
-                                    <h2 className="text-3xl md:text-5xl font-black text-black tracking-tighter leading-none italic">
+                                    </p>
+                                    <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black tracking-tight leading-none italic">
                                         Oportunidades <span className="text-zinc-500">Táticas Encontradas.</span>
                                     </h2>
                                 </div>
@@ -973,39 +973,39 @@ const SiteScore = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                     <div className="p-8 bg-zinc-50 border border-zinc-100 flex flex-col justify-between">
                                         <div>
-                                            <span className="text-xxs font-mono text-zinc-400 uppercase tracking-widest block mb-4">Escalabilidade</span>
+                                            <span className="text-xxs font-sans text-zinc-400 uppercase tracking-wider block mb-4">Escalabilidade</span>
                                             <h4 className="text-xl font-bold text-black mb-4 tracking-tight">Performance Proativa</h4>
                                             <p className="text-sm text-zinc-600 leading-relaxed mb-6">
                                                 Com um score de {currentScore}%, sua infraestrutura {currentScore > 80 ? "está pronta para suportar escalas agressivas de mídia paga." : "apresenta gargalos que aumentarão drasticamente o seu CAC se tentar escalar agora."}
                                             </p>
                                         </div>
-                                        <div className="text-xxs font-black text-black flex items-center gap-2 uppercase tracking-widest">
+                                        <div className="text-xxs font-bold text-black flex items-center gap-2 uppercase tracking-wider">
                                             Status: {currentScore > 80 ? "Verde (Go Scale)" : "Amarelo (Fix First)"}
                                         </div>
                                     </div>
 
                                     <div className="p-8 bg-zinc-50 border border-zinc-100 flex flex-col justify-between">
                                         <div>
-                                            <span className="text-xxs font-mono text-zinc-400 uppercase tracking-widest block mb-4">Autoridade</span>
+                                            <span className="text-xxs font-sans text-zinc-400 uppercase tracking-wider block mb-4">Autoridade</span>
                                             <h4 className="text-xl font-bold text-black mb-4 tracking-tight">Clareza Semântica</h4>
                                             <p className="text-sm text-zinc-600 leading-relaxed mb-6">
                                                 O uso de {(psiResults?.techStack || []).length} tecnologias e {psiResults?.seoMetadata?.title ? "metadados presentes" : "metadados ausentes"} indica uma operação {(psiResults?.techStack || []).length > 5 ? "robusta" : "em estágio inicial"} de marketing digital.
                                             </p>
                                         </div>
-                                        <div className="text-xxs font-black text-black flex items-center gap-2 uppercase tracking-widest">
+                                        <div className="text-xxs font-bold text-black flex items-center gap-2 uppercase tracking-wider">
                                             Nível: {(psiResults?.techStack || []).length > 5 ? "Avançado" : "Semente"}
                                         </div>
                                     </div>
 
                                     <div className="p-8 bg-zinc-50 border border-zinc-100 flex flex-col justify-between">
                                         <div>
-                                            <span className="text-xxs font-mono text-zinc-400 uppercase tracking-widest block mb-4">Conversão</span>
+                                            <span className="text-xxs font-sans text-zinc-400 uppercase tracking-wider block mb-4">Conversão</span>
                                             <h4 className="text-xl font-bold text-black mb-4 tracking-tight">Mobile First Index</h4>
                                             <p className="text-sm text-zinc-600 leading-relaxed mb-6">
                                                 Sua pontuação mobile de {psiResults?.mobile?.vitals?.score || 0}% é o principal fator de retenção. {(psiResults?.mobile?.vitals?.score || 0) > 90 ? "Parabéns pela otimização extrema." : "Cada 1% de melhoria aqui reflete em aproximadamente 2% de redução no bounce rate."}
                                             </p>
                                         </div>
-                                        <div className="text-xxs font-black text-black flex items-center gap-2 uppercase tracking-widest">
+                                        <div className="text-xxs font-bold text-black flex items-center gap-2 uppercase tracking-wider">
                                             Prioridade: {(psiResults?.mobile?.vitals?.score || 0) < 50 ? "Crítica" : "Otimização"}
                                         </div>
                                     </div>
@@ -1026,8 +1026,8 @@ const SiteScore = () => {
 
                             {/* Fallback MoFu CTA */}
                             <div className="mt-8 mb-16 flex flex-col items-center justify-center text-center px-4">
-                                <span className="text-xxs font-mono text-zinc-400 uppercase tracking-widest mb-4">MUITO CEDO PARA UMA DEEP-DIVE CALL?</span>
-                                <button onClick={() => window.open('https://revhackers.com.br/')} className="text-xs font-semibold text-white bg-zinc-900 border border-zinc-700 px-6 py-3 hover:bg-zinc-800 transition-colors uppercase tracking-widest">Baixe o Checklist de Conversão (Grátis)</button>
+                                <span className="text-xxs font-sans text-zinc-400 uppercase tracking-wider mb-4">MUITO CEDO PARA UMA DEEP-DIVE CALL?</span>
+                                <button onClick={() => window.open('https://revhackers.com.br/')} className="text-xs font-semibold text-white bg-zinc-900 border border-zinc-700 px-6 py-3 hover:bg-zinc-800 transition-colors uppercase tracking-wider">Baixe o Checklist de Conversão (Grátis)</button>
                             </div>
                         </div>
                     </div>

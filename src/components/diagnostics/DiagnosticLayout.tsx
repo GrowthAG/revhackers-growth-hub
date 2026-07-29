@@ -39,11 +39,11 @@ export const DiagnosticLayout = ({
             `}</style>
             <div className={cn(
                 "min-h-screen transition-colors duration-300 relative overflow-hidden",
-                isDark ? "bg-zinc-950 text-white" : "bg-zinc-50/80 text-zinc-900"
+                isDark ? "bg-black text-white" : "bg-zinc-50/80 text-zinc-900"
             )}>
                 {/* Subtle Grid Pattern */}
                 {!isDark && (
-                    <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none" />
+                    <div className="absolute inset-0 [background-size:16px_16px] opacity-40 pointer-events-none" />
                 )}
 
                 <Section
@@ -58,14 +58,9 @@ export const DiagnosticLayout = ({
                         {/* Standard SaaS Header */}
                         {!hideHeader && (
                             <div className="mb-8 w-full text-center space-y-2">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-zinc-200 shadow-xs mb-2">
-                                    <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />
-                                    <span className="text-[11px] font-mono font-bold text-zinc-700 uppercase tracking-wider">
-                                        GROWTHHUB INTELLIGENCE
-                                    </span>
-                                </div>
+                                <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">GROWTHHUB INTELLIGENCE</p>
                                 <h1 className={cn(
-                                    "text-3xl md:text-4xl font-bold tracking-tight text-zinc-900",
+                                    "text-2xl md:text-3xl font-bold tracking-tight text-zinc-900",
                                     isDark && "text-white"
                                 )}>
                                     {title}
@@ -90,7 +85,7 @@ export const DiagnosticLayout = ({
                         {/* Governance Footer */}
                         {showGovernanceFooter && (
                             <div className="mt-16 text-center w-full max-w-xl mx-auto">
-                                <p className="text-[11px] font-mono text-zinc-400 leading-relaxed font-medium">
+                                <p className="text-[11px] font-sans text-zinc-400 leading-relaxed font-medium">
                                     RevHackers Intelligence Unit — Diagnóstico preditivo de receita e maturidade operacional B2B.
                                 </p>
                             </div>

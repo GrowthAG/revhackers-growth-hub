@@ -58,7 +58,7 @@ export default function MeetingTimeline({ clientEmail, className = '' }: Meeting
                         <Video className="w-4 h-4 text-zinc-400" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-black text-zinc-900 uppercase tracking-wider">Reuniões</h3>
+                        <h3 className="text-sm font-bold text-zinc-900 uppercase tracking-wider">Reuniões</h3>
                         <p className="text-xs text-zinc-400">Carregando do Google Meet...</p>
                     </div>
                 </div>
@@ -75,7 +75,7 @@ export default function MeetingTimeline({ clientEmail, className = '' }: Meeting
     if (error) {
         return (
             <div className={`${className}`}>
-                <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-100 ">
+                <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-100">
                     <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
                     <div>
                         <p className="text-sm font-semibold text-red-800">Erro ao carregar reuniões</p>
@@ -94,11 +94,11 @@ export default function MeetingTimeline({ clientEmail, className = '' }: Meeting
             {/* Header */}
             <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-zinc-950 flex items-center justify-center">
+                    <div className="w-8 h-8 bg-black flex items-center justify-center">
                         <Video className="w-4 h-4 text-[#00CC6A]" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-black text-zinc-900 uppercase tracking-wider">Reuniões</h3>
+                        <h3 className="text-sm font-bold text-zinc-900 uppercase tracking-wider">Reuniões</h3>
                         <p className="text-xs text-zinc-400">
                             {meetings.length} reuniões encontradas via Google Meet
                         </p>
@@ -120,7 +120,7 @@ export default function MeetingTimeline({ clientEmail, className = '' }: Meeting
                     <button
                         onClick={() => setFilterType('all')}
                         className={`px-3 py-1 text-xs font-semibold transition-colors whitespace-nowrap ${filterType === 'all'
-                                ? 'bg-zinc-950 text-white'
+                                ? 'bg-black text-white'
                                 : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200'
                             }`}
                     >
@@ -134,7 +134,7 @@ export default function MeetingTimeline({ clientEmail, className = '' }: Meeting
                                 key={key}
                                 onClick={() => setFilterType(key)}
                                 className={`px-3 py-1 text-xs font-semibold transition-colors whitespace-nowrap ${filterType === key
-                                        ? 'bg-zinc-950 text-white'
+                                        ? 'bg-black text-white'
                                         : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200'
                                     }`}
                             >
@@ -147,7 +147,7 @@ export default function MeetingTimeline({ clientEmail, className = '' }: Meeting
 
             {/* Empty state */}
             {filteredMeetings.length === 0 && (
-                <div className="text-center py-12 bg-zinc-50 border border-zinc-100 ">
+                <div className="text-center py-12 bg-zinc-50 border border-zinc-100">
                     <Video className="w-8 h-8 text-zinc-300 mx-auto mb-3" />
                     <p className="text-sm text-zinc-500 font-medium">Nenhuma reunião encontrada</p>
                     <p className="text-xs text-zinc-400 mt-1">
@@ -183,10 +183,10 @@ export default function MeetingTimeline({ clientEmail, className = '' }: Meeting
                                 >
                                     {/* Date badge */}
                                     <div className="shrink-0 w-12 text-center">
-                                        <p className="text-xs font-black text-zinc-400 uppercase">
+                                        <p className="text-xs font-bold text-zinc-400 uppercase">
                                             {meetingDate.toLocaleDateString('pt-BR', { month: 'short' })}
                                         </p>
-                                        <p className="text-lg font-black text-zinc-900 leading-tight">
+                                        <p className="text-lg font-bold text-zinc-900 leading-tight">
                                             {meetingDate.getDate()}
                                         </p>
                                     </div>
@@ -239,7 +239,7 @@ export default function MeetingTimeline({ clientEmail, className = '' }: Meeting
                                             <div className="px-4 pb-4 pt-1 border-t border-zinc-100 space-y-3">
                                                 {/* Video embed */}
                                                 {meeting.video_url && (
-                                                    <div className="bg-zinc-950 overflow-hidden">
+                                                    <div className="bg-black overflow-hidden">
                                                         <iframe
                                                             src={`https://drive.google.com/file/d/${meeting.drive_file_id}/preview`}
                                                             className="w-full aspect-video"
@@ -252,12 +252,12 @@ export default function MeetingTimeline({ clientEmail, className = '' }: Meeting
                                                 {/* Attendees */}
                                                 {meeting.attendees?.length > 0 && (
                                                     <div>
-                                                        <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5">Participantes</p>
+                                                        <p className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-1.5">Participantes</p>
                                                         <div className="flex flex-wrap gap-1.5">
                                                             {meeting.attendees.map((a, i) => (
                                                                 <span
                                                                     key={i}
-                                                                    className="text-xs bg-zinc-100 text-zinc-600 px-2 py-0.5 "
+                                                                    className="text-xs bg-zinc-100 text-zinc-600 px-2 py-0.5"
                                                                 >
                                                                     {a.name || a.email}
                                                                 </span>

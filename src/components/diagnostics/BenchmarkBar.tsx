@@ -33,12 +33,12 @@ export const BenchmarkBar = ({ userScore, type, variant = 'dark' }: BenchmarkBar
         <div className={cn(
             "p-6 border",
             variant === 'dark'
-                ? "bg-zinc-950 border-zinc-900"
+                ? "bg-black border-zinc-900"
                 : "bg-white border-zinc-200"
         )}>
             <div className="flex items-center gap-2 mb-6">
                 <div className={cn("w-1 h-1 rounded-full", variant === 'dark' ? "bg-revgreen" : "bg-zinc-900")} />
-                <span className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-500">
+                <span className="text-xxs font-bold uppercase tracking-[0.25em] text-zinc-500">
                     Benchmark de Maturidade
                 </span>
             </div>
@@ -56,7 +56,7 @@ export const BenchmarkBar = ({ userScore, type, variant = 'dark' }: BenchmarkBar
                                 {bar.label}
                             </span>
                             <span className={cn(
-                                "text-xs font-mono font-bold",
+                                "text-xs font-sans font-bold",
                                 bar.accent
                                     ? (variant === 'dark' ? "text-white" : "text-black")
                                     : "text-zinc-500"

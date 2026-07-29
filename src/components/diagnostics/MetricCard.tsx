@@ -26,7 +26,7 @@ export const MetricCard = ({ label, value, description, subtext, status = 'neutr
         <div className={cn(
             "p-6 border transition-colors duration-300 h-full flex flex-col justify-between group",
             variant === 'dark'
-                ? "border-zinc-900 bg-zinc-950/50 hover:border-zinc-700"
+                ? "border-zinc-900 bg-black/50 hover:border-zinc-700"
                 : "border-zinc-200 bg-zinc-50 hover:border-zinc-300",
             className
         )}>
@@ -49,7 +49,7 @@ export const MetricCard = ({ label, value, description, subtext, status = 'neutr
             <div className="mt-auto">
                 {description && (
                     <p className={cn(
-                        "text-2xs font-bold uppercase mb-1 tracking-widest",
+                        "text-2xs font-bold uppercase mb-1 tracking-wider",
                         variant === 'dark' ? "text-zinc-500" : "text-zinc-400"
                     )}>
                         {description}

@@ -42,11 +42,11 @@ const ValuesSection = () => {
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-1 h-1 bg-black rounded-full" />
-                <span className="font-mono text-xxs text-zinc-400 uppercase tracking-[0.4em] font-black">
+                <span className="font-sans text-xxs text-zinc-400 uppercase tracking-wider font-bold">
                   // Core_Principles
                 </span>
               </div>
-              <h2 className="text-5xl md:text-7xl font-black text-black tracking-tighter leading-[0.85]">
+              <h2 className="text-2xl md:text-3xl font-bold text-black tracking-tight leading-[0.85]">
                 NOSSOS <br />
                 VALORES<span className="text-revgreen">.</span>
               </h2>
@@ -64,12 +64,12 @@ const ValuesSection = () => {
               className="p-12 bg-white hover:bg-zinc-50 transition-all duration-500 group"
             >
               <div className="space-y-12">
-                <div className="flex justify-between items-center text-xxs font-mono text-zinc-300 font-black tracking-widest uppercase">
+                <div className="flex justify-between items-center text-xxs font-sans text-zinc-300 font-bold tracking-wider uppercase">
                   <span>PR_VAL.{index + 1}</span>
                   <CheckCircle className="h-4 w-4 text-zinc-100 group-hover:text-revgreen transition-colors" />
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-black text-black tracking-tighter leading-none uppercase italic">
+                  <h3 className="text-2xl font-bold text-black tracking-tight leading-none uppercase italic">
                     {value.title}
                   </h3>
                   <p className="text-zinc-500 leading-relaxed text-sm font-medium">

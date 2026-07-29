@@ -54,10 +54,10 @@ const BookingPage = () => {
 
           {/* Header */}
           <div className="text-center mb-16">
-            <span className="inline-block border border-zinc-800 text-zinc-900 px-3 py-1 font-mono font-bold uppercase tracking-[0.3em] mb-6 text-xs bg-transparent">
+            <span className="inline-block border border-zinc-800 text-zinc-900 px-3 py-1 font-sans font-bold uppercase tracking-wider mb-6 text-xs bg-transparent">
               [ Vagas Restritas: 3 / mês ]
             </span>
-            <h1 className="text-4xl md:text-6xl font-black text-zinc-900 tracking-tighter mb-6 uppercase">
+            <h1 className="text-2xl md:text-3xl font-bold text-zinc-900 tracking-tight mb-6 uppercase">
               Auditoria de Receita
             </h1>
             <p className="text-lg text-zinc-600 max-w-2xl mx-auto font-medium leading-relaxed">
@@ -73,7 +73,7 @@ const BookingPage = () => {
 
               {/* Pré-Requisitos */}
               <div className="bg-zinc-50 border border-zinc-200 p-6 rounded-sm">
-                <span className="font-bold text-xxs tracking-widest uppercase text-zinc-500 mb-4 border-b border-zinc-200 pb-3 block">
+                <span className="font-bold text-xxs tracking-wider uppercase text-zinc-500 mb-4 border-b border-zinc-200 pb-3 block">
                   Pré-Requisitos da Operação:
                 </span>
                 <div className="flex flex-col gap-3">
@@ -90,7 +90,7 @@ const BookingPage = () => {
 
               {/* O que acontece depois de agendar */}
               <div>
-                <span className="font-bold text-xxs tracking-widest uppercase text-zinc-400 mb-5 block">
+                <span className="font-bold text-xxs tracking-wider uppercase text-zinc-400 mb-5 block">
                   O que acontece depois:
                 </span>
                 <div className="flex flex-col gap-5">
@@ -100,7 +100,7 @@ const BookingPage = () => {
                         <step.icon className="w-4 h-4 text-white" />
                       </div>
                       <div>
-                        <p className="text-sm font-black text-zinc-900 mb-1">{step.title}</p>
+                        <p className="text-sm font-bold text-zinc-900 mb-1">{step.title}</p>
                         <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
                       </div>
                     </div>
@@ -110,8 +110,8 @@ const BookingPage = () => {
 
               {/* Mini social proof */}
               <div className="border-t border-zinc-100 pt-6">
-                <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Resultado típico em 90 dias</p>
-                <p className="text-2xl font-black text-zinc-900 tracking-tighter">+R$480K</p>
+                <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Resultado típico em 90 dias</p>
+                <p className="text-2xl font-bold text-zinc-900 tracking-tight">+R$480K</p>
                 <p className="text-sm text-zinc-500 mt-1">em receita identificada ou recuperada nas últimas 4 auditorias.</p>
               </div>
             </div>

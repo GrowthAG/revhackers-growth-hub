@@ -14,7 +14,7 @@ export const TechStackCard = ({ category, items, status = 'detected', variant = 
         <div className={cn(
             "p-6 border transition-all duration-300 h-full flex flex-col",
             variant === 'dark'
-                ? "bg-zinc-950 border-zinc-900 hover:border-zinc-700"
+                ? "bg-black border-zinc-900 hover:border-zinc-700"
                 : "bg-zinc-50 border-zinc-200 hover:border-zinc-300"
         )}>
             <div className="flex justify-between items-start mb-6">
@@ -32,7 +32,7 @@ export const TechStackCard = ({ category, items, status = 'detected', variant = 
                             <span
                                 key={idx}
                                 className={cn(
-                                    "px-3 py-1.5 border text-xxs font-bold uppercase tracking-widest rounded-sm transition-colors",
+                                    "px-3 py-1.5 border text-xxs font-bold uppercase tracking-wider rounded-sm transition-colors",
                                     variant === 'dark'
                                         ? "bg-zinc-900 border-zinc-800 text-white"
                                         : "bg-white border-zinc-200 text-zinc-900"

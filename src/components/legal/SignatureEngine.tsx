@@ -128,11 +128,11 @@ export const SignatureEngine: React.FC<SignatureEngineProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label className="text-xs font-bold text-zinc-700 uppercase tracking-widest">Nome Completo</Label>
+          <Label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">Nome Completo</Label>
           <Input placeholder="Ex: João da Silva" value={name} onChange={e => setName(e.target.value)} className="h-12 bg-zinc-50 border-zinc-200" />
         </div>
         <div className="space-y-2">
-          <Label className="text-xs font-bold text-zinc-700 uppercase tracking-widest">E-mail Corporativo</Label>
+          <Label className="text-xs font-bold text-zinc-700 uppercase tracking-wider">E-mail Corporativo</Label>
           <Input type="email" placeholder="joao@empresa.com" value={email} onChange={e => setEmail(e.target.value)} className="h-12 bg-zinc-50 border-zinc-200" />
         </div>
       </div>
@@ -154,7 +154,7 @@ export const SignatureEngine: React.FC<SignatureEngineProps> = ({
       <Button 
         onClick={handleSign} 
         disabled={isSigning || !termsAccepted || !name || !email}
-        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold h-14 text-sm uppercase tracking-widest transition-all shadow-sm shadow-emerald-200"
+        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold h-14 text-sm uppercase tracking-wider transition-all shadow-sm shadow-emerald-200"
       >
         {isSigning ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ShieldCheck className="w-4 h-4 mr-2" />}
         {isSigning ? 'Registrando...' : 'Aceitar Acordo e Avançar'}

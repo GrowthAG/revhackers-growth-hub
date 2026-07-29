@@ -200,7 +200,7 @@ const FounderScore = () => {
             >
                 <div className="max-w-2xl mx-auto w-full">
                     <div className="flex flex-col md:flex-row gap-0 w-full border border-zinc-200 bg-white overflow-hidden mb-3">
-                        <span className="hidden md:flex items-center px-5 font-mono text-xs text-zinc-400 bg-zinc-50 border-r border-zinc-200 select-none whitespace-nowrap">
+                        <span className="hidden md:flex items-center px-5 font-sans text-xs text-zinc-400 bg-zinc-50 border-r border-zinc-200 select-none whitespace-nowrap">
                             linkedin.com/in/
                         </span>
                         <input
@@ -214,12 +214,12 @@ const FounderScore = () => {
                         <button
                             onClick={() => handleStartDiagnostic(linkedinUrl)}
                             disabled={!linkedinUrl}
-                            className="bg-black text-white px-8 h-14 font-black text-xs tracking-widest uppercase hover:bg-zinc-800 transition-colors disabled:opacity-40 flex items-center justify-center gap-2 whitespace-nowrap"
+                            className="bg-black text-white px-8 h-14 font-bold text-xs tracking-wider uppercase hover:bg-zinc-800 transition-colors disabled:opacity-40 flex items-center justify-center gap-2 whitespace-nowrap"
                         >
                             {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <>INICIAR <ArrowRight className="w-3 h-3" /></>}
                         </button>
                     </div>
-                    <p className="text-xxs uppercase tracking-widest text-zinc-400 font-mono">
+                    <p className="text-xxs uppercase tracking-wider text-zinc-400 font-sans">
                         Usaremos IA para analisar seu perfil. Perfis com alta privacidade podem ter coleta limitada.
                     </p>
                 </div>
@@ -252,9 +252,9 @@ const FounderScore = () => {
                     <div className="w-full flex items-center justify-between mb-4 border-b border-zinc-100 pb-2">
                         <div className="flex items-center gap-3">
                             <span className="w-2 h-2 bg-black rounded-full animate-pulse"></span>
-                            <span className="text-xs font-mono font-medium text-zinc-500 tracking-wider">Protocolo de Diagnóstico</span>
+                            <span className="text-xs font-sans font-medium text-zinc-500 tracking-wider">Protocolo de Diagnóstico</span>
                         </div>
-                        <span className="text-xs font-mono font-medium text-zinc-400">0{currentQ + 1} / 0{QUESTIONS.length}</span>
+                        <span className="text-xs font-sans font-medium text-zinc-400">0{currentQ + 1} / 0{QUESTIONS.length}</span>
                     </div>
 
                     <div className="w-full animate-fade-in flex flex-col">
@@ -267,7 +267,7 @@ const FounderScore = () => {
                                 exit={{ opacity: 0, y: -10 }}
                                 className="w-full flex flex-col space-y-4"
                             >
-                                <h2 className="text-2xl md:text-3xl font-black text-black tracking-tight leading-tight max-w-2xl">
+                                <h2 className="text-2xl md:text-3xl font-bold text-black tracking-tight leading-tight max-w-2xl">
                                     {QUESTIONS[currentQ].question}
                                 </h2>
 
@@ -282,7 +282,7 @@ const FounderScore = () => {
                                                 : "bg-white border-zinc-200 text-zinc-900 hover:border-zinc-400 hover:bg-zinc-50"
                                                 } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
                                         >
-                                            <div className={`w-6 h-6 flex-shrink-0 flex items-center justify-center text-xxs font-mono font-bold border rounded transition-colors ${selectedOption === idx
+                                            <div className={`w-6 h-6 flex-shrink-0 flex items-center justify-center text-xxs font-sans font-bold border rounded transition-colors ${selectedOption === idx
                                                 ? "bg-white text-zinc-900 border-white"
                                                 : "bg-zinc-100 border-zinc-200 text-zinc-500 group-hover:border-zinc-400 group-hover:text-zinc-900"
                                                 }`}>
@@ -324,13 +324,13 @@ const FounderScore = () => {
                             <div className="bg-black border border-zinc-900 p-8 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 shadow-sm relative overflow-hidden my-auto max-h-[90vh]">
                                 {/* Coluna Esquerda: Teaser */}
                                 <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:border-r border-zinc-900 md:pr-12">
-                                    <div className="inline-flex items-center gap-2 bg-zinc-950 px-3 py-1 border border-zinc-800">
+                                    <div className="inline-flex items-center gap-2 bg-black px-3 py-1 border border-zinc-800">
                                         <div className={`w-1.5 h-1.5 ${finalScore >= 70 ? 'bg-zinc-200' : finalScore >= 40 ? 'bg-zinc-400' : 'bg-zinc-600'} animate-pulse`}></div>
-                                        <span className="text-2xs font-mono font-bold text-zinc-400 tracking-wider uppercase">Análise Finalizada</span>
+                                        <span className="text-2xs font-sans font-bold text-zinc-400 tracking-wider uppercase">Análise Finalizada</span>
                                     </div>
 
                                     <div className="relative">
-                                        <div className="text-8xl md:text-9xl font-black text-white tracking-tighter leading-none">{finalScore}</div>
+                                        <div className="text-3xl font-bold text-white tracking-tight leading-none">{finalScore}</div>
                                     </div>
 
                                     <h3 className="text-sm font-medium text-zinc-400 leading-relaxed max-w-xs">
@@ -358,11 +358,11 @@ const FounderScore = () => {
 
                         {/* DASHBOARD HEADLINE - Padronizado */}
                         <div className="mb-12 text-center animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-4xl mx-auto pt-8">
-                            <div className="inline-flex items-center gap-2 mb-4 bg-zinc-900 border border-zinc-800 px-3 py-1 ">
-                                <span className="w-1.5 h-1.5 bg-white "></span>
-                                <span className="text-xxs font-mono font-bold text-zinc-400 uppercase tracking-widest">Status: Finalizado</span>
+                            <div className="inline-flex items-center gap-2 mb-4 bg-zinc-900 border border-zinc-800 px-3 py-1">
+                                <span className="w-1.5 h-1.5 bg-white"></span>
+                                <span className="text-xxs font-sans font-bold text-zinc-400 uppercase tracking-wider">Status: Finalizado</span>
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-2">
+                            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-2">
                                 Diagnóstico <span className="text-zinc-600">Founder</span>
                             </h1>
                             <p className="text-zinc-500 font-medium max-w-xl mx-auto">
@@ -387,13 +387,13 @@ const FounderScore = () => {
                                         <div className="relative z-10 space-y-6">
                                             <div className="inline-flex items-center gap-2 bg-zinc-800 px-3 py-1 border border-zinc-700">
                                                 <Brain className="w-3 h-3 text-zinc-300" />
-                                                <span className="text-xxs font-mono font-bold text-zinc-300 uppercase tracking-widest">
+                                                <span className="text-xxs font-sans font-bold text-zinc-300 uppercase tracking-wider">
                                                     Arquétipo Identificado
                                                 </span>
                                             </div>
 
                                             <div>
-                                                <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2">
+                                                <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-2">
                                                     {analysisResult.archetype.toUpperCase()}
                                                 </h2>
                                                 <p className="text-xl text-zinc-400 font-medium italic border-l-2 border-zinc-600 pl-4">
@@ -407,8 +407,8 @@ const FounderScore = () => {
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
                                                 <div>
-                                                    <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                                        <span className="w-1.5 h-1.5 bg-zinc-300 "></span> Vantagens Competitivas
+                                                    <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                                        <span className="w-1.5 h-1.5 bg-zinc-300"></span> Vantagens Competitivas
                                                     </h4>
                                                     <ul className="space-y-2">
                                                         {analysisResult.strengths.map((s, i) => (
@@ -419,7 +419,7 @@ const FounderScore = () => {
                                                     </ul>
                                                 </div>
                                                 <div>
-                                                    <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                                    <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3 flex items-center gap-2">
                                                         <span className="w-1.5 h-1.5 bg-zinc-400"></span> Pontos Cegos
                                                     </h4>
                                                     <ul className="space-y-2">
@@ -436,7 +436,7 @@ const FounderScore = () => {
                                         <div className="flex items-center justify-center h-full">
                                             <div className="flex flex-col items-center gap-4 text-zinc-500">
                                                 <Loader2 className="w-8 h-8 animate-spin" />
-                                                <span className="text-xs font-mono uppercase tracking-widest">Processando Inteligência...</span>
+                                                <span className="text-xs font-sans uppercase tracking-wider">Processando Inteligência...</span>
                                             </div>
                                         </div>
                                     )}
@@ -453,10 +453,10 @@ const FounderScore = () => {
                                 {analysisResult && (analysisResult.brandingGaps?.length || analysisResult.actionableInsight) ? (
                                     <section>
                                         <div className="space-y-6 mb-12 text-center md:text-left">
-                                            <div className="inline-block bg-black text-white px-4 py-1.5 text-2xs font-mono uppercase tracking-[0.5em] font-black">
+                                            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
                                                 DIAGNÓSTICO_DE_AUTORIDADE
-                                            </div>
-                                            <h2 className="text-5xl md:text-7xl font-black text-black tracking-tighter leading-none">
+                                            </p>
+                                            <h2 className="text-2xl md:text-3xl font-bold text-black tracking-tight leading-none">
                                                 {analysisResult.archetype}
                                             </h2>
                                         </div>
@@ -464,7 +464,7 @@ const FounderScore = () => {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
                                             {/* Branding Gaps */}
                                             <div className="border border-zinc-200 p-8 bg-white">
-                                                <h4 className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-900 mb-6 flex items-center gap-2">
+                                                <h4 className="text-xxs font-bold uppercase tracking-[0.25em] text-zinc-900 mb-6 flex items-center gap-2">
                                                     <div className="w-2 h-2 bg-zinc-900" />
                                                     Gaps de Posicionamento
                                                 </h4>
@@ -480,7 +480,7 @@ const FounderScore = () => {
 
                                             {/* Perspectiva Técnica */}
                                             <div className="border border-zinc-200 p-8 bg-zinc-50">
-                                                <h4 className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-900 mb-6 flex items-center gap-2">
+                                                <h4 className="text-xxs font-bold uppercase tracking-[0.25em] text-zinc-900 mb-6 flex items-center gap-2">
                                                     <div className="w-2 h-2 bg-revgreen" />
                                                     Perspectiva Técnica
                                                 </h4>
@@ -493,7 +493,7 @@ const FounderScore = () => {
                                         {/* Actionable Insight Card */}
                                         {analysisResult.actionableInsight && (
                                             <div className="border-l-4 border-[#00CC6A] bg-zinc-50 rounded-r-2xl p-8 mb-16">
-                                                <h4 className="text-xxs font-black uppercase tracking-[0.25em] text-zinc-500 mb-3">
+                                                <h4 className="text-xxs font-bold uppercase tracking-[0.25em] text-zinc-500 mb-3">
                                                     Ação Imediata Recomendada
                                                 </h4>
                                                 <p className="text-zinc-900 text-base font-semibold leading-relaxed">
@@ -505,18 +505,18 @@ const FounderScore = () => {
                                 ) : (
                                     <section>
                                         <div className="space-y-6 mb-20 text-center md:text-left">
-                                            <div className="inline-block bg-black text-white px-4 py-1.5 text-2xs font-mono uppercase tracking-[0.5em] font-black">
+                                            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
                                                 DIAGNÓSTICO_DE_AUTORIDADE
-                                            </div>
-                                            <h2 className="text-5xl md:text-7xl font-black text-black tracking-tighter leading-none italic">
+                                            </p>
+                                            <h2 className="text-2xl md:text-3xl font-bold text-black tracking-tight leading-none italic">
                                                 {insights.title.split(' ')[0]} <span className="text-zinc-500">{insights.title.split(' ').slice(1).join(' ')}</span>
                                             </h2>
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-32 text-left">
                                             <div className="space-y-6 border-l border-zinc-200 pl-8">
-                                                <h4 className="text-sm font-black !text-black uppercase tracking-widest flex items-center gap-3">
-                                                    <div className="w-1.5 h-1.5 bg-black " />
+                                                <h4 className="text-sm font-bold !text-black uppercase tracking-wider flex items-center gap-3">
+                                                    <div className="w-1.5 h-1.5 bg-black" />
                                                     Perspectiva Técnica
                                                 </h4>
                                                 <p className="!text-zinc-900 text-base leading-relaxed font-semibold">
@@ -525,8 +525,8 @@ const FounderScore = () => {
                                             </div>
 
                                             <div className="space-y-6 border-l border-zinc-200 pl-8">
-                                                <h4 className="text-sm font-black !text-black uppercase tracking-widest flex items-center gap-3">
-                                                    <div className="w-1.5 h-1.5 bg-black " />
+                                                <h4 className="text-sm font-bold !text-black uppercase tracking-wider flex items-center gap-3">
+                                                    <div className="w-1.5 h-1.5 bg-black" />
                                                     Plano de Ação
                                                 </h4>
                                                 <p className="!text-zinc-900 text-base leading-relaxed font-semibold">
@@ -541,10 +541,10 @@ const FounderScore = () => {
                                 {/* PREMISSAS SECTION */}
                                 <section>
                                     <div className="space-y-6 mb-20">
-                                        <div className="inline-block bg-black text-white px-4 py-1.5 text-2xs font-mono uppercase tracking-[0.5em] font-black">
+                                        <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
                                             PREMISSAS_DE_ALINHAMENTO
-                                        </div>
-                                        <h2 className="text-5xl md:text-7xl font-black text-black tracking-tighter leading-none italic">
+                                        </p>
+                                        <h2 className="text-2xl md:text-3xl font-bold text-black tracking-tight leading-none italic">
                                             Sua marca pessoal <span className="text-zinc-500">vende ou dorme?</span>
                                         </h2>
                                     </div>
@@ -560,17 +560,17 @@ const FounderScore = () => {
                                             return (
                                                 <div key={idx} className="bg-zinc-50 p-8 border border-zinc-200 hover:border-black transition-all duration-300 flex flex-col h-full">
                                                     <div className="flex items-start justify-between mb-4">
-                                                        <h4 className="text-tiny font-black !text-black uppercase tracking-widest flex items-center gap-3">
+                                                        <h4 className="text-tiny font-bold !text-black uppercase tracking-wider flex items-center gap-3">
                                                             <div className={`w-1.5 h-1.5 ${isCritical ? 'bg-red-500' : 'bg-black'}`} />
                                                             Pilar 0{idx + 1}
                                                         </h4>
-                                                        {isCritical && <span className="text-2xs bg-red-100 text-red-600 px-2 py-0.5 font-bold uppercase tracking-widest">Crítico</span>}
+                                                        {isCritical && <span className="text-2xs bg-red-100 text-red-600 px-2 py-0.5 font-bold uppercase tracking-wider">Crítico</span>}
                                                     </div>
                                                     
                                                     <h3 className="text-sm font-bold text-zinc-900 mb-3">{q.question}</h3>
                                                     
                                                     <div className="mb-4 bg-white border border-zinc-100 p-3 text-xs font-medium text-zinc-600">
-                                                        <span className="block text-xxs text-zinc-400 uppercase tracking-widest mb-1">Seu Diagnóstico:</span>
+                                                        <span className="block text-xxs text-zinc-400 uppercase tracking-wider mb-1">Seu Diagnóstico:</span>
                                                         "{userAnswerData?.label || 'Não Respondido'}"
                                                     </div>
                                                     
@@ -601,8 +601,8 @@ const FounderScore = () => {
 
                                     {/* Fallback MoFu CTA */}
                                     <div className="mt-8 mb-16 flex flex-col items-center justify-center text-center px-4">
-                                        <span className="text-xxs font-mono text-zinc-400 uppercase tracking-widest mb-4">MUITO CEDO PARA UMA DEEP-DIVE CALL?</span>
-                                        <button onClick={() => window.open('https://revhackers.com.br/')} className="text-xs font-semibold text-white bg-zinc-900 border border-zinc-700 px-6 py-3 hover:bg-zinc-800 transition-colors uppercase tracking-widest">Baixe o Playbook de Authority (Grátis)</button>
+                                        <span className="text-xxs font-sans text-zinc-400 uppercase tracking-wider mb-4">MUITO CEDO PARA UMA DEEP-DIVE CALL?</span>
+                                        <button onClick={() => window.open('https://revhackers.com.br/')} className="text-xs font-semibold text-white bg-zinc-900 border border-zinc-700 px-6 py-3 hover:bg-zinc-800 transition-colors uppercase tracking-wider">Baixe o Playbook de Authority (Grátis)</button>
                                     </div>
                                 </div>
                             </div>

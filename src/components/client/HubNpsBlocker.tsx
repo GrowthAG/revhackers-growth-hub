@@ -92,10 +92,10 @@ export const HubNpsBlocker: React.FC<HubNpsBlockerProps> = ({ projectId, clientN
             <motion.div 
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                className="w-full max-w-2xl bg-zinc-950 border border-zinc-800 shadow-sm overflow-hidden my-8"
+                className="w-full max-w-2xl bg-black border border-zinc-800 shadow-sm overflow-hidden my-8"
             >
                 {/* Header Section */}
-                <div className="bg-zinc-950 p-8 text-center border-b border-zinc-800">
+                <div className="bg-black p-8 text-center border-b border-zinc-800">
                     <div className="w-16 h-16 bg-zinc-800 flex items-center justify-center mx-auto mb-6 transform -rotate-6">
                         <Star className="w-8 h-8 text-zinc-300" />
                     </div>
@@ -110,7 +110,7 @@ export const HubNpsBlocker: React.FC<HubNpsBlockerProps> = ({ projectId, clientN
                 {/* Content Section */}
                 <div className="p-8 space-y-8">
                     <div className="space-y-4">
-                        <label className="text-sm font-semibold tracking-widest text-zinc-300 uppercase block text-center">
+                        <label className="text-sm font-semibold tracking-wider text-zinc-300 uppercase block text-center">
                             De 0 a 10, como você avalia nosso processo de Onboarding e Alinhamento?
                         </label>
                         
@@ -144,7 +144,7 @@ export const HubNpsBlocker: React.FC<HubNpsBlockerProps> = ({ projectId, clientN
                                 animate={{ height: 'auto', opacity: 1 }}
                                 className="space-y-3"
                             >
-                                <label className="text-sm font-semibold tracking-widest text-zinc-300 uppercase block">
+                                <label className="text-sm font-semibold tracking-wider text-zinc-300 uppercase block">
                                     O que motivou a sua nota? (Opcional)
                                 </label>
                                 <Textarea 
