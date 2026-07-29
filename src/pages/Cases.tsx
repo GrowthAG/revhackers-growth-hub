@@ -71,8 +71,9 @@ const Cases = () => {
         ]}
       />
       <DarkHeroSection
-        title="Cases"
-        subtitle="Histórias reais de empresas que transformaram seus resultados através de inteligência técnica."
+        eyebrow="Cases"
+        title="Geramos mais de R$ 50 milhões em pipeline auditado reduzindo o CAC médio em 40%."
+        subtitle="Resultados reais de empresas B2B que escalaram operações com nossas arquiteturas de IA e ABM."
         searchPlaceholder="BUSCAR CASES..."
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -102,7 +103,7 @@ const Cases = () => {
               {filteredCases.map((study, index) => (
                 <Link to={`/cases/${study.slug}`} className="group h-full" key={study.id || index}>
                   <div className={`
-                    bg-white overflow-hidden h-full flex flex-col transition-all duration-500 relative rounded-sm border border-zinc-200 hover:border-black shadow-sm hover:-translate-y-1
+                    bg-white overflow-hidden h-full flex flex-col transition-all duration-500 relative rounded-xl border border-zinc-200 hover:border-black shadow-sm hover:-translate-y-1
                   `}>
                     <div className="h-56 overflow-hidden bg-zinc-50 flex items-center justify-center border-b border-zinc-100 relative transition-all">
                       <div className="w-full h-full flex items-center justify-center p-10 transition-transform duration-700 group-hover:scale-105">
@@ -118,7 +119,7 @@ const Cases = () => {
                     </div>
 
                     <div className="p-10 md:p-12 flex-1 flex flex-col bg-white">
-                      <span className="text-2xs font-bold uppercase tracking-[0.2em] text-zinc-400 mb-6 bg-zinc-50 w-fit px-2 py-1 rounded-lg border border-zinc-100">
+                      <span className="text-2xs font-bold uppercase tracking-wider text-zinc-400 mb-6 bg-zinc-50 w-fit px-2 py-1 rounded-lg border border-zinc-100">
                         {study.case_category}
                       </span>
                       <h3 className="text-base md:text-lg font-bold text-zinc-900">
@@ -129,7 +130,7 @@ const Cases = () => {
                       </p>
 
                       <div className="pt-8 border-t border-zinc-100 flex items-center justify-between group-hover:opacity-100 transition-opacity">
-                        <span className="text-xxs font-bold uppercase tracking-[0.2em] text-black">
+                        <span className="text-xxs font-bold uppercase tracking-wider text-black">
                           Ver Detalhes
                         </span>
                         <ArrowRight className="h-4 w-4 text-black group-hover:translate-x-1 transition-transform" />
@@ -157,7 +158,7 @@ const Cases = () => {
               </p>
             </div>
 
-            <div className="w-full md:w-auto bg-white p-8 rounded-sm shadow-sm border border-zinc-200 flex-1">
+            <div className="w-full md:w-auto bg-white p-8 rounded-xl shadow-sm border border-zinc-200 flex-1">
               <ContactForm formType="diagnosis" />
             </div>
           </div>

@@ -12,23 +12,20 @@ const HeroSection = () => {
       {/* Modern Hacker Aesthetic Background */}
       <ModernTechnicalBackground />
 
-      <div className="w-full px-4 flex flex-col items-center text-center relative z-10">
-        {/* Headline - Parity with Home (3 lines, sentence case) */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-[1.1] tracking-tight w-full max-w-[90rem] mx-auto">
-          Construímos a <span className="text-revgreen">Arquitetura de Receita</span> <br className="hidden md:block" />
-          que sustenta o seu próximo <br className="hidden md:block" />
-          nível de escala.
+      <div className="w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center relative z-10">
+        <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
+          Quem Somos
+        </p>
+        <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center">
+          Não entregamos apresentações de slides. Instalamos sistemas de engenharia de receita.
         </h1>
-
-        {/* Subheadline - Parity with Home */}
-        <p className="text-lg md:text-xl text-zinc-200 mb-12 max-w-5xl leading-relaxed font-light text-balance mx-auto">
-          Unificamos Marketing, Vendas e Customer Success através de processos <br className="hidden md:block" />
-          cirúrgicos, automações inteligentes e ciência de dados.
+        <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center mb-8">
+          Combinamos engenharia de dados, IA e estratégia Go-To-Market para transformar vendas B2B. Claude Partner, Google for Startups, Funnels Partner.
         </p>
 
         {/* Buttons - Single as requested */}
         <div className="flex flex-col sm:flex-row gap-4 mb-16 w-full justify-center">
-          <Button asChild className="bg-white text-black h-16 px-12 rounded-none text-xs font-black uppercase tracking-[0.3em] hover:bg-revgreen hover:text-black transition-all duration-300">
+          <Button asChild className="bg-white text-black h-11 px-8 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-revgreen hover:text-black transition-all duration-300">
             <Link to="/diagnostico" onClick={scrollToTop}>
               Conhecer a Metodologia //
             </Link>

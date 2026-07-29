@@ -25,12 +25,13 @@ const Comunidade = () => {
       />
       {/* Hero - Standardized DarkHeroSection */}
       <DarkHeroSection
-        title="Comunidade RevHackers"
-        subtitle="CONECTE-SE COM A ELITE DE REVENUE OPERATIONS, MARKETING E VENDAS DO BRASIL."
+        eyebrow="Comunidade"
+        title="Acelere o crescimento da sua empresa B2B junto a 500+ líderes de receita."
+        subtitle="Rede fechada de diretores, founders e líderes de RevOps com troca direta de playbooks e benchmarks."
       />
 
       {/* CTA Bar */}
-      <Section variant="dark" className="py-12 bg-black border-b border-zinc-900">
+      <Section variant="light" className="py-12 bg-white border-b border-zinc-200">
         <div className="container-custom text-center">
           <a href="https://academy.revhackers.com.br/" target="_blank" rel="noopener noreferrer">
             <Button className="btn-green-flat h-14 px-8 text-sm">
@@ -41,7 +42,7 @@ const Comunidade = () => {
       </Section>
 
       {/* Benefits Grid - 3 Cards */}
-      <Section variant="dark" className="py-24 bg-black border-b border-zinc-900">
+      <Section variant="light" className="py-24 bg-white border-b border-zinc-200">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto mb-16">
             <span className="font-sans text-xs text-zinc-500 uppercase tracking-[0.2em] mb-4 block">
@@ -58,7 +59,7 @@ const Comunidade = () => {
               { icon: Repeat, title: 'Networking estratégico', desc: 'Conecte-se com profissionais do setor e amplie sua rede de contatos qualificados.' },
               { icon: Lightbulb, title: 'Insights valiosos', desc: 'Descubra tendências, ferramentas e estratégias que estão transformando o mercado.' },
             ].map((item, i) => (
-              <div key={i} className="group bg-zinc-900/30 border border-zinc-800 p-10 hover:border-revgreen/30 transition-all duration-500">
+              <div key={i} className="group bg-white border border-zinc-200 p-10 hover:border-revgreen/30 transition-all duration-500 rounded-xl">
                 <div className="mb-8 text-zinc-600 group-hover:text-revgreen transition-colors duration-500">
                   <item.icon size={36} strokeWidth={1.5} />
                 </div>
@@ -71,15 +72,15 @@ const Comunidade = () => {
       </Section>
 
       {/* Features - Logo + List */}
-      <Section variant="dark" className="py-24 bg-black border-b border-zinc-900">
+      <Section variant="light" className="py-24 bg-white border-b border-zinc-200">
         <div className="container-custom">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
               {/* Left Column: Logo */}
-              <div className="bg-black p-12 border border-zinc-800 flex items-center justify-center">
+              <div className="bg-white p-12 border border-zinc-200 flex items-center justify-center rounded-xl">
                 <img
-                  src="/brand/revhackers-wordmark-white.png"
+                  src="/brand/revhackers-wordmark.png"
                   alt="RevHackers"
                   className="w-64 md:w-80 h-auto opacity-80"
                 />
@@ -104,7 +105,7 @@ const Comunidade = () => {
                     { icon: BookOpen, title: 'Biblioteca de recursos', desc: 'Templates, playbooks e ferramentas validadas pela comunidade.' },
                   ].map((item, i) => (
                     <div key={i} className="flex gap-4 group">
-                      <div className="flex-shrink-0 w-10 h-10 bg-zinc-900 border border-zinc-800 flex items-center justify-center group-hover:border-revgreen/50 transition-colors">
+                      <div className="flex-shrink-0 w-10 h-10 bg-white border border-zinc-200 flex items-center justify-center group-hover:border-revgreen/50 transition-colors rounded-lg">
                         <item.icon className="text-zinc-500 group-hover:text-revgreen transition-colors" size={18} />
                       </div>
                       <div>
@@ -122,7 +123,7 @@ const Comunidade = () => {
       </Section>
 
       {/* Final CTA */}
-      <Section variant="dark" className="py-24 bg-black border-t border-zinc-900">
+      <Section variant="light" className="py-24 bg-white border-t border-zinc-200">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">

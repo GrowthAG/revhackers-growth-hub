@@ -114,8 +114,9 @@ const Materiais = () => {
         ]}
       />
       <DarkHeroSection
-        title="Materiais"
-        subtitle="Frameworks, checklists e playbooks para escalar sua operação de revenue."
+        eyebrow="Materiais"
+        title="Copie os frameworks de RevOps e IA que usamos para escalar operações B2B."
+        subtitle="Blueprints de arquitetura, scripts de automação e templates de Go-To-Market prontos para rodar no seu CRM hoje."
         searchPlaceholder="BUSCAR MATERIAIS..."
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -171,7 +172,7 @@ const Materiais = () => {
                       navigate(`/materiais/${slug}`);
                     }}
                   >
-                    <div className="h-full flex flex-col p-8 rounded-sm border border-zinc-200 bg-white shadow-sm hover:-translate-y-1 transition-all duration-500 relative cursor-pointer group">
+                    <div className="h-full flex flex-col p-8 rounded-xl border border-zinc-200 bg-white shadow-sm hover:-translate-y-1 transition-all duration-500 relative cursor-pointer group">
                       <div className="flex justify-between items-start mb-6">
                         <span className="text-2xs font-bold uppercase tracking-tight text-black bg-white px-2 py-1 rounded-sm border border-zinc-200">
                           {type}
@@ -222,7 +223,7 @@ const Materiais = () => {
               <Button
                 size="lg"
                 onClick={() => setIsBookingOpen(true)}
-                className="bg-black text-white hover:bg-revgreen hover:text-black font-bold tracking-tight uppercase px-10 h-16 rounded-sm text-xs transition-all duration-500 shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:shadow-revgreen/20"
+                className="bg-black text-white hover:bg-revgreen hover:text-black font-bold tracking-wider uppercase px-10 h-11 rounded-lg text-xs transition-all duration-500 shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:shadow-revgreen/20"
               >
                 Auditar Minha Operação
               </Button>

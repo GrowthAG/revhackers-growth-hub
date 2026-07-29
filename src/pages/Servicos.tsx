@@ -74,25 +74,23 @@ const Servicos = () => {
           { question: "Quais empresas a RevHackers atende?", answer: "Atendemos empresas B2B com operações comerciais complexas que buscam escalar receita através de tecnologia, automação e processos de Revenue Operations." }
         ]}
       />
-      {/* Hero Section - Standard White Minimal (Match Metodologia/Home) */}
-      <section className="py-24 md:py-32 bg-black">
-        <div className="container-custom text-center relative z-10">
-          <div className="max-w-4xl mx-auto">
+      {/* Hero Section - Standard Black */}
+      <section className="bg-black py-24 md:py-32">
+        <div className="max-w-4xl mx-auto px-6 text-center">
             <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
-              Ecossistema RevOps
+              Ecossistema
             </p>
-            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto text-center mb-8">
-              O Mecanismo<span className="text-[#00CC6A]">.</span>
+            <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center">
+              Elimine gargalos de receita conectando CRM, ABM, IA e automações em um único motor de vendas.
             </h1>
-            <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed text-center">
-              Nós não prestamos "serviços". Nós alugamos nossa infraestrutura de IA e CRM para o seu B2B.
+            <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center mb-8">
+              Engenheiramos toda a infraestrutura de Go-To-Market de ponta a ponta. Unificamos inteligência preditiva, ABM automatizado e CRM para fechar contratos maiores em menos tempo.
             </p>
-            <div className="mt-12 flex justify-center gap-4">
-                <Button asChild className="bg-[#00CC6A] text-black hover:bg-white hover:text-black rounded-lg px-8 py-3 text-sm font-semibold transition-all">
+            <div className="flex justify-center gap-4">
+                <Button asChild className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 rounded-lg transition-all">
                     <Link to="/booking">Auditar Minha Operação</Link>
                 </Button>
             </div>
-          </div>
         </div>
       </section>
 
@@ -120,14 +118,14 @@ const Servicos = () => {
             {capabilities.map((item) => (
               <div
                 key={item.id}
-                className="group relative bg-white p-10 md:p-12 hover:shadow-sm hover:shadow-zinc-200/50 transition-all duration-700 rounded-[2.5rem] border border-zinc-100 flex flex-col h-full overflow-hidden"
+                className="group relative bg-white p-10 md:p-12 hover:shadow-sm hover:shadow-zinc-200/50 transition-all duration-700 rounded-xl border border-zinc-100 flex flex-col h-full overflow-hidden"
               >
                 {/* Header Card */}
                 <div className="flex justify-between items-start mb-12">
                   <span className="font-sans text-2xl md:text-3xl font-bold text-zinc-50 group-hover:text-zinc-100 transition-colors duration-500 tracking-tight">
                     {item.id}
                   </span>
-                  <div className="p-5 bg-zinc-900 rounded-[1.25rem] shadow-sm shadow-zinc-200 group-hover:bg-black transition-all duration-500 group-hover:scale-110">
+                  <div className="p-5 bg-zinc-900 rounded-xl shadow-sm shadow-zinc-200 group-hover:bg-black transition-all duration-500 group-hover:scale-110">
                     <item.icon className="w-6 h-6 text-white" />
                   </div>
                 </div>
@@ -154,7 +152,7 @@ const Servicos = () => {
 
                   <Link
                     to={`/servicos/${item.slug}`}
-                    className="inline-flex items-center text-xxs font-bold text-zinc-900 uppercase tracking-[0.2em] group-hover:text-black transition-all gap-3 group-hover:gap-5"
+                    className="inline-flex items-center text-xs font-semibold text-zinc-900 uppercase tracking-wider group-hover:text-black transition-all gap-3 group-hover:gap-5"
                   >
                     EXPLORAR <ArrowUpRight className="w-4 h-4" />
                   </Link>
@@ -178,7 +176,7 @@ const Servicos = () => {
             <p className="text-zinc-500 mb-12 text-lg font-bold max-w-xl mx-auto">
               Vagas de implementação restritas. Vamos auditar suas finanças e plugar a Automação se houver fit com a RevHackers.
             </p>
-            <Button asChild className="bg-black text-white hover:bg-revgreen hover:text-black border-none rounded-lg px-10 py-8 text-sm uppercase tracking-[0.2em] font-bold transition-all transform hover:-translate-y-1">
+            <Button asChild className="bg-black text-white hover:bg-[#00CC6A] hover:text-black border-none rounded-lg px-6 h-11 text-sm uppercase tracking-wider font-semibold transition-all transform hover:-translate-y-1">
               <Link to="/booking">
                 Auditar Minha Operação
               </Link>

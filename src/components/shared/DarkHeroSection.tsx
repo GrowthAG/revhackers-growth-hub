@@ -2,6 +2,7 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 interface DarkHeroSectionProps {
+  eyebrow?: string;
   title: string;
   subtitle: string;
   searchPlaceholder?: string;
@@ -13,6 +14,7 @@ interface DarkHeroSectionProps {
 }
 
 const DarkHeroSection = ({
+  eyebrow,
   title,
   subtitle,
   searchPlaceholder = 'BUSCAR...',
@@ -24,17 +26,17 @@ const DarkHeroSection = ({
 }: DarkHeroSectionProps) => {
   return (
     <section className="bg-black py-24 md:py-32 relative overflow-hidden">
-      {/* Sophisticated Dark Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
-      {/* Overlay solido - gradientes proibidos pelo design system */}
-      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-
-      <div className="container-custom relative z-10">
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto text-center mb-8">
-            {title}<span className="text-revgreen">.</span>
+      <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <div className="mb-16">
+          {eyebrow && (
+            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
+              {eyebrow}
+            </p>
+          )}
+          <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center">
+            {title}
           </h1>
-          <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed text-center">
+          <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center mb-8">
             {subtitle}
           </p>
         </div>

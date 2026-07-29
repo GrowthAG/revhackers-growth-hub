@@ -29,30 +29,28 @@ const Metodologia = () => {
             />
             <Header />
 
-            {/* --- HERO SECTION (WHITE MINIMAL) --- */}
-            <section className="pt-32 pb-20 md:pt-48 md:pb-32 bg-white">
-                <div className="container-custom text-center">
-                    <div className="max-w-4xl mx-auto">
-                        {/* Tag */}
-                        <span className="font-bold text-revgreen bg-revgreen/10 px-3 py-1 text-xxs border border-revgreen/20 uppercase tracking-[0.2em] mb-6 inline-block">
-                            Engenharia Reversa B2B
-                        </span>
+            {/* --- HERO SECTION (BLACK) --- */}
+            <section className="bg-black py-24 md:py-32">
+                <div className="max-w-4xl mx-auto px-6 text-center">
+                    {/* Eyebrow */}
+                    <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
+                        Metodologia
+                    </p>
 
-                        {/* Standard Headline H1 */}
-                        <h1 className="text-2xl md:text-3xl font-bold text-black mb-8 tracking-tight text-balance leading-[1.05]">
-                            Como a Máquina<br />Opera<span className="text-revgreen">.</span>
-                        </h1>
+                    {/* Standard Headline H1 */}
+                    <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center">
+                        Multiplique seu pipeline B2B por 3x em 90 dias sem contratar mais vendedores.
+                    </h1>
 
-                        {/* Standard Subheadline */}
-                        <p className="text-xl md:text-2xl text-zinc-500 font-medium leading-relaxed max-w-3xl mx-auto tracking-tight">
-                            Sem teorias. Nós plugamos Inteligência Artificial, Automação e CRM na sua operação para você parar de depender passivamente de indicações.
-                        </p>
+                    {/* Standard Subheadline */}
+                    <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center mb-8">
+                        Instalamos a metodologia de Revenue Engineering que integra GTM, RevOps e IA para automatizar 80% das rotinas operacionais de vendas.
+                    </p>
 
-                        <div className="mt-12 flex justify-center gap-4">
-                            <Button asChild className="bg-revgreen text-black hover:bg-black hover:text-white h-16 px-12 rounded-lg text-sm font-bold uppercase tracking-tight shadow-sm transition-all">
-                                <Link to="/booking">Auditar Minha Operação</Link>
-                            </Button>
-                        </div>
+                    <div className="flex justify-center gap-4">
+                        <Button asChild className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 rounded-lg transition-all">
+                            <Link to="/booking">Auditar Minha Operação</Link>
+                        </Button>
                     </div>
                 </div>
             </section>
@@ -71,45 +69,45 @@ const Metodologia = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
                         {/* Pillar 1 */}
-                        <div className="group p-10 rounded-sm bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
-                            <div className="w-12 h-12 rounded-sm bg-black flex items-center justify-center mb-8 text-white shadow-sm">
+                        <div className="group p-10 rounded-xl bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
+                            <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-8 text-white shadow-sm">
                                 <Database className="w-5 h-5" />
                             </div>
                             <h3 className="text-base md:text-lg font-bold text-zinc-900">1. Aquisição Brutal</h3>
-                            <p className="text-zinc-500 leading-relaxed text-base font-medium">
+                            <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">
                                 Operamos campanhas B2B injetando previsibilidade matemática. Extraímos leads do mercado (Inbound/Outbound) com teto calculado de CAC.
                             </p>
                         </div>
 
                         {/* Pillar 2 */}
-                        <div className="group p-10 rounded-sm bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
-                            <div className="w-12 h-12 rounded-sm bg-black flex items-center justify-center mb-8 text-white shadow-sm">
+                        <div className="group p-10 rounded-xl bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
+                            <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-8 text-white shadow-sm">
                                 <Network className="w-5 h-5" />
                             </div>
                             <h3 className="text-base md:text-lg font-bold text-zinc-900">2. IA Filtra Curiosos</h3>
-                            <p className="text-zinc-500 leading-relaxed text-base font-medium">
+                            <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">
                                 Entrou lead sujo? Seus vendedores não falam com ele. Nossa IA de qualificação corta quem não tem verba e agenda quem tem dor real.
                             </p>
                         </div>
 
                         {/* Pillar 3 */}
-                        <div className="group p-10 rounded-sm bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
-                            <div className="w-12 h-12 rounded-sm bg-black flex items-center justify-center mb-8 text-white shadow-sm">
+                        <div className="group p-10 rounded-xl bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
+                            <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-8 text-white shadow-sm">
                                 <Zap className="w-5 h-5" />
                             </div>
                             <h3 className="text-base md:text-lg font-bold text-zinc-900">3. Automação de Follow-Up</h3>
-                            <p className="text-zinc-500 leading-relaxed text-base font-medium">
+                            <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">
                                 Seu vendedor esqueceu de ligar? O sistema não. Plugamos robôs (Make/n8n) que perseguem o lead com consistência até ele preencher o calendário.
                             </p>
                         </div>
 
                         {/* Pillar 4 */}
-                        <div className="group p-10 rounded-sm bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
-                            <div className="w-12 h-12 rounded-sm bg-black flex items-center justify-center mb-8 text-white shadow-sm">
+                        <div className="group p-10 rounded-xl bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
+                            <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-8 text-white shadow-sm">
                                 <Lock className="w-5 h-5" />
                             </div>
                             <h3 className="text-base md:text-lg font-bold text-zinc-900">4. CRM Vault (O Cofre)</h3>
-                            <p className="text-zinc-500 leading-relaxed text-base font-medium">
+                            <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">
                                 Nenhuma reunião agendada escapa. Você e seu time operam 100% dentro do CRM configurado por nós para registrar cada ganho de receita.
                             </p>
                         </div>
@@ -138,28 +136,28 @@ const Metodologia = () => {
                             <div className="relative group">
                                 <span className="absolute -left-[67px] md:-left-[99px] top-1 w-12 h-12 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-black text-sm font-bold font-sans group-hover:border-black group-hover:bg-black group-hover:text-white transition-all shadow-sm">01</span>
                                 <h3 className="text-base md:text-lg font-bold text-zinc-900">Diagnóstico Deep Dive</h3>
-                                <p className="text-zinc-500 leading-relaxed text-base font-medium">Mergulhamos nos seus dados atuais, auditamos seu CRM e entrevistamos stakeholders para identificar os gargalos reais de receita.</p>
+                                <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">Mergulhamos nos seus dados atuais, auditamos seu CRM e entrevistamos stakeholders para identificar os gargalos reais de receita.</p>
                             </div>
 
                             {/* Step 2 */}
                             <div className="relative group">
                                 <span className="absolute -left-[67px] md:-left-[99px] top-1 w-12 h-12 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-400 text-sm font-bold font-sans group-hover:border-black group-hover:bg-black group-hover:text-white transition-all shadow-sm">02</span>
                                 <h3 className="text-base md:text-lg font-bold text-zinc-900">Fundação de Revenue</h3>
-                                <p className="text-zinc-500 leading-relaxed text-base font-medium">Arrumamos a casa. Limpeza de dados, configuração de tracking correto, definição de ICP e implementação da arquitetura correta de CRM.</p>
+                                <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">Arrumamos a casa. Limpeza de dados, configuração de tracking correto, definição de ICP e implementação da arquitetura correta de CRM.</p>
                             </div>
 
                             {/* Step 3 */}
                             <div className="relative group">
                                 <span className="absolute -left-[67px] md:-left-[99px] top-1 w-12 h-12 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-400 text-sm font-bold font-sans group-hover:border-black group-hover:bg-black group-hover:text-white transition-all shadow-sm">03</span>
                                 <h3 className="text-base md:text-lg font-bold text-zinc-900">Growth Loops</h3>
-                                <p className="text-zinc-500 leading-relaxed text-base font-medium">Implementação das campanhas de aquisição e réguas de nutrição. Início dos testes A/B de conversão e otimização de canais pagos.</p>
+                                <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">Implementação das campanhas de aquisição e réguas de nutrição. Início dos testes A/B de conversão e otimização de canais pagos.</p>
                             </div>
 
                             {/* Step 4 */}
                             <div className="relative group">
                                 <span className="absolute -left-[67px] md:-left-[99px] top-1 w-12 h-12 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-400 text-sm font-bold font-sans group-hover:border-black group-hover:bg-black group-hover:text-white transition-all shadow-sm">04</span>
                                 <h3 className="text-base md:text-lg font-bold text-zinc-900">Escala & Otimização</h3>
-                                <p className="text-zinc-500 leading-relaxed text-base font-medium">Refinamento contínuo baseado em dados de coorte. Expansão para novos canais e automação avançada de retenção.</p>
+                                <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">Refinamento contínuo baseado em dados de coorte. Expansão para novos canais e automação avançada de retenção.</p>
                             </div>
                         </div>
                     </div>
@@ -172,10 +170,10 @@ const Metodologia = () => {
                     <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
                         Pare de queimar caixa <span className="text-zinc-500 line-through">adivinhando</span>.
                     </h2>
-                    <p className="text-xl text-zinc-500 mb-12 max-w-2xl mx-auto font-bold tracking-tight">
+                    <p className="text-sm md:text-base font-normal text-zinc-500 mb-12 max-w-2xl mx-auto tracking-tight">
                         Deixe a IA e o CRM trabalharem suas conversões. Vagas Restritas (Max 3/mês).
                     </p>
-                    <Button asChild className="bg-black text-white hover:bg-revgreen hover:text-black h-16 px-12 rounded-lg text-sm font-bold tracking-tight uppercase transition-all shadow-sm hover:translate-y-[-2px]">
+                    <Button asChild className="bg-black text-white hover:bg-[#00CC6A] hover:text-black font-semibold text-sm h-11 px-6 rounded-lg uppercase transition-all shadow-sm hover:translate-y-[-2px]">
                         <Link to="/booking">Auditar Minha Operação</Link>
                     </Button>
 
