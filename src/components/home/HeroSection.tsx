@@ -22,16 +22,16 @@ const HeroSection = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-[90vh] flex flex-col justify-center items-center overflow-hidden pt-32 pb-20 bg-white"
+      className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black"
     >
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
+      <div className="relative z-10 w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
 
-        {/* Headline — Outfit display, grande, limpa */}
+        {/* Headline — tamanho Funnels: 2.25rem mobile, 3rem desktop */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="font-display text-[2.5rem] sm:text-[3.25rem] md:text-[4rem] lg:text-[4.5rem] font-extrabold text-zinc-900 mb-6 leading-[1.08] tracking-tight text-center text-balance"
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="font-sans text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center text-balance"
         >
           Escale suas vendas.{' '}
           <span className="text-[#00CC6A]">
@@ -39,63 +39,63 @@ const HeroSection = () => {
           </span>
         </motion.h1>
 
-        {/* Subheadline — Inter, 18-20px, leve */}
+        {/* Subheadline — 1rem / 1.125rem, normal weight */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="font-body text-zinc-500 mb-10 text-lg md:text-xl font-normal leading-relaxed max-w-2xl mx-auto text-center"
+          transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
+          className="text-zinc-400 mb-8 text-base md:text-lg font-normal leading-relaxed max-w-xl mx-auto text-center"
         >
-          A única assessoria B2B que unifica Processos, Automações, IA e CRM. Abandone a força bruta operacional e conquiste previsibilidade via Engenharia de Receita.
+          A única assessoria B2B que unifica Processos, Automações, IA e CRM para transformar sua operação comercial em uma máquina de receita previsível.
         </motion.p>
 
-        {/* CTAs — Botões com rounded-lg, estilo Funnels */}
+        {/* CTAs — rounded-lg, tamanho médio */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-          className="flex flex-col sm:flex-row gap-3 mb-14 w-full sm:w-auto"
+          transition={{ duration: 0.5, delay: 0.16, ease: 'easeOut' }}
+          className="flex flex-col sm:flex-row gap-3 mb-12 w-full sm:w-auto"
         >
-          <Button asChild size="lg" className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-bold text-sm h-12 px-7 w-full sm:w-auto rounded-lg transition-colors">
+          <Button asChild size="lg" className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 w-full sm:w-auto rounded-lg transition-colors">
             <Link to={buildBookingUrl('homepage', 'hero_primary')} onClick={scrollToTop}>
               Começar agora
               <ArrowRight className="w-4 h-4 ml-2" strokeWidth={2} />
             </Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:border-zinc-300 font-medium text-sm h-12 px-7 w-full sm:w-auto rounded-lg transition-colors">
+          <Button asChild size="lg" variant="outline" className="bg-transparent border border-zinc-700 text-zinc-300 hover:bg-zinc-900 hover:text-white font-medium text-sm h-11 px-6 w-full sm:w-auto rounded-lg transition-colors">
             <Link to="/cases" onClick={scrollToTop}>
               Ver resultados
             </Link>
           </Button>
         </motion.div>
 
-        {/* Métricas — Limpas, separadas por linha, fonte mono nos números */}
+        {/* Métricas — Estilo Funnels: números mono, labels pequenos */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.35, ease: 'easeOut' }}
-          className="flex justify-center items-center gap-0 w-full max-w-xl"
+          transition={{ duration: 0.5, delay: 0.28, ease: 'easeOut' }}
+          className="flex justify-center items-center gap-0 w-full max-w-md border-t border-zinc-800 pt-8"
         >
           {stats.map((stat, i) => (
             <div key={stat.label} className="flex items-center">
-              <div className="flex flex-col items-center px-6 sm:px-8 py-2">
+              <div className="flex flex-col items-center px-5 sm:px-7 py-1">
                 {typeof stat.value === 'number' ? (
                   <NumberTicker 
                     value={stat.value} 
                     suffix={stat.suffix} 
                     prefix={stat.prefix} 
-                    className="text-zinc-900 font-mono font-bold text-2xl sm:text-3xl leading-none tracking-tight" 
+                    className="text-white font-mono font-bold text-xl sm:text-2xl leading-none tracking-tight" 
                   />
                 ) : (
-                  <span className="text-zinc-900 font-mono font-bold text-2xl sm:text-3xl leading-none tracking-tight">
+                  <span className="text-white font-mono font-bold text-xl sm:text-2xl leading-none tracking-tight">
                     {stat.value}
                   </span>
                 )}
-                <span className="text-zinc-400 text-xs font-medium mt-2 text-center">
+                <span className="text-zinc-500 text-[0.7rem] font-medium mt-2 text-center">
                   {stat.label}
                 </span>
               </div>
-              {i < stats.length - 1 && <div className="w-px h-10 bg-zinc-200" />}
+              {i < stats.length - 1 && <div className="w-px h-8 bg-zinc-800" />}
             </div>
           ))}
         </motion.div>

@@ -30,10 +30,9 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
   // Helper variables for styling based on variant/scroll state
   const isLightMode = variant === 'light' && !scrolled;
 
-  const textColor = "text-zinc-600 hover:text-zinc-900";
-  const navBg = "bg-white border-zinc-200";
-  const hoverBg = "hover:bg-zinc-50";
-  const logoClass = "invert";
+  const textColor = scrolled ? "text-zinc-600 hover:text-zinc-900" : "text-zinc-300 hover:text-white";
+  const hoverBg = scrolled ? "hover:bg-zinc-50" : "hover:bg-white/10";
+  const logoClass = scrolled ? "invert" : "";
 
   const NavLink = ({ to, children }: { to: string, children: React.ReactNode }) => (
     <Link
@@ -123,10 +122,10 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
     <>
       <header
         className={cn(
-          "w-full fixed top-0 left-0 right-0 z-[60] transition-all duration-300 border-b border-zinc-200",
+          "w-full fixed top-0 left-0 right-0 z-[60] transition-all duration-300",
           scrolled
-            ? "bg-white py-4"
-            : "bg-white py-5"
+            ? "bg-white border-b border-zinc-200 py-3"
+            : "bg-transparent border-b border-transparent py-4"
         )}
       >
         <div className="container-custom flex justify-between items-center relative gap-4">
@@ -143,13 +142,19 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
 
           {/* Center: Navigation */}
           <nav className="hidden xl:flex items-center justify-center flex-1">
-            <div className="flex items-center rounded-xl px-2 py-1 border border-zinc-200 bg-zinc-50/50">
+            <div className={cn(
+              "flex items-center rounded-xl px-2 py-1 border transition-colors",
+              scrolled ? "border-zinc-200 bg-zinc-50/50" : "border-zinc-700 bg-white/5"
+            )}>
               <div className="flex items-center space-x-1">
                 <NavLink to="/">Home</NavLink>
                 <div className="w-px h-3 mx-1 bg-zinc-200" />
 
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="px-4 py-2 text-sm font-medium transition-colors flex items-center gap-1.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg focus:outline-none data-[state=open]:text-[#00CC6A]">
+                  <DropdownMenuTrigger className={cn(
+                    "px-4 py-2 text-sm font-medium transition-colors flex items-center gap-1.5 rounded-lg focus:outline-none data-[state=open]:text-[#00CC6A]",
+                    scrolled ? "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100" : "text-zinc-300 hover:text-white hover:bg-white/10"
+                  )}>
                     Auditoria <ChevronDown className="w-3 h-3" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent sideOffset={8} className="bg-white border border-zinc-200 p-1.5 w-[260px] z-[70] rounded-xl shadow-lg">
@@ -237,7 +242,10 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
               </DropdownMenu>
             ) : (
               <Link to="/login"
-                className="text-sm font-medium transition-colors text-zinc-500 hover:text-zinc-900 px-3 py-2"
+                className={cn(
+                  "text-sm font-medium transition-colors px-3 py-2",
+                  scrolled ? "text-zinc-500 hover:text-zinc-900" : "text-zinc-400 hover:text-white"
+                )}
                 onClick={scrollToTop}
               >
                 Login
@@ -257,7 +265,10 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
 
           <button
             onClick={toggleMenu}
-            className="xl:hidden p-2 transition-colors ml-auto z-10 text-zinc-900 hover:text-[#00CC6A]"
+            className={cn(
+              "xl:hidden p-2 transition-colors ml-auto z-10",
+              scrolled ? "text-zinc-900 hover:text-[#00CC6A]" : "text-white hover:text-[#00CC6A]"
+            )}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

@@ -66,12 +66,11 @@ const Login = () => {
             {/* Header Brand */}
             <div className="w-full max-w-7xl mx-auto flex items-center justify-between z-10 pt-4">
                 <Link to="/" className="flex items-center gap-2 group">
-                    <div className="w-6 h-6 bg-[#00CC6A] rounded-sm group-hover:scale-105 transition-transform flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-sm" />
-                    </div>
-                    <span className="font-semibold text-lg text-zinc-900 tracking-tight">
-                        RevHackers
-                    </span>
+                    <img
+                        src="/brand/revhackers-wordmark-white.png"
+                        alt="RevHackers"
+                        className="h-7 max-w-[160px] invert group-hover:opacity-80 transition-opacity"
+                    />
                 </Link>
             </div>
 
