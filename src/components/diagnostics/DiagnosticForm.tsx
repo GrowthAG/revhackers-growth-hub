@@ -220,7 +220,7 @@ export const DiagnosticForm = ({
  <Button
  type="submit"
  disabled={isSubmitting || !!emailError}
- className="w-full px-16 h-11 bg-[#00CC6A] text-black font-semibold rounded-lg transition-all border border-[#00CC6A] hover:bg-[#00b35c]"}
+ className="w-full px-16 h-11 bg-[#00CC6A] text-black font-semibold rounded-lg transition-all border border-[#00CC6A] hover:bg-[#00b35c]"
  >
  {isSubmitting ? 'Processando dados...' : 'Liberar Relatório'}
  </Button>
