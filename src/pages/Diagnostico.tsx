@@ -1,6 +1,6 @@
 import PageLayout from '@/components/layout/PageLayout';
 import Section from '@/components/ui/Section';
-import { ArrowUpRight, BarChart2, Globe, TrendingUp, User, Sparkles } from 'lucide-react';
+import { ArrowUpRight, BarChart2, Globe, TrendingUp, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '@/components/shared/SEO';
 
@@ -46,22 +46,18 @@ const DiagnosticoGateway = () => {
     <PageLayout>
       <SEO title="Central de Diagnósticos GrowthHub" description="Descubra onde estão os vazamentos na sua operação B2B com diagnósticos gratuitos de Growth, CRM, Founder e Site." canonical="https://revhackers.com.br/diagnostico" />
       
-      <section className="bg-zinc-950 py-24 md:py-32 relative overflow-hidden border-b border-zinc-800">
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
+      <section className="bg-black py-24 md:py-32 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-6 relative z-10 space-y-5 text-center">
+          <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
+            Diagnósticos
+          </p>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10 space-y-6 text-center">
-          <div className="flex items-center justify-center gap-2">
-            <span className="px-3 py-1 rounded-md text-xs font-mono font-bold bg-[#00CC6A] text-black inline-flex items-center gap-1.5">
-              <Sparkles size={13} /> GROWTHHUB INTELLIGENCE
-            </span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-tight max-w-4xl mx-auto">
+          <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto">
             Central de Diagnósticos Preditivos
           </h1>
 
           <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed">
-            Avalie a maturidade da sua operação B2B em 1 minuto. Nossa IA calcula os vazamentos financeiros e entrega seu plano de ação imediato.
+            Avalie a maturidade da sua operação B2B em 1 minuto. Nossa IA calcula os vazamentos e entrega seu plano de ação.
           </p>
         </div>
       </section>

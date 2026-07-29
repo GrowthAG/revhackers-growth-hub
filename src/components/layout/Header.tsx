@@ -32,7 +32,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
 
   const textColor = scrolled ? "text-zinc-600 hover:text-zinc-900" : "text-zinc-300 hover:text-white";
   const hoverBg = scrolled ? "hover:bg-zinc-50" : "hover:bg-white/10";
-  const logoClass = scrolled ? "invert" : "";
+  const logoClass = scrolled ? "brightness-0" : "";
 
   const NavLink = ({ to, children }: { to: string, children: React.ReactNode }) => (
     <Link
