@@ -72,7 +72,11 @@ const Cases = () => {
       />
       <DarkHeroSection
         eyebrow="Cases"
-        title="Geramos mais de R$ 50 milhões em pipeline auditado reduzindo o CAC médio em 40%."
+        title={
+          <>
+            Geramos mais de R$ 50 milhões em pipeline auditado <span className="text-[#00CC6A]">reduzindo o CAC médio em 40%.</span>
+          </>
+        }
         subtitle="Resultados reais de empresas B2B que escalaram operações com nossas arquiteturas de IA e ABM."
         searchPlaceholder="BUSCAR CASES..."
         searchQuery={searchQuery}

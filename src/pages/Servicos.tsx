@@ -81,7 +81,7 @@ const Servicos = () => {
               Ecossistema
             </p>
             <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center">
-              Elimine gargalos de receita conectando CRM, ABM, IA e automações em um único motor de vendas.
+              Elimine gargalos de receita conectando <span className="text-[#00CC6A]">CRM, ABM, IA e automações em um único motor de vendas.</span>
             </h1>
             <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center mb-8">
               Engenheiramos toda a infraestrutura de Go-To-Market de ponta a ponta. Unificamos inteligência preditiva, ABM automatizado e CRM para fechar contratos maiores em menos tempo.

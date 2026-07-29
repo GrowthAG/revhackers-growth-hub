@@ -1,9 +1,10 @@
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import React from 'react';
 
 interface DarkHeroSectionProps {
   eyebrow?: string;
-  title: string;
+  title: React.ReactNode;
   subtitle: string;
   searchPlaceholder?: string;
   searchQuery?: string;

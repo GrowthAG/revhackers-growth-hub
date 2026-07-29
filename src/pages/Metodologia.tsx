@@ -39,7 +39,7 @@ const Metodologia = () => {
 
                     {/* Standard Headline H1 */}
                     <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center">
-                        Multiplique seu pipeline B2B por 3x em 90 dias sem contratar mais vendedores.
+                        Multiplique seu pipeline B2B por 3x em 90 dias <span className="text-[#00CC6A]">sem contratar mais vendedores.</span>
                     </h1>
 
                     {/* Standard Subheadline */}
