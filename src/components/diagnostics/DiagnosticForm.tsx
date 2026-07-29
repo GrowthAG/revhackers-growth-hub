@@ -46,7 +46,22 @@ export const DiagnosticForm = ({
  website: '',
  crm: ''
  });
- const [isQueryingCnpj, setIsQueryingCnpj] = useState(false);
+  const [customCrm, setCustomCrm] = useState('');
+
+  const handleCrmChange = (val: string) => {
+    if (val === 'outros') {
+      setForm(prev => ({ ...prev, crm: customCrm ? `Outros (${customCrm})` : 'Outros' }));
+    } else {
+      setForm(prev => ({ ...prev, crm: val }));
+      setCustomCrm('');
+    }
+  };
+
+  const handleCustomCrmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setCustomCrm(val);
+    setForm(prev => ({ ...prev, crm: `Outros (${val})` }));
+  };
  const [cnpjChecked, setCnpjChecked] = useState(false);
  const [emailError, setEmailError] = useState('');
 
@@ -215,20 +230,36 @@ export const DiagnosticForm = ({
 
   <div className="space-y-1.5">
     <Label className={labelClasses}>CRM Utilizado Atualmente</Label>
-    <Select onValueChange={val => setForm({ ...form, crm: val })}>
+    <Select onValueChange={handleCrmChange}>
       <SelectTrigger className={inputClasses}>
         <SelectValue placeholder="Selecione o CRM principal" />
       </SelectTrigger>
       <SelectContent className="bg-white border border-zinc-200 text-zinc-900 rounded-lg shadow-sm">
-        <SelectItem value="hubspot" className="cursor-pointer focus:bg-zinc-100">HubSpot CRM</SelectItem>
-        <SelectItem value="pipedrive" className="cursor-pointer focus:bg-zinc-100">Pipedrive</SelectItem>
-        <SelectItem value="salesforce" className="cursor-pointer focus:bg-zinc-100">Salesforce</SelectItem>
-        <SelectItem value="rd-station" className="cursor-pointer focus:bg-zinc-100">RD Station CRM</SelectItem>
-        <SelectItem value="active-campaign" className="cursor-pointer focus:bg-zinc-100">ActiveCampaign</SelectItem>
-        <SelectItem value="outros" className="cursor-pointer focus:bg-zinc-100">Outro CRM</SelectItem>
-        <SelectItem value="sem-crm" className="cursor-pointer focus:bg-zinc-100">Não utilizamos CRM / Planilhas</SelectItem>
+        <SelectItem value="HubSpot" className="cursor-pointer focus:bg-zinc-100">HubSpot CRM</SelectItem>
+        <SelectItem value="ActiveCampaign" className="cursor-pointer focus:bg-zinc-100">ActiveCampaign</SelectItem>
+        <SelectItem value="Pipedrive" className="cursor-pointer focus:bg-zinc-100">Pipedrive</SelectItem>
+        <SelectItem value="Salesforce" className="cursor-pointer focus:bg-zinc-100">Salesforce</SelectItem>
+        <SelectItem value="RD Station" className="cursor-pointer focus:bg-zinc-100">RD Station CRM</SelectItem>
+        <SelectItem value="outros" className="cursor-pointer focus:bg-zinc-100">Outros</SelectItem>
+        <SelectItem value="Não utilizamos CRM / Planilhas" className="cursor-pointer focus:bg-zinc-100">Não utilizamos CRM / Planilhas</SelectItem>
       </SelectContent>
     </Select>
+
+    {form.crm?.startsWith('Outros') && (
+      <motion.div 
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: 'auto' }}
+        className="pt-1.5"
+      >
+        <Input
+          required
+          className={inputClasses}
+          value={customCrm}
+          onChange={handleCustomCrmChange}
+          placeholder="Qual CRM a sua empresa utiliza?"
+        />
+      </motion.div>
+    )}
   </div>
 
  <div className="space-y-1.5">
