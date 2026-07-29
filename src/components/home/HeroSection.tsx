@@ -24,14 +24,14 @@ const HeroSection = () => {
       ref={ref}
       className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black"
     >
-      <div className="relative z-10 w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
 
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="font-sans text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center text-balance"
+          className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center"
         >
           Montamos a sua estrutura de{' '}
           <span className="text-[#00CC6A]">
@@ -128,14 +128,14 @@ const HeroSection = () => {
                     value={stat.value} 
                     suffix={stat.suffix} 
                     prefix={stat.prefix} 
-                    className="text-white font-mono font-bold text-xl sm:text-2xl leading-none tracking-tight" 
+                    className="text-white font-sans font-bold text-xl sm:text-2xl leading-none tracking-tight" 
                   />
                 ) : (
-                  <span className="text-white font-mono font-bold text-xl sm:text-2xl leading-none tracking-tight">
+                  <span className="text-white font-sans font-bold text-xl sm:text-2xl leading-none tracking-tight">
                     {stat.value}
                   </span>
                 )}
-                <span className="text-zinc-500 text-[0.7rem] font-medium mt-2 text-center">
+                <span className="text-zinc-500 text-xs font-sans font-medium mt-2 text-center">
                   {stat.label}
                 </span>
               </div>
