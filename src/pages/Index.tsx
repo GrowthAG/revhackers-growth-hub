@@ -11,19 +11,7 @@ import TestimonialsSection from '@/components/home/TestimonialsSection';
 import ContactFormSection from '@/components/home/ContactFormSection';
 import SEO from '@/components/shared/SEO';
 
-// Hostnames que exibem a landing page institucional.
-const LANDING_HOSTS = ['revhackers.com.br', 'revhackers.com', 'www.revhackers.com.br', 'www.revhackers.com', 'localhost', '127.0.0.1'];
-
 const Index = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const host = window.location.hostname;
-    if (!LANDING_HOSTS.includes(host)) {
-      navigate('/login', { replace: true });
-    }
-  }, [navigate]);
-
   return (
     <PageLayout>
       <SEO
