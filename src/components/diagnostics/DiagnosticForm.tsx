@@ -13,6 +13,8 @@ export interface DiagnosticFormData {
  role: string;
  linkedin: string;
  cnpj?: string;
+ website?: string;
+ crm?: string;
 }
 
 interface DiagnosticFormProps {
@@ -40,7 +42,9 @@ export const DiagnosticForm = ({
  company: '',
  role: '',
  linkedin: '',
- cnpj: ''
+ cnpj: '',
+ website: '',
+ crm: ''
  });
  const [isQueryingCnpj, setIsQueryingCnpj] = useState(false);
  const [cnpjChecked, setCnpjChecked] = useState(false);
@@ -199,6 +203,34 @@ export const DiagnosticForm = ({
  <Label className={labelClasses}>Nome da Empresa</Label>
  <Input required className={inputClasses} value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} placeholder="Nome da sua Organização" />
  </div>
+  <div className="space-y-1.5">
+    <Label className={labelClasses}>Website / LP da Empresa</Label>
+    <Input 
+      className={inputClasses} 
+      value={form.website || ''} 
+      onChange={e => setForm({ ...form, website: e.target.value })} 
+      placeholder="seusite.com.br" 
+    />
+  </div>
+
+  <div className="space-y-1.5">
+    <Label className={labelClasses}>CRM Utilizado Atualmente</Label>
+    <Select onValueChange={val => setForm({ ...form, crm: val })}>
+      <SelectTrigger className={inputClasses}>
+        <SelectValue placeholder="Selecione o CRM principal" />
+      </SelectTrigger>
+      <SelectContent className="bg-white border border-zinc-200 text-zinc-900 rounded-lg shadow-sm">
+        <SelectItem value="hubspot" className="cursor-pointer focus:bg-zinc-100">HubSpot CRM</SelectItem>
+        <SelectItem value="pipedrive" className="cursor-pointer focus:bg-zinc-100">Pipedrive</SelectItem>
+        <SelectItem value="salesforce" className="cursor-pointer focus:bg-zinc-100">Salesforce</SelectItem>
+        <SelectItem value="rd-station" className="cursor-pointer focus:bg-zinc-100">RD Station CRM</SelectItem>
+        <SelectItem value="active-campaign" className="cursor-pointer focus:bg-zinc-100">ActiveCampaign</SelectItem>
+        <SelectItem value="outros" className="cursor-pointer focus:bg-zinc-100">Outro CRM</SelectItem>
+        <SelectItem value="sem-crm" className="cursor-pointer focus:bg-zinc-100">Não utilizamos CRM / Planilhas</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+
  <div className="space-y-1.5">
  <Label className={labelClasses}>Cargo Estratégico</Label>
  <Select onValueChange={val => setForm({ ...form, role: val })}>

@@ -70,6 +70,17 @@ const QUESTIONS = [
  { label: "Nenhuma barreira de entrada. Qualquer um que se interessar pelo produto, deixamos entrar", score: 0 }
  ],
  log: "Comunicação para todos ecoa para ninguém. Alvo amplo é ausência fatal de posicionamento em B2B."
+ },
+ {
+ id: 6,
+ question: "Como você avalia a capacidade de conversão do seu Site / Landing Page principal?",
+ options: [
+ { label: "Alta conversão (Oferta clara, CRO otimizado e captura direta por IA/CRM)", score: 20 },
+ { label: "Conversão mediana (Gera leads, mas a maioria não tem perfil ideal/ICP)", score: 10 },
+ { label: "Baixa conversão (O site é institucional, pouca clareza de proposta de valor)", score: 5 },
+ { label: "Não temos LP otimizada ou o site é desatualizado/lento", score: 0 }
+ ],
+ log: "Seu site é a porta de entrada da sua marca. Se a proposta de valor não for instantânea, você rasga orçamento de mídia."
  }
 ];
 
