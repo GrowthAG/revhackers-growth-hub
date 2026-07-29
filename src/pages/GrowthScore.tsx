@@ -309,64 +309,68 @@ const GrowthScore = () => {
   {step === 'results' && (
     <>
       {!hasSubmittedLead && (
-        <div className="w-full max-w-4xl mx-auto my-12 animate-fade-in">
-          <div className="bg-white border border-zinc-200 rounded-xl p-8 sm:p-12 shadow-sm space-y-10">
+        <div className="w-full max-w-5xl mx-auto my-12 animate-fade-in">
+          <div className="bg-white border border-zinc-200 rounded-2xl p-8 sm:p-12 shadow-sm flex flex-col lg:flex-row items-stretch gap-10 lg:gap-14">
             
-            {/* Cabeçalho Unificado de Resultado */}
-            <div className="text-center space-y-3 max-w-2xl mx-auto">
-              <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
-                Diagnóstico de Growth • Resultado Preliminar
-              </p>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900">
-                Sua operação possui oportunidades claras de estancar perdas financeiras.
-              </h2>
-              <p className="text-sm text-zinc-500 leading-relaxed">
-                Com base nas respostas declaradas, calculamos o nível de maturidade da sua arquitetura comercial e o impacto financeiro acumulado em 12 meses.
-              </p>
-            </div>
-
-            {/* Painel de Métricas e Diagnóstico Preliminar */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-zinc-50 border border-zinc-200/80 rounded-xl p-6">
-              
-              <div className="space-y-1 text-center md:text-left border-b md:border-b-0 md:border-r border-zinc-200 pb-4 md:pb-0 md:pr-6">
-                <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider block">Maturidade Geral</span>
-                <div className="flex items-baseline justify-center md:justify-start gap-1">
-                  <span className="text-4xl font-extrabold text-zinc-900 tracking-tight">{teaserScore}</span>
-                  <span className="text-sm font-bold text-zinc-400">/100</span>
-                </div>
-                <span className="text-xs font-medium text-zinc-600 block pt-1">
-                  {teaserScore >= 70 ? 'Operação Estruturada' : teaserScore >= 40 ? 'Vazamento de Processos' : 'Gargalo Crítico de Receita'}
-                </span>
-              </div>
-
-              <div className="space-y-1 text-center md:text-left border-b md:border-b-0 md:border-r border-zinc-200 pb-4 md:pb-0 md:pr-6">
-                <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider block">Vazamento Estimado</span>
-                <div className="text-2xl font-bold text-zinc-900 tracking-tight">
-                  {( Math.max(120000, (100 - teaserScore) * 4850 + (answers[0] === 0 ? 140000 : 0) + (answers[1] === 0 ? 95000 : 0)) ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                </div>
-                <span className="text-xs font-normal text-zinc-500 block pt-1">Projeção anual de margem perdida</span>
-              </div>
-
-              <div className="space-y-1 text-center md:text-left">
-                <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider block">Principal Gargalo</span>
-                <p className="text-xs text-zinc-700 font-medium leading-normal pt-1">
-                  {answers[0] === 0 
-                    ? "Centralização operacional e processos manuais em vendas." 
-                    : answers[2] === 0 
-                    ? "Alta vulnerabilidade por dependência de poucos canais."
-                    : "Falta de controle estrito de CAC Teto e triagem preditiva."}
+            {/* Lado Esquerdo: Diagnóstico e Métricas */}
+            <div className="flex-1 flex flex-col justify-between space-y-8 lg:border-r border-zinc-100 lg:pr-12">
+              <div className="space-y-4">
+                <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
+                  Diagnóstico de Growth • Análise Concluída
+                </p>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 leading-tight">
+                  Identificamos vazamentos significativos na sua operação comercial.
+                </h2>
+                <p className="text-sm text-zinc-500 leading-relaxed">
+                  Com base no algoritmo de IA e nas respostas declaradas, calculamos o nível de maturidade e o impacto financeiro acumulado.
                 </p>
               </div>
 
+              {/* Cards de Métricas alinhados verticalmente no lado esquerdo */}
+              <div className="space-y-4">
+                <div className="bg-zinc-50 border border-zinc-200/80 rounded-xl p-5 flex items-center justify-between">
+                  <div>
+                    <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider block">Score de Maturidade</span>
+                    <span className="text-xs text-zinc-600 font-medium pt-0.5 block">
+                      {teaserScore >= 70 ? 'Operação Estruturada' : teaserScore >= 40 ? 'Vazamento de Processos' : 'Gargalo Crítico de Receita'}
+                    </span>
+                  </div>
+                  <div className="flex items-baseline gap-0.5">
+                    <span className="text-3xl font-extrabold text-zinc-900 tracking-tight">{teaserScore}</span>
+                    <span className="text-xs font-bold text-zinc-400">/100</span>
+                  </div>
+                </div>
+
+                <div className="bg-zinc-50 border border-zinc-200/80 rounded-xl p-5 space-y-1">
+                  <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider block">Vazamento Anual Projetado</span>
+                  <div className="text-2xl font-extrabold text-zinc-900 tracking-tight">
+                    {( Math.max(120000, (100 - teaserScore) * 4850 + (answers[0] === 0 ? 140000 : 0) + (answers[1] === 0 ? 95000 : 0)) ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    <span className="text-xs font-normal text-zinc-500 ml-1">/ano</span>
+                  </div>
+                  <p className="text-xs text-zinc-600 leading-relaxed pt-1">
+                    {answers[0] === 0 
+                      ? "Gargalo operacional centralizado no fundador e processos manuais que consomem margem líquida." 
+                      : answers[2] === 0 
+                      ? "Vulnerabilidade crítica de receita por dependência de poucos canais de aquisição."
+                      : "Desperdício de orçamento por ausência de teto rígido de CAC e triagem por IA."}
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-2 flex items-center gap-4 text-xs text-zinc-400 font-medium">
+                <span>✓ 5 Dimensões Auditadas</span>
+                <span>•</span>
+                <span>✓ Algoritmo de IA</span>
+              </div>
             </div>
 
-            {/* Formulário Corporativo sem visual de popup */}
-            <div className="pt-4 border-t border-zinc-100 max-w-xl mx-auto">
+            {/* Lado Direito: Formulário Corporativo */}
+            <div className="flex-1 w-full max-w-md flex flex-col justify-center">
               <DiagnosticForm
                 onSubmit={handleFormSubmit}
                 isSubmitting={isSubmitting}
                 title="Desbloquear Relatório Completo"
-                subtitle="Preencha os dados corporativos abaixo para visualizar o detalhamento por pilar e o plano de ação."
+                subtitle="Preencha os dados corporativos abaixo para liberar o plano de ação detalhado."
                 variant="light"
                 diagnosticType="Growth"
               />
