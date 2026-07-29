@@ -58,7 +58,7 @@ export const DiagnosticLayout = ({
                         {/* Standard SaaS Header */}
                         {!hideHeader && (
                             <div className="mb-8 w-full text-center space-y-2">
-                                <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">GROWTHHUB INTELLIGENCE</p>
+                                <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">Diagnóstico</p>
                                 <h1 className={cn(
                                     "text-2xl md:text-3xl font-bold tracking-tight text-zinc-900",
                                     isDark && "text-white"

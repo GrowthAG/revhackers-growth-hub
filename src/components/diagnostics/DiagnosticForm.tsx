@@ -165,7 +165,7 @@ export const DiagnosticForm = ({
                                     </span>
                                 )}
                                 {cnpjChecked && (
-                                    <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">GROWTHHUB INTELLIGENCE</p>
+                                    <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">Dados verificados</p>
                                 )}
                             </div>
                             <Input

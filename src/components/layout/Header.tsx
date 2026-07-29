@@ -125,7 +125,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
           "w-full fixed top-0 left-0 right-0 z-[60] transition-all duration-300",
           scrolled
             ? "bg-white border-b border-zinc-200 py-3"
-            : "bg-transparent border-b border-transparent py-4"
+            : "bg-black border-b border-zinc-800 py-3"
         )}
       >
         <div className="container-custom flex justify-between items-center relative gap-4">
