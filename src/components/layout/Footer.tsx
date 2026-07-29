@@ -84,12 +84,13 @@ const Footer = () => {
             Technology Partners
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
-            {/* Anthropic / Claude */}
+            {/* Claude Partner Network + Startup */}
             <a href="https://anthropic.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors group">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.304 3.541l-5.74 16.918H14.7L20.44 3.541h-3.136zm-10.608 0L1.56 20.459h3.262l1.072-3.305h5.47l1.072 3.305h3.262L10.558 3.541H6.696zM8.108 7.639l1.99 6.632H6.118l1.99-6.632z"/>
-              </svg>
-              <span className="text-xs font-semibold tracking-wide">Claude Partner</span>
+              <img
+                src="/brand/claude-partner-badge.png"
+                alt="Claude Partner Network"
+                className="h-6 opacity-60 group-hover:opacity-90 transition-opacity invert"
+              />
             </a>
 
             <div className="w-px h-4 bg-zinc-800 hidden sm:block" />
