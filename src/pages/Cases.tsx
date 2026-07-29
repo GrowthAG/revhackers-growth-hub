@@ -106,40 +106,56 @@ const Cases = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredCases.map((study, index) => (
                 <Link to={`/cases/${study.slug}`} className="group h-full" key={study.id || index}>
-                  <div className={`
-                    bg-white overflow-hidden h-full flex flex-col transition-all duration-500 relative rounded-xl border border-zinc-200 hover:border-black shadow-sm hover:-translate-y-1
-                  `}>
-                    <div className="h-56 overflow-hidden bg-zinc-50 flex items-center justify-center border-b border-zinc-100 relative transition-all">
-                      <div className="w-full h-full flex items-center justify-center p-10 transition-transform duration-700 group-hover:scale-105">
-                        <img
-                          src={study.client_logo}
-                          alt={study.title}
-                          className="max-w-[200px] max-h-[110px] w-auto h-auto object-contain opacity-100 grayscale group-hover:grayscale-0 transition-all duration-500"
-                          style={{
-                            transform: study.logoScale ? `scale(${study.logoScale})` : 'scale(1.0)',
-                          }}
-                        />
-                      </div>
+                  <div className="bg-white overflow-hidden h-full flex flex-col transition-all duration-300 relative rounded-xl border border-zinc-200 hover:border-zinc-400 shadow-sm hover:shadow-md">
+                    
+                    {/* Header do Card com Logo */}
+                    <div className="h-44 overflow-hidden bg-zinc-50 flex items-center justify-center border-b border-zinc-100 p-8 relative">
+                      <img
+                        src={study.client_logo}
+                        alt={study.title}
+                        className="max-w-[180px] max-h-[85px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                        style={{
+                          transform: study.logoScale ? `scale(${study.logoScale})` : 'scale(1.0)',
+                        }}
+                      />
                     </div>
 
-                    <div className="p-10 md:p-12 flex-1 flex flex-col bg-white">
-                      <span className="text-2xs font-bold uppercase tracking-wider text-zinc-400 mb-6 bg-zinc-50 w-fit px-2 py-1 rounded-lg border border-zinc-100">
-                        {study.case_category}
-                      </span>
-                      <h3 className="text-base md:text-lg font-bold text-zinc-900">
+                    {/* Conteúdo do Card */}
+                    <div className="p-6 md:p-8 flex-1 flex flex-col bg-white">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
+                          {study.case_category}
+                        </span>
+                      </div>
+
+                      <h3 className="text-lg font-bold text-zinc-900 mb-2 group-hover:text-[#00CC6A] transition-colors leading-snug">
                         {study.title}
                       </h3>
-                      <p className="text-zinc-600 font-normal text-mini mb-8 flex-1 line-clamp-3 leading-relaxed">
+
+                      <p className="text-zinc-500 text-xs leading-relaxed mb-6 flex-1 line-clamp-3">
                         {study.preview_description}
                       </p>
 
-                      <div className="pt-8 border-t border-zinc-100 flex items-center justify-between group-hover:opacity-100 transition-opacity">
-                        <span className="text-xxs font-bold uppercase tracking-wider text-black">
-                          Ver Detalhes
+                      {/* Métricas do Case (se existirem) */}
+                      {study.metrics && Array.isArray(study.metrics) && (
+                        <div className="grid grid-cols-2 gap-2 mb-6 pt-4 border-t border-zinc-100">
+                          {study.metrics.slice(0, 2).map((m: any, idx: number) => (
+                            <div key={idx} className="bg-zinc-50 border border-zinc-100 rounded-lg p-2.5">
+                              <span className="text-[10px] text-zinc-400 font-semibold block uppercase tracking-wider">{m.label}</span>
+                              <span className="text-sm font-extrabold text-zinc-900">{m.value}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
+                        <span className="text-xs font-bold text-zinc-900 group-hover:text-[#00CC6A] transition-colors">
+                          Ver Estudo Completo
                         </span>
-                        <ArrowRight className="h-4 w-4 text-black group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight className="h-4 w-4 text-zinc-400 group-hover:text-[#00CC6A] group-hover:translate-x-1 transition-all" />
                       </div>
                     </div>
+
                   </div>
                 </Link>
               ))}
