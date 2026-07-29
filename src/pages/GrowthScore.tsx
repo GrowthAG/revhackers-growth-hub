@@ -347,7 +347,7 @@ const GrowthScore = () => {
                     </span>
                   </div>
                   <div className="flex items-baseline gap-0.5 bg-white border border-zinc-200 px-3 py-1.5 rounded-lg shadow-2xs">
-                    <span className={`text-2xl font-extrabold tracking-tight ${teaserScore >= 70 ? 'text-[#00CC6A]' : teaserScore >= 40 ? 'text-amber-500' : 'text-red-500'}`}>{teaserScore}</span>
+                    <span className="text-2xl font-extrabold tracking-tight text-[#00CC6A]">{teaserScore}</span>
                     <span className="text-xs font-bold text-zinc-400">/100</span>
                   </div>
                 </div>
@@ -368,10 +368,19 @@ const GrowthScore = () => {
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center gap-4 text-xs text-zinc-400 font-medium">
-                <span>✓ 6 Dimensões Auditadas</span>
-                <span>•</span>
-                <span>✓ Algoritmo de IA</span>
+              <div className="pt-2 flex items-center justify-between">
+                <div className="flex items-center gap-4 text-xs text-zinc-400 font-medium">
+                  <span>✓ 6 Dimensões Auditadas</span>
+                  <span>•</span>
+                  <span>✓ Algoritmo de IA</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsBookingModalOpen(true)}
+                  className="text-xs font-bold text-zinc-700 hover:text-[#00CC6A] underline underline-offset-4 transition-colors"
+                >
+                  Falar com Especialista →
+                </button>
               </div>
             </div>
 
@@ -426,8 +435,8 @@ const GrowthScore = () => {
  ) : analysisResult ? (
  <>
  <div className="flex items-center gap-2 mb-4">
- <span className="text-xs font-bold text-red-500 bg-red-500/10 px-3 py-1.5 border border-red-500/20">
- VAZAMENTO CRÍTICO DETECTADO
+ <span className="text-xs font-bold text-zinc-900 bg-zinc-100 px-3 py-1.5 border border-zinc-200">
+ OPORTUNIDADE DE OTIMIZAÇÃO DETECTADA
  </span>
  </div>
  <p className="text-zinc-900 text-lg font-medium leading-relaxed mb-0">
