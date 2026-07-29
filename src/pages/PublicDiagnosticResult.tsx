@@ -130,30 +130,32 @@ export default function PublicDiagnosticResult() {
 
     return (
         <PageLayout>
-            <div className="bg-zinc-950 text-white min-h-screen pt-24 pb-20 border-b border-zinc-800">
+            <SEO title={`Relatório Preditivo - ${result.empresa}`} description="Diagnóstico de Maturidade de Growth & Unit Economics da sua operação B2B." />
+            
+            <div className="bg-white text-zinc-900 min-h-screen pt-24 pb-20 border-b border-zinc-100">
                 <div className="max-w-6xl mx-auto px-6 space-y-10">
 
                     {/* Top Action Header */}
-                    <div className="flex items-center justify-between border-b border-zinc-800 pb-6">
-                        <Link to="/diagnostico" className="inline-flex items-center text-xs font-semibold text-zinc-400 hover:text-white transition-colors">
+                    <div className="flex items-center justify-between border-b border-zinc-100 pb-6">
+                        <Link to="/diagnostico" className="inline-flex items-center text-xs font-semibold text-zinc-500 hover:text-zinc-900 transition-colors">
                             <ArrowLeft size={14} className="mr-1.5" /> Central de Diagnósticos
                         </Link>
                         <div className="flex items-center gap-2">
-                            <span className="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
-                                RELATÓRIO PREDITIVO
+                            <span className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
+                                Relatório Preditivo
                             </span>
                         </div>
                     </div>
 
                     {/* Dashboard Header */}
-                    <div className="space-y-3">
-                        <span className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-widest">
-                            DIAGNÓSTICO OFICIAL • {result.empresa}
-                        </span>
-                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white">
+                    <div className="space-y-3 text-center md:text-left">
+                        <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
+                            Diagnóstico Oficial • {result.empresa}
+                        </p>
+                        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900">
                             Maturidade de Growth & Unit Economics
                         </h1>
-                        <p className="text-sm md:text-base text-zinc-400 max-w-2xl leading-relaxed">
+                        <p className="text-sm md:text-base text-zinc-500 max-w-2xl leading-relaxed">
                             Mapeamento de gargalos no funil de vendas, vazamentos financeiros e plano de correção operacional com Inteligência Artificial.
                         </p>
                     </div>
@@ -162,61 +164,61 @@ export default function PublicDiagnosticResult() {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
                         {/* Card 1: Score Gauge & Radar (Left 5 Cols) */}
-                        <div className="lg:col-span-5 bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6">
+                        <div className="lg:col-span-5 bg-white border border-zinc-200 rounded-xl p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-sm">
                             <div className="space-y-4 text-center">
-                                <span className="text-xs font-mono text-zinc-400 uppercase font-bold tracking-wider">Índice Sintético de Crescimento</span>
+                                <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Índice Sintético de Crescimento</span>
                                 <div className="relative flex items-center justify-center">
-                                    <div className="text-7xl md:text-8xl font-extrabold tracking-tighter text-white">
+                                    <div className="text-6xl md:text-7xl font-extrabold tracking-tight text-zinc-900">
                                         {score}
                                     </div>
-                                    <span className="text-sm font-mono text-zinc-500 font-bold ml-1">/100</span>
+                                    <span className="text-sm font-bold text-zinc-400 ml-1">/100</span>
                                 </div>
-                                <span className="inline-block px-3 py-1 rounded-md text-xs font-bold bg-zinc-800 text-[#00CC6A] border border-zinc-700">
+                                <span className="inline-block px-3 py-1 rounded-lg text-xs font-semibold bg-zinc-100 text-[#00CC6A] border border-zinc-200">
                                     {result.nivel_maturidade}
                                 </span>
                             </div>
 
                             {/* Radar Chart */}
                             <div className="h-56 w-full pt-4">
-                                <h4 className="text-center text-xs font-mono font-bold text-zinc-400 mb-2 uppercase">Equilíbrio por Dimensão</h4>
+                                <h4 className="text-center text-xs font-semibold text-zinc-500 mb-2 uppercase">Equilíbrio por Dimensão</h4>
                                 <ResponsiveContainer width="100%" height="100%">
                                     <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
-                                        <PolarGrid stroke="#3f3f46" />
-                                        <PolarAngleAxis dataKey="subject" stroke="#a1a1aa" tick={{ fill: '#a1a1aa', fontSize: 11 }} />
-                                        <Radar name="Pontuação" dataKey="A" stroke="#00CC6A" fill="#00CC6A" fillOpacity={0.4} />
+                                        <PolarGrid stroke="#e4e4e7" />
+                                        <PolarAngleAxis dataKey="subject" stroke="#71717a" tick={{ fill: '#71717a', fontSize: 11, fontWeight: 500 }} />
+                                        <Radar name="Pontuação" dataKey="A" stroke="#00CC6A" fill="#00CC6A" fillOpacity={0.3} />
                                     </RadarChart>
                                 </ResponsiveContainer>
                             </div>
                         </div>
 
                         {/* Card 2: Financial Projection & Leakage (Right 7 Cols) */}
-                        <div className="lg:col-span-7 bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-8">
+                        <div className="lg:col-span-7 bg-white border border-zinc-200 rounded-xl p-6 sm:p-8 flex flex-col justify-between space-y-8 shadow-sm">
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2">
-                                    <AlertTriangle size={18} className="text-red-400" />
-                                    <span className="text-xs font-mono font-bold text-red-400 uppercase tracking-wider">
-                                        VAZAMENTO ANUAL ESTIMADO
+                                    <AlertTriangle size={18} className="text-red-500" />
+                                    <span className="text-xs font-semibold text-red-500 uppercase tracking-wider">
+                                        Vazamento Anual Estimado
                                     </span>
                                 </div>
 
-                                <div className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                                    {leakageEstimate.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} <span className="text-xs text-zinc-500 font-normal font-mono">/ano em margem perdida</span>
+                                <div className="text-2xl sm:text-3xl font-bold text-zinc-900 tracking-tight">
+                                    {leakageEstimate.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} <span className="text-xs text-zinc-400 font-normal">/ano em margem perdida</span>
                                 </div>
 
-                                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed border-l-2 border-[#00CC6A] pl-4">
+                                <p className="text-sm text-zinc-600 leading-relaxed border-l-2 border-[#00CC6A] pl-4">
                                     {result.detalhes_resultado?.description || "Incapacidade de qualificar leads em tempo real e falta de automação no CRM geram desperdício contínuo de orçamento publicitário e tempo da equipe."}
                                 </p>
                             </div>
 
                             {/* Bar Chart Projeção de Recuperação */}
                             <div className="space-y-2">
-                                <h4 className="text-xs font-mono font-bold text-zinc-400 uppercase">Impacto da Correção em Milhares (R$ k)</h4>
+                                <h4 className="text-xs font-semibold text-zinc-500 uppercase">Impacto da Correção em Milhares (R$ k)</h4>
                                 <div className="h-36 w-full">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <BarChart data={projectionData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                            <XAxis type="number" stroke="#71717a" tick={{ fill: '#a1a1aa', fontSize: 11 }} />
-                                            <YAxis type="category" dataKey="name" stroke="#71717a" tick={{ fill: '#ffffff', fontSize: 11 }} width={120} />
-                                            <Tooltip contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px', color: '#fff' }} />
+                                            <XAxis type="number" stroke="#a1a1aa" tick={{ fill: '#71717a', fontSize: 11 }} />
+                                            <YAxis type="category" dataKey="name" stroke="#a1a1aa" tick={{ fill: '#27272a', fontSize: 11, fontWeight: 500 }} width={120} />
+                                            <Tooltip contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e4e4e7', borderRadius: '8px', color: '#18181b', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
                                             <Bar dataKey="valor" fill="#00CC6A" radius={[0, 6, 6, 0]} />
                                         </BarChart>
                                     </ResponsiveContainer>
@@ -224,18 +226,18 @@ export default function PublicDiagnosticResult() {
                             </div>
 
                             {/* Action CTA */}
-                            <div className="pt-4 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                                <div className="space-y-0.5">
-                                    <span className="text-xs font-bold text-white block">Deseja estancar essa perda?</span>
-                                    <span className="text-[11px] text-zinc-400 block font-normal">Agende uma auditoria técnica de 30 minutos com nossos especialistas.</span>
+                            <div className="pt-4 border-t border-zinc-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div className="space-y-0.5 text-center sm:text-left">
+                                    <span className="text-sm font-bold text-zinc-900 block">Deseja estancar essa perda?</span>
+                                    <span className="text-xs text-zinc-500 block font-normal">Agende uma auditoria técnica de 30 minutos com nossos especialistas.</span>
                                 </div>
 
                                 <Button
                                     onClick={() => window.open(`https://api.whatsapp.com/send?phone=5511999999999&text=Olá, vi o relatório de diagnósticos da ${result.empresa} com score ${score}. Gostaria de agendar o plano de correção.`, '_blank')}
-                                    className="w-full sm:w-auto h-10 px-5 bg-white hover:bg-zinc-100 text-zinc-950 font-bold text-xs rounded-lg gap-2 shrink-0 border border-white"
+                                    className="w-full sm:w-auto h-11 px-6 bg-[#00CC6A] hover:bg-[#00b35e] text-black font-semibold text-sm rounded-lg gap-2 shrink-0 transition-colors"
                                 >
                                     <span>Agendar Diagnóstico</span>
-                                    <Rocket size={14} className="text-zinc-950" />
+                                    <Rocket size={16} />
                                 </Button>
                             </div>
 
@@ -244,32 +246,32 @@ export default function PublicDiagnosticResult() {
 
                     {/* Lower Grid: Checklist & Action Items */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-                        <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 space-y-3">
+                        <div className="bg-white border border-zinc-200 rounded-xl p-6 space-y-3 shadow-sm">
                             <div className="flex items-center gap-2">
-                                <CheckCircle2 size={16} className="text-[#00CC6A]" />
-                                <h4 className="text-xs font-bold text-white uppercase font-mono">1. Diagnóstico de Canais</h4>
+                                <CheckCircle2 size={18} className="text-[#00CC6A]" />
+                                <h4 className="text-sm font-bold text-zinc-900">1. Diagnóstico de Canais</h4>
                             </div>
-                            <p className="text-xs text-zinc-400 leading-relaxed">
+                            <p className="text-xs text-zinc-600 leading-relaxed">
                                 Diversificar a matriz de risco para não depender 100% de indicação ou tráfego pago instável.
                             </p>
                         </div>
 
-                        <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 space-y-3">
+                        <div className="bg-white border border-zinc-200 rounded-xl p-6 space-y-3 shadow-sm">
                             <div className="flex items-center gap-2">
-                                <BarChart2 size={16} className="text-[#00CC6A]" />
-                                <h4 className="text-xs font-bold text-white uppercase font-mono">2. Automação no CRM</h4>
+                                <BarChart2 size={18} className="text-[#00CC6A]" />
+                                <h4 className="text-sm font-bold text-zinc-900">2. Automação no CRM</h4>
                             </div>
-                            <p className="text-xs text-zinc-400 leading-relaxed">
+                            <p className="text-xs text-zinc-600 leading-relaxed">
                                 Implementar SLA de primeiro contato em até 5 minutos via WhatsApp com qualificação por IA.
                             </p>
                         </div>
 
-                        <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 space-y-3">
+                        <div className="bg-white border border-zinc-200 rounded-xl p-6 space-y-3 shadow-sm">
                             <div className="flex items-center gap-2">
-                                <ShieldCheck size={16} className="text-[#00CC6A]" />
-                                <h4 className="text-xs font-bold text-white uppercase font-mono">3. CAC Teto & Break-even</h4>
+                                <ShieldCheck size={18} className="text-[#00CC6A]" />
+                                <h4 className="text-sm font-bold text-zinc-900">3. CAC Teto & Break-even</h4>
                             </div>
-                            <p className="text-xs text-zinc-400 leading-relaxed">
+                            <p className="text-xs text-zinc-600 leading-relaxed">
                                 Delimitar o custo limite de aquisição por cohort para garantir margem líquida positiva.
                             </p>
                         </div>
