@@ -50,7 +50,7 @@ const CasesSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-black text-zinc-900 tracking-tighter text-center leading-[1.1] text-balance"
+            className="text-2xl md:text-3xl font-bold text-zinc-900 tracking-tight text-center leading-[1.1] text-balance"
           >
             Resultados Consolidados<span className="text-zinc-300">.</span>
           </motion.h2>
@@ -153,7 +153,7 @@ const CasesSection = () => {
           <Link
             to="/cases"
             onClick={scrollToTop}
-            className="group relative px-14 py-6 bg-zinc-900 text-white hover:bg-black font-black uppercase tracking-[0.4em] text-tiny overflow-hidden transition-all duration-500 hover:-translate-y-1 shadow-sm shadow-zinc-200"
+            className="group relative px-14 py-6 bg-zinc-900 text-white hover:bg-black font-bold uppercase tracking-[0.4em] text-tiny overflow-hidden transition-all duration-500 hover:-translate-y-1 shadow-sm shadow-zinc-200"
           >
             <span className="relative z-10 flex items-center gap-3">
               Explorar Portfolio

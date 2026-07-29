@@ -32,7 +32,7 @@ const JourneySection = () => {
         <span className="text-label text-zinc-400 mb-6 block">
           Metodologia Proprietária
         </span>
-        <h2 className="text-4xl md:text-6xl font-black mb-8 text-zinc-900 tracking-tighter text-balance">
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-zinc-900 tracking-tight text-balance">
           Em 90 Dias, Sua Operação<br className="hidden md:block" /> Funciona Sem Você.
         </h2>
         <p className="text-xl md:text-2xl text-zinc-500 font-light tracking-tight max-w-2xl mx-auto leading-relaxed">

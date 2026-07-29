@@ -37,7 +37,7 @@ const ContactFormSection = () => {
             <h2
               className="text-white mb-6"
               style={{
-                fontSize: 'clamp(2rem, 3vw, 3rem)',
+                fontSize: 'clamp(1.5rem, 2.5vw, 1.875rem)',
                 fontWeight: 700,
                 letterSpacing: '-0.025em',
                 lineHeight: 1.1,

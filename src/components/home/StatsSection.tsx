@@ -55,7 +55,7 @@ const StatsSection = () => {
                 <div className="inline-flex h-16 w-16 items-center justify-center bg-[#00CC6A]/10 text-revgreen mb-6 group-hover:scale-110 transition-transform duration-300 shimmer-effect">
                   <IconComponent className="h-8 w-8" />
                 </div>
-                <p className="text-5xl md:text-6xl font-black text-[#00CC6A] mb-3">
+                <p className="text-2xl md:text-3xl font-bold font-sans text-[#00CC6A] mb-3">
                   <StatsCounter end={stat.value} suffix={stat.suffix} />
                 </p>
                 <p className="text-xl font-semibold mb-3 text-zinc-800">{stat.label}</p>

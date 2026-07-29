@@ -81,14 +81,14 @@ const Servicos = () => {
             <span className="font-bold text-revgreen bg-revgreen/10 px-3 py-1 text-xxs border border-revgreen/20 uppercase tracking-[0.2em] mb-6 inline-block">
               Ecossistema RevOps
             </span>
-            <h1 className="text-5xl md:text-7xl font-black text-black mb-8 tracking-tighter text-balance leading-[1.05]">
+            <h1 className="text-2xl md:text-3xl font-bold text-black mb-8 tracking-tight text-balance leading-[1.05]">
               O Mecanismo<span className="text-revgreen">.</span>
             </h1>
             <p className="text-xl md:text-2xl text-zinc-500 font-medium leading-relaxed max-w-3xl mx-auto tracking-tight">
               Nós não prestamos "serviços". Nós alugamos nossa infraestrutura de IA e CRM para o seu B2B.
             </p>
             <div className="mt-12 flex justify-center gap-4">
-                <Button asChild className="bg-revgreen text-black hover:bg-black hover:text-white h-16 px-12 rounded-sm text-sm font-black uppercase tracking-widest shadow-sm transition-all">
+                <Button asChild className="bg-revgreen text-black hover:bg-black hover:text-white h-16 px-12 rounded-sm text-sm font-bold uppercase shadow-sm transition-all">
                     <Link to="/booking">Auditar Minha Operação</Link>
                 </Button>
             </div>
@@ -102,10 +102,10 @@ const Servicos = () => {
           {/* Section Context */}
           <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8 border-b border-zinc-200 pb-12">
             <div className="max-w-2xl">
-              <span className="font-mono text-xs text-zinc-400 uppercase tracking-[0.2em] mb-4 block">
+              <span className="font-sans text-xs text-zinc-400 uppercase tracking-[0.2em] mb-4 block">
                 // The Capabilities Matrix
               </span>
-              <h2 className="text-4xl md:text-6xl font-black text-zinc-900 tracking-tighter text-balance leading-tight">
+              <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 tracking-tight text-balance leading-tight">
                 Sistemas de Crescimento. <br />
                 <span className="text-zinc-300 font-light italic">Peça por peça.</span>
               </h2>
@@ -124,7 +124,7 @@ const Servicos = () => {
               >
                 {/* Header Card */}
                 <div className="flex justify-between items-start mb-12">
-                  <span className="font-mono text-5xl md:text-6xl font-black text-zinc-50 group-hover:text-zinc-100 transition-colors duration-500 tracking-tighter">
+                  <span className="font-sans text-2xl md:text-3xl font-bold text-zinc-50 group-hover:text-zinc-100 transition-colors duration-500 tracking-tight">
                     {item.id}
                   </span>
                   <div className="p-5 bg-zinc-900 rounded-[1.25rem] shadow-sm shadow-zinc-200 group-hover:bg-black transition-all duration-500 group-hover:scale-110">
@@ -146,7 +146,7 @@ const Servicos = () => {
                 <div className="pt-8 border-t border-zinc-50">
                   <div className="flex flex-wrap gap-2 mb-10">
                     {item.tech.map((tech) => (
-                      <span key={tech} className="text-2xs font-bold text-zinc-400 uppercase tracking-widest bg-zinc-50 border border-zinc-100 px-2.5 py-1 rounded-full">
+                      <span key={tech} className="text-2xs font-bold text-zinc-400 uppercase bg-zinc-50 border border-zinc-100 px-2.5 py-1 rounded-full">
                         {tech}
                       </span>
                     ))}
@@ -154,7 +154,7 @@ const Servicos = () => {
 
                   <Link
                     to={`/servicos/${item.slug}`}
-                    className="inline-flex items-center text-xxs font-black text-zinc-900 uppercase tracking-[0.2em] group-hover:text-black transition-all gap-3 group-hover:gap-5"
+                    className="inline-flex items-center text-xxs font-bold text-zinc-900 uppercase tracking-[0.2em] group-hover:text-black transition-all gap-3 group-hover:gap-5"
                   >
                     EXPLORAR <ArrowUpRight className="w-4 h-4" />
                   </Link>
@@ -172,13 +172,13 @@ const Servicos = () => {
       <Section variant="light" className="py-32 bg-zinc-50 border-t border-zinc-200">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-black text-black mb-8 tracking-tighter uppercase">
+            <h2 className="text-2xl md:text-3xl font-bold text-black mb-8 tracking-tight uppercase">
               Está pronto para a Máquina?
             </h2>
             <p className="text-zinc-500 mb-12 text-lg font-bold max-w-xl mx-auto">
               Vagas de implementação restritas. Vamos auditar suas finanças e plugar a Automação se houver fit com a RevHackers.
             </p>
-            <Button asChild className="bg-black text-white hover:bg-revgreen hover:text-black border-none rounded-sm px-10 py-8 text-sm uppercase tracking-[0.2em] font-black transition-all transform hover:-translate-y-1">
+            <Button asChild className="bg-black text-white hover:bg-revgreen hover:text-black border-none rounded-sm px-10 py-8 text-sm uppercase tracking-[0.2em] font-bold transition-all transform hover:-translate-y-1">
               <Link to="/booking">
                 Auditar Minha Operação
               </Link>

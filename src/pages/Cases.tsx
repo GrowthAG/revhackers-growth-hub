@@ -92,8 +92,8 @@ const Cases = () => {
             </div>
           ) : filteredCases.length === 0 ? (
             <div className="text-center py-20 border border-dashed border-zinc-200 bg-zinc-50/30">
-              <h3 className="text-xl font-black uppercase tracking-widest text-black">Nenhum case encontrado</h3>
-              <Button variant="link" className="text-black font-bold uppercase tracking-widest text-xxs mt-4" onClick={() => { setSearchQuery(''); setActiveCategory('Todos') }}>
+              <h3 className="text-xl font-bold uppercase text-black">Nenhum case encontrado</h3>
+              <Button variant="link" className="text-black font-bold uppercase text-xxs mt-4" onClick={() => { setSearchQuery(''); setActiveCategory('Todos') }}>
                 Limpar filtros
               </Button>
             </div>
@@ -118,7 +118,7 @@ const Cases = () => {
                     </div>
 
                     <div className="p-10 md:p-12 flex-1 flex flex-col bg-white">
-                      <span className="text-2xs font-black uppercase tracking-[0.2em] text-zinc-400 mb-6 font-mono-tech bg-zinc-50 w-fit px-2 py-1 rounded-full border border-zinc-100">
+                      <span className="text-2xs font-bold uppercase tracking-[0.2em] text-zinc-400 mb-6 bg-zinc-50 w-fit px-2 py-1 rounded-full border border-zinc-100">
                         {study.case_category}
                       </span>
                       <h3 className="text-2xl font-bold text-black mb-4 group-hover:text-zinc-500 transition-colors leading-tight">
@@ -148,7 +148,7 @@ const Cases = () => {
         <div className="container-custom">
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 items-center">
             <div className="flex-1">
-              <h2 className="text-3xl font-black mb-6 text-black tracking-tighter uppercase relative">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black tracking-tight uppercase relative">
                 <div className="w-2 h-2 bg-revgreen absolute -left-4 top-4" />
                 Quer plugar esta Engenharia na sua operação?
               </h2>

@@ -71,7 +71,7 @@ const BlogSection = () => {
       <div className="container-custom">
         <div className="flex flex-col md:flex-row justify-between items-start mb-16">
           <div className="max-w-lg mb-8 md:mb-0">
-            <h2 className="text-3xl md:text-4xl font-black mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">
               Blog RevHackers
             </h2>
             <p className="text-lg text-zinc-600">
@@ -120,7 +120,7 @@ const BlogSection = () => {
                         className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500"
                       />
                       <div className="absolute top-3 left-3">
-                        <span className="text-xxs uppercase tracking-widest bg-white/90 backdrop-blur-sm px-3 py-1 text-black font-bold border border-black/10 rounded-sm">
+                        <span className="text-xxs uppercase bg-white/90 backdrop-blur-sm px-3 py-1 text-black font-bold border border-black/10 rounded-sm">
                           {article.category}
                         </span>
                       </div>

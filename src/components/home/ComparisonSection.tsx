@@ -85,7 +85,7 @@ const ComparisonSection = () => {
           <span className="font-mono text-xs text-zinc-400 uppercase tracking-[0.2em] mb-6 block">
             Por que RevHackers
           </span>
-          <h2 className="text-4xl md:text-6xl font-black text-zinc-900 tracking-tighter leading-[1.05] mb-6 text-balance">
+          <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 tracking-tight leading-[1.05] mb-6 text-balance">
             Por Que Não Contratar<br className="hidden md:block" /> Internamente?
           </h2>
           <p className="text-xl text-zinc-500 font-light leading-relaxed max-w-2xl mx-auto">
@@ -109,11 +109,11 @@ const ComparisonSection = () => {
               <span className="text-revgreen/60 text-[10px] font-mono tracking-widest uppercase">Consultoria RevOps</span>
             </div>
             <div className="col-span-1 bg-zinc-50 border-x border-t border-zinc-200 px-6 py-5 text-center">
-              <span className="text-xs font-black uppercase tracking-[0.2em] text-zinc-700 block">Time Interno</span>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-700 block">Time Interno</span>
               <span className="text-zinc-400 text-xxs font-mono">RevOps Manager + Ops</span>
             </div>
             <div className="col-span-1 bg-zinc-50 border-t border-r border-zinc-200 px-6 py-5 text-center">
-              <span className="text-xs font-black uppercase tracking-[0.2em] text-zinc-700 block">Agência Digital</span>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-700 block">Agência Digital</span>
               <span className="text-zinc-400 text-xxs font-mono">Marketing / Growth</span>
             </div>
           </div>
@@ -159,7 +159,7 @@ const ComparisonSection = () => {
           <p className="text-sm text-zinc-500 mb-6 font-medium max-w-lg mx-auto">
             Veja quanto sua operação está perdendo agora — antes de contratar qualquer pessoa.
           </p>
-          <Button asChild size="lg" className="bg-zinc-900 text-white hover:bg-revgreen hover:text-black font-black uppercase tracking-[0.12em] text-xs h-14 px-10 rounded-none transition-all">
+          <Button asChild size="lg" className="bg-zinc-900 text-white hover:bg-revgreen hover:text-black font-bold uppercase tracking-[0.12em] text-xs h-14 px-10 rounded-none transition-all">
             <Link to={buildBookingUrl('homepage', 'comparison_cta')}>
               Auditar Minha Operação
             </Link>

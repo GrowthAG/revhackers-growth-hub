@@ -44,10 +44,10 @@ const Comunidade = () => {
       <Section variant="dark" className="py-24 bg-black border-b border-zinc-900">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto mb-16">
-            <span className="font-mono text-xs text-zinc-500 uppercase tracking-[0.2em] mb-4 block">
+            <span className="font-sans text-xs text-zinc-500 uppercase tracking-[0.2em] mb-4 block">
               // Por que participar
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tighter">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
               Uma rede que <span className="text-revgreen">acelera</span> resultados.
             </h2>
           </div>
@@ -88,10 +88,10 @@ const Comunidade = () => {
               {/* Right Column: Content */}
               <div className="space-y-10">
                 <div>
-                  <span className="font-mono text-xs text-zinc-500 uppercase tracking-[0.2em] mb-4 block">
+                  <span className="font-sans text-xs text-zinc-500 uppercase tracking-[0.2em] mb-4 block">
                     // Benefícios Exclusivos
                   </span>
-                  <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tighter">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
                     Plataforma completa para sua carreira<span className="text-revgreen">.</span>
                   </h2>
                 </div>
@@ -125,7 +125,7 @@ const Comunidade = () => {
       <Section variant="dark" className="py-24 bg-black border-t border-zinc-900">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white tracking-tighter">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-white tracking-tight">
               Faça parte da elite<span className="text-revgreen">.</span>
             </h2>
             <p className="text-xl text-zinc-500 mb-12 font-light">
