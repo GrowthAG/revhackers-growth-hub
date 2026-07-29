@@ -24,14 +24,14 @@ const HeroSection = () => {
       ref={ref}
       className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black"
     >
-      <div className="relative z-10 w-full max-w-3xl mx-auto px-6 flex flex-col items-start text-left">
+      <div className="relative z-10 w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
 
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="font-sans text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-left text-balance"
+          className="font-sans text-[2rem] sm:text-[2.5rem] md:text-[3rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center text-balance"
         >
           Montamos a sua estrutura de{' '}
           <span className="text-[#00CC6A]">
@@ -44,7 +44,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
-          className="text-zinc-400 mb-4 text-base md:text-lg font-normal leading-relaxed max-w-xl text-left"
+          className="text-zinc-400 mb-4 text-base md:text-lg font-normal leading-relaxed max-w-xl mx-auto text-center"
         >
           Engenharia de receita B2B que integra CRM, automações e inteligência artificial para escalar operações comerciais sem aumentar headcount.
         </motion.p>
@@ -61,7 +61,7 @@ const HeroSection = () => {
           <img
             src="/brand/claude-partner-badge.png"
             alt="Claude Partner Network"
-            className="h-5 sm:h-6 opacity-50 hover:opacity-80 transition-opacity invert"
+            className="h-5 sm:h-6 opacity-50 hover:opacity-80 transition-opacity brightness-0 invert"
           />
           <div className="w-px h-4 bg-zinc-700" />
           {/* Google for Startups — texto estilizado com ícone Google */}
