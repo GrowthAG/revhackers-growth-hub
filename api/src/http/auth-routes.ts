@@ -103,6 +103,21 @@ export function createAuthRoutes(deps: AuthRouteDependencies) {
           [email, token],
         );
 
+        // Hash e salva nova senha
+        const encoder = new TextEncoder();
+        const data = encoder.encode(newPassword);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+        await ensureUserPasswordsTable(pool);
+        await pool.query(
+          `INSERT INTO app.user_passwords (email, password_hash)
+           VALUES ($1, $2)
+           ON CONFLICT (email) DO UPDATE SET password_hash = $2`,
+          [email, hashHex],
+        );
+
         return json(200, { message: 'Senha alterada com sucesso.' });
       } catch (err) {
         console.error('[auth-routes] verify-reset error:', err);
@@ -122,6 +137,23 @@ export function createAuthRoutes(deps: AuthRouteDependencies) {
 
         // Conta autorizada máster
         if (email === 'giulliano@revhackers.com.br') {
+          if (!body.password) {
+            return json(401, { error: 'E-mail ou senha inválidos.' });
+          }
+
+          const encoder = new TextEncoder();
+          const data = encoder.encode(body.password);
+          const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+          const hashArray = Array.from(new Uint8Array(hashBuffer));
+          const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+          const defaultHash = 'dd776b8961926c2e8d4c912a9eff8affef7a6d42c03ec252be5f898dd23b5f6c';
+          const expectedHash = process.env.MASTER_PASSWORD_HASH || defaultHash;
+
+          if (hashHex !== expectedHash) {
+            return json(401, { error: 'E-mail ou senha inválidos.' });
+          }
+
           return json(200, {
             user: {
               id: 'master-super-admin-id',
@@ -147,10 +179,7 @@ export function createAuthRoutes(deps: AuthRouteDependencies) {
           return json(401, { error: 'E-mail ou senha inválidos.' });
         }
 
-        return json(200, {
-          user: { id: userResult.rows[0]!.id, email, role: 'user' },
-          token: generateSecureToken(),
-        });
+        return json(401, { error: 'Use Google Sign-In para autenticar.' });
       } catch (err) {
         console.error('[auth-routes] login error:', err);
         return json(500, { error: 'Erro interno.' });
@@ -190,6 +219,19 @@ async function ensureResetTokensTable(pool: QueryablePool): Promise<void> {
     )
   `);
   tableEnsured = true;
+}
+
+let userPasswordsTableEnsured = false;
+async function ensureUserPasswordsTable(pool: QueryablePool): Promise<void> {
+  if (userPasswordsTableEnsured) return;
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS app.user_passwords (
+      email TEXT PRIMARY KEY,
+      password_hash TEXT NOT NULL,
+      updated_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+  userPasswordsTableEnsured = true;
 }
 
 async function sendBrandedResetEmail(email: string, resetUrl: string): Promise<void> {

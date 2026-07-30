@@ -44,7 +44,7 @@ const DiagnosticoGateway = () => {
 
   return (
     <PageLayout>
-      <SEO title="Central de Diagnósticos GrowthHub" description="Descubra onde estão os vazamentos na sua operação B2B com diagnósticos gratuitos de Growth, CRM, Founder e Site." canonical="https://revhackers.com.br/diagnostico" />
+      <SEO title="Central de Diagnósticos" description="Descubra onde estão os vazamentos na sua operação B2B com diagnósticos gratuitos de Growth, CRM, Founder e Site." canonical="https://revhackers.com.br/diagnostico" />
       
       <section className="bg-black py-24 md:py-32 relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-6 relative z-10 space-y-5 text-center">
