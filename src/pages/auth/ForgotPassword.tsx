@@ -23,27 +23,39 @@ const ForgotPassword = () => {
         }
     }, [countdown]);
 
+    const sendResetEmail = async (emailToSend: string) => {
+        const apiUrl = import.meta.env.VITE_GCP_API_URL?.replace(/\/$/, '');
+        if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+            try {
+                const res = await fetch(`${apiUrl}/v1/auth/reset-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: emailToSend }),
+                });
+
+                if (res.ok) {
+                    return { error: null };
+                }
+                const errData = await res.json().catch(() => ({}));
+                return { error: new Error(errData.message || 'Erro ao enviar e-mail via GCP Cloud Functions') };
+            } catch (err: any) {
+                console.warn('Erro ao conectar com GCP Cloud Functions no resetPassword, tentando auth local...', err);
+            }
+        }
+
+        return await resetPassword(emailToSend);
+    };
+
     const handleResend = async () => {
         if (countdown > 0) return;
 
         setLoading(true);
         setError(null);
 
-        const result = await resetPassword(email);
+        const result = await sendResetEmail(email);
 
         if (result.error) {
-            let userMessage = result.error.message;
-
-            if (userMessage.includes('Invalid API key') || userMessage.includes('apiKey')) {
-                userMessage = 'O serviço de e-mail de recuperação está em manutenção. Entre em contato com o suporte ou utilize seu login via Google.';
-            } else if (userMessage.includes('For security purposes, you can only request this after')) {
-                const seconds = userMessage.match(/\d+/)?.[0] || 'alguns';
-                userMessage = `Por segurança, aguarde ${seconds} segundos antes de tentar novamente.`;
-            } else if (userMessage.includes('Too many requests')) {
-                userMessage = 'Muitas tentativas. Aguarde um momento.';
-            }
-
-            setError(userMessage || 'Erro ao reenviar e-mail.');
+            setError(result.error.message || 'Erro ao reenviar e-mail de recuperação.');
         } else {
             setCountdown(60);
         }
@@ -55,28 +67,16 @@ const ForgotPassword = () => {
         setError(null);
         setLoading(true);
 
-        // Basic email validation
         if (!email || !email.includes('@')) {
             setError("Por favor, insira um e-mail válido.");
             setLoading(false);
             return;
         }
 
-        const result = await resetPassword(email);
+        const result = await sendResetEmail(email);
 
         if (result.error) {
-            let userMessage = result.error.message;
-
-            if (userMessage.includes('Invalid API key') || userMessage.includes('apiKey')) {
-                userMessage = 'O serviço de e-mail de recuperação está em manutenção. Entre em contato com o suporte ou utilize seu login via Google.';
-            } else if (userMessage.includes('For security purposes, you can only request this after')) {
-                const seconds = userMessage.match(/\d+/)?.[0] || 'alguns';
-                userMessage = `Por segurança, aguarde ${seconds} segundos antes de tentar novamente.`;
-            } else if (userMessage.includes('Too many requests')) {
-                userMessage = 'Muitas tentativas. Aguarde um momento.';
-            }
-
-            setError(userMessage || 'Erro ao enviar e-mail. Tente novamente.');
+            setError(result.error.message || 'Erro ao enviar e-mail. Tente novamente.');
         } else {
             setSuccess(true);
             setCountdown(60);
