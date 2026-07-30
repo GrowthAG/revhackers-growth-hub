@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Plus, MessageSquare, Trash2, Loader2 } from 'lucide-react';
-import { useAI } from '@/context/AIContext';
+import { useAI } from '@/contexts/AIContext';
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { useAI } from '@/context/AIContext';
+import { useAI } from '@/contexts/AIContext';
 import type { Message, Session } from '../types';
 
 export interface UseChatSessionReturn {

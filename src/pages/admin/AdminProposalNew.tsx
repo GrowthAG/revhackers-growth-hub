@@ -6,7 +6,7 @@ import ProposalForm from "@/components/admin/ProposalForm";
 import { getReiProjectById } from "@/api/reiProjects";
 import { getLatestReiResponse } from "@/api/reiResponses";
 import AdminPageLayout from "@/components/layout/AdminPageLayout";
-import { AIProvider } from "@/context/AIContext";
+import { AIProvider } from "@/contexts/AIContext";
 import { useOpportunityIntelligence, type OpportunityContext } from "@/hooks/useOpportunityIntelligence";
 
 const AdminProposalNew = () => {

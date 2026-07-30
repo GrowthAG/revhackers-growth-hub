@@ -10,7 +10,7 @@ import { toast } from '@/components/ui/use-toast';
 import { Loader2, Wand2, ArrowLeft, RefreshCw, Save, ExternalLink, Upload, FileText, Video, X, ShieldAlert, ListTree, CheckCircle2, AlertCircle, Code, ChevronDown, Presentation } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { uploadImageToSupabase } from '@/utils/uploadImageToSupabase';
-import { useAI } from '@/context/AIContext';
+import { useAI } from '@/contexts/AIContext';
 import { Card, CardContent } from "@/components/ui/card";
 import {
     Tabs,

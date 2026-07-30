@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Session, User } from '@supabase/supabase-js';
@@ -449,25 +449,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
     };
 
+    const contextValue = useMemo(() => ({
+        session,
+        user,
+        userProfile,
+        userRole,
+        isLoading,
+        isProfileLoading,
+        isRecoveringPassword,
+        setIsRecoveringPassword,
+        signIn,
+        signInWithPassword,
+        signInWithGoogle,
+        isGoogleAuthEnabled,
+        signUp,
+        resetPassword,
+        updatePassword,
+        signOut
+    }), [session, user, userProfile, userRole, isLoading, isProfileLoading, isRecoveringPassword, isGoogleAuthEnabled]);
+
     return (
-        <AuthContext.Provider value={{
-            session,
-            user,
-            userProfile,
-            userRole,
-            isLoading,
-            isProfileLoading,
-            isRecoveringPassword,
-            setIsRecoveringPassword,
-            signIn,
-            signInWithPassword,
-            signInWithGoogle,
-            isGoogleAuthEnabled,
-            signUp,
-            resetPassword,
-            updatePassword,
-            signOut
-        }}>
+        <AuthContext.Provider value={contextValue}>
             {children}
         </AuthContext.Provider>
     );

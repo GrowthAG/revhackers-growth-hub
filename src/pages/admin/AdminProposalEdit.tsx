@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/layout/AdminLayout";
 import ProposalForm from "@/components/admin/ProposalForm";
 import { Loader2 } from "lucide-react";
-import { AIProvider } from "@/context/AIContext";
+import { AIProvider } from "@/contexts/AIContext";
 
 const AdminProposalEdit = () => {
     const { id } = useParams();

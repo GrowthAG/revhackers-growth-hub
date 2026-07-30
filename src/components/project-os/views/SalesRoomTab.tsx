@@ -3,7 +3,7 @@ import { ReiProject } from '@/api/reiProjects';
 import { Cpu, Presentation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProposalForm from '@/components/admin/ProposalForm';
-import { AIProvider } from '@/context/AIContext';
+import { AIProvider } from '@/contexts/AIContext';
 
 interface SalesRoomTabProps {
     project: ReiProject;

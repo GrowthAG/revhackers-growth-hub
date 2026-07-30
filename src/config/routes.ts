@@ -1,16 +1,18 @@
 /**
- * Dicionário Universal de Rotas da RevHackers Growth Hub.
- * Este arquivo foi mapeado ESTRITAMENTE a partir das rotas reais do App.tsx.
- * Objetivo: Evitar hardcoding de strings soltas, erros de digitação de URL (404)
- * e facilitar qualquer migração futura de rotas.
+ * Dicionário Universal de Rotas da RevHackers.
+ * Mapeado ESTRITAMENTE a partir das rotas reais do App.tsx.
+ * Última sincronização: 30/07/2026
  *
- * NOTA DE SEGURANÇA: Não adicione rotas "ideais" aqui se elas não existirem no App.tsx.
+ * NOTA: Não adicione rotas aqui se elas não existirem no App.tsx.
  */
 
 export const APP_ROUTES = {
   PUBLIC: {
     HOME: '/',
     PUBLIC_DEAL_ROOM: '/p/:slug',
+    PUBLIC_DEAL_ROOM_LEGACY: '/p/:slug/legacy',
+    PUBLIC_GROWTHMAP: '/public/growthmap/:share_token',
+    PUBLIC_KICKOFF: '/public/kickoff/:id',
     BLOG: '/blog',
     BLOG_POST: '/blog/:slug',
     DIAGNOSTICO: '/diagnostico',
@@ -28,8 +30,8 @@ export const APP_ROUTES = {
     MATERIAL_LANDING: '/materiais/:slug',
     COMUNIDADE: '/comunidade',
     BOOKING: '/booking',
-    AGENDA: '/agenda',
-    AGENDA_DIAGNOSTICO: '/agenda-diagnostico',
+    AGENDA: '/agenda', // redirects to /booking
+    AGENDA_DIAGNOSTICO: '/agenda-diagnostico', // redirects to /booking
     SUPABASE_DIAGNOSTIC: '/supabase-diagnostic',
     CLIENT_ONBOARDING: '/cadastro-cliente',
     ONBOARDING_SUCCESS: '/onboarding/success',
@@ -41,13 +43,15 @@ export const APP_ROUTES = {
     THANK_YOU: '/obrigado',
     PESQUISA_NPS: '/pesquisa-nps',
     OBRIGADO_NPS: '/obrigado-nps',
+    CERTIFICADO: '/legal/certificado/:hash',
+    APPROVE: '/approve/:token',
   },
   SPECIALIZED: {
-    AGENDA_GIULLIANO_SECURE: '/agenda/giulliano',
+    AGENDA_GIULLIANO_SECURE: '/agenda/giulliano', // redirects to /booking
     AGENDA_GIULLIANO: '/agenda-giulliano',
-    AGENDA_LUNA: '/agenda-luna',
-    AGENDA_LINKEDIN: '/agenda-linkedin',
-    AGENDA_KICKOFF: '/agenda-kickoff',
+    AGENDA_LUNA: '/agenda-luna', // redirects to /booking
+    AGENDA_LINKEDIN: '/agenda-linkedin', // redirects to /booking
+    AGENDA_KICKOFF: '/agenda-kickoff', // redirects to /booking
     CADASTRO_PARCEIRO: '/cadastro-parceiro',
   },
   SCORES: {
@@ -57,43 +61,49 @@ export const APP_ROUTES = {
     REVENUE_SCORE: '/score-revenue',
   },
   REI: {
-    HUB_REDIRECT: '/rei',
-    HUB: '/rei-hub',
+    HUB_REDIRECT: '/rei', // redirects to /admin/projects
+    HUB: '/rei-hub', // redirects to /admin/projects
     WIZARD: '/rei/wizard',
     RESULT: '/rei/resultado/:id',
     SUCCESS: '/rei/success',
     DEV: '/rei-dev',
     CONSULTING: '/rei-consulting',
     FOUNDER: '/rei-founder',
-    LEGACY_ONBOARDING: '/rei-onboarding',
-    LEGACY_DASHBOARD: '/rei-dashboard',
+    LEGACY_ONBOARDING: '/rei-onboarding', // redirects to /admin/projects
+    LEGACY_DASHBOARD: '/rei-dashboard', // redirects to /admin/projects
   },
   AUTH: {
     LOGIN: '/login',
-    SIGNUP: '/signup',
+    SIGNUP: '/signup', // redirects to /login
     FORGOT_PASSWORD: '/forgot-password',
     RESET_PASSWORD: '/reset-password',
     COMPLETE_PROFILE: '/complete-profile',
   },
   ADMIN: {
     ROOT_REDIRECT: '/admin',
-    DASHBOARD: '/admin/dashboard',
-    GLOBAL_DASHBOARD: '/dashboard', // App.tsx redirects /dashboard -> /admin
-    REI_PROJECTS: '/admin/rei',
+    DASHBOARD: '/admin/dashboard', // redirects to /admin
+    GLOBAL_DASHBOARD: '/dashboard', // GrowthMap page
+    PROJECTS: '/admin/projects',
+    PROJECT_DETAILS: '/admin/projects/:id/*',
+    REI_PROJECTS: '/admin/rei', // redirects to /admin/projects
     REI_PROJECT_NEW: '/admin/rei/novo',
     REI_PROJECT_EDIT: '/admin/rei/:id',
     ORCHESTRATED_ONBOARDING: '/admin/jornada/:id',
-    STRATEGIC_PLAN: '/admin/strategic-plan/:projectId',
-    RESULTS_REPORT: '/admin/resultados/:projectId',
+    STRATEGIC_PLAN: '/admin/planejamento/:reiProjectId',
     PROFILE: '/admin/profile',
+    SETTINGS: '/admin/settings', // redirects to /admin/profile
     USERS: '/admin/users',
-    SETTINGS: '/admin/settings',
     CLIENTS: '/admin/clients',
     CLIENT_NEW: '/admin/clients/novo',
     CLIENT_EDIT: '/admin/clients/edit/:id',
-    POSTS: '/admin/posts',
-    POST_NEW: '/admin/posts/new',
-    POST_EDIT: '/admin/posts/edit/:id',
+    FINANCE: '/admin/finance',
+    MENSAGENS: '/admin/mensagens',
+    INTELLIGENCE: '/admin/intelligence',
+    INTELLIGENCE_PROJECT: '/admin/intelligence/:projectId',
+    PITCH: '/admin/pitch/:id',
+    BLOG: '/admin/blog',
+    BLOG_NEW: '/admin/blog/novo',
+    POSTS_REDIRECT: '/admin/posts', // legacy, maps to /admin/blog
     MATERIALS: '/admin/materials',
     MATERIAL_NEW: '/admin/materials/new',
     MATERIAL_EDIT: '/admin/materials/edit/:id',
@@ -102,21 +112,26 @@ export const APP_ROUTES = {
     CASE_NEW: '/admin/cases/new',
     CASE_EDIT: '/admin/cases/edit/:id',
     SYNC: '/admin/sync',
-    ESTRATEGIA: '/admin/estrategia',
-    ESTRATEGIA_EDIT: '/admin/estrategia/:id',
     CRONOGRAMA: '/admin/cronograma',
     CRONOGRAMA_EDIT: '/admin/cronograma/:id',
-    PROJECT_DETAILS: '/admin/projects/:id',
     DIAGNOSTIC_VIEW: '/admin/diagnostico/:id',
-    STRATEGIC_PLAN_GENERATOR: '/admin/planejamento/:reiProjectId',
-    INTEGRATIONS: '/admin/integrations',
-    PROPOSALS: '/admin/proposals',
-    PROPOSAL_NEW: '/admin/proposals/new',
-    PROPOSAL_EDIT: '/admin/proposals/edit/:id',
+    COCKPIT: '/admin/cockpit',
+    REVENUE_COCKPIT: '/admin/revenue-cockpit',
+    COCKPIT_SHORTCUT: '/cockpit',
+    KNOWLEDGE_DOC_NEW: '/admin/knowledge/:libraryId/doc/new',
+    KNOWLEDGE_DOC: '/admin/knowledge/:libraryId/doc/:docId',
+    RECORDING: '/admin/recording/:id',
+    LIFECYCLE: '/admin/lifecycle',
+    LIFECYCLE_CONTACT: '/admin/lifecycle/:contactId',
+    JORNADA_REDIRECT: '/admin/jornada', // redirects to /admin/projects
   },
   CLIENT_HUB: {
     STRATEGIC_PLAN_PRESENTATION: '/plan/:token',
-    PLAN_SIGN: '/plan/:token/sign',
+    SUCCESS_PLAN: '/success/:token',
     HUB: '/hub/:id',
-  }
+  },
+  GROWTHMAP: {
+    ROOT: '/growthmap',
+    PROJECT: '/growthmap/:projectId',
+  },
 } as const;

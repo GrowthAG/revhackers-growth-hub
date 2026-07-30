@@ -14,7 +14,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import ProposalForm from '@/components/admin/ProposalForm';
-import { AIProvider } from '@/context/AIContext';
+import { AIProvider } from '@/contexts/AIContext';
 import { Stakeholder } from '@/types/pipeline';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
