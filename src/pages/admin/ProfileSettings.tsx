@@ -13,12 +13,63 @@ import AdminPageLayout from "@/components/layout/AdminPageLayout";
 import { uploadImageToSupabase } from "@/utils/uploadImageToSupabase";
 
 const ProfileSettings = () => {
-    const { user, signOut } = useAuth();
+    const { user, updatePassword } = useAuth();
     const navigate = useNavigate();
     const { toast } = useToast();
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [uploading, setUploading] = useState(false);
+
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [updatingPassword, setUpdatingPassword] = useState(false);
+
+    const handlePasswordChange = async () => {
+        if (!newPassword || newPassword.length < 6) {
+            toast({
+                title: "Senha inválida",
+                description: "A senha deve conter no mínimo 6 caracteres.",
+                variant: "destructive",
+            });
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            toast({
+                title: "Senhas divergentes",
+                description: "A confirmação de senha não confere.",
+                variant: "destructive",
+            });
+            return;
+        }
+
+        setUpdatingPassword(true);
+        try {
+            const result = await updatePassword(newPassword);
+            if (result.error) {
+                toast({
+                    title: "Erro ao atualizar senha",
+                    description: result.error.message || "Tente novamente.",
+                    variant: "destructive",
+                });
+            } else {
+                toast({
+                    title: "Senha alterada com sucesso!",
+                    description: "Sua nova senha já está valendo para os próximos acessos.",
+                });
+                setNewPassword("");
+                setConfirmPassword("");
+            }
+        } catch (err: any) {
+            toast({
+                title: "Erro de conexão",
+                description: err.message,
+                variant: "destructive",
+            });
+        } finally {
+            setUpdatingPassword(false);
+        }
+    };
 
     const [formData, setFormData] = useState({
         username: "",
@@ -319,15 +370,55 @@ const ProfileSettings = () => {
 
                                     {/* ROW 5 */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="bio" className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-400">Bio</Label>
+                                        <Label htmlFor="bio" className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Bio</Label>
                                         <Textarea
                                             id="bio"
                                             name="bio"
                                             value={formData.bio}
                                             onChange={handleChange}
-                                            className="min-h-[80px] bg-white shadow-sm/30 border-zinc-200 rounded-none focus-visible:ring-0 focus-visible:border-black text-xs font-medium transition-all py-3 placeholder:text-zinc-200 shadow-none resize-none"
-                                            placeholder="BREVE DESCRIÇÃO..."
+                                            className="min-h-[80px] bg-white shadow-xs border-zinc-200 rounded-lg focus-visible:ring-0 focus-visible:border-zinc-900 text-xs font-medium transition-all py-3 placeholder:text-zinc-400 shadow-none resize-none"
+                                            placeholder="Breve descrição profissional..."
                                         />
+                                    </div>
+
+                                    {/* SEÇÃO DE SEGURANÇA E ALTERAÇÃO DE SENHA */}
+                                    <div className="pt-6 border-t border-zinc-200/80 space-y-4">
+                                        <div>
+                                            <h3 className="text-sm font-bold text-zinc-900">Segurança da Conta</h3>
+                                            <p className="text-xs text-zinc-500">Atualize sua senha de acesso ao painel corporativo.</p>
+                                        </div>
+
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <div className="space-y-1.5">
+                                                <Label className="text-xs font-semibold text-zinc-700">Nova Senha</Label>
+                                                <Input
+                                                    type="password"
+                                                    placeholder="••••••••••••"
+                                                    value={newPassword}
+                                                    onChange={(e) => setNewPassword(e.target.value)}
+                                                    className="h-10 bg-white border-zinc-200 rounded-lg text-xs"
+                                                />
+                                            </div>
+                                            <div className="space-y-1.5">
+                                                <Label className="text-xs font-semibold text-zinc-700">Confirmar Nova Senha</Label>
+                                                <Input
+                                                    type="password"
+                                                    placeholder="••••••••••••"
+                                                    value={confirmPassword}
+                                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                                    className="h-10 bg-white border-zinc-200 rounded-lg text-xs"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <Button
+                                            type="button"
+                                            onClick={handlePasswordChange}
+                                            disabled={updatingPassword || !newPassword}
+                                            className="bg-zinc-900 text-white hover:bg-zinc-800 text-xs font-semibold h-9 px-4 rounded-lg transition-all"
+                                        >
+                                            {updatingPassword ? <Loader2 className="w-4 h-4 animate-spin text-white" /> : "Atualizar Senha"}
+                                        </Button>
                                     </div>
                                 </div>
                             </div>
