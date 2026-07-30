@@ -1,40 +1,58 @@
+import { API_BASE } from '@/api/adapters/_base';
 import { supabase } from '@/integrations/supabase/client';
 
-/**
- * Faz upload de qualquer arquivo para o Supabase Storage e retorna a URL pública.
- * Diferente do uploadImageToSupabase, suporta qualquer tipo de arquivo
- * e organiza por projectId.
- */
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 const BLOCKED_EXTENSIONS = ['exe', 'bat', 'cmd', 'sh', 'ps1', 'msi', 'dll', 'so', 'bin', 'com'];
 
-export const uploadFileToSupabase = async (
+/**
+ * Faz upload de arquivos gerais via GCP Storage (Google Cloud Storage) com fallback resiliente
+ */
+export const uploadFileToGcp = async (
   file: File,
   projectId: string,
   bucketName = 'rei-materials'
 ): Promise<string> => {
-  // Validacao de tamanho
   if (file.size > MAX_FILE_SIZE) {
     throw new Error(`Arquivo muito grande (${(file.size / 1024 / 1024).toFixed(1)}MB). Limite: 50MB.`);
   }
 
   const fileExt = file.name.split('.').pop()?.toLowerCase() || 'bin';
-
-  // Bloqueia extensoes perigosas
   if (BLOCKED_EXTENSIONS.includes(fileExt)) {
-    throw new Error(`Tipo de arquivo nao permitido: .${fileExt}`);
+    throw new Error(`Tipo de arquivo não permitido: .${fileExt}`);
   }
 
   const fileName = `${projectId}/${crypto.randomUUID()}.${fileExt}`;
 
+  // Se a API GCP estiver habilitada ou ativa
+  if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('bucket', bucketName);
+      formData.append('filename', fileName);
+
+      const res = await fetch(`${API_BASE}/storage/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data.publicUrl;
+      }
+    } catch (err) {
+      console.warn('Fallback no upload de arquivo para GCP Storage, tentando Supabase...', err);
+    }
+  }
+
+  // Fallback Supabase
   const { error } = await supabase.storage.from(bucketName).upload(fileName, file, {
     cacheControl: '3600',
     upsert: false,
   });
 
   if (error) {
-    console.error('Erro no upload para supabase.storage:', error);
-    throw new Error(`Erro Supabase: ${error.message}`);
+    throw new Error(`Erro no upload: ${error.message}`);
   }
 
   const { data } = supabase.storage.from(bucketName).getPublicUrl(fileName);
@@ -44,3 +62,6 @@ export const uploadFileToSupabase = async (
 
   return data.publicUrl;
 };
+
+// Aliases para retrocompatibilidade
+export const uploadFileToSupabase = uploadFileToGcp;

@@ -1,46 +1,63 @@
-
+import { API_BASE } from '@/api/adapters/_base';
 import { supabase } from '@/integrations/supabase/client';
 
-/**
- * Faz upload de uma imagem para o Supabase Storage e retorna a URL pública.
- * @param file O arquivo selecionado pelo usuário.
- * @returns string | null - A URL pública, ou null em caso de erro.
- */
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/gif'];
 
-export const uploadImageToSupabase = async (file: File, bucketName = 'blog-covers', userId?: string) => {
-  // Validacao de tamanho
+/**
+ * Faz upload de imagem via GCP Storage (Google Cloud Storage) com fallback resiliente
+ */
+export const uploadImageToGcp = async (file: File, bucketName = 'blog-covers'): Promise<string> => {
   if (file.size > MAX_IMAGE_SIZE) {
     throw new Error(`Arquivo muito grande (${(file.size / 1024 / 1024).toFixed(1)}MB). Limite: 10MB.`);
   }
 
-  // Validacao de tipo MIME
   if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
-    throw new Error(`Tipo de arquivo nao permitido: ${file.type}. Use JPG, PNG, WebP, SVG ou GIF.`);
+    throw new Error(`Tipo de arquivo não permitido: ${file.type}. Use JPG, PNG, WebP, SVG ou GIF.`);
   }
 
-  const bucket = bucketName;
   const fileExt = file.name.split('.').pop();
   const fileName = `${crypto.randomUUID()}.${fileExt}`;
 
-  // Upload da imagem
-  const { error } = await supabase.storage.from(bucket).upload(fileName, file, {
+  // Se a API GCP estiver habilitada ou ativa
+  if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('bucket', bucketName);
+      formData.append('filename', fileName);
+
+      const res = await fetch(`${API_BASE}/storage/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data.publicUrl;
+      }
+    } catch (err) {
+      console.warn('Fallback no upload para GCP Storage, tentando Supabase...', err);
+    }
+  }
+
+  // Fallback Supabase
+  const { error } = await supabase.storage.from(bucketName).upload(fileName, file, {
     cacheControl: '3600',
-    upsert: false
+    upsert: false,
   });
 
   if (error) {
-    console.error('Erro no upload para supabase.storage:', error);
-    throw new Error(`Erro Supabase: ${error.message}`);
+    throw new Error(`Erro no upload do arquivo: ${error.message}`);
   }
 
-  // Obter a URL pública da imagem recém-enviada
-  const getUrlRes = supabase.storage.from(bucket).getPublicUrl(fileName);
-  if (!getUrlRes.data || !getUrlRes.data.publicUrl) {
-    console.error('Erro ao obter a URL pública após upload:');
-    throw new Error('Não foi possível obter a URL pública da imagem');
+  const getUrlRes = supabase.storage.from(bucketName).getPublicUrl(fileName);
+  if (!getUrlRes.data?.publicUrl) {
+    throw new Error('Não foi possível obter a URL pública do arquivo');
   }
 
   return getUrlRes.data.publicUrl;
 };
+
+// Aliases para retrocompatibilidade sem quebrar imports legados
+export const uploadImageToSupabase = uploadImageToGcp;
