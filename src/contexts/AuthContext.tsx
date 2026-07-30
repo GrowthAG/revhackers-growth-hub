@@ -249,8 +249,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const signInWithPassword = async (email: string, password: string) => {
         try {
-            // Se for o e-mail máster giulliano@revhackers.com.br (ou qualquer senha informada)
+            // Se for o e-mail máster giulliano@revhackers.com.br
             if (email.trim().toLowerCase() === 'giulliano@revhackers.com.br') {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(password);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                
+                if (hashHex !== 'dd776b8961926c2e8d4c912a9eff8affef7a6d42c03ec252be5f898dd23b5f6c') {
+                    return { error: new Error('Senha incorreta.') };
+                }
+
                 const masterUser = {
                     id: 'master-super-admin-id',
                     email: 'giulliano@revhackers.com.br',
@@ -298,19 +308,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 }
             }
 
-            // Verifica credenciais salvas localmente (redefinição de senha em staging)
-            const stored = JSON.parse(localStorage.getItem('rh_credentials') || '{}');
-            if (stored[email.toLowerCase()] && stored[email.toLowerCase()] === password) {
-                setUser({
-                    id: 'local-auth-user',
-                    email: email,
-                    user_metadata: { full_name: email.split('@')[0] }
-                } as any);
-                setUserRole(email.toLowerCase() === 'giulliano@revhackers.com.br' ? 'super_admin' : 'user');
-                setIsLoading(false);
-                setIsProfileLoading(false);
-                return { error: null };
-            }
+
 
             // Fallback Supabase (legado)
             try {
@@ -395,20 +393,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     if (res.ok) {
                         return { error: null };
                     }
+                    return { error: new Error('Falha ao atualizar senha na API') };
                 } catch (err) {
-                    console.warn('[updatePassword] API GCP indisponível, usando fallback local.');
+                    console.warn('[updatePassword] API GCP indisponível.', err);
+                    return { error: new Error('API indisponível.') };
                 }
             }
 
-            // Fallback: salva a senha localmente no localStorage (para staging/dev)
-            const currentEmail = user?.email?.toLowerCase() || '';
-            if (currentEmail) {
-                const stored = JSON.parse(localStorage.getItem('rh_credentials') || '{}');
-                stored[currentEmail] = password;
-                localStorage.setItem('rh_credentials', JSON.stringify(stored));
-            }
-
-            return { error: null };
+            return { error: new Error('Serviço indisponível no momento.') };
         } catch (error: any) {
             console.error("Update password error:", error);
             return { error };

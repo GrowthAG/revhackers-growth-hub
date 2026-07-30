@@ -111,26 +111,23 @@ const ForgotPassword = () => {
 
             // Tenta salvar via API do GCP
             const apiUrl = import.meta.env.VITE_GCP_API_URL?.replace(/\/$/, '');
-            if (apiUrl) {
-                try {
-                    await fetch(`${apiUrl}/v1/auth/verify-reset`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            email: normalizedEmail,
-                            newPassword: newPassword,
-                            token: 'direct-reset',
-                        }),
-                    });
-                } catch (err) {
-                    // API indisponível, continua com fallback local
-                }
+            if (!apiUrl) {
+                throw new Error('Serviço indisponível no momento.');
             }
 
-            // Salva a credencial localmente para que o login funcione
-            const stored = JSON.parse(localStorage.getItem('rh_credentials') || '{}');
-            stored[normalizedEmail] = newPassword;
-            localStorage.setItem('rh_credentials', JSON.stringify(stored));
+            const res = await fetch(`${apiUrl}/v1/auth/verify-reset`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: normalizedEmail,
+                    newPassword: newPassword,
+                    token: 'direct-reset',
+                }),
+            });
+            
+            if (!res.ok) {
+                throw new Error('Falha ao redefinir a senha. Tente novamente mais tarde.');
+            }
 
             setResetSuccess(true);
             setTimeout(() => navigate('/login'), 3000);
