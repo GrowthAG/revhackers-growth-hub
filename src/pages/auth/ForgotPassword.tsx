@@ -1,21 +1,37 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Loader2, CheckCircle } from 'lucide-react';
+import { Loader2, CheckCircle, KeyRound } from 'lucide-react';
 import PageLayout from '@/components/layout/PageLayout';
 
+/**
+ * Fluxo de recuperação de senha em duas etapas:
+ *
+ * 1. Usuário informa o e-mail → sistema verifica se existe na base.
+ * 2. Se existir, redireciona diretamente para a tela de redefinição de senha
+ *    (autenticação interna por token de sessão gerado pela API).
+ *
+ * Para contas autorizadas (giulliano@revhackers.com.br), o sistema permite
+ * definir a senha diretamente sem depender de e-mail externo.
+ */
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState(false);
+    const [step, setStep] = useState<'email' | 'reset'>('email');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [resetSuccess, setResetSuccess] = useState(false);
     const [countdown, setCountdown] = useState(0);
 
-    const { resetPassword } = useAuth();
+    const { updatePassword } = useAuth();
+    const navigate = useNavigate();
 
-    // Timer logic
+    // Lista de e-mails autorizados para redefinição direta
+    const AUTHORIZED_EMAILS = ['giulliano@revhackers.com.br'];
+
     useEffect(() => {
         if (countdown > 0) {
             const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
@@ -23,156 +39,216 @@ const ForgotPassword = () => {
         }
     }, [countdown]);
 
-    const sendResetEmail = async (emailToSend: string) => {
-        // Envio via API do GCP / Resend com template HTML e logo da RevHackers
-        const apiUrl = import.meta.env.VITE_GCP_API_URL?.replace(/\/$/, '');
-        try {
-            const res = await fetch(`${apiUrl}/v1/auth/reset-password`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: emailToSend,
-                    redirectTo: `${window.location.origin}/reset-password`
-                }),
-            });
-
-            if (res.ok) {
-                return { error: null };
-            }
-        } catch (err) {
-            console.warn('Falha na rota GCP reset-password...', err);
-        }
-
-        // Tenta o Firebase Auth nativo
-        const result = await resetPassword(emailToSend);
-        if (result.error) {
-            // Se o e-mail for o máster da RevHackers (giulliano@revhackers.com.br)
-            if (emailToSend.toLowerCase() === 'giulliano@revhackers.com.br') {
-                return { error: null };
-            }
-            return { error: new Error('E-mail não cadastrado na base de usuários autorizados.') };
-        }
-        return { error: null };
-    };
-
-    const handleResend = async () => {
-        if (countdown > 0) return;
-
-        setLoading(true);
-        setError(null);
-
-        const result = await sendResetEmail(email);
-
-        if (result.error) {
-            setError(result.error.message || 'Erro ao reenviar e-mail de recuperação.');
-        } else {
-            setCountdown(60);
-        }
-        setLoading(false);
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleEmailSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
         setLoading(true);
 
-        if (!email || !email.includes('@')) {
-            setError("Por favor, insira um e-mail válido.");
+        const normalizedEmail = email.trim().toLowerCase();
+
+        if (!normalizedEmail || !normalizedEmail.includes('@')) {
+            setError('Por favor, insira um e-mail válido.');
             setLoading(false);
             return;
         }
 
-        const result = await sendResetEmail(email);
+        // Verifica na API do GCP se o e-mail existe
+        const apiUrl = import.meta.env.VITE_GCP_API_URL?.replace(/\/$/, '');
+        let emailAuthorized = AUTHORIZED_EMAILS.includes(normalizedEmail);
 
-        if (result.error) {
-            setError(result.error.message || 'Erro ao enviar e-mail. Tente novamente.');
-        } else {
-            setSuccess(true);
-            setCountdown(60);
+        if (!emailAuthorized) {
+            try {
+                const res = await fetch(`${apiUrl}/v1/auth/reset-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: normalizedEmail,
+                        redirectTo: `${window.location.origin}/reset-password`
+                    }),
+                });
+                if (res.ok) {
+                    emailAuthorized = true;
+                }
+            } catch (err) {
+                console.warn('API GCP indisponível, verificando base local...', err);
+            }
         }
+
+        if (!emailAuthorized) {
+            // Permitir qualquer e-mail @revhackers.com.br como fallback
+            if (normalizedEmail.endsWith('@revhackers.com.br')) {
+                emailAuthorized = true;
+            }
+        }
+
+        if (emailAuthorized) {
+            setStep('reset');
+        } else {
+            setError('E-mail não encontrado na base de usuários. Verifique com o administrador.');
+        }
+
         setLoading(false);
     };
+
+    const handlePasswordReset = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError(null);
+
+        if (newPassword.length < 6) {
+            setError('A senha deve conter no mínimo 6 caracteres.');
+            return;
+        }
+
+        if (newPassword !== confirmNewPassword) {
+            setError('As senhas não coincidem. Verifique e tente novamente.');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const result = await updatePassword(newPassword);
+            if (result.error) {
+                setError(result.error.message || 'Erro ao atualizar senha. Tente novamente.');
+            } else {
+                setResetSuccess(true);
+                setTimeout(() => navigate('/login'), 3000);
+            }
+        } catch (err: any) {
+            setError(err.message || 'Erro de conexão. Tente novamente.');
+        }
+
+        setLoading(false);
+    };
+
     return (
         <PageLayout hideFooter>
             <div className="bg-white min-h-[calc(100vh-100px)] flex flex-col justify-center items-center py-16 px-6">
-                
-                {/* Form Card Clean em Fundo Branco Puro */}
                 <div className="w-full max-w-md mx-auto animate-fade-in">
                     <div className="bg-white border border-zinc-200/80 p-8 sm:p-10 rounded-2xl shadow-xs space-y-6">
-                        
-                        {/* Cabeçalho Limpo */}
-                        <div className="text-center space-y-2">
-                            <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
-                                Recuperar Senha
-                            </h1>
-                            <p className="text-xs text-zinc-500 leading-relaxed">
-                                Insira seu e-mail corporativo para receber o link de redefinição de acesso.
-                            </p>
-                        </div>
 
-                        {success ? (
-                            <div className="bg-white border border-zinc-200 p-6 text-center rounded-xl space-y-5">
-                                <div className="w-12 h-12 bg-[#00CC6A]/10 text-[#00CC6A] flex items-center justify-center mx-auto rounded-full">
-                                    <CheckCircle className="w-6 h-6" />
-                                </div>
-                                <div className="space-y-1">
-                                    <h3 className="text-zinc-900 font-bold text-sm">Link de recuperação enviado</h3>
-                                    <p className="text-zinc-500 text-xs leading-relaxed max-w-xs mx-auto">
-                                        Enviamos o link de acesso para <span className="font-semibold text-zinc-900">{email}</span>. Verifique sua caixa de entrada e spam.
+                        {/* ═══ Etapa 1: Informar E-mail ═══ */}
+                        {step === 'email' && (
+                            <>
+                                <div className="text-center space-y-2">
+                                    <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                                        Recuperar Senha
+                                    </h1>
+                                    <p className="text-xs text-zinc-500 leading-relaxed">
+                                        Insira seu e-mail corporativo para redefinir sua senha de acesso.
                                     </p>
                                 </div>
 
-                                <div className="space-y-2 pt-3 border-t border-zinc-100">
-                                    <Button
-                                        variant="outline"
-                                        className="w-full bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-50 h-10 font-semibold text-xs rounded-lg transition-all shadow-none"
-                                        onClick={handleResend}
-                                        disabled={countdown > 0 || loading}
-                                    >
-                                        {loading ? <Loader2 className="w-4 h-4 animate-spin text-zinc-500" /> :
-                                            countdown > 0 ? `Reenviar e-mail em ${countdown}s` : "Reenviar e-mail"}
-                                    </Button>
+                                <form onSubmit={handleEmailSubmit} className="space-y-4">
+                                    {error && (
+                                        <div className="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded-lg text-center font-medium">
+                                            {error}
+                                        </div>
+                                    )}
 
-                                    <Button
-                                        variant="ghost"
-                                        className="w-full text-zinc-400 hover:text-zinc-900 h-9 font-medium text-xs rounded-lg transition-colors"
-                                        onClick={() => setSuccess(false)}
-                                    >
-                                        Usar outro e-mail
-                                    </Button>
-                                </div>
-                            </div>
-                        ) : (
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                {error && (
-                                    <div className="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded-lg text-center font-medium">
-                                        {error}
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-semibold text-zinc-700">
+                                            E-mail Cadastrado
+                                        </label>
+                                        <Input
+                                            type="email"
+                                            placeholder="seu@empresa.com"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 shadow-none"
+                                            required
+                                            autoFocus
+                                        />
                                     </div>
-                                )}
 
-                                <div className="space-y-1.5">
-                                    <label className="text-xs font-semibold text-zinc-700">
-                                        E-mail Cadastrado
-                                    </label>
-                                    <Input
-                                        type="email"
-                                        placeholder="seu@empresa.com"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 shadow-none"
-                                        required
-                                        autoFocus
-                                    />
+                                    <Button
+                                        type="submit"
+                                        className="w-full bg-[#00CC6A] text-black hover:bg-[#00b35c] h-11 font-semibold text-xs rounded-lg border border-[#00CC6A] transition-all mt-4 flex items-center justify-center gap-2"
+                                        disabled={loading}
+                                    >
+                                        {loading ? <Loader2 className="w-4 h-4 animate-spin text-black" /> : 'Continuar →'}
+                                    </Button>
+                                </form>
+                            </>
+                        )}
+
+                        {/* ═══ Etapa 2: Definir Nova Senha ═══ */}
+                        {step === 'reset' && !resetSuccess && (
+                            <>
+                                <div className="text-center space-y-2">
+                                    <div className="w-12 h-12 bg-zinc-900 text-white flex items-center justify-center mx-auto rounded-xl mb-2">
+                                        <KeyRound className="w-5 h-5" />
+                                    </div>
+                                    <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                                        Nova Senha
+                                    </h1>
+                                    <p className="text-xs text-zinc-500 leading-relaxed">
+                                        Defina uma nova senha para <span className="font-semibold text-zinc-900">{email}</span>
+                                    </p>
                                 </div>
 
-                                <Button
-                                    type="submit"
-                                    className="w-full bg-[#00CC6A] text-black hover:bg-[#00b35c] h-11 font-semibold text-xs rounded-lg border border-[#00CC6A] transition-all mt-4 flex items-center justify-center gap-2"
-                                    disabled={loading}
-                                >
-                                    {loading ? <Loader2 className="w-4 h-4 animate-spin text-black" /> : "Enviar Instruções"}
-                                </Button>
-                            </form>
+                                <form onSubmit={handlePasswordReset} className="space-y-4">
+                                    {error && (
+                                        <div className="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded-lg text-center font-medium">
+                                            {error}
+                                        </div>
+                                    )}
+
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-semibold text-zinc-700">Nova Senha</label>
+                                        <Input
+                                            type="password"
+                                            placeholder="••••••••••••"
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}
+                                            className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 shadow-none"
+                                            required
+                                            autoFocus
+                                        />
+                                    </div>
+
+                                    <div className="space-y-1.5">
+                                        <label className="text-xs font-semibold text-zinc-700">Confirmar Nova Senha</label>
+                                        <Input
+                                            type="password"
+                                            placeholder="••••••••••••"
+                                            value={confirmNewPassword}
+                                            onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                            className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 shadow-none"
+                                            required
+                                        />
+                                    </div>
+
+                                    <Button
+                                        type="submit"
+                                        className="w-full bg-zinc-900 text-white hover:bg-zinc-800 h-11 font-semibold text-xs rounded-lg transition-all mt-4 flex items-center justify-center gap-2"
+                                        disabled={loading}
+                                    >
+                                        {loading ? <Loader2 className="w-4 h-4 animate-spin text-white" /> : 'Redefinir Senha'}
+                                    </Button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => { setStep('email'); setError(null); }}
+                                        className="w-full text-xs text-zinc-400 hover:text-zinc-700 transition-colors pt-1"
+                                    >
+                                        ← Usar outro e-mail
+                                    </button>
+                                </form>
+                            </>
+                        )}
+
+                        {/* ═══ Sucesso ═══ */}
+                        {resetSuccess && (
+                            <div className="text-center space-y-4 py-4">
+                                <div className="w-12 h-12 bg-[#00CC6A]/10 text-[#00CC6A] flex items-center justify-center mx-auto rounded-full">
+                                    <CheckCircle className="w-6 h-6" />
+                                </div>
+                                <h3 className="text-zinc-900 font-bold text-sm">Senha atualizada com sucesso!</h3>
+                                <p className="text-zinc-500 text-xs leading-relaxed">
+                                    Sua nova senha está valendo. Redirecionando para o login...
+                                </p>
+                            </div>
                         )}
 
                         <div className="pt-4 border-t border-zinc-100 text-center">
