@@ -9,6 +9,8 @@ import { Loader2, Mail, ArrowRight, Eye, EyeOff } from 'lucide-react';
 const APP_SUBDOMAINS = ['app', 'admin'];
 const isAppSubdomain = APP_SUBDOMAINS.includes(window.location.hostname.split('.')[0]);
 
+import PageLayout from '@/components/layout/PageLayout';
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,19 +19,16 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     const { signInWithPassword, signInWithGoogle, isGoogleAuthEnabled, user, userRole, isProfileLoading, isRecoveringPassword } = useAuth();
-    // No subdominio app. sempre exibe Google login (independente da flag de env)
     const showGoogleLogin = isGoogleAuthEnabled || isAppSubdomain;
     const navigate = useNavigate();
 
-    // Redirecionar se já estiver logado (exceto se estiver em fluxo de recuperação)
     useEffect(() => {
         if (user && !isRecoveringPassword && !isProfileLoading) {
             if (userRole === 'super_admin' || userRole === 'admin') {
                 navigate('/admin');
             } else if (userRole === 'user') {
-                // Previne Loop Infinito. Se tentar entrar no admin sem permissão, quebra o redirect
                 setError('Sua conta não possui privilégios de acesso ao painel de administração.');
-                setLoading(false); // PARA O SPINNER!
+                setLoading(false);
             }
         }
     }, [user, userRole, isProfileLoading, isRecoveringPassword, navigate]);
@@ -44,9 +43,6 @@ const Login = () => {
         if (result.error) {
             setError('Credenciais inválidas. Tente novamente.');
             setLoading(false);
-        } else {
-            // A responsabilidade de check de role agora cai no useAuth state update via useEffect acima.
-            // Para não piscar erro se der sucesso, deixamos o AuthContext e o useEffect guiarem.
         }
     };
 
@@ -61,54 +57,20 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white flex flex-col justify-between relative selection:bg-[#00CC6A] selection:text-black">
-            
-            {/* Header de Navegação Padronizado (bg-black) */}
-            <header className="w-full border-b border-zinc-800 py-5 px-6 sm:px-12 bg-black">
-                <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <Link to="/" className="block group">
-                        <img
-                            src="/brand/revhackers-wordmark-white.png"
-                            alt="RevHackers Logo"
-                            className="w-40 sm:w-48 h-auto object-contain transition-opacity group-hover:opacity-90"
-                        />
-                    </Link>
-                    <Link 
-                        to="/" 
-                        className="text-xs font-semibold text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-lg"
-                    >
-                        Voltar ao site →
-                    </Link>
-                </div>
-            </header>
-
-            {/* Conteúdo Principal — Hero Copy + Card de Autenticação */}
-            <main className="w-full max-w-7xl mx-auto px-6 py-12 sm:py-16 flex-1 flex flex-col justify-center items-center">
+        <PageLayout>
+            <div className="bg-white min-h-[calc(100vh-140px)] flex flex-col justify-center items-center py-16 px-6">
                 
-                {/* Headline & Subheadline no padrão da Home */}
-                <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-                    <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
-                        Painel de Operações & Inteligência
-                    </p>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                        Acesse seu motor de <span className="text-[#00CC6A]">Revenue Engineering</span>
-                    </h1>
-                    <p className="text-zinc-400 text-sm sm:text-base font-normal leading-relaxed max-w-xl mx-auto">
-                        Ambiente restrito de gestão operacional, inteligência de contas B2B e relatórios de auditoria.
-                    </p>
-                </div>
-
-                {/* Login Card Component em Fundo Branco Clean */}
+                {/* Form Card Clean em Fundo Branco */}
                 <div className="w-full max-w-md mx-auto animate-fade-in">
-                    <div className="bg-white text-zinc-900 border border-zinc-200 p-8 sm:p-10 rounded-2xl shadow-xl space-y-6">
+                    <div className="bg-white border border-zinc-200 p-8 sm:p-10 rounded-2xl shadow-sm space-y-6">
                         
-                        {/* Subcabeçalho do Card */}
-                        <div className="text-center space-y-1">
-                            <h2 className="text-xl font-bold tracking-tight text-zinc-900">
-                                Identificação de Acesso
-                            </h2>
-                            <p className="text-xs text-zinc-500">
-                                Insira suas credenciais corporativas autorizadas
+                        {/* Cabeçalho Limpo */}
+                        <div className="text-center space-y-2">
+                            <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                                Acesse sua conta
+                            </h1>
+                            <p className="text-xs text-zinc-500 leading-relaxed">
+                                Insira suas credenciais para acessar o painel corporativo.
                             </p>
                         </div>
 
@@ -124,7 +86,7 @@ const Login = () => {
                                 <Button
                                     type="button"
                                     onClick={handleGoogleLogin}
-                                    className="w-full bg-white text-zinc-900 hover:bg-zinc-50 border border-zinc-200 h-11 font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
+                                    className="w-full bg-white text-zinc-900 hover:bg-zinc-50 border border-zinc-200 h-11 font-medium text-sm rounded-lg transition-all flex items-center justify-center gap-2 shadow-xs"
                                     disabled={loading}
                                 >
                                     {loading ? (
@@ -153,27 +115,27 @@ const Login = () => {
                                     )}
 
                                     <div className="space-y-1.5">
-                                        <label className="text-sm font-medium text-zinc-700">
-                                            Email
+                                        <label className="text-xs font-semibold text-zinc-700">
+                                            E-mail Corporativo
                                         </label>
                                         <Input
                                             type="email"
-                                            placeholder="seu@email.com"
+                                            placeholder="seu@empresa.com"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
-                                            className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-11 rounded-lg focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all text-sm px-3 shadow-sm"
+                                            className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 shadow-none"
                                             required
                                         />
                                     </div>
 
                                     <div className="space-y-1.5">
                                         <div className="flex justify-between items-center">
-                                            <label className="text-sm font-medium text-zinc-700">
+                                            <label className="text-xs font-semibold text-zinc-700">
                                                 Senha
                                             </label>
                                             <Link
                                                 to="/forgot-password"
-                                                className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors"
+                                                className="text-xs text-zinc-500 hover:text-zinc-900 transition-colors"
                                             >
                                                 Esqueceu a senha?
                                             </Link>
@@ -184,7 +146,7 @@ const Login = () => {
                                                 placeholder="••••••••••••"
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
-                                                className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-11 rounded-lg focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all text-sm px-3 pr-10 shadow-sm"
+                                                className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 pr-10 shadow-none"
                                                 required
                                             />
                                             <button
@@ -199,15 +161,15 @@ const Login = () => {
 
                                     <Button
                                         type="submit"
-                                        className="w-full bg-[#00CC6A] text-white hover:bg-[#00CC6A]/90 h-11 font-medium text-sm rounded-lg border-none transition-all mt-6 flex items-center justify-center gap-2"
+                                        className="w-full bg-[#00CC6A] text-black hover:bg-[#00b35c] h-11 font-semibold text-xs rounded-lg border border-[#00CC6A] transition-all mt-4 flex items-center justify-center gap-2"
                                         disabled={loading}
                                     >
                                         {loading ? (
-                                            <Loader2 className="w-4 h-4 animate-spin text-white" />
+                                            <Loader2 className="w-4 h-4 animate-spin text-black" />
                                         ) : (
                                             <>
                                                 <span>Entrar</span>
-                                                <ArrowRight className="w-4 h-4" />
+                                                <ArrowRight className="w-4 h-4 text-black" />
                                             </>
                                         )}
                                     </Button>
@@ -216,19 +178,8 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-            </main>
-
-            {/* Bottom Footer Padronizado Escuro */}
-            <footer className="w-full border-t border-zinc-900 py-6 px-6 sm:px-12 bg-black text-xs text-zinc-500">
-                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <span>&copy; {new Date().getFullYear()} RevHackers. Todos os direitos reservados.</span>
-                    <div className="flex items-center gap-6">
-                        <Link to="/privacidade" className="hover:text-zinc-300 transition-colors">Privacidade</Link>
-                        <Link to="/termos" className="hover:text-zinc-300 transition-colors">Termos de Uso</Link>
-                    </div>
-                </div>
-            </footer>
-        </div>
+            </div>
+        </PageLayout>
     );
 };
 
