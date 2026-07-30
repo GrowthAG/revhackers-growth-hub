@@ -70,8 +70,8 @@ export const AdminBlog = () => {
                             <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
                                 Gestão de Artigos & Publicações B2B
                             </h1>
-                            <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
-                                {filtered.length} ARTIGOS
+                            <span className="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-zinc-100 text-zinc-700 border border-zinc-200">
+                                {filtered.length} artigos
                             </span>
                         </div>
                         <p className="text-sm font-medium text-zinc-500 mt-1">
@@ -82,15 +82,15 @@ export const AdminBlog = () => {
                     <div className="flex items-center gap-2">
                         <Button
                             onClick={() => navigate('/admin/blog/novo')}
-                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-200"
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-semibold shadow-xs gap-2 flex items-center transition-all border border-zinc-200"
                         >
-                            <Plus size={15} className="text-[#00CC6A]" /> NOVO ARTIGO
+                            <Plus size={15} className="text-[#00CC6A]" /> Novo Artigo
                         </Button>
                     </div>
                 </div>
 
                 {/* Control Bar: Search */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-sm p-2 rounded-xl border border-zinc-200">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-xs p-2 rounded-xl border border-zinc-200/80">
                     <div className="relative flex-1 max-w-md">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                         <Input
@@ -112,11 +112,11 @@ export const AdminBlog = () => {
                         >
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between">
-                                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-700 border border-zinc-200">
+                                    <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-700 border border-zinc-200">
                                         {post.category || 'GROWTH'}
                                     </span>
-                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
-                                        ● PUBLICADO
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-semibold bg-[#00CC6A] text-black">
+                                        ● Publicado
                                     </span>
                                 </div>
 

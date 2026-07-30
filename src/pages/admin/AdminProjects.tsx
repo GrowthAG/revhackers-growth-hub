@@ -143,51 +143,51 @@ const AdminProjects: React.FC = () => {
           <div className="flex items-center gap-2">
             <Button
               onClick={() => navigate('/admin/rei/novo')}
-              className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-200"
+              className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-semibold tracking-wide shadow-xs gap-2 flex items-center transition-all border border-zinc-200"
             >
-              <Plus size={15} className="text-[#00CC6A]" /> NOVO PROJETO
+              <Plus size={15} className="text-[#00CC6A]" /> Novo Projeto
             </Button>
           </div>
         </div>
 
         {/* Metric Cards — High Precision SaaS UI */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+          <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs hover:border-zinc-300 transition-all">
             <div className="flex items-center justify-between text-zinc-500 mb-2">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider">Total de Projetos</span>
+              <span className="text-xs font-medium text-zinc-500">Total de Projetos</span>
               <FolderKanban size={15} className="text-zinc-400" />
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-semibold text-zinc-900 tabular-nums">{counts.todos}</span>
+              <span className="text-2xl font-bold text-zinc-900 tabular-nums">{counts.todos}</span>
               <span className="text-xs text-zinc-400 font-medium">operações</span>
             </div>
           </div>
 
-          <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+          <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs hover:border-zinc-300 transition-all">
             <div className="flex items-center justify-between text-zinc-500 mb-2">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider">Em Execução</span>
+              <span className="text-xs font-medium text-zinc-500">Em Execução</span>
               <div className="w-2 h-2 rounded-full bg-[#00CC6A]"></div>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-semibold text-[#00CC6A] tabular-nums">{counts.execucao}</span>
+              <span className="text-2xl font-bold text-[#00CC6A] tabular-nums">{counts.execucao}</span>
               <span className="text-xs text-zinc-500 font-medium">sprints ativas</span>
             </div>
           </div>
 
-          <div className="bg-white border border-zinc-200 rounded-xl p-4.5 shadow-none">
+          <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs hover:border-zinc-300 transition-all">
             <div className="flex items-center justify-between text-zinc-500 mb-2">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider">Encerrados</span>
+              <span className="text-xs font-medium text-zinc-500">Encerrados</span>
               <CheckCircle2 size={15} className="text-zinc-400" />
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-semibold text-zinc-900 tabular-nums">{counts.encerrado}</span>
+              <span className="text-2xl font-bold text-zinc-900 tabular-nums">{counts.encerrado}</span>
               <span className="text-xs text-zinc-400 font-medium">concluídos</span>
             </div>
           </div>
         </div>
 
         {/* Control Bar: Search & Status Filters */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-sm p-2 rounded-xl border border-zinc-200">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-xs p-2 rounded-xl border border-zinc-200/80">
           <div className="relative flex-1">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
             <Input
@@ -201,19 +201,19 @@ const AdminProjects: React.FC = () => {
           <div className="flex items-center gap-1">
             <button
               onClick={() => setFilter('todos')}
-              className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${filter === 'todos' ? 'bg-zinc-950 text-white border border-zinc-950' : 'text-zinc-600 hover:text-zinc-900'}`}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${filter === 'todos' ? 'bg-zinc-950 text-white border border-zinc-950' : 'text-zinc-600 hover:text-zinc-900'}`}
             >
               Todos ({counts.todos})
             </button>
             <button
               onClick={() => setFilter('execucao')}
-              className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${filter === 'execucao' ? 'bg-[#00CC6A] text-black border border-[#00CC6A]' : 'text-zinc-600 hover:text-zinc-900'}`}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${filter === 'execucao' ? 'bg-[#00CC6A] text-black border border-[#00CC6A]' : 'text-zinc-600 hover:text-zinc-900'}`}
             >
               Em Execução ({counts.execucao})
             </button>
             <button
               onClick={() => setFilter('encerrado')}
-              className={`px-3 py-1.5 text-xs font-mono font-bold tracking-wider uppercase rounded-lg transition-all ${filter === 'encerrado' ? 'bg-zinc-900 text-white border border-zinc-900' : 'text-zinc-600 hover:text-zinc-900'}`}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${filter === 'encerrado' ? 'bg-zinc-900 text-white border border-zinc-900' : 'text-zinc-600 hover:text-zinc-900'}`}
             >
               Encerrados ({counts.encerrado})
             </button>
@@ -229,11 +229,11 @@ const AdminProjects: React.FC = () => {
             </div>
           </div>
         ) : filtered.length > 0 ? (
-          <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-none">
+          <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-xs">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-zinc-200 bg-white shadow-sm text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                  <tr className="border-b border-zinc-200 bg-zinc-50/50 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider">
                     <th className="py-3.5 px-4">Projeto & Cliente</th>
                     <th className="py-3.5 px-4">Tipo</th>
                     <th className="py-3.5 px-4">Status</th>
