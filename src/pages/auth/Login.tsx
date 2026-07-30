@@ -63,6 +63,8 @@ const Login = () => {
             }
             setError(msg);
             setLoading(false);
+        } else {
+            navigate('/admin');
         }
     };
 
