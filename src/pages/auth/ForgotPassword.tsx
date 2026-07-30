@@ -34,8 +34,9 @@ const ForgotPassword = () => {
         if (result.error) {
             let userMessage = result.error.message;
 
-            // Tradução de erros comuns do Supabase
-            if (userMessage.includes('For security purposes, you can only request this after')) {
+            if (userMessage.includes('Invalid API key') || userMessage.includes('apiKey')) {
+                userMessage = 'O serviço de e-mail de recuperação está em manutenção. Entre em contato com o suporte ou utilize seu login via Google.';
+            } else if (userMessage.includes('For security purposes, you can only request this after')) {
                 const seconds = userMessage.match(/\d+/)?.[0] || 'alguns';
                 userMessage = `Por segurança, aguarde ${seconds} segundos antes de tentar novamente.`;
             } else if (userMessage.includes('Too many requests')) {
@@ -66,9 +67,9 @@ const ForgotPassword = () => {
         if (result.error) {
             let userMessage = result.error.message;
 
-
-            // Tradução de erros comuns do Supabase
-            if (userMessage.includes('For security purposes, you can only request this after')) {
+            if (userMessage.includes('Invalid API key') || userMessage.includes('apiKey')) {
+                userMessage = 'O serviço de e-mail de recuperação está em manutenção. Entre em contato com o suporte ou utilize seu login via Google.';
+            } else if (userMessage.includes('For security purposes, you can only request this after')) {
                 const seconds = userMessage.match(/\d+/)?.[0] || 'alguns';
                 userMessage = `Por segurança, aguarde ${seconds} segundos antes de tentar novamente.`;
             } else if (userMessage.includes('Too many requests')) {
