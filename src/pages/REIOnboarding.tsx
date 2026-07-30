@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import PageLayout from '@/components/layout/PageLayout';
-import REIWizard from '@/components/diagnostic/REIWizard';
+import REIWizard from '@/components/rei/REIWizard';
 import Section from '@/components/ui/Section';
 
 const REIOnboardingPage = () => {
@@ -29,7 +29,7 @@ const REIOnboardingPage = () => {
         <PageLayout>
             <Section variant="light" className="py-16 bg-zinc-50 min-h-screen">
                 <div className="container-custom">
-                    <REIWizard />
+                    <REIWizard projectId="legacy" type="consulting" />
                 </div>
             </Section>
         </PageLayout>
