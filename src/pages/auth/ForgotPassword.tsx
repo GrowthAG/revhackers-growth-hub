@@ -83,12 +83,12 @@ const ForgotPassword = () => {
         setLoading(false);
     };
     return (
-        <PageLayout>
-            <div className="bg-white min-h-[calc(100vh-140px)] flex flex-col justify-center items-center py-16 px-6">
+        <PageLayout hideFooter>
+            <div className="bg-white min-h-[calc(100vh-100px)] flex flex-col justify-center items-center py-16 px-6">
                 
-                {/* Form Card Clean em Fundo Branco */}
+                {/* Form Card Clean em Fundo Branco Puro */}
                 <div className="w-full max-w-md mx-auto animate-fade-in">
-                    <div className="bg-white border border-zinc-200 p-8 sm:p-10 rounded-2xl shadow-sm space-y-6">
+                    <div className="bg-white border border-zinc-200/80 p-8 sm:p-10 rounded-2xl shadow-xs space-y-6">
                         
                         {/* Cabeçalho Limpo */}
                         <div className="text-center space-y-2">
@@ -101,31 +101,31 @@ const ForgotPassword = () => {
                         </div>
 
                         {success ? (
-                            <div className="bg-zinc-50 border border-zinc-200 p-6 text-center rounded-xl space-y-4">
-                                <div className="w-10 h-10 bg-[#00CC6A]/10 text-[#00CC6A] flex items-center justify-center mx-auto rounded-full">
-                                    <CheckCircle className="w-5 h-5" />
+                            <div className="bg-white border border-zinc-200 p-6 text-center rounded-xl space-y-5">
+                                <div className="w-12 h-12 bg-[#00CC6A]/10 text-[#00CC6A] flex items-center justify-center mx-auto rounded-full">
+                                    <CheckCircle className="w-6 h-6" />
                                 </div>
-                                <div>
+                                <div className="space-y-1">
                                     <h3 className="text-zinc-900 font-bold text-sm">Link de recuperação enviado</h3>
-                                    <p className="text-zinc-500 text-xs mt-1 leading-relaxed">
-                                        Enviamos as instruções para <span className="font-semibold text-zinc-700">{email}</span>. Verifique sua caixa de entrada e pasta de spam.
+                                    <p className="text-zinc-500 text-xs leading-relaxed max-w-xs mx-auto">
+                                        Enviamos o link de acesso para <span className="font-semibold text-zinc-900">{email}</span>. Verifique sua caixa de entrada e spam.
                                     </p>
                                 </div>
 
-                                <div className="space-y-2 pt-2">
+                                <div className="space-y-2 pt-3 border-t border-zinc-100">
                                     <Button
                                         variant="outline"
-                                        className="w-full bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-50 h-10 font-semibold text-xs rounded-lg transition-all"
+                                        className="w-full bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-50 h-10 font-semibold text-xs rounded-lg transition-all shadow-none"
                                         onClick={handleResend}
                                         disabled={countdown > 0 || loading}
                                     >
                                         {loading ? <Loader2 className="w-4 h-4 animate-spin text-zinc-500" /> :
-                                            countdown > 0 ? `Reenviar em ${countdown}s` : "Reenviar Link"}
+                                            countdown > 0 ? `Reenviar e-mail em ${countdown}s` : "Reenviar e-mail"}
                                     </Button>
 
                                     <Button
                                         variant="ghost"
-                                        className="w-full text-zinc-500 hover:text-zinc-900 h-9 font-medium text-xs rounded-lg transition-colors"
+                                        className="w-full text-zinc-400 hover:text-zinc-900 h-9 font-medium text-xs rounded-lg transition-colors"
                                         onClick={() => setSuccess(false)}
                                     >
                                         Usar outro e-mail
@@ -135,7 +135,7 @@ const ForgotPassword = () => {
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 {error && (
-                                    <div className="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded-lg text-center">
+                                    <div className="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded-lg text-center font-medium">
                                         {error}
                                     </div>
                                 )}

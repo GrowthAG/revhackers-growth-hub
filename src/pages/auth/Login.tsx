@@ -57,7 +57,7 @@ const Login = () => {
     };
 
     return (
-        <PageLayout>
+        <PageLayout hideFooter>
             <div className="bg-white min-h-[calc(100vh-140px)] flex flex-col justify-center items-center py-16 px-6">
                 
                 {/* Form Card Clean em Fundo Branco */}
