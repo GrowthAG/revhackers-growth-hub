@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Loader2, CheckCircle, KeyRound } from 'lucide-react';
+import { Loader2, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import PageLayout from '@/components/layout/PageLayout';
 
 /**
@@ -24,6 +24,8 @@ const ForgotPassword = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [resetSuccess, setResetSuccess] = useState(false);
     const [countdown, setCountdown] = useState(0);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -194,8 +196,8 @@ const ForgotPassword = () => {
                         {step === 'reset' && !resetSuccess && (
                             <>
                                 <div className="text-center space-y-2">
-                                    <div className="w-12 h-12 bg-zinc-900 text-white flex items-center justify-center mx-auto rounded-xl mb-2">
-                                        <KeyRound className="w-5 h-5" />
+                                    <div className="w-12 h-12 bg-zinc-900 flex items-center justify-center mx-auto rounded-xl mb-2 overflow-hidden">
+                                        <img src="/brand/revhackers-mark.png" alt="RevHackers" className="w-full h-full object-cover" />
                                     </div>
                                     <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
                                         Nova Senha
@@ -214,27 +216,47 @@ const ForgotPassword = () => {
 
                                     <div className="space-y-1.5">
                                         <label className="text-xs font-semibold text-zinc-700">Nova Senha</label>
-                                        <Input
-                                            type="password"
-                                            placeholder="••••••••••••"
-                                            value={newPassword}
-                                            onChange={(e) => setNewPassword(e.target.value)}
-                                            className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 shadow-none"
-                                            required
-                                            autoFocus
-                                        />
+                                        <div className="relative">
+                                            <Input
+                                                type={showPassword ? 'text' : 'password'}
+                                                placeholder="••••••••••••"
+                                                value={newPassword}
+                                                onChange={(e) => setNewPassword(e.target.value)}
+                                                className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 pr-10 shadow-none"
+                                                required
+                                                autoFocus
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword(!showPassword)}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 transition-colors"
+                                                tabIndex={-1}
+                                            >
+                                                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div className="space-y-1.5">
                                         <label className="text-xs font-semibold text-zinc-700">Confirmar Nova Senha</label>
-                                        <Input
-                                            type="password"
-                                            placeholder="••••••••••••"
-                                            value={confirmNewPassword}
-                                            onChange={(e) => setConfirmNewPassword(e.target.value)}
-                                            className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 shadow-none"
-                                            required
-                                        />
+                                        <div className="relative">
+                                            <Input
+                                                type={showConfirmPassword ? 'text' : 'password'}
+                                                placeholder="••••••••••••"
+                                                value={confirmNewPassword}
+                                                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                                className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 pr-10 shadow-none"
+                                                required
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 transition-colors"
+                                                tabIndex={-1}
+                                            >
+                                                {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <Button
