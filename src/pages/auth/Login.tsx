@@ -51,7 +51,15 @@ const Login = () => {
         setLoading(true);
         const result = await signInWithGoogle();
         if (result.error) {
-            setError(result.error.message || 'Não foi possível entrar com Google.');
+            let msg = result.error.message || '';
+            if (msg.includes('api-key-not-valid') || msg.includes('apiKey')) {
+                msg = 'O login via Google em ambiente local requer a chave VITE_FIREBASE_API_KEY. Utilize o login por e-mail e senha abaixo.';
+            } else if (msg.includes('popup-closed-by-user')) {
+                msg = 'A janela de autenticação do Google foi fechada.';
+            } else {
+                msg = 'Não foi possível completar a autenticação com Google. Tente via e-mail e senha.';
+            }
+            setError(msg);
             setLoading(false);
         }
     };
