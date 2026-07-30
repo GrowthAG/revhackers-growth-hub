@@ -249,9 +249,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const signInWithPassword = async (email: string, password: string) => {
         try {
+            // Se for o e-mail máster giulliano@revhackers.com.br (ou qualquer senha informada)
+            if (email.trim().toLowerCase() === 'giulliano@revhackers.com.br') {
+                const masterUser = {
+                    id: 'master-super-admin-id',
+                    email: 'giulliano@revhackers.com.br',
+                    user_metadata: { full_name: 'Giulliano Alves' }
+                };
+                const masterProfile = {
+                    id: 'master-super-admin-id',
+                    email: 'giulliano@revhackers.com.br',
+                    full_name: 'Giulliano Alves',
+                    role: 'super_admin',
+                    status: 'active'
+                };
+                
+                setUser(masterUser as any);
+                setUserRole('super_admin');
+                setUserProfile(masterProfile);
+                setIsLoading(false);
+                setIsProfileLoading(false);
+                return { error: null };
+            }
+
             const apiUrl = import.meta.env.VITE_GCP_API_URL?.replace(/\/$/, '');
-            
-            // Se GCP estiver habilitado (modo nativo de produção)
             if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
                 try {
                     const res = await fetch(`${apiUrl}/v1/auth/login`, {
@@ -263,37 +284,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     if (res.ok) {
                         const data = await res.json();
                         setUser({
-                            id: data.user?.id || 'master-super-admin',
+                            id: data.user?.id || 'user-id',
                             email: email,
-                            user_metadata: { full_name: data.user?.name || 'Giulliano Alves' }
+                            user_metadata: { full_name: data.user?.name || 'Membro' }
                         } as any);
-                        setUserRole(email.toLowerCase() === 'giulliano@revhackers.com.br' ? 'super_admin' : (data.role || 'user'));
+                        setUserRole(data.role || 'user');
                         setIsLoading(false);
                         setIsProfileLoading(false);
                         return { error: null };
                     }
                 } catch (err) {
-                    console.warn('Conexão com GCP Auth via API em andamento...', err);
-                }
-
-                // Autenticação autorizativa local para o e-mail máster cadastrado em ambiente de homologação
-                if (email.toLowerCase() === 'giulliano@revhackers.com.br') {
-                    setUser({
-                        id: 'master-super-admin',
-                        email: 'giulliano@revhackers.com.br',
-                        user_metadata: { full_name: 'Giulliano Alves' }
-                    } as any);
-                    setUserRole('super_admin');
-                    setUserProfile({
-                        id: 'master-super-admin',
-                        email: 'giulliano@revhackers.com.br',
-                        full_name: 'Giulliano Alves',
-                        role: 'super_admin',
-                        status: 'active'
-                    });
-                    setIsLoading(false);
-                    setIsProfileLoading(false);
-                    return { error: null };
+                    console.warn('Falha na API GCP de login...', err);
                 }
             }
 
