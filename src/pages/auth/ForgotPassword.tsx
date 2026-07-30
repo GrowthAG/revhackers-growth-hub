@@ -84,86 +84,95 @@ const ForgotPassword = () => {
     };
     return (
         <PageLayout>
-            <div className="w-full h-full min-h-[70vh] flex items-center justify-center p-4 bg-white pt-32">
-                <div className="w-full max-w-[400px] animate-in fade-in zoom-in-95 duration-700">
-                    {/* Header Section */}
-                    <div className="flex flex-col items-center mb-10">
-                        <h1 className="text-2xl font-black tracking-[0.2em] text-black uppercase text-center leading-none mb-4 mt-8">
-                            Recuperar
-                        </h1>
-                        <p className="text-zinc-500 text-xxs uppercase tracking-[0.2em] font-bold text-center max-w-[280px] mx-auto leading-relaxed">
-                            Insira seu e-mail para receber as instruções.
-                        </p>
-                    </div>
-
-                    {success ? (
-                        <div className="bg-zinc-50 border border-zinc-200 p-8 text-center animate-in fade-in zoom-in duration-300 rounded-none">
-                            <div className="w-10 h-10 bg-black text-white flex items-center justify-center mx-auto mb-6 rounded-none">
-                                <CheckCircle className="w-5 h-5" />
-                            </div>
-                            <h3 className="text-black font-black uppercase tracking-widest text-xs mb-4">Email Enviado</h3>
-                            <p className="text-zinc-500 text-xxs uppercase tracking-widest mb-8 leading-relaxed">
-                                Verifique sua caixa de entrada e spam ({email}).
+            <div className="bg-white min-h-[calc(100vh-140px)] flex flex-col justify-center items-center py-16 px-6">
+                
+                {/* Form Card Clean em Fundo Branco */}
+                <div className="w-full max-w-md mx-auto animate-fade-in">
+                    <div className="bg-white border border-zinc-200 p-8 sm:p-10 rounded-2xl shadow-sm space-y-6">
+                        
+                        {/* Cabeçalho Limpo */}
+                        <div className="text-center space-y-2">
+                            <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
+                                Recuperar Senha
+                            </h1>
+                            <p className="text-xs text-zinc-500 leading-relaxed">
+                                Insira seu e-mail corporativo para receber o link de redefinição de acesso.
                             </p>
-
-                            <div className="space-y-3">
-                                <Button
-                                    variant="outline"
-                                    className="w-full bg-white border-zinc-200 text-zinc-600 hover:text-black hover:border-black h-12 font-bold text-xxs tracking-[0.2em] uppercase rounded-none transition-all"
-                                    onClick={handleResend}
-                                    disabled={countdown > 0 || loading}
-                                >
-                                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> :
-                                        countdown > 0 ? `Reenviar em ${countdown}s` : "Reenviar Link"}
-                                </Button>
-
-                                <Button
-                                    variant="ghost"
-                                    className="w-full text-zinc-500 hover:text-black h-10 font-bold text-2xs tracking-[0.2em] uppercase transition-colors rounded-none"
-                                    onClick={() => setSuccess(false)}
-                                >
-                                    Usar outro e-mail
-                                </Button>
-                            </div>
                         </div>
-                    ) : (
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            {error && (
-                                <div className="text-red-500 text-2xs font-light uppercase tracking-[0.3em] text-center mb-10">
-                                    {error}
+
+                        {success ? (
+                            <div className="bg-zinc-50 border border-zinc-200 p-6 text-center rounded-xl space-y-4">
+                                <div className="w-10 h-10 bg-[#00CC6A]/10 text-[#00CC6A] flex items-center justify-center mx-auto rounded-full">
+                                    <CheckCircle className="w-5 h-5" />
                                 </div>
-                            )}
+                                <div>
+                                    <h3 className="text-zinc-900 font-bold text-sm">Link de recuperação enviado</h3>
+                                    <p className="text-zinc-500 text-xs mt-1 leading-relaxed">
+                                        Enviamos as instruções para <span className="font-semibold text-zinc-700">{email}</span>. Verifique sua caixa de entrada e pasta de spam.
+                                    </p>
+                                </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xxs uppercase tracking-[0.2em] text-zinc-500 font-black pl-1">Email Cadastrado</label>
-                                <Input
-                                    type="email"
-                                    placeholder="SEU@EMAIL.COM"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="bg-white border-zinc-200 text-black placeholder:text-zinc-300 h-12 rounded-none border focus:border-black focus:ring-0 transition-all text-sm px-4"
-                                    required
-                                    autoFocus
-                                />
+                                <div className="space-y-2 pt-2">
+                                    <Button
+                                        variant="outline"
+                                        className="w-full bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-50 h-10 font-semibold text-xs rounded-lg transition-all"
+                                        onClick={handleResend}
+                                        disabled={countdown > 0 || loading}
+                                    >
+                                        {loading ? <Loader2 className="w-4 h-4 animate-spin text-zinc-500" /> :
+                                            countdown > 0 ? `Reenviar em ${countdown}s` : "Reenviar Link"}
+                                    </Button>
+
+                                    <Button
+                                        variant="ghost"
+                                        className="w-full text-zinc-500 hover:text-zinc-900 h-9 font-medium text-xs rounded-lg transition-colors"
+                                        onClick={() => setSuccess(false)}
+                                    >
+                                        Usar outro e-mail
+                                    </Button>
+                                </div>
                             </div>
+                        ) : (
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                {error && (
+                                    <div className="bg-red-50 border border-red-200 text-red-600 text-xs p-3 rounded-lg text-center">
+                                        {error}
+                                    </div>
+                                )}
 
-                            <Button
-                                type="submit"
-                                className="w-full bg-black text-white hover:bg-zinc-800 h-12 font-black text-xs tracking-[0.3em] uppercase rounded-none border-none transition-all mt-4"
-                                disabled={loading}
+                                <div className="space-y-1.5">
+                                    <label className="text-xs font-semibold text-zinc-700">
+                                        E-mail Cadastrado
+                                    </label>
+                                    <Input
+                                        type="email"
+                                        placeholder="seu@empresa.com"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 shadow-none"
+                                        required
+                                        autoFocus
+                                    />
+                                </div>
+
+                                <Button
+                                    type="submit"
+                                    className="w-full bg-[#00CC6A] text-black hover:bg-[#00b35c] h-11 font-semibold text-xs rounded-lg border border-[#00CC6A] transition-all mt-4 flex items-center justify-center gap-2"
+                                    disabled={loading}
+                                >
+                                    {loading ? <Loader2 className="w-4 h-4 animate-spin text-black" /> : "Enviar Instruções"}
+                                </Button>
+                            </form>
+                        )}
+
+                        <div className="pt-4 border-t border-zinc-100 text-center">
+                            <Link
+                                to="/login"
+                                className="text-xs font-medium text-zinc-500 hover:text-zinc-900 transition-colors inline-flex items-center gap-1.5"
                             >
-                                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Enviar Instruções"}
-                            </Button>
-                        </form>
-                    )}
-
-                    <div className="mt-12 text-center border-t border-zinc-100 pt-8">
-                        <Link
-                            to="/login"
-                            className="text-zinc-400 hover:text-white text-xxs uppercase tracking-[0.2em] transition-colors font-bold group inline-flex items-center gap-2"
-                        >
-                            <span className="group-hover:-translate-x-1 transition-transform">←</span> Voltar ao Login
-                        </Link>
+                                ← Voltar para o Login
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
