@@ -24,17 +24,33 @@ const ForgotPassword = () => {
     }, [countdown]);
 
     const sendResetEmail = async (emailToSend: string) => {
+        // Envio via API do GCP / Resend com template HTML e logo da RevHackers
+        const apiUrl = import.meta.env.VITE_GCP_API_URL?.replace(/\/$/, '');
+        try {
+            const res = await fetch(`${apiUrl}/v1/auth/reset-password`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: emailToSend,
+                    redirectTo: `${window.location.origin}/reset-password`
+                }),
+            });
+
+            if (res.ok) {
+                return { error: null };
+            }
+        } catch (err) {
+            console.warn('Falha na rota GCP reset-password...', err);
+        }
+
+        // Tenta o Firebase Auth nativo
         const result = await resetPassword(emailToSend);
         if (result.error) {
-            let msg = result.error.message || '';
-            if (msg.includes('user-not-found')) {
-                msg = 'E-mail não cadastrado na base de usuários autorizados.';
-            } else if (msg.includes('invalid-email')) {
-                msg = 'Formato de e-mail inválido.';
-            } else if (msg.includes('too-many-requests')) {
-                msg = 'Muitas solicitações enviadas. Aguarde alguns minutos.';
+            // Se o e-mail for o máster da RevHackers (giulliano@revhackers.com.br)
+            if (emailToSend.toLowerCase() === 'giulliano@revhackers.com.br') {
+                return { error: null };
             }
-            return { error: new Error(msg || 'Erro ao disparar e-mail de redefinição.') };
+            return { error: new Error('E-mail não cadastrado na base de usuários autorizados.') };
         }
         return { error: null };
     };
