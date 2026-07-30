@@ -45,7 +45,7 @@ const criteria = [
   },
   {
     label: 'Accountability por receita gerada',
-    revhackers: 'Sim — métricas acordadas',
+    revhackers: 'Sim: métricas acordadas',
     interno: 'Difícil de isolar',
     agencia: 'Raramente formalizado',
     revhackersGood: true,
@@ -54,9 +54,9 @@ const criteria = [
   },
   {
     label: 'Risco de desligamento / turnover',
-    revhackers: 'Zero — time externo dedicado',
-    interno: 'Alto — 3–6 meses para reposição',
-    agencia: 'Médio — rotatividade de account',
+    revhackers: 'Zero: time externo dedicado',
+    interno: 'Alto: 3 a 6 meses para reposição',
+    agencia: 'Médio: rotatividade de account',
     revhackersGood: true,
     internoGood: false,
     agenciaGood: null,

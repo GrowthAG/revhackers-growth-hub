@@ -35,7 +35,7 @@ const HeroSection = () => {
         >
           Nós não vendemos consultoria.{' '}
           <span className="text-[#00CC6A]">
-            Instalamos sua máquina de receita B2B com ABM e IA em 45 dias.
+            Instalamos sua máquina de receita B2B com ABM e IA em 90 dias.
           </span>
         </motion.h1>
 
