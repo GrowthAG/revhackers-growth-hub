@@ -43,6 +43,11 @@ export function observeGoogleAuth(callback: (user: User | null) => void): () => 
   return onAuthStateChanged(getFirebaseAuth(), callback);
 }
 
+export async function sendPasswordResetEmailFromFirebase(email: string): Promise<void> {
+  const { sendPasswordResetEmail } = await import('firebase/auth');
+  await sendPasswordResetEmail(getFirebaseAuth(), email);
+}
+
 export async function signOutGoogle(): Promise<void> {
   await signOut(getFirebaseAuth());
 }

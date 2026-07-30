@@ -345,14 +345,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const resetPassword = async (email: string) => {
         try {
-            const appOrigin = APP_CONFIG.URLS.APP || window.location.origin;
-            const redirectUrl = `${appOrigin}/reset-password`;
-
-            const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                redirectTo: redirectUrl,
-            });
-
-            if (error) throw error;
+            const { sendPasswordResetEmailFromFirebase } = await import('@/integrations/firebase/client');
+            await sendPasswordResetEmailFromFirebase(email);
             return { error: null };
         } catch (error: any) {
             console.error("Reset password error:", error.message);

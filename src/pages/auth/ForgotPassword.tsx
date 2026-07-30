@@ -24,33 +24,19 @@ const ForgotPassword = () => {
     }, [countdown]);
 
     const sendResetEmail = async (emailToSend: string) => {
-        const apiUrl = import.meta.env.VITE_GCP_API_URL?.replace(/\/$/, '');
-        if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
-            try {
-                const res = await fetch(`${apiUrl}/v1/auth/reset-password`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: emailToSend }),
-                });
-
-                if (res.ok) {
-                    return { error: null };
-                }
-
-                if (res.status === 404) {
-                    return { error: new Error('E-mail não cadastrado no sistema. Apenas membros convidados possuem acesso.') };
-                }
-            } catch (err: any) {
-                console.warn('Conexão GCP offline para envio de email de redefinição...', err);
+        const result = await resetPassword(emailToSend);
+        if (result.error) {
+            let msg = result.error.message || '';
+            if (msg.includes('user-not-found')) {
+                msg = 'E-mail não cadastrado na base de usuários autorizados.';
+            } else if (msg.includes('invalid-email')) {
+                msg = 'Formato de e-mail inválido.';
+            } else if (msg.includes('too-many-requests')) {
+                msg = 'Muitas solicitações enviadas. Aguarde alguns minutos.';
             }
+            return { error: new Error(msg || 'Erro ao disparar e-mail de redefinição.') };
         }
-
-        // Se for o e-mail máster cadastrado (giulliano@revhackers.com.br)
-        if (emailToSend.toLowerCase() === 'giulliano@revhackers.com.br') {
-            return { error: null };
-        }
-
-        return { error: new Error('E-mail não encontrado na base de usuários. Verifique com o administrador.') };
+        return { error: null };
     };
 
     const handleResend = async () => {
