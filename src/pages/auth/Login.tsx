@@ -43,6 +43,8 @@ const Login = () => {
         if (result.error) {
             setError('Credenciais inválidas. Tente novamente.');
             setLoading(false);
+        } else {
+            navigate('/admin');
         }
     };
 
