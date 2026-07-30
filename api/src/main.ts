@@ -21,6 +21,7 @@ import { createStrategicPlansRoutes } from './http/strategic-plans-http-routes';
 import { GoogleIdentityTokenVerifier } from './identity/google-identity-verifier';
 import { PostgresIdentityRepository } from './identity/postgres-identity-repository';
 import { createApiServer } from './server';
+import { createAuthRoutes } from './http/auth-routes';
 
 import { PostgresFinanceRepository } from './domains/finance/postgres-repository';
 import { InfinitePayConnector } from './domains/finance/connectors/infinitepay-connector';
@@ -113,7 +114,10 @@ async function main(): Promise<void> {
     (await handleContactJourney(request, envVars, postgres.pool as any)) ??
     null;
 
+  const authRoutes = createAuthRoutes({ pool: postgres.pool });
+
   const route = async (request: Request, requestId: string) =>
+    (await authRoutes(request)) ??
     (await lifecycleRoute(request)) ??
     (await intelligenceRoutes(request)) ??
     (await reiRoutes(request)) ??
