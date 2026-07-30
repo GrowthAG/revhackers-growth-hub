@@ -1,1043 +1,353 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Smartphone, Search, TrendingUp, ArrowRight, Download, Calendar, Mail, ShieldCheck, Gauge, Globe, Terminal, Activity, Check, Monitor, Wifi, Users, Trophy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { submitPublicDiagnostic } from "@/api/publicDiagnostic";
-import { runCompetitiveBenchmark, BenchmarkResult, formatMetricValue, getCategoryColor } from "@/api/cruxApi";
-import { DiagnosticLayout } from '@/components/diagnostics/DiagnosticLayout';
-import { DiagnosticForm, DiagnosticFormData } from '@/components/diagnostics/DiagnosticForm';
-import { ScoreGauge } from '@/components/diagnostics/ScoreGauge';
-import { MetricCard } from '@/components/diagnostics/MetricCard';
-import { DiagnosticActionSection } from '@/components/diagnostics/DiagnosticActionSection';
-import { DiagnosticBookingModal } from '@/components/diagnostics/DiagnosticBookingModal';
+import { runCompetitiveBenchmark, BenchmarkResult } from "@/api/cruxApi";
 import { getDiagnosticInsights } from '@/utils/diagnosticMapping';
 import SEO from '@/components/shared/SEO';
+import { DiagnosticFormData } from '@/components/diagnostics/DiagnosticForm';
 
-// Perguntas Padronizadas REI Site (3 dimensões, total = 100pts)
-const QUESTIONS = [
- {
- id: 1,
- question: "Velocidade de Carregamento (Percepção do Usuário)",
- log: "Mais de 50% dos usuários B2B abandonam sites que demoram mais de 3 segundos para carregar o conteúdo principal.",
- options: [
- { label: "Quase instantâneo. Sem tempo de tela preta/branca.", score: 34 },
- { label: "Demora alguns segundos para renderizar completamente.", score: 15 },
- { label: "Muito lento. Às vezes o usuário precisa atualizar a página.", score: 5 },
- { label: "Carregamento instável ou frequentemente quebrado.", score: 0 }
- ]
- },
- {
- id: 2,
- question: "Otimização para Dispositivos Móveis (Mobile First)",
- log: "A maioria das pesquisas de descoberta B2B agora ocorre via celular. Um site engessado afugenta tomadores de decisão.",
- options: [
- { label: "Experiência perfeita. Design fluido, botões acessíveis e navegação fácil no celular.", score: 33 },
- { label: "Responsivo, mas o texto fica pequeno e alguns elementos quebram.", score: 15 },
- { label: "Difícil de usar. O usuário precisa dar zoom para ler.", score: 5 },
- { label: "Versão Desktop encolhida na tela do celular.", score: 0 }
- ]
- },
- {
- id: 3,
- question: "Rastreamento e Governança de Dados (Analytics & Pixels)",
- log: "Falta de rastreamento cega sua operação de marketing, impedindo a mensuração de ROI.",
- options: [
- { label: "GTM implementado, tags disparando corretamente sem duplicidade e compliance LGPD/GDPR.", score: 33 },
- { label: "Tags instaladas, mas com incerteza sobre a precisão dos dados recebidos.", score: 15 },
- { label: "Apenas Google Analytics cru. Pixel do Meta sem configuração avançada.", score: 5 },
- { label: "Não fazemos rastreio inteligente do tráfego.", score: 0 }
- ]
- }
-];
+import { SiteScoreHero } from '@/components/scores/site/SiteScoreHero';
+import { SiteScoreQuiz, QUESTIONS } from '@/components/scores/site/SiteScoreQuiz';
+import { SiteScoreResult } from '@/components/scores/site/SiteScoreResult';
 
 type Step = 'url-input' | 'questions' | 'analyzing' | 'lead-capture' | 'results';
 
 const SiteScore = () => {
- const { toast } = useToast();
- const [step, setStep] = useState<Step>('url-input');
- const [currentQ, setCurrentQ] = useState(0);
- const [score, setScore] = useState(0);
- const [answers, setAnswers] = useState<number[]>([]);
- const [isSubmitting, setIsSubmitting] = useState(false);
- const [hasSubmittedLead, setHasSubmittedLead] = useState(false);
- const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
- const insights = getDiagnosticInsights('site', score);
-
-
- // Estado do Protocolo e Logs
- const [selectedOption, setSelectedOption] = useState<number | null>(null);
- const [showLog, setShowLog] = useState(false);
-
- // PageSpeed State
- const [targetUrl, setTargetUrl] = useState('');
- const [psiResults, setPsiResults] = useState<{
- mobile: any,
- desktop: any,
- techStack: string[],
- pixels: string[],
- vitals: { lcp: string, cls: string, tbt: string, score: number },
- seoMetadata?: { title: string, description: string, h1?: string },
- compliance?: { lgpd: boolean, privacy: boolean, security: boolean },
- crux?: { lcp: string, fid?: string, cls: string, assessment: string },
- error?: boolean
- } | null>(null);
- const [isAnalyzing, setIsAnalyzing] = useState(false);
- const [loadingStatus, setLoadingStatus] = useState('Iniciando análise...');
- const [progress, setProgress] = useState(0);
-
- // Efeito para simular progresso durante a análise
- useEffect(() => {
- if (step === 'analyzing') {
- setProgress(0);
- const interval = setInterval(() => {
- setProgress(prev => {
- if (prev >= 90) return prev;
- // Incremento variável para parecer mais natural
- const increment = Math.random() * 5 + 1;
- return Math.min(90, Math.floor(prev + increment));
- });
- }, 200);
-
- return () => clearInterval(interval);
- }
- }, [step]);
-
- // View Mode State
- const [viewMode, setViewMode] = useState<'mobile' | 'desktop'>('mobile');
-
- // Benchmark Competitivo State
- const [competitorUrls, setCompetitorUrls] = useState<string[]>(['', '']);
- const [benchmarkResult, setBenchmarkResult] = useState<BenchmarkResult | null>(null);
- const [isBenchmarking, setIsBenchmarking] = useState(false);
-
- const runPageSpeed = async (url: string) => {
- setIsAnalyzing(true);
- setPsiResults(null);
- setLoadingStatus('Conectando ao Google PageSpeed Insights...');
-
- try {
- // Normaliza URL
- const finalUrl = url.startsWith('http') ? url : `https://${url}`;
-
- // CHECK FOR LOCALHOST (PSI cannot analyze localhost)
- if (finalUrl.includes('localhost') || finalUrl.includes('127.0.0.1')) {
- console.warn("Localhost detected. Using Mock Data.");
-
- setLoadingStatus('Ambiente de Desenvolvimento Detectado...');
- await new Promise(r => setTimeout(r, 1500));
-
- const mockResult = {
- mobile: { lighthouseResult: { categories: { performance: { score: 0.85 }, seo: { score: 0.92 } } } },
- desktop: null,
- techStack: ["React", "Vite", "Tailwind (Dev Mode)"],
- pixels: ["Pixel de Teste"],
- vitals: { lcp: "1.2s", cls: "0.05", tbt: "120ms", score: 85 },
- seoMetadata: { title: "Localhost Development", description: "Ambiente de teste local." },
- compliance: { lgpd: true, privacy: true, security: false },
- crux: { lcp: "1.0s", cls: "0.01", assessment: "PASS" },
- error: false
- };
-
- setPsiResults(mockResult);
- setProgress(100);
-
- toast({
- className: "bg-white border-zinc-200 text-zinc-900",
- title: "MODO DESENVOLVEDOR",
- description: "Simulação de análise ativa para Localhost."
- });
-
- setStep('results');
- return;
- }
-
- // Call analyze-site Edge Function (API key managed server-side)
- setLoadingStatus('Auditando Core Web Vitals (Mobile)...');
-
- const { data, error } = await supabase.functions.invoke('analyze-site', {
- body: { url: finalUrl, strategy: 'mobile' }
- });
-
- if (error) throw new Error(error.message || 'Edge Function error');
- if (data?.error) throw new Error(data.error?.message || JSON.stringify(data.error));
-
- const lighthouse = data.lighthouseResult;
-
- setLoadingStatus('Processando Árvore de Renderização...');
- await new Promise(r => setTimeout(r, 800));
-
- const score = Math.round((lighthouse?.categories?.performance?.score || 0) * 100);
- const audits = lighthouse?.audits || {};
-
- const lcp = audits['largest-contentful-paint']?.displayValue || "N/A";
- const cls = audits['cumulative-layout-shift']?.displayValue || "N/A";
- const tbt = audits['total-blocking-time']?.displayValue || "N/A";
-
- const detectedTech = lighthouse?.stackPacks?.map((p: any) => p.title) || [];
-
- const realResults = {
- mobile: data,
- desktop: null,
- techStack: detectedTech.length > 0 ? detectedTech : ["Tecnologia Web Padrão"],
- pixels: ["Análise Profunda Pendente"],
- vitals: { lcp, cls, tbt, score },
- seoMetadata: {
- title: audits['document-title']?.details?.title || "Título não detectado",
- description: audits['meta-description']?.details?.items?.[0]?.description || "Descrição não encontrada",
- },
- compliance: {
- lgpd: audits['bf-cache']?.score === 1,
- privacy: url.includes('https'),
- security: url.includes('https')
- },
- crux: {
- lcp: data.loadingExperience?.metrics?.LARGEST_CONTENTFUL_PAINT_MS?.percentile
- ? `${(data.loadingExperience.metrics.LARGEST_CONTENTFUL_PAINT_MS.percentile / 1000).toFixed(1)}s`
- : "N/A",
- cls: data.loadingExperience?.metrics?.CUMULATIVE_LAYOUT_SHIFT_SCORE?.percentile
- ? (data.loadingExperience.metrics.CUMULATIVE_LAYOUT_SHIFT_SCORE.percentile / 100).toFixed(2)
- : "N/A",
- assessment: data.loadingExperience?.overall_category || "DADOS INSUFICIENTES"
- },
- error: false
- };
-
- setPsiResults(realResults);
- setProgress(100);
-
- toast({
- className: "bg-white border-zinc-200 text-zinc-900",
- title: "DIAGNÓSTICO REAL CONCLUÍDO",
- description: `Auditoria oficial do Google finalizada. Score: ${score}`
- });
-
- setStep('results');
-
- } catch (error: any) {
- console.error(error);
-
- let userMessage = "Falha ao conectar ao Google PSI.";
- if (error.message?.includes("FAILED_DOCUMENT_REQUEST") || error.message?.includes("ERR_CONNECTION_FAILED")) {
- userMessage = "Não foi possível acessar o site. Verifique se a URL está correta e acessível publicamente.";
- } else if (error.message?.includes("400")) {
- userMessage = "URL inválida ou não encontrada.";
- } else if (error.message?.includes("500")) {
- userMessage = "Erro no servidor do Google. Tente novamente.";
- }
-
- toast({
- variant: "destructive",
- title: "Erro na Análise",
- description: userMessage
- });
-
- setPsiResults({
- error: true,
- mobile: null, desktop: null, techStack: [], pixels: [],
- vitals: { lcp: "Erro", cls: "Erro", tbt: "Erro", score: 0 },
- seoMetadata: { title: "Erro na Leitura", description: "Não foi possível acessar o site." },
- compliance: { lgpd: false, privacy: false, security: false },
- crux: { lcp: "N/A", cls: "N/A", assessment: "ERRO DE CONEXÃO" }
- });
-
- setProgress(100);
- setTimeout(() => {
- setStep('results');
- }, 1000);
- } finally {
- setIsAnalyzing(false);
- }
- };
-
- // Benchmark Competitivo - Executado após resultados carregarem
- const runBenchmark = async () => {
- const validCompetitors = competitorUrls.filter(url => url.trim() !== '');
- if (validCompetitors.length === 0 || !targetUrl) return;
-
- setIsBenchmarking(true);
- try {
- const result = await runCompetitiveBenchmark(
- targetUrl,
- validCompetitors,
- viewMode === 'mobile' ? 'PHONE' : 'DESKTOP'
- );
- setBenchmarkResult(result);
- toast({
- className: "bg-white border-zinc-200 text-zinc-900",
- title: "BENCHMARK CONCLUÍDO",
- description: `Comparação com ${validCompetitors.length} concorrente(s) finalizada.`
- });
- } catch (error) {
- console.error('Benchmark error:', error);
- toast({
- variant: "destructive",
- title: "Erro no Benchmark",
- description: "Não foi possível comparar com os concorrentes."
- });
- } finally {
- setIsBenchmarking(false);
- }
- };
-
- // Trigger benchmark automaticamente quando resultados carregam e há concorrentes
- useEffect(() => {
- if (step === 'results' && !benchmarkResult && competitorUrls.some(u => u.trim())) {
- runBenchmark();
- }
- }, [step]);
-
- const handleAnswer = (optionScore: number, optionIdx: number) => {
- if (selectedOption !== null) return;
- setSelectedOption(optionIdx);
- setShowLog(true);
-
- const newScore = score + optionScore;
- setScore(newScore);
- setAnswers([...answers, optionScore]);
-
- setTimeout(() => {
- if (currentQ < QUESTIONS.length - 1) {
- setShowLog(false);
- setSelectedOption(null);
- setCurrentQ(prev => prev + 1);
- } else {
- setStep('analyzing');
- runPageSpeed(targetUrl);
- }
- }, 2000);
- };
-
- const handleFormSubmit = async (data: DiagnosticFormData) => {
- setIsSubmitting(true);
- try {
- await submitPublicDiagnostic(
- { ...data, phone: '' },
- { answers, diagnostic_type: 'site', psi: psiResults ? 'captured' : 'failed', target_url: targetUrl, source: 'site-score' },
- score,
- { level: "Auditoria Técnica", description: "Diagnóstico Finalizado", action: "Revisão Recomendada", color: "revgreen" },
- 'score_captured'
- );
-
- setHasSubmittedLead(true);
- toast({
- className: "bg-white border-zinc-200 text-zinc-900",
- title: "RELATÓRIO LIBERADO",
- description: "Acesso completo concedido."
- });
- } catch (error) {
- console.error(error);
- toast({ variant: 'destructive', title: "Erro", description: "Tente novamente." });
- } finally {
- setIsSubmitting(false);
- }
- };
-
- // Unified score calculation with robust fallback
- const getFinalScore = () => {
- // baseScore is from manual questions (max 100)
- const baseScore = score;
-
- // If we have PSI score, we could blend it, but for now we prioritize PSI if it exists and is > 0
- const psiScore = psiResults?.mobile?.vitals?.score || 0;
-
- if (psiScore > 0) return psiScore;
- return baseScore;
- };
-
- const finalScore = getFinalScore();
- const psiMobileScore = psiResults?.mobile?.lighthouseResult?.categories?.performance?.score ? Math.round(psiResults.mobile.lighthouseResult.categories.performance.score * 100) : null;
- const psiDesktopScore = psiResults?.desktop?.lighthouseResult?.categories?.performance?.score ? Math.round(psiResults.desktop.lighthouseResult.categories.performance.score * 100) : null;
- const psiSeoScore = psiResults?.mobile?.lighthouseResult?.categories?.seo?.score ? Math.round(psiResults.mobile.lighthouseResult.categories.seo.score * 100) : null;
-
-
- const seoComponent = (
- <SEO
- title="Auditoria de Site B2B - Diagnóstico de Performance Gratuito"
- description="Analise gratuitamente a performance, SEO e conformidade do seu site B2B. Auditoria técnica com PageSpeed Insights e análise de Core Web Vitals."
- canonical="https://revhackers.com.br/score-site"
- breadcrumbs={[
- { name: "Home", url: "https://revhackers.com.br/" },
- { name: "Diagnósticos", url: "https://revhackers.com.br/diagnostico" },
- { name: "Score Site", url: "https://revhackers.com.br/score-site" }
- ]}
- />
- );
-
- if (step === 'url-input') {
- return (
- <>{seoComponent}
- <DiagnosticLayout
- title="Diagnóstico Site"
- subtitle="Veja como esta a performance do seu site e entenda os pontos de melhoria"
- variant="light"
- centered={true}
- hideHeader={false}
- headerVariant="default"
- >
- <div className="max-w-4xl mx-auto flex flex-col items-center w-full min-h-[60vh] justify-center animate-fade-in">
- <div className="bg-white border border-zinc-200 p-12 mb-8 relative overflow-hidden group w-full text-center hover:border-zinc-300 transition-colors shadow-sm">
- <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none transition-transform group-hover:scale-105 duration-1000">
- <Zap className="w-64 h-64 text-black rotate-12" />
- </div>
-
- <div className="relative z-10 flex flex-col items-center max-w-2xl mx-auto">
-
- {/* URL Input Action Area */}
- <div className="mb-16 w-full">
- <div className="flex flex-col md:flex-row gap-0 w-full border border-zinc-200 bg-white group-hover:border-zinc-300 transition-colors overflow-hidden shadow-sm mb-4">
- <span className="hidden md:flex items-center px-6 font-sans text-xs text-zinc-500 bg-zinc-50 border-r border-zinc-200 select-none gap-2">
- <Globe className="w-4 h-4" />
- https://
- </span>
- <input
- type="text"
- value={targetUrl}
- onChange={(e) => setTargetUrl(e.target.value)}
- placeholder="seu-site.com"
- className="flex-1 bg-transparent border-none text-black h-16 px-6 focus:ring-0 outline-none font-bold text-lg placeholder:text-zinc-600"
- />
- <button
- onClick={() => setStep('questions')}
- disabled={!targetUrl}
- className="bg-white text-zinc-900 px-8 h-16 font-bold text-xs hover:bg-zinc-50 transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 min-w-[140px]"
- >
- INICIAR <ArrowRight className="w-3 h-3" />
- </button>
- </div>
- <p className="text-xs text-zinc-500 font-sans">
- *Iniciaremos a análise técnica de infraestrutura
- </p>
-
- {/* Competitor URLs - Opcional */}
- <div className="mt-8 w-full border-t border-zinc-100 pt-8">
- <div className="flex items-center gap-2 mb-4">
- <Trophy className="w-4 h-4 text-zinc-500" />
- <span className="text-xs font-bold text-zinc-500 ">Benchmark Competitivo (Opcional)</span>
- </div>
- <p className="text-xs text-zinc-500 mb-4">Compare sua performance contra até 2 concorrentes usando dados reais do Chrome.</p>
- <div className="space-y-3">
- {competitorUrls.map((url, idx) => (
- <div key={idx} className="flex items-center gap-2">
- <span className="text-xs font-sans text-zinc-500 w-24">Concorrente {idx + 1}</span>
- <input
- type="text"
- value={url}
- onChange={(e) => {
- const newUrls = [...competitorUrls];
- newUrls[idx] = e.target.value;
- setCompetitorUrls(newUrls);
- }}
- placeholder="concorrente.com"
- className="flex-1 bg-zinc-50 border border-zinc-100 text-black h-10 px-4 text-sm focus:ring-0 outline-none focus:border-zinc-300"
- />
- </div>
- ))}
- </div>
- </div>
- </div>
-
- {/* 3-Column Grid */}
- <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full border-t border-zinc-100 pt-12">
- <div className="flex flex-col items-center justify-center gap-4 group/item">
- <div className="w-12 h-12 flex items-center justify-center bg-zinc-50 border border-zinc-100 group-hover/item:border-black group-hover/item:bg-white group-hover/item:text-zinc-900 transition-all duration-500">
- <Zap className="w-5 h-5" />
- </div>
- <div className="flex flex-col gap-1">
- <span className="text-xs font-sans font-bold text-zinc-500 ">01 // Speed</span>
- <span className="text-sm font-bold text-zinc-900">Performance</span>
- </div>
- </div>
-
- <div className="flex flex-col items-center justify-center gap-4 group/item">
- <div className="w-12 h-12 flex items-center justify-center bg-zinc-50 border border-zinc-100 group-hover/item:border-black group-hover/item:bg-white group-hover/item:text-zinc-900 transition-all duration-500">
- <Search className="w-5 h-5" />
- </div>
- <div className="flex flex-col gap-1">
- <span className="text-xs font-sans font-bold text-zinc-500 ">02 // SEO</span>
- <span className="text-sm font-bold text-zinc-900">Visibilidade</span>
- </div>
- </div>
-
- <div className="flex flex-col items-center justify-center gap-4 group/item">
- <div className="w-12 h-12 flex items-center justify-center bg-zinc-50 border border-zinc-100 group-hover/item:border-black group-hover/item:bg-white group-hover/item:text-zinc-900 transition-all duration-500">
- <Terminal className="w-5 h-5" />
- </div>
- <div className="flex flex-col gap-1">
- <span className="text-xs font-sans font-bold text-zinc-500 ">03 // Tech</span>
- <span className="text-sm font-bold text-zinc-900">Conformidade</span>
- </div>
- </div>
- </div>
- </div>
- </div>
- </div>
- </DiagnosticLayout>
- </>
- );
- }
-
- if (step === 'questions') {
- const question = QUESTIONS[currentQ];
- return (
- <>{seoComponent}
- <DiagnosticLayout title="Diagnóstico Site" subtitle="Em análise" variant="light" centered={true} hideHeader={false} headerVariant="default">
- <div className="max-w-3xl mx-auto flex flex-col items-center w-full min-h-[60vh] justify-center px-4 md:px-0">
-
- {/* Header Clean */}
- <div className="w-full flex items-center justify-between mb-8 border-b border-zinc-100 pb-2">
- <div className="flex items-center gap-3">
- <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
- <span className="text-xs font-sans font-medium text-zinc-500 ">Protocolo de Diagnóstico</span>
- </div>
- <span className="text-xs font-sans font-medium text-zinc-500">0{currentQ + 1} / 0{QUESTIONS.length}</span>
- </div>
-
- <div className="w-full animate-fade-in flex flex-col items-center relative">
- <AnimatePresence mode="wait">
- <motion.div
- key={currentQ}
- initial={{ opacity: 0, y: 10 }}
- animate={{ opacity: 1, y: 0 }}
- exit={{ opacity: 0, y: -10 }}
- className="w-full flex flex-col items-center space-y-6"
- >
- <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black leading-tight text-center max-w-2xl">
- {question.question}
- </h2>
-
- <div className="grid grid-cols-1 gap-3 w-full max-w-xl">
- {question.options.map((opt, idx) => (
- <button
- key={idx}
- disabled={selectedOption !== null}
- onClick={() => handleAnswer(opt.score, idx)}
- className={`group relative flex items-center gap-5 p-5 text-left transition-all duration-300 border ${selectedOption === idx
- ? "bg-white text-zinc-900 border-zinc-200 scale-[1.01]"
- : "bg-white border-zinc-200 text-zinc-900 hover:border-zinc-400 hover:bg-zinc-50"
- } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
- >
- <div className={`w-6 h-6 flex items-center justify-center text-xs font-sans font-bold border rounded transition-colors ${selectedOption === idx
- ? "bg-white text-zinc-900 border-white"
- : "bg-zinc-100 border-zinc-200 text-zinc-500 group-hover:border-zinc-400 group-hover:text-zinc-900"
- }`}>
- {String.fromCharCode(65 + idx)}
- </div>
- <span className="text-sm font-medium">
- {opt.label}
- </span>
- </button>
- ))}
- </div>
-
- {/* Minimal Log */}
- <AnimatePresence>
- {showLog && (
- <motion.div
- initial={{ opacity: 0, y: 10 }}
- animate={{ opacity: 1, y: 0 }}
- className="absolute -bottom-32 left-0 right-0 mx-auto w-full max-w-xl text-center"
- >
- <p className="text-xs font-medium text-zinc-500 bg-zinc-50 px-4 py-2 inline-block border border-zinc-100">
- <span className="text-black font-bold mr-2">Info:</span>{question.log}
- </p>
- </motion.div>
- )}
- </AnimatePresence>
- </motion.div>
- </AnimatePresence>
- </div>
- </div>
- </DiagnosticLayout>
- </>
- );
- }
-
- if (step === 'analyzing') {
- return (
- <>{seoComponent}
- <DiagnosticLayout title="Analisando" subtitle="Processando..." variant="light" centered={true} hideHeader={false} headerVariant="default">
- <div className="max-w-xl mx-auto text-center flex flex-col items-center justify-center min-h-[60vh]">
- <div className="w-full space-y-12">
- <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
- <div className="absolute inset-0 border-2 border-zinc-100 rounded-full"></div>
- <div className="absolute inset-0 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
- {/* <Gauge className="w-5 h-5 text-black" /> REMOVIDO PARA DAR LUGAR A PORCENTAGEM */}
- <span className="text-xs font-bold font-sans min-w-[3ch] text-center">{progress}%</span>
- </div>
- <div className="space-y-4">
- <span className="text-xs font-sans text-zinc-500 font-medium block">{loadingStatus}</span>
- <div className="w-full max-w-xs mx-auto bg-zinc-100 h-[2px] relative overflow-hidden">
- <motion.div
- className="absolute top-0 left-0 bg-white h-full"
- initial={{ width: 0 }}
- animate={{ width: "100%" }}
- transition={{ duration: 4, ease: "easeInOut" }}
- />
- </div>
- </div>
- </div>
- </div>
- </DiagnosticLayout>
- </>
- );
- }
-
- if (step === 'results') {
- const currentData = viewMode === 'mobile' ? psiResults?.mobile : psiResults?.desktop;
- const currentScore = currentData?.vitals?.score || finalScore;
-
- return (
- <>{seoComponent}
- <DiagnosticLayout
- title=""
- subtitle=""
- variant="dark"
- hideHeader={true}
- centered={true}
- headerVariant="default"
- >
- {/* BACKDROP DE SEGURANÇA (Garante fundo preto total) */}
- <div className="fixed inset-0 bg-white -z-50 pointer-events-none" />
-
- {/* GATE OVERLAY */}
- {!hasSubmittedLead && (
- <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/95 backdrop-blur-md p-4 animate-in fade-in duration-300 overflow-y-auto">
- <div className="bg-white border border-zinc-200 p-8 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 shadow-sm relative my-auto max-h-[90vh]">
-
- {/* Coluna Esquerda: Resultado (Visual) */}
- <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:border-r border-zinc-200 md:pr-12">
- {/* Teaser Pill */}
- <div className="inline-flex items-center gap-2 bg-white px-3 py-1 border border-zinc-200">
- <div className={`w-1.5 h-1.5 rounded-full ${psiResults?.mobile?.vitals?.score >= 70 ? 'bg-revgreen' : 'bg-red-500'} animate-pulse shadow-[0_0_10px_currentColor]`}></div>
- <span className="text-xs font-sans font-bold text-zinc-500 ">Análise Finalizada</span>
- </div>
-
- <div className="relative">
- <div className="text-3xl font-bold text-zinc-900 leading-none shadow-black drop-shadow-2xl">{finalScore}</div>
- </div>
-
- <h3 className="text-sm font-medium text-zinc-500 leading-relaxed max-w-xs">
- {finalScore >= 90 ? (
- <>Seu site está <span className="text-revgreen font-bold">muito bem otimizado</span>. Confira os detalhes técnicos completos.</>
- ) : finalScore >= 70 ? (
- <>Seu site está em bom estado, mas ainda há <span className="text-yellow-400 font-bold">pequenas otimizações</span> cruciais.</>
- ) : (
- <>Detectamos oportunidades de <span className="text-revgreen font-bold">otimização técnica</span> crítica na sua infraestrutura.</>
- )}
- </h3>
- </div>
-
- {/* Coluna Direita: Formulário */}
- <div className="flex-1 w-full max-w-md flex flex-col justify-center">
- <DiagnosticForm
- onSubmit={handleFormSubmit}
- isSubmitting={isSubmitting}
- title="Receber Relatório"
- subtitle="Obtenha o plano de ação técnico."
- variant="dark"
- diagnosticType="Site"
- showLinkedin={false}
- />
- </div>
- </div>
- </div>
- )}
-
- <div className={`space-y-8 transition-all duration-700 w-full ${!hasSubmittedLead ? 'blur-sm opacity-60 pointer-events-none' : ''}`}>
-
- {/* DASHBOARD HEADLINE - Adicionado por solicitação */}
- <div className="mb-12 text-center animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-4xl mx-auto">
- <div className="inline-flex items-center gap-2 mb-4 bg-white border border-zinc-200 px-3 py-1">
- <span className="w-1.5 h-1.5 bg-revgreen shadow-[0_0_10px_#00CC6A]"></span>
- <span className="text-xs font-sans font-bold text-zinc-500 ">Status: Finalizado</span>
- </div>
- <h1 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-2">
- Diagnóstico <span className="text-zinc-600">Site</span>
- </h1>
- <p className="text-zinc-500 font-medium max-w-xl mx-auto">
- Análise técnica completa dos vetores de crescimento e infraestrutura.
- </p>
- </div>
-
- <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch animate-in fade-in duration-700">
- {/* Left Column: Gauge */}
- <div className="lg:col-span-4">
- <ScoreGauge
- score={currentScore}
- label={`Performance ${viewMode === 'mobile' ? 'Mobile' : 'Desktop'}`}
- description="Google PageSpeed Insights"
- />
- </div>
-
- {/* Right Column: Detailed Grid */}
- <div className="lg:col-span-8 flex flex-col gap-px bg-zinc-50 border border-zinc-200 overflow-hidden">
- {/* Header Row with Toggle */}
- <div className="bg-white p-6 border-b border-zinc-200 flex justify-between items-center bg-white/5">
- <div className="flex items-center gap-3">
- <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${viewMode === 'mobile' ? 'bg-revgreen' : 'bg-zinc-400'}`} />
- <span className="text-xs font-sans font-bold text-zinc-500 ">
- INFRAESTRUTURA // WEB VITALS
- </span>
- </div>
-
- {/* TOGGLE BUTTONS */}
- <div className="flex bg-white p-1 border border-zinc-200">
- <button
- onClick={() => setViewMode('mobile')}
- className={`px-3 py-1 text-xs font-bold transition-all ${viewMode === 'mobile' ? 'bg-zinc-50 text-zinc-900 shadow-sm' : 'text-zinc-500 hover:text-zinc-600'}`}
- >
- Mobile
- </button>
- <button
- onClick={() => setViewMode('desktop')}
- className={`px-3 py-1 text-xs font-bold transition-all ${viewMode === 'desktop' ? 'bg-zinc-50 text-zinc-900 shadow-sm' : 'text-zinc-500 hover:text-zinc-600'}`}
- >
- Desktop
- </button>
- </div>
- </div>
-
-
- <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-white">
- {/* Core Web Vitals Dynamic */}
- <MetricCard
- label="LCP (Carregamento)"
- value={psiResults?.error ? "ERRO API" : (currentData?.vitals?.lcp || "N/A")}
- description={psiResults?.error ? String(psiResults.error).substring(0, 30) : "Largest Contentful Paint"}
- status={psiResults?.error ? 'critical' : !currentData?.vitals?.lcp || currentData.vitals.lcp === 'N/A' ? 'warning' : parseFloat(currentData.vitals.lcp) > 2.5 ? 'critical' : 'success'}
- variant="dark"
- />
- <MetricCard
- label="Crux Assessment"
- value={psiResults?.crux?.assessment || "Indisponível"}
- description="Dados de Usuários Reais"
- status={psiResults?.crux?.assessment === 'PASS' ? 'success' : 'warning'}
- />
- <MetricCard
- label="SEO Técnico"
- value={psiSeoScore !== null ? `${psiSeoScore}/100` : "PENDENTE"}
- description="Search Engine Opt."
- status={psiSeoScore && psiSeoScore >= 90 ? 'success' : 'warning'}
- variant="dark"
- />
-
- {/* Compliance & Intelligence */}
- <MetricCard
- label="Segurança (SSL)"
- value={psiResults?.compliance?.security ? "Protegido" : "Vulnerável"}
- description="Protocolo HTTPS"
- status={psiResults?.compliance?.security ? 'success' : 'critical'}
- variant="dark"
- />
- <MetricCard
- label="Conformidade (Privacy)"
- value={psiResults?.compliance?.lgpd ? "Detectada" : "Ausente"}
- description="Scripts de Consentimento"
- status={psiResults?.compliance?.lgpd ? 'success' : 'warning'}
- variant="dark"
- />
- <MetricCard
- label="UX / Core Vitals"
- value={currentScore >= 90 ? "Otimizado" : currentScore >= 50 ? "Regular" : "Crítico"}
- description="Experiência do Usuário"
- status={currentScore >= 90 ? 'success' : currentScore >= 50 ? 'warning' : 'critical'}
- variant="dark"
- />
- </div>
-
- {/* Tech Stack & SEO Meta Row */}
- <div className="bg-white p-6 border-t border-zinc-200 grid grid-cols-1 md:grid-cols-2 gap-8">
- <div>
- <span className="text-xs font-sans text-zinc-500 block mb-4">Clareza Estratégica (SEO)</span>
- <div className="space-y-3">
- <div>
- <span className="text-xs font-bold text-zinc-600 block">Title Tag</span>
- <p className="text-sm font-bold text-zinc-900 line-clamp-1">{psiResults?.seoMetadata?.title}</p>
- </div>
- <div>
- <span className="text-xs font-bold text-zinc-600 block">Meta Description</span>
- <p className="text-xs text-zinc-500 line-clamp-2 italic">"{psiResults?.seoMetadata?.description}"</p>
- </div>
- </div>
- </div>
- <div>
- <span className="text-xs font-sans text-zinc-500 block mb-4">Tecnologias Identificadas</span>
- <div className="flex flex-wrap gap-2">
- {[...(psiResults?.techStack || []), ...(psiResults?.pixels || [])].map((tech, i) => (
- <span key={i} className="text-xs font-bold bg-white text-zinc-600 border border-zinc-200 px-3 py-1">
- {tech}
- </span>
- ))}
- </div>
- </div>
- </div>
- </div>
- </div>
-
- {/* FOLD 02: WHITE DIAGNOSIS & ACTION PLAN */}
- <div className="w-[100vw] relative left-[50%] right-[50%] -ml-[50vw] bg-white text-zinc-900 px-4 md:px-0 py-20 mt-32 border-t border-zinc-200 animate-fade-in duration-1000 delay-500">
- <div className="max-w-6xl mx-auto space-y-32">
-
- {/* PSI AUDIT DETAILS */}
- <section>
- <div className="space-y-6 mb-20">
- <p className="text-[#00CC6A] text-xs font-semibold ">
- AUDITORIA_ESTRATÉGICA
- </p>
- <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black leading-none italic">
- Sua infraestrutura <span className="text-zinc-500">trabalha para você?</span>
- </h2>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
- <div className="space-y-6 border-l border-zinc-200 pl-8">
- <h4 className="text-sm font-bold text-black flex items-center gap-3">
- <div className="w-1.5 h-1.5 bg-white" />
- Perspectiva Técnica
- </h4>
- <p className="text-black text-base leading-relaxed font-semibold">
- {psiResults?.error
- ? "Devido às camadas de segurança do seu servidor (Kasada/Akamai), nossa análise automática foi parcialmente limitada. " +
- (score >= 90
- ? "Com base no seu score de " + score + "%, sua infraestrutura está operando em alta performance. Continue monitorando para manter a excelência."
- : score >= 50
- ? "Com base no seu score de " + score + "%, sua infraestrutura apresenta oportunidades de otimização que podem melhorar seu CAC."
- : "Com base no seu score de " + score + "%, detectamos que sua infraestrutura é o principal gargalo da sua operação hoje.")
- : insights.description}
- </p>
- </div>
-
- <div className="space-y-6 border-l border-zinc-200 pl-8">
- <h4 className="text-sm font-bold text-black flex items-center gap-3">
- <div className="w-1.5 h-1.5 bg-white" />
- Plano de Ação
- </h4>
- <p className="text-black text-base leading-relaxed font-semibold">
- Sua prioridade técnica imediata é: <strong className="text-black bg-zinc-200 px-1">{insights.action}</strong>.
- {score >= 90
- ? " Mantenha o monitoramento ativo para preservar esta vantagem competitiva."
- : " Ignorar estes ajustes resulta em perda direta de tráfego qualificado por fricção técnica."}
- </p>
- </div>
- </div>
- </section>
-
- {/* BENCHMARK COMPETITIVO - Exibe apenas se houver resultados */}
- {(benchmarkResult || isBenchmarking) && (
- <section className="mt-32">
- <div className="space-y-6 mb-12">
- <div className="inline-block bg-revgreen text-black px-4 py-1.5 text-xs font-sans font-bold">
- BENCHMARK_COMPETITIVO
- </div>
- <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black leading-none italic">
- Você vs. <span className="text-zinc-500">Concorrentes</span>
- </h2>
- <p className="text-sm text-zinc-500 max-w-xl">
- Comparação baseada em dados reais de usuários Chrome (CrUX API). Métricas de P75 (percentil 75).
- </p>
- </div>
-
- {isBenchmarking ? (
- <div className="flex items-center justify-center py-16 gap-4 bg-zinc-50 border border-zinc-100">
- <div className="w-6 h-6 border-2 border-revgreen border-t-transparent rounded-full animate-spin" />
- <span className="text-sm font-medium text-zinc-500">Consultando dados reais de performance...</span>
- </div>
- ) : benchmarkResult && (
- <div className="overflow-x-auto">
- <table className="w-full border-collapse">
- <thead>
- <tr className="border-b-2 border-black">
- <th className="text-left py-4 px-4 text-xs font-sans font-bold text-zinc-500 ">Site</th>
- <th className="text-center py-4 px-4 text-xs font-sans font-bold text-zinc-500 ">LCP</th>
- <th className="text-center py-4 px-4 text-xs font-sans font-bold text-zinc-500 ">CLS</th>
- <th className="text-center py-4 px-4 text-xs font-sans font-bold text-zinc-500 ">INP</th>
- <th className="text-center py-4 px-4 text-xs font-sans font-bold text-zinc-500 ">Status</th>
- </tr>
- </thead>
- <tbody>
- {/* Cliente (Destacado) */}
- <tr className="bg-revgreen/10 border-b border-zinc-100">
- <td className="py-4 px-4">
- <div className="flex items-center gap-3">
- <Trophy className="w-4 h-4 text-revgreen" />
- <div>
- <span className="font-bold text-black text-sm block">{new URL(benchmarkResult.clientSite.url).hostname}</span>
- <span className="text-xs text-zinc-500 font-sans">SEU SITE</span>
- </div>
- </div>
- </td>
- <td className="text-center py-4 px-4">
- <span className="font-sans font-bold" style={{ color: getCategoryColor(benchmarkResult.clientSite.lcp.category) }}>
- {formatMetricValue('lcp', benchmarkResult.clientSite.lcp.p75)}
- </span>
- </td>
- <td className="text-center py-4 px-4">
- <span className="font-sans font-bold" style={{ color: getCategoryColor(benchmarkResult.clientSite.cls.category) }}>
- {formatMetricValue('cls', benchmarkResult.clientSite.cls.p75)}
- </span>
- </td>
- <td className="text-center py-4 px-4">
- <span className="font-sans font-bold" style={{ color: getCategoryColor(benchmarkResult.clientSite.inp.category) }}>
- {formatMetricValue('inp', benchmarkResult.clientSite.inp.p75)}
- </span>
- </td>
- <td className="text-center py-4 px-4">
- <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-bold bg-white text-zinc-900">
- #{benchmarkResult.ranking.overall} de {benchmarkResult.competitors.length + 1}
- </span>
- </td>
- </tr>
-
- {/* Concorrentes */}
- {benchmarkResult.competitors.map((competitor, idx) => (
- <tr key={idx} className="border-b border-zinc-100 hover:bg-zinc-50 transition-colors">
- <td className="py-4 px-4">
- <div className="flex items-center gap-3">
- <Users className="w-4 h-4 text-zinc-600" />
- <div>
- <span className="font-medium text-zinc-700 text-sm block">{new URL(competitor.url).hostname}</span>
- <span className="text-xs text-zinc-500 font-sans">CONCORRENTE {idx + 1}</span>
- </div>
- </div>
- </td>
- <td className="text-center py-4 px-4">
- {competitor.error ? (
- <span className="text-xs text-zinc-500">N/A</span>
- ) : (
- <span className="font-sans font-bold" style={{ color: getCategoryColor(competitor.lcp.category) }}>
- {formatMetricValue('lcp', competitor.lcp.p75)}
- </span>
- )}
- </td>
- <td className="text-center py-4 px-4">
- {competitor.error ? (
- <span className="text-xs text-zinc-500">N/A</span>
- ) : (
- <span className="font-sans font-bold" style={{ color: getCategoryColor(competitor.cls.category) }}>
- {formatMetricValue('cls', competitor.cls.p75)}
- </span>
- )}
- </td>
- <td className="text-center py-4 px-4">
- {competitor.error ? (
- <span className="text-xs text-zinc-500">N/A</span>
- ) : (
- <span className="font-sans font-bold" style={{ color: getCategoryColor(competitor.inp.category) }}>
- {formatMetricValue('inp', competitor.inp.p75)}
- </span>
- )}
- </td>
- <td className="text-center py-4 px-4">
- {competitor.error ? (
- <span className="text-xs text-zinc-500">{competitor.error}</span>
- ) : (
- <span className="text-xs text-zinc-500">Analisado</span>
- )}
- </td>
- </tr>
- ))}
- </tbody>
- </table>
-
- {/* Legenda */}
- <div className="flex items-center justify-center gap-6 mt-6 text-xs font-sans text-zinc-500">
- <div className="flex items-center gap-2">
- <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#00C853' }} />
- <span>Bom</span>
- </div>
- <div className="flex items-center gap-2">
- <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FFAB00' }} />
- <span>Precisa Melhorar</span>
- </div>
- <div className="flex items-center gap-2">
- <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF1744' }} />
- <span>Ruim</span>
- </div>
- </div>
- </div>
- )}
- </section>
- )}
-
- <section>
- <div className="space-y-6 mb-20 text-right">
- <p className="text-[#00CC6A] text-xs font-semibold ">
- MARKET_INTELLIGENCE
- </p>
- <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black leading-none italic">
- Oportunidades <span className="text-zinc-500">Táticas Encontradas.</span>
- </h2>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
- <div className="p-8 bg-zinc-50 border border-zinc-100 flex flex-col justify-between">
- <div>
- <span className="text-xs font-sans text-zinc-500 block mb-4">Escalabilidade</span>
- <h4 className="text-xl font-bold text-black mb-4 ">Performance Proativa</h4>
- <p className="text-sm text-zinc-600 leading-relaxed mb-6">
- Com um score de {currentScore}%, sua infraestrutura {currentScore > 80 ? "está pronta para suportar escalas agressivas de mídia paga." : "apresenta gargalos que aumentarão drasticamente o seu CAC se tentar escalar agora."}
- </p>
- </div>
- <div className="text-xs font-bold text-black flex items-center gap-2 ">
- Status: {currentScore > 80 ? "Verde (Go Scale)" : "Amarelo (Fix First)"}
- </div>
- </div>
-
- <div className="p-8 bg-zinc-50 border border-zinc-100 flex flex-col justify-between">
- <div>
- <span className="text-xs font-sans text-zinc-500 block mb-4">Autoridade</span>
- <h4 className="text-xl font-bold text-black mb-4 ">Clareza Semântica</h4>
- <p className="text-sm text-zinc-600 leading-relaxed mb-6">
- O uso de {(psiResults?.techStack || []).length} tecnologias e {psiResults?.seoMetadata?.title ? "metadados presentes" : "metadados ausentes"} indica uma operação {(psiResults?.techStack || []).length > 5 ? "robusta" : "em estágio inicial"} de marketing digital.
- </p>
- </div>
- <div className="text-xs font-bold text-black flex items-center gap-2 ">
- Nível: {(psiResults?.techStack || []).length > 5 ? "Avançado" : "Semente"}
- </div>
- </div>
-
- <div className="p-8 bg-zinc-50 border border-zinc-100 flex flex-col justify-between">
- <div>
- <span className="text-xs font-sans text-zinc-500 block mb-4">Conversão</span>
- <h4 className="text-xl font-bold text-black mb-4 ">Mobile First Index</h4>
- <p className="text-sm text-zinc-600 leading-relaxed mb-6">
- Sua pontuação mobile de {psiResults?.mobile?.vitals?.score || 0}% é o principal fator de retenção. {(psiResults?.mobile?.vitals?.score || 0) > 90 ? "Parabéns pela otimização extrema." : "Cada 1% de melhoria aqui reflete em aproximadamente 2% de redução no bounce rate."}
- </p>
- </div>
- <div className="text-xs font-bold text-black flex items-center gap-2 ">
- Prioridade: {(psiResults?.mobile?.vitals?.score || 0) < 50 ? "Crítica" : "Otimização"}
- </div>
- </div>
- </div>
- </section>
-
- <DiagnosticActionSection
- title="Destrave sua Performance."
- subtitle="Agende um diagnóstico gratuito com um especialista técnico para desenhar seu plano de ação."
- onCtaClick={() => setIsBookingModalOpen(true)}
- />
-
- <DiagnosticBookingModal
- isOpen={isBookingModalOpen}
- onClose={() => setIsBookingModalOpen(false)}
- diagnosticType="site"
- />
-
- {/* Fallback MoFu CTA */}
- <div className="mt-8 mb-16 flex flex-col items-center justify-center text-center px-4">
- <span className="text-xs font-sans text-zinc-500 mb-4">MUITO CEDO PARA UMA DEEP-DIVE CALL?</span>
- <button onClick={() => window.open('https://revhackers.com.br/')} className="text-xs font-semibold text-zinc-900 bg-white border border-zinc-200 px-6 py-3 hover:bg-zinc-50 transition-colors ">Baixe o Checklist de Conversão (Grátis)</button>
- </div>
- </div>
- </div>
- </div>
- </DiagnosticLayout>
- </>
- );
- }
-
- return <>{seoComponent}</>;
+  const { toast } = useToast();
+  const [step, setStep] = useState<Step>('url-input');
+  const [currentQ, setCurrentQ] = useState(0);
+  const [score, setScore] = useState(0);
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSubmittedLead, setHasSubmittedLead] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const insights = getDiagnosticInsights('site', score);
+
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [showLog, setShowLog] = useState(false);
+
+  const [targetUrl, setTargetUrl] = useState('');
+  const [psiResults, setPsiResults] = useState<{
+    mobile: any,
+    desktop: any,
+    techStack: string[],
+    pixels: string[],
+    vitals: { lcp: string, cls: string, tbt: string, score: number },
+    seoMetadata?: { title: string, description: string, h1?: string },
+    compliance?: { lgpd: boolean, privacy: boolean, security: boolean },
+    crux?: { lcp: string, fid?: string, cls: string, assessment: string },
+    error?: boolean
+  } | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState('Iniciando análise...');
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (step === 'analyzing') {
+      setProgress(0);
+      const interval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 90) return prev;
+          const increment = Math.random() * 5 + 1;
+          return Math.min(90, Math.floor(prev + increment));
+        });
+      }, 200);
+
+      return () => clearInterval(interval);
+    }
+  }, [step]);
+
+  const [viewMode, setViewMode] = useState<'mobile' | 'desktop'>('mobile');
+
+  const [competitorUrls, setCompetitorUrls] = useState<string[]>(['', '']);
+  const [benchmarkResult, setBenchmarkResult] = useState<BenchmarkResult | null>(null);
+  const [isBenchmarking, setIsBenchmarking] = useState(false);
+
+  const runPageSpeed = async (url: string) => {
+    setIsAnalyzing(true);
+    setPsiResults(null);
+    setLoadingStatus('Conectando ao Google PageSpeed Insights...');
+
+    try {
+      const finalUrl = url.startsWith('http') ? url : `https://${url}`;
+
+      if (finalUrl.includes('localhost') || finalUrl.includes('127.0.0.1')) {
+        console.warn("Localhost detected. Using Mock Data.");
+
+        setLoadingStatus('Ambiente de Desenvolvimento Detectado...');
+        await new Promise(r => setTimeout(r, 1500));
+
+        const mockResult = {
+          mobile: { lighthouseResult: { categories: { performance: { score: 0.85 }, seo: { score: 0.92 } } } },
+          desktop: null,
+          techStack: ["React", "Vite", "Tailwind (Dev Mode)"],
+          pixels: ["Pixel de Teste"],
+          vitals: { lcp: "1.2s", cls: "0.05", tbt: "120ms", score: 85 },
+          seoMetadata: { title: "Localhost Development", description: "Ambiente de teste local." },
+          compliance: { lgpd: true, privacy: true, security: false },
+          crux: { lcp: "1.0s", cls: "0.01", assessment: "PASS" },
+          error: false
+        };
+
+        setPsiResults(mockResult);
+        setProgress(100);
+
+        toast({
+          className: "bg-white border-zinc-200 text-zinc-900",
+          title: "MODO DESENVOLVEDOR",
+          description: "Simulação de análise ativa para Localhost."
+        });
+
+        setStep('results');
+        return;
+      }
+
+      setLoadingStatus('Auditando Core Web Vitals (Mobile)...');
+
+      const { data, error } = await supabase.functions.invoke('analyze-site', {
+        body: { url: finalUrl, strategy: 'mobile' }
+      });
+
+      if (error) throw new Error(error.message || 'Edge Function error');
+      if (data?.error) throw new Error(data.error?.message || JSON.stringify(data.error));
+
+      const lighthouse = data.lighthouseResult;
+
+      setLoadingStatus('Processando Árvore de Renderização...');
+      await new Promise(r => setTimeout(r, 800));
+
+      const scoreValue = Math.round((lighthouse?.categories?.performance?.score || 0) * 100);
+      const audits = lighthouse?.audits || {};
+
+      const lcp = audits['largest-contentful-paint']?.displayValue || "N/A";
+      const cls = audits['cumulative-layout-shift']?.displayValue || "N/A";
+      const tbt = audits['total-blocking-time']?.displayValue || "N/A";
+
+      const detectedTech = lighthouse?.stackPacks?.map((p: any) => p.title) || [];
+
+      const realResults = {
+        mobile: data,
+        desktop: null,
+        techStack: detectedTech.length > 0 ? detectedTech : ["Tecnologia Web Padrão"],
+        pixels: ["Análise Profunda Pendente"],
+        vitals: { lcp, cls, tbt, score: scoreValue },
+        seoMetadata: {
+          title: audits['document-title']?.details?.title || "Título não detectado",
+          description: audits['meta-description']?.details?.items?.[0]?.description || "Descrição não encontrada",
+        },
+        compliance: {
+          lgpd: audits['bf-cache']?.score === 1,
+          privacy: url.includes('https'),
+          security: url.includes('https')
+        },
+        crux: {
+          lcp: data.loadingExperience?.metrics?.LARGEST_CONTENTFUL_PAINT_MS?.percentile
+            ? `${(data.loadingExperience.metrics.LARGEST_CONTENTFUL_PAINT_MS.percentile / 1000).toFixed(1)}s`
+            : "N/A",
+          cls: data.loadingExperience?.metrics?.CUMULATIVE_LAYOUT_SHIFT_SCORE?.percentile
+            ? (data.loadingExperience.metrics.CUMULATIVE_LAYOUT_SHIFT_SCORE.percentile / 100).toFixed(2)
+            : "N/A",
+          assessment: data.loadingExperience?.overall_category || "DADOS INSUFICIENTES"
+        },
+        error: false
+      };
+
+      setPsiResults(realResults);
+      setProgress(100);
+
+      toast({
+        className: "bg-white border-zinc-200 text-zinc-900",
+        title: "DIAGNÓSTICO REAL CONCLUÍDO",
+        description: `Auditoria oficial do Google finalizada. Score: ${scoreValue}`
+      });
+
+      setStep('results');
+
+    } catch (error: any) {
+      console.error(error);
+
+      let userMessage = "Falha ao conectar ao Google PSI.";
+      if (error.message?.includes("FAILED_DOCUMENT_REQUEST") || error.message?.includes("ERR_CONNECTION_FAILED")) {
+        userMessage = "Não foi possível acessar o site. Verifique se a URL está correta e acessível publicamente.";
+      } else if (error.message?.includes("400")) {
+        userMessage = "URL inválida ou não encontrada.";
+      } else if (error.message?.includes("500")) {
+        userMessage = "Erro no servidor do Google. Tente novamente.";
+      }
+
+      toast({
+        variant: "destructive",
+        title: "Erro na Análise",
+        description: userMessage
+      });
+
+      setPsiResults({
+        error: true,
+        mobile: null, desktop: null, techStack: [], pixels: [],
+        vitals: { lcp: "Erro", cls: "Erro", tbt: "Erro", score: 0 },
+        seoMetadata: { title: "Erro na Leitura", description: "Não foi possível acessar o site." },
+        compliance: { lgpd: false, privacy: false, security: false },
+        crux: { lcp: "N/A", cls: "N/A", assessment: "ERRO DE CONEXÃO" }
+      });
+
+      setProgress(100);
+      setTimeout(() => {
+        setStep('results');
+      }, 1000);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const runBenchmark = async () => {
+    const validCompetitors = competitorUrls.filter(url => url.trim() !== '');
+    if (validCompetitors.length === 0 || !targetUrl) return;
+
+    setIsBenchmarking(true);
+    try {
+      const result = await runCompetitiveBenchmark(
+        targetUrl,
+        validCompetitors,
+        viewMode === 'mobile' ? 'PHONE' : 'DESKTOP'
+      );
+      setBenchmarkResult(result);
+      toast({
+        className: "bg-white border-zinc-200 text-zinc-900",
+        title: "BENCHMARK CONCLUÍDO",
+        description: `Comparação com ${validCompetitors.length} concorrente(s) finalizada.`
+      });
+    } catch (error) {
+      console.error('Benchmark error:', error);
+      toast({
+        variant: "destructive",
+        title: "Erro no Benchmark",
+        description: "Não foi possível comparar com os concorrentes."
+      });
+    } finally {
+      setIsBenchmarking(false);
+    }
+  };
+
+  useEffect(() => {
+    if (step === 'results' && !benchmarkResult && competitorUrls.some(u => u.trim())) {
+      runBenchmark();
+    }
+  }, [step]);
+
+  const handleAnswer = (optionScore: number, optionIdx: number) => {
+    if (selectedOption !== null) return;
+    setSelectedOption(optionIdx);
+    setShowLog(true);
+
+    const newScore = score + optionScore;
+    setScore(newScore);
+    setAnswers([...answers, optionScore]);
+
+    setTimeout(() => {
+      if (currentQ < QUESTIONS.length - 1) {
+        setShowLog(false);
+        setSelectedOption(null);
+        setCurrentQ(prev => prev + 1);
+      } else {
+        setStep('analyzing');
+        runPageSpeed(targetUrl);
+      }
+    }, 2000);
+  };
+
+  const handleFormSubmit = async (data: DiagnosticFormData) => {
+    setIsSubmitting(true);
+    try {
+      await submitPublicDiagnostic(
+        { ...data, phone: '' },
+        { answers, diagnostic_type: 'site', psi: psiResults ? 'captured' : 'failed', target_url: targetUrl, source: 'site-score' },
+        score,
+        { level: "Auditoria Técnica", description: "Diagnóstico Finalizado", action: "Revisão Recomendada", color: "revgreen" },
+        'score_captured'
+      );
+
+      setHasSubmittedLead(true);
+      toast({
+        className: "bg-white border-zinc-200 text-zinc-900",
+        title: "RELATÓRIO LIBERADO",
+        description: "Acesso completo concedido."
+      });
+    } catch (error) {
+      console.error(error);
+      toast({ variant: 'destructive', title: "Erro", description: "Tente novamente." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getFinalScore = () => {
+    const baseScore = score;
+    const psiScore = psiResults?.mobile?.vitals?.score || 0;
+    if (psiScore > 0) return psiScore;
+    return baseScore;
+  };
+
+  const finalScore = getFinalScore();
+  const currentData = viewMode === 'mobile' ? psiResults?.mobile : psiResults?.desktop;
+  const computedCurrentScore = currentData?.vitals?.score || finalScore;
+  const psiSeoScore = psiResults?.mobile?.lighthouseResult?.categories?.seo?.score ? Math.round(psiResults.mobile.lighthouseResult.categories.seo.score * 100) : null;
+
+  const seoComponent = (
+    <SEO
+      title="Auditoria de Site B2B - Diagnóstico de Performance Gratuito"
+      description="Analise gratuitamente a performance, SEO e conformidade do seu site B2B. Auditoria técnica com PageSpeed Insights e análise de Core Web Vitals."
+      canonical="https://revhackers.com.br/score-site"
+      breadcrumbs={[
+        { name: "Home", url: "https://revhackers.com.br/" },
+        { name: "Diagnósticos", url: "https://revhackers.com.br/diagnostico" },
+        { name: "Score Site", url: "https://revhackers.com.br/score-site" }
+      ]}
+    />
+  );
+
+  return (
+    <>
+      {seoComponent}
+      {step === 'url-input' || step === 'analyzing' ? (
+        <SiteScoreHero
+          step={step}
+          targetUrl={targetUrl}
+          setTargetUrl={setTargetUrl}
+          competitorUrls={competitorUrls}
+          setCompetitorUrls={setCompetitorUrls}
+          onStart={() => setStep('questions')}
+          progress={progress}
+          loadingStatus={loadingStatus}
+        />
+      ) : step === 'questions' ? (
+        <SiteScoreQuiz
+          currentQ={currentQ}
+          selectedOption={selectedOption}
+          showLog={showLog}
+          onAnswer={handleAnswer}
+        />
+      ) : step === 'results' ? (
+        <SiteScoreResult
+          finalScore={finalScore}
+          psiResults={psiResults}
+          hasSubmittedLead={hasSubmittedLead}
+          onSubmitLead={handleFormSubmit}
+          isSubmitting={isSubmitting}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          currentScore={computedCurrentScore}
+          psiSeoScore={psiSeoScore}
+          benchmarkResult={benchmarkResult}
+          isBenchmarking={isBenchmarking}
+          score={score}
+          insights={insights}
+          isBookingModalOpen={isBookingModalOpen}
+          setIsBookingModalOpen={setIsBookingModalOpen}
+        />
+      ) : null}
+    </>
+  );
 };
 
 export default SiteScore;

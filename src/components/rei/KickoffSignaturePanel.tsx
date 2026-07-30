@@ -4,6 +4,7 @@ import { QRCodeSVG } from "qrcode.react";
 import Confetti from "react-confetti";
 import { supabase } from "@/integrations/supabase/client";
 import { ReiProject, updateReiProject } from "@/api/reiProjects";
+import { documentSignaturesGcpAdapter } from "@/api/adapters/document-signatures-gcp";
 import { toast } from "sonner";
 
 interface KickoffSignaturePanelProps {
@@ -41,11 +42,7 @@ export const KickoffSignaturePanel: React.FC<KickoffSignaturePanelProps> = ({ pr
     // Check local database on mount for native signatures
     useEffect(() => {
         const checkNativeSignature = async () => {
-            const { data } = await supabase.from('document_signatures')
-                .select('id')
-                .eq('project_id', project.id)
-                .eq('reference_id', 'kickoff_validation')
-                .limit(1);
+            const data = await documentSignaturesGcpAdapter.getSignature(project.id, 'kickoff_validation');
                 
             if (data && data.length > 0 && !isSigned) {
                 setIsSigned(true);

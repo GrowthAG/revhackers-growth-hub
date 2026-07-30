@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Search, CheckCircle2, Zap } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import { supabase } from '@/integrations/supabase/client';
+import { scraperGcpAdapter } from '@/api/adapters/scraper-gcp';
 
 interface StepFounderProps {
     form: UseFormReturn<any>;
@@ -39,9 +39,7 @@ export default function StepFounderLinkedIn({ form }: StepFounderProps) {
         setLoading(true);
         try {
             // Chamada Real para a Inteligência Artificial (Edge Function)
-            const { data, error } = await supabase.functions.invoke('scrape-profile', {
-                body: { url: linkedInUrl }
-            });
+            const { data, error } = await scraperGcpAdapter.scrapeProfile(linkedInUrl);
 
             if (error) {
                 console.error("Supabase EF Error:", error);

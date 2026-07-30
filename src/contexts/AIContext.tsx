@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { aiGcpAdapter } from '@/api/adapters/ai-gcp';
 
 export interface AgentOption {
     id: string;

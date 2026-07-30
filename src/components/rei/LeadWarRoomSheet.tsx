@@ -16,6 +16,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import ProposalForm from '@/components/admin/ProposalForm';
 import { AIProvider } from '@/contexts/AIContext';
 import { Stakeholder } from '@/types/pipeline';
+import { leadWarRoomGcpAdapter } from '@/api/adapters/lead-war-room-gcp';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -155,11 +156,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
     const loadFullData = async (projectId: string) => {
         setLoadingData(true);
         try {
-            const { data } = await supabase
-                .from('rei_projects')
-                .select('client_name, client_company, client_email, client_site, trade_name, type, enrichment_data, market_data, site_analysis')
-                .eq('id', projectId)
-                .single();
+            const data = await leadWarRoomGcpAdapter.getProjectFullData(projectId);
             setFullData((data as any) || null);
             setManualTradeName((data as any)?.trade_name || '');
         } catch (e) {
@@ -171,11 +168,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
 
     const loadMeetings = async (projectId: string) => {
         try {
-            const { data } = await supabase
-                .from('meeting_recordings')
-                .select('id, title, happened_at, ai_insights')
-                .eq('rei_project_id', projectId)
-                .order('happened_at', { ascending: false });
+            const data = await leadWarRoomGcpAdapter.getMeetings(projectId);
             setMeetings(data || []);
         } catch (e) {
             console.error('[LeadWarRoomSheet] loadMeetings error:', e);
@@ -188,9 +181,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
         if (!lead?.id) return;
         setEnriching(true);
         try {
-            await supabase.functions.invoke('auto-enrich-project', {
-                body: { project_id: lead.id },
-            });
+            await leadWarRoomGcpAdapter.enrichProject(lead.id);
             toast.success('Dados atualizados!');
             await loadFullData(lead.id);
         } catch (e: any) {
@@ -212,7 +203,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
             
             const enrich = fullData?.enrichment_data || {};
             const newData = { ...enrich, cnpj: data };
-            await supabase.from('rei_projects').update({ enrichment_data: newData } as any).eq('id', lead!.id);
+            await leadWarRoomGcpAdapter.updateProjectEnrichment(lead!.id, newData);
             
             toast.success('CNPJ Enriquecido com sucesso!');
             await loadFullData(lead!.id);
@@ -228,7 +219,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
         if (!lead?.id || !manualTradeName.trim()) return;
         setSavingTradeName(true);
         try {
-            await supabase.from('rei_projects').update({ trade_name: manualTradeName.trim() } as any).eq('id', lead.id);
+            await leadWarRoomGcpAdapter.updateProjectTradeName(lead.id, manualTradeName.trim());
             toast.success('Nome Fantasia guardado e propagado no funil!');
             await loadFullData(lead.id);
         } catch (e) {
@@ -257,7 +248,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
             const mkt = fullData?.market_data || {};
             mkt.war_notes = updatedList;
 
-            await supabase.from('rei_projects').update({ market_data: mkt } as any).eq('id', lead.id);
+            await leadWarRoomGcpAdapter.updateProjectMarketData(lead.id, mkt);
             setNewNote('');
             toast.success('Nota registrada no Dossiê!');
             await loadFullData(lead.id);
@@ -283,7 +274,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
         
         try {
             const oppData = lead?.opportunity_data || {};
-            await supabase.from('opportunities').update({ opportunity_data: { ...oppData, stakeholders: updated } }).eq('id', lead.id);
+            await leadWarRoomGcpAdapter.updateOpportunityStakeholders(lead.id, oppData, updated);
             setStName(''); setStEmail(''); setStRole(''); setStType('decision_maker');
             setShowStakeholderForm(false);
             toast.success('Stakeholder adicionado!');
@@ -300,7 +291,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
             const oppData = fullData?.opportunity_data || {};
             const existing = (oppData.stakeholders || []) as Stakeholder[];
             const updated = existing.filter(s => s.id !== id);
-            await supabase.from('opportunities').update({ opportunity_data: { ...oppData, stakeholders: updated } }).eq('id', lead.id);
+            await leadWarRoomGcpAdapter.updateOpportunityStakeholders(lead.id, oppData, updated);
             toast.success('Stakeholder removido.');
             await loadFullData(lead.id);
         } catch(e) {
@@ -316,43 +307,8 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
         if (!lead?.id || !fullData) return;
         setQualifying(true);
         try {
-            // 0. Central de Inteligência: Garantir Cadastramento de Cliente Oficial
-            let officialClientId = null;
             const nameToSearch = fullData.trade_name || fullData.client_company || lead.name;
-            
-            const { data: existingClients } = await supabase
-                .from('clients')
-                .select('id')
-                .ilike('name', `%${nameToSearch}%`)
-                .limit(1);
-
-            if (existingClients && existingClients.length > 0) {
-                officialClientId = existingClients[0].id;
-            } else {
-                // Cria a ficha de Cliente furtivamente no Background (Zero Fricção)
-                const newClientRes = await supabase.from('clients').insert([{
-                    name: nameToSearch,
-                    company: fullData.client_company || nameToSearch,
-                    trade_name: fullData.trade_name,
-                    email: fullData.client_email,
-                    status: 'active'
-                }]).select('id').single();
-                
-                if (newClientRes.data?.id) {
-                    officialClientId = newClientRes.data.id;
-                }
-            }
-
-            // 1. Atualizar projeto mudando de Caixa (Lead -> Approved Onboarding)
-            const { error: updateErr } = await supabase
-                .from('rei_projects')
-                .update({ 
-                    status: 'approved',
-                    client_id: officialClientId
-                } as any)
-                .eq('id', lead.id);
-
-            if (updateErr) throw updateErr;
+            await leadWarRoomGcpAdapter.qualifyLead(lead.id, nameToSearch, fullData);
 
             toast.success(`Contrato Fechado: ${lead.name}`, {
                 description: 'Iniciando Engenharia e Setup de Onboarding...',
