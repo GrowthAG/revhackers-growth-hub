@@ -7,19 +7,19 @@ const journeySteps = [
   {
     id: "01",
     title: "Você Para de Adivinhar",
-    desc: "Em 7 dias, mapeamos os vazamentos reais da sua operação. Diagnóstico técnico com dados — não com intuição.",
+    desc: "Nos primeiros 30 dias, mapeamos os vazamentos reais da sua operação. Diagnóstico técnico com dados — não com intuição.",
     items: ["Auditoria de CRM e Pipeline", "Análise de Unit Economics", "Mapa de Gargalos"]
   },
   {
     id: "02",
     title: "Sua Máquina Funciona",
-    desc: "Em 30 dias, você tem CRM integrado, IA filtrando leads e automações rodando. Sua equipe para de fazer trabalho manual.",
+    desc: "Do dia 30 ao 60, você tem CRM integrado, IA filtrando leads e automações rodando. Sua equipe para de fazer trabalho manual.",
     items: ["Integração via API/Webhook", "Qualificação Automatizada", "Score de Leads Ativo"]
   },
   {
     id: "03",
     title: "Você Escala Sem Contratar",
-    desc: "Com a base certa, crescemos seu resultado semana a semana — sem precisar expandir o time de vendas.",
+    desc: "Do dia 60 ao 90, com a base consolidada, escalamos seus resultados semana a semana — sem precisar expandir o time.",
     items: ["Testes A/B em Canais", "Refinamento de Playbooks", "Reporting Executivo"]
   }
 ];
