@@ -243,10 +243,10 @@ const App = () => (
               <Route path="/rei-founder" element={<ReiFounder />} />
 
 
-              {/* Redirect /dashboard to /admin (unified GROWTHHUB) */}
+              {/* Redirect /dashboard to /admin (unified Painel Administrativo) */}
               <Route path="/dashboard" element={<Navigate to="/admin" replace />} />
 
-              {/* Admin Management - GROWTHHUB */}
+              {/* Admin Management - Painel Administrativo */}
               <Route path="/admin" element={<ProtectedRoute><PageErrorBoundary><AdminDashboard /></PageErrorBoundary></ProtectedRoute>} />
               <Route path="/admin/dashboard" element={<Navigate to="/admin" replace />} />
               {/* Redirect legado: /jornada/:id → /projects/:id */}
@@ -329,7 +329,7 @@ const App = () => (
               <Route path="/plan/:token" element={<StrategicPlanPresentation />} />
               <Route path="/success/:token" element={<SuccessPlanPresentation />} />
 
-              {/* GrowthMap — Strategic Intelligence Layer (The GrowthHub) */}
+              {/* GrowthMap — Strategic Intelligence Layer (The RevHackers) */}
               <Route path="/growthmap/:projectId" element={<ProtectedRoute><GrowthMapPage /></ProtectedRoute>} />
               <Route path="/growthmap" element={<ProtectedRoute><GrowthMapPage /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><GrowthMapPage /></ProtectedRoute>} />

@@ -364,7 +364,7 @@ const ClientProjectHub = () => {
                             <h1 className="text-sm font-bold text-zinc-900 leading-none mb-1">
                                 {(project as any).trade_name || (project as any).client_company || project.client_name}
                             </h1>
-                            <p className="text-xxs text-zinc-500 uppercase tracking-widest font-medium">Growth Hub</p>
+                            <p className="text-xxs text-zinc-500 uppercase tracking-widest font-medium">RevHackers</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -754,7 +754,7 @@ const ClientProjectHub = () => {
                                 </div>
                             </div>
                             <p className="text-xxs text-center text-zinc-400 uppercase tracking-widest mt-8 font-medium">
-                                RevHackers Growth Hub • Documento Oficial
+                                RevHackers • Documento Oficial
                             </p>
                         </div>
                     </div>

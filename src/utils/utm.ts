@@ -1,5 +1,5 @@
 /**
- * UTM Tracking utilities para o RevHackers Growth Hub.
+ * UTM Tracking utilities para o RevHackers.
  * 
  * Uso:
  *   import { buildBookingUrl } from '@/utils/utm';

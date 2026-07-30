@@ -102,7 +102,7 @@ export default function CertificateOfAuthenticity() {
                     {/* Declaration */}
                     <div className="prose prose-sm md:prose-base text-zinc-700 max-w-none leading-relaxed mb-10">
                         <p>
-                            A <strong>RevHackers Growth Hub</strong> certifica, para os devidos fins legais e comprobatórios, que o documento eletrônico identificado pelo tipo <strong>{signature.reference_type.toUpperCase()}</strong> foi aceito e assinado digitalmente, possuindo plena validade jurídica e integridade, em conformidade com a legislação vigente aplicável a contratos e acordos eletrônicos.
+                            A <strong>RevHackers</strong> certifica, para os devidos fins legais e comprobatórios, que o documento eletrônico identificado pelo tipo <strong>{signature.reference_type.toUpperCase()}</strong> foi aceito e assinado digitalmente, possuindo plena validade jurídica e integridade, em conformidade com a legislação vigente aplicável a contratos e acordos eletrônicos.
                         </p>
                     </div>
 

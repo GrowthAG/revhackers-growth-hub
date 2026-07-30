@@ -72,13 +72,10 @@ export const AIProvider = ({ children }: { children: ReactNode }) => {
             if (!user) return;
 
             // Load Agents
-            const { data: agentsData } = await supabase
-                .from('agents')
-                .select('id, name, system_prompt, role, model, description')
-                .order('created_at', { ascending: false });
+            const agentsData = await aiGcpAdapter.getAgents();
 
             if (agentsData) {
-                setAgents(agentsData.map(a => ({
+                setAgents(agentsData.map((a: any) => ({
                     id: a.id,
                     name: a.name,
                     prompt: a.system_prompt,
@@ -89,14 +86,10 @@ export const AIProvider = ({ children }: { children: ReactNode }) => {
             }
 
             // Load Sessions
-            const { data: sessionsData } = await supabase
-                .from('chat_sessions')
-                .select('id, agent_id, title, created_at, updated_at')
-                .eq('user_id', user.id)
-                .order('updated_at', { ascending: false });
+            const sessionsData = await aiGcpAdapter.getSessions(user.id);
 
             if (sessionsData) {
-                setSessions(sessionsData.map(s => ({
+                setSessions(sessionsData.map((s: any) => ({
                     id: s.id,
                     agentId: s.agent_id,
                     title: s.title || 'Nova Conversa',
@@ -118,12 +111,7 @@ export const AIProvider = ({ children }: { children: ReactNode }) => {
 
     const deleteSession = async (sessionId: string) => {
         try {
-            const { error } = await supabase
-                .from('chat_sessions')
-                .delete()
-                .eq('id', sessionId);
-
-            if (error) throw error;
+            await aiGcpAdapter.deleteSession(sessionId);
             await refreshAI();
         } catch (error) {
             console.error('Error deleting session:', error);
@@ -133,12 +121,7 @@ export const AIProvider = ({ children }: { children: ReactNode }) => {
 
     const renameSession = async (sessionId: string, newTitle: string) => {
         try {
-            const { error } = await supabase
-                .from('chat_sessions')
-                .update({ title: newTitle })
-                .eq('id', sessionId);
-
-            if (error) throw error;
+            await aiGcpAdapter.renameSession(sessionId, newTitle);
             await refreshAI();
         } catch (error) {
             console.error('Error renaming session:', error);

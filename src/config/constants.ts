@@ -28,5 +28,5 @@ export const APP_CONFIG = {
     WHATSAPP: {
         DEFAULT_NUMBER: '5511999999999', // Placeholder found in code
     },
-    PLATFORM_NAME: 'RevHackers Growth Hub'
+    PLATFORM_NAME: 'RevHackers'
 };

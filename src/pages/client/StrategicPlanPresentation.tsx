@@ -397,7 +397,7 @@ export default function StrategicPlanPresentation() {
                                 )}
                             </div>
 
-                            <div className="mt-12 pt-6 border-t border-zinc-200"><span className="text-xs text-zinc-400 uppercase tracking-widest">▲ RevHackers Growth Hub</span></div>
+                            <div className="mt-12 pt-6 border-t border-zinc-200"><span className="text-xs text-zinc-400 uppercase tracking-widest">▲ RevHackers</span></div>
                         </div>
                     ) : isRejected ? (
                         <div className="bg-white border border-zinc-200 p-10 md:p-14 text-center max-w-2xl mx-auto">

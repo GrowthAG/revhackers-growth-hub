@@ -93,7 +93,7 @@ const CompleteProfile = () => {
 
             toast({
                 title: "Perfil Completado!",
-                description: "Bem-vindo ao RevHackers Growth Hub.",
+                description: "Bem-vindo à RevHackers.",
             });
             navigate("/dashboard");
         } catch (error: any) {

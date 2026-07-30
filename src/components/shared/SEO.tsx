@@ -44,7 +44,7 @@ const SEO = ({
         "@type": "ProfessionalService",
         "@id": "https://revhackers.com.br/#organization",
         "name": "RevHackers",
-        "alternateName": ["RevHackers Growth Hub", "RevHackers Consultoria", "RevHackers RevOps"],
+        "alternateName": ["RevHackers", "RevHackers Consultoria", "RevHackers RevOps"],
         "url": "https://revhackers.com.br",
         "logo": {
             "@type": "ImageObject",
@@ -239,7 +239,7 @@ const SEO = ({
             <meta property="og:image" content={image} />
             <meta property="og:image:width" content="1200" />
             <meta property="og:image:height" content="630" />
-            <meta property="og:site_name" content="RevHackers Growth Hub" />
+            <meta property="og:site_name" content="RevHackers" />
 
             {/* Twitter */}
             <meta name="twitter:card" content="summary_large_image" />
