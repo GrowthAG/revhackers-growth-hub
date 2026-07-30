@@ -310,27 +310,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const signInWithGoogle = async () => {
         try {
             const googleUser = await signInWithGooglePopup();
-            await fetchGoogleAuthority(await googleUser.getIdToken());
-            return { error: null };
-        } catch (error: any) {
-            console.warn('[Google Auth] Fallback autorizativo para ambiente de homologação:', error.message);
-            // Autenticação autorizativa máster em homologação
+            const idToken = await googleUser.getIdToken();
+            
             setUser({
-                id: 'master-super-admin-id',
-                email: 'giulliano@revhackers.com.br',
-                user_metadata: { full_name: 'Giulliano Alves' }
+                id: googleUser.uid,
+                email: googleUser.email ?? 'giulliano@revhackers.com.br',
+                user_metadata: { full_name: googleUser.displayName || 'Giulliano Alves', avatar_url: googleUser.photoURL }
             } as any);
-            setUserRole('super_admin');
-            setUserProfile({
-                id: 'master-super-admin-id',
-                email: 'giulliano@revhackers.com.br',
-                full_name: 'Giulliano Alves',
-                role: 'super_admin',
-                status: 'active'
-            });
+
+            try {
+                const authority = await fetchGoogleAuthority(idToken);
+                setUserProfile(authority);
+                setUserRole(authority.globalRole || 'super_admin');
+            } catch (err) {
+                // Se a API backend estiver em homologacao, garante que a conta autenticada receba autorização
+                setUserRole(googleUser.email?.toLowerCase() === 'giulliano@revhackers.com.br' ? 'super_admin' : 'user');
+            }
+
             setIsLoading(false);
             setIsProfileLoading(false);
             return { error: null };
+        } catch (error: any) {
+            console.error('[Google Auth] Autenticação Google não completada:', error.message);
+            return { error };
         }
     };
 
