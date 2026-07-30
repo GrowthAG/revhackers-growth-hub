@@ -36,13 +36,21 @@ const ForgotPassword = () => {
                 if (res.ok) {
                     return { error: null };
                 }
+
+                if (res.status === 404) {
+                    return { error: new Error('E-mail não cadastrado no sistema. Apenas membros convidados possuem acesso.') };
+                }
             } catch (err: any) {
                 console.warn('Conexão GCP offline para envio de email de redefinição...', err);
             }
         }
 
-        // Simulação de envio com sucesso em caso de ambiente local/desenvolvimento
-        return { error: null };
+        // Se for o e-mail máster cadastrado (giulliano@revhackers.com.br)
+        if (emailToSend.toLowerCase() === 'giulliano@revhackers.com.br') {
+            return { error: null };
+        }
+
+        return { error: new Error('E-mail não encontrado na base de usuários. Verifique com o administrador.') };
     };
 
     const handleResend = async () => {
