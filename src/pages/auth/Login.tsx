@@ -126,7 +126,10 @@ const Login = () => {
                                         type="email"
                                         placeholder="seu@empresa.com"
                                         value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={(e) => {
+                                            if (error) setError(null);
+                                            setEmail(e.target.value);
+                                        }}
                                         className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-400 h-10 rounded-lg focus:border-zinc-400 focus:ring-0 transition-all text-xs px-3 shadow-none"
                                         required
                                     />
