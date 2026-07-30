@@ -61,6 +61,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const fetchUserRole = async (userId: string, silent = false) => {
         try {
+            // Regra canônica: giulliano@revhackers.com.br é SEMPRE super_admin
+            if (user?.email?.toLowerCase() === 'giulliano@revhackers.com.br') {
+                setUserRole('super_admin');
+                setUserProfile({
+                    id: userId,
+                    email: 'giulliano@revhackers.com.br',
+                    full_name: 'Giulliano Alves',
+                    role: 'super_admin',
+                    status: 'active'
+                });
+                if (!silent) setIsProfileLoading(false);
+                return;
+            }
+
             const { data, error } = await supabase
                 .from('profiles')
                 .select('*')
@@ -82,7 +96,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         } catch (err) {
             console.error('Failed to fetch profile:', err);
         } finally {
-            // Só desliga loading se foi ligado (evita re-render desnecessario no refresh silencioso)
             if (!silent) {
                 setIsProfileLoading(false);
             }
