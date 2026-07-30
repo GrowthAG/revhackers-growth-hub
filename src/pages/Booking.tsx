@@ -56,7 +56,7 @@ const BookingPage = () => {
           <div className="text-center mb-16">
             <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
               [ Vagas Restritas: 3 / mês ]
-            </span>
+            </p>
             <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto text-center mb-8">Auditoria de Receita</h1>
             <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed text-center">
               Não fazemos "calls para nos conhecer". Esta é uma agenda técnica focada em achar vazamentos no seu LTV e CAC. Se nossa Engenharia não puder dobrar a eficiência da sua máquina comercial em 90 dias, não faremos proposta.

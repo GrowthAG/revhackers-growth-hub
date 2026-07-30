@@ -1,4 +1,4 @@
-import { API_BASE } from './_base';
+import { apiBase } from './_base';
 
 export interface BlogArticleGcp {
   id: string;
@@ -38,21 +38,21 @@ export interface CaseStudyGcp {
 export const contentGcpAdapter = {
   // Blog Articles
   async getBlogArticles(): Promise<BlogArticleGcp[]> {
-    const res = await fetch(`${API_BASE}/blog/articles`);
+    const res = await fetch(`${apiBase()}/blog/articles`);
     if (!res.ok) throw new Error('Falha ao carregar artigos do Blog da API GCP');
     return res.json();
   },
 
   // Materials
   async getMaterials(): Promise<MaterialGcp[]> {
-    const res = await fetch(`${API_BASE}/materials`);
+    const res = await fetch(`${apiBase()}/materials`);
     if (!res.ok) throw new Error('Falha ao carregar materiais da API GCP');
     return res.json();
   },
 
   // Cases
   async getCases(): Promise<CaseStudyGcp[]> {
-    const res = await fetch(`${API_BASE}/cases`);
+    const res = await fetch(`${apiBase()}/cases`);
     if (!res.ok) throw new Error('Falha ao carregar cases da API GCP');
     return res.json();
   },

@@ -196,7 +196,7 @@ export default function GrowthMap() {
                 disabled={isGeneratingAll}
                 className="bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-800 rounded-xl h-10 px-5 text-xs font-bold gap-2 flex items-center transition-all shadow-xs"
               >
-                {isGeneratingAll ? <Loader2 size={14} className="animate-spin text-[#00CC6A]" /> : }
+                {isGeneratingAll ? <Loader2 size={14} className="animate-spin text-[#00CC6A]" /> : null}
                 <span>{isGeneratingAll ? "Processando Frameworks..." : "Rodar Inteligência Completa"}</span>
               </button>
             </div>

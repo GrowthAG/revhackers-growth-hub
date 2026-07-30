@@ -1,4 +1,4 @@
-import { API_BASE } from './_base';
+import { apiBase } from './_base';
 
 export interface UserProfileGcp {
   id: string;
@@ -22,19 +22,19 @@ export interface InvitationGcp {
 
 export const usersGcpAdapter = {
   async getAll(): Promise<UserProfileGcp[]> {
-    const res = await fetch(`${API_BASE}/users`);
+    const res = await fetch(`${apiBase()}/users`);
     if (!res.ok) throw new Error('Falha ao buscar usuários da API GCP');
     return res.json();
   },
 
   async getInvitations(): Promise<InvitationGcp[]> {
-    const res = await fetch(`${API_BASE}/users/invitations`);
+    const res = await fetch(`${apiBase()}/users/invitations`);
     if (!res.ok) throw new Error('Falha ao buscar convites da API GCP');
     return res.json();
   },
 
   async inviteMember(email: string, role: string): Promise<InvitationGcp> {
-    const res = await fetch(`${API_BASE}/users/invite`, {
+    const res = await fetch(`${apiBase()}/users/invite`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, role }),
@@ -47,7 +47,7 @@ export const usersGcpAdapter = {
   },
 
   async deleteUser(userId: string): Promise<void> {
-    const res = await fetch(`${API_BASE}/users/${userId}`, {
+    const res = await fetch(`${apiBase()}/users/${userId}`, {
       method: 'DELETE',
     });
     if (!res.ok) throw new Error('Erro ao remover usuário via GCP Cloud Function');

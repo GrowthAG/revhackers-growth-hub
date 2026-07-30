@@ -1,4 +1,4 @@
-import { API_BASE } from '@/api/adapters/_base';
+import { apiBase } from '@/api/adapters/_base';
 import { supabase } from '@/integrations/supabase/client';
 
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -27,7 +27,7 @@ export const uploadImageToGcp = async (file: File, bucketName = 'blog-covers'): 
       formData.append('bucket', bucketName);
       formData.append('filename', fileName);
 
-      const res = await fetch(`${API_BASE}/storage/upload`, {
+      const res = await fetch(`${apiBase()}/storage/upload`, {
         method: 'POST',
         body: formData,
       });
