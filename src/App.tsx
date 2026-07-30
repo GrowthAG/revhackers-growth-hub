@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { ErrorBoundary } from "./components/shared/ErrorBoundary";
+import { PageErrorBoundary } from "./components/shared/PageErrorBoundary";
 import ChatbotManager from "./components/shared/ChatbotManager";
 
 // ─── Loading Fallback ────────────────────────────────────────────────
@@ -224,10 +225,10 @@ const App = () => (
               <Route path="/rei-dashboard" element={<Navigate to="/admin/projects" replace />} />
 
               {/* Public Scores (Lead Gen) */}
-              <Route path="/score" element={<GrowthScore />} />
-              <Route path="/score-site" element={<SiteScore />} />
-              <Route path="/score-founder" element={<FounderScore />} />
-              <Route path="/score-revenue" element={<RevenueScore />} />
+              <Route path="/score" element={<PageErrorBoundary><GrowthScore /></PageErrorBoundary>} />
+              <Route path="/score-site" element={<PageErrorBoundary><SiteScore /></PageErrorBoundary>} />
+              <Route path="/score-founder" element={<PageErrorBoundary><FounderScore /></PageErrorBoundary>} />
+              <Route path="/score-revenue" element={<PageErrorBoundary><RevenueScore /></PageErrorBoundary>} />
               <Route path="/diagnostico/resultado/:id" element={<PublicDiagnosticResult />} />
 
               {/* Auth Routes */}
@@ -246,7 +247,7 @@ const App = () => (
               <Route path="/dashboard" element={<Navigate to="/admin" replace />} />
 
               {/* Admin Management - GROWTHHUB */}
-              <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+              <Route path="/admin" element={<ProtectedRoute><PageErrorBoundary><AdminDashboard /></PageErrorBoundary></ProtectedRoute>} />
               <Route path="/admin/dashboard" element={<Navigate to="/admin" replace />} />
               {/* Redirect legado: /jornada/:id → /projects/:id */}
               <Route path="/admin/jornada/:id" element={<JornadaRedirect />} />
@@ -261,7 +262,7 @@ const App = () => (
               <Route path="/admin/intelligence/:projectId" element={<ProtectedRoute><IntelligenceDashboard /></ProtectedRoute>} />
 
               {/* Admin - Clients (legado - tabela clients) */}
-              <Route path="/admin/clients" element={<ProtectedRoute><AdminClients /></ProtectedRoute>} />
+              <Route path="/admin/clients" element={<ProtectedRoute><PageErrorBoundary><AdminClients /></PageErrorBoundary></ProtectedRoute>} />
               <Route path="/admin/clients/novo" element={<ProtectedRoute><ClientForm /></ProtectedRoute>} />
               <Route path="/admin/clients/edit/:id" element={<ProtectedRoute><ClientForm /></ProtectedRoute>} />
 
@@ -301,7 +302,7 @@ const App = () => (
               <Route path="/admin/revenue-cockpit" element={<ProtectedRoute><RevenueCockpit /></ProtectedRoute>} />
               <Route path="/cockpit" element={<ProtectedRoute><RevenueCockpit /></ProtectedRoute>} />
               {/* Unified Project Workspace */}
-              <Route path="/admin/projects/:id/*" element={<ProtectedRoute><ProjectDetails /></ProtectedRoute>} />
+              <Route path="/admin/projects/:id/*" element={<ProtectedRoute><PageErrorBoundary><ProjectDetails /></PageErrorBoundary></ProtectedRoute>} />
               
               {/* Project Wiki / Document Editor */}
               <Route path="/admin/knowledge/:libraryId/doc/new" element={<ProtectedRoute><KnowledgeDocument /></ProtectedRoute>} />
