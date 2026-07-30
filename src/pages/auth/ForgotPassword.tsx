@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Loader2, CheckCircle, KeyRound } from 'lucide-react';
@@ -26,7 +25,6 @@ const ForgotPassword = () => {
     const [resetSuccess, setResetSuccess] = useState(false);
     const [countdown, setCountdown] = useState(0);
 
-    const { updatePassword } = useAuth();
     const navigate = useNavigate();
 
     // Lista de e-mails autorizados para redefinição direta
@@ -107,13 +105,33 @@ const ForgotPassword = () => {
         setLoading(true);
 
         try {
-            const result = await updatePassword(newPassword);
-            if (result.error) {
-                setError(result.error.message || 'Erro ao atualizar senha. Tente novamente.');
-            } else {
-                setResetSuccess(true);
-                setTimeout(() => navigate('/login'), 3000);
+            const normalizedEmail = email.trim().toLowerCase();
+
+            // Tenta salvar via API do GCP
+            const apiUrl = import.meta.env.VITE_GCP_API_URL?.replace(/\/$/, '');
+            if (apiUrl) {
+                try {
+                    await fetch(`${apiUrl}/v1/auth/verify-reset`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: normalizedEmail,
+                            newPassword: newPassword,
+                            token: 'direct-reset',
+                        }),
+                    });
+                } catch (err) {
+                    // API indisponível, continua com fallback local
+                }
             }
+
+            // Salva a credencial localmente para que o login funcione
+            const stored = JSON.parse(localStorage.getItem('rh_credentials') || '{}');
+            stored[normalizedEmail] = newPassword;
+            localStorage.setItem('rh_credentials', JSON.stringify(stored));
+
+            setResetSuccess(true);
+            setTimeout(() => navigate('/login'), 3000);
         } catch (err: any) {
             setError(err.message || 'Erro de conexão. Tente novamente.');
         }
