@@ -42,6 +42,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { APP_CONFIG } from "@/config/constants";
 import { useNavigate } from "react-router-dom";
+import { usersGcpAdapter } from '@/api/adapters/users-gcp';
 
 interface UserProfile {
     id: string;
@@ -90,6 +91,25 @@ const AdminUsers = () => {
 
     const fetchUsers = async () => {
         try {
+            if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+                try {
+                    const gcpUsers = await usersGcpAdapter.getAll();
+                    setUsers(gcpUsers.map(u => ({
+                        id: u.id,
+                        email: u.email,
+                        username: u.username || u.email.split('@')[0],
+                        full_name: u.fullName || u.email,
+                        role: u.role,
+                        status: u.status,
+                        avatar_url: u.avatarUrl || '',
+                        created_at: u.createdAt,
+                    })));
+                    return;
+                } catch (e) {
+                    console.warn('Fallback para Supabase no fetchUsers...', e);
+                }
+            }
+
             const { data, error } = await supabase
                 .from("profiles")
                 .select("*")
@@ -104,6 +124,22 @@ const AdminUsers = () => {
 
     const fetchInvitations = async () => {
         try {
+            if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+                try {
+                    const gcpInvites = await usersGcpAdapter.getInvitations();
+                    setInvitations(gcpInvites.map(i => ({
+                        id: i.id,
+                        email: i.email,
+                        role: i.role,
+                        status: i.status,
+                        created_at: i.createdAt,
+                    })));
+                    return;
+                } catch (e) {
+                    console.warn('Fallback para Supabase no fetchInvitations...', e);
+                }
+            }
+
             const { data, error } = await supabase
                 .from("invitations")
                 .select("*")
@@ -120,6 +156,22 @@ const AdminUsers = () => {
         if (!inviteData.email) return;
         setInviting(true);
         try {
+            if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+                try {
+                    await usersGcpAdapter.inviteMember(inviteData.email, inviteData.role);
+                    toast({
+                        title: "Convite GCP enviado com sucesso!",
+                        description: `Enviamos o acesso via GCP Cloud Functions para ${inviteData.email}.`
+                    });
+                    setIsInviteModalOpen(false);
+                    setInviteData({ email: "", role: "user" });
+                    fetchInvitations();
+                    return;
+                } catch (e: any) {
+                    console.warn('Fallback para Supabase no handleInvite...', e);
+                }
+            }
+
             const { data, error: functionError } = await supabase.functions.invoke('invite-member', {
                 body: {
                     email: inviteData.email,
