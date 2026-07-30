@@ -46,25 +46,27 @@ export const Sidebar = () => {
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 h-screen bg-white border-r border-zinc-200 shadow-[2px_0_8px_-4px_rgba(0,0,0,0.05)]',
+        'fixed left-0 top-0 h-screen bg-black border-r border-zinc-800/80 shadow-2xl',
         'transition-all duration-200 ease-out z-50',
         collapsed ? 'w-16' : 'w-64'
       )}
     >
-      {/* Header com Logo */}
-      <div className="h-16 flex items-center justify-between px-3 border-b border-zinc-100">
+      {/* Header com Logo Centralizado */}
+      <div className="h-16 flex items-center justify-between px-4 border-b border-zinc-800/80">
         {!collapsed ? (
           <>
-            <Link to="/admin" className="flex items-center gap-2 pl-2">
-              <img 
-                src={LOGO_URL}
-                alt="RevHackers" 
-                className="w-28 max-w-full h-auto invert opacity-90"
-              />
-            </Link>
+            <div className="flex-1 flex justify-center items-center py-2">
+              <Link to="/admin" className="flex items-center justify-center">
+                <img 
+                  src={LOGO_URL}
+                  alt="RevHackers" 
+                  className="w-32 max-w-full h-auto object-contain opacity-95 hover:opacity-100 transition-opacity"
+                />
+              </Link>
+            </div>
             <button
               onClick={() => setCollapsed(true)}
-              className="p-1.5 hover:bg-zinc-100 text-zinc-400 hover:text-zinc-600 rounded-md transition-colors"
+              className="p-1.5 hover:bg-zinc-900 text-zinc-400 hover:text-white rounded-lg transition-colors ml-1"
               aria-label="Colapsar sidebar"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -73,7 +75,7 @@ export const Sidebar = () => {
         ) : (
           <button
             onClick={() => setCollapsed(false)}
-            className="p-1.5 hover:bg-zinc-100 text-zinc-400 hover:text-zinc-600 rounded-md transition-colors mx-auto"
+            className="p-1.5 hover:bg-zinc-900 text-zinc-400 hover:text-white rounded-lg transition-colors mx-auto"
             aria-label="Expandir sidebar"
           >
             <ChevronRight className="w-4 h-4" />
@@ -82,7 +84,7 @@ export const Sidebar = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="p-3 overflow-y-auto h-[calc(100vh-4rem)]">
+      <nav className="p-3 overflow-y-auto h-[calc(100vh-4rem)] space-y-4">
         {Object.entries(NAVIGATION).map(([section, items]) => (
           <SidebarSection key={section} title={collapsed ? '' : section}>
             {items.map((item) => (
@@ -110,12 +112,12 @@ interface SidebarSectionProps {
 }
 
 const SidebarSection = ({ title, children }: SidebarSectionProps) => {
-  if (!title) return <div className="space-y-0.5">{children}</div>;
+  if (!title) return <div className="space-y-1">{children}</div>;
   
   return (
-    <div className="space-y-1 mt-6 first:mt-0">
-      <div className="px-3 mb-2">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
+    <div className="space-y-1 mt-4 first:mt-0">
+      <div className="px-3 mb-1.5">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
           {title}
         </span>
       </div>
@@ -140,21 +142,21 @@ const SidebarItem = ({ icon: Icon, label, to, active, collapsed, badge }: Sideba
       to={to}
       className={cn(
         'flex items-center gap-3 px-3 py-2 rounded-lg',
-        'transition-colors duration-150',
-        'text-sm font-medium',
+        'transition-all duration-150',
+        'text-xs font-semibold',
         active
-          ? 'bg-zinc-100/80 text-zinc-900 font-semibold'
-          : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900',
+          ? 'bg-zinc-900 text-[#00CC6A] border border-zinc-800'
+          : 'text-zinc-400 hover:bg-zinc-900/60 hover:text-white',
         collapsed && 'justify-center'
       )}
       title={collapsed ? label : undefined}
     >
-      <Icon className={cn("w-4 h-4 flex-shrink-0", active ? "text-zinc-900" : "text-zinc-400")} />
+      <Icon className={cn("w-4 h-4 flex-shrink-0", active ? "text-[#00CC6A]" : "text-zinc-400")} />
       {!collapsed && (
         <>
           <span className="flex-1">{label}</span>
           {badge != null && badge > 0 && (
-            <span className="min-w-[20px] h-[20px] text-[11px] font-semibold flex items-center justify-center bg-zinc-100 text-zinc-600 px-1.5 rounded-full border border-zinc-200">
+            <span className="min-w-[18px] h-[18px] text-[10px] font-bold flex items-center justify-center bg-[#00CC6A]/20 text-[#00CC6A] px-1.5 rounded-full border border-[#00CC6A]/30">
               {badge}
             </span>
           )}
