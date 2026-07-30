@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { migrateCases } from '@/services/migrationService';
 
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
+
 const AdminCases = () => {
     const [cases, setCases] = useState<any[]>([]);
     const [search, setSearch] = useState('');
@@ -16,6 +18,24 @@ const AdminCases = () => {
     useEffect(() => { fetchCases(); }, []);
 
     const fetchCases = async () => {
+        if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
+            try {
+                const gcpCases = await contentGcpAdapter.getCases();
+                setCases(gcpCases.map(c => ({
+                    id: c.id,
+                    client_name: c.clientName,
+                    client_logo: c.clientLogo,
+                    case_category: c.caseCategory,
+                    title: c.headline,
+                    published: c.published,
+                    created_at: c.createdAt,
+                })));
+                return;
+            } catch (e) {
+                console.warn('Fallback para Supabase no fetchCases...', e);
+            }
+        }
+
         const { data, error } = await supabase
             .from('cases')
             .select('*')
@@ -59,22 +79,22 @@ const AdminCases = () => {
                 {/* Header SaaS Moderno Benchmark */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/80">
                     <div>
-                        <div className="flex items-center gap-2 text-xs font-mono font-bold text-zinc-400 mb-1.5 uppercase tracking-wider">
+                        <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 mb-1">
                             <button
                                 onClick={() => navigate('/admin')}
                                 className="hover:text-zinc-900 transition-colors flex items-center gap-1"
                             >
-                                <ArrowLeft size={13} /> DASHBOARD
+                                <ArrowLeft size={13} /> Dashboard
                             </button>
                             <span>/</span>
-                            <span className="text-zinc-900">CASES</span>
+                            <span className="text-zinc-900 font-bold">Cases</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
                                 Cases de Sucesso & Resultados
                             </h1>
-                            <span className="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
-                                {filtered.length} CASES
+                            <span className="px-2.5 py-0.5 rounded-md text-xs font-semibold bg-zinc-100 text-zinc-700 border border-zinc-200">
+                                {filtered.length} cases
                             </span>
                         </div>
                         <p className="text-sm font-medium text-zinc-500 mt-1">
@@ -86,21 +106,21 @@ const AdminCases = () => {
                         <Button
                             variant="outline"
                             onClick={handleMigrate}
-                            className="bg-white border-zinc-200 hover:bg-white shadow-sm text-zinc-700 text-xs font-mono font-bold tracking-wider uppercase h-9 px-3 gap-1.5"
+                            className="bg-white border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-xs font-semibold h-9 px-3 gap-1.5 rounded-lg shadow-xs"
                         >
-                            <Download size={14} /> MIGRAR ESTÁTICO
+                            <Download size={14} /> Migrar Estático
                         </Button>
                         <Button
                             onClick={() => navigate('/admin/cases/new')}
-                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-mono font-bold tracking-wider uppercase shadow-none gap-2 flex items-center transition-all border border-zinc-200"
+                            className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-semibold shadow-xs gap-2 flex items-center transition-all border border-zinc-200"
                         >
-                            <Plus size={15} className="text-[#00CC6A]" /> NOVO CASE
+                            <Plus size={15} className="text-[#00CC6A]" /> Novo Case
                         </Button>
                     </div>
                 </div>
 
                 {/* Control Bar: Search */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-sm p-2 rounded-xl border border-zinc-200">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white shadow-xs p-2 rounded-xl border border-zinc-200/80">
                     <div className="relative flex-1 max-w-md">
                         <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                         <Input
@@ -122,16 +142,16 @@ const AdminCases = () => {
                         >
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between">
-                                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 border border-zinc-200">
+                                    <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-600 border border-zinc-200">
                                         {item.case_category || 'GERAL'}
                                     </span>
                                     {item.published ? (
-                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-[#00CC6A] text-black">
-                                            ● PUBLICADO
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-semibold bg-[#00CC6A] text-black">
+                                            ● Publicado
                                         </span>
                                     ) : (
-                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-medium bg-zinc-100 text-zinc-500 border border-zinc-200">
-                                            RASCUNHO
+                                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-semibold bg-zinc-100 text-zinc-500 border border-zinc-200">
+                                            Rascunho
                                         </span>
                                     )}
                                 </div>
