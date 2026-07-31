@@ -142,10 +142,16 @@ const AdminProjects: React.FC = () => {
 
           <div className="flex items-center gap-2">
             <Button
-              onClick={() => navigate('/admin/rei/novo')}
-              className="bg-zinc-950 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-semibold tracking-wide shadow-xs gap-2 flex items-center transition-all border border-zinc-200"
+              onClick={() => navigate('/rei/wizard')}
+              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] rounded-lg h-9 px-4 text-xs font-semibold tracking-wide shadow-xs gap-2 flex items-center transition-all"
             >
-              <Plus size={15} className="text-[#00CC6A]" /> Novo Projeto
+              <Zap size={15} className="fill-zinc-950" /> 📋 Iniciar Call REI (40 Perguntas)
+            </Button>
+            <Button
+              onClick={() => navigate('/admin/rei/novo')}
+              className="bg-zinc-900 text-white hover:bg-zinc-800 rounded-lg h-9 px-4 text-xs font-semibold tracking-wide shadow-xs gap-2 flex items-center transition-all border border-zinc-200"
+            >
+              <Plus size={15} className="text-[#00CC6A]" /> Criar Projeto
             </Button>
           </div>
         </div>

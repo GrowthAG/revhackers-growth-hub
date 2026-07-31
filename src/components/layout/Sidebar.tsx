@@ -22,8 +22,6 @@ const NAVIGATION: Record<string, NavItem[]> = {
     { icon: Home, label: 'Dashboard', to: '/admin' },
     { icon: LayoutDashboard, label: 'Projetos', to: '/admin/projects' },
     { icon: Activity, label: 'Cockpit REI', to: '/admin/rei' },
-    { icon: Building2, label: 'Inteligência', to: '/admin/intelligence' },
-    { icon: Clock, label: 'Lifecycle', to: '/admin/lifecycle' },
   ],
   CLIENTES: [
     { icon: Users, label: 'Clientes', to: '/admin/clients' },

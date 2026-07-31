@@ -129,14 +129,22 @@ export const REICockpit: React.FC = () => {
               Gestão de Saúde, Churn e Marcos de Sucesso dos Clientes em Onboarding.
             </p>
           </div>
-          <button
-            onClick={() => refetch()}
-            disabled={isRefetching}
-            className="flex items-center gap-2 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-semibold px-4 py-2 rounded-lg transition text-sm disabled:opacity-50"
-          >
-            <RefreshCw className={`w-4 h-4 ${isRefetching ? 'animate-spin' : ''}`} />
-            Atualizar Painel
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => window.location.href = '/rei/wizard'}
+              className="flex items-center gap-2 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-bold px-4 py-2 rounded-lg transition text-sm shadow-xs"
+            >
+              📋 Abrir Call REI (40 Perguntas)
+            </button>
+            <button
+              onClick={() => refetch()}
+              disabled={isRefetching}
+              className="flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white font-medium px-4 py-2 rounded-lg transition border border-zinc-200 text-sm disabled:opacity-50"
+            >
+              <RefreshCw className={`w-4 h-4 ${isRefetching ? 'animate-spin' : ''}`} />
+              Atualizar Painel
+            </button>
+          </div>
         </div>
 
         {/* Top 4 Stats Cards */}
