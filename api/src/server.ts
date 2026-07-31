@@ -46,7 +46,7 @@ async function toWebRequest(req: IncomingMessage): Promise<Request> {
   const init: RequestInit = {
     method: req.method || 'GET',
     headers,
-    ...(body !== undefined ? { body } : {}),
+    ...(body !== undefined ? { body: body as unknown as BodyInit } : {}),
   };
   return new Request(requestUrl(req), init);
 }
