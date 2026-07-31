@@ -117,20 +117,22 @@ export default function ClaudePartnerNetworkPage() {
       >
         <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
           
-          {/* Partner Badge */}
+          {/* Logo Oficial Claude Partner Network — Alinhamento idêntico à Home */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 text-xs font-semibold tracking-wide shadow-2xl"
+            className="flex items-center justify-center gap-3 mb-2"
           >
             <img
               src="/brand/claude-partner-network.svg"
               alt="Claude Partner Network"
-              className="h-4.5 w-auto object-contain opacity-95"
+              className="h-6 sm:h-7 w-auto object-contain opacity-90"
             />
-            <span className="w-px h-3.5 bg-zinc-700" />
-            <span className="text-[#00CC6A] font-bold">Trilha Oficial Restrita</span>
+            <span className="w-px h-4 bg-zinc-800" />
+            <span className="text-[#00CC6A] text-xs font-semibold uppercase tracking-wider">
+              Trilha Oficial Restrita
+            </span>
           </motion.div>
           
           {/* Headline H1 */}
@@ -153,15 +155,15 @@ export default function ClaudePartnerNetworkPage() {
             Você está entre as 10 pessoas convidadas para participar da trilha exclusiva do Claude Partner Network com a RevHackers.
           </motion.p>
 
-          {/* Badge de Escassez em Tempo Real */}
+          {/* Indicador de Status Limpo — Padrão da Home */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={inViewHero ? { opacity: 1, scale: 1 } : {}}
+            initial={{ opacity: 0 }}
+            animate={inViewHero ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.12 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/80 text-emerald-400 text-xs font-semibold"
+            className="flex items-center justify-center gap-2 text-zinc-400 text-xs font-medium"
           >
-            <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-ping" />
-            <span>Vagas Selecionadas: 7 de 10 preenchidas</span>
+            <span className="w-2 h-2 rounded-full bg-[#00CC6A]" />
+            <span>Vagas Selecionadas: <strong className="text-white">7 de 10 preenchidas</strong></span>
           </motion.div>
 
           {/* Box de Apoio */}
