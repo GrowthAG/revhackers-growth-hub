@@ -42,7 +42,7 @@ jobs:
           SSH_PORT: "65002"
           SSH_USERNAME: "u139274360"
           SSH_PRIVATE_KEY: ${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}
-          SSH_REMOTE_DIR: "public_html"
+          SSH_REMOTE_DIR: "/home/u139274360/domains/revhackers.com.br/public_html"
         run: |
           set -euo pipefail
           : "${SSH_PRIVATE_KEY:?Configure o Secret HOSTINGER_SSH_PRIVATE_KEY}"
