@@ -55,7 +55,7 @@
 </head>
 
 <body>
-  <!-- Chunk stale cache guard: reloads ONCE if a dynamic import fails (outdated cached JS chunk) -->
+  <!-- Chunk stale cache guard: reloads ONCE if a dynamic import fails or root fails to mount -->
   <script>
     window.addEventListener("error", function(e) {
       var msg = (e.message || '') + (e.filename || '');
@@ -66,12 +66,32 @@
       );
       if (isChunkError && !sessionStorage.getItem('__rx_chunk_refresh')) {
         sessionStorage.setItem('__rx_chunk_refresh', '1');
-        window.location.reload();
+        window.location.reload(true);
       }
     });
-    // Limpa flag após carregamento bem-sucedido
+
+    // Auto-detect empty #root (White Screen) and self-heal automatically
+    setTimeout(function() {
+      var root = document.getElementById('root');
+      if (root && !root.hasChildNodes() && !sessionStorage.getItem('__rx_ws_recovered')) {
+        sessionStorage.setItem('__rx_ws_recovered', '1');
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            regs.forEach(function(r) { r.unregister(); });
+          });
+        }
+        window.location.reload(true);
+      }
+    }, 2500);
+
     window.addEventListener('load', function() {
-      sessionStorage.removeItem('__rx_chunk_refresh');
+      setTimeout(function() {
+        var root = document.getElementById('root');
+        if (root && root.hasChildNodes()) {
+          sessionStorage.removeItem('__rx_chunk_refresh');
+          sessionStorage.removeItem('__rx_ws_recovered');
+        }
+      }, 3000);
     });
   </script>
   <!-- Google Tag Manager (noscript) -->
