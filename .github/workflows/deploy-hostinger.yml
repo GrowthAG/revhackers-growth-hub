@@ -37,7 +37,7 @@ jobs:
       - name: Deploy via FTP/SFTP para Hostinger
         uses: SamKirland/FTP-Deploy-Action@v4.3.5
         with:
-          server: "212.86.109.213"
+          server: "ftp.revhackers.com.br"
           username: "u995977926.rhoficial"
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
