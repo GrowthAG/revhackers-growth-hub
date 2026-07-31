@@ -20,10 +20,19 @@ const confirmationSchema = z.object({
   role: z.string().min(2, 'Informe seu cargo'),
   website: z.string().min(3, 'Informe o site da empresa'),
   segment: z.string().min(1, 'Selecione o segmento da empresa'),
+  otherSegment: z.string().optional(),
   whyParticipate: z.string().min(15, 'Descreva brevemente sua motivação'),
   whatToBuild: z.string().min(15, 'Descreva o que deseja construir ou melhorar'),
   confirmAvailability: z.boolean().refine(val => val === true, 'Você precisa confirmar disponibilidade até 27/10'),
   agreeTerms: z.boolean().refine(val => val === true, 'Você precisa concordar com os termos de participação'),
+}).refine((data) => {
+  if (data.segment === 'Outro') {
+    return !!data.otherSegment && data.otherSegment.trim().length >= 3;
+  }
+  return true;
+}, {
+  message: 'Por favor, especifique o seu segmento',
+  path: ['otherSegment']
 });
 
 type ConfirmationFormData = z.infer<typeof confirmationSchema>;
@@ -49,6 +58,7 @@ export default function ClaudePartnerNetworkPage() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<ConfirmationFormData>({
     resolver: zodResolver(confirmationSchema),
@@ -57,6 +67,8 @@ export default function ClaudePartnerNetworkPage() {
       agreeTerms: false,
     }
   });
+
+  const selectedSegment = watch('segment');
 
   const onSubmit = async (data: ConfirmationFormData) => {
     setIsSubmitting(true);
@@ -360,6 +372,22 @@ export default function ClaudePartnerNetworkPage() {
                   {errors.segment && <p className="text-xs text-rose-600">{errors.segment.message}</p>}
                 </div>
               </div>
+
+              {/* Card Condicional: Especificar Segmento quando 'Outro' for selecionado */}
+              {selectedSegment === 'Outro' && (
+                <div className="p-5 rounded-xl bg-white border border-[#00CC6A]/40 shadow-xs space-y-2 transition-all">
+                  <label className="text-xs font-bold text-zinc-900 flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-[#00CC6A]" />
+                    Especificar Segmento da Empresa *
+                  </label>
+                  <input
+                    {...register('otherSegment')}
+                    placeholder="Qual o segmento específico da sua empresa?"
+                    className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                  />
+                  {errors.otherSegment && <p className="text-xs text-rose-600 font-medium">{errors.otherSegment.message}</p>}
+                </div>
+              )}
 
               {/* Por que quer participar? */}
               <div className="space-y-2">
