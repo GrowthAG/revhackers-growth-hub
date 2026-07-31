@@ -400,17 +400,17 @@ export default function ClaudePartnerNetworkPage() {
 
               </div>
 
-              {/* Termos de Participação */}
-              <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-xs text-zinc-400 space-y-2">
-                <p className="font-bold text-white flex items-center gap-1.5">
-                  <AlertCircle className="w-3.5 h-3.5 text-amber-500" /> Termos de Participação:
+              {/* Termos de Participação & Compromisso */}
+              <div className="p-5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs text-zinc-400 space-y-3">
+                <p className="font-bold text-white flex items-center gap-2 text-xs uppercase tracking-wide">
+                  <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" /> Termos de Participação & Compromisso de Conclusão:
                 </p>
-                <ol className="list-decimal list-inside space-y-1 text-zinc-400 leading-relaxed">
-                  <li>A trilha é gratuita</li>
-                  <li>A vaga é limitada</li>
-                  <li>A participação depende de validação final</li>
-                  <li>O não cumprimento do prazo pode levar à exclusão da turma</li>
-                  <li>A confirmação não garante permanência se houver descumprimento</li>
+                <ol className="list-decimal list-inside space-y-1.5 text-zinc-300 leading-relaxed font-normal">
+                  <li>A trilha é 100% gratuita (investimento coberto pelo programa de parceiros).</li>
+                  <li>As vagas são estritamente limitadas e a participação depende de validação final.</li>
+                  <li>Carga horária estimada de 40 horas práticas com prazo final impreterível em 27/10.</li>
+                  <li>Para garantir o compromisso da turma, a não conclusão ou abandono sem justificativa prévia até 27/10 acarretará taxa de não-conclusão de R$ 500.</li>
+                  <li>A confirmação de inscrição implica na concordância com o cronograma e os termos de dedicação.</li>
                 </ol>
               </div>
 
