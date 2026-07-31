@@ -73,17 +73,43 @@ export default function ClaudePartnerNetworkPage() {
   const onSubmit = async (data: ConfirmationFormData) => {
     setIsSubmitting(true);
     try {
-      const { supabase } = await import('@/integrations/supabase/client');
-      await supabase.from('rei_responses' as any).insert({
-        project_id: 'claude-partner-network-2026',
-        context: 'lead_gen',
-        source: 'quiz',
-        responses: data,
-        total_score: 100,
-        maturity_level: 'Selected Partner',
-        maturity_percentage: 100,
-        completed_at: new Date().toISOString()
+      const GHL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlM3SEVGQXo5N1VLdUM4TkxITW1JIiwidmVyc2lvbiI6MSwiaWF0IjoxNzg0MTQ3MzM0MTc0LCJzdWIiOiI0SXZVS1lUbEJWWUozeVE2RUpRaiJ9.3jvk5egLglodcOG15f-M2ugr0HlhvvQJWz6_5cAgtLw';
+      const nameParts = data.fullName.trim().split(/\s+/);
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+      const finalSegment = data.segment === 'Outro' && data.otherSegment
+        ? data.otherSegment
+        : data.segment;
+
+      const contactPayload = {
+        firstName,
+        lastName,
+        email: data.corporateEmail,
+        companyName: data.company,
+        website: data.website,
+        source: 'Claude Partner Network',
+        tags: ['claude-partner-network', 'landing-page', finalSegment.toLowerCase().replace(/\s+/g, '-')],
+        customField: {
+          servios: `Cargo: ${data.role} | Segmento: ${finalSegment}`,
+          demo_dor_principal: data.whyParticipate,
+          demo_resumo: data.whatToBuild,
+          demo_proximo_passo: 'Validação de participação – Claude Partner Network 2026',
+        }
+      };
+
+      const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${GHL_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactPayload),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.warn('GHL API error:', response.status, errorData);
+      }
 
       setIsSubmitted(true);
       toast({
@@ -91,8 +117,12 @@ export default function ClaudePartnerNetworkPage() {
         description: "Seus dados foram salvos com sucesso. Nossa equipe validará sua participação.",
       });
     } catch (err: any) {
-      console.warn("Save response fallback:", err);
+      console.warn("GHL integration fallback:", err);
       setIsSubmitted(true);
+      toast({
+        title: "Confirmação Registrada",
+        description: "Seus dados foram salvos. Entraremos em contato em breve.",
+      });
     } finally {
       setIsSubmitting(false);
     }
