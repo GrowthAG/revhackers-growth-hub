@@ -43,6 +43,33 @@ export const contentGcpAdapter = {
     return res.json();
   },
 
+  async createBlogArticle(payload: any): Promise<any> {
+    const res = await fetch(`${apiBase()}/blog/articles`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Falha ao criar artigo na API GCP');
+    return res.json();
+  },
+
+  async updateBlogArticle(id: string, payload: any): Promise<any> {
+    const res = await fetch(`${apiBase()}/blog/articles/${encodeURIComponent(id)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Falha ao atualizar artigo na API GCP');
+    return res.json();
+  },
+
+  async deleteBlogArticle(id: string): Promise<void> {
+    const res = await fetch(`${apiBase()}/blog/articles/${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+    });
+    if (!res.ok) throw new Error('Falha ao excluir artigo na API GCP');
+  },
+
   // Materials
   async getMaterials(): Promise<MaterialGcp[]> {
     const res = await fetch(`${apiBase()}/materials`);

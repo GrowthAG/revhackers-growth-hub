@@ -109,27 +109,38 @@ const PostForm = ({ initialData, isEditing = false }: PostFormProps) => {
                 updated_at: new Date().toISOString()
             };
 
-            let error;
             if (isEditing && initialData?.id) {
-                // Update
-                const { error: updateError } = await supabase
-                    .from('blog_posts')
-                    .update(payload)
-                    .eq('id', initialData.id);
-                error = updateError;
+                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
+                    try {
+                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.updateBlogArticle(initialData.id, payload);
+                    } catch (gcpErr) {
+                        console.warn('GCP updateBlogArticle failed, falling back to Supabase', gcpErr);
+                        const { error: supaErr } = await supabase.from('blog_posts').update(payload).eq('id', initialData.id);
+                        if (supaErr) throw supaErr;
+                    }
+                } else {
+                    const { error: supaErr } = await supabase.from('blog_posts').update(payload).eq('id', initialData.id);
+                    if (supaErr) throw supaErr;
+                }
             } else {
-                // Insert
-                // Only if strictly required, we add created_at
                 const insertPayload = {
                     ...payload,
                     created_at: new Date().toISOString(),
-                    author_id: session.user.id // Explicitly set author_id logic for RLS match
+                    author_id: session?.user?.id || 'master-user-id'
                 };
-                const { error: insertError } = await supabase.from('blog_posts').insert(insertPayload);
-                error = insertError;
+                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
+                    try {
+                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.createBlogArticle(insertPayload);
+                    } catch (gcpErr) {
+                        console.warn('GCP createBlogArticle failed, falling back to Supabase', gcpErr);
+                        const { error: supaErr } = await supabase.from('blog_posts').insert(insertPayload);
+                        if (supaErr) throw supaErr;
+                    }
+                } else {
+                    const { error: supaErr } = await supabase.from('blog_posts').insert(insertPayload);
+                    if (supaErr) throw supaErr;
+                }
             }
-
-            if (error) throw error;
 
             toast({
                 title: isEditing ? 'Artigo atualizado!' : 'Artigo criado!',
@@ -156,8 +167,18 @@ const PostForm = ({ initialData, isEditing = false }: PostFormProps) => {
 
         setLoading(true);
         try {
-            const { error } = await supabase.from('blog_posts').delete().eq('id', initialData.id);
-            if (error) throw error;
+            if (import.meta.env.VITE_GCP_ENABLED === 'true') {
+                try {
+                    await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.deleteBlogArticle(initialData.id);
+                } catch (gcpErr) {
+                    console.warn('GCP deleteBlogArticle failed, falling back to Supabase', gcpErr);
+                    const { error } = await supabase.from('blog_posts').delete().eq('id', initialData.id);
+                    if (error) throw error;
+                }
+            } else {
+                const { error } = await supabase.from('blog_posts').delete().eq('id', initialData.id);
+                if (error) throw error;
+            }
             toast({ title: 'Artigo excluído' });
             navigate('/admin/posts');
         } catch (error: any) {
