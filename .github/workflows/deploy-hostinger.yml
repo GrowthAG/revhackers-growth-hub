@@ -1,4 +1,4 @@
-name: Deploy Automático Hostinger (FTP)
+name: Deploy Automático Hostinger (FTPS)
 
 on:
   push:
@@ -38,18 +38,32 @@ jobs:
 
       - name: Deploy via FTPS para Hostinger
         env:
+          FTP_HOST: ${{ secrets.HOSTINGER_FTP_HOST }}
+          FTP_USERNAME: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ vars.HOSTINGER_FTP_REMOTE_DIR }}
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq lftp > /dev/null 2>&1
-          lftp -u "u995977926.rhoficial","$FTP_PASSWORD" \
-               -e "set ftp:ssl-allow yes; \
-                   set ftp:ssl-force yes; \
-                   set ftp:ssl-protect-data yes; \
-                   set ssl:verify-certificate no; \
-                   set ftp:passive-mode yes; \
-                   set net:timeout 60; \
-                   set net:max-retries 5; \
-                   set net:reconnect-interval-base 5; \
-                   mirror --reverse --delete --verbose --parallel=2 ./dist/ /; \
-                   bye" \
-               ftps://ftp.revhackers.com.br
+          set -euo pipefail
+          : "${FTP_HOST:?Configure o Secret HOSTINGER_FTP_HOST}"
+          : "${FTP_USERNAME:?Configure o Secret HOSTINGER_FTP_USERNAME}"
+          : "${FTP_PASSWORD:?Configure o Secret FTP_PASSWORD}"
+          FTP_REMOTE_DIR="${FTP_REMOTE_DIR:-/public_html}"
+          FTP_REMOTE_DIR="/${FTP_REMOTE_DIR#/}"
+          FTP_REMOTE_DIR="${FTP_REMOTE_DIR%/}"
+
+          find ./dist -type f -print0 | while IFS= read -r -d '' file; do
+            remote_path="${file#./dist/}"
+            printf 'Uploading %s\n' "$remote_path"
+            curl --fail --show-error --silent \
+              --ftp-ssl-reqd \
+              --ftp-pasv \
+              --ftp-create-dirs \
+              --insecure \
+              --connect-timeout 30 \
+              --max-time 120 \
+              --retry 5 \
+              --retry-all-errors \
+              --user "$FTP_USERNAME:$FTP_PASSWORD" \
+              --upload-file "$file" \
+              "ftp://$FTP_HOST$FTP_REMOTE_DIR/$remote_path"
+          done
