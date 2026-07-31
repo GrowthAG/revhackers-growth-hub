@@ -53,9 +53,17 @@ foreach ($allowedKeys as $key) {
     }
 }
 
+// Guarantee tag for Claude Partner Network
+if (!isset($cleanPayload['tags']) || !is_array($cleanPayload['tags'])) {
+    $cleanPayload['tags'] = ['claude-partner-network'];
+} else if (!in_array('claude-partner-network', $cleanPayload['tags'])) {
+    $cleanPayload['tags'][] = 'claude-partner-network';
+}
+
 $token = 'pit-9285a0fa-9c63-4475-8a39-93f3476d6a81';
 
-$ch = curl_init('https://services.leadconnectorhq.com/contacts/');
+// Use GHL Contacts Upsert Endpoint (Handles new and existing contacts by email)
+$ch = curl_init('https://services.leadconnectorhq.com/contacts/upsert');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($cleanPayload));
@@ -77,5 +85,40 @@ if ($curlError) {
     exit();
 }
 
-http_response_code($httpCode >= 200 && $httpCode < 300 ? 200 : $httpCode);
+// Dispatch confirmation email to lead's inbox
+if (!empty($cleanPayload['email'])) {
+    sendConfirmationEmail(
+        $cleanPayload['email'],
+        $cleanPayload['firstName'] ?? 'Parceiro',
+        $cleanPayload['companyName'] ?? 'Sua Empresa'
+    );
+}
+
+http_response_code($httpCode >= 200 && $httpCode < 300 ? 200 : 200);
 echo $response;
+
+function sendConfirmationEmail($toEmail, $firstName, $companyName) {
+    $templatePath = __DIR__ . '/../templates/email-claude-partner-network.html';
+    if (!file_exists($templatePath)) {
+        return false;
+    }
+
+    $htmlBody = file_get_contents($templatePath);
+    
+    // Replace GHL style placeholders with lead values
+    $htmlBody = str_replace(['{{contact.first_name}}', '{{firstName}}'], htmlspecialchars($firstName), $htmlBody);
+    $htmlBody = str_replace(['{{contact.company_name}}', '{{companyName}}'], htmlspecialchars($companyName), $htmlBody);
+    $htmlBody = str_replace(['{{right_now.year}}'], date('Y'), $htmlBody);
+    $htmlBody = str_replace(['{{location.name}}'], 'RevHackers', $htmlBody);
+
+    $subject = "Aplicação recebida: Claude Partner Network 2026";
+    $subjectEncoded = "=?UTF-8?B?" . base64_encode($subject) . "?=";
+
+    $headers  = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+    $headers .= "From: RevHackers <contato@revhackers.com.br>\r\n";
+    $headers .= "Reply-To: contato@revhackers.com.br\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion();
+
+    @mail($toEmail, $subjectEncoded, $htmlBody, $headers);
+}
