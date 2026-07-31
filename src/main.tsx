@@ -16,14 +16,22 @@ window.addEventListener('unhandledrejection', (event) => {
     }
 });
 
-const rootElement = document.getElementById("root")!;
+function mountApp() {
+    const rootElement = document.getElementById("root");
+    if (!rootElement) return;
 
-// Limpa conteúdo pré-renderizado pelo Puppeteer antes de montar o React.
-// hydrateRoot requer HTML identico ao do React - prerender com GTM/tracking quebra isso.
-rootElement.innerHTML = '';
+    // Limpa conteúdo pré-renderizado pelo Puppeteer antes de montar o React.
+    rootElement.innerHTML = '';
 
-createRoot(rootElement).render(
-    <SEOProvider>
-        <App />
-    </SEOProvider>
-);
+    createRoot(rootElement).render(
+        <SEOProvider>
+            <App />
+        </SEOProvider>
+    );
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mountApp);
+} else {
+    mountApp();
+}
