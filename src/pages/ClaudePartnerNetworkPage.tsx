@@ -6,7 +6,7 @@ import { motion, useInView } from 'framer-motion';
 import PageLayout from '@/components/layout/PageLayout';
 import SEO from '@/components/shared/SEO';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, Sparkles, AlertCircle, Loader2, ArrowRight, Check } from 'lucide-react';
+import { ShieldCheck, Sparkles, AlertCircle, Loader2, ArrowRight, Check, Cpu, Award, Layers } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const confirmationSchema = z.object({
@@ -29,12 +29,12 @@ const confirmationSchema = z.object({
 type ConfirmationFormData = z.infer<typeof confirmationSchema>;
 
 const AUDIENCE_ROLES = [
-  { title: 'SaaS & Founders', desc: 'Engenharia de produto e automação B2B' },
-  { title: 'Software House & Devs', desc: 'Construção de soluções AI-native' },
-  { title: 'Cibersegurança', desc: 'Compliance e governança de dados Enterprise' },
-  { title: 'Automação & RevOps', desc: 'Orquestração de pipelines e CRMs inteligentes' },
-  { title: 'Growth & CS', desc: 'Retenção e expansão de contas pós-venda' },
-  { title: 'Produto & Liderança', desc: 'Estratégia de integração de IA em processos' }
+  { icon: Cpu, title: 'SaaS & Founders', desc: 'Engenharia de produto e automação B2B' },
+  { icon: Layers, title: 'Software House & Devs', desc: 'Construção de soluções AI-native' },
+  { icon: ShieldCheck, title: 'Cibersegurança', desc: 'Compliance e governança de dados Enterprise' },
+  { icon: Award, title: 'Automação & RevOps', desc: 'Orquestração de pipelines e CRMs inteligentes' },
+  { icon: Sparkles, title: 'Growth & CS', desc: 'Retenção e expansão de contas pós-venda' },
+  { icon: Check, title: 'Produto & Liderança', desc: 'Estratégia de integração de IA em processos' }
 ];
 
 export default function ClaudePartnerNetworkPage() {
@@ -110,15 +110,15 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 text-xs font-semibold tracking-wide"
+            className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 text-xs font-semibold tracking-wide shadow-2xl"
           >
             <img
               src="/brand/claude-partner-network.svg"
               alt="Claude Partner Network"
-              className="h-4 w-auto object-contain opacity-90"
+              className="h-4.5 w-auto object-contain opacity-95"
             />
-            <span className="w-px h-3 bg-zinc-700" />
-            <span className="text-[#00CC6A]">Trilha Oficial Restrita</span>
+            <span className="w-px h-3.5 bg-zinc-700" />
+            <span className="text-[#00CC6A] font-bold">Trilha Oficial Restrita</span>
           </motion.div>
           
           {/* Headline H1 — IDÊNTICO À HOME */}
@@ -174,11 +174,11 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* O que acontece agora & Público Elegível (PADRÃO EXACTO SERVICESSECTION DA HOME) */}
+      {/* O que acontece agora & Público Elegível (CARDS ALINHADOS PREMIUM) */}
       <section className="py-20 bg-zinc-50 border-b border-zinc-200">
         <div className="max-w-5xl mx-auto px-6 space-y-16">
           
-          {/* O que acontece agora — Linha da Home com Cards p-6 bg-white border border-zinc-200 rounded-xl */}
+          {/* O que acontece agora — Grid 4 Colunas Perfeitamente Alinhadas */}
           <div className="space-y-8">
             <div className="max-w-3xl">
               <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
@@ -189,30 +189,32 @@ export default function ClaudePartnerNetworkPage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
               {[
                 { step: "01", title: "Confirmação de Dados", desc: "Preencha o formulário oficial nesta página para garantir sua vaga." },
                 { step: "02", title: "Validação Técnica", desc: "Nossa equipe analisa o alinhamento técnico e de negócio." },
                 { step: "03", title: "Recebimento de Acessos", desc: "Envio de chave de acesso, calendário de encontros e materiais." },
                 { step: "04", title: "Entrada na Trilha", desc: "Início do programa prático de desenvolvimento com o time." }
               ].map((item) => (
-                <div key={item.step} className="flex flex-col h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 transition-all shadow-xs">
-                  <div className="w-8 h-8 bg-zinc-100 rounded-lg flex items-center justify-center mb-4 text-xs font-sans font-bold text-zinc-900">
-                    {item.step}
+                <div key={item.step} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 transition-all shadow-xs group">
+                  <div>
+                    <div className="w-9 h-9 bg-zinc-100 rounded-lg flex items-center justify-center mb-5 text-xs font-mono font-bold text-zinc-900 group-hover:bg-[#00CC6A]/10 group-hover:text-[#00CC6A] transition-colors">
+                      {item.step}
+                    </div>
+                    <h3 className="text-zinc-900 font-bold text-base mb-2 group-hover:text-[#00CC6A] transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-zinc-500 text-xs leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
-                  <h3 className="text-zinc-900 font-bold text-base mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-zinc-500 text-xs leading-relaxed flex-1">
-                    {item.desc}
-                  </p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Para quem essa trilha faz sentido — Linha da Home com Grid de Cards SaaS */}
-          <div className="space-y-8 pt-8 border-t border-zinc-200/80">
+          {/* Para quem essa trilha faz sentido — Grid 3 Colunas Perfeitamente Alinhadas */}
+          <div className="space-y-8 pt-10 border-t border-zinc-200/80">
             <div className="max-w-3xl">
               <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
                 Público Elegível
@@ -222,22 +224,25 @@ export default function ClaudePartnerNetworkPage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {AUDIENCE_ROLES.map((role) => (
-                <div key={role.title} className="flex flex-col h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 transition-all shadow-xs">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 rounded-full bg-[#00CC6A]/10 flex items-center justify-center shrink-0">
-                      <Check className="w-3.5 h-3.5 text-[#00CC6A]" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+              {AUDIENCE_ROLES.map((role) => {
+                const IconComponent = role.icon;
+                return (
+                  <div key={role.title} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 transition-all shadow-xs group">
+                    <div>
+                      <div className="w-10 h-10 bg-zinc-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#00CC6A]/10 transition-colors">
+                        <IconComponent className="w-5 h-5 text-zinc-700 group-hover:text-[#00CC6A] transition-colors" strokeWidth={1.5} />
+                      </div>
+                      <h3 className="text-zinc-900 font-bold text-base mb-2 group-hover:text-[#00CC6A] transition-colors">
+                        {role.title}
+                      </h3>
+                      <p className="text-zinc-500 text-xs leading-relaxed">
+                        {role.desc}
+                      </p>
                     </div>
-                    <h3 className="text-zinc-900 font-bold text-sm">
-                      {role.title}
-                    </h3>
                   </div>
-                  <p className="text-zinc-500 text-xs leading-relaxed pl-8">
-                    {role.desc}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
