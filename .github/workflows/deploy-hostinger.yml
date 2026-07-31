@@ -36,34 +36,28 @@ jobs:
           VITE_GROWTHMAP_GCP_ENABLED: "true"
         run: npx vite build
 
-      - name: Deploy via FTPS para Hostinger
+      - name: Deploy via SFTP para Hostinger
         env:
-          FTP_HOST: ${{ secrets.HOSTINGER_FTP_HOST }}
-          FTP_USERNAME: ${{ secrets.HOSTINGER_FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_REMOTE_DIR: ${{ vars.HOSTINGER_FTP_REMOTE_DIR }}
+          SSH_HOST: "151.106.98.30"
+          SSH_PORT: "65002"
+          SSH_USERNAME: "u139274360"
+          SSH_PRIVATE_KEY: ${{ secrets.HOSTINGER_SSH_PRIVATE_KEY }}
+          SSH_REMOTE_DIR: "public_html"
         run: |
           set -euo pipefail
-          : "${FTP_HOST:?Configure o Secret HOSTINGER_FTP_HOST}"
-          : "${FTP_USERNAME:?Configure o Secret HOSTINGER_FTP_USERNAME}"
-          : "${FTP_PASSWORD:?Configure o Secret FTP_PASSWORD}"
-          FTP_REMOTE_DIR="${FTP_REMOTE_DIR:-/public_html}"
-          FTP_REMOTE_DIR="/${FTP_REMOTE_DIR#/}"
-          FTP_REMOTE_DIR="${FTP_REMOTE_DIR%/}"
+          : "${SSH_PRIVATE_KEY:?Configure o Secret HOSTINGER_SSH_PRIVATE_KEY}"
 
-          find ./dist -type f -print0 | while IFS= read -r -d '' file; do
-            remote_path="${file#./dist/}"
-            printf 'Uploading %s\n' "$remote_path"
-            curl --fail --show-error --silent \
-              --ftp-ssl-reqd \
-              --ftp-pasv \
-              --ftp-create-dirs \
-              --insecure \
-              --connect-timeout 30 \
-              --max-time 120 \
-              --retry 5 \
-              --retry-all-errors \
-              --user "$FTP_USERNAME:$FTP_PASSWORD" \
-              --upload-file "$file" \
-              "ftp://$FTP_HOST$FTP_REMOTE_DIR/$remote_path"
-          done
+          key_file="$(mktemp)"
+          trap 'rm -f "$key_file"' EXIT
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$key_file"
+          chmod 600 "$key_file"
+
+          install -m 700 -d "$HOME/.ssh"
+          cat > "$HOME/.ssh/known_hosts" <<'EOF'
+          [151.106.98.30]:65002 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGzcHcn75uvWs5rxDQEpS2ylTjLAfuvPt7W7cwICOKFh
+          EOF
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+          rsync --archive --compress --human-readable --itemize-changes \
+            -e "ssh -i $key_file -p $SSH_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
+            ./dist/ "$SSH_USERNAME@$SSH_HOST:$SSH_REMOTE_DIR/"
