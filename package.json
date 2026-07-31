@@ -12,7 +12,7 @@
     "build:api": "tsc -p api/tsconfig.build.json",
     "start:api": "node api/dist/main.js",
     "dev": "vite",
-    "build": "vite build && node ./scripts/prerender.js",
+    "build": "vite build && node ./scripts/generate-page-og-html.mjs",
     "build:offline": "node ./scripts/build-offline.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
