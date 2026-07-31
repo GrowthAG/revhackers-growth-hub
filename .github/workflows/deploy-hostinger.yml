@@ -34,15 +34,25 @@ jobs:
           VITE_GROWTHMAP_GCP_ENABLED: "true"
         run: npx vite build
 
-      - name: Deploy via FTP/SFTP para Hostinger
-        uses: SamKirland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: "ftp.revhackers.com.br"
-          username: "u995977926.rhoficial"
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          protocol: ftps
-          security-option: loose
-          server-dir: ./
-          local-dir: ./dist/
-          dangerous-clean-slate: false
+      - name: Instalar lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy via FTPS para Hostinger
+        env:
+          FTP_SERVER: "ftp.revhackers.com.br"
+          FTP_USERNAME: "u995977926.rhoficial"
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -e "
+            set ftp:ssl-allow yes;
+            set ftp:ssl-force yes;
+            set ftp:ssl-protect-data yes;
+            set ssl:verify-certificate no;
+            set ftp:passive-mode yes;
+            set net:timeout 30;
+            set net:max-retries 3;
+            set net:reconnect-interval-base 5;
+            open -u $FTP_USERNAME,$FTP_PASSWORD ftps://$FTP_SERVER;
+            mirror --reverse --delete --verbose --parallel=4 ./dist/ /;
+            bye;
+          "
