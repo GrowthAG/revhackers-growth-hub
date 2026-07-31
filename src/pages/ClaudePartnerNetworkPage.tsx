@@ -6,7 +6,7 @@ import { motion, useInView } from 'framer-motion';
 import PageLayout from '@/components/layout/PageLayout';
 import SEO from '@/components/shared/SEO';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, Sparkles, AlertCircle, Loader2, ArrowRight, Check, Cpu, Award, Layers } from 'lucide-react';
+import { ShieldCheck, Sparkles, AlertCircle, Loader2, ArrowRight, Check, Cpu, Award, Layers, Clock, Lock, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const confirmationSchema = z.object({
@@ -110,14 +110,14 @@ export default function ClaudePartnerNetworkPage() {
         canonical="https://revhackers.com.br/claude-partner-network"
       />
 
-      {/* Hero Section — Fundo Black (IDÊNTICO À HOME) */}
+      {/* Hero Section — Fundo Black Purificado (IDÊNTICO À HOME) */}
       <section
         ref={heroRef}
         className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-32 pb-20 bg-black border-b border-zinc-900"
       >
         <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
           
-          {/* Partner Badge — IDÊNTICO À HOME */}
+          {/* Partner Badge */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
@@ -133,7 +133,7 @@ export default function ClaudePartnerNetworkPage() {
             <span className="text-[#00CC6A] font-bold">Trilha Oficial Restrita</span>
           </motion.div>
           
-          {/* Headline H1 — IDÊNTICO À HOME */}
+          {/* Headline H1 */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
@@ -143,7 +143,7 @@ export default function ClaudePartnerNetworkPage() {
             Parabéns, <span className="text-[#00CC6A]">você foi selecionado</span>
           </motion.h1>
 
-          {/* Subheadline — IDÊNTICO À HOME */}
+          {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
@@ -153,7 +153,18 @@ export default function ClaudePartnerNetworkPage() {
             Você está entre as 10 pessoas convidadas para participar da trilha exclusiva do Claude Partner Network com a RevHackers.
           </motion.p>
 
-          {/* Box de Apoio — Fundo Dark zinc-950 com Borda Zinc-800 */}
+          {/* Badge de Escassez em Tempo Real */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={inViewHero ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.12 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/80 text-emerald-400 text-xs font-semibold"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-ping" />
+            <span>Vagas Selecionadas: 7 de 10 preenchidas</span>
+          </motion.div>
+
+          {/* Box de Apoio */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
@@ -186,11 +197,11 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* O que acontece agora & Público Elegível (CARDS ALINHADOS PREMIUM) */}
+      {/* O que acontece agora & Público Elegível (PADRÃO EXACTO SERVICESSECTION DA HOME) */}
       <section className="py-20 bg-zinc-50 border-b border-zinc-200">
         <div className="max-w-5xl mx-auto px-6 space-y-16">
           
-          {/* O que acontece agora — Grid 4 Colunas Perfeitamente Alinhadas */}
+          {/* O que acontece agora */}
           <div className="space-y-8">
             <div className="max-w-3xl">
               <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
@@ -225,7 +236,7 @@ export default function ClaudePartnerNetworkPage() {
             </div>
           </div>
 
-          {/* Para quem essa trilha faz sentido — Grid 3 Colunas Perfeitamente Alinhadas */}
+          {/* Para quem essa trilha faz sentido */}
           <div className="space-y-8 pt-10 border-t border-zinc-200/80">
             <div className="max-w-3xl">
               <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
