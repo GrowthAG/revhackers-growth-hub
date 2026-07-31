@@ -2,6 +2,7 @@ import { consultingConfig } from './consultingQuestions';
 import { devConfig } from './devQuestions';
 import { founderConfig } from './founderQuestions';
 import { crmOpsConfig } from './crmOpsQuestions';
+import { siteConfig } from './siteQuestions';
 import { REIType, REIConfig } from '@/types/rei';
 
 export const REI_CONFIGS: Record<REIType, REIConfig> = {
@@ -9,7 +10,7 @@ export const REI_CONFIGS: Record<REIType, REIConfig> = {
     dev: devConfig,
     founder: founderConfig,
     crm_ops: crmOpsConfig,
-    site: devConfig,
+    site: siteConfig,
     funnel: consultingConfig,
 };
 
