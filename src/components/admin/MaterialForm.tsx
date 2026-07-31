@@ -119,7 +119,16 @@ const MaterialForm = ({ initialData, isEditing = false }: MaterialFormProps) => 
         if (!isEditing || !initialData?.id || !confirm('Excluir este Material?')) return;
         setLoading(true);
         try {
-            await supabase.from('materials').delete().eq('id', initialData.id);
+            if (import.meta.env.VITE_GCP_ENABLED === 'true') {
+                try {
+                    await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.deleteMaterial(initialData.id);
+                } catch (gcpErr) {
+                    console.warn('GCP deleteMaterial failed, falling back to Supabase', gcpErr);
+                    await supabase.from('materials').delete().eq('id', initialData.id);
+                }
+            } else {
+                await supabase.from('materials').delete().eq('id', initialData.id);
+            }
             toast({ title: 'Material excluído' });
             navigate('/admin/materials');
         } catch (error: any) {
@@ -133,14 +142,13 @@ const MaterialForm = ({ initialData, isEditing = false }: MaterialFormProps) => 
         setLoading(true);
         try {
             const { data: { session } } = await supabase.auth.getSession();
-            if (!session) { navigate('/login'); return; }
+            if (!session && import.meta.env.VITE_GCP_ENABLED !== 'true') { navigate('/login'); return; }
 
-            // Map to strict DB columns: material_name, material_type, link_material
             const payload = {
                 material_name: data.title,
                 material_type: data.type,
                 link_material: data.material_url,
-                material_url: data.material_url, // Add redundant field to satisfy types if needed, or check DB
+                material_url: data.material_url,
                 slug: data.slug,
                 description: data.description,
                 published: data.published,
@@ -148,13 +156,33 @@ const MaterialForm = ({ initialData, isEditing = false }: MaterialFormProps) => 
             };
 
             if (isEditing && initialData?.id) {
-                const { error } = await supabase.from('materials').update(payload).eq('id', initialData.id);
-                if (error) throw error;
+                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
+                    try {
+                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.updateMaterial(initialData.id, payload);
+                    } catch (gcpErr) {
+                        console.warn('GCP updateMaterial failed, falling back to Supabase', gcpErr);
+                        const { error } = await supabase.from('materials').update(payload).eq('id', initialData.id);
+                        if (error) throw error;
+                    }
+                } else {
+                    const { error } = await supabase.from('materials').update(payload).eq('id', initialData.id);
+                    if (error) throw error;
+                }
                 toast({ title: 'Material atualizado!' });
                 localStorage.removeItem(draftKey);
             } else {
-                const { error } = await supabase.from('materials').insert(payload);
-                if (error) throw error;
+                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
+                    try {
+                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.createMaterial(payload);
+                    } catch (gcpErr) {
+                        console.warn('GCP createMaterial failed, falling back to Supabase', gcpErr);
+                        const { error } = await supabase.from('materials').insert(payload);
+                        if (error) throw error;
+                    }
+                } else {
+                    const { error } = await supabase.from('materials').insert(payload);
+                    if (error) throw error;
+                }
                 toast({ title: 'Material criado!' });
                 localStorage.removeItem(draftKey);
                 navigate('/admin/materials');

@@ -50,10 +50,64 @@ export const contentGcpAdapter = {
     return res.json();
   },
 
+  async createMaterial(payload: any): Promise<any> {
+    const res = await fetch(`${apiBase()}/materials`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Falha ao criar material na API GCP');
+    return res.json();
+  },
+
+  async updateMaterial(id: string, payload: any): Promise<any> {
+    const res = await fetch(`${apiBase()}/materials/${encodeURIComponent(id)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Falha ao atualizar material na API GCP');
+    return res.json();
+  },
+
+  async deleteMaterial(id: string): Promise<void> {
+    const res = await fetch(`${apiBase()}/materials/${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+    });
+    if (!res.ok) throw new Error('Falha ao excluir material na API GCP');
+  },
+
   // Cases
   async getCases(): Promise<CaseStudyGcp[]> {
     const res = await fetch(`${apiBase()}/cases`);
     if (!res.ok) throw new Error('Falha ao carregar cases da API GCP');
     return res.json();
+  },
+
+  async createCase(payload: any): Promise<any> {
+    const res = await fetch(`${apiBase()}/cases`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Falha ao criar case na API GCP');
+    return res.json();
+  },
+
+  async updateCase(id: string, payload: any): Promise<any> {
+    const res = await fetch(`${apiBase()}/cases/${encodeURIComponent(id)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Falha ao atualizar case na API GCP');
+    return res.json();
+  },
+
+  async deleteCase(id: string): Promise<void> {
+    const res = await fetch(`${apiBase()}/cases/${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+    });
+    if (!res.ok) throw new Error('Falha ao excluir case na API GCP');
   },
 };

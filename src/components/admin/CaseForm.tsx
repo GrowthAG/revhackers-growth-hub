@@ -106,7 +106,16 @@ const CaseForm = ({ initialData, isEditing = false }: CaseFormProps) => {
         if (!isEditing || !initialData?.id || !confirm('Excluir este case?')) return;
         setLoading(true);
         try {
-            await supabase.from('cases').delete().eq('id', initialData.id);
+            if (import.meta.env.VITE_GCP_ENABLED === 'true') {
+                try {
+                    await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.deleteCase(initialData.id);
+                } catch (gcpErr) {
+                    console.warn('GCP deleteCase failed, falling back to Supabase', gcpErr);
+                    await supabase.from('cases').delete().eq('id', initialData.id);
+                }
+            } else {
+                await supabase.from('cases').delete().eq('id', initialData.id);
+            }
             toast({ title: 'Case excluído' });
             navigate('/admin/cases');
         } catch (error) {
@@ -120,18 +129,38 @@ const CaseForm = ({ initialData, isEditing = false }: CaseFormProps) => {
         setLoading(true);
         try {
             const { data: { session } } = await supabase.auth.getSession();
-            if (!session) { navigate('/login'); return; }
+            if (!session && import.meta.env.VITE_GCP_ENABLED !== 'true') { navigate('/login'); return; }
 
             const payload = { ...data };
 
             if (isEditing && initialData?.id) {
-                const { error } = await supabase.from('cases').update(payload).eq('id', initialData.id);
-                if (error) throw error;
+                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
+                    try {
+                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.updateCase(initialData.id, payload);
+                    } catch (gcpErr) {
+                        console.warn('GCP updateCase failed, falling back to Supabase', gcpErr);
+                        const { error } = await supabase.from('cases').update(payload).eq('id', initialData.id);
+                        if (error) throw error;
+                    }
+                } else {
+                    const { error } = await supabase.from('cases').update(payload).eq('id', initialData.id);
+                    if (error) throw error;
+                }
                 toast({ title: 'Case atualizado!' });
                 navigate('/admin/cases');
             } else {
-                const { error } = await supabase.from('cases').insert(payload);
-                if (error) throw error;
+                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
+                    try {
+                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.createCase(payload);
+                    } catch (gcpErr) {
+                        console.warn('GCP createCase failed, falling back to Supabase', gcpErr);
+                        const { error } = await supabase.from('cases').insert(payload);
+                        if (error) throw error;
+                    }
+                } else {
+                    const { error } = await supabase.from('cases').insert(payload);
+                    if (error) throw error;
+                }
                 toast({ title: 'Case criado!' });
                 navigate('/admin/cases');
             }
