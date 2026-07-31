@@ -36,8 +36,27 @@ function parseName(fullName: string): { firstName: string; lastName: string } {
 }
 
 /**
+ * Capture UTM parameters from the current URL.
+ */
+function getUtmParams(): Record<string, string> {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const utms: Record<string, string> = {};
+        const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid'];
+        for (const key of keys) {
+            const val = params.get(key);
+            if (val) utms[key] = val;
+        }
+        return utms;
+    } catch {
+        return {};
+    }
+}
+
+/**
  * Build a GHL contact payload from event type + raw form data.
  * Maps each form's fields to the correct GHL contact fields and custom fields.
+ * Automatically captures UTMs, timestamp, and page source.
  */
 function buildContactPayload(
     eventType: GHLEventType,
@@ -47,6 +66,9 @@ function buildContactPayload(
         (payload.fullName as string) || (payload.name as string) || (payload.firstName as string) || ''
     );
 
+    const utms = getUtmParams();
+    const pageUrl = typeof window !== 'undefined' ? window.location.pathname : '';
+
     const base: Record<string, unknown> = {
         firstName: firstName || (payload.firstName as string) || '',
         lastName: lastName || (payload.lastName as string) || '',
@@ -54,11 +76,30 @@ function buildContactPayload(
         phone: payload.phone || payload.whatsapp || '',
         companyName: payload.company || payload.companyName || '',
         website: payload.website || '',
-        source: `RevHackers - ${eventType}`,
+        source: utms.utm_source
+            ? `${utms.utm_source}${utms.utm_medium ? ' / ' + utms.utm_medium : ''}`
+            : `RevHackers - ${eventType}`,
         tags: ['revhackers', eventType],
     };
 
-    const customField: Record<string, string> = {};
+    const customField: Record<string, string> = {
+        // Always populate timestamp and page source
+        timestamp_captura: new Date().toISOString(),
+    };
+
+    // UTM tracking fields
+    if (utms.utm_source) customField.utm_source = utms.utm_source;
+    if (utms.utm_medium) customField.utm_medium = utms.utm_medium;
+    if (utms.utm_term) customField.utm_term = utms.utm_term;
+    if (utms.utm_campaign || utms.utm_content) {
+        customField.campanha__ao = [utms.utm_campaign, utms.utm_content].filter(Boolean).join(' | ');
+    }
+    if (utms.fbclid) customField.fbclid = utms.fbclid;
+
+    // Page-level context
+    if (pageUrl) {
+        customField.demo_proximo_passo = `Página: ${pageUrl} | Formulário: ${eventType}`;
+    }
 
     switch (eventType) {
         case 'contact_form':
@@ -132,10 +173,14 @@ export async function sendToGHL(
     try {
         const contactPayload = buildContactPayload(eventType, payload);
 
-        const response = await fetch(GHL_API_URL, {
+        // Call PHP proxy on Hostinger to avoid browser CORS restriction
+        const proxyEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('revhackers.com.br')
+            ? '/api/ghl.php'
+            : 'https://revhackers.com.br/api/ghl.php';
+
+        const response = await fetch(proxyEndpoint, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${GHL_API_KEY}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(contactPayload),
@@ -143,14 +188,14 @@ export async function sendToGHL(
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            console.warn(`[ghlRelay] GHL API error (${response.status}):`, errorData);
+            console.warn(`[ghlRelay] GHL Proxy error (${response.status}):`, errorData);
             return false;
         }
 
         return true;
     } catch (err: any) {
         // Never propagate GHL failures to the UI - this is CRM enrichment, not core flow
-        console.warn('[ghlRelay] Failed to reach GHL API (non-critical):', err?.message ?? err);
+        console.warn('[ghlRelay] Failed to reach GHL Proxy (non-critical):', err?.message ?? err);
         return false;
     }
 }

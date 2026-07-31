@@ -97,10 +97,13 @@ export default function ClaudePartnerNetworkPage() {
         }
       };
 
-      const response = await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+      const proxyEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('revhackers.com.br')
+        ? '/api/ghl.php'
+        : 'https://revhackers.com.br/api/ghl.php';
+
+      const response = await fetch(proxyEndpoint, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${GHL_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(contactPayload),
