@@ -8,6 +8,7 @@ import SEO from '@/components/shared/SEO';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, Sparkles, AlertCircle, Loader2, ArrowRight, Check, Cpu, Award, Layers, Clock, Lock, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { sendToGHL } from '@/lib/ghlRelay';
 
 const confirmationSchema = z.object({
   fullName: z.string().min(3, 'Informe seu nome completo'),
@@ -73,46 +74,20 @@ export default function ClaudePartnerNetworkPage() {
   const onSubmit = async (data: ConfirmationFormData) => {
     setIsSubmitting(true);
     try {
-      const GHL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlM3SEVGQXo5N1VLdUM4TkxITW1JIiwidmVyc2lvbiI6MSwiaWF0IjoxNzg0MTQ3MzM0MTc0LCJzdWIiOiI0SXZVS1lUbEJWWUozeVE2RUpRaiJ9.3jvk5egLglodcOG15f-M2ugr0HlhvvQJWz6_5cAgtLw';
-      const nameParts = data.fullName.trim().split(/\s+/);
-      const firstName = nameParts[0] || '';
-      const lastName = nameParts.slice(1).join(' ') || '';
       const finalSegment = data.segment === 'Outro' && data.otherSegment
         ? data.otherSegment
         : data.segment;
 
-      const contactPayload = {
-        firstName,
-        lastName,
+      await sendToGHL('claude_partner_network', {
+        fullName: data.fullName,
         email: data.corporateEmail,
-        companyName: data.company,
+        company: data.company,
+        role: data.role,
         website: data.website,
-        source: 'Claude Partner Network',
-        tags: ['claude-partner-network', 'landing-page', finalSegment.toLowerCase().replace(/\s+/g, '-')],
-        customField: {
-          servios: `Cargo: ${data.role} | Segmento: ${finalSegment}`,
-          demo_dor_principal: data.whyParticipate,
-          demo_resumo: data.whatToBuild,
-          demo_proximo_passo: 'Validação de participação – Claude Partner Network 2026',
-        }
-      };
-
-      const proxyEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('revhackers.com.br')
-        ? '/api/ghl.php'
-        : 'https://revhackers.com.br/api/ghl.php';
-
-      const response = await fetch(proxyEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(contactPayload),
+        segment: finalSegment,
+        whyParticipate: data.whyParticipate,
+        whatToBuild: data.whatToBuild,
       });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.warn('GHL API error:', response.status, errorData);
-      }
 
       setIsSubmitted(true);
       toast({

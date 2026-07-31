@@ -1,18 +1,30 @@
 /**
  * ghlRelay.ts
  *
- * Frontend utility for sending events to GoHighLevel via direct API v1.
- * Creates/updates contacts directly in GHL without webhook intermediaries.
- *
- * Usage:
- *   import { sendToGHL } from '@/lib/ghlRelay';
- *   await sendToGHL('contact_form', { name, email, message });
- *   await sendToGHL('rei_completed', { companyName, email, score, ... });
- *   await sendToGHL('newsletter', { name, email });
+ * Frontend utility for sending events to GoHighLevel via GHL v2 API.
+ * Maps all form fields & UTMs to exact customField IDs in the Revhackers subaccount.
  */
 
-const GHL_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlM3SEVGQXo5N1VLdUM4TkxITW1JIiwidmVyc2lvbiI6MSwiaWF0IjoxNzg0MTQ3MzM0MTc0LCJzdWIiOiI0SXZVS1lUbEJWWUozeVE2RUpRaiJ9.3jvk5egLglodcOG15f-M2ugr0HlhvvQJWz6_5cAgtLw';
-const GHL_API_URL = 'https://rest.gohighlevel.com/v1/contacts/';
+const REVHACKERS_FIELD_MAP: Record<string, string> = {
+    utm_source: '1qsr7n8OT9GcDfs1aq6J',
+    utm_medium: '4j9NUCQoBZyhe0WdufzH',
+    utm_campaign: '0FU30gR9HD7UxPZcOns9',
+    utm_term: 'LCLQDAx8N7XwB1eSk1kb',
+    utm_content: 'W7HVgpIpwlm6uYFvHKwA',
+    cargo: 'OSTYIR0k40rFmwZ0EP0h',
+    setor: 'JhYjktc505SiN12iB8kG',
+    principal_dor: 'fwqjWlKHp0P1f6biwu8e',
+    desafios_da_empresa: 'gRxNUvGtxiGcXf04KO8R',
+    ferramentas_atuais: '1YtAMjATP2H8gqbQTniB',
+    crm_atual: 'XdMA3ZfqWiNVPGr7s2mC',
+    tamanho_do_time: 'sXUgGYTSmoPonpNl4z4h',
+    materiallink: 'WMq9rJL3kzLjcSILnEdx',
+    diagnostic_score: 'qCUpCmj7ciDfQnonMFqY',
+    diagnostic_category: 'h3jGZ0m5IajLV9nynKcI',
+    diagnostic_type: 'wuQsE7Xw0NndleUuLM67',
+    linkedin: 'YjGoZEjX20GpLJzlOCWV',
+    fonte_do_lead: 'yALdhsRVfsjk1e4n7L0a',
+};
 
 export type GHLEventType =
     | 'rei_completed'
@@ -24,9 +36,6 @@ export type GHLEventType =
     | 'download'
     | 'email_material';
 
-/**
- * Parse a full name into firstName and lastName.
- */
 function parseName(fullName: string): { firstName: string; lastName: string } {
     const parts = (fullName || '').trim().split(/\s+/);
     return {
@@ -35,9 +44,6 @@ function parseName(fullName: string): { firstName: string; lastName: string } {
     };
 }
 
-/**
- * Capture UTM parameters from the current URL.
- */
 function getUtmParams(): Record<string, string> {
     try {
         const params = new URLSearchParams(window.location.search);
@@ -53,13 +59,8 @@ function getUtmParams(): Record<string, string> {
     }
 }
 
-/**
- * Build a GHL contact payload from event type + raw form data.
- * Maps each form's fields to the correct GHL contact fields and custom fields.
- * Automatically captures UTMs, timestamp, and page source.
- */
-function buildContactPayload(
-    eventType: GHLEventType,
+export function buildContactPayload(
+    eventType: GHLEventType | string,
     payload: Record<string, unknown>,
 ): Record<string, unknown> {
     const { firstName, lastName } = parseName(
@@ -67,7 +68,6 @@ function buildContactPayload(
     );
 
     const utms = getUtmParams();
-    const pageUrl = typeof window !== 'undefined' ? window.location.pathname : '';
 
     const base: Record<string, unknown> = {
         firstName: firstName || (payload.firstName as string) || '',
@@ -82,98 +82,49 @@ function buildContactPayload(
         tags: ['revhackers', eventType],
     };
 
-    const customField: Record<string, string> = {
-        // Always populate timestamp and page source
-        timestamp_captura: new Date().toISOString(),
+    const customFields: Array<{ id: string; value: string }> = [];
+
+    const addCustomField = (key: string, value: unknown) => {
+        if (!value) return;
+        const fieldId = REVHACKERS_FIELD_MAP[key];
+        if (fieldId) {
+            customFields.push({ id: fieldId, value: String(value) });
+        }
     };
 
-    // UTM tracking fields
-    if (utms.utm_source) customField.utm_source = utms.utm_source;
-    if (utms.utm_medium) customField.utm_medium = utms.utm_medium;
-    if (utms.utm_term) customField.utm_term = utms.utm_term;
-    if (utms.utm_campaign || utms.utm_content) {
-        customField.campanha__ao = [utms.utm_campaign, utms.utm_content].filter(Boolean).join(' | ');
-    }
-    if (utms.fbclid) customField.fbclid = utms.fbclid;
+    // Auto-populate UTMs
+    if (utms.utm_source) addCustomField('utm_source', utms.utm_source);
+    if (utms.utm_medium) addCustomField('utm_medium', utms.utm_medium);
+    if (utms.utm_campaign) addCustomField('utm_campaign', utms.utm_campaign);
+    if (utms.utm_term) addCustomField('utm_term', utms.utm_term);
+    if (utms.utm_content) addCustomField('utm_content', utms.utm_content);
 
-    // Page-level context
-    if (pageUrl) {
-        customField.demo_proximo_passo = `Página: ${pageUrl} | Formulário: ${eventType}`;
-    }
+    // Form fields
+    if (payload.role) addCustomField('cargo', payload.role);
+    if (payload.segment || payload.industry) addCustomField('setor', payload.segment || payload.industry);
+    if (payload.message || payload.whyParticipate) addCustomField('principal_dor', payload.message || payload.whyParticipate);
+    if (payload.whatToBuild) addCustomField('desafios_da_empresa', payload.whatToBuild);
+    if (payload.crm) addCustomField('crm_atual', payload.crm);
+    if (payload.companySize) addCustomField('tamanho_do_time', payload.companySize);
+    if (payload.materialTitle || payload.material) addCustomField('materiallink', payload.materialTitle || payload.material);
+    if (payload.score || payload.total_score) addCustomField('diagnostic_score', String(payload.score || payload.total_score));
+    if (payload.maturity_level) addCustomField('diagnostic_category', payload.maturity_level);
 
-    switch (eventType) {
-        case 'contact_form':
-            if (payload.industry) base.tags = [...(base.tags as string[]), String(payload.industry).toLowerCase()];
-            if (payload.role) customField.servios = `Cargo: ${payload.role} | Indústria: ${payload.industry || 'N/A'}`;
-            if (payload.message) customField.demo_dor_principal = String(payload.message);
-            if (payload.formType) customField.demo_proximo_passo = `Formulário: ${payload.formType}`;
-            break;
-
-        case 'newsletter':
-            base.tags = [...(base.tags as string[]), 'newsletter'];
-            customField.demo_proximo_passo = 'Inscrito na newsletter RevHackers';
-            break;
-
-        case 'rei_completed':
-            if (payload.score || payload.total_score) {
-                customField.demo_resumo = `Score REI: ${payload.score || payload.total_score}`;
-            }
-            if (payload.maturity_level) {
-                customField.demo_proximo_passo = `Maturidade: ${payload.maturity_level}`;
-            }
-            if (payload.modality) {
-                base.tags = [...(base.tags as string[]), `rei-${String(payload.modality).toLowerCase()}`];
-            }
-            if (payload.segment) {
-                customField.servios = `Segmento: ${payload.segment}`;
-            }
-            // Map REI-specific fields
-            if (payload.companySize) customField.ciclo_de_vendas = String(payload.companySize);
-            if (payload.role) customField.servios = `Cargo: ${payload.role} | Segmento: ${payload.segment || 'N/A'}`;
-            break;
-
-        case 'score_captured':
-            if (payload.score) customField.demo_resumo = `Score: ${payload.score} (${payload.type || 'geral'})`;
-            if (payload.type) base.tags = [...(base.tags as string[]), `score-${payload.type}`];
-            break;
-
-        case 'lead_capture':
-        case 'download':
-        case 'email_material':
-            if (payload.materialTitle || payload.material) {
-                customField.material_link = String(payload.materialTitle || payload.material);
-            }
-            base.tags = [...(base.tags as string[]), 'material-download'];
-            break;
-
-        case 'roi_calculator':
-            if (payload.roi) customField.demo_resumo = `ROI Calculado: ${payload.roi}`;
-            break;
-    }
-
-    if (Object.keys(customField).length > 0) {
-        base.customField = customField;
+    if (customFields.length > 0) {
+        base.customFields = customFields;
     }
 
     return base;
 }
 
-/**
- * Send an event to GHL via direct API v1 (contact upsert).
- * Never throws - GHL is a non-critical enrichment channel.
- * Returns true if the contact was created/updated successfully.
- *
- * @param _organizationId - Kept for backward compatibility, not used in direct API mode.
- */
 export async function sendToGHL(
-    eventType: GHLEventType,
+    eventType: GHLEventType | string,
     payload: Record<string, unknown>,
     _organizationId?: string,
 ): Promise<boolean> {
     try {
         const contactPayload = buildContactPayload(eventType, payload);
 
-        // Call PHP proxy on Hostinger to avoid browser CORS restriction
         const proxyEndpoint = typeof window !== 'undefined' && window.location.hostname.includes('revhackers.com.br')
             ? '/api/ghl.php'
             : 'https://revhackers.com.br/api/ghl.php';
@@ -194,7 +145,6 @@ export async function sendToGHL(
 
         return true;
     } catch (err: any) {
-        // Never propagate GHL failures to the UI - this is CRM enrichment, not core flow
         console.warn('[ghlRelay] Failed to reach GHL Proxy (non-critical):', err?.message ?? err);
         return false;
     }

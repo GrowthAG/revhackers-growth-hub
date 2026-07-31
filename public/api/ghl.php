@@ -29,15 +29,36 @@ if (!is_array($data)) {
     exit();
 }
 
-// Force target to Revhackers subaccount
-$data['locationId'] = 'oFTw9DcsKRUj6xCiq4mb';
+// Strict whitelist of GHL v2 API top-level properties
+$allowedKeys = [
+    'locationId',
+    'firstName',
+    'lastName',
+    'email',
+    'phone',
+    'companyName',
+    'website',
+    'source',
+    'tags',
+    'customFields'
+];
+
+$cleanPayload = [
+    'locationId' => 'oFTw9DcsKRUj6xCiq4mb'
+];
+
+foreach ($allowedKeys as $key) {
+    if (array_key_exists($key, $data) && $data[$key] !== null) {
+        $cleanPayload[$key] = $data[$key];
+    }
+}
 
 $token = 'pit-9285a0fa-9c63-4475-8a39-93f3476d6a81';
 
 $ch = curl_init('https://services.leadconnectorhq.com/contacts/');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($cleanPayload));
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Authorization: Bearer ' . $token,
     'Version: 2021-07-28',
