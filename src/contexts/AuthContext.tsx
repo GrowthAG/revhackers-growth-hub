@@ -193,6 +193,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
             if (!mounted) return;
 
+            // Se for login master, ignora eventos nulos do Supabase auth
+            if (sessionStorage.getItem('rh_master_logged') === 'true') {
+                setIsLoading(false);
+                setIsProfileLoading(false);
+                return;
+            }
+
             // Sincronizar estados basicos imediatamente
             setSession(session);
             setUser(session?.user ?? null);

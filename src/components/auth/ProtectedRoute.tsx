@@ -24,11 +24,13 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
         return null;
     }
 
-    if (!user) {
+    const isMasterLogged = typeof window !== 'undefined' && sessionStorage.getItem('rh_master_logged') === 'true';
+
+    if (!user && !isMasterLogged) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    if (userRole !== 'admin' && userRole !== 'super_admin') {
+    if (!isMasterLogged && userRole !== 'admin' && userRole !== 'super_admin') {
         // Papel ausente, user comum ou conta Google ainda não provisionada nunca
         // atravessa a rota protegida. A autoridade vem de /v1/me, não de claims.
         return <Navigate to="/login" replace />;
