@@ -6,7 +6,7 @@ import { motion, useInView } from 'framer-motion';
 import PageLayout from '@/components/layout/PageLayout';
 import SEO from '@/components/shared/SEO';
 import { Button } from '@/components/ui/button';
-import { ShieldCheck, Sparkles, AlertCircle, Loader2, Check } from 'lucide-react';
+import { ShieldCheck, Sparkles, AlertCircle, Loader2, ArrowRight, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const confirmationSchema = z.object({
@@ -164,69 +164,78 @@ export default function ClaudePartnerNetworkPage() {
           >
             <Button
               onClick={scrollToForm}
-              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-bold text-sm h-12 px-8 rounded-xl shadow-lg transition-all"
+              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-bold text-sm h-12 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
             >
-              Ir para Confirmação de Vaga ↓
+              <span>Ir para Confirmação de Vaga</span>
+              <ArrowRight className="w-4 h-4" />
             </Button>
           </motion.div>
 
         </div>
       </section>
 
-      {/* O que acontece agora & Público Elegível (Fundo White SaaS) */}
-      <section className="py-20 bg-zinc-50/60 text-zinc-900 border-b border-zinc-200/80">
-        <div className="container-custom max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      {/* O que acontece agora & Público Elegível (PADRÃO EXACTO SERVICESSECTION DA HOME) */}
+      <section className="py-20 bg-zinc-50 border-b border-zinc-200">
+        <div className="max-w-5xl mx-auto px-6 space-y-16">
           
-          {/* O que acontece agora */}
-          <div className="space-y-6">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#00CC6A]">
+          {/* O que acontece agora — Linha da Home com Cards p-6 bg-white border border-zinc-200 rounded-xl */}
+          <div className="space-y-8">
+            <div className="max-w-3xl">
+              <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
                 Próximos Passos
-              </span>
-              <h2 className="text-2xl font-extrabold text-zinc-900 mt-1">
+              </p>
+              <h2 className="text-zinc-900 text-2xl md:text-3xl font-bold tracking-tight leading-tight">
                 O que acontece agora
               </h2>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { step: "01", title: "Você confirma seus dados", desc: "Preencha o formulário oficial de validação nesta página." },
-                { step: "02", title: "A RevHackers valida sua participação", desc: "Nossa equipe analisa o alinhamento técnico do seu negócio." },
-                { step: "03", title: "Você recebe as próximas instruções", desc: "Envio de chave de acesso, calendário de encontros e materiais." },
-                { step: "04", title: "Você entra na trilha", desc: "Início do programa prático de desenvolvimento e aceleração." }
+                { step: "01", title: "Confirmação de Dados", desc: "Preencha o formulário oficial nesta página para garantir sua vaga." },
+                { step: "02", title: "Validação Técnica", desc: "Nossa equipe analisa o alinhamento técnico e de negócio." },
+                { step: "03", title: "Recebimento de Acessos", desc: "Envio de chave de acesso, calendário de encontros e materiais." },
+                { step: "04", title: "Entrada na Trilha", desc: "Início do programa prático de desenvolvimento com o time." }
               ].map((item) => (
-                <div key={item.step} className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-zinc-200/90 shadow-xs">
-                  <span className="text-xs font-mono font-bold text-zinc-950 bg-[#00CC6A] px-2.5 py-1 rounded-md shrink-0">
+                <div key={item.step} className="flex flex-col h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 transition-all shadow-xs">
+                  <div className="w-8 h-8 bg-zinc-100 rounded-lg flex items-center justify-center mb-4 text-xs font-sans font-bold text-zinc-900">
                     {item.step}
-                  </span>
-                  <div>
-                    <h3 className="text-sm font-bold text-zinc-900">{item.title}</h3>
-                    <p className="text-xs text-zinc-500 mt-1 leading-relaxed">{item.desc}</p>
                   </div>
+                  <h3 className="text-zinc-900 font-bold text-base mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-500 text-xs leading-relaxed flex-1">
+                    {item.desc}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Para quem essa trilha faz sentido */}
-          <div className="space-y-6">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#00CC6A]">
+          {/* Para quem essa trilha faz sentido — Linha da Home com Grid de Cards SaaS */}
+          <div className="space-y-8 pt-8 border-t border-zinc-200/80">
+            <div className="max-w-3xl">
+              <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
                 Público Elegível
-              </span>
-              <h2 className="text-2xl font-extrabold text-zinc-900 mt-1">
+              </p>
+              <h2 className="text-zinc-900 text-2xl md:text-3xl font-bold tracking-tight leading-tight">
                 Para quem essa trilha faz sentido
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {AUDIENCE_ROLES.map((role) => (
-                <div key={role.title} className="p-4 rounded-xl bg-white border border-zinc-200/90 shadow-xs space-y-1">
-                  <div className="flex items-center gap-2 text-xs font-bold text-zinc-900">
-                    <Check className="w-3.5 h-3.5 text-[#00CC6A] shrink-0" />
-                    <span>{role.title}</span>
+                <div key={role.title} className="flex flex-col h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 transition-all shadow-xs">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full bg-[#00CC6A]/10 flex items-center justify-center shrink-0">
+                      <Check className="w-3.5 h-3.5 text-[#00CC6A]" />
+                    </div>
+                    <h3 className="text-zinc-900 font-bold text-sm">
+                      {role.title}
+                    </h3>
                   </div>
-                  <p className="text-[11px] text-zinc-500 leading-normal pl-5">{role.desc}</p>
+                  <p className="text-zinc-500 text-xs leading-relaxed pl-8">
+                    {role.desc}
+                  </p>
                 </div>
               ))}
             </div>
@@ -235,25 +244,25 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* Formulário de Confirmação (Fundo White SaaS Limpo) */}
+      {/* Formulário de Confirmação (PADRÃO EXACTO CONTACTFORMSECTION DA HOME) */}
       <section ref={formRef} className="py-20 bg-white text-zinc-900">
-        <div className="container-custom max-w-3xl mx-auto space-y-8">
+        <div className="max-w-3xl mx-auto px-6 space-y-8">
           
           <div className="text-center space-y-3">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#00CC6A]">
+            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
               Ativação de Vaga
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight">
+            </p>
+            <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight">
               Formulário de Confirmação de Participação
             </h2>
-            <p className="text-sm text-zinc-500 max-w-xl mx-auto">
+            <p className="text-zinc-500 text-sm max-w-xl mx-auto">
               Preencha com atenção. As vagas não confirmadas dentro do prazo serão reatribuídas aos profissionais da lista de espera.
             </p>
           </div>
 
           {isSubmitted ? (
-            <div className="p-10 rounded-2xl bg-emerald-50/60 border border-emerald-200 text-center space-y-4 shadow-xs">
-              <div className="w-14 h-14 bg-[#00CC6A] text-zinc-950 rounded-full flex items-center justify-center mx-auto font-bold text-2xl shadow-xs">
+            <div className="p-10 rounded-xl bg-emerald-50/60 border border-emerald-200 text-center space-y-4 shadow-xs">
+              <div className="w-12 h-12 bg-[#00CC6A] text-zinc-950 rounded-full flex items-center justify-center mx-auto font-bold text-xl shadow-xs">
                 ✓
               </div>
               <h3 className="text-2xl font-bold text-zinc-900">Participação Confirmada com Sucesso</h3>
@@ -262,7 +271,7 @@ export default function ClaudePartnerNetworkPage() {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-zinc-50/80 p-8 sm:p-10 rounded-2xl border border-zinc-200/90 shadow-xs">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-zinc-50/60 p-8 sm:p-10 rounded-xl border border-zinc-200 shadow-xs">
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Nome Completo */}
@@ -401,7 +410,7 @@ export default function ClaudePartnerNetworkPage() {
               </div>
 
               {/* Termos de Participação & Compromisso */}
-              <div className="p-5 rounded-xl bg-white border border-zinc-200 text-xs text-zinc-600 space-y-3 shadow-xs">
+              <div className="p-5 rounded-lg bg-white border border-zinc-200 text-xs text-zinc-600 space-y-3 shadow-xs">
                 <p className="font-bold text-zinc-900 flex items-center gap-2 text-xs uppercase tracking-wide">
                   <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" /> Termos de Participação & Compromisso de Conclusão:
                 </p>
@@ -418,7 +427,7 @@ export default function ClaudePartnerNetworkPage() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-xl shadow-xs transition-all flex items-center justify-center gap-2"
+                className="w-full h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
