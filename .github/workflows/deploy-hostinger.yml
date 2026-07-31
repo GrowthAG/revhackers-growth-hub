@@ -9,6 +9,8 @@ jobs:
   web-deploy:
     name: Build & Deploy para Hostinger
     runs-on: ubuntu-latest
+    env:
+      PUPPETEER_SKIP_DOWNLOAD: "true"
     steps:
       - name: Checkout Código
         uses: actions/checkout@v4
@@ -16,7 +18,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Instalar Dependências
