@@ -9,7 +9,9 @@ export const APP_CONFIG = {
         PAGES_DOMAIN: 'https://pages.revhackers.com.br',
         MATERIALS_API: 'https://materiais.revhackers.com.br/wp-json/wp/v2/posts?_embed',
         LP_ACTION_PLAN: 'https://lp.revhackers.com.br/post/plano-acao-90-dias',
-        INSTAGRAM: 'https://www.instagram.com/revhackers.com.br/',
+        INSTAGRAM: 'https://www.instagram.com/revhackers',
+        LINKEDIN: 'https://www.linkedin.com/company/revhackers',
+        YOUTUBE: 'https://www.youtube.com/@revhackers',
     },
     EMAILS: {
         CONTACT: 'contato@revhackers.com.br',

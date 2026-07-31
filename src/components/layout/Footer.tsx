@@ -9,8 +9,8 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: Instagram, href: APP_CONFIG.URLS.INSTAGRAM, label: 'Instagram' },
-    { icon: Linkedin, href: 'https://linkedin.com/company/revhackers', label: 'LinkedIn' },
-    { icon: Youtube, href: 'https://youtube.com/@revhackers', label: 'YouTube' },
+    { icon: Linkedin, href: APP_CONFIG.URLS.LINKEDIN, label: 'LinkedIn' },
+    { icon: Youtube, href: APP_CONFIG.URLS.YOUTUBE, label: 'YouTube' },
     { icon: Mail, href: `mailto:${APP_CONFIG.EMAILS.CONTACT}`, label: 'Email' }
   ];
 
@@ -40,10 +40,10 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 border border-white/20 flex items-center justify-center text-white hover:border-revgreen hover:text-revgreen transition-all"
+                  className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-zinc-950 hover:bg-[#00CC6A] hover:border-[#00CC6A] transition-all shadow-xs"
                   aria-label={social.label}
                 >
-                  <social.icon size={18} strokeWidth={1.5} />
+                  <social.icon size={18} strokeWidth={1.75} />
                 </a>
               ))}
             </div>
