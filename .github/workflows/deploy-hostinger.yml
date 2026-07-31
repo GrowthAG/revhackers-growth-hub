@@ -41,7 +41,7 @@ jobs:
           username: "u995977926.rhoficial"
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
-          protocol: ftp
+          protocol: ftps
           security-option: loose
           server-dir: ./
           local-dir: ./dist/
