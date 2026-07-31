@@ -22,14 +22,25 @@ if (empty($rawInput)) {
     exit();
 }
 
-$apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlM3SEVGQXo5N1VLdUM4TkxITW1JIiwidmVyc2lvbiI6MSwiaWF0IjoxNzg0MTQ3MzM0MTc0LCJzdWIiOiI0SXZVS1lUbEJWWUozeVE2RUpRaiJ9.3jvk5egLglodcOG15f-M2ugr0HlhvvQJWz6_5cAgtLw';
+$data = json_decode($rawInput, true);
+if (!is_array($data)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid JSON payload']);
+    exit();
+}
 
-$ch = curl_init('https://rest.gohighlevel.com/v1/contacts/');
+// Force target to Revhackers subaccount
+$data['locationId'] = 'oFTw9DcsKRUj6xCiq4mb';
+
+$token = 'pit-9285a0fa-9c63-4475-8a39-93f3476d6a81';
+
+$ch = curl_init('https://services.leadconnectorhq.com/contacts/');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $rawInput);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    'Authorization: Bearer ' . $apiKey,
+    'Authorization: Bearer ' . $token,
+    'Version: 2021-07-28',
     'Content-Type: application/json'
 ]);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
