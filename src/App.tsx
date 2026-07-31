@@ -280,8 +280,7 @@ const App = () => (
               <Route path="/admin/cases/new" element={<ProtectedRoute><AdminCaseNew /></ProtectedRoute>} />
               <Route path="/admin/cases/edit/:id" element={<ProtectedRoute><AdminCaseEdit /></ProtectedRoute>} />
 
-              {/* Admin - REI Projects (Redirected to Cockpit) */}
-              <Route path="/admin/rei" element={<Navigate to="/admin/projects" replace />} />
+              {/* Admin - REI Projects */}
               <Route path="/admin/rei/novo" element={<ProtectedRoute><REIProjectForm /></ProtectedRoute>} />
               <Route path="/admin/rei/:id" element={<ProtectedRoute><REIProjectForm /></ProtectedRoute>} />
 

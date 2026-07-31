@@ -405,7 +405,7 @@ const REIProjectForm = () => {
                 });
                 localStorage.removeItem(DRAFT_KEY);
             }
-            navigate('/admin/rei');
+            navigate('/admin/projects');
         } catch (error: any) {
             console.error("Error creating project:", error);
             const errorMessage = error?.message || error?.toString() || 'Verifique os dados e tente novamente.';
