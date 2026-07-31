@@ -244,15 +244,15 @@ export const FinanceCockpit: React.FC = () => {
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8 bg-slate-950 text-slate-100 min-h-screen">
+    <div className="p-8 max-w-7xl mx-auto space-y-8 bg-white text-zinc-900 min-h-screen">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-zinc-200 pb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
-            <DollarSign className="w-8 h-8 text-emerald-400" />
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 flex items-center gap-3">
+            <DollarSign className="w-8 h-8 text-[#00CC6A]" />
             Cockpit Financeiro & Reconciliação
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-zinc-500 text-sm mt-1">
             Motor Enterprise de Extratos, Reconciliação Contábil e DRE Gerencial em Tempo Real.
           </p>
         </div>
@@ -260,7 +260,7 @@ export const FinanceCockpit: React.FC = () => {
           <select
             value={selectedEntityId}
             onChange={(e) => setSelectedEntityId(e.target.value)}
-            className="bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="bg-white border border-zinc-200 text-zinc-800 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
           >
             <option value="">Todas as entidades (consolidado)</option>
             {entities.map((ent) => (
@@ -271,7 +271,7 @@ export const FinanceCockpit: React.FC = () => {
           </select>
           <button
             onClick={() => { fetchStatements(); fetchDRE(); }}
-            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-4 py-2 rounded-lg transition shadow-lg shadow-emerald-900/30 text-sm"
+            className="flex items-center gap-2 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-semibold px-4 py-2 rounded-lg transition text-sm shadow-xs"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             Atualizar
@@ -280,14 +280,14 @@ export const FinanceCockpit: React.FC = () => {
       </div>
 
       {/* Connector Sync Bar */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-wrap items-center gap-2">
-        <span className="text-sm text-slate-400 mr-2">Sync de conectores:</span>
+      <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 flex flex-wrap items-center gap-2">
+        <span className="text-sm text-zinc-600 font-medium mr-2">Sync de conectores:</span>
         {['stripe', 'infinitepay', 'pagbank', 'pluggy'].map((provider) => (
           <button
             key={provider}
             onClick={() => handleConnectorSync(provider)}
             disabled={loading}
-            className="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-md border border-slate-700 transition disabled:opacity-50"
+            className="text-xs bg-white hover:bg-zinc-100 text-zinc-700 font-semibold px-3 py-1.5 rounded-lg border border-zinc-200 transition disabled:opacity-50 shadow-xs"
           >
             {provider}
           </button>
@@ -296,32 +296,32 @@ export const FinanceCockpit: React.FC = () => {
 
       {/* DRE por Entidade (segmentada) */}
       {dreByEntity.length > 0 && (
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5">
-          <h2 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-emerald-400" />
+        <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+          <h2 className="text-lg font-semibold text-zinc-900 mb-3 flex items-center gap-2">
+            <Building2 className="w-5 h-5 text-[#00CC6A]" />
             DRE Segmentada por Entidade (Jul/2026)
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {dreByEntity.map((ent) => (
-              <div key={ent.entity_id} className="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
-                <div className="text-xs text-slate-400 font-medium uppercase tracking-wide">{ent.entity_name}</div>
-                <div className="text-xl font-bold text-white mt-1">{formatCurrency(ent.gross_revenue)}</div>
+              <div key={ent.entity_id} className="bg-zinc-50 border border-zinc-200 rounded-lg p-4">
+                <div className="text-xs text-zinc-500 font-semibold uppercase tracking-wide">{ent.entity_name}</div>
+                <div className="text-xl font-bold text-zinc-900 mt-1">{formatCurrency(ent.gross_revenue)}</div>
                 <div className="grid grid-cols-2 gap-2 mt-3 text-xs">
                   <div>
-                    <span className="text-slate-500">MRR</span>
-                    <div className="text-emerald-300">{formatCurrency(ent.mrr_revenue)}</div>
+                    <span className="text-zinc-400">MRR</span>
+                    <div className="text-emerald-600 font-semibold">{formatCurrency(ent.mrr_revenue)}</div>
                   </div>
                   <div>
-                    <span className="text-slate-500">Serviços</span>
-                    <div className="text-emerald-300">{formatCurrency(ent.services_revenue)}</div>
+                    <span className="text-zinc-400">Serviços</span>
+                    <div className="text-emerald-600 font-semibold">{formatCurrency(ent.services_revenue)}</div>
                   </div>
                   <div>
-                    <span className="text-slate-500">Impostos</span>
-                    <div className="text-amber-300">{formatCurrency(ent.taxes)}</div>
+                    <span className="text-zinc-400">Impostos</span>
+                    <div className="text-amber-600 font-semibold">{formatCurrency(ent.taxes)}</div>
                   </div>
                   <div>
-                    <span className="text-slate-500">Margem</span>
-                    <div className="text-white">{ent.net_margin_percentage.toFixed(1)}%</div>
+                    <span className="text-zinc-400">Margem</span>
+                    <div className="text-zinc-900 font-bold">{ent.net_margin_percentage.toFixed(1)}%</div>
                   </div>
                 </div>
               </div>
@@ -332,76 +332,76 @@ export const FinanceCockpit: React.FC = () => {
 
       {/* Top Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
-          <div className="flex justify-between items-center text-slate-400 text-sm font-medium">
+        <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+          <div className="flex justify-between items-center text-zinc-500 text-sm font-medium">
             <span>Receita Bruta (Mês)</span>
-            <ArrowUpRight className="w-5 h-5 text-emerald-400" />
+            <ArrowUpRight className="w-5 h-5 text-[#00CC6A]" />
           </div>
-          <div className="text-2xl font-bold text-white mt-2">
+          <div className="text-2xl font-bold text-zinc-900 mt-2">
             {formatCurrency(dre.gross_revenue)}
           </div>
-          <div className="text-xs text-emerald-400 mt-2 flex items-center gap-1 font-medium">
+          <div className="text-xs text-emerald-600 mt-2 flex items-center gap-1 font-semibold">
             <TrendingUp className="w-3.5 h-3.5" /> MRR: {formatCurrency(dre.mrr_revenue)}
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
-          <div className="flex justify-between items-center text-slate-400 text-sm font-medium">
+        <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+          <div className="flex justify-between items-center text-zinc-500 text-sm font-medium">
             <span>Custos & Impostos</span>
-            <ArrowDownRight className="w-5 h-5 text-rose-400" />
+            <ArrowDownRight className="w-5 h-5 text-rose-500" />
           </div>
-          <div className="text-2xl font-bold text-white mt-2">
+          <div className="text-2xl font-bold text-zinc-900 mt-2">
             {formatCurrency(dre.operational_costs + dre.taxes)}
           </div>
-          <div className="text-xs text-slate-400 mt-2">
+          <div className="text-xs text-zinc-500 mt-2">
             Impostos: {formatCurrency(dre.taxes)} | Ops: {formatCurrency(dre.operational_costs)}
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
-          <div className="flex justify-between items-center text-slate-400 text-sm font-medium">
+        <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+          <div className="flex justify-between items-center text-zinc-500 text-sm font-medium">
             <span>Margem Líquida</span>
-            <PieChartIcon className="w-5 h-5 text-blue-400" />
+            <PieChartIcon className="w-5 h-5 text-blue-500" />
           </div>
-          <div className="text-2xl font-bold text-emerald-400 mt-2">
+          <div className="text-2xl font-bold text-emerald-600 mt-2">
             {formatCurrency(dre.net_margin)}
           </div>
-          <div className="text-xs text-emerald-400/90 mt-2 font-medium">
+          <div className="text-xs text-emerald-600 mt-2 font-semibold">
             Margem de Lucro: {dre.net_margin_percentage}%
           </div>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
-          <div className="flex justify-between items-center text-slate-400 text-sm font-medium">
+        <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+          <div className="flex justify-between items-center text-zinc-500 text-sm font-medium">
             <span>Status Conciliação</span>
-            <Clock className="w-5 h-5 text-amber-400" />
+            <Clock className="w-5 h-5 text-amber-500" />
           </div>
-          <div className="text-2xl font-bold text-white mt-2">
+          <div className="text-2xl font-bold text-zinc-900 mt-2">
             {statements.filter(s => s.reconciliation_status === 'PENDING').length} Pendente(s)
           </div>
-          <div className="text-xs text-amber-400 mt-2">
+          <div className="text-xs text-amber-600 mt-2 font-medium">
             Aguardando validação ou match automático
           </div>
         </div>
       </div>
 
       {/* DRE Breakdown & Graphical Bar */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 shadow-sm space-y-4">
-        <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-          <FileText className="w-5 h-5 text-emerald-400" />
+      <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-xs space-y-4">
+        <h2 className="text-lg font-semibold text-zinc-900 flex items-center gap-2">
+          <FileText className="w-5 h-5 text-[#00CC6A]" />
           DRE Sintética & Margem Operacional
         </h2>
 
         {/* Visual Bar Breakdown */}
         <div className="space-y-2">
-          <div className="flex justify-between text-xs font-medium text-slate-400">
+          <div className="flex justify-between text-xs font-medium text-zinc-500">
             <span>Composição da Receita (Receita Bruta: {formatCurrency(dre.gross_revenue)})</span>
             <span>Margem Líquida: {dre.net_margin_percentage}%</span>
           </div>
-          <div className="h-4 w-full bg-slate-800 rounded-full overflow-hidden flex">
+          <div className="h-4 w-full bg-zinc-100 rounded-full overflow-hidden flex">
             <div 
               style={{ width: `${(dre.net_margin / (dre.gross_revenue || 1)) * 100}%` }} 
-              className="bg-emerald-500 h-full" 
+              className="bg-[#00CC6A] h-full" 
               title="Margem Líquida" 
             />
             <div 
@@ -415,8 +415,8 @@ export const FinanceCockpit: React.FC = () => {
               title="Impostos" 
             />
           </div>
-          <div className="flex items-center gap-6 text-xs text-slate-400 pt-1">
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-emerald-500 inline-block"/> Margem Líquida</span>
+          <div className="flex items-center gap-6 text-xs text-zinc-500 pt-1">
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-[#00CC6A] inline-block"/> Margem Líquida</span>
             <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-amber-500 inline-block"/> Custos Operacionais</span>
             <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-rose-500 inline-block"/> Impostos & Tributos</span>
           </div>
@@ -424,28 +424,28 @@ export const FinanceCockpit: React.FC = () => {
       </div>
 
       {/* Statements Table & 1-Click Reconciliation */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 shadow-sm space-y-4">
+      <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-xs space-y-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-emerald-400" />
+          <h2 className="text-lg font-semibold text-zinc-900 flex items-center gap-2">
+            <Building2 className="w-5 h-5 text-[#00CC6A]" />
             Extratos Bancários Ingeridos & Conciliação
           </h2>
-          <span className="text-xs text-slate-400">Suporte a OFX, CSV, Asaas, Stripe e Pluggy</span>
+          <span className="text-xs text-zinc-400 font-medium">Suporte a OFX, CSV, Asaas, Stripe e Pluggy</span>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-800/60 text-slate-400 text-xs uppercase tracking-wider">
+          <table className="w-full text-left text-sm text-zinc-700">
+            <thead className="bg-zinc-50 text-zinc-500 text-xs uppercase tracking-wider border-b border-zinc-200">
               <tr>
-                <th className="p-3">Data</th>
-                <th className="p-3">Descrição / Pagador</th>
-                <th className="p-3">Documento</th>
-                <th className="p-3 text-right">Valor</th>
-                <th className="p-3 text-center">Status</th>
-                <th className="p-3 text-right">Ação</th>
+                <th className="p-3 font-semibold">Data</th>
+                <th className="p-3 font-semibold">Descrição / Pagador</th>
+                <th className="p-3 font-semibold">Documento</th>
+                <th className="p-3 text-right font-semibold">Valor</th>
+                <th className="p-3 text-center font-semibold">Status</th>
+                <th className="p-3 text-right font-semibold">Ação</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800">
+            <tbody className="divide-y divide-zinc-200">
               {statements.map((stmt) => {
                 const isReconciled = stmt.reconciliation_status === 'RECONCILED';
                 const isDivergent = stmt.reconciliation_status === 'DIVERGENT';

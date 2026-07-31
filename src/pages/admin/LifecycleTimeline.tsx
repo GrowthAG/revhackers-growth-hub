@@ -39,70 +39,58 @@ export default function LifecycleTimeline() {
 
   return (
     <AdminLayout>
-      <div className="p-8 max-w-6xl mx-auto space-y-8 bg-slate-950 text-slate-100 min-h-screen">
+      <div className="p-8 max-w-6xl mx-auto space-y-8 bg-white text-zinc-900 min-h-screen">
         {/* Header */}
-        <div className="border-b border-slate-800 pb-6">
-          <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-            <Clock className="w-8 h-8 text-emerald-400" />
+        <div className="border-b border-zinc-200 pb-6">
+          <h1 className="text-2xl md:text-3xl font-bold text-zinc-900 flex items-center gap-3">
+            <Clock className="w-7 h-7 text-[#00CC6A]" />
             Lifecycle Timeline
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-zinc-500 text-sm mt-1">
             Jornada completa do lead → customer → expansion → renewal
           </p>
         </div>
 
         {/* Stage Visualization */}
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Estágios do Lifecycle</h2>
+        <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-xs">
+          <h2 className="text-lg font-semibold text-zinc-900 mb-4">Estágios do Lifecycle</h2>
 
           {/* Horizontal Timeline */}
           <div className="relative overflow-x-auto pb-4">
             <div className="flex items-center min-w-max">
-              {LIFECYCLE_STAGES.map((stage, idx) => {
-                const Icon = stage.icon;
+              {LIFECYCLE_STAGES.map((s, idx) => {
+                const isPassed = idx <= currentStageIndex;
                 const isCurrent = idx === currentStageIndex;
-                const isPast = idx < currentStageIndex;
-
-                const colorClasses = {
-                  gray: 'bg-slate-700 text-slate-300',
-                  blue: 'bg-blue-600 text-white',
-                  indigo: 'bg-indigo-600 text-white',
-                  purple: 'bg-purple-600 text-white',
-                  green: 'bg-green-600 text-white',
-                  emerald: 'bg-emerald-600 text-white',
-                  cyan: 'bg-cyan-600 text-white',
-                  red: 'bg-red-600 text-white',
-                }[stage.color];
+                const Icon = s.icon;
 
                 return (
-                  <React.Fragment key={stage.value}>
-                    <div className="flex flex-col items-center min-w-[120px]">
+                  <React.Fragment key={s.value}>
+                    <div className="flex flex-col items-center">
                       <div
                         className={cn(
-                          'w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold border-4',
-                          isCurrent
-                            ? `${colorClasses} border-yellow-400 ring-4 ring-yellow-400/30 animate-pulse`
-                            : isPast
-                            ? `${colorClasses} border-slate-600 opacity-80`
-                            : 'bg-slate-800 text-slate-500 border-slate-700 opacity-50',
+                          'w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all',
+                          isCurrent && 'border-[#00CC6A] bg-[#00CC6A]/10 text-[#00CC6A] ring-4 ring-[#00CC6A]/20',
+                          isPassed && !isCurrent && 'border-[#00CC6A] bg-[#00CC6A] text-zinc-950',
+                          !isPassed && 'border-zinc-200 bg-zinc-50 text-zinc-400'
                         )}
                       >
-                        {isPast ? <CheckCircle className="w-6 h-6" /> : <Icon className="w-6 h-6" />}
+                        <Icon className="w-5 h-5" />
                       </div>
                       <span
                         className={cn(
-                          'text-xs mt-2 text-center font-medium',
-                          isCurrent ? 'text-yellow-400 font-bold' : isPast ? 'text-slate-300' : 'text-slate-500',
+                          'text-xs font-semibold mt-2 max-w-[100px] text-center',
+                          isCurrent ? 'text-[#00CC6A]' : isPassed ? 'text-zinc-900' : 'text-zinc-400'
                         )}
                       >
-                        {stage.label}
+                        {s.label}
                       </span>
                     </div>
+
                     {idx < LIFECYCLE_STAGES.length - 1 && (
-                      <ArrowRight
+                      <div
                         className={cn(
-                          'w-6 h-6 mx-2 shrink-0',
-                          isPast ? 'text-emerald-400' : 'text-slate-700',
+                          'h-0.5 w-12 mx-2 transition-all',
+                          idx < currentStageIndex ? 'bg-[#00CC6A]' : 'bg-zinc-200'
                         )}
                       />
                     )}
@@ -113,18 +101,18 @@ export default function LifecycleTimeline() {
           </div>
         </div>
 
-        {/* History */}
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Histórico de Transições</h2>
+        {/* Transition Events List */}
+        <div className="bg-white border border-zinc-200 rounded-xl p-6 shadow-xs">
+          <h2 className="text-lg font-semibold text-zinc-900 mb-4">Histórico de Transições</h2>
 
           {journeyQuery.isLoading ? (
-            <div className="text-center py-8 text-slate-500">Carregando...</div>
+            <div className="text-center py-8 text-zinc-400">Carregando jornada...</div>
           ) : events.length === 0 ? (
-            <div className="text-center py-8 text-slate-500">Nenhuma transição registrada ainda.</div>
+            <div className="text-center py-8 text-zinc-400">Nenhuma transição registrada ainda.</div>
           ) : (
-            <div className="space-y-3">
-              {events.map((event) => (
-                <TransitionCard key={event.id} event={event} />
+            <div className="space-y-4">
+              {events.map((evt) => (
+                <EventCard key={evt.id} event={evt} />
               ))}
             </div>
           )}
@@ -134,27 +122,34 @@ export default function LifecycleTimeline() {
   );
 }
 
-function TransitionCard({ event }: { event: LifecycleEvent }) {
-  const fromStage = LIFECYCLE_STAGES.find((s) => s.value === event.from_stage);
-  const toStage = LIFECYCLE_STAGES.find((s) => s.value === event.to_stage);
+function EventCard({ event }: { event: LifecycleEvent }) {
+  const fromLabel = LIFECYCLE_STAGES.find((s) => s.value === event.from_stage)?.label || event.from_stage || 'Início';
+  const toLabel = LIFECYCLE_STAGES.find((s) => s.value === event.to_stage)?.label || event.to_stage;
+  const dateStr = new Date(event.transitioned_at).toLocaleString('pt-BR');
 
   return (
-    <div className="bg-slate-950/60 border border-slate-800 rounded-lg p-4">
-      <div className="flex items-center gap-3">
-        <div className="text-sm text-slate-500 font-mono">
-          {new Date(event.transitioned_at).toLocaleString('pt-BR')}
+    <div className="bg-zinc-50 border border-zinc-200 rounded-lg p-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-[#00CC6A]/10 text-[#00CC6A] flex items-center justify-center font-bold text-xs">
+            <CheckCircle className="w-4 h-4" />
+          </div>
+          <div>
+            <div className="text-sm font-semibold text-zinc-900 flex items-center gap-2">
+              <span>{fromLabel}</span>
+              <ArrowRight className="w-4 h-4 text-zinc-400" />
+              <span className="text-[#00CC6A] font-bold">{toLabel}</span>
+            </div>
+          </div>
         </div>
-        <div className="flex-1 flex items-center gap-2 text-sm">
-          {fromStage && <span className="text-slate-400">{fromStage.label}</span>}
-          {fromStage && <ArrowRight className="w-4 h-4 text-emerald-400" />}
-          {toStage && <span className="font-bold text-emerald-400">{toStage.label}</span>}
-        </div>
-        <div className="text-xs text-slate-500">
-          via <span className="text-slate-300">{event.triggered_by}</span>
+
+        <div className="text-right">
+          <span className="text-xs text-zinc-400 font-medium">{dateStr}</span>
+          <div className="text-xs text-zinc-400">{event.triggered_by || 'Sistema'}</div>
         </div>
       </div>
       {event.metadata && Object.keys(event.metadata).length > 0 && (
-        <div className="mt-2 text-xs text-slate-500 font-mono">
+        <div className="mt-2 text-xs text-zinc-500 font-mono">
           {JSON.stringify(event.metadata, null, 2)}
         </div>
       )}
