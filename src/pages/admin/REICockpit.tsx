@@ -117,22 +117,22 @@ export const REICockpit: React.FC = () => {
 
   return (
     <AdminLayout>
-      <div className="p-6 md:p-8 space-y-8 bg-slate-950 text-slate-100 min-h-screen">
+      <div className="p-6 md:p-8 space-y-8 bg-white text-zinc-900 min-h-screen">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-zinc-200 pb-6">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
-              <Activity className="w-8 h-8 text-emerald-400" />
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 flex items-center gap-3">
+              <Activity className="w-7 h-7 text-[#00CC6A]" />
               Cockpit REI — Onboarding Orquestrado
             </h1>
-            <p className="text-slate-400 text-sm mt-1">
+            <p className="text-zinc-500 text-sm mt-1">
               Gestão de Saúde, Churn e Marcos de Sucesso dos Clientes em Onboarding.
             </p>
           </div>
           <button
             onClick={() => refetch()}
             disabled={isRefetching}
-            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-4 py-2 rounded-lg transition shadow-lg shadow-emerald-900/30 text-sm disabled:opacity-50"
+            className="flex items-center gap-2 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-semibold px-4 py-2 rounded-lg transition text-sm disabled:opacity-50"
           >
             <RefreshCw className={`w-4 h-4 ${isRefetching ? 'animate-spin' : ''}`} />
             Atualizar Painel
@@ -141,42 +141,42 @@ export const REICockpit: React.FC = () => {
 
         {/* Top 4 Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
-            <div className="flex justify-between items-center text-slate-400 text-sm font-medium">
+          <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+            <div className="flex justify-between items-center text-zinc-500 text-sm font-medium">
               <span>Total Ativos</span>
-              <Activity className="w-5 h-5 text-emerald-400" />
+              <Activity className="w-5 h-5 text-[#00CC6A]" />
             </div>
-            <div className="text-3xl font-bold text-white mt-2">{totalActive}</div>
-            <div className="text-xs text-slate-400 mt-2">Em onboarding orquestrado</div>
+            <div className="text-3xl font-bold text-zinc-900 mt-2">{totalActive}</div>
+            <div className="text-xs text-zinc-400 mt-2">Em onboarding orquestrado</div>
           </div>
 
-          <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
-            <div className="flex justify-between items-center text-slate-400 text-sm font-medium">
+          <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+            <div className="flex justify-between items-center text-zinc-500 text-sm font-medium">
               <span>NPS D14 Médio</span>
-              <Star className="w-5 h-5 text-amber-400" />
+              <Star className="w-5 h-5 text-amber-500" />
             </div>
-            <div className="text-3xl font-bold text-amber-400 mt-2">{avgNps}</div>
-            <div className="text-xs text-slate-400 mt-2">Satisfação inicial (0-10)</div>
+            <div className="text-3xl font-bold text-amber-600 mt-2">{avgNps}</div>
+            <div className="text-xs text-zinc-400 mt-2">Satisfação inicial (0-10)</div>
           </div>
 
-          <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
-            <div className="flex justify-between items-center text-slate-400 text-sm font-medium">
+          <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+            <div className="flex justify-between items-center text-zinc-500 text-sm font-medium">
               <span>Health Score Médio</span>
-              <Heart className="w-5 h-5 text-purple-400" />
+              <Heart className="w-5 h-5 text-purple-500" />
             </div>
             <div className={`text-3xl font-bold mt-2 ${getHealthColor(avgHealth)}`}>
-              {avgHealth} <span className="text-sm text-slate-500 font-normal">/ 100</span>
+              {avgHealth} <span className="text-sm text-zinc-400 font-normal">/ 100</span>
             </div>
-            <div className="text-xs text-slate-400 mt-2">Saúde da carteira</div>
+            <div className="text-xs text-zinc-400 mt-2">Saúde da carteira</div>
           </div>
 
-          <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
-            <div className="flex justify-between items-center text-slate-400 text-sm font-medium">
+          <div className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+            <div className="flex justify-between items-center text-zinc-500 text-sm font-medium">
               <span>Risco Alto de Churn</span>
-              <AlertTriangle className="w-5 h-5 text-rose-400" />
+              <AlertTriangle className="w-5 h-5 text-rose-500" />
             </div>
-            <div className="text-3xl font-bold text-rose-400 mt-2">{highChurnPct}%</div>
-            <div className="text-xs text-rose-400/90 mt-2 font-medium">
+            <div className="text-3xl font-bold text-rose-600 mt-2">{highChurnPct}%</div>
+            <div className="text-xs text-rose-500 mt-2 font-medium">
               {highChurnCount} cliente(s) requerem intervenção
             </div>
           </div>
@@ -184,18 +184,18 @@ export const REICockpit: React.FC = () => {
 
         {/* Loading / Error State */}
         {isLoading && (
-          <div className="flex items-center justify-center py-20 bg-slate-900/40 border border-slate-800 rounded-xl">
-            <Loader2 className="w-8 h-8 animate-spin text-emerald-400" />
-            <span className="ml-3 text-slate-300">Carregando Cockpit REI...</span>
+          <div className="flex items-center justify-center py-20 bg-zinc-50 border border-zinc-200 rounded-xl">
+            <Loader2 className="w-8 h-8 animate-spin text-[#00CC6A]" />
+            <span className="ml-3 text-zinc-600 font-medium">Carregando Cockpit REI...</span>
           </div>
         )}
 
         {isError && (
-          <div className="p-6 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-xl flex items-center gap-3">
-            <AlertTriangle className="w-6 h-6 flex-shrink-0" />
+          <div className="p-6 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl flex items-center gap-3">
+            <AlertTriangle className="w-6 h-6 flex-shrink-0 text-rose-600" />
             <div>
-              <h3 className="font-semibold">Erro ao carregar dados do GCP</h3>
-              <p className="text-sm text-rose-300/80 mt-0.5">
+              <h3 className="font-semibold">Erro ao carregar dados</h3>
+              <p className="text-sm text-rose-600 mt-0.5">
                 Não foi possível consultar os onboarding ativos na API. Tente atualizar.
               </p>
             </div>

@@ -215,14 +215,11 @@ const App = () => (
               <Route path="/cadastro-parceiro" element={<CadastroParceiro />} />
 
               {/* REI System (Internal) - Unified */}
-              <Route path="/rei" element={<Navigate to="/admin/projects" replace />} />
+              <Route path="/rei" element={<ProtectedRoute><REICockpit /></ProtectedRoute>} />
               <Route path="/rei/wizard" element={<ProtectedRoute><REIWizardPage /></ProtectedRoute>} />
+              <Route path="/rei-onboarding" element={<ProtectedRoute><REIWizardPage /></ProtectedRoute>} />
               <Route path="/rei/resultado/:id" element={<ProtectedRoute><REIResult /></ProtectedRoute>} />
               <Route path="/rei/success" element={<ProtectedRoute><SchedulingSuccess /></ProtectedRoute>} />
-
-              {/* Legacy REI Routes - Redirect to projects */}
-              <Route path="/rei-onboarding" element={<Navigate to="/admin/projects" replace />} />
-              <Route path="/rei-dashboard" element={<Navigate to="/admin/projects" replace />} />
 
               {/* Public Scores (Lead Gen) */}
               <Route path="/score" element={<PageErrorBoundary><GrowthScore /></PageErrorBoundary>} />

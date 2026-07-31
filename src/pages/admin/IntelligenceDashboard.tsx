@@ -102,23 +102,23 @@ export default function IntelligenceDashboard() {
 
   return (
     <AdminLayout>
-      <div id="intelligence-dashboard-content" className="p-8 max-w-7xl mx-auto space-y-8 bg-slate-950 text-slate-100 min-h-screen">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-6">
+      <div id="intelligence-dashboard-content" className="p-8 max-w-7xl mx-auto space-y-8 bg-white text-zinc-900 min-h-screen">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-zinc-200 pb-6">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
-              <Building2 className="w-8 h-8 text-emerald-400" />
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 flex items-center gap-3">
+              <Building2 className="w-7 h-7 text-[#00CC6A]" />
               Inteligência Estratégica
             </h1>
-            <p className="text-slate-400 text-sm mt-1">Diagnóstico de mercado, concorrência e posicionamento — análise profunda para o seu projeto.</p>
+            <p className="text-zinc-500 text-sm mt-1">Diagnóstico de mercado, concorrência e posicionamento — análise profunda para o seu projeto.</p>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => pdfExportMutation.mutate()} disabled={pdfExportMutation.isPending} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-lg transition text-sm disabled:opacity-50">
+            <button onClick={() => pdfExportMutation.mutate()} disabled={pdfExportMutation.isPending} className="flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white font-medium px-4 py-2 rounded-lg transition text-sm disabled:opacity-50">
               {pdfExportMutation.isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> Exportando...</> : <><Download className="w-4 h-4" /> Exportar PDF</>}
             </button>
-            <button onClick={() => shareMutation.mutate()} disabled={shareMutation.isPending} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-medium px-4 py-2 rounded-lg transition text-sm disabled:opacity-50">
+            <button onClick={() => shareMutation.mutate()} disabled={shareMutation.isPending} className="flex items-center gap-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 border border-zinc-200 font-medium px-4 py-2 rounded-lg transition text-sm disabled:opacity-50">
               {shareMutation.isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> Gerando link...</> : <><Share2 className="w-4 h-4" /> Compartilhar</>}
             </button>
-            <button onClick={() => { competitorsQuery.refetch(); signalsQuery.refetch(); jobsQuery.refetch(); findingsQuery.refetch(); }} disabled={competitorsQuery.isFetching} className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-4 py-2 rounded-lg transition text-sm disabled:opacity-50">
+            <button onClick={() => { competitorsQuery.refetch(); signalsQuery.refetch(); jobsQuery.refetch(); findingsQuery.refetch(); }} disabled={competitorsQuery.isFetching} className="flex items-center gap-2 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-semibold px-4 py-2 rounded-lg transition text-sm disabled:opacity-50">
               <RefreshCw className={cn("w-4 h-4", competitorsQuery.isFetching && "animate-spin")} /> Atualizar
             </button>
           </div>
@@ -126,15 +126,15 @@ export default function IntelligenceDashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {FALLBACK_INSIGHTS.map((insight, i) => (
-            <div key={i} className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-sm">
-              <div className="flex justify-between items-start text-slate-400 text-sm font-medium">
+            <div key={i} className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+              <div className="flex justify-between items-start text-zinc-500 text-sm font-medium">
                 <span>{insight.label}</span>
-                {insight.trend === 'up' && <ArrowUpRight className="w-5 h-5 text-emerald-400" />}
-                {insight.trend === 'down' && <ArrowDownRight className="w-5 h-5 text-rose-400" />}
-                {insight.trend === 'neutral' && <Target className="w-5 h-5 text-amber-400" />}
+                {insight.trend === 'up' && <ArrowUpRight className="w-5 h-5 text-[#00CC6A]" />}
+                {insight.trend === 'down' && <ArrowDownRight className="w-5 h-5 text-rose-500" />}
+                {insight.trend === 'neutral' && <Target className="w-5 h-5 text-amber-500" />}
               </div>
-              <div className="text-2xl font-bold text-white mt-2">{insight.value}</div>
-              <div className="text-xs text-slate-400 mt-2 leading-relaxed">{insight.description}</div>
+              <div className="text-2xl font-bold text-zinc-900 mt-2">{insight.value}</div>
+              <div className="text-xs text-zinc-500 mt-2 leading-relaxed">{insight.description}</div>
             </div>
           ))}
         </div>
