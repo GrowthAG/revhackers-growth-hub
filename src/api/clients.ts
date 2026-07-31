@@ -75,7 +75,11 @@ export const getClientById = async (id: string): Promise<Client | null> => {
 
 export const createClient = async (client: ClientInsert): Promise<Client | null> => {
     if (isGcpEnabled()) {
-        return await clientsGcpAdapter.create(client);
+        try {
+            return await clientsGcpAdapter.create(client);
+        } catch (error) {
+            console.warn('GCP create failed, falling back to Supabase:', error);
+        }
     }
     const { data, error } = await supabase
         .from('clients' as any)
@@ -92,7 +96,11 @@ export const createClient = async (client: ClientInsert): Promise<Client | null>
 
 export const updateClient = async (id: string, updates: ClientUpdate): Promise<Client | null> => {
     if (isGcpEnabled()) {
-        return await clientsGcpAdapter.update(id, updates);
+        try {
+            return await clientsGcpAdapter.update(id, updates);
+        } catch (error) {
+            console.warn('GCP update failed, falling back to Supabase:', error);
+        }
     }
     const { data, error } = await supabase
         .from('clients' as any)
@@ -110,7 +118,11 @@ export const updateClient = async (id: string, updates: ClientUpdate): Promise<C
 
 export const deleteClient = async (id: string): Promise<void> => {
     if (isGcpEnabled()) {
-        return await clientsGcpAdapter.delete(id);
+        try {
+            return await clientsGcpAdapter.delete(id);
+        } catch (error) {
+            console.warn('GCP delete failed, falling back to Supabase:', error);
+        }
     }
     const { error } = await supabase
         .from('clients' as any)
