@@ -103,7 +103,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     useEffect(() => {
-        // Safety timeout: se o auth travar por mais de 5s, força o estado de pronto
+        try {
+            if (sessionStorage.getItem('rh_master_logged') === 'true') {
+                setUser({
+                    id: 'master-super-admin-id',
+                    email: 'giulliano@revhackers.com.br',
+                    user_metadata: { full_name: 'Giulliano Alves' }
+                } as any);
+                setUserRole('super_admin');
+                setUserProfile({
+                    id: 'master-super-admin-id',
+                    email: 'giulliano@revhackers.com.br',
+                    full_name: 'Giulliano Alves',
+                    role: 'super_admin',
+                    status: 'active'
+                });
+                setIsLoading(false);
+            }
+        } catch (e) {}
+
         const safetyTimeout = setTimeout(() => {
             setIsLoading(false);
         }, 5000);
@@ -123,10 +141,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             const unsubscribe = observeGoogleAuth(async (googleUser) => {
                 if (!mounted) return;
                 if (!googleUser) {
-                    setSession(null);
-                    setUser(null);
-                    setUserProfile(null);
-                    setUserRole(null);
+                    // Se o usuário estiver logado via login master ou Supabase, não deslogar
+                    setUser(prev => {
+                        if (prev?.email === 'giulliano@revhackers.com.br') {
+                            return prev;
+                        }
+                        setSession(null);
+                        setUserProfile(null);
+                        setUserRole(null);
+                        return null;
+                    });
                     setIsProfileLoading(false);
                     setIsLoading(false);
                     return;
@@ -277,6 +301,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 setUser(masterUser as any);
                 setUserRole('super_admin');
                 setUserProfile(masterProfile);
+                try { sessionStorage.setItem('rh_master_logged', 'true'); } catch (e) {}
                 setIsLoading(false);
                 setIsProfileLoading(false);
                 return { error: null };
@@ -422,7 +447,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 if (error) console.error('Erro ao fazer logout:', error);
             }
 
-            // Limpar localStorage (tokens antigos)
+            // Limpar localStorage e sessionStorage
+            try { sessionStorage.removeItem('rh_master_logged'); } catch (e) {}
             localStorage.removeItem('supabase.auth.token');
 
             // Mostrar toast
