@@ -9,8 +9,8 @@ const pages = [
   {
     route: 'claude-partner-network',
     title: 'Claude Partner Network 2026 | Seleção Oficial RevHackers & Anthropic',
-    description: 'Trilha exclusiva do Claude Partner Network com a RevHackers e Anthropic. Inscreva sua empresa para a seleção de parceiros AI-Native.',
-    image: 'https://revhackers.com.br/brand/claude-partner-network.svg',
+    description: 'Programa exclusivo de aceleração AI-Native, RevOps e automação avançada com Claude 3.5 Sonnet. Inscreva sua empresa para a seleção de parceiros.',
+    image: 'https://revhackers.com.br/brand/claude-partner-badge.png',
     canonical: 'https://revhackers.com.br/claude-partner-network'
   },
   {
@@ -96,7 +96,7 @@ function generatePageHtml() {
     }
     fs.writeFileSync(path.join(routeDir, 'index.html'), customHtml, 'utf-8');
 
-    // Also write dist/<route>.html for compatibility
+    // Also write dist/<route>.html for direct file matching
     fs.writeFileSync(path.join(distDir, `${page.route}.html`), customHtml, 'utf-8');
 
     console.log(`✅ Generated pre-rendered OG HTML for /${page.route}`);

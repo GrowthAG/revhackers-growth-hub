@@ -15,6 +15,16 @@ RewriteCond %{HTTP_HOST} ^(app|admin)\.revhackers\.com\.br$ [NC]
 RewriteCond %{REQUEST_URI} ^/$
 RewriteRule ^$ /admin [L,R=301]
 
+# Prevent Apache 301 directory redirect so social crawlers (WhatsApp) get HTTP 200 directly on route URLs
+DirectorySlash Off
+
+# Direct file match for pre-rendered route HTML files (prevents 301 redirect for social crawlers)
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^([^/]+)$ $1.html [L]
+
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+RewriteRule ^([^/]+)/?$ $1/index.html [L]
+
 # SPA Fallback: serve index.html for any route that isn't a real file or directory
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
