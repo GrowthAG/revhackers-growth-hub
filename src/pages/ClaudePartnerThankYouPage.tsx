@@ -60,20 +60,59 @@ export default function ClaudePartnerThankYouPage() {
             Enviamos a confirmação com os detalhes de acesso diretamente para a caixa de entrada do seu e-mail corporativo.
           </motion.p>
 
-          {/* Botão de Retorno */}
+          {/* Card de Confirmação & Ativação de Acesso High-Tech */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="pt-4"
+            className="w-full max-w-xl mx-auto mt-6 bg-zinc-900/90 border border-zinc-800 p-6 sm:p-8 rounded-2xl shadow-2xl text-left space-y-6"
           >
-            <Button
-              onClick={() => navigate('/')}
-              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm h-12 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
-            >
-              <span>Voltar para o Início</span>
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+            {/* Header do Card */}
+            <div className="flex items-center justify-between border-b border-zinc-800/80 pb-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#00CC6A] animate-pulse" />
+                <span className="text-xs font-bold text-white uppercase tracking-wider">Acesso Liberado & Ativo</span>
+              </div>
+              <span className="text-[11px] font-medium text-zinc-400">Claude 3.5 Sonnet</span>
+            </div>
+
+            {/* Saudação */}
+            <div className="space-y-2">
+              <h3 className="text-lg sm:text-xl font-extrabold text-white tracking-tight">
+                Seja bem-vindo ao Claude Partner Network & RevHackers
+              </h3>
+              <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed font-normal">
+                Sua empresa agora faz parte do grupo selecionado pela <strong className="text-white font-bold">RevHackers & Anthropic</strong> para dominar a construção de agentes autônomos de IA e arquitetura de receitas B2B.
+              </p>
+            </div>
+
+            {/* Grid de Detalhes da Conta */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div className="bg-black/50 border border-zinc-800 p-3.5 rounded-xl space-y-1">
+                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Status da Operação</span>
+                <span className="text-xs font-bold text-[#00CC6A] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A]" /> Credenciais Liberadas
+                </span>
+              </div>
+
+              <div className="bg-black/50 border border-zinc-800 p-3.5 rounded-xl space-y-1">
+                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Engenharia de IA</span>
+                <span className="text-xs font-bold text-white">Claude 3.5 & Agentes Autônomos</span>
+              </div>
+            </div>
+
+            {/* Botão de Acesso Direto ao Portal */}
+            <div className="pt-2">
+              <a
+                href="https://eulerapp.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-xs sm:text-sm h-12 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md"
+              >
+                <span>Entrar no Portal Euler App</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
           </motion.div>
 
         </div>
