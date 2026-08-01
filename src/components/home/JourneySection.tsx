@@ -5,67 +5,64 @@ import Section from '@/components/ui/Section';
 
 const journeySteps = [
   {
-    id: "01",
+    step: "Passo 01 — Dias 1 a 30",
     title: "Você Para de Adivinhar",
-    desc: "Nos primeiros 30 dias, mapeamos os vazamentos reais da sua operação. Diagnóstico técnico com dados — não com intuição.",
-    items: ["Auditoria de CRM e Pipeline", "Análise de Unit Economics", "Mapa de Gargalos"]
+    desc: "Mapeamos os vazamentos reais da sua operação com dados auditados no seu CRM — não com intuição.",
+    items: ["Auditoria de CRM e Pipeline", "Análise de Unit Economics", "Mapa dos Maiores Gargalos"]
   },
   {
-    id: "02",
+    step: "Passo 02 — Dias 30 a 60",
     title: "Sua Máquina Funciona",
-    desc: "Do dia 30 ao 60, você tem CRM integrado, IA filtrando leads e automações rodando. Sua equipe para de fazer trabalho manual.",
-    items: ["Integração via API/Webhook", "Qualificação Automatizada", "Score de Leads Ativo"]
+    desc: "CRM integrado, IA filtrando leads e automações ativas. Sua equipe para de fazer trabalho manual.",
+    items: ["Integração via API & Webhook", "Qualificação Automatizada", "Score de Leads Ativo"]
   },
   {
-    id: "03",
+    step: "Passo 03 — Dias 60 a 90",
     title: "Você Escala Sem Contratar",
-    desc: "Do dia 60 ao 90, com a base consolidada, escalamos seus resultados semana a semana — sem precisar expandir o time.",
+    desc: "Com a base consolidada, escalamos seus resultados semana a semana sem precisar expandir a equipe.",
     items: ["Testes A/B em Canais", "Refinamento de Playbooks", "Reporting Executivo"]
   }
 ];
 
 const JourneySection = () => {
   return (
-    <Section variant="light" className="border-t border-zinc-100 py-24 md:py-40 bg-white overflow-hidden">
-      {/* Centered Standard Header - Light Mode */}
-      <div className="text-center mb-24 md:mb-32 max-w-4xl mx-auto">
-        <span className="text-label text-zinc-400 mb-6 block">
-          Metodologia Proprietária
-        </span>
-        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-zinc-900 tracking-tight text-balance">
-          Em 90 Dias, Sua Operação<br className="hidden md:block" /> Funciona Sem Você.
-        </h2>
-        <p className="text-xl md:text-2xl text-zinc-500 font-light tracking-tight max-w-2xl mx-auto leading-relaxed">
-          Três passos. Do diagnóstico à escala previsível.
-        </p>
-      </div>
+    <Section variant="light" className="bg-white py-20 border-t border-zinc-200/80">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Header Centralizado Padrão Ouro */}
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <h2 className="font-sans text-2xl sm:text-3xl md:text-4xl font-extrabold text-zinc-950 tracking-tight leading-[1.15] mb-4 text-center">
+            Em 90 Dias, Sua Operação <span className="text-zinc-500">Funciona Sem Você.</span>
+          </h2>
+          <p className="text-zinc-600 text-base md:text-lg font-normal leading-relaxed max-w-xl mx-auto text-center">
+            Três passos de execução cirúrgica. Do diagnóstico à escala previsível.
+          </p>
+        </div>
 
-      <div className="container-custom relative z-10">
-        {/* Connector Line (Desktop) - Subtle Zinc */}
-        <div className="absolute top-[100px] left-0 w-full h-px bg-zinc-100 hidden md:block -z-10"></div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          {journeySteps.map((step, index) => (
+        {/* Pipeline Horizontal de 1px — Padrão RevHackers */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+          {journeySteps.map((item, index) => (
             <div
               key={index}
-              className="bg-white border border-zinc-100 p-10 md:p-12 rounded-[2.5rem] relative group hover:shadow-sm hover:shadow-zinc-200/50 transition-all duration-700 shadow-sm flex flex-col h-full"
+              className="border-t-2 border-zinc-950 pt-6 flex flex-col justify-between h-full"
             >
-              {/* Number Badge - Inverted Mono */}
-              <div className="w-16 h-16 bg-zinc-900 text-white text-metric text-xl flex items-center justify-center mb-10 group-hover:bg-black transition-all duration-500 shadow-sm shadow-zinc-200 group-hover:scale-110">
-                {step.id}
+              <div>
+                <span className="text-zinc-400 text-xs font-semibold uppercase tracking-wider block mb-2">
+                  {item.step}
+                </span>
+                <h3 className="text-lg sm:text-xl font-bold text-zinc-950 mb-3 tracking-tight">
+                  {item.title}
+                </h3>
+                <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+                  {item.desc}
+                </p>
               </div>
 
-              <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-6 tracking-tight">{step.title}</h3>
-              <p className="text-zinc-500 text-reading mb-10 leading-[1.6] flex-1">
-                {step.desc}
-              </p>
-
-              <div className="pt-8 border-t border-zinc-50">
-                <ul className="space-y-4">
-                  {step.items.map((item, idx) => (
-                    <li key={idx} className="flex items-center text-label text-zinc-400 group-hover:text-zinc-600 transition-colors">
-                      <div className="w-2 h-2 bg-zinc-900 mr-4 rounded-full"></div>
-                      {item}
+              <div className="pt-4 border-t border-zinc-100">
+                <ul className="space-y-2.5">
+                  {item.items.map((bullet, idx) => (
+                    <li key={idx} className="flex items-center gap-2.5 text-xs text-zinc-600 font-medium">
+                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-950 shrink-0" />
+                      <span>{bullet}</span>
                     </li>
                   ))}
                 </ul>
