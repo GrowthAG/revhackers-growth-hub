@@ -58,10 +58,6 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
                       transform: caseData.logoScale ? `scale(${caseData.logoScale})` : undefined
                     }}
                   />
-
-                  {/* Plate Metadata - Swiss Precision */}
-                  <div className="absolute top-2 left-4 font-mono text-4xs text-zinc-400 tracking-[0.3em] uppercase opacity-40">CALIBRATION_SPEC // {caseData.whiteLogo ? 'VECTOR' : 'PLATE'}</div>
-                  <div className="absolute bottom-2 right-4 font-mono text-4xs text-zinc-400 tracking-[0.3em] uppercase opacity-40">REF // REV_HACK_V2</div>
                 </div>
               </div>
             ) : (
@@ -75,7 +71,7 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-center gap-4 mb-10">
               <div className="h-px w-8 bg-zinc-800"></div>
-              <h2 className="text-zinc-500 font-mono text-xxs uppercase tracking-[0.6em] whitespace-nowrap">Performance_Specification</h2>
+              <h2 className="text-zinc-400 font-sans text-xs uppercase tracking-widest whitespace-nowrap font-bold">Especificação de Performance</h2>
               <div className="h-px w-8 bg-zinc-800"></div>
             </div>
             <p className="text-3xl md:text-5xl lg:text-6xl text-white font-bold tracking-tight leading-[0.95] mb-4 animate-fade-in-up delay-200 text-balance italic">

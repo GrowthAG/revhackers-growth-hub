@@ -97,12 +97,7 @@ const CaseContent = ({ caseData }: CaseContentProps) => {
 
               {/* CHALLENGE SIDE */}
               <div className="lg:col-span-5 p-12 md:p-16 lg:p-24 border-b lg:border-b-0 lg:border-r border-zinc-900 relative">
-                {/* Marginalia - Technical Annotations */}
-                <div className="absolute top-10 left-10 flex flex-col gap-1 opacity-20 group">
-                  <div className="w-4 h-[1px] bg-black"></div>
-                  <div className="w-8 h-[1px] bg-black"></div>
-                  <span className="font-mono text-4xs rotate-90 origin-left mt-10 translate-x-2 text-black font-bold tracking-widest uppercase">AUDIT_LOG // 01A</span>
-                </div>
+
 
                 <div className="sticky top-32">
                   <div className="inline-block border border-zinc-200 px-3 py-1 mb-12">
@@ -205,8 +200,8 @@ const CaseContent = ({ caseData }: CaseContentProps) => {
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl bg-white border-zinc-900 border-2 p-12 rounded-none shadow-[40px_40px_0px_rgba(0,0,0,0.05)] bg-grain">
                       <DialogHeader className="mb-12 p-0">
-                        <DialogTitle className="text-5xl font-black tracking-tighter uppercase italic leading-none">Agendar Inspeção Técnica</DialogTitle>
-                        <p className="font-mono text-tiny text-zinc-400 tracking-[0.3em] mt-6 border-b border-zinc-100 pb-4">SPECIFICATION_REQUEST // PHASE_01_INIT</p>
+                        <DialogTitle className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-950">Agendar Inspeção Técnica</DialogTitle>
+                        <p className="font-sans text-xs text-zinc-500 font-medium tracking-wide mt-2 border-b border-zinc-100 pb-4">Solicitação de Diagnóstico & Especificação Técnica</p>
                       </DialogHeader>
                       <ContactForm />
                     </DialogContent>
