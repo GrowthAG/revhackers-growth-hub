@@ -197,24 +197,29 @@ export const DiagnosticForm = ({
  </div>
  <div className="space-y-1.5">
  <div className="flex items-center justify-between">
- <Label className={labelClasses}>CNPJ da Empresa (Preenchimento Automático)</Label>
- {isQueryingCnpj && (
- <span className="text-[10px] font-sans text-zinc-500 flex items-center gap-1">
- <RefreshCw className="w-2.5 h-2.5 animate-spin" /> Buscando...
- </span>
- )}
- {cnpjChecked && (
- <p className="text-[#00CC6A] text-xs font-medium">Dados verificados</p>
- )}
- </div>
- <Input
- className={inputClasses}
- value={form.cnpj || ''}
- onChange={handleCnpjChange}
- maxLength={18}
- placeholder="00.000.000/0000-00"
- />
- </div>
+            <Label className={labelClasses}>
+              CNPJ da Empresa <span className="text-zinc-400 font-normal">(Opcional)</span>
+            </Label>
+            {isQueryingCnpj && (
+              <span className="text-[10px] font-sans text-zinc-500 flex items-center gap-1">
+                <RefreshCw className="w-2.5 h-2.5 animate-spin" /> Buscando...
+              </span>
+            )}
+            {cnpjChecked && (
+              <p className="text-[#00CC6A] text-xs font-medium">Dados verificados</p>
+            )}
+          </div>
+          <Input
+            className={inputClasses}
+            value={form.cnpj || ''}
+            onChange={handleCnpjChange}
+            maxLength={18}
+            placeholder="00.000.000/0000-00"
+          />
+          <p className="text-[11px] text-zinc-500 font-normal leading-tight pt-0.5">
+            💡 Se informado, sua auditoria será mais personalizada com base no mercado da sua empresa e análise dos seus concorrentes.
+          </p>
+        </div>
  <div className="space-y-1.5">
  <Label className={labelClasses}>Nome da Empresa</Label>
  <Input required className={inputClasses} value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} placeholder="Nome da sua Organização" />
