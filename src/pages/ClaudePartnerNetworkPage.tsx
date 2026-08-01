@@ -291,10 +291,10 @@ export default function ClaudePartnerNetworkPage() {
               CLAUDE PARTNER NETWORK × REVHACKERS
             </p>
             <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Bem-vindo à nova era da Engenharia de Receita & IA.
+              Seja bem-vindo ao Claude Partner Network & RevHackers.
             </h2>
             <p className="text-zinc-500 text-sm max-w-xl mx-auto">
-              Ative seu acesso ao Claude Partner Network da Anthropic & RevHackers. Zero enrolação, 100% execução.
+              Ative o acesso da sua empresa ao programa de inteligência artificial da Anthropic & RevHackers. Zero enrolação, 100% execução.
             </p>
           </div>
 
