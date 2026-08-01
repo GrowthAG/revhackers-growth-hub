@@ -10,99 +10,65 @@ const ContactFormSection = () => {
   return (
     <section
       ref={ref}
-      className="relative py-32 border-t border-white/6"
-      style={{ background: '#0a0a0a' }}
+      className="relative py-24 bg-black border-t border-zinc-900 overflow-hidden"
     >
-      {/* Top border line */}
-      <div
-        className="absolute inset-x-0 top-0 h-px bg-white/6"
-      />
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32 items-start">
-
-          {/* Left - copy de autoridade */}
+          {/* Left - Copy de autoridade */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, ease: 'easeOut' }}
-            className="lg:sticky lg:top-32 pt-2"
+            className="space-y-6"
           >
-            <p
-              className="text-revgreen text-tiny uppercase font-medium mb-6"
-              style={{ letterSpacing: '0.06em' }}
-            >
-              Inicie o Protocolo
-            </p>
-            <h2
-              className="text-white mb-6"
-              style={{
-                fontSize: 'clamp(1.5rem, 2.5vw, 1.875rem)',
-                fontWeight: 700,
-                letterSpacing: '-0.025em',
-                lineHeight: 1.1,
-              }}
-            >
+            <h2 className="font-sans text-[2rem] sm:text-[2.5rem] font-extrabold text-white leading-[1.15] tracking-tight">
               Montamos sua operação de vendas{' '}
-              <span style={{ color: '#00C060' }}>do zero à escala.</span>
+              <span className="text-[#00CC6A]">do zero à escala.</span>
             </h2>
-            <p className="text-zinc-500 leading-relaxed font-light mb-12" style={{ maxWidth: '36ch' }}>
-              Nossa infraestrutura não é para todos. Desenhamos arquiteturas comerciais pesadas para
-              empresas que buscam dominar o mercado com precisão.
+            <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-lg">
+              Desenhamos arquiteturas comerciais pesadas para empresas que buscam dominar o mercado com inteligência e precisão.
             </p>
 
-            {/* Steps */}
-            <div className="space-y-8">
+            {/* Steps — Lista limpa com marcadores suaves */}
+            <div className="space-y-5 pt-4 border-t border-zinc-900">
               {[
-                { n: '01', title: 'Diagnóstico', desc: 'Auditoria completa de tracking, CRM e atribuição.' },
-                { n: '02', title: 'Roadmap',     desc: 'Plano de 90 dias focado em eficiência e escala.' },
-                { n: '03', title: 'Execução',    desc: 'Time especializado implementando cada protocolo.' },
-              ].map(step => (
-                <div key={step.n} className="flex items-start gap-5">
-                  <span
-                    className="text-zinc-700 font-mono text-xs pt-0.5 shrink-0"
-                    style={{ letterSpacing: '0.04em' }}
-                  >
-                    {step.n}
-                  </span>
+                { title: 'Diagnóstico Técnico', desc: 'Auditoria completa de tracking, CRM e atribuição.' },
+                { title: 'Roadmap de 90 Dias', desc: 'Plano de execução focado em eficiência de CAC e LTV.' },
+                { title: 'Execução Hands-on', desc: 'Time especializado implementando cada automação.' },
+              ].map((step, idx) => (
+                <div key={idx} className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A] mt-2 shrink-0" />
                   <div>
-                    <p className="text-white text-sm font-medium mb-1">{step.title}</p>
-                    <p className="text-zinc-600 text-sm font-light leading-relaxed">{step.desc}</p>
+                    <p className="text-white text-sm font-bold mb-0.5">{step.title}</p>
+                    <p className="text-zinc-400 text-xs leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-12 pt-8 border-t border-white/6">
-              <p className="text-zinc-700 text-tiny" style={{ letterSpacing: '0.04em' }}>
-                Agenda Q2 2026 · <span className="text-zinc-400">Vagas limitadas</span>
-              </p>
+            <div className="pt-4 text-xs font-medium text-zinc-500">
+              Agenda Q2 2026 · <span className="text-zinc-300 font-semibold">Vagas limitadas</span>
             </div>
           </motion.div>
 
-          {/* Right - formulario */}
+          {/* Right - Formulário no Padrão Claude Partner Network (Caixa Branca Puro) */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           >
-            <div
-              className="border border-white/8 p-8 md:p-10 rounded-sm"
-              style={{ background: '#111111' }}
-            >
-              <div className="mb-8">
-                <h3
-                  className="text-white font-semibold mb-2"
-                  style={{ fontSize: '1.125rem', letterSpacing: '-0.01em' }}
-                >
+            <div className="bg-white border border-zinc-200/80 p-8 sm:p-10 rounded-2xl shadow-xs text-zinc-900">
+              <div className="mb-6 space-y-1">
+                <h3 className="text-xl font-bold text-zinc-900 tracking-tight">
                   Solicitar Análise
                 </h3>
-                <p className="text-zinc-500 text-sm font-light">
-                  Preencha para análise técnica de perfil. Resposta em 24h.
+                <p className="text-xs sm:text-sm text-zinc-500">
+                  Preencha para análise técnica de perfil. Resposta em até 24h.
                 </p>
               </div>
 
-              <ContactForm formType="contact" variant="dark" />
+              <ContactForm formType="contact" variant="light" />
             </div>
           </motion.div>
 

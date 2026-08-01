@@ -14,7 +14,7 @@ import SEO from '@/components/shared/SEO';
 import DarkHeroSection from '@/components/shared/DarkHeroSection';
 import BookingModal from '@/components/shared/BookingModal';
 import { removeEmojis } from '@/utils/stringUtils';
-// import { materialsData } from '@/data/materialsData'; // REMOVED: Usage of static data disabled.
+import { materialsData } from '@/data/materialsData';
 
 // Icon map for dynamic icon rendering
 const IconMap: Record<string, React.ElementType> = {
@@ -37,12 +37,12 @@ const Materiais = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Buscar materiais do Supabase com timeout
+  // Buscar materiais do Supabase com timeout e fallback automatico para materialsData
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Timeout de rede')), 10000)
+          setTimeout(() => reject(new Error('Timeout de rede')), 5000)
         );
 
         const fetchPromise = supabase
@@ -55,12 +55,14 @@ const Materiais = () => {
 
         if (error) throw error;
 
-        if (data) {
+        if (data && data.length > 0) {
           setApiMaterials(data);
-
+        } else {
+          setApiMaterials(materialsData);
         }
       } catch (err: any) {
-        console.warn('⚠️ [DATABASE] Falha ao buscar materiais (usando offline/static):', err.message);
+        console.warn('⚠️ [DATABASE] Usando materiais ricos locais (materialsData):', err.message);
+        setApiMaterials(materialsData);
       } finally {
         setLoading(false);
       }
@@ -69,11 +71,14 @@ const Materiais = () => {
     fetchMaterials();
   }, []);
 
-  // Pure Database Data - filter out materials with Google Drive links (invalid)
-  const materials = apiMaterials.filter(m => {
+  // Filter materials (use materialsData if apiMaterials yields 0 after filtering)
+  const rawMaterials = apiMaterials.length > 0 ? apiMaterials : materialsData;
+  const filteredDbMaterials = rawMaterials.filter(m => {
     const link = (m.link_material || '').toLowerCase();
     return !link.includes('docs.google.com') && !link.includes('drive.google.com');
   });
+
+  const materials = filteredDbMaterials.length > 0 ? filteredDbMaterials : materialsData;
 
   const handleDownloadClick = (material: any) => {
     setSelectedMaterial(material);
