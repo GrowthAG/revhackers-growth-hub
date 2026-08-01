@@ -18,60 +18,56 @@ const FormCompanySection = ({
   return (
     <>
       <div className="space-y-1">
-        <Label htmlFor="company" className="text-zinc-900 text-xs font-bold uppercase tracking-wider">Empresa *</Label>
+        <Label htmlFor="company" className="text-xs font-semibold text-zinc-800">Empresa *</Label>
         <Input
           id="company"
           name="company"
           value={formData.company}
           onChange={handleInputChange}
           placeholder="Nome da sua empresa"
-          className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-300 focus-visible:ring-0 focus-visible:border-black h-10 rounded-sm transition-all shadow-none"
+          className="w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all"
           required
         />
       </div>
 
-
-
       <div className="space-y-1">
-        <Label htmlFor="industry" className="text-zinc-900 text-xs font-bold uppercase tracking-wider">Setor *</Label>
+        <Label htmlFor="industry" className="text-xs font-semibold text-zinc-800">Setor *</Label>
         <Select
           value={formData.industry}
           onValueChange={(value) => handleSelectChange('industry', value)}
         >
-          <SelectTrigger id="industry" className="bg-white border-zinc-200 text-zinc-900 h-10 rounded-sm focus:ring-0 focus:border-black shadow-none font-medium">
-            <SelectValue placeholder="Selecione..." />
+          <SelectTrigger id="industry" className="w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm focus:outline-none focus:border-zinc-900 transition-all">
+            <SelectValue placeholder="Selecione o setor" />
           </SelectTrigger>
-          <SelectContent className="bg-white border-zinc-200 text-zinc-900 shadow-none rounded-sm">
-            <SelectItem value="saas" className="focus:bg-zinc-50 focus:text-black cursor-pointer">SaaS</SelectItem>
-            <SelectItem value="tech" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Tecnologia</SelectItem>
-            <SelectItem value="startup" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Startup</SelectItem>
-            <SelectItem value="b2b" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Serviços B2B</SelectItem>
-            <SelectItem value="ecommerce" className="focus:bg-zinc-50 focus:text-black cursor-pointer">E-commerce</SelectItem>
-            <SelectItem value="fintech" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Fintech</SelectItem>
-            <SelectItem value="marketing" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Agência/Marketing</SelectItem>
-            <SelectItem value="other" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Outro</SelectItem>
+          <SelectContent className="bg-white border-zinc-200 text-zinc-900 shadow-sm rounded-lg">
+            <SelectItem value="saas">SaaS / Software</SelectItem>
+            <SelectItem value="tech">Tecnologia</SelectItem>
+            <SelectItem value="startup">Startup</SelectItem>
+            <SelectItem value="b2b">Serviços B2B</SelectItem>
+            <SelectItem value="ecommerce">E-commerce</SelectItem>
+            <SelectItem value="fintech">Fintech</SelectItem>
+            <SelectItem value="marketing">Agência / Growth</SelectItem>
+            <SelectItem value="other">Outro Segmento</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       <div className="col-span-1 md:col-span-2 space-y-1">
-        <Label htmlFor="role" className="text-zinc-900 text-xs font-bold uppercase tracking-wider">Cargo *</Label>
+        <Label htmlFor="role" className="text-xs font-semibold text-zinc-800">Cargo *</Label>
         <Select
           value={formData.role}
           onValueChange={(value) => handleSelectChange('role', value)}
         >
-          <SelectTrigger id="role" className="bg-white border-zinc-200 text-zinc-900 h-10 rounded-sm focus:ring-0 focus:border-black shadow-none font-medium">
-            <SelectValue placeholder="Selecione sua função" />
+          <SelectTrigger id="role" className="w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm focus:outline-none focus:border-zinc-900 transition-all">
+            <SelectValue placeholder="Selecione seu cargo" />
           </SelectTrigger>
-          <SelectContent className="bg-white border-zinc-200 text-zinc-900 shadow-none rounded-sm">
-            <SelectItem value="executivo-senior" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Executivo sênior</SelectItem>
-            <SelectItem value="socio-vp" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Sócio / VP</SelectItem>
-            <SelectItem value="chefe-diretor" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Chefe / Diretor</SelectItem>
-            <SelectItem value="gerente-lider" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Gerente / Líder de equipe</SelectItem>
-            <SelectItem value="especialista-consultor" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Especialista / Consultor</SelectItem>
-            <SelectItem value="colaborador-individual" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Colaborador individual</SelectItem>
-            <SelectItem value="autonomo" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Autônomo</SelectItem>
-            <SelectItem value="estudante" className="focus:bg-zinc-50 focus:text-black cursor-pointer">Estudante</SelectItem>
+          <SelectContent className="bg-white border-zinc-200 text-zinc-900 shadow-sm rounded-lg">
+            <SelectItem value="executivo-senior">Founder / CEO</SelectItem>
+            <SelectItem value="socio-vp">Sócio / C-Level / VP</SelectItem>
+            <SelectItem value="chefe-diretor">Diretor de RevOps / Vendas</SelectItem>
+            <SelectItem value="gerente-lider">Gerente / Head de Growth</SelectItem>
+            <SelectItem value="especialista-consultor">Especialista / Consultor</SelectItem>
+            <SelectItem value="outros">Outros</SelectItem>
           </SelectContent>
         </Select>
       </div>

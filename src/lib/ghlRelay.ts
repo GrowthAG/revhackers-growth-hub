@@ -69,6 +69,13 @@ export function buildContactPayload(
 
     const utms = getUtmParams();
 
+    const tags = ['revhackers', eventType];
+    if (eventType === 'download' || eventType === 'email_material' || payload.materialId || payload.materiallink || payload.materialTitle) {
+        if (!tags.includes('materiais')) {
+            tags.push('materiais');
+        }
+    }
+
     const base: Record<string, unknown> = {
         firstName: firstName || (payload.firstName as string) || '',
         lastName: lastName || (payload.lastName as string) || '',
@@ -79,7 +86,7 @@ export function buildContactPayload(
         source: utms.utm_source
             ? `${utms.utm_source}${utms.utm_medium ? ' / ' + utms.utm_medium : ''}`
             : `RevHackers - ${eventType}`,
-        tags: ['revhackers', eventType],
+        tags,
     };
 
     const customFields: Array<{ id: string; value: string }> = [];

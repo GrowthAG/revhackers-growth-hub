@@ -12,32 +12,32 @@ const FormPersonalSection = ({ formData, handleInputChange }: FormPersonalSectio
   return (
     <>
       <div className="space-y-1">
-        <Label htmlFor="firstName" className="text-zinc-900 text-xs font-bold uppercase tracking-wider">Nome *</Label>
+        <Label htmlFor="firstName" className="text-xs font-semibold text-zinc-800">Nome *</Label>
         <Input
           id="firstName"
           name="firstName"
           value={formData.firstName}
           onChange={handleInputChange}
           placeholder="Seu nome"
-          className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-300 focus-visible:ring-0 focus-visible:border-black h-10 rounded-sm transition-all shadow-none"
+          className="w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all"
           required
         />
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="lastName" className="text-zinc-900 text-xs font-bold uppercase tracking-wider">Sobrenome</Label>
+        <Label htmlFor="lastName" className="text-xs font-semibold text-zinc-800">Sobrenome</Label>
         <Input
           id="lastName"
           name="lastName"
           value={formData.lastName}
           onChange={handleInputChange}
           placeholder="Seu sobrenome"
-          className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-300 focus-visible:ring-0 focus-visible:border-black h-10 rounded-sm transition-all shadow-none"
+          className="w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all"
         />
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="email" className="text-zinc-900 text-xs font-bold uppercase tracking-wider">Email Corporativo *</Label>
+        <Label htmlFor="email" className="text-xs font-semibold text-zinc-800">E-mail Corporativo *</Label>
         <Input
           id="email"
           name="email"
@@ -45,20 +45,20 @@ const FormPersonalSection = ({ formData, handleInputChange }: FormPersonalSectio
           value={formData.email}
           onChange={handleInputChange}
           placeholder="seuemail@seudominio.com.br"
-          className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-300 focus-visible:ring-0 focus-visible:border-black h-10 rounded-sm transition-all shadow-none"
+          className="w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all"
           required
         />
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="phone" className="text-zinc-900 text-xs font-bold uppercase tracking-wider">WhatsApp</Label>
+        <Label htmlFor="phone" className="text-xs font-semibold text-zinc-800">WhatsApp / Telefone</Label>
         <Input
           id="phone"
           name="phone"
           value={formData.phone}
           onChange={handleInputChange}
           placeholder="(11) 99999-9999"
-          className="bg-white border-zinc-200 text-zinc-900 placeholder:text-zinc-300 focus-visible:ring-0 focus-visible:border-black h-10 rounded-sm transition-all shadow-none"
+          className="w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all"
         />
       </div>
     </>

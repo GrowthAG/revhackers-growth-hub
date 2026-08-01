@@ -55,7 +55,7 @@ const DownloadFormContent: React.FC<DownloadFormContentProps> = ({
       <div className="pt-2">
         <Button
           type="submit"
-          className="w-full font-bold h-12 text-tiny rounded-none transition-all uppercase tracking-[0.25em] shadow-none flex items-center justify-center gap-2 group"
+          className="w-full h-11 bg-zinc-900 hover:bg-zinc-800 text-white font-semibold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
@@ -65,8 +65,8 @@ const DownloadFormContent: React.FC<DownloadFormContentProps> = ({
             </span>
           ) : (
             <span className="flex items-center gap-2">
-              <Download className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 stroke-[2.5]" />
-              Acessar Material
+              <Download className="w-4 h-4 stroke-[2.5]" />
+              Acessar Material →
             </span>
           )}
         </Button>
