@@ -150,7 +150,7 @@ export default function ClaudePartnerNetworkPage() {
             transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
             className="font-sans text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-extrabold text-white leading-[1.1] tracking-tight text-center"
           >
-            Parabéns, <span className="text-[#00CC6A]">você foi selecionado</span>
+            Seja bem-vindo ao <span className="text-[#00CC6A]">Claude Partner Network</span> & RevHackers.
           </motion.h1>
 
           {/* Subheadline */}
@@ -160,7 +160,7 @@ export default function ClaudePartnerNetworkPage() {
             transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
             className="text-zinc-400 text-base md:text-xl font-normal leading-relaxed max-w-2xl mx-auto text-center"
           >
-            Você está entre as 10 pessoas convidadas para participar da trilha exclusiva do Claude Partner Network com a RevHackers.
+            Impulsione a arquitetura de inteligência artificial da sua empresa com os modelos Claude 3.5 Sonnet e agentes autônomos de alta performance.
           </motion.p>
 
           {/* Indicador de Status Limpo — Padrão da Home */}
@@ -171,7 +171,7 @@ export default function ClaudePartnerNetworkPage() {
             className="flex items-center justify-center gap-2 text-zinc-400 text-xs font-medium"
           >
             <span className="w-2 h-2 rounded-full bg-[#00CC6A]" />
-            <span>Vagas Selecionadas: <strong className="text-white">7 de 10 preenchidas</strong></span>
+            <span>Programa Exclusivo: <strong className="text-white">Capacitação Oficial Anthropic & RevHackers</strong></span>
           </motion.div>
 
           {/* Box de Apoio */}
@@ -179,14 +179,14 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
-            className="p-6 rounded-2xl bg-zinc-950 border border-zinc-800/90 max-w-2xl mx-auto text-sm text-zinc-300 text-left space-y-3 shadow-2xl"
+            className="w-full max-w-2xl bg-zinc-900/80 rounded-xl p-5 border border-zinc-800 text-left space-y-2"
           >
-            <div className="flex items-center gap-2 text-white font-bold text-base">
-              <ShieldCheck className="w-5 h-5 text-[#00CC6A] shrink-0" />
-              <span>Programa Oficial Anthropic x RevHackers</span>
+            <div className="flex items-center gap-2 text-white font-bold text-sm">
+              <ShieldCheck className="w-4 h-4 text-[#00CC6A]" />
+              Programa Oficial Anthropic x RevHackers
             </div>
-            <p className="leading-relaxed text-zinc-400">
-              Essa é uma trilha oficial da Anthropic, gratuita e restrita ao programa de parceiros. Ela foi criada para pessoas que querem aprender Claude na prática e aplicar isso em negócio real.
+            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+              Trilha técnica oficial desenvolvida em parceria com a Anthropic. Criada para founders, diretores e times de tecnologia aplicarem a pilha de modelos Claude e agentes autônomos em operações reais.
             </p>
           </motion.div>
 
