@@ -26,8 +26,48 @@
   <!-- Google Search Console Verification -->
   <meta name="google-site-verification" content="mnJN0Y0oxcM6PFoQsCcacQWBseZol3jbRI4_GEPtp-w" />
 
+  <!-- Force purge all GHL / LeadConnector external chat widget embeds -->
+  <style>
+    chat-widget,
+    #chat-widget,
+    #leadconnector-chat-widget,
+    .hl-chat-widget,
+    #hl-chat-widget-container,
+    [id*="chat-widget"],
+    [class*="chat-widget"],
+    [id*="leadconnector"],
+    [class*="leadconnector"],
+    iframe[src*="leadconnector"],
+    iframe[src*="widget.leadconnectorhq"] {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      height: 0 !important;
+      position: absolute !important;
+      left: -9999px !important;
+      z-index: -9999 !important;
+    }
+  </style>
+
   <!-- Auto-reload handler for deploy chunk updates (prevents white screens) -->
   <script>
+    // MutationObserver to immediately destroy any GHL chat widget injected by GTM or scripts
+    (function() {
+      function killGhlWidget() {
+        var targets = document.querySelectorAll('chat-widget, #chat-widget, #leadconnector-chat-widget, [id*="chat-widget"], [class*="chat-widget"], [id*="leadconnector"], [class*="leadconnector"], iframe[src*="leadconnector"], iframe[src*="widget.leadconnectorhq"]');
+        for (var i = 0; i < targets.length; i++) {
+          targets[i].remove();
+        }
+      }
+      if (typeof window !== 'undefined') {
+        window.addEventListener('DOMContentLoaded', killGhlWidget);
+        var obs = new MutationObserver(killGhlWidget);
+        obs.observe(document.documentElement, { childList: true, subtree: true });
+      }
+    })();
+
     window.addEventListener('error', function(e) {
       var msg = e && e.message ? String(e.message) : '';
       if (msg.indexOf('Loading chunk') !== -1 || msg.indexOf('dynamically imported module') !== -1 || msg.indexOf('Importing a module script failed') !== -1) {

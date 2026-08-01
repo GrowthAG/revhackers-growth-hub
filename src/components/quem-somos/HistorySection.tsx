@@ -11,8 +11,8 @@ const HistorySection = () => {
             <div className="space-y-6 lg:col-span-8">
               <div className="flex items-center gap-3">
                 <span className="text-revgreen text-xs">•</span>
-                <span className="font-sans text-xxs text-zinc-400 uppercase tracking-wider font-bold">
-                  REVHACKERS // INTELLIGENCE UNIT
+                <span className="font-sans text-xs text-zinc-400 uppercase tracking-wider font-bold">
+                  ENGENHARIA DE GTM
                 </span>
               </div>
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-black leading-[0.85] mb-6">

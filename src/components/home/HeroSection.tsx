@@ -76,19 +76,6 @@ const HeroSection = () => {
             />
           </div>
 
-          <div className="w-px h-4 bg-zinc-800 shrink-0" />
-
-          {/* Meta Business Partner */}
-          <div className="h-7 flex items-center px-3 sm:px-5">
-            <img
-              src="/brand/meta-business-partner.svg"
-              alt="Meta Business Partner"
-              className="h-4.5 sm:h-5 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity block"
-            />
-          </div>
-
-          <div className="w-px h-4 bg-zinc-800 shrink-0" />
-
           {/* Google for Startups */}
           <div className="h-7 flex items-center gap-2 px-3 sm:px-5 opacity-75 hover:opacity-100 transition-opacity select-none">
             <svg className="w-4 h-4 shrink-0 block" viewBox="0 0 24 24">

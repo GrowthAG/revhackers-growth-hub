@@ -529,8 +529,8 @@ const RevenueScore = () => {
  </div>
 
  <div className="pt-8 text-center">
- <span className="text-xs font-sans font-bold text-zinc-600 ">
- RevHackers // Intelligence Unit
+ <span className="text-xs font-sans font-bold text-zinc-400">
+ RevHackers — GTM Engineering
  </span>
  </div>
  </div>
