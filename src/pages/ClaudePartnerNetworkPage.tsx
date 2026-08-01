@@ -291,17 +291,20 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* Formulário de Confirmação em 3 Etapas (ULTRA MINIMALISTA SEM VIBECODE) */}
-      <section ref={formRef} className="py-20 bg-white text-zinc-900">
-        <div className="max-w-md mx-auto px-6 space-y-8">
+      {/* Formulário de Confirmação em 3 Etapas (ESTILO ASIDE.COM — DARK GLASS & PRECISÃO MONO) */}
+      <section ref={formRef} className="py-24 bg-black text-white border-t border-zinc-900">
+        <div className="max-w-lg mx-auto px-6 space-y-10">
           
-          <div className="text-center space-y-2">
-            <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <div className="text-center space-y-3">
+            <p className="text-[#00CC6A] font-mono text-xs font-bold tracking-widest uppercase">
+              [ INSCRIÇÃO DIRETA · ETAPA {step} DE 3 ]
+            </p>
+            <h2 className="text-white text-2xl sm:text-4xl font-extrabold tracking-tight">
               {step === 1 && "1. Seus dados de acesso"}
               {step === 2 && "2. Dados da sua empresa"}
               {step === 3 && "3. Perfil & Ativação"}
             </h2>
-            <p className="text-zinc-500 text-sm max-w-sm mx-auto leading-relaxed">
+            <p className="text-zinc-400 text-sm max-w-md mx-auto leading-relaxed">
               {step === 1 && "Preencha seus dados básicos pra gente liberar suas credenciais de parceiro."}
               {step === 2 && "Mapeie sua empresa para conectarmos a melhor integração do Claude."}
               {step === 3 && "Selecione seu perfil e confirme o aceite para receber os acessos."}
@@ -309,88 +312,88 @@ export default function ClaudePartnerNetworkPage() {
           </div>
 
           {!isSubmitted && (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               
-              {/* STEP 1: DADOS PESSOAIS (EXATAMENTE 3 CAMPOS) */}
+              {/* STEP 1: DADOS PESSOAIS (EXATAMENTE 3 CAMPOS — ASIDE DARK GLASS) */}
               {step === 1 && (
-                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 flex flex-col">
+                <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-5 flex flex-col">
                   {/* Campo 1 */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">1. Nome Completo *</label>
+                    <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider">1. Nome Completo *</label>
                     <input
                       {...register('fullName')}
                       placeholder="Seu nome completo"
-                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      className="w-full h-12 px-4 rounded-xl border border-zinc-800 bg-zinc-900/60 text-white placeholder:text-zinc-500 text-sm focus:outline-none focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all"
                     />
-                    {errors.fullName && <p className="text-xs text-rose-600 font-medium">{errors.fullName.message}</p>}
+                    {errors.fullName && <p className="text-xs text-rose-500 font-medium">{errors.fullName.message}</p>}
                   </div>
 
                   {/* Campo 2 */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">2. E-mail Corporativo *</label>
+                    <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider">2. E-mail Corporativo *</label>
                     <input
                       {...register('corporateEmail')}
                       placeholder="voce@empresa.com.br"
-                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      className="w-full h-12 px-4 rounded-xl border border-zinc-800 bg-zinc-900/60 text-white placeholder:text-zinc-500 text-sm focus:outline-none focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all"
                     />
-                    {errors.corporateEmail && <p className="text-xs text-rose-600 font-medium">{errors.corporateEmail.message}</p>}
+                    {errors.corporateEmail && <p className="text-xs text-rose-500 font-medium">{errors.corporateEmail.message}</p>}
                   </div>
 
                   {/* Campo 3 */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">3. WhatsApp / Telefone *</label>
+                    <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider">3. WhatsApp / Telefone *</label>
                     <input
                       {...register('phone')}
                       placeholder="(11) 99999-9999"
-                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      className="w-full h-12 px-4 rounded-xl border border-zinc-800 bg-zinc-900/60 text-white placeholder:text-zinc-500 text-sm focus:outline-none focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all"
                     />
-                    {errors.phone && <p className="text-xs text-rose-600 font-medium">{errors.phone.message}</p>}
+                    {errors.phone && <p className="text-xs text-rose-500 font-medium">{errors.phone.message}</p>}
                   </div>
 
                   <Button
                     type="button"
                     onClick={handleNextStep1}
-                    className="w-full h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2 pt-2"
+                    className="w-full h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-black text-sm tracking-wide rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 pt-1"
                   >
                     <span>Avançar para Dados da Empresa →</span>
                   </Button>
                 </motion.div>
               )}
 
-              {/* STEP 2: DADOS DA EMPRESA (EXATAMENTE 3 CAMPOS) */}
+              {/* STEP 2: DADOS DA EMPRESA (EXATAMENTE 3 CAMPOS — ASIDE DARK GLASS) */}
               {step === 2 && (
-                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 flex flex-col">
+                <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-5 flex flex-col">
                   {/* Campo 1 */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">4. Nome da Empresa *</label>
+                    <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider">4. Nome da Empresa *</label>
                     <input
                       {...register('company')}
                       placeholder="Nome da sua empresa"
-                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      className="w-full h-12 px-4 rounded-xl border border-zinc-800 bg-zinc-900/60 text-white placeholder:text-zinc-500 text-sm focus:outline-none focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all"
                     />
-                    {errors.company && <p className="text-xs text-rose-600 font-medium">{errors.company.message}</p>}
+                    {errors.company && <p className="text-xs text-rose-500 font-medium">{errors.company.message}</p>}
                   </div>
 
                   {/* Campo 2 */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">5. Cidade / Estado *</label>
+                    <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider">5. Cidade / Estado *</label>
                     <input
                       {...register('city')}
                       placeholder="Ex: São Paulo / SP"
-                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      className="w-full h-12 px-4 rounded-xl border border-zinc-800 bg-zinc-900/60 text-white placeholder:text-zinc-500 text-sm focus:outline-none focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all"
                     />
-                    {errors.city && <p className="text-xs text-rose-600 font-medium">{errors.city.message}</p>}
+                    {errors.city && <p className="text-xs text-rose-500 font-medium">{errors.city.message}</p>}
                   </div>
 
                   {/* Campo 3 */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">6. Seu Cargo ou Função *</label>
+                    <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider">6. Seu Cargo ou Função *</label>
                     <input
                       {...register('role')}
                       placeholder="Ex: Founder, CTO, VP of Product, Head de RevOps"
-                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      className="w-full h-12 px-4 rounded-xl border border-zinc-800 bg-zinc-900/60 text-white placeholder:text-zinc-500 text-sm focus:outline-none focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all"
                     />
-                    {errors.role && <p className="text-xs text-rose-600 font-medium">{errors.role.message}</p>}
+                    {errors.role && <p className="text-xs text-rose-500 font-medium">{errors.role.message}</p>}
                   </div>
 
                   <div className="flex items-center gap-4 pt-2">
@@ -398,14 +401,14 @@ export default function ClaudePartnerNetworkPage() {
                       type="button"
                       variant="outline"
                       onClick={handlePrevStep}
-                      className="w-1/3 h-12 border border-zinc-300 font-bold text-sm text-zinc-700 hover:bg-zinc-100"
+                      className="w-1/3 h-12 border border-zinc-800 bg-zinc-900/40 font-bold text-sm text-zinc-300 hover:bg-zinc-900 hover:text-white rounded-xl"
                     >
                       ← Voltar
                     </Button>
                     <Button
                       type="button"
                       onClick={handleNextStep2}
-                      className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
+                      className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-black text-sm tracking-wide rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
                     >
                       <span>Avançar para Perfil & Ativação →</span>
                     </Button>
@@ -413,87 +416,87 @@ export default function ClaudePartnerNetworkPage() {
                 </motion.div>
               )}
 
-              {/* STEP 3: PERFIL & ATIVAÇÃO (EXATAMENTE 3 ITENS) */}
+              {/* STEP 3: PERFIL & ATIVAÇÃO (EXATAMENTE 3 ITENS — ASIDE DARK GLASS) */}
               {step === 3 && (
-                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 flex flex-col">
+                <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-5 flex flex-col">
                   {/* Item 1 */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">7. Tamanho da Empresa / Ops *</label>
+                    <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider">7. Tamanho da Empresa / Ops *</label>
                     <select
                       {...register('companySize')}
-                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      className="w-full h-12 px-4 rounded-xl border border-zinc-800 bg-zinc-900/60 text-white text-sm focus:outline-none focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all"
                     >
-                      <option value="">Selecione o tamanho</option>
-                      <option value="1-10">1 a 10 colaboradores</option>
-                      <option value="11-50">11 a 50 colaboradores</option>
-                      <option value="51-200">51 a 200 colaboradores</option>
-                      <option value="201-500">201 a 500 colaboradores</option>
-                      <option value="500+">Mais de 500 colaboradores</option>
+                      <option value="" className="bg-zinc-900 text-zinc-300">Selecione o tamanho</option>
+                      <option value="1-10" className="bg-zinc-900 text-zinc-300">1 a 10 colaboradores</option>
+                      <option value="11-50" className="bg-zinc-900 text-zinc-300">11 a 50 colaboradores</option>
+                      <option value="51-200" className="bg-zinc-900 text-zinc-300">51 a 200 colaboradores</option>
+                      <option value="201-500" className="bg-zinc-900 text-zinc-300">201 a 500 colaboradores</option>
+                      <option value="500+" className="bg-zinc-900 text-zinc-300">Mais de 500 colaboradores</option>
                     </select>
-                    {errors.companySize && <p className="text-xs text-rose-600 font-medium">{errors.companySize.message}</p>}
+                    {errors.companySize && <p className="text-xs text-rose-500 font-medium">{errors.companySize.message}</p>}
                   </div>
 
                   {/* Item 2 */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">8. Segmento da Empresa *</label>
+                    <label className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-wider">8. Segmento da Empresa *</label>
                     <select
                       {...register('segment')}
-                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      className="w-full h-12 px-4 rounded-xl border border-zinc-800 bg-zinc-900/60 text-white text-sm focus:outline-none focus:border-[#00CC6A] focus:ring-1 focus:ring-[#00CC6A] transition-all"
                     >
-                      <option value="">Selecione o segmento</option>
-                      <option value="SaaS">SaaS</option>
-                      <option value="Software house">Software house</option>
-                      <option value="Cibersegurança">Cibersegurança</option>
-                      <option value="Automação">Automação</option>
-                      <option value="RevOps">RevOps</option>
-                      <option value="Produto">Produto</option>
-                      <option value="Growth">Growth</option>
-                      <option value="CS">CS</option>
-                      <option value="Desenvolvimento">Desenvolvimento</option>
-                      <option value="Outro">Outro Segmento B2B</option>
+                      <option value="" className="bg-zinc-900 text-zinc-300">Selecione o segmento</option>
+                      <option value="SaaS" className="bg-zinc-900 text-zinc-300">SaaS</option>
+                      <option value="Software house" className="bg-zinc-900 text-zinc-300">Software house</option>
+                      <option value="Cibersegurança" className="bg-zinc-900 text-zinc-300">Cibersegurança</option>
+                      <option value="Automação" className="bg-zinc-900 text-zinc-300">Automação</option>
+                      <option value="RevOps" className="bg-zinc-900 text-zinc-300">RevOps</option>
+                      <option value="Produto" className="bg-zinc-900 text-zinc-300">Produto</option>
+                      <option value="Growth" className="bg-zinc-900 text-zinc-300">Growth</option>
+                      <option value="CS" className="bg-zinc-900 text-zinc-300">CS</option>
+                      <option value="Desenvolvimento" className="bg-zinc-900 text-zinc-300">Desenvolvimento</option>
+                      <option value="Outro" className="bg-zinc-900 text-zinc-300">Outro Segmento B2B</option>
                     </select>
-                    {errors.segment && <p className="text-xs text-rose-600 font-medium">{errors.segment.message}</p>}
+                    {errors.segment && <p className="text-xs text-rose-500 font-medium">{errors.segment.message}</p>}
                   </div>
 
                   {selectedSegment === 'Outro' && (
-                    <div className="p-4 rounded-xl bg-white border border-[#00CC6A]/40 shadow-xs space-y-2 transition-all">
-                      <label className="text-xs font-bold text-zinc-900 block">
+                    <div className="p-4 rounded-xl bg-zinc-900/80 border border-[#00CC6A]/40 space-y-2 transition-all">
+                      <label className="text-xs font-mono font-bold text-white block">
                         Especificar Segmento da Empresa *
                       </label>
                       <input
                         {...register('otherSegment')}
                         placeholder="Qual o segmento específico da sua empresa?"
-                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-800 bg-black text-white text-sm focus:outline-none focus:border-[#00CC6A]"
                       />
-                      {errors.otherSegment && <p className="text-xs text-rose-600 font-medium">{errors.otherSegment.message}</p>}
+                      {errors.otherSegment && <p className="text-xs text-rose-500 font-medium">{errors.otherSegment.message}</p>}
                     </div>
                   )}
 
                   {/* Item 3 */}
-                  <div className="pt-2 border-t border-zinc-200 space-y-3">
+                  <div className="pt-3 border-t border-zinc-900 space-y-3">
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
                         type="checkbox"
                         {...register('confirmAvailability')}
-                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
+                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-800 bg-zinc-900 focus:ring-[#00CC6A]"
                       />
-                      <span className="text-xs text-zinc-700 font-medium leading-normal">
+                      <span className="text-xs text-zinc-400 font-medium leading-normal">
                         Confirmo disponibilidade para acompanhar a trilha de execução *
                       </span>
                     </label>
-                    {errors.confirmAvailability && <p className="text-xs text-rose-600 font-medium">{errors.confirmAvailability.message}</p>}
+                    {errors.confirmAvailability && <p className="text-xs text-rose-500 font-medium">{errors.confirmAvailability.message}</p>}
 
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
                         type="checkbox"
                         {...register('agreeTerms')}
-                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
+                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-800 bg-zinc-900 focus:ring-[#00CC6A]"
                       />
-                      <span className="text-xs text-zinc-700 font-medium leading-normal">
+                      <span className="text-xs text-zinc-400 font-medium leading-normal">
                         Concordo com as regras do jogo e termos do Claude Partner Network *
                       </span>
                     </label>
-                    {errors.agreeTerms && <p className="text-xs text-rose-600 font-medium">{errors.agreeTerms.message}</p>}
+                    {errors.agreeTerms && <p className="text-xs text-rose-500 font-medium">{errors.agreeTerms.message}</p>}
                   </div>
 
                   {/* CTA Final */}
@@ -502,14 +505,14 @@ export default function ClaudePartnerNetworkPage() {
                       type="button"
                       variant="outline"
                       onClick={handlePrevStep}
-                      className="w-1/3 h-12 border border-zinc-300 font-bold text-sm text-zinc-700 hover:bg-zinc-100"
+                      className="w-1/3 h-12 border border-zinc-800 bg-zinc-900/40 font-bold text-sm text-zinc-300 hover:bg-zinc-900 hover:text-white rounded-xl"
                     >
                       ← Voltar
                     </Button>
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
+                      className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-black text-sm tracking-wide rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
                     >
                       {isSubmitting ? (
                         <>
