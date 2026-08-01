@@ -164,7 +164,7 @@ export default function ClaudePartnerNetworkPage() {
             transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
             className="font-sans text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-3xl"
           >
-            Você foi selecionado para o <span className="text-[#00CC6A]">Claude Partner Network</span>.
+            Você foi selecionado para o <span className="text-[#00CC6A]">Claude Partner Network</span> & RevHackers.
           </motion.h1>
 
           {/* Subheadline */}
@@ -174,7 +174,7 @@ export default function ClaudePartnerNetworkPage() {
             transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
             className="text-zinc-300 text-base md:text-xl font-medium leading-relaxed max-w-2xl mx-auto text-center"
           >
-            Aqui é o ambiente onde você vai aprender o Claude de verdade. Se dedique — com certeza você colherá bons frutos disso.
+            Aqui é o ambiente onde você vai aprender o Claude de verdade. Dedique-se e com certeza você colherá bons frutos disso.
           </motion.p>
 
           <motion.div
