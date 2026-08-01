@@ -27,7 +27,7 @@ const CardLogo = ({ logo, title, scale }: { logo?: string; title: string; scale?
       src={logo}
       alt={title}
       onError={() => setFailed(true)}
-      className="max-w-[170px] max-h-[75px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+      className="max-w-[220px] max-h-[90px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
       style={{
         transform: scale ? `scale(${scale})` : 'scale(1.0)',
       }}
