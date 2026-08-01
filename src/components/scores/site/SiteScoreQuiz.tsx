@@ -1,39 +1,73 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { DiagnosticLayout } from '@/components/diagnostics/DiagnosticLayout';
-import { fadeInSlideUp } from './SiteScoreAnimations';
+import { QuestionProgressBar } from '@/components/diagnostics/QuestionProgressBar';
+import { ArrowRight } from 'lucide-react';
 
 export const QUESTIONS = [
   {
     id: 1,
-    question: "Velocidade de Carregamento (Percepção do Usuário)",
-    log: "Mais de 50% dos usuários B2B abandonam sites que demoram mais de 3 segundos para carregar o conteúdo principal.",
+    question: "Qual é a velocidade percebida e tempo de carregamento da sua página comercial principal?",
+    log: "Mais de 53% dos tomadores de decisão B2B abandonam páginas que demoram mais de 3 segundos para carregar.",
     options: [
-      { label: "Quase instantâneo. Sem tempo de tela preta/branca.", score: 34 },
-      { label: "Demora alguns segundos para renderizar completamente.", score: 15 },
-      { label: "Muito lento. Às vezes o usuário precisa atualizar a página.", score: 5 },
-      { label: "Carregamento instável ou frequentemente quebrado.", score: 0 }
+      { label: "Carregamento instantâneo (< 1.5s), Core Web Vitals no verde no Google PageSpeed", score: 20 },
+      { label: "Carrega bem no Desktop, mas tem lentidão perceptível no dispositivo móvel", score: 10 },
+      { label: "Demora entre 3 a 5 segundos com travamentos de elementos visuais", score: 5 },
+      { label: "Muito lento (> 5s). Imagens pesadas e scripts travando a renderização", score: 0 }
     ]
   },
   {
     id: 2,
-    question: "Otimização para Dispositivos Móveis (Mobile First)",
-    log: "A maioria das pesquisas de descoberta B2B agora ocorre via celular. Um site engessado afugenta tomadores de decisão.",
+    question: "Como está a experiência do seu site em dispositivos móveis (Mobile First)?",
+    log: "Mais de 65% das pesquisas de descoberta B2B ocorrem via celular. Um site engessado no mobile destrói a conversão.",
     options: [
-      { label: "Experiência perfeita. Design fluido, botões acessíveis e navegação fácil no celular.", score: 33 },
-      { label: "Responsivo, mas o texto fica pequeno e alguns elementos quebram.", score: 15 },
-      { label: "Difícil de usar. O usuário precisa dar zoom para ler.", score: 5 },
-      { label: "Versão Desktop encolhida na tela do celular.", score: 0 }
+      { label: "100% responsivo, navegabilidade fluida e CTAs acessíveis com o polegar", score: 20 },
+      { label: "Responsivo, mas textos ficam pequenos ou menus sanfonados falham", score: 10 },
+      { label: "Difícil de navegar no celular. O usuário precisa dar zoom para ler propostas", score: 5 },
+      { label: "Layout encolhido de desktop na tela do celular", score: 0 }
     ]
   },
   {
     id: 3,
-    question: "Rastreamento e Governança de Dados (Analytics & Pixels)",
-    log: "Falta de rastreamento cega sua operação de marketing, impedindo a mensuração de ROI.",
+    question: "Qual é a clareza da proposta de valor acima da dobra (Hero Section)?",
+    log: "O visitante leva 3 segundos para decidir se permanece ou fecha a aba do seu site.",
     options: [
-      { label: "GTM implementado, tags disparando corretamente sem duplicidade e compliance LGPD/GDPR.", score: 33 },
-      { label: "Tags instaladas, mas com incerteza sobre a precisão dos dados recebidos.", score: 15 },
-      { label: "Apenas Google Analytics cru. Pixel do Meta sem configuração avançada.", score: 5 },
-      { label: "Não fazemos rastreio inteligente do tráfego.", score: 0 }
+      { label: "Headline ultra-clara com dor específica do cliente B2B + CTA primário de alta conversão", score: 20 },
+      { label: "Título genérico (ex: 'Transformamos seu negócio') que não explica o que fazemos exatamente", score: 10 },
+      { label: "Texto técnico demais ou focado apenas no produto, e não no problema do cliente", score: 5 },
+      { label: "Sem proposta clara de valor. Apresenta apenas institucional vago", score: 0 }
+    ]
+  },
+  {
+    id: 4,
+    question: "Como está estruturada a sua infraestrutura de rastreamento e analytics (Pixels & GTM)?",
+    log: "Falta de rastreamento de conversão cega os algoritmos de mídia paga e invalida o ROI de tráfego.",
+    options: [
+      { label: "Google Tag Manager configurado, API de Conversão (Meta/LinkedIn) e eventos de Lead ativos", score: 20 },
+      { label: "Pixels básicos instalados, mas sem mensurar cliques em botões ou formulários enviados", score: 10 },
+      { label: "Apenas Google Analytics padrão sem configuração de metas de conversão", score: 5 },
+      { label: "Não temos pixels de rastreamento nem governança de dados", score: 0 }
+    ]
+  },
+  {
+    id: 5,
+    question: "Qual é a fricção do seu formulário de captura e mecanismo de conversão?",
+    log: "Formulários longos e sem microcopy persuasiva reduzem drasticamente o volume de MQLs.",
+    options: [
+      { label: "Formulário curto com validação em tempo real, CNPJ enriquecido e confirmação instantânea", score: 20 },
+      { label: "Formulário funcional, mas pede muitos campos desnecessários no primeiro contato", score: 10 },
+      { label: "Apenas link direto para WhatsApp sem captura prévia de dados no formulário", score: 5 },
+      { label: "Formulário quebra ou envia dados para email genérico (contato@empresa.com)", score: 0 }
+    ]
+  },
+  {
+    id: 6,
+    question: "O seu site possui prova social B2B e depoimentos de empresas relevantes?",
+    log: "Sem prova social de clientes reais, a taxa de conversão em vendas B2B cai até 70%.",
+    options: [
+      { label: "Logos de grandes empresas, cases com métricas auditadas e depoimentos de executivos", score: 20 },
+      { label: "Alguns logos de clientes, mas sem cases detalhados ou depoimentos com foto/cargo", score: 10 },
+      { label: "Depoimentos genéricos sem nome da empresa ou identificação do autor", score: 5 },
+      { label: "Sem nenhuma prova social ou logos de clientes", score: 0 }
     ]
   }
 ];
@@ -47,64 +81,81 @@ interface SiteScoreQuizProps {
 
 export const SiteScoreQuiz = ({ currentQ, selectedOption, showLog, onAnswer }: SiteScoreQuizProps) => {
   const question = QUESTIONS[currentQ];
-  
-  return (
-    <DiagnosticLayout title="Diagnóstico Site" subtitle="Em análise" variant="light" centered={true} hideHeader={false} headerVariant="default">
-      <div className="max-w-3xl mx-auto flex flex-col items-center w-full min-h-[60vh] justify-center px-4 md:px-0">
-        <div className="w-full flex items-center justify-between mb-8 border-b border-zinc-100 pb-2">
-          <div className="flex items-center gap-3">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            <span className="text-xs font-sans font-medium text-zinc-500 ">Protocolo de Diagnóstico</span>
-          </div>
-          <span className="text-xs font-sans font-medium text-zinc-500">0{currentQ + 1} / 0{QUESTIONS.length}</span>
-        </div>
 
-        <div className="w-full animate-fade-in flex flex-col items-center relative">
+  return (
+    <DiagnosticLayout 
+      title="Diagnóstico de Site & Landing Page" 
+      subtitle="Auditoria de CRO e Performance" 
+      variant="light" 
+      centered={true}
+    >
+      <div className="max-w-3xl mx-auto w-full py-6 md:py-10 px-4 md:px-0">
+        <QuestionProgressBar currentStep={currentQ + 1} totalSteps={QUESTIONS.length} />
+
+        <div className="bg-white border border-zinc-200/80 rounded-2xl p-8 md:p-12 shadow-xs mt-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentQ}
-              {...fadeInSlideUp}
-              className="w-full flex flex-col items-center space-y-6"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25 }}
+              className="space-y-8"
             >
-              <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black leading-tight text-center max-w-2xl">
+              <h2 className="text-2xl md:text-3xl font-extrabold text-zinc-950 tracking-tight leading-snug">
                 {question.question}
               </h2>
 
-              <div className="grid grid-cols-1 gap-3 w-full max-w-xl">
-                {question.options.map((opt, idx) => (
-                  <button
-                    key={idx}
-                    disabled={selectedOption !== null}
-                    onClick={() => onAnswer(opt.score, idx)}
-                    className={`group relative flex items-center gap-5 p-5 text-left transition-all duration-300 border ${
-                      selectedOption === idx
-                        ? "bg-white text-zinc-900 border-zinc-200 scale-[1.01]"
-                        : "bg-white border-zinc-200 text-zinc-900 hover:border-zinc-400 hover:bg-zinc-50"
-                    } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
-                  >
-                    <div className={`w-6 h-6 flex items-center justify-center text-xs font-sans font-bold border rounded transition-colors ${
-                      selectedOption === idx
-                        ? "bg-white text-zinc-900 border-white"
-                        : "bg-zinc-100 border-zinc-200 text-zinc-500 group-hover:border-zinc-400 group-hover:text-zinc-900"
-                    }`}>
-                      {String.fromCharCode(65 + idx)}
-                    </div>
-                    <span className="text-sm font-medium">
-                      {opt.label}
-                    </span>
-                  </button>
-                ))}
+              <div className="grid grid-cols-1 gap-3.5 w-full">
+                {question.options.map((opt, idx) => {
+                  const letter = String.fromCharCode(65 + idx);
+                  const isSelected = selectedOption === idx;
+
+                  return (
+                    <button
+                      key={idx}
+                      disabled={selectedOption !== null}
+                      onClick={() => onAnswer(opt.score, idx)}
+                      className={`group relative flex items-center justify-between p-5 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
+                        isSelected
+                          ? "border-[#00CC6A] bg-[#00CC6A]/10 shadow-sm ring-1 ring-[#00CC6A]"
+                          : "border-zinc-200/90 bg-zinc-50/50 hover:bg-zinc-100/70 hover:border-zinc-300 text-zinc-900"
+                      } ${selectedOption !== null && !isSelected ? "opacity-50" : "opacity-100"}`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                          isSelected
+                            ? "bg-[#00CC6A] text-zinc-950"
+                            : "bg-zinc-200/80 text-zinc-700 group-hover:bg-zinc-300"
+                        }`}>
+                          {letter}
+                        </span>
+                        <span className="text-sm md:text-base font-semibold text-zinc-900 leading-snug">
+                          {opt.label}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors ml-4 shrink-0">
+                        <span className="text-xs font-bold uppercase tracking-wider hidden sm:inline">{letter}</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
 
               <AnimatePresence>
                 {showLog && (
                   <motion.div
-                    {...fadeInSlideUp}
-                    className="absolute -bottom-32 left-0 right-0 mx-auto w-full max-w-xl text-center"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="overflow-hidden pt-2"
                   >
-                    <p className="text-xs font-medium text-zinc-500 bg-zinc-50 px-4 py-2 inline-block border border-zinc-100">
-                      <span className="text-black font-bold mr-2">Info:</span>{question.log}
-                    </p>
+                    <div className="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 text-xs font-medium leading-relaxed flex items-start gap-2.5">
+                      <span className="shrink-0 font-bold">💡 Insights:</span>
+                      <span>{question.log}</span>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
