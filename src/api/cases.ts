@@ -67,7 +67,7 @@ const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
         scale: 1.6
     },
     'Funnels': {
-        logo: '/uploads/e468ed87-3eee-496b-bb1a-3525f02f8429.png',
+        logo: '/uploads/funnels-official-logo.webp',
         scale: 1.5
     },
     'PlacLux': {

@@ -6,7 +6,7 @@ const partners = [
   { name: "Lindoya", logo: "/uploads/lindoya-logo.png", scale: 1.3 },
   { name: "FMU", logo: "/uploads/e0d3d03b-c1d5-4a6e-9a61-3a1c2a707b5f.png", scale: 1.4 },
   { name: "Anhembi Morumbi", logo: "/uploads/f5e74a47-fc77-4b34-970e-e839080310fd.png", scale: 1.8 },
-  { name: "Cruzeiro do Sul", logo: "/uploads/cruzeiro-site-dark.svg", scale: 1.8 },
+  { name: "Cruzeiro do Sul", logo: "/uploads/cruzeiro-site-dark.svg", scale: 1.25 },
   { name: "Agence", logo: "/uploads/6c09375e-5298-4672-9226-27eb60a6b038.png", scale: 1.3 },
   { name: "BLDN", logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c77062fe4f1854fadf797.svg", scale: 1.3 },
   { name: "Idee Seguros", logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c73dcdda192452a508485.png", scale: 1.4 },
@@ -15,7 +15,7 @@ const partners = [
   { name: "Tegra", logo: "/uploads/tegra-logo-new.png", scale: 1.6 },
   { name: "Tikpag", logo: "/uploads/tikpag-logo-final.png", scale: 1.6 },
   { name: "Placlux", logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c76cfe889d38ced51667d.png", scale: 1.3 },
-  { name: "Funnels", logo: "/uploads/e468ed87-3eee-496b-bb1a-3525f02f8429.png", scale: 1.3 },
+  { name: "Funnels", logo: "/uploads/funnels-official-logo.webp", scale: 1.3 },
   { name: "ENICS", logo: "/uploads/a05718ad-1822-4102-909a-7e86af151e98.png", scale: 1.4 }
 ];
 

@@ -211,9 +211,9 @@ const FounderScore = () => {
       >
         {step === 'results' && <div className="fixed inset-0 bg-white -z-50 pointer-events-none" />}
         {step === 'questions' && (
-          <div className="w-full max-w-3xl mx-auto space-y-6">
-            <div className="bg-white border border-zinc-200/90 rounded-2xl shadow-xl p-6 sm:p-10 space-y-8 relative overflow-hidden backdrop-blur-xl">
-              <div className="space-y-4">
+          <div className="w-full max-w-3xl mx-auto space-y-4">
+            <div className="bg-white border border-zinc-200/90 rounded-2xl shadow-xl p-5 sm:p-7 space-y-5 relative overflow-hidden backdrop-blur-xl">
+              <div>
                 <QuestionProgressBar current={currentQ} total={QUESTIONS.length} variant="light" />
               </div>
 
@@ -223,14 +223,14 @@ const FounderScore = () => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="space-y-6"
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="space-y-4"
                 >
-                  <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 leading-snug">
+                  <h2 className="text-lg sm:text-xl font-bold text-zinc-900 leading-snug">
                     {currentQData.question}
                   </h2>
 
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="grid grid-cols-1 gap-2.5">
                     {currentQData.options.map((opt, idx) => {
                       const letter = String.fromCharCode(65 + idx);
                       const isSelected = selectedOption === idx;
@@ -240,28 +240,28 @@ const FounderScore = () => {
                           key={idx}
                           disabled={selectedOption !== null}
                           onClick={() => handleAnswer(opt.score, idx)}
-                          className={`group relative flex items-center justify-between p-4 sm:p-5 text-left transition-all duration-200 border rounded-xl shadow-xs cursor-pointer ${
+                          className={`group relative flex items-center justify-between p-3 sm:p-3.5 text-left transition-all duration-200 border rounded-xl shadow-xs cursor-pointer ${
                             isSelected
                               ? "bg-white text-zinc-900 border-zinc-950 ring-2 ring-[#00CC6A]"
                               : "bg-white border-zinc-200/80 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/50"
                           } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
                         >
-                          <div className="flex items-center gap-4">
-                            <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center text-xs font-sans font-bold rounded-lg border transition-colors ${
+                          <div className="flex items-center gap-3">
+                            <div className={`w-7 h-7 flex-shrink-0 flex items-center justify-center text-xs font-sans font-bold rounded-lg border transition-colors ${
                               isSelected
                                 ? "bg-[#00CC6A] text-black border-[#00CC6A]"
                                 : "bg-zinc-100 border-zinc-200 text-zinc-600 group-hover:border-zinc-300 group-hover:text-zinc-900"
                             }`}>
                               {letter}
                             </div>
-                            <span className="text-xs md:text-sm font-medium leading-relaxed">
+                            <span className="text-xs sm:text-sm font-medium leading-normal">
                               {opt.label}
                             </span>
                           </div>
 
-                          <div className="flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors ml-4 shrink-0">
-                            <span className="text-xs font-bold uppercase tracking-wider hidden sm:inline">{letter}</span>
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          <div className="flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors ml-3 shrink-0">
+                            <span className="text-[10px] font-bold uppercase tracking-wider hidden sm:inline">{letter}</span>
+                            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                           </div>
                         </button>
                       );
@@ -269,7 +269,7 @@ const FounderScore = () => {
                   </div>
 
                   {showLog && currentQData.log && (
-                    <div className="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 text-xs font-medium leading-relaxed flex items-start gap-2.5">
+                    <div className="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 text-xs font-medium leading-relaxed flex items-start gap-2">
                       <span className="shrink-0 font-bold">💡 Insight:</span>
                       <span>{currentQData.log}</span>
                     </div>
@@ -277,7 +277,7 @@ const FounderScore = () => {
                 </motion.div>
               </AnimatePresence>
 
-              <div className="flex items-center justify-between pt-6 border-t border-zinc-100 text-[11px] text-zinc-400 font-medium">
+              <div className="flex items-center justify-between pt-4 border-t border-zinc-100 text-[11px] text-zinc-400 font-medium">
                 <span className="flex items-center gap-1.5">
                   <Command className="w-3 h-3" /> Pressione <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">A</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">B</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">C</kbd> ou <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">D</kbd> para responder
                 </span>
@@ -285,7 +285,7 @@ const FounderScore = () => {
               </div>
             </div>
           </div>
- )}
+        )}
 
  {step === 'results' && (
     <>

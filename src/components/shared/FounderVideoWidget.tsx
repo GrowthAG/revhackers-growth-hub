@@ -84,18 +84,20 @@ const FounderVideoWidget = () => {
     }
 
     return [
-      { sender: 'ai', text: 'Fala! Giulliano aqui, fundador da RevHackers.', timestamp: 'Agora' },
-      { sender: 'ai', text: 'Antes de comecarmos nossa conversa tecnica, digite seu e-mail corporativo para liberar o chat ao vivo:', timestamp: 'Agora' }
+      { sender: 'ai', text: 'Fala! Sou o Giulliano, fundador da RevHackers.', timestamp: 'Agora' },
+      { sender: 'ai', text: 'Me conta: qual e o maior desafio ou gargalo da sua empresa hoje para gerar demanda e escalar vendas B2B?', timestamp: 'Agora' }
     ];
   };
 
   const [messages, setMessages] = useState<Message[]>(() => getContextualMessages(location.pathname));
+  const [conversationalStep, setConversationalStep] = useState<number>(0);
 
   // Automatically close modal and update context when user navigates to another page
   useEffect(() => {
     setIsOpen(false);
     if (!emailCaptured) {
       setMessages(getContextualMessages(location.pathname));
+      setConversationalStep(0);
     }
   }, [location.pathname]);
 
@@ -155,7 +157,7 @@ const FounderVideoWidget = () => {
         { sender: 'user', text: email, timestamp: 'Agora' },
         {
           sender: 'ai',
-          text: `E-mail registrado no nosso CRM! Como posso ajudar sua operacao B2B com GTM Engineering hoje?`,
+          text: `Perfeito, e-mail registrado com sucesso! Como posso te ajudar a aprofundar sua estratégia de GTM hoje?`,
           timestamp: 'Agora'
         }
       ]);
@@ -170,7 +172,6 @@ const FounderVideoWidget = () => {
     const text = textToSend || inputText;
     if (!text.trim()) return;
 
-    // Hide pills when user sends a message
     setShowPills(false);
 
     const userMsg: Message = { sender: 'user', text, timestamp: 'Agora' };
@@ -180,102 +181,34 @@ const FounderVideoWidget = () => {
     setLoading(true);
     setIsTyping(true);
 
-    // Humanized Typing Delay Simulation (1.8s to 2.2s)
     setTimeout(() => {
-      let aiReply = "Fala! Giulliano aqui. Nossa Engenharia de GTM conecta Midia Paga (Google, Meta e LinkedIn Ads) diretamente ao seu CRM com funis de alta conversao. Quer agendar uma auditoria tecnica de 30 minutos pra ver na pratica?";
-      
-      const lower = text.toLowerCase().trim();
-      const utmParams = { ...getPersistedUtmParams(), ...captureUtmParams() };
+      let aiReply = "";
 
-      // 0. AI Extraction: Detect LinkedIn URL or Profile
-      const linkedinMatch = text.match(/(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+/i);
-      if (linkedinMatch || lower.includes('linkedin.com')) {
-        const detectedLinkedin = linkedinMatch ? linkedinMatch[0] : text.trim();
-        setExtractedData(prev => ({ ...prev, linkedin: detectedLinkedin }));
-        
-        // Background CRM Sync
-        if (email) {
-          sendToGHL({
-            email,
-            customFields: { linkedin: detectedLinkedin, ...utmParams },
-            tags: ['ai_chat_linkedin_captured', 'gtm_engineering']
-          }, 'lead_capture').catch(() => {});
+      if (!emailCaptured) {
+        if (conversationalStep === 0) {
+          aiReply = "Entendi perfeitamente! Esse e o gargalo classico de aquisicao B2B. Na RevHackers nos instalamos a arquitetura de GTM no seu CRM para conectar Midia Paga e Automacao em ate 30 dias. Me conta: qual e o segmento da sua empresa e o tamanho da sua equipe comercial?";
+          setConversationalStep(1);
+        } else if (conversationalStep === 1) {
+          aiReply = "Excelente! Tenho um estudo de viabilidade e arquitetura de receita muito alinhado com a sua operacao. Digite seu e-mail corporativo abaixo para salvarmos seu diagnostico e te enviar a analise completa:";
+          setConversationalStep(2);
+        } else {
+          aiReply = "Digite seu e-mail corporativo abaixo para liberar o atendimento consultivo ao vivo:";
         }
-
-        aiReply = "Show! Guardei seu perfil do LinkedIn no nosso CRM. Qual e o principal desafio da sua operacao comercial hoje?";
-      }
-      // 1. AI Extraction: Detect CRM Tool
-      const crmMatch = lower.match(/(hubspot|rd station|pipedrive|salesforce|activecampaign|zoho|bitrix|exact sales|ghl)/i);
-      if (crmMatch) {
-        const detectedCrm = crmMatch[0].toUpperCase();
-        setExtractedData(prev => ({ ...prev, crm: detectedCrm }));
-        
-        // Background CRM Sync
-        if (email) {
-          sendToGHL({
-            email,
-            customFields: { crm_atual: detectedCrm, ...utmParams },
-            tags: ['ai_chat_crm_captured', 'gtm_engineering']
-          }, 'lead_capture').catch(() => {});
+      } else {
+        const lower = text.toLowerCase().trim();
+        if (lower.includes('como funciona') || lower.includes('o que voces fazem')) {
+          aiReply = "Nossa Engenharia de GTM instala 4 motores acionaveis na sua empresa em 30 dias: 1. Midia Paga B2B, 2. Funis de Agendamento, 3. Arquitetura de CRM e 4. Automacao Comercial.";
+        } else if (lower.includes('case') || lower.includes('resultado') || lower.includes('heineken') || lower.includes('wysion')) {
+          aiReply = "Na Wysion geramos 1.000+ reunioes qualificadas em software B2B, e na Heineken aumentamos o sell-out em 30%. Qual e o foco da sua empresa hoje?";
+        } else {
+          aiReply = "Excelente ponto! Voce tambem pode agendar uma sessao de 30 minutos direto na nossa agenda corporativa em /booking para ver os motores rodando na pratica.";
         }
-
-        aiReply = `Perfeito! O ${detectedCrm} e excelente quando integrado a nossa Engenharia de GTM. Conseguimos instalar automacoes de qualificacao com IA e roteamento inteligente diretamente nele. Qual e o nome da sua empresa?`;
-      } 
-      // 2. AI Extraction: Detect Company Name or Role
-      else if (lower.includes('empresa') || lower.includes('trabalho na') || lower.includes('sou da') || lower.includes('minha empresa')) {
-        const cleanedCompany = text.replace(/(minha empresa e|sou da|trabalho na|empresa|e a)/gi, '').trim();
-        if (cleanedCompany.length > 1) {
-          setExtractedData(prev => ({ ...prev, company: cleanedCompany }));
-          
-          // Background CRM Sync
-          if (email) {
-            sendToGHL({
-              email,
-              companyName: cleanedCompany,
-              customFields: { ...utmParams },
-              tags: ['ai_chat_company_captured', 'gtm_engineering']
-            }, 'lead_capture').catch(() => {});
-          }
-
-          aiReply = `Excelente! Analisando o modelo da ${cleanedCompany}, o maior ganho costuma vir da aceleracao de pipeline com automacoes entre Midia Paga e CRM. Qual e o seu cargo na empresa hoje?`;
-        }
-      }
-      else if (lower.includes('ceo') || lower.includes('founder') || lower.includes('sócio') || lower.includes('socio') || lower.includes('diretor') || lower.includes('head') || lower.includes('gerente') || lower.includes('coordenador') || lower.includes('vendedor') || lower.includes('sdr')) {
-        const roleMatch = text.trim();
-        setExtractedData(prev => ({ ...prev, role: roleMatch }));
-
-        // Background CRM Sync
-        if (email) {
-          sendToGHL({
-            email,
-            customFields: { cargo: roleMatch, ...utmParams },
-            tags: ['ai_chat_role_captured', 'gtm_engineering']
-          }, 'lead_capture').catch(() => {});
-        }
-
-        aiReply = `Otimo falar com quem esta no comando da operacao! O GTM Engineering e exatamente desenhado para lideres que precisam de previsibilidade de receita e ROI acelerado. Quer agendar nossa Auditoria de Vazamento de Receita de 30 min em /booking?`;
-      }
-      // 3. Intent Matching
-      else if (lower.includes('nome') || lower.includes('quem e') || lower.includes('quem eh') || lower.includes('quem fala') || lower.includes('quem voce')) {
-        aiReply = "Eu sou a IA do Giulliano Alves, fundador da RevHackers. Posso te ajudar a entender nossa Engenharia de GTM ou agendar uma auditoria tecnica de receita de 30 min. Como posso ajudar sua empresa hoje?";
-      } else if (lower.includes('ola') || lower.includes('oi') || lower.includes('bom dia') || lower.includes('boa tarde') || lower.includes('boa noite') || lower.includes('tudo bem')) {
-        aiReply = "Fala! Tudo otimo por aqui. Como posso ajudar sua operacao B2B com GTM Engineering hoje?";
-      } else if (lower.includes('como funciona') || lower.includes('o que voces fazem') || lower.includes('como eh')) {
-        aiReply = "Nossa Engenharia de GTM instala 4 motores acionaveis na sua empresa em 30 dias: 1. Midia Paga (Midia Paga & Social Selling), 2. Funis de Agendamento, 3. Arquitetura de CRM e 4. Automacao B2B. Quer ver um exemplo real?";
-      } else if (lower.includes('gtm') || lower.includes('engenharia')) {
-        aiReply = "Boa pergunta! O GTM Engineering substitui aquela consultoria teorica de slides por 4 sistemas instalados na sua operacao: Engenharia de Vendas, Arquitetura de CRM, Automacao B2B e Habilitacao do time comercial em ate 30 dias.";
-      } else if (lower.includes('case') || lower.includes('resultado') || lower.includes('wysion') || lower.includes('heineken')) {
-        aiReply = "Te dar 2 exemplos praticos: na Wysion (Software House), estruturamos a geracao de demanda e geramos 1.000+ reunioes qualificadas. Na Heineken, aumentamos o sell-out em 30%. Qual e o setor da sua empresa?";
-      } else if (lower.includes('custo') || lower.includes('preco') || lower.includes('quanto') || lower.includes('valor')) {
-        aiReply = "Trabalhamos com foco total em ROI acelerado e contrato por marcos de entrega. O caminho padrao que fazemos com todos os clientes e comecar pela Auditoria de Vazamento de Receita de 30 min sem custo.";
-      } else if (lower.includes('agendar') || lower.includes('time') || lower.includes('falar') || lower.includes('reuniao')) {
-        aiReply = "Excelente! Voce pode agendar direto na minha agenda corporativa pelo link /booking. Nosso time tecnico analisa seus gargalos antes da chamada.";
       }
 
       setIsTyping(false);
       setMessages(prev => [...prev, { sender: 'ai', text: aiReply, timestamp: 'Agora' }]);
       setLoading(false);
-    }, 1800);
+    }, 2000);
   };
 
   const topicPills = [
@@ -285,30 +218,7 @@ const FounderVideoWidget = () => {
   ];
 
   const handlePillClickBeforeEmail = (pillText: string) => {
-    if (pillText.includes("Auditoria")) {
-      window.location.href = "/score";
-    } else if (pillText.includes("Cases")) {
-      window.location.href = "/cases";
-    } else if (pillText.includes("Especialista")) {
-      setShowPills(false);
-      setMessages(prev => [
-        ...prev,
-        { sender: 'user', text: pillText, timestamp: 'Agora' }
-      ]);
-      setIsTyping(true);
-
-      setTimeout(() => {
-        setIsTyping(false);
-        setMessages(prev => [
-          ...prev,
-          {
-            sender: 'ai',
-            text: "Excelente! Sou o Giulliano, especialista em Engenharia de GTM. Para iniciarmos nossa conversa técnica e mapear os gargalos da sua operação B2B, digite seu e-mail corporativo abaixo:",
-            timestamp: 'Agora'
-          }
-        ]);
-      }, 1200);
-    }
+    handleSendMessage(pillText);
   };
 
   return (
@@ -436,13 +346,36 @@ const FounderVideoWidget = () => {
             </div>
 
             <div className="p-3 border-t border-zinc-100 bg-white shrink-0 space-y-2">
-              {!emailCaptured ? (
+              {!emailCaptured && conversationalStep < 2 ? (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}
+                  className="flex items-center gap-2"
+                >
+                  <Input
+                    type="text"
+                    placeholder="Responda ou digite sua dúvida aqui..."
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs h-10 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading || !inputText.trim()}
+                    className="h-10 w-10 bg-[#00CC6A] text-black hover:bg-[#00b35e] font-bold rounded-xl flex items-center justify-center transition-all shrink-0 disabled:opacity-50"
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                </form>
+              ) : !emailCaptured && conversationalStep >= 2 ? (
                 <>
                   <form onSubmit={handleEmailSubmit} className="space-y-2">
                     <div className="relative flex items-center">
                       <Input
                         type="email"
-                        placeholder="Digite seu e-mail corporativo..."
+                        placeholder="Digite seu e-mail corporativo para liberar..."
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required

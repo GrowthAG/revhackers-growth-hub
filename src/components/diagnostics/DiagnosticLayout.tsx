@@ -38,15 +38,15 @@ export const DiagnosticLayout = ({
 
      {/* 1. Official Black Hero Header */}
      {!hideHeader && (
-       <section className="bg-black py-16 md:py-24 border-b border-zinc-900 relative overflow-hidden">
-         <div className="max-w-4xl mx-auto px-6 text-center space-y-4 relative z-10">
+       <section className="bg-black py-8 md:py-12 border-b border-zinc-900 relative overflow-hidden">
+         <div className="max-w-4xl mx-auto px-6 text-center space-y-2 relative z-10">
            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
              Diagnóstico Preditivo B2B
            </p>
-           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+           <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-tight">
              {title}
            </h1>
-           <p className="text-sm md:text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed font-normal">
+           <p className="text-xs md:text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed font-normal">
              {subtitle}
            </p>
          </div>
@@ -54,8 +54,8 @@ export const DiagnosticLayout = ({
      )}
 
      {/* 2. Pure White Content Area */}
-     <section className="py-16 md:py-24 bg-white min-h-[60vh]">
-       <div className="max-w-4xl mx-auto px-6 flex flex-col items-center">
+     <section className="py-8 md:py-12 bg-white min-h-[55vh] flex flex-col justify-center">
+       <div className="max-w-4xl mx-auto px-6 flex flex-col items-center w-full">
          <div className={cn(
            "w-full transition-all duration-300",
            hideHeader ? "max-w-5xl" : "max-w-3xl"
@@ -64,8 +64,8 @@ export const DiagnosticLayout = ({
          </div>
 
          {showGovernanceFooter && (
-           <div className="mt-16 text-center w-full max-w-xl mx-auto border-t border-zinc-100 pt-8">
-             <p className="text-xs font-sans text-zinc-400 leading-relaxed font-medium">
+           <div className="mt-8 text-center w-full max-w-xl mx-auto border-t border-zinc-100 pt-6">
+             <p className="text-[11px] font-sans text-zinc-400 leading-relaxed font-medium">
                RevHackers GTM Engineering — Diagnóstico preditivo de receita e maturidade operacional B2B.
              </p>
            </div>
