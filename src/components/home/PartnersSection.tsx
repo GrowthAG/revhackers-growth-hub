@@ -43,7 +43,14 @@ const PartnersSection = () => {
   return (
     <Section variant="light" className="bg-white py-12 md:py-16 overflow-hidden">
       <div className="text-center mb-8">
-        <span className="text-zinc-400 text-xs font-medium tracking-wider">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <img
+            src="/brand/revhackers-wordmark-white.png"
+            alt="RevHackers Logo"
+            className="h-4 w-auto brightness-0"
+          />
+        </div>
+        <span className="text-zinc-500 text-xs font-bold tracking-wider uppercase">
           Empresas que confiam na RevHackers
         </span>
       </div>

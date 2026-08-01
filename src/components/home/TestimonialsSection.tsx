@@ -27,14 +27,21 @@ const TestimonialsSection = () => {
     }));
 
   return (
-    <Section variant="light" className="bg-[#F5F5F7] border-t border-zinc-200 py-32">
+    <Section variant="light" className="bg-white border-t border-zinc-100 py-24 sm:py-32">
       <div className="container-custom">
-        {/* Header - Subtle & Clean */}
-        <div className="text-center mb-20 max-w-2xl mx-auto">
-          <h2 className="text-[10px] font-bold text-zinc-400 uppercase mb-4">
-            Resultados Comprovados
+        {/* Header - Subtle & Clean com Logo da RevHackers */}
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <img
+              src="/brand/revhackers-wordmark-white.png"
+              alt="RevHackers Logo"
+              className="h-4 sm:h-5 w-auto brightness-0"
+            />
+          </div>
+          <h2 className="text-[11px] font-extrabold text-zinc-400 uppercase tracking-widest mb-3">
+            RESULTADOS COMPROVADOS
           </h2>
-          <p className="text-2xl md:text-3xl font-bold text-zinc-900 tracking-tight leading-tight">
+          <p className="text-2xl md:text-3xl font-extrabold text-zinc-950 tracking-tight leading-tight">
             O impacto da nossa metodologia na voz de quem lidera o mercado.
           </p>
         </div>
