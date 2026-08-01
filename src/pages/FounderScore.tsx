@@ -287,309 +287,231 @@ const FounderScore = () => {
  )}
 
  {step === 'results' && (
- <>
- {/* GATE OVERLAY */}
- {!hasSubmittedLead && (
- <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/95 backdrop-blur-sm p-4 overflow-y-auto animate-in fade-in duration-500">
- <div className="bg-white border border-zinc-200 p-8 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 shadow-sm relative overflow-hidden my-auto max-h-[90vh]">
-  {/* Coluna Esquerda: Teaser com Gatilho do CNPJ */}
-  <div className="flex-1 flex flex-col justify-center text-center md:text-left space-y-5 md:border-r border-zinc-200 md:pr-10">
-    <div className="inline-flex items-center gap-2 bg-zinc-50 px-3 py-1 border border-zinc-200 rounded-full w-fit mx-auto md:mx-0">
-      <div className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse"></div>
-      <span className="text-xs font-bold text-zinc-800">Análise Prévia • Score {finalScore}/100</span>
-    </div>
+    <>
+      {!hasSubmittedLead && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/90 backdrop-blur-md p-4 overflow-y-auto animate-in fade-in duration-300">
+          <div className="bg-zinc-900 border border-zinc-800 p-6 md:p-10 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 shadow-2xl rounded-2xl relative overflow-hidden my-auto max-h-[90vh]">
+            {/* Coluna Esquerda: Teaser com Gatilho do CNPJ */}
+            <div className="flex-1 flex flex-col justify-center text-center md:text-left space-y-5 md:border-r border-zinc-800 md:pr-10">
+              <div className="inline-flex items-center gap-2 bg-zinc-800/80 px-3 py-1 border border-zinc-700/80 rounded-full w-fit mx-auto md:mx-0">
+                <div className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse"></div>
+                <span className="text-xs font-bold text-zinc-200">Análise Prévia • Score {finalScore}/100</span>
+              </div>
 
-    <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-950 tracking-tight leading-snug">
-      Quer um Raio-X completo da sua empresa e concorrentes?
-    </h3>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-snug">
+                Quer um Raio-X completo da sua empresa e concorrentes?
+              </h3>
 
-    <p className="text-zinc-600 text-xs sm:text-sm leading-relaxed font-normal">
-      Preencha o formulário ao lado com o CNPJ da sua empresa para liberar o diagnóstico completo. Nosso sistema vai mapear o seu mercado, analisar seus concorrentes e trazer tudo o que eles estão fazendo em um diagnóstico completo para você seguir e implementar.
-    </p>
+              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed font-normal">
+                Preencha o formulário ao lado com o CNPJ da sua empresa para liberar o diagnóstico completo. Nosso sistema vai mapear o seu mercado, analisar seus concorrentes e trazer tudo o que eles estão fazendo em um diagnóstico completo para você seguir e implementar.
+              </p>
 
-    <div className="pt-1 flex flex-col gap-2 text-xs font-semibold text-zinc-500">
-      <div className="flex items-center gap-2">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A] shrink-0" />
-        <span>Mapeamento de mercado & inteligência competitiva</span>
+              <div className="pt-1 flex flex-col gap-2 text-xs font-semibold text-zinc-400">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A] shrink-0" />
+                  <span>Mapeamento de mercado & inteligência competitiva</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A] shrink-0" />
+                  <span>Preenchimento rápido via CNPJ da Empresa (Opcional)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Coluna Direita: Formulário */}
+            <div className="flex-1 w-full max-w-md flex flex-col justify-center">
+              <DiagnosticForm
+                onSubmit={handleFormSubmit}
+                isSubmitting={isSubmitting}
+                title="Liberar Diagnóstico"
+                subtitle="Score Blended: Respostas + Autoridade Founder."
+                variant="dark"
+                showLinkedin={false}
+                diagnosticType="Founder"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={`space-y-12 transition-all duration-500 ${!hasSubmittedLead ? 'blur-md opacity-30 pointer-events-none' : ''}`}>
+
+        {/* DASHBOARD HEADLINE */}
+        <div className="text-center animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-4xl mx-auto pt-4">
+          <div className="inline-flex items-center gap-2 mb-3 bg-zinc-900 border border-zinc-800 px-3 py-1 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse"></span>
+            <span className="text-xs font-bold text-zinc-300">Status: Auditoria Concluída</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-2 tracking-tight">
+            Diagnóstico <span className="text-[#00CC6A]">Founder & Autoridade</span>
+          </h1>
+          <p className="text-zinc-400 font-medium text-sm md:text-base max-w-xl mx-auto">
+            Análise de posicionamento estratégico, autoridade digital e capacidade de descentralização.
+          </p>
+        </div>
+
+        {/* TOP SCORE & AI ARCHEETYPE GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto">
+          <div className="lg:col-span-4 flex">
+            <ScoreGauge
+              score={finalScore}
+              label="Founder Authority"
+              description="Índice de autoridade e liberdade operacional."
+            />
+          </div>
+
+          <div className="lg:col-span-8 flex flex-col justify-center bg-zinc-900/90 border border-zinc-800/90 rounded-2xl p-6 md:p-8 relative overflow-hidden backdrop-blur-xl">
+            {/* AI Archetype Card */}
+            {isAnalyzing ? (
+              <div className="flex flex-col items-center justify-center py-12 gap-4 text-zinc-400">
+                <Loader2 className="w-8 h-8 animate-spin text-[#00CC6A]" />
+                <span className="text-xs font-semibold tracking-wider uppercase">Processando Inteligência Digital...</span>
+              </div>
+            ) : (
+              <div className="relative z-10 space-y-5">
+                <div className="inline-flex items-center gap-2 bg-zinc-800/80 px-3 py-1 border border-zinc-700/70 rounded-full">
+                  <Brain className="w-3.5 h-3.5 text-[#00CC6A]" />
+                  <span className="text-xs font-bold text-zinc-200 uppercase tracking-wider">
+                    Arquétipo Identificado
+                  </span>
+                </div>
+
+                <div>
+                  <h2 className="text-xl md:text-2xl font-extrabold text-white mb-2 tracking-tight">
+                    {(analysisResult?.archetype || resultDetails.title).toUpperCase()}
+                  </h2>
+                  {analysisResult?.headline && (
+                    <p className="text-base text-zinc-300 font-medium italic border-l-2 border-[#00CC6A] pl-3">
+                      "{analysisResult.headline}"
+                    </p>
+                  )}
+                </div>
+
+                <p className="text-zinc-300 text-xs md:text-sm leading-relaxed bg-zinc-950/60 p-4 border border-zinc-800/80 rounded-xl">
+                  {analysisResult?.analysis || resultDetails.msg}
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-4 rounded-xl">
+                    <h4 className="text-xs font-bold text-emerald-400 mb-2.5 flex items-center gap-2 uppercase tracking-wider">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A]"></span> Vantagens Competitivas
+                    </h4>
+                    <ul className="space-y-1.5">
+                      {(analysisResult?.strengths && analysisResult.strengths.length > 0 ? analysisResult.strengths : ["Foco executivo claro", "Tese de mercado definida"]).map((s, i) => (
+                        <li key={i} className="text-zinc-300 text-xs font-medium flex items-center gap-2">
+                          <span className="text-[#00CC6A] font-bold">0{i + 1}.</span> {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="bg-zinc-950/40 border border-zinc-800/80 p-4 rounded-xl">
+                    <h4 className="text-xs font-bold text-amber-400 mb-2.5 flex items-center gap-2 uppercase tracking-wider">
+                      <AlertTriangle className="w-3.5 h-3.5 text-amber-400" /> Pontos Cegos
+                    </h4>
+                    <ul className="space-y-1.5">
+                      {(analysisResult?.blindSpots && analysisResult.blindSpots.length > 0 ? analysisResult.blindSpots : ["Gargalo operacional concentrado", "Distribuição dependente de poucas pessoas"]).map((s, i) => (
+                        <li key={i} className="text-zinc-300 text-xs font-medium flex items-center gap-2">
+                          <span className="text-amber-400 font-bold">•</span> {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* WHITE CONTENT SECTION FOR AUDIT DETAILS */}
+        <div className="w-[100vw] relative left-[50%] right-[50%] -ml-[50vw] bg-white text-zinc-900 px-6 py-16 mt-16 border-t border-zinc-200">
+          <div className="max-w-5xl mx-auto space-y-16">
+            
+            {/* Actionable Insight Banner */}
+            <div className="border-l-4 border-[#00CC6A] bg-emerald-50/60 p-6 md:p-8 rounded-r-2xl border border-emerald-100 shadow-xs">
+              <h4 className="text-xs font-extrabold text-emerald-800 uppercase tracking-wider mb-2 flex items-center gap-2">
+                <span>💡 Recomendação Estratégica Imediata</span>
+              </h4>
+              <p className="text-zinc-900 text-base md:text-lg font-semibold leading-relaxed">
+                {analysisResult?.actionableInsight || insights.action}
+              </p>
+              <p className="text-zinc-600 text-xs md:text-sm mt-2 leading-relaxed">
+                {insights.description}
+              </p>
+            </div>
+
+            {/* PREMISSAS / PILLARES SECTION */}
+            <section className="space-y-8">
+              <div className="text-center md:text-left space-y-2">
+                <p className="text-[#00CC6A] text-xs font-bold uppercase tracking-wider">
+                  Detalhamento de Diagnóstico
+                </p>
+                <h2 className="text-2xl md:text-3xl font-extrabold text-zinc-950 tracking-tight">
+                  Sua marca pessoal <span className="text-zinc-500 font-normal">vende ou dorme?</span>
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {QUESTIONS.map((q, idx) => {
+                  const userAnswerScore = answers[idx] ?? 0;
+                  const userAnswerData = q.options.find(o => o.score === userAnswerScore);
+                  const isCritical = userAnswerScore < 10;
+
+                  return (
+                    <div key={idx} className="bg-zinc-50 p-6 rounded-2xl border border-zinc-200/90 flex flex-col justify-between space-y-4 hover:border-zinc-300 transition-all shadow-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+                          Pilar 0{idx + 1}
+                        </span>
+                        {isCritical ? (
+                          <span className="text-[10px] bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded-full border border-red-200">
+                            Ajuste Crítico
+                          </span>
+                        ) : (
+                          <span className="text-[10px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full border border-emerald-200">
+                            Adequado
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-sm md:text-base font-bold text-zinc-900 leading-snug">
+                        {q.question}
+                      </h3>
+
+                      <div className="bg-white border border-zinc-200/80 p-3 rounded-xl text-xs font-medium text-zinc-700">
+                        <span className="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Sua Escolha:</span>
+                        "{userAnswerData?.label || 'Não Respondido'}"
+                      </div>
+
+                      <div className="pt-2 border-t border-zinc-200/60">
+                        <p className="text-xs text-zinc-600 leading-relaxed">
+                          <strong className="text-zinc-900 font-semibold">Insight:</strong> {q.log}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* Final CTA Area */}
+            <div className="pt-6">
+              <DiagnosticActionSection
+                title="Retome o Controle da Sua Operação."
+                subtitle="Agende uma sessão estratégica gratuita de 30 minutos com nossos diretores para descentralizar a operação e escalar sua autoridade."
+                onCtaClick={() => setIsBookingModalOpen(true)}
+              />
+
+              <DiagnosticBookingModal
+                isOpen={isBookingModalOpen}
+                onClose={() => setIsBookingModalOpen(false)}
+                diagnosticType="founder"
+              />
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="flex items-center gap-2">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A] shrink-0" />
-        <span>Preenchimento rápido via CNPJ</span>
-      </div>
-    </div>
-  </div>
-
- {/* Coluna Direita: Formulário */}
- <div className="flex-1 w-full max-w-md flex flex-col justify-center">
- <DiagnosticForm
- onSubmit={handleFormSubmit}
- isSubmitting={isSubmitting}
- title="Receber Relatório"
- subtitle="Score Blended: Respostas + Autoridade LinkedIn."
- variant="dark"
- showLinkedin={false}
- diagnosticType="Founder"
- />
- </div>
- </div>
- </div>
- )}
-
- <div className={`space-y-0 transition-all duration-700 ${!hasSubmittedLead ? 'blur-sm opacity-60 pointer-events-none' : ''}`}>
-
- {/* DASHBOARD HEADLINE - Padronizado */}
- <div className="mb-12 text-center animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-4xl mx-auto pt-8">
- <div className="inline-flex items-center gap-2 mb-4 bg-white border border-zinc-200 px-3 py-1">
- <span className="w-1.5 h-1.5 bg-white"></span>
- <span className="text-xs font-sans font-bold text-zinc-500 ">Status: Finalizado</span>
- </div>
- <h1 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-2">
- Diagnóstico <span className="text-zinc-600">Founder</span>
- </h1>
- <p className="text-zinc-500 font-medium max-w-xl mx-auto">
- Análise de posicionamento digital e alinhamento estratégico.
- </p>
- </div>
-
-
- <div className="space-y-32">
- <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch animate-fade-in duration-1000">
- <div className="lg:col-span-4">
- <ScoreGauge
- score={finalScore}
- label="Founder Authority"
- description="Índice de autoridade e liberdade digital."
- />
- </div>
-
- <div className="lg:col-span-8 flex flex-col justify-center bg-white/50 border border-zinc-200 p-8 md:p-12 relative overflow-hidden">
- {/* AI Archetype Card */}
- {analysisResult ? (
- <div className="relative z-10 space-y-6">
- <div className="inline-flex items-center gap-2 bg-zinc-50 px-3 py-1 border border-zinc-200">
- <Brain className="w-3 h-3 text-zinc-600" />
- <span className="text-xs font-sans font-bold text-zinc-600 ">
- Arquétipo Identificado
- </span>
- </div>
-
- <div>
- <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-2">
- {analysisResult.archetype.toUpperCase()}
- </h2>
- <p className="text-xl text-zinc-500 font-medium italic border-l-2 border-zinc-600 pl-4">
- "{analysisResult.headline}"
- </p>
- </div>
-
- <p className="text-zinc-600 text-sm md:text-base leading-relaxed max-w-2xl bg-white/40 p-6 border border-zinc-200">
- {analysisResult.analysis}
- </p>
-
- <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
- <div>
- <h4 className="text-xs font-bold text-zinc-500 mb-3 flex items-center gap-2">
- <span className="w-1.5 h-1.5 bg-zinc-300"></span> Vantagens Competitivas
- </h4>
- <ul className="space-y-2">
- {analysisResult.strengths.map((s, i) => (
- <li key={i} className="text-zinc-900 text-sm font-medium flex items-center gap-2">
- <span className="text-zinc-600">0{i + 1}</span> {s}
- </li>
- ))}
- </ul>
- </div>
- <div>
- <h4 className="text-xs font-bold text-zinc-500 mb-3 flex items-center gap-2">
- <span className="w-1.5 h-1.5 bg-zinc-400"></span> Pontos Cegos
- </h4>
- <ul className="space-y-2">
- {analysisResult.blindSpots.map((s, i) => (
- <li key={i} className="text-zinc-900 text-sm font-medium flex items-center gap-2">
- <AlertTriangle className="w-3 h-3 text-zinc-500" /> {s}
- </li>
- ))}
- </ul>
- </div>
- </div>
- </div>
- ) : (
- <div className="flex items-center justify-center h-full">
- <div className="flex flex-col items-center gap-4 text-zinc-500">
- <Loader2 className="w-8 h-8 animate-spin" />
- <span className="text-xs font-sans ">Processando Inteligência...</span>
- </div>
- </div>
- )}
- </div>
- </div>
- </div>
-
-
-
- {/* WHITE CONTENT SECTION */}
- <div className="w-[100vw] relative left-[50%] right-[50%] -ml-[50vw] bg-white text-zinc-900 px-4 md:px-0 py-20 mt-32 border-t border-zinc-200">
- <div className="max-w-6xl mx-auto">
- {/* AI Branding Analysis */}
- {analysisResult && (analysisResult.brandingGaps?.length || analysisResult.actionableInsight) ? (
- <section>
- <div className="space-y-6 mb-12 text-center md:text-left">
- <p className="text-[#00CC6A] text-xs font-semibold ">
- DIAGNÓSTICO_DE_AUTORIDADE
- </p>
- <h2 className="text-2xl md:text-3xl font-bold text-black leading-none">
- {analysisResult.archetype}
- </h2>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
- {/* Branding Gaps */}
- <div className="border border-zinc-200 p-8 bg-white">
- <h4 className="text-xs font-bold text-zinc-900 mb-6 flex items-center gap-2">
- <div className="w-2 h-2 bg-white" />
- Gaps de Posicionamento
- </h4>
- <div className="space-y-4">
- {(analysisResult.brandingGaps || []).map((g, i) => (
- <div key={i} className="flex gap-3">
- <span className="text-zinc-500 font-bold text-sm mt-0.5">✗</span>
- <p className="text-zinc-700 text-sm font-medium leading-relaxed">{g}</p>
- </div>
- ))}
- </div>
- </div>
-
- {/* Perspectiva Técnica */}
- <div className="border border-zinc-200 p-8 bg-zinc-50">
- <h4 className="text-xs font-bold text-zinc-900 mb-6 flex items-center gap-2">
- <div className="w-2 h-2 bg-revgreen" />
- Perspectiva Técnica
- </h4>
- <p className="text-zinc-900 text-sm font-medium leading-relaxed">
- {insights.description}
- </p>
- </div>
- </div>
-
- {/* Actionable Insight Card */}
- {analysisResult.actionableInsight && (
- <div className="border-l-4 border-[#00CC6A] bg-zinc-50 rounded-r-2xl p-8 mb-16">
- <h4 className="text-xs font-bold text-zinc-500 mb-3">
- Ação Imediata Recomendada
- </h4>
- <p className="text-zinc-900 text-base font-semibold leading-relaxed">
- {analysisResult.actionableInsight}
- </p>
- </div>
- )}
- </section>
- ) : (
- <section>
- <div className="space-y-6 mb-20 text-center md:text-left">
- <p className="text-[#00CC6A] text-xs font-semibold ">
- DIAGNÓSTICO_DE_AUTORIDADE
- </p>
- <h2 className="text-2xl md:text-3xl font-bold text-black leading-none italic">
- {insights.title.split(' ')[0]} <span className="text-zinc-500">{insights.title.split(' ').slice(1).join(' ')}</span>
- </h2>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-32 text-left">
- <div className="space-y-6 border-l border-zinc-200 pl-8">
- <h4 className="text-sm font-bold !text-black flex items-center gap-3">
- <div className="w-1.5 h-1.5 bg-white" />
- Perspectiva Técnica
- </h4>
- <p className="!text-zinc-900 text-base leading-relaxed font-semibold">
- {insights.description}
- </p>
- </div>
-
- <div className="space-y-6 border-l border-zinc-200 pl-8">
- <h4 className="text-sm font-bold !text-black flex items-center gap-3">
- <div className="w-1.5 h-1.5 bg-white" />
- Plano de Ação
- </h4>
- <p className="!text-zinc-900 text-base leading-relaxed font-semibold">
- Sua prioridade estratégica agora é: <strong className="!text-black bg-[#00CC6A]/20 px-1">{insights.action}</strong>.
- O custo de ignorar este ajuste é a perda de autoridade para concorrentes menos qualificados porém mais barulhentos.
- </p>
- </div>
- </div>
- </section>
- )}
-
- {/* PREMISSAS SECTION */}
- <section>
- <div className="space-y-6 mb-20">
- <p className="text-[#00CC6A] text-xs font-semibold ">
- PREMISSAS_DE_ALINHAMENTO
- </p>
- <h2 className="text-2xl md:text-3xl font-bold text-black leading-none italic">
- Sua marca pessoal <span className="text-zinc-500">vende ou dorme?</span>
- </h2>
- </div>
-
- <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
- {QUESTIONS.slice(0, 4).map((q, idx) => {
- const userAnswerScore = answers[idx];
- const userAnswerData = q.options.find(o => o.score === userAnswerScore);
- 
- // Status based on performance (0-20 scale per question)
- const isCritical = userAnswerScore < 10;
- 
- return (
- <div key={idx} className="bg-zinc-50 p-8 border border-zinc-200 hover:border-black transition-all duration-300 flex flex-col h-full">
- <div className="flex items-start justify-between mb-4">
- <h4 className="text-tiny font-bold !text-black flex items-center gap-3">
- <div className={`w-1.5 h-1.5 ${isCritical ? 'bg-red-500' : 'bg-white'}`} />
- Pilar 0{idx + 1}
- </h4>
- {isCritical && <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 font-bold ">Crítico</span>}
- </div>
- 
- <h3 className="text-sm font-bold text-zinc-900 mb-3">{q.question}</h3>
- 
- <div className="mb-4 bg-white border border-zinc-100 p-3 text-xs font-medium text-zinc-600">
- <span className="block text-xs text-zinc-500 mb-1">Seu Diagnóstico:</span>
- "{userAnswerData?.label || 'Não Respondido'}"
- </div>
- 
- <div className="mt-auto border-t border-zinc-200 pt-4">
- <p className="!text-zinc-900 text-xs leading-relaxed font-semibold">
- Atenção: <span className="font-normal text-zinc-600">{q.log}</span>
- </p>
- </div>
- </div>
- );
- })}
- </div>
- </section>
-
- {/* Final CTA Area - Standardized */}
- <div className="mt-20">
- <DiagnosticActionSection
- title="Retome o Controle."
- subtitle="Agende um diagnóstico gratuito com um especialista para desenhar seu plano de ação e descentralizar."
- onCtaClick={() => setIsBookingModalOpen(true)}
- />
-
- <DiagnosticBookingModal
- isOpen={isBookingModalOpen}
- onClose={() => setIsBookingModalOpen(false)}
- diagnosticType="founder"
- />
-
- {/* Fallback MoFu CTA */}
- <div className="mt-8 mb-16 flex flex-col items-center justify-center text-center px-4">
- <span className="text-xs font-sans text-zinc-500 mb-4">MUITO CEDO PARA UMA DEEP-DIVE CALL?</span>
- <button onClick={() => window.open('https://revhackers.com.br/')} className="text-xs font-semibold text-zinc-900 bg-white border border-zinc-200 px-6 py-3 hover:bg-zinc-50 transition-colors ">Baixe o Playbook de Authority (Grátis)</button>
- </div>
- </div>
- </div>
- </div>
- </div>
- </>
+    </>
  )}
  </DiagnosticLayout >
  </>
