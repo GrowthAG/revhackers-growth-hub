@@ -137,22 +137,24 @@ export default function ClaudePartnerNetworkPage() {
       >
         <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
           
-          {/* Logo Oficial Claude Partner Network — Alinhamento idêntico à Home */}
+          {/* Lockup de Logos Oficiais: Claude Partner Network × REVHACKERS */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="flex items-center justify-center gap-3 mb-2"
+            className="flex items-center justify-center gap-4 sm:gap-6 mb-2 p-3 px-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 shadow-inner"
           >
             <img
               src="/brand/claude-partner-network.svg"
               alt="Claude Partner Network"
-              className="h-6 sm:h-7 w-auto object-contain opacity-90"
+              className="h-7 sm:h-9 w-auto object-contain"
             />
-            <span className="w-px h-4 bg-zinc-800" />
-            <span className="text-[#00CC6A] text-xs font-semibold uppercase tracking-wider">
-              Trilha Oficial Restrita
-            </span>
+            <span className="text-zinc-600 font-light text-base sm:text-lg">×</span>
+            <img
+              src="/brand/revhackers-wordmark-white.png"
+              alt="REVHACKERS"
+              className="h-4 sm:h-5 w-auto object-contain"
+            />
           </motion.div>
           
           {/* Headline H1 */}
@@ -160,9 +162,9 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
-            className="font-sans text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-extrabold text-white leading-[1.1] tracking-tight text-center"
+            className="font-sans text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-3xl"
           >
-            Seja bem-vindo ao <span className="text-[#00CC6A]">Claude Partner Network</span> & RevHackers.
+            Você foi selecionado para o <span className="text-[#00CC6A]">Claude Partner Network</span>.
           </motion.h1>
 
           {/* Subheadline */}
@@ -170,48 +172,22 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-            className="text-zinc-400 text-base md:text-xl font-normal leading-relaxed max-w-2xl mx-auto text-center"
+            className="text-zinc-300 text-base md:text-xl font-medium leading-relaxed max-w-2xl mx-auto text-center"
           >
-            Sem mimimi corporativo ou palestrinha. Aqui a gente constrói agentes autônomos de IA e escala operação de receita na prática usando o ecossistema do Claude 3.5 Sonnet.
+            Aqui é o ambiente onde você vai aprender o Claude de verdade. Se dedique — com certeza você colherá bons frutos disso.
           </motion.p>
 
-          {/* Indicador de Status Limpo — Padrão da Home */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inViewHero ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.12 }}
-            className="flex items-center justify-center gap-2 text-zinc-400 text-xs font-medium"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#00CC6A]" />
-            <span>Papo reto: <strong className="text-white">Trilha de execução restrita RevHackers × Anthropic</strong></span>
-          </motion.div>
-
-          {/* Box de Apoio */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
-            className="w-full max-w-2xl bg-zinc-900/80 rounded-xl p-5 border border-zinc-800 text-left space-y-2"
-          >
-            <div className="flex items-center gap-2 text-white font-bold text-sm">
-              <ShieldCheck className="w-4 h-4 text-[#00CC6A]" />
-              Programa Oficial Anthropic x RevHackers
-            </div>
-            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Trilha técnica sem enrolação. Criada pra quem quer meter a mão no código, conectar o Claude no produto e rodar agentes autônomos que geram resultado de verdade.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inViewHero ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="pt-4"
           >
             <Button
               onClick={scrollToForm}
-              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-bold text-sm h-12 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
+              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm h-12 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
             >
-              <span>Ir para Confirmação de Vaga</span>
+              <span>Ativar Acesso & Criar Conta</span>
               <ArrowRight className="w-4 h-4" />
             </Button>
           </motion.div>
