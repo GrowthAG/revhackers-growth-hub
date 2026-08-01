@@ -24,7 +24,7 @@ export const DiagnosticActionSection = ({
  <div className="text-center bg-zinc-50 p-12 md:p-20 border border-zinc-100">
  <div className="max-w-3xl mx-auto space-y-12">
  <div className="space-y-6">
- <span className="text-xs font-sans font-bold text-zinc-500 ">NEXT // ACTION_PLAN</span>
+ <span className="text-xs font-sans font-bold text-zinc-500 uppercase tracking-wider">Próximos Passos</span>
  <h2 className="text-2xl md:text-3xl font-bold text-black leading-none italic">
  {title}
  </h2>

@@ -15,11 +15,10 @@ const CaseHero = ({ caseData }: CaseHeroProps) => {
       <div className="container-custom relative z-10">
         <div className="max-w-5xl mx-auto text-center flex flex-col items-center">
 
-          {/* Technical Metadata - Swiss Standard */}
-          <div className="mb-20 flex items-center gap-6 animate-fade-in opacity-40">
-            <span className="font-mono text-2xs uppercase tracking-[0.3em] text-zinc-400">RH_CASE_FILE // {caseData.title.toUpperCase().replace(/\s+/g, '_')}</span>
-            <div className="w-12 h-px bg-zinc-800"></div>
-            <span className="font-mono text-2xs uppercase tracking-[0.3em] text-zinc-500">REV.V2.025</span>
+          {/* Metadata Clean */}
+          <div className="mb-12 flex items-center gap-3 animate-fade-in">
+            <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />
+            <span className="font-sans text-xs uppercase tracking-widest text-zinc-300 font-bold">Estudo de Caso • {caseData.title}</span>
           </div>
 
           {/* The Technical Plate - High Performance Viewport */}

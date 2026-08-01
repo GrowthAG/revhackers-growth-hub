@@ -48,7 +48,7 @@ export const CallDiagnosticModal = ({ isOpen, onClose, source = 'diagnostic' }: 
  {/* Header Context */}
  <div className="p-8 md:p-12 border-b border-zinc-100 flex justify-between items-start">
  <div className="space-y-2">
- <span className="text-xs font-sans font-bold text-zinc-500 ">DEBRIEFING // QUALIFICAÇÃO</span>
+ <span className="text-xs font-sans font-bold text-zinc-500 uppercase tracking-wider">Qualificação Estratégica</span>
  <h2 className="text-3xl md:text-2xl md:text-3xl font-bold text-black leading-none italic ">
  {step === 'form' ? 'Contexto de Negócio' : step === 'calendar' ? 'Seleção de Agenda' : 'Confirmado'}
  </h2>

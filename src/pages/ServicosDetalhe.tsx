@@ -384,7 +384,7 @@ const ServicosDetalhe = () => {
             {/* Header - Same as CallDiagnosticModal */}
             <div className="p-8 md:p-12 border-b border-zinc-100 flex justify-between items-start">
               <div className="space-y-2">
-                <span className="text-xxs font-sans font-bold text-revgreen uppercase tracking-wider">{service?.number} // {service?.title}</span>
+                <span className="text-xs font-sans font-bold text-revgreen uppercase tracking-wider">{service?.number}. {service?.title}</span>
                 <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
                   {selectedService.title}
                 </h2>

@@ -106,20 +106,11 @@ const CaseContent = ({ caseData }: CaseContentProps) => {
 
                 <div className="sticky top-32">
                   <div className="inline-block border border-zinc-200 px-3 py-1 mb-12">
-                    <h3 className="font-mono text-3xs text-zinc-500 uppercase tracking-[0.4em]">Problem_Layer // {caseData.category}</h3>
+                    <h3 className="font-sans text-xs text-zinc-500 uppercase tracking-widest font-bold">Diagnóstico & Desafios • {caseData.category}</h3>
                   </div>
-                  <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-black mb-16 uppercase italic leading-[0.85] underline decoration-zinc-100 underline-offset-[12px]">O Desafio</h2>
-                  <div className="antialiased text-lg leading-relaxed text-zinc-800">
+                  <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-950 mb-12 leading-tight">O Desafio</h2>
+                  <div className="antialiased text-base md:text-lg leading-relaxed text-zinc-700 font-normal">
                     {renderTechnicalNarrative(caseData.challenge)}
-                  </div>
-
-                  {/* Digital Stamp */}
-                  <div className="mt-20 flex items-center gap-4 opacity-30">
-                    <div className="w-12 h-12 border-2 border-zinc-300 rounded-full flex items-center justify-center font-mono text-3xs font-bold">APPROVED</div>
-                    <div className="flex flex-col">
-                      <span className="font-mono text-4xs uppercase font-bold">Technical Audit</span>
-                      <span className="font-mono text-4xs uppercase">RH_QUAL_V2.05</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -131,44 +122,31 @@ const CaseContent = ({ caseData }: CaseContentProps) => {
                   style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '30px 30px' }}>
                 </div>
 
-                <div className="absolute top-10 right-10 font-mono text-3xs text-zinc-700 pointer-events-none uppercase tracking-[0.5em] font-bold">EXECUTION_PROTOCOL // MASTERPIECE</div>
-
                 <div className="inline-block border border-zinc-800 px-3 py-1 mb-12 relative z-10">
-                  <h3 className="font-mono text-3xs text-zinc-500 uppercase tracking-[0.4em]">Strategic_Blueprint // RH_CORE</h3>
+                  <h3 className="font-sans text-xs text-zinc-400 uppercase tracking-widest font-bold">Solução & Engenharia GTM</h3>
                 </div>
 
-                <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-white mb-16 uppercase italic leading-[0.85] underline decoration-zinc-900 underline-offset-[12px] relative z-10">A Estratégia</h2>
+                <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-12 leading-tight relative z-10">A Estratégia</h2>
 
-                <div className="antialiased relative z-10 text-lg md:text-xl leading-relaxed text-zinc-300">
+                <div className="antialiased relative z-10 text-base md:text-lg leading-relaxed text-zinc-300 font-normal">
                   {renderTechnicalNarrative(caseData.solution, true)}
                 </div>
-
-                {/* Precision Crosshairs in Black area */}
-                <div className="absolute top-32 right-10 w-20 h-20 opacity-10 pointer-events-none">
-                  <div className="absolute top-1/2 left-0 w-full h-[0.5px] bg-white"></div>
-                  <div className="absolute left-1/2 top-0 w-[0.5px] h-full bg-white"></div>
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 border border-white rounded-full"></div>
-                </div>
-
-                <div className="absolute bottom-10 left-10 w-10 h-10 border-b-2 border-l-2 border-zinc-900"></div>
-                <div className="absolute bottom-10 right-10 w-10 h-10 border-b-2 border-r-2 border-zinc-900"></div>
               </div>
 
             </div>
           </div>
 
           {/* PHASE_02: QUANTITATIVE IMPACT */}
-          <div className="mb-64 relative">
-            <div className="flex flex-col gap-4 mb-24 px-1">
+          <div className="mb-32 relative">
+            <div className="flex flex-col gap-4 mb-16 px-1">
               <div className="flex items-center gap-6">
-                <div className="bg-zinc-900 px-6 py-2">
-                  <span className="font-mono text-tiny text-white tracking-[0.4em] font-bold italic">PHASE_02 // PERFORMANCE_LEDGER</span>
+                <div className="bg-zinc-900 px-6 py-2 rounded-lg">
+                  <span className="font-sans text-xs text-white tracking-widest font-bold uppercase">Resultados & Métricas de Performance</span>
                 </div>
-                <div className="h-[2px] flex-1 bg-zinc-900/10"></div>
+                <div className="h-[1px] flex-1 bg-zinc-200"></div>
               </div>
               <div className="flex justify-between items-center">
-                <span className="font-mono text-2xs text-zinc-400 uppercase tracking-[0.5em]">Validated_Growth_Metrics // 1024_SAMPLING</span>
-                <span className="font-mono text-2xs text-zinc-300">TRUST_LEVEL_V1.0</span>
+                <span className="font-sans text-xs text-zinc-500 uppercase tracking-wider font-semibold">Métricas e Impacto Real de Negócio</span>
               </div>
             </div>
 

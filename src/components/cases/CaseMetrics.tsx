@@ -7,13 +7,11 @@ interface CaseMetricsProps {
 const CaseMetrics = ({ caseData }: CaseMetricsProps) => {
   return (
     <div className="w-full">
-      {/* Metrics Header - Technical Marker */}
-      <div className="mb-12 flex items-center justify-between opacity-30">
+      {/* Metrics Header */}
+      <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-2xs tracking-widest">METR_DATA_SPEC // V1.025</span>
-          <div className="h-[1px] w-6 bg-black"></div>
+          <span className="font-sans text-xs font-bold text-zinc-500 uppercase tracking-widest">Indicadores de Desempenho</span>
         </div>
-        <span className="font-mono text-4xs uppercase tracking-widest text-zinc-400">Validated_Performance_Sheet</span>
       </div>
 
       {/* Metrics - Performance Datasheet Grid - With Technical Markers */}
