@@ -275,48 +275,28 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* Formulário de Confirmação em 3 Etapas (3 CAMPOS POR CARD PADRÃO) */}
+      {/* Formulário de Confirmação em 3 Etapas (ULTRA MINIMALISTA SEM VIBECODE) */}
       <section ref={formRef} className="py-20 bg-white text-zinc-900">
-        <div className="max-w-xl mx-auto px-6 space-y-8">
+        <div className="max-w-md mx-auto px-6 space-y-8">
           
           <div className="text-center space-y-3">
-            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
-              CADASTRO RÁPIDO · ETAPA {step} DE 3
+            <p className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase">
+              ETAPA {step} DE 3
             </p>
-            <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight">
+            <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight">
               {step === 1 && "1. Seus dados de acesso"}
               {step === 2 && "2. Dados da sua empresa"}
               {step === 3 && "3. Perfil & Ativação"}
             </h2>
-            <p className="text-zinc-500 text-sm max-w-xl mx-auto">
+            <p className="text-zinc-500 text-sm max-w-sm mx-auto leading-relaxed">
               {step === 1 && "Preencha seus dados básicos pra gente liberar suas credenciais de parceiro."}
               {step === 2 && "Mapeie sua empresa para conectarmos a melhor integração do Claude."}
               {step === 3 && "Selecione seu perfil e confirme o aceite para receber os acessos."}
             </p>
           </div>
 
-          {/* Stepper Progress Bar */}
           {!isSubmitted && (
-            <div className="flex items-center justify-between max-w-md mx-auto py-2">
-              <div className={`flex items-center gap-2 text-xs font-bold ${step >= 1 ? 'text-[#00CC6A]' : 'text-zinc-400'}`}>
-                <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-all ${step >= 1 ? 'bg-[#00CC6A] text-zinc-950 font-black' : 'bg-zinc-200 text-zinc-600'}`}>1</span>
-                <span>Seus Dados</span>
-              </div>
-              <div className={`flex-1 h-0.5 mx-3 transition-colors ${step >= 2 ? 'bg-[#00CC6A]' : 'bg-zinc-200'}`} />
-              <div className={`flex items-center gap-2 text-xs font-bold ${step >= 2 ? 'text-[#00CC6A]' : 'text-zinc-400'}`}>
-                <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-all ${step >= 2 ? 'bg-[#00CC6A] text-zinc-950 font-black' : 'bg-zinc-200 text-zinc-600'}`}>2</span>
-                <span>Sua Empresa</span>
-              </div>
-              <div className={`flex-1 h-0.5 mx-3 transition-colors ${step >= 3 ? 'bg-[#00CC6A]' : 'bg-zinc-200'}`} />
-              <div className={`flex items-center gap-2 text-xs font-bold ${step >= 3 ? 'text-[#00CC6A]' : 'text-zinc-400'}`}>
-                <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-all ${step >= 3 ? 'bg-[#00CC6A] text-zinc-950 font-black' : 'bg-zinc-200 text-zinc-600'}`}>3</span>
-                <span>Ativação</span>
-              </div>
-            </div>
-          )}
-
-          {!isSubmitted && (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-zinc-50/60 p-8 sm:p-10 rounded-xl border border-zinc-200 shadow-xs">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               
               {/* STEP 1: DADOS PESSOAIS (EXATAMENTE 3 CAMPOS) */}
               {step === 1 && (
