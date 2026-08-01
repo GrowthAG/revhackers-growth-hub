@@ -63,264 +63,227 @@ const QUESTIONS = [
  }
 ];
 
-type Step = 'start' | 'questions' | 'lead-capture' | 'results';
+type Step = 'questions' | 'lead-capture' | 'results';
 
 const FounderScore = () => {
- const { toast } = useToast();
- const [step, setStep] = useState<Step>('start');
- const [currentQ, setCurrentQ] = useState(0);
- const [score, setScore] = useState(0);
- const [answers, setAnswers] = useState<number[]>([]);
- const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  const [step, setStep] = useState<Step>('questions');
+  const [currentQ, setCurrentQ] = useState(0);
+  const [score, setScore] = useState(0);
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
- const [hasSubmittedLead, setHasSubmittedLead] = useState(false);
- const [isBookingModalOpen, setIsBookingModalOpen] = useState(false); // Kept for types, unused if modal removed
+  const [hasSubmittedLead, setHasSubmittedLead] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
- // Data Enrichment State
- const [linkedinUrl, setLinkedinUrl] = useState('');
- const [analysisResult, setAnalysisResult] = useState<FounderAnalysisResult | null>(null);
- const [isAnalyzing, setIsAnalyzing] = useState(false);
- const [selectedOption, setSelectedOption] = useState<number | null>(null);
- const [showLog, setShowLog] = useState(false);
+  const [linkedinUrl, setLinkedinUrl] = useState('');
+  const [analysisResult, setAnalysisResult] = useState<FounderAnalysisResult | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [showLog, setShowLog] = useState(false);
 
- const currentQData = QUESTIONS[currentQ];
+  const currentQData = QUESTIONS[currentQ];
 
- const handleStartDiagnostic = (url: string) => {
- if (!url) return;
- setLinkedinUrl(url);
- setStep('questions');
- };
+  useEffect(() => {
+    if (step !== 'questions' || selectedOption !== null) return;
 
- const handleAnswer = (optionScore: number, optionIdx: number) => {
- if (selectedOption !== null) return;
- setSelectedOption(optionIdx);
- setShowLog(true);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const key = e.key.toUpperCase();
+      const optionMap: Record<string, number> = { 'A': 0, 'B': 1, 'C': 2, 'D': 3, '1': 0, '2': 1, '3': 2, '4': 3 };
 
- const newScore = score + optionScore;
- const updatedAnswers = [...answers, optionScore];
+      if (key in optionMap) {
+        const optIndex = optionMap[key];
+        if (currentQData.options[optIndex]) {
+          handleAnswer(currentQData.options[optIndex].score, optIndex);
+        }
+      }
+    };
 
- setScore(newScore);
- setAnswers(updatedAnswers);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [step, currentQ, selectedOption, currentQData]);
 
- // Add visual delay for "Quiz Effect"
- setTimeout(() => {
- setShowLog(false);
- setSelectedOption(null);
- if (currentQ < QUESTIONS.length - 1) {
- setCurrentQ(prev => prev + 1);
- } else {
- setStep('results');
- }
- }, 1500);
- };
+  const handleAnswer = (optionScore: number, optionIdx: number) => {
+    if (selectedOption !== null) return;
+    setSelectedOption(optionIdx);
+    setShowLog(true);
 
- const handleFormSubmit = async (data: DiagnosticFormData) => {
- setIsSubmitting(true);
- try {
- const result = getResultMap(score);
+    const newScore = score + optionScore;
+    const updatedAnswers = [...answers, optionScore];
 
- // Merge Manual Data with Enriched Data
- const enrichedData = {
- ...data,
- linkedin: linkedinUrl,
- ...(analysisResult || {})
- };
+    setScore(newScore);
+    setAnswers(updatedAnswers);
 
- await submitPublicDiagnostic(
- { ...enrichedData, phone: '' },
- { answers, diagnostic_type: 'founder', analysis: analysisResult, source: 'founder-score' },
- score,
- {
- level: result.title,
- description: result.msg,
- action: "Agendar Call de Diagnóstico",
- color: "revgreen"
- },
- 'score_captured'
- );
+    setTimeout(() => {
+      setShowLog(false);
+      setSelectedOption(null);
+      if (currentQ < QUESTIONS.length - 1) {
+        setCurrentQ(prev => prev + 1);
+      } else {
+        setStep('results');
+      }
+    }, 1200);
+  };
 
- setHasSubmittedLead(true);
- toast({
- className: "bg-white border-zinc-200 text-zinc-900",
- title: "DIAGNÓSTICO PROCESSADO",
- description: "Análise de perfil Founder gerada."
- });
+  const handleFormSubmit = async (data: DiagnosticFormData) => {
+    setIsSubmitting(true);
+    try {
+      const result = getResultMap(score);
 
- setIsAnalyzing(true);
- setStep('results');
- 
- analyzeFounderProfileAI(linkedinUrl, answers, score)
- .then(result => {
- setAnalysisResult(result);
- })
- .catch(err => console.error(err))
- .finally(() => setIsAnalyzing(false));
+      const enrichedData = {
+        ...data,
+        linkedin: linkedinUrl,
+        ...(analysisResult || {})
+      };
 
- } catch (error) {
- console.error(error);
- toast({ variant: 'destructive', title: "Erro", description: "Tente novamente." });
- } finally {
- setIsSubmitting(false);
- }
- };
+      await submitPublicDiagnostic(
+        { ...enrichedData, phone: '' },
+        { answers, diagnostic_type: 'founder', analysis: analysisResult, source: 'founder-score' },
+        score,
+        {
+          level: result.title,
+          description: result.msg,
+          action: "Agendar Call de Diagnóstico",
+          color: "revgreen"
+        },
+        'score_captured'
+      );
 
- const getResultMap = (s: number) => {
- if (s >= 80) return { title: "CEO Estrategista", msg: "Você opera como um CEO de verdade, focado no futuro e na cultura." };
- if (s >= 50) return { title: "CEO Híbrido", msg: "Você equilibra pratos entre operação e estratégia. O risco de burnout existe." };
- return { title: "CEO Operacional", msg: "Você é o gargalo. A empresa não cresce além da sua capacidade de horas." };
- };
+      setHasSubmittedLead(true);
+      toast({
+        className: "bg-white border-zinc-200 text-zinc-900",
+        title: "DIAGNÓSTICO PROCESSADO",
+        description: "Análise de perfil Founder gerada."
+      });
 
- // Score calculation logic
- const getFinalScore = () => {
- return score; // O score agora é derivado puramente das respostas validadas
- };
+      setIsAnalyzing(true);
+      setStep('results');
 
- const finalScore = getFinalScore();
- const resultDetails = getResultMap(finalScore);
- const insights = getDiagnosticInsights('founder', finalScore);
+      analyzeFounderProfileAI(linkedinUrl, answers, score)
+        .then(result => {
+          setAnalysisResult(result);
+        })
+        .catch(err => console.error(err))
+        .finally(() => setIsAnalyzing(false));
 
- if (step === 'start') {
- return (
- <>
- <SEO
- title="Diagnóstico Founder - Avalie sua Autoridade Digital B2B"
- description="Descubra se você é um CEO Estrategista ou um Gargalo Operacional. Diagnóstico gratuito com análise de IA sobre autoridade, posicionamento e liderança."
- canonical="https://revhackers.com.br/score-founder"
- breadcrumbs={[
- { name: "Home", url: "https://revhackers.com.br/" },
- { name: "Diagnósticos", url: "https://revhackers.com.br/diagnostico" },
- { name: "Score Founder", url: "https://revhackers.com.br/score-founder" }
- ]}
- />
- <DiagnosticLayout
- title="Diagnóstico Founder"
- subtitle="Analise e entenda como transformar o seu perfil do LinkedIn em um canal ativo de geracao de demanda"
- showGovernanceFooter={false}
- variant="light"
- >
-        <div className="max-w-xl mx-auto w-full bg-white border border-zinc-200/80 rounded-2xl p-8 shadow-xs space-y-4">
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-zinc-800 block">
-              Perfil do LinkedIn
-            </label>
-            <div className="flex flex-col sm:flex-row gap-2 w-full">
-              <div className="flex items-center flex-1 bg-white border border-zinc-200 rounded-lg overflow-hidden focus-within:border-zinc-950">
-                <span className="hidden sm:flex items-center px-3 text-xs font-medium text-zinc-400 bg-zinc-50 border-r border-zinc-200 select-none whitespace-nowrap h-11">
-                  linkedin.com/in/
-                </span>
-                <input
-                  type="text"
-                  value={linkedinUrl}
-                  onChange={(e) => setLinkedinUrl(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleStartDiagnostic(linkedinUrl)}
-                  placeholder="seu-perfil"
-                  className="flex-1 bg-transparent border-none text-zinc-900 h-11 px-4 focus:ring-0 outline-none text-sm font-semibold placeholder:text-zinc-400"
-                />
+    } catch (error) {
+      console.error(error);
+      toast({ variant: 'destructive', title: "Erro", description: "Tente novamente." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getResultMap = (s: number) => {
+    if (s >= 80) return { title: "CEO Estrategista", msg: "Você opera como um CEO de verdade, focado no futuro e na cultura." };
+    if (s >= 50) return { title: "CEO Híbrido", msg: "Você equilibra pratos entre operação e estratégia. O risco de burnout existe." };
+    return { title: "CEO Operacional", msg: "Você é o gargalo. A empresa não cresce além da sua capacidade de horas." };
+  };
+
+  const getFinalScore = () => {
+    return score;
+  };
+
+  const finalScore = getFinalScore();
+  const resultDetails = getResultMap(finalScore);
+  const insights = getDiagnosticInsights('founder', finalScore);
+
+  return (
+    <>
+      <SEO
+        title="Diagnóstico Founder - Avalie sua Autoridade Digital B2B"
+        description="Descubra se você é um CEO Estrategista ou um Gargalo Operacional. Diagnóstico gratuito com análise sobre autoridade e liderança."
+        canonical="https://revhackers.com.br/score-founder"
+        breadcrumbs={[
+          { name: "Home", url: "https://revhackers.com.br/" },
+          { name: "Diagnósticos", url: "https://revhackers.com.br/diagnostico" },
+          { name: "Score Founder", url: "https://revhackers.com.br/score-founder" }
+        ]}
+      />
+      <DiagnosticLayout
+        title={step === 'results' ? "" : "Diagnóstico Founder & Autoridade"}
+        subtitle={step === 'results' ? "" : "Analise e entenda como transformar sua presença de liderança em um canal ativo de geração de demanda B2B"}
+        variant={step === 'results' ? 'dark' : 'light'}
+        centered={step === 'results'}
+        hideHeader={step === 'results'}
+        headerVariant="default"
+      >
+        {step === 'results' && <div className="fixed inset-0 bg-white -z-50 pointer-events-none" />}
+        {step === 'questions' && (
+          <div className="w-full max-w-3xl mx-auto space-y-6">
+            <div className="bg-white border border-zinc-200/90 rounded-2xl shadow-xl p-6 sm:p-10 space-y-8 relative overflow-hidden backdrop-blur-xl">
+              <div className="space-y-4">
+                <QuestionProgressBar current={currentQ} total={QUESTIONS.length} variant="light" />
               </div>
-              <button
-                onClick={() => handleStartDiagnostic(linkedinUrl)}
-                disabled={!linkedinUrl || isAnalyzing}
-                className="bg-zinc-950 text-white hover:bg-zinc-800 h-11 px-6 rounded-lg font-semibold text-sm transition-all disabled:opacity-40 flex items-center justify-center gap-2 whitespace-nowrap shrink-0"
-              >
-                {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Iniciar Análise <ArrowRight className="w-4 h-4" /></>}
-              </button>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentQ}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="space-y-6"
+                >
+                  <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 leading-snug">
+                    {currentQData.question}
+                  </h2>
+
+                  <div className="grid grid-cols-1 gap-3">
+                    {currentQData.options.map((opt, idx) => {
+                      const letter = String.fromCharCode(65 + idx);
+                      const isSelected = selectedOption === idx;
+
+                      return (
+                        <button
+                          key={idx}
+                          disabled={selectedOption !== null}
+                          onClick={() => handleAnswer(opt.score, idx)}
+                          className={`group relative flex items-center justify-between p-4 sm:p-5 text-left transition-all duration-200 border rounded-xl shadow-xs cursor-pointer ${
+                            isSelected
+                              ? "bg-white text-zinc-900 border-zinc-950 ring-2 ring-[#00CC6A]"
+                              : "bg-white border-zinc-200/80 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/50"
+                          } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center text-xs font-sans font-bold rounded-lg border transition-colors ${
+                              isSelected
+                                ? "bg-[#00CC6A] text-black border-[#00CC6A]"
+                                : "bg-zinc-100 border-zinc-200 text-zinc-600 group-hover:border-zinc-300 group-hover:text-zinc-900"
+                            }`}>
+                              {letter}
+                            </div>
+                            <span className="text-xs md:text-sm font-medium leading-relaxed">
+                              {opt.label}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors ml-4 shrink-0">
+                            <span className="text-xs font-bold uppercase tracking-wider hidden sm:inline">{letter}</span>
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {showLog && currentQData.log && (
+                    <div className="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 text-xs font-medium leading-relaxed flex items-start gap-2.5">
+                      <span className="shrink-0 font-bold">💡 Insight:</span>
+                      <span>{currentQData.log}</span>
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="flex items-center justify-between pt-6 border-t border-zinc-100 text-[11px] text-zinc-400 font-medium">
+                <span className="flex items-center gap-1.5">
+                  <Command className="w-3 h-3" /> Pressione <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">A</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">B</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">C</kbd> ou <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">D</kbd> para responder
+                </span>
+                <span>100% Privado</span>
+              </div>
             </div>
           </div>
-          <p className="text-xs text-zinc-400 font-normal">
-            Usaremos Inteligência Artificial para analisar a presença do seu perfil. Perfis com alta privacidade podem ter coleta limitada.
-          </p>
-        </div>
- </DiagnosticLayout>
- </>
- );
- }
-
- return (
- <>
- <SEO
- title="Diagnóstico Founder - Avalie sua Autoridade Digital B2B"
- description="Descubra se você é um CEO Estrategista ou um Gargalo Operacional. Diagnóstico gratuito com análise de IA."
- canonical="https://revhackers.com.br/score-founder"
- />
- <DiagnosticLayout
- title={step === 'results' ? "" : "Diagnóstico Founder"}
- subtitle={step === 'results' ? "" : "Analise e entenda como transformar o seu perfil do LinkedIn em um canal ativo de geracao de demanda"}
- variant={step === 'results' ? 'dark' : 'light'}
- centered={step === 'results'}
- hideHeader={step === 'results'}
- headerVariant="default"
- >
- {/* BACKDROP DE SEGURANÇA (Garante fundo preto total nos resultados) */}
- {step === 'results' && <div className="fixed inset-0 bg-white -z-50 pointer-events-none" />}
- {step === 'questions' && (
- <div className="max-w-2xl mx-auto flex flex-col w-full px-4 md:px-0">
-
- {/* Header Clean */}
- <div className="w-full flex items-center justify-between mb-4 border-b border-zinc-100 pb-2">
- <div className="flex items-center gap-3">
- <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
- <span className="text-xs font-sans font-medium text-zinc-500 ">Protocolo de Diagnóstico</span>
- </div>
- <span className="text-xs font-sans font-medium text-zinc-500">0{currentQ + 1} / 0{QUESTIONS.length}</span>
- </div>
-
- <div className="w-full animate-fade-in flex flex-col">
- 
- <AnimatePresence mode="wait">
- <motion.div
- key={currentQ}
- initial={{ opacity: 0, y: 10 }}
- animate={{ opacity: 1, y: 0 }}
- exit={{ opacity: 0, y: -10 }}
- className="w-full flex flex-col space-y-4"
- >
- <h2 className="text-2xl md:text-3xl font-bold text-black leading-tight max-w-2xl">
- {QUESTIONS[currentQ].question}
- </h2>
-
- <div className="grid grid-cols-1 gap-2 w-full">
- {currentQData.options.map((opt, idx) => (
- <button
- key={idx}
- disabled={selectedOption !== null}
- onClick={() => handleAnswer(opt.score, idx)}
- className={`group relative flex items-center gap-4 p-4 text-left transition-all duration-300 border ${selectedOption === idx
- ? "bg-white text-zinc-900 border-zinc-200 scale-[1.01]"
- : "bg-white border-zinc-200 text-zinc-900 hover:border-zinc-400 hover:bg-zinc-50"
- } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
- >
- <div className={`w-6 h-6 flex-shrink-0 flex items-center justify-center text-xs font-sans font-bold border rounded transition-colors ${selectedOption === idx
- ? "bg-white text-zinc-900 border-white"
- : "bg-zinc-100 border-zinc-200 text-zinc-500 group-hover:border-zinc-400 group-hover:text-zinc-900"
- }`}>
- {String.fromCharCode(65 + idx)}
- </div>
- <span className="text-sm font-medium">
- {opt.label}
- </span>
- </button>
- ))}
- </div>
- </motion.div>
- </AnimatePresence>
- </div>
-
- {/* Log strip - fixed bottom */}
- <AnimatePresence>
- {showLog && currentQData.log && (
- <motion.div
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- exit={{ opacity: 0, y: 20 }}
- className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-zinc-100 px-4 py-3"
- >
- <p className="text-xs font-medium text-zinc-500 text-center max-w-2xl mx-auto">
- <span className="text-black font-bold mr-2">Insight:</span>{currentQData.log}
- </p>
- </motion.div>
- )}
- </AnimatePresence>
- </div>
  )}
 
  {step === 'results' && (

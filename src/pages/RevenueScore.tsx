@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { submitPublicDiagnostic } from "@/api/publicDiagnostic";
-import { ArrowRight, BarChart, DollarSign, Target, Briefcase, TrendingUp, Users } from 'lucide-react';
+import { ArrowRight, BarChart, DollarSign, Target, Briefcase, TrendingUp, Users, Command } from 'lucide-react';
 import { DiagnosticLayout } from '@/components/diagnostics/DiagnosticLayout';
 import { DiagnosticForm, DiagnosticFormData } from '@/components/diagnostics/DiagnosticForm';
 import { ScoreGauge } from '@/components/diagnostics/ScoreGauge';
@@ -192,61 +192,80 @@ const RevenueScore = () => {
  {step === 'results' && <div className="fixed inset-0 bg-white -z-50 pointer-events-none" />}
 
  {step === 'questions' && (
- <div className="max-w-2xl animate-fade-in w-full mx-auto">
- <QuestionProgressBar current={currentQ} total={QUESTIONS.length} variant="light" />
- <div className="space-y-6 mt-4">
- <div className="flex justify-between items-center text-xs font-sans font-semibold text-zinc-500 border-b border-zinc-200/80 pb-3">
- <span className="text-zinc-900 font-bold">Pergunta {currentQ + 1} de {QUESTIONS.length}</span>
- <span className="bg-zinc-100 text-zinc-600 px-2 py-0.5 rounded text-[10px]">ID: 0{currentQ + 1}</span>
- </div>
+    <div className="w-full max-w-3xl mx-auto space-y-6">
+      <div className="bg-white border border-zinc-200/90 rounded-2xl shadow-xl p-6 sm:p-10 space-y-8 relative overflow-hidden backdrop-blur-xl">
+        <div className="space-y-4">
+          <QuestionProgressBar current={currentQ} total={QUESTIONS.length} variant="light" />
+        </div>
 
- <div className="space-y-6">
- <h2 className="text-xl md:text-2xl font-bold text-zinc-900 leading-snug">
- {QUESTIONS[currentQ].question}
- </h2>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentQ}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="space-y-6"
+          >
+            <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 leading-snug">
+              {currentQData.question}
+            </h2>
 
- <div className="grid grid-cols-1 gap-3">
- {currentQData.options.map((opt, idx) => (
- <button
- key={idx}
- disabled={selectedOption !== null}
- onClick={() => handleAnswer(opt.score, idx)}
- className={`group relative flex items-center gap-4 p-4 text-left transition-all duration-200 border rounded-xl shadow-xs ${selectedOption === idx
- ? "bg-white text-zinc-900 border-zinc-950 ring-2 ring-[#00CC6A]"
- : "bg-white border-zinc-200/80 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/50"
- } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
- >
- <div className={`w-7 h-7 flex-shrink-0 flex items-center justify-center text-xs font-sans font-bold rounded-lg border transition-colors ${selectedOption === idx
- ? "bg-[#00CC6A] text-black border-[#00CC6A]"
- : "bg-zinc-100 border-zinc-200 text-zinc-600 group-hover:border-zinc-300 group-hover:text-zinc-900"
- }`}>
- {String.fromCharCode(65 + idx)}
- </div>
- <span className="text-xs md:text-sm font-medium leading-relaxed">
- {opt.label}
- </span>
- </button>
- ))}
- </div>
- </div>
- </div>
+            <div className="grid grid-cols-1 gap-3">
+              {currentQData.options.map((opt, idx) => {
+                const letter = String.fromCharCode(65 + idx);
+                const isSelected = selectedOption === idx;
 
- {/* Log strip - fixed bottom */}
- <AnimatePresence>
- {showLog && currentQData.log && (
- <motion.div
- initial={{ opacity: 0, y: 20 }}
- animate={{ opacity: 1, y: 0 }}
- exit={{ opacity: 0, y: 20 }}
- className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-zinc-100 px-4 py-3"
- >
- <p className="text-xs font-medium text-zinc-500 text-center max-w-2xl mx-auto">
- <span className="text-black font-bold mr-2">Análise:</span>{currentQData.log}
- </p>
- </motion.div>
- )}
- </AnimatePresence>
- </div>
+                return (
+                  <button
+                    key={idx}
+                    disabled={selectedOption !== null}
+                    onClick={() => handleAnswer(opt.score, idx)}
+                    className={`group relative flex items-center justify-between p-4 sm:p-5 text-left transition-all duration-200 border rounded-xl shadow-xs cursor-pointer ${
+                      isSelected
+                        ? "bg-white text-zinc-900 border-zinc-950 ring-2 ring-[#00CC6A]"
+                        : "bg-white border-zinc-200/80 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/50"
+                    } ${selectedOption !== null && selectedOption !== idx ? "opacity-40" : "opacity-100"}`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center text-xs font-sans font-bold rounded-lg border transition-colors ${
+                        isSelected
+                          ? "bg-[#00CC6A] text-black border-[#00CC6A]"
+                          : "bg-zinc-100 border-zinc-200 text-zinc-600 group-hover:border-zinc-300 group-hover:text-zinc-900"
+                      }`}>
+                        {letter}
+                      </div>
+                      <span className="text-xs md:text-sm font-medium leading-relaxed">
+                        {opt.label}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors ml-4 shrink-0">
+                      <span className="text-xs font-bold uppercase tracking-wider hidden sm:inline">{letter}</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {showLog && currentQData.log && (
+              <div className="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 text-xs font-medium leading-relaxed flex items-start gap-2.5">
+                <span className="shrink-0 font-bold">💡 Insight:</span>
+                <span>{currentQData.log}</span>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="flex items-center justify-between pt-6 border-t border-zinc-100 text-[11px] text-zinc-400 font-medium">
+          <span className="flex items-center gap-1.5">
+            <Command className="w-3 h-3" /> Pressione <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">A</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">B</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">C</kbd> ou <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">D</kbd> para responder
+          </span>
+          <span>100% Privado</span>
+        </div>
+      </div>
+    </div>
  )}
 
  {step === 'results' && (

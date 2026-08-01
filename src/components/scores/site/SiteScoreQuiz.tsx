@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DiagnosticLayout } from '@/components/diagnostics/DiagnosticLayout';
 import { QuestionProgressBar } from '@/components/diagnostics/QuestionProgressBar';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Command } from 'lucide-react';
 
 export const QUESTIONS = [
   {
@@ -82,31 +83,52 @@ interface SiteScoreQuizProps {
 export const SiteScoreQuiz = ({ currentQ, selectedOption, showLog, onAnswer }: SiteScoreQuizProps) => {
   const question = QUESTIONS[currentQ];
 
+  useEffect(() => {
+    if (selectedOption !== null) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const key = e.key.toUpperCase();
+      const optionMap: Record<string, number> = { 'A': 0, 'B': 1, 'C': 2, 'D': 3, '1': 0, '2': 1, '3': 2, '4': 3 };
+
+      if (key in optionMap) {
+        const optIndex = optionMap[key];
+        if (question.options[optIndex]) {
+          onAnswer(question.options[optIndex].score, optIndex);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentQ, selectedOption, question]);
+
   return (
     <DiagnosticLayout 
-      title="Diagnóstico de Site & Landing Page" 
-      subtitle="Auditoria de CRO e Performance" 
+      title="Diagnóstico de Site & CRO" 
+      subtitle="Avaliação completa de performance, clareza de proposta de valor e fricção de conversão B2B" 
       variant="light" 
       centered={true}
     >
-      <div className="max-w-3xl mx-auto w-full py-6 md:py-10 px-4 md:px-0">
-        <QuestionProgressBar currentStep={currentQ + 1} totalSteps={QUESTIONS.length} />
+      <div className="w-full max-w-3xl mx-auto space-y-6">
+        <div className="bg-white border border-zinc-200/90 rounded-2xl shadow-xl p-6 sm:p-10 space-y-8 relative overflow-hidden backdrop-blur-xl">
+          <div className="space-y-4">
+            <QuestionProgressBar current={currentQ} total={QUESTIONS.length} variant="light" />
+          </div>
 
-        <div className="bg-white border border-zinc-200/80 rounded-2xl p-8 md:p-12 shadow-xs mt-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentQ}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-8"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="space-y-6"
             >
-              <h2 className="text-2xl md:text-3xl font-extrabold text-zinc-950 tracking-tight leading-snug">
+              <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 leading-snug">
                 {question.question}
               </h2>
 
-              <div className="grid grid-cols-1 gap-3.5 w-full">
+              <div className="grid grid-cols-1 gap-3">
                 {question.options.map((opt, idx) => {
                   const letter = String.fromCharCode(65 + idx);
                   const isSelected = selectedOption === idx;
@@ -116,21 +138,21 @@ export const SiteScoreQuiz = ({ currentQ, selectedOption, showLog, onAnswer }: S
                       key={idx}
                       disabled={selectedOption !== null}
                       onClick={() => onAnswer(opt.score, idx)}
-                      className={`group relative flex items-center justify-between p-5 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
+                      className={`group relative flex items-center justify-between p-4 sm:p-5 text-left transition-all duration-200 border rounded-xl shadow-xs cursor-pointer ${
                         isSelected
-                          ? "border-[#00CC6A] bg-[#00CC6A]/10 shadow-sm ring-1 ring-[#00CC6A]"
-                          : "border-zinc-200/90 bg-zinc-50/50 hover:bg-zinc-100/70 hover:border-zinc-300 text-zinc-900"
+                          ? "bg-white text-zinc-900 border-zinc-950 ring-2 ring-[#00CC6A]"
+                          : "bg-white border-zinc-200/80 text-zinc-800 hover:border-zinc-300 hover:bg-zinc-50/50"
                       } ${selectedOption !== null && !isSelected ? "opacity-50" : "opacity-100"}`}
                     >
                       <div className="flex items-center gap-4">
-                        <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                        <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center text-xs font-sans font-bold rounded-lg border transition-colors ${
                           isSelected
-                            ? "bg-[#00CC6A] text-zinc-950"
-                            : "bg-zinc-200/80 text-zinc-700 group-hover:bg-zinc-300"
+                            ? "bg-[#00CC6A] text-black border-[#00CC6A]"
+                            : "bg-zinc-100 border-zinc-200 text-zinc-600 group-hover:border-zinc-300 group-hover:text-zinc-900"
                         }`}>
                           {letter}
-                        </span>
-                        <span className="text-sm md:text-base font-semibold text-zinc-900 leading-snug">
+                        </div>
+                        <span className="text-xs md:text-sm font-medium leading-relaxed">
                           {opt.label}
                         </span>
                       </div>
@@ -144,23 +166,21 @@ export const SiteScoreQuiz = ({ currentQ, selectedOption, showLog, onAnswer }: S
                 })}
               </div>
 
-              <AnimatePresence>
-                {showLog && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="overflow-hidden pt-2"
-                  >
-                    <div className="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 text-xs font-medium leading-relaxed flex items-start gap-2.5">
-                      <span className="shrink-0 font-bold">💡 Insights:</span>
-                      <span>{question.log}</span>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {showLog && question.log && (
+                <div className="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 text-xs font-medium leading-relaxed flex items-start gap-2.5">
+                  <span className="shrink-0 font-bold">💡 Insight:</span>
+                  <span>{question.log}</span>
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
+
+          <div className="flex items-center justify-between pt-6 border-t border-zinc-100 text-[11px] text-zinc-400 font-medium">
+            <span className="flex items-center gap-1.5">
+              <Command className="w-3 h-3" /> Pressione <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">A</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">B</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">C</kbd> ou <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">D</kbd> para responder
+            </span>
+            <span>100% Privado</span>
+          </div>
         </div>
       </div>
     </DiagnosticLayout>
