@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import SEO from '@/components/shared/SEO';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, ArrowRight, Mail, Sparkles, ShieldCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function ClaudePartnerThankYouPage() {
   const navigate = useNavigate();
@@ -16,9 +16,9 @@ export default function ClaudePartnerThankYouPage() {
         canonical="https://revhackers.com.br/claude-partner-network/obrigado"
       />
 
-      {/* Hero Section Ultra-Minimalista */}
-      <section className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-32 pb-20 bg-black border-b border-zinc-900">
-        <div className="relative z-10 w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center space-y-8">
+      {/* 1ª DOBRA: Hero Section Ultra-Minimalista (Fundo Preto) */}
+      <section className="relative min-h-[75vh] flex flex-col justify-center items-center overflow-hidden pt-32 pb-20 bg-black border-b border-zinc-900">
+        <div className="relative z-10 w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
           
           {/* Lockup Oficial: Claude Partner Network by RevHackers */}
           <motion.div
@@ -40,80 +40,32 @@ export default function ClaudePartnerThankYouPage() {
             />
           </motion.div>
 
-          {/* Icon Check Minimalista */}
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.05 }}
-            className="w-16 h-16 rounded-full bg-[#00CC6A]/10 border border-[#00CC6A]/30 flex items-center justify-center text-[#00CC6A]"
-          >
-            <CheckCircle2 className="w-8 h-8 text-[#00CC6A]" />
-          </motion.div>
-
           {/* Headline H1 */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-            className="font-sans text-[2.25rem] sm:text-[3rem] font-extrabold text-white leading-[1.1] tracking-tight text-center"
+            transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
+            className="font-sans text-[2.25rem] sm:text-[3.25rem] md:text-[4rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-2xl"
           >
-            Tudo certo! Sua conta foi ativada. 🚀
+            Tudo certo, sua conta foi ativada.
           </motion.h1>
 
           {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
+            transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
             className="text-zinc-300 text-base sm:text-lg font-medium leading-relaxed max-w-xl mx-auto text-center"
           >
             Enviamos a confirmação com os detalhes de acesso diretamente para a caixa de entrada do seu e-mail corporativo.
           </motion.p>
 
-          {/* Card de Próximos Passos */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-full bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 sm:p-8 text-left space-y-6"
-          >
-            <div className="flex items-center gap-3 text-white font-bold text-sm uppercase tracking-wider text-[#00CC6A]">
-              <Mail className="w-4 h-4" /> Próximos Passos Pós-Cadastro
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-start gap-4">
-                <span className="text-[#00CC6A] text-xs font-mono font-extrabold px-2 py-1 bg-[#00CC6A]/10 border border-[#00CC6A]/20 rounded">01</span>
-                <div>
-                  <h4 className="text-white text-sm font-bold">Verifique sua Caixa de Entrada</h4>
-                  <p className="text-zinc-400 text-xs leading-relaxed mt-0.5">Procure pelo e-mail com remetente RevHackers & Anthropic. Cheque também a pasta de spam ou promoções por garantia.</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <span className="text-[#00CC6A] text-xs font-mono font-extrabold px-2 py-1 bg-[#00CC6A]/10 border border-[#00CC6A]/20 rounded">02</span>
-                <div>
-                  <h4 className="text-white text-sm font-bold">Confirme as Instruções de Ativação</h4>
-                  <p className="text-zinc-400 text-xs leading-relaxed mt-0.5">Siga os links no e-mail para validar seus acessos e entrar na comunidade de parceiros.</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <span className="text-[#00CC6A] text-xs font-mono font-extrabold px-2 py-1 bg-[#00CC6A]/10 border border-[#00CC6A]/20 rounded">03</span>
-                <div>
-                  <h4 className="text-white text-sm font-bold">Start na Trilha Prática</h4>
-                  <p className="text-zinc-400 text-xs leading-relaxed mt-0.5">Prepare-se para construir agentes autônomos de IA e escalar operações reais de receita.</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
           {/* Botão de Retorno */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="pt-2"
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="pt-4"
           >
             <Button
               onClick={() => navigate('/')}
@@ -124,6 +76,54 @@ export default function ClaudePartnerThankYouPage() {
             </Button>
           </motion.div>
 
+        </div>
+      </section>
+
+      {/* 2ª DOBRA: Próximos Passos (Fundo Claro SaaS - Padrão Institucional) */}
+      <section className="py-20 bg-zinc-50 border-b border-zinc-200">
+        <div className="max-w-4xl mx-auto px-6 space-y-10">
+          <div className="max-w-2xl">
+            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
+              Próximos Passos
+            </p>
+            <h2 className="text-zinc-900 text-2xl md:text-3xl font-bold tracking-tight leading-tight">
+              O que acontece agora
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {[
+              {
+                step: "01",
+                title: "Verifique seu E-mail",
+                desc: "Procure pelo e-mail com remetente RevHackers & Anthropic. Cheque a pasta de spam ou promoções por garantia."
+              },
+              {
+                step: "02",
+                title: "Ativação de Acessos",
+                desc: "Siga as orientações enviadas para validar suas chaves e entrar no ambiente de parceiros."
+              },
+              {
+                step: "03",
+                title: "Start na Trilha Prática",
+                desc: "Prepare-se para construir agentes autônomos de IA e aplicar em operações reais de receita."
+              }
+            ].map((item) => (
+              <div key={item.step} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/50 transition-all shadow-xs group">
+                <div>
+                  <span className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase block mb-3">
+                    PASSO {item.step}
+                  </span>
+                  <h3 className="text-zinc-900 font-bold text-base mb-2 group-hover:text-[#00CC6A] transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-500 text-xs leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </PageLayout>

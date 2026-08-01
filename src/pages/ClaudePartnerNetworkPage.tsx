@@ -526,7 +526,7 @@ export default function ClaudePartnerNetworkPage() {
                         </>
                       ) : (
                         <>
-                          <span>Validar & Ativar Acessos ⚡</span>
+                          <span>Validar & Ativar Acessos →</span>
                         </>
                       )}
                     </Button>
