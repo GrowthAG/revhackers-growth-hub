@@ -255,7 +255,7 @@ export default function ClaudePartnerNetworkPage() {
             </div>
           </div>
 
-          {/* 2. Para quem essa trilha faz sentido (Notion Feature Grid com Micro-Ícones) */}
+          {/* 2. Para quem essa trilha faz sentido (Layout Editorial Notiano — ZERO CAIXAS DE ÍCONES) */}
           <div className="space-y-8 pt-12 border-t border-zinc-200/80">
             <div className="max-w-2xl">
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-zinc-100 border border-zinc-200/80 text-zinc-600 text-[11px] font-mono font-medium tracking-wider uppercase mb-3">
@@ -269,27 +269,21 @@ export default function ClaudePartnerNetworkPage() {
               </p>
             </div>
 
-            {/* Grid 3 Colunas Notion Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {AUDIENCE_ROLES.map((role) => {
-                const IconComponent = role.icon;
-                return (
-                  <div
-                    key={role.title}
-                    className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2.5"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-white border border-zinc-200/80 flex items-center justify-center text-zinc-800 shadow-2xs">
-                      <IconComponent className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-zinc-900 font-bold text-sm tracking-tight">
-                      {role.title}
-                    </h3>
-                    <p className="text-zinc-500 text-xs leading-relaxed font-normal">
-                      {role.desc}
-                    </p>
-                  </div>
-                );
-              })}
+            {/* Grid 3 Colunas Editorial (Borda Fina + Zero Caixas de Ícones) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {AUDIENCE_ROLES.map((role) => (
+                <div
+                  key={role.title}
+                  className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2"
+                >
+                  <h3 className="text-zinc-900 font-bold text-base tracking-tight">
+                    {role.title}
+                  </h3>
+                  <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                    {role.desc}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
