@@ -81,7 +81,7 @@ export default function ClaudePartnerNetworkPage() {
   };
 
   const handleNextStep2 = async () => {
-    const isValid = await trigger(['company', 'city', 'role', 'companySize', 'segment', 'otherSegment']);
+    const isValid = await trigger(['company', 'city', 'role']);
     if (isValid) setStep(3);
   };
 
@@ -275,9 +275,9 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* Formulário de Confirmação (PADRÃO EXACTO CONTACTFORMSECTION DA HOME) */}
+      {/* Formulário de Confirmação em 3 Etapas (3 CAMPOS POR CARD PADRÃO) */}
       <section ref={formRef} className="py-20 bg-white text-zinc-900">
-        <div className="max-w-3xl mx-auto px-6 space-y-8">
+        <div className="max-w-xl mx-auto px-6 space-y-8">
           
           <div className="text-center space-y-3">
             <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
@@ -286,12 +286,12 @@ export default function ClaudePartnerNetworkPage() {
             <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight">
               {step === 1 && "1. Seus dados de acesso"}
               {step === 2 && "2. Dados da sua empresa"}
-              {step === 3 && "3. Ativação e regras do jogo"}
+              {step === 3 && "3. Perfil & Ativação"}
             </h2>
             <p className="text-zinc-500 text-sm max-w-xl mx-auto">
               {step === 1 && "Preencha seus dados básicos pra gente liberar suas credenciais de parceiro."}
               {step === 2 && "Mapeie sua empresa para conectarmos a melhor integração do Claude."}
-              {step === 3 && "Confirme o compromisso de execução para receber as chaves no e-mail."}
+              {step === 3 && "Selecione seu perfil e confirme o aceite para receber os acessos."}
             </p>
           </div>
 
@@ -300,7 +300,7 @@ export default function ClaudePartnerNetworkPage() {
             <div className="flex items-center justify-between max-w-md mx-auto py-2">
               <div className={`flex items-center gap-2 text-xs font-bold ${step >= 1 ? 'text-[#00CC6A]' : 'text-zinc-400'}`}>
                 <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-all ${step >= 1 ? 'bg-[#00CC6A] text-zinc-950 font-black' : 'bg-zinc-200 text-zinc-600'}`}>1</span>
-                <span>Identificação</span>
+                <span>Seus Dados</span>
               </div>
               <div className={`flex-1 h-0.5 mx-3 transition-colors ${step >= 2 ? 'bg-[#00CC6A]' : 'bg-zinc-200'}`} />
               <div className={`flex items-center gap-2 text-xs font-bold ${step >= 2 ? 'text-[#00CC6A]' : 'text-zinc-400'}`}>
@@ -318,10 +318,10 @@ export default function ClaudePartnerNetworkPage() {
           {!isSubmitted && (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-zinc-50/60 p-8 sm:p-10 rounded-xl border border-zinc-200 shadow-xs">
               
-              {/* STEP 1: DADOS PESSOAIS (EMPILHADOS UM ABAIXO DO OUTRO) */}
+              {/* STEP 1: DADOS PESSOAIS (EXATAMENTE 3 CAMPOS) */}
               {step === 1 && (
                 <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 flex flex-col">
-                  {/* Nome Completo */}
+                  {/* Campo 1 */}
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-zinc-800">1. Nome Completo *</label>
                     <input
@@ -332,7 +332,7 @@ export default function ClaudePartnerNetworkPage() {
                     {errors.fullName && <p className="text-xs text-rose-600 font-medium">{errors.fullName.message}</p>}
                   </div>
 
-                  {/* E-mail Corporativo */}
+                  {/* Campo 2 */}
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-zinc-800">2. E-mail Corporativo *</label>
                     <input
@@ -343,7 +343,7 @@ export default function ClaudePartnerNetworkPage() {
                     {errors.corporateEmail && <p className="text-xs text-rose-600 font-medium">{errors.corporateEmail.message}</p>}
                   </div>
 
-                  {/* Telefone / WhatsApp */}
+                  {/* Campo 3 */}
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-zinc-800">3. WhatsApp / Telefone *</label>
                     <input
@@ -364,10 +364,10 @@ export default function ClaudePartnerNetworkPage() {
                 </motion.div>
               )}
 
-              {/* STEP 2: DADOS DA EMPRESA & OPERAÇÃO (EMPILHADOS UM ABAIXO DO OUTRO) */}
+              {/* STEP 2: DADOS DA EMPRESA (EXATAMENTE 3 CAMPOS) */}
               {step === 2 && (
                 <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 flex flex-col">
-                  {/* Empresa */}
+                  {/* Campo 1 */}
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-zinc-800">4. Nome da Empresa *</label>
                     <input
@@ -378,7 +378,7 @@ export default function ClaudePartnerNetworkPage() {
                     {errors.company && <p className="text-xs text-rose-600 font-medium">{errors.company.message}</p>}
                   </div>
 
-                  {/* Cidade / Estado */}
+                  {/* Campo 2 */}
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-zinc-800">5. Cidade / Estado *</label>
                     <input
@@ -389,7 +389,7 @@ export default function ClaudePartnerNetworkPage() {
                     {errors.city && <p className="text-xs text-rose-600 font-medium">{errors.city.message}</p>}
                   </div>
 
-                  {/* Cargo / Função */}
+                  {/* Campo 3 */}
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-zinc-800">6. Seu Cargo ou Função *</label>
                     <input
@@ -400,7 +400,30 @@ export default function ClaudePartnerNetworkPage() {
                     {errors.role && <p className="text-xs text-rose-600 font-medium">{errors.role.message}</p>}
                   </div>
 
-                  {/* Tamanho da Empresa / Ops */}
+                  <div className="flex items-center gap-4 pt-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handlePrevStep}
+                      className="w-1/3 h-12 border border-zinc-300 font-bold text-sm text-zinc-700 hover:bg-zinc-100"
+                    >
+                      ← Voltar
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={handleNextStep2}
+                      className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
+                    >
+                      <span>Avançar para Perfil & Ativação →</span>
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STEP 3: PERFIL & ATIVAÇÃO (EXATAMENTE 3 ITENS) */}
+              {step === 3 && (
+                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 flex flex-col">
+                  {/* Item 1 */}
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-zinc-800">7. Tamanho da Empresa / Ops *</label>
                     <select
@@ -417,7 +440,7 @@ export default function ClaudePartnerNetworkPage() {
                     {errors.companySize && <p className="text-xs text-rose-600 font-medium">{errors.companySize.message}</p>}
                   </div>
 
-                  {/* Segmento da Empresa */}
+                  {/* Item 2 */}
                   <div className="space-y-2">
                     <label className="text-xs font-semibold text-zinc-800">8. Segmento da Empresa *</label>
                     <select
@@ -440,7 +463,7 @@ export default function ClaudePartnerNetworkPage() {
                   </div>
 
                   {selectedSegment === 'Outro' && (
-                    <div className="p-5 rounded-xl bg-white border border-[#00CC6A]/40 shadow-xs space-y-2 transition-all">
+                    <div className="p-4 rounded-xl bg-white border border-[#00CC6A]/40 shadow-xs space-y-2 transition-all">
                       <label className="text-xs font-bold text-zinc-900 block">
                         Especificar Segmento da Empresa *
                       </label>
@@ -453,6 +476,34 @@ export default function ClaudePartnerNetworkPage() {
                     </div>
                   )}
 
+                  {/* Item 3 */}
+                  <div className="pt-2 border-t border-zinc-200 space-y-3">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        {...register('confirmAvailability')}
+                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
+                      />
+                      <span className="text-xs text-zinc-700 font-medium leading-normal">
+                        Confirmo disponibilidade para acompanhar a trilha de execução *
+                      </span>
+                    </label>
+                    {errors.confirmAvailability && <p className="text-xs text-rose-600 font-medium">{errors.confirmAvailability.message}</p>}
+
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        {...register('agreeTerms')}
+                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
+                      />
+                      <span className="text-xs text-zinc-700 font-medium leading-normal">
+                        Concordo com as regras do jogo e termos do Claude Partner Network *
+                      </span>
+                    </label>
+                    {errors.agreeTerms && <p className="text-xs text-rose-600 font-medium">{errors.agreeTerms.message}</p>}
+                  </div>
+
+                  {/* CTA Final */}
                   <div className="flex items-center gap-4 pt-2">
                     <Button
                       type="button"
@@ -463,11 +514,20 @@ export default function ClaudePartnerNetworkPage() {
                       ← Voltar
                     </Button>
                     <Button
-                      type="button"
-                      onClick={handleNextStep2}
+                      type="submit"
+                      disabled={isSubmitting}
                       className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
                     >
-                      <span>Avançar para Validação →</span>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin text-zinc-950" />
+                          <span>Validando e liberando...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Validar & Ativar Acessos →</span>
+                        </>
+                      )}
                     </Button>
                   </div>
                 </motion.div>
