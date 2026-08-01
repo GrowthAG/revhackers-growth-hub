@@ -88,10 +88,17 @@
     })();
 
     window.addEventListener('error', function(e) {
-      var msg = e && e.message ? String(e.message) : '';
-      if (msg.indexOf('Loading chunk') !== -1 || msg.indexOf('dynamically imported module') !== -1 || msg.indexOf('Importing a module script failed') !== -1) {
-        if (!sessionStorage.getItem('rev_chunk_reload')) {
-          sessionStorage.setItem('rev_chunk_reload', '1');
+      var msg = (e && e.message ? String(e.message) : '') + (e && e.filename ? String(e.filename) : '');
+      var isChunkError = (
+        msg.indexOf('Loading chunk') !== -1 ||
+        msg.indexOf('dynamically imported module') !== -1 ||
+        msg.indexOf('Importing a module script failed') !== -1 ||
+        msg.indexOf('error loading dynamically imported module') !== -1
+      );
+      if (isChunkError) {
+        var lastReload = parseInt(sessionStorage.getItem('rev_chunk_last_reload') || '0', 10);
+        if (Date.now() - lastReload > 3000) {
+          sessionStorage.setItem('rev_chunk_last_reload', String(Date.now()));
           window.location.reload(true);
         }
       }
@@ -145,16 +152,19 @@
     // Auto-detect empty #root (White Screen) and self-heal automatically
     setTimeout(function() {
       var root = document.getElementById('root');
-      if (root && !root.hasChildNodes() && !sessionStorage.getItem('__rx_ws_recovered')) {
-        sessionStorage.setItem('__rx_ws_recovered', '1');
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.getRegistrations().then(function(regs) {
-            regs.forEach(function(r) { r.unregister(); });
-          });
+      if (root && !root.hasChildNodes()) {
+        var lastWs = parseInt(sessionStorage.getItem('__rx_ws_last') || '0', 10);
+        if (Date.now() - lastWs > 4000) {
+          sessionStorage.setItem('__rx_ws_last', String(Date.now()));
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+              regs.forEach(function(r) { r.unregister(); });
+            });
+          }
+          window.location.reload(true);
         }
-        window.location.reload(true);
       }
-    }, 2500);
+    }, 1500);
 
     window.addEventListener('load', function() {
       setTimeout(function() {
