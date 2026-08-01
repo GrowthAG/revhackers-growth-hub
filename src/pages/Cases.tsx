@@ -123,12 +123,12 @@ const Cases = () => {
                     {/* Conteúdo do Card */}
                     <div className="p-6 md:p-8 flex-1 flex flex-col bg-white">
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
+                        <span className="text-zinc-500 text-xs font-semibold tracking-wider uppercase">
                           {study.case_category}
                         </span>
                       </div>
 
-                      <h3 className="text-lg font-bold text-zinc-900 mb-2 group-hover:text-[#00CC6A] transition-colors leading-snug">
+                      <h3 className="text-lg font-bold text-zinc-900 mb-2 group-hover:text-zinc-700 transition-colors leading-snug">
                         {study.title}
                       </h3>
 
@@ -142,17 +142,17 @@ const Cases = () => {
                           {study.metrics.slice(0, 2).map((m: any, idx: number) => (
                             <div key={idx} className="bg-zinc-50 border border-zinc-100 rounded-lg p-2.5">
                               <span className="text-[10px] text-zinc-400 font-semibold block uppercase tracking-wider">{m.label}</span>
-                              <span className="text-sm font-extrabold text-zinc-900">{m.value}</span>
+                              <span className="text-sm font-extrabold text-zinc-950">{m.value}</span>
                             </div>
                           ))}
                         </div>
                       )}
 
                       <div className="pt-4 border-t border-zinc-100 flex items-center justify-between">
-                        <span className="text-xs font-bold text-zinc-900 group-hover:text-[#00CC6A] transition-colors">
+                        <span className="text-xs font-bold text-zinc-950 group-hover:text-zinc-700 transition-colors">
                           Ver Estudo Completo
                         </span>
-                        <ArrowRight className="h-4 w-4 text-zinc-400 group-hover:text-[#00CC6A] group-hover:translate-x-1 transition-all" />
+                        <ArrowRight className="h-4 w-4 text-zinc-400 group-hover:text-zinc-950 group-hover:translate-x-1 transition-all" />
                       </div>
                     </div>
 

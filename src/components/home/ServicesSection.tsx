@@ -52,27 +52,18 @@ const ServicesSection = () => {
   return (
     <section
       ref={ref}
-      className="py-20 bg-zinc-50 border-b border-zinc-200"
+      className="py-20 bg-white border-b border-zinc-200/80"
     >
       <div className="max-w-5xl mx-auto px-6">
 
-        {/* Header — Centralizado */}
-        <div className="mb-14 max-w-3xl mx-auto text-center">
-          <motion.p
-            variants={fadeUp}
-            custom={0}
-            initial="hidden"
-            animate={inView ? 'visible' : 'hidden'}
-            className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-3"
-          >
-            Como funciona
-          </motion.p>
+        {/* Header — Centralizado sem badges pill */}
+        <div className="mb-14 max-w-3xl mx-auto text-center space-y-3">
           <motion.h2
             variants={fadeUp}
             custom={1}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            className="text-zinc-900 text-2xl md:text-3xl font-bold tracking-tight leading-tight mb-4"
+            className="text-zinc-900 text-2xl md:text-3xl font-extrabold tracking-tight leading-tight"
           >
             Você contratou SDRs, comprou ferramentas e postou no LinkedIn por 6 meses.{' '}
             <span className="text-zinc-400">Quanto disso virou receita auditada?</span>
@@ -82,16 +73,15 @@ const ServicesSection = () => {
             custom={2}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            className="text-zinc-500 text-base leading-relaxed max-w-2xl mx-auto"
+            className="text-zinc-500 text-sm md:text-base leading-relaxed max-w-2xl mx-auto"
           >
             Nós não vendemos horas de consultoria. Nós instalamos 4 sistemas que encontram e fecham receita travada na sua operação.
           </motion.p>
         </div>
 
-        {/* Grid 2x2 — Cards limpos SaaS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Grid 2x2 — Editorial Limpo sem caixas de ícones */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((service, i) => {
-            const Icon = service.icon;
             return (
               <motion.div
                 key={service.title}
@@ -103,29 +93,24 @@ const ServicesSection = () => {
                 <Link
                   to={service.link}
                   onClick={scrollToTop}
-                  className="group flex flex-col h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 hover:shadow-sm transition-all"
+                  className="group flex flex-col h-full p-6 bg-zinc-50/70 border border-zinc-200/80 rounded-xl hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-3"
                 >
-                  {/* Ícones de Engenharia & Processos */}
-                  <div className="w-10 h-10 bg-zinc-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#00CC6A]/10 transition-colors">
-                    <Icon className="w-5 h-5 text-zinc-700 group-hover:text-[#00CC6A] transition-colors" strokeWidth={1.5} />
-                  </div>
-
                   {/* Título */}
-                  <h3 className="text-zinc-900 font-bold text-base mb-2 group-hover:text-[#00CC6A] transition-colors">
+                  <h3 className="text-zinc-900 font-bold text-base tracking-tight">
                     {service.title}
                   </h3>
 
                   {/* Descrição */}
-                  <p className="text-zinc-500 text-sm leading-relaxed flex-1 mb-4">
+                  <p className="text-zinc-500 text-xs leading-relaxed flex-1 font-normal">
                     {service.desc}
                   </p>
 
                   {/* Resultado concreto */}
-                  <div className="flex items-center justify-between pt-4 border-t border-zinc-100">
-                    <span className="text-xs font-sans font-bold text-[#00CC6A]">
+                  <div className="flex items-center justify-between pt-3 border-t border-zinc-200/60">
+                    <span className="text-xs font-sans font-bold text-zinc-900">
                       {service.result}
                     </span>
-                    <ArrowRight className="w-4 h-4 text-zinc-300 group-hover:text-[#00CC6A] transition-colors" strokeWidth={1.5} />
+                    <ArrowRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-900 group-hover:translate-x-1 transition-all" strokeWidth={1.5} />
                   </div>
                 </Link>
               </motion.div>

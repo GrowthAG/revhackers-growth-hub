@@ -75,76 +75,59 @@ const Servicos = () => {
         ]}
       />
       {/* Hero Section - Standard Black */}
-      <section className="bg-black py-24 md:py-32">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
-              Ecossistema
-            </p>
-            <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center">
-              Elimine gargalos de receita conectando <span className="text-[#00CC6A]">CRM, ABM, IA e automações em um único motor de vendas.</span>
-            </h1>
-            <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center mb-8">
-              Engenheiramos toda a infraestrutura de Go-To-Market de ponta a ponta. Unificamos inteligência preditiva, ABM automatizado e CRM para fechar contratos maiores em menos tempo.
-            </p>
-            <div className="flex justify-center gap-4">
-                <Button asChild className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 rounded-lg transition-all">
-                    <Link to="/booking">Auditar Minha Operação</Link>
-                </Button>
-            </div>
+      <section className="bg-black py-24 md:py-32 border-b border-zinc-900">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-5">
+          <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3.25rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
+            Elimine gargalos de receita conectando <span className="text-[#00CC6A]">CRM, ABM, IA e automações em um único motor de vendas.</span>
+          </h1>
+          <p className="text-zinc-300 text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto text-center">
+            Engenheiramos toda a infraestrutura de Go-To-Market de ponta a ponta. Unificamos inteligência preditiva, ABM automatizado e CRM para fechar contratos maiores em menos tempo.
+          </p>
+          <div className="pt-2 flex justify-center">
+            <Button asChild className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm h-12 px-8 rounded-xl shadow-lg transition-all">
+              <Link to="/booking">Auditar Minha Operação →</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Capabilities Matrix - The "Machine" View */}
-      <Section variant="light" className="py-24 md:py-40 bg-zinc-50 relative overflow-hidden">
-        <div className="container-custom">
-          {/* Section Context */}
-          <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8 border-b border-zinc-200 pb-12">
-            <div className="max-w-2xl">
-              <span className="font-sans text-xs text-zinc-400 uppercase tracking-[0.2em] mb-4 block">
-                // The Capabilities Matrix
-              </span>
-              <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-                Sistemas de Crescimento. <br />
-                <span className="text-zinc-300 font-light italic">Peça por peça.</span>
-              </h2>
-            </div>
-            <p className="text-lg text-zinc-500 max-w-xs leading-relaxed font-light text-right md:text-left">
-              Não vendemos "serviços avulsos". Entregamos infraestrutura de receita compobível.
+      {/* Capabilities Matrix - Fundo 100% Branco Puro (Zero Cinza, Zero Caixas de Ícones) */}
+      <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
+        <div className="max-w-6xl mx-auto px-6 space-y-16">
+          
+          {/* Section Header Centralizado */}
+          <div className="max-w-2xl mx-auto text-center space-y-2">
+            <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              Sistemas de Crescimento Commercial
+            </h2>
+            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+              Não vendemos serviços avulsos. Entregamos infraestrutura de receita escalável e componível.
             </p>
           </div>
 
-          {/* Apple-Style Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {/* Grid 3 Colunas Editorial Limpa (Sem caixas de ícones) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {capabilities.map((item) => (
               <div
                 key={item.id}
-                className="group relative bg-white p-10 md:p-12 hover:shadow-sm hover:shadow-zinc-200/50 transition-all duration-700 rounded-xl border border-zinc-100 flex flex-col h-full overflow-hidden"
+                className="p-6 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex flex-col justify-between space-y-6"
               >
-                {/* Header Card */}
-                <div className="flex justify-between items-start mb-12">
-                  <span className="font-sans text-2xl md:text-3xl font-bold text-zinc-50 group-hover:text-zinc-100 transition-colors duration-500 tracking-tight">
-                    {item.id}
+                <div className="space-y-3">
+                  <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
+                    {item.id} / SISTEMA
                   </span>
-                  <div className="p-5 bg-zinc-900 rounded-xl shadow-sm shadow-zinc-200 group-hover:bg-black transition-all duration-500 group-hover:scale-110">
-                    <item.icon className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1">
-                  <h3 className="text-base md:text-lg font-bold text-zinc-900">
+                  <h3 className="text-zinc-900 font-bold text-lg tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-body text-zinc-500 leading-relaxed mb-10 font-normal">
+                  <p className="text-zinc-500 text-xs leading-relaxed font-normal">
                     {item.description}
                   </p>
                 </div>
 
-                {/* Tech Stack Footer */}
-                <div className="pt-8 border-t border-zinc-50">
-                  <div className="flex flex-wrap gap-2 mb-10">
+                <div className="space-y-4 pt-4 border-t border-zinc-200/60">
+                  <div className="flex flex-wrap gap-1.5">
                     {item.tech.map((tech) => (
-                      <span key={tech} className="text-2xs font-bold text-zinc-400 uppercase bg-zinc-50 border border-zinc-100 px-2.5 py-1 rounded-lg">
+                      <span key={tech} className="text-[10px] font-semibold text-zinc-600 uppercase bg-white border border-zinc-200 px-2 py-0.5 rounded">
                         {tech}
                       </span>
                     ))}
@@ -152,38 +135,34 @@ const Servicos = () => {
 
                   <Link
                     to={`/servicos/${item.slug}`}
-                    className="inline-flex items-center text-xs font-semibold text-zinc-900 uppercase tracking-wider group-hover:text-black transition-all gap-3 group-hover:gap-5"
+                    className="inline-flex items-center text-xs font-bold text-zinc-900 uppercase tracking-wider hover:text-zinc-600 transition-colors gap-2"
                   >
-                    EXPLORAR <ArrowUpRight className="w-4 h-4" />
+                    <span>Explorar Detalhes</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
-
-                {/* Subtle Hover Gradient */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-zinc-50 rounded-lg -mr-16 -mt-16 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-3xl -z-10" />
               </div>
             ))}
           </div>
         </div>
-      </Section>
+      </section>
 
-      {/* CTA Section - Minimalist Footer */}
-      <Section variant="light" className="py-32 bg-zinc-50 border-t border-zinc-200">
-        <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-              Está pronto para a Máquina?
-            </h2>
-            <p className="text-zinc-500 mb-12 text-lg font-bold max-w-xl mx-auto">
-              Vagas de implementação restritas. Vamos auditar suas finanças e plugar a Automação se houver fit com a RevHackers.
-            </p>
-            <Button asChild className="bg-black text-white hover:bg-[#00CC6A] hover:text-black border-none rounded-lg px-6 h-11 text-sm uppercase tracking-wider font-semibold transition-all transform hover:-translate-y-1">
-              <Link to="/booking">
-                Auditar Minha Operação
-              </Link>
+      {/* CTA Section - Fundo 100% Branco Puro */}
+      <section className="py-20 bg-white text-zinc-900 border-t border-zinc-200/80">
+        <div className="max-w-3xl mx-auto px-6 text-center space-y-4">
+          <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight">
+            Está pronto para a Máquina?
+          </h2>
+          <p className="text-zinc-500 text-sm max-w-xl mx-auto leading-relaxed">
+            Vagas de implementação restritas. Vamos auditar suas finanças e plugar a Automação se houver fit com a RevHackers.
+          </p>
+          <div className="pt-2">
+            <Button asChild className="bg-zinc-950 text-white hover:bg-zinc-800 font-bold text-sm h-11 px-8 rounded-xl shadow-xs transition-all">
+              <Link to="/booking">Auditar Minha Operação →</Link>
             </Button>
           </div>
         </div>
-      </Section>
+      </section>
     </PageLayout>
   );
 };
