@@ -176,7 +176,7 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
-            className="font-sans text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-extrabold text-white leading-[1.22] tracking-tight text-center max-w-3xl"
+            className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-[1.2] tracking-tight text-center max-w-3xl mx-auto"
           >
             Você foi selecionado para o <span className="text-[#00CC6A]">Claude Partner Network</span> & RevHackers.
           </motion.h1>
@@ -186,7 +186,7 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-            className="text-zinc-300 text-base sm:text-lg md:text-xl font-medium leading-relaxed max-w-2xl mx-auto text-center"
+            className="text-zinc-300 text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto text-center"
           >
             Aqui é o ambiente onde você vai aprender o Claude de verdade. Dedique-se e com certeza você colherá bons frutos disso.
           </motion.p>
@@ -195,11 +195,11 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="pt-3 sm:pt-4"
+            className="pt-2 flex justify-center"
           >
             <Button
               onClick={scrollToForm}
-              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm sm:text-base h-12 sm:h-13 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
+              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm sm:text-base h-12 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
             >
               <span>Ativar Acesso & Criar Conta</span>
               <ArrowRight className="w-4 h-4" />

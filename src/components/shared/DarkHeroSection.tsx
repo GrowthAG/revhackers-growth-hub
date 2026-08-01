@@ -34,10 +34,10 @@ const DarkHeroSection = ({
               {eyebrow}
             </p>
           )}
-          <h1 className="text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.5rem] font-extrabold text-white mb-6 sm:mb-8 leading-[1.22] tracking-tight text-center max-w-3xl mx-auto">
+          <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-6 leading-[1.2] tracking-tight text-center max-w-3xl mx-auto">
             {title}
           </h1>
-          <p className="text-zinc-300 text-base sm:text-lg md:text-xl font-medium leading-relaxed max-w-2xl mx-auto text-center mb-10 sm:mb-12">
+          <p className="text-zinc-300 text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto text-center mb-8 sm:mb-10">
             {subtitle}
           </p>
         </div>

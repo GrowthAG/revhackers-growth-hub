@@ -75,16 +75,16 @@ const Servicos = () => {
         ]}
       />
       {/* Hero Section - Standard Black */}
-      <section className="bg-black py-24 md:py-32 border-b border-zinc-900">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-6 sm:space-y-8">
-          <h1 className="text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.5rem] font-extrabold text-white leading-[1.22] tracking-tight text-center max-w-3xl mx-auto">
+      <section className="bg-black py-20 md:py-28 border-b border-zinc-900">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
+          <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-[1.2] tracking-tight text-center max-w-3xl mx-auto">
             Elimine gargalos de receita conectando <span className="text-[#00CC6A]">CRM, ABM, IA e automações em um único motor de vendas.</span>
           </h1>
-          <p className="text-zinc-300 text-base sm:text-lg md:text-xl font-medium leading-relaxed max-w-2xl mx-auto text-center">
+          <p className="text-zinc-300 text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto text-center">
             Engenheiramos toda a infraestrutura de Go-To-Market de ponta a ponta. Unificamos inteligência preditiva, ABM automatizado e CRM para fechar contratos maiores em menos tempo.
           </p>
-          <div className="pt-3 sm:pt-4 flex justify-center">
-            <Button asChild className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm sm:text-base h-12 sm:h-13 px-8 rounded-xl shadow-lg transition-all">
+          <div className="pt-2 flex justify-center">
+            <Button asChild className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm sm:text-base h-12 px-8 rounded-xl shadow-lg transition-all">
               <Link to="/booking">Auditar Minha Operação →</Link>
             </Button>
           </div>
