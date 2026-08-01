@@ -1,4 +1,6 @@
 import { lazy, Suspense } from "react";
+import CommandPalette from "@/components/ui/CommandPalette";
+import FounderVideoWidget from "@/components/shared/FounderVideoWidget";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -334,12 +336,11 @@ const App = () => (
               <Route path="/dashboard" element={<ProtectedRoute><GrowthMapPage /></ProtectedRoute>} />
               {/* Rota PlanSignPage removida */}
               <Route path="/hub/:id" element={<ClientProjectHub />} />
-
-                  {/* 404 Route */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
               </ErrorBoundary>
             </Suspense>
+            <FounderVideoWidget />
           </>
         </AuthProvider>
       </BrowserRouter>
