@@ -134,8 +134,8 @@ const FounderVideoWidget = () => {
                   />
                 ) : (
                   <img
-                    src="https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694f308542bb1c3d633bdbfb.png"
-                    alt="Giulliano"
+                    src="/uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
+                    alt="Giulliano Alves"
                     className="w-full h-full object-cover"
                   />
                 )}
@@ -161,26 +161,13 @@ const FounderVideoWidget = () => {
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
             className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] max-h-[85vh] bg-zinc-950 text-white rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden flex flex-col"
           >
-            {/* Header com Vídeo do Founder */}
-            <div className="relative h-44 bg-zinc-900 overflow-hidden shrink-0">
-              {!videoError ? (
-                <video
-                  ref={videoRef}
-                  src={FOUNDER_VIDEO_URL}
-                  autoPlay
-                  loop
-                  muted={isMuted}
-                  playsInline
-                  onError={() => setVideoError(true)}
-                  className="w-full h-full object-cover filter brightness-90"
-                />
-              ) : (
-                <img
-                  src="https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694f308542bb1c3d633bdbfb.png"
-                  alt="Giulliano"
-                  className="w-full h-full object-cover"
-                />
-              )}
+            {/* Header com Vídeo do Founder - Enquadramento Perfeito com object-top */}
+            <div className="relative h-60 bg-zinc-900 overflow-hidden shrink-0">
+              <img
+                src="/uploads/0cf4734e-5153-4c6e-8f33-4b382577e479.png"
+                alt="Giulliano Alves"
+                className="w-full h-full object-cover object-top filter brightness-95"
+              />
 
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-zinc-950/60 pointer-events-none" />
