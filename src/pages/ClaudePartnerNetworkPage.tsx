@@ -209,25 +209,22 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* O que acontece agora & Público Elegível (PADRÃO NOTION.SO & ASIDE.COM — LIGHT MODE REFINADO) */}
+      {/* O que acontece agora & Público Elegível (HEADLINES CENTRALIZADAS — ZERO BADGES EM PILL BANIDOS) */}
       <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
         <div className="max-w-6xl mx-auto px-6 space-y-20">
           
-          {/* 1. O que acontece agora (Notion Step Block System) */}
-          <div className="space-y-8">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-zinc-100 border border-zinc-200/80 text-zinc-600 text-[11px] font-mono font-medium tracking-wider uppercase mb-3">
-                Processo de Entrada
-              </span>
-              <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+          {/* 1. O que acontece agora (Headlines Centralizadas — Zero Pill Badges) */}
+          <div className="space-y-10">
+            <div className="max-w-2xl mx-auto text-center space-y-2">
+              <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                 O que acontece agora
               </h2>
-              <p className="text-zinc-500 text-xs sm:text-sm mt-2 leading-relaxed">
+              <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
                 Do cadastro inicial à liberação das credenciais de parceiro no ambiente oficial do Claude.
               </p>
             </div>
 
-            {/* Grid 4 Colunas Notion Style (Containers Sutis + Micro Pill Badges) */}
+            {/* Grid 4 Colunas Clean (Zero Pill Badges) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { step: "01", title: "Cadastro em 3 Etapas", desc: "Preenche seus dados essenciais pra gente liberar suas credenciais de acesso." },
@@ -237,39 +234,34 @@ export default function ClaudePartnerNetworkPage() {
               ].map((item) => (
                 <div
                   key={item.step}
-                  className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex flex-col justify-between space-y-3"
+                  className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2"
                 >
-                  <div className="space-y-2">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded bg-white border border-zinc-200 text-zinc-700 text-[11px] font-mono font-semibold">
-                      Passo {item.step}
-                    </span>
-                    <h3 className="text-zinc-900 font-bold text-base tracking-tight pt-1">
-                      {item.title}
-                    </h3>
-                    <p className="text-zinc-500 text-xs leading-relaxed font-normal">
-                      {item.desc}
-                    </p>
-                  </div>
+                  <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
+                    {item.step} / Passo
+                  </span>
+                  <h3 className="text-zinc-900 font-bold text-base tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                    {item.desc}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* 2. Para quem essa trilha faz sentido (Layout Editorial Notiano — ZERO CAIXAS DE ÍCONES) */}
-          <div className="space-y-8 pt-12 border-t border-zinc-200/80">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-zinc-100 border border-zinc-200/80 text-zinc-600 text-[11px] font-mono font-medium tracking-wider uppercase mb-3">
-                Público Elegível
-              </span>
-              <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+          {/* 2. Para quem essa trilha faz sentido (Headlines Centralizadas — Zero Pill Badges) */}
+          <div className="space-y-10 pt-12 border-t border-zinc-200/80">
+            <div className="max-w-2xl mx-auto text-center space-y-2">
+              <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                 Para quem essa trilha foi construída
               </h2>
-              <p className="text-zinc-500 text-xs sm:text-sm mt-2 leading-relaxed">
+              <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
                 Desenhado exclusivamente para lideranças de tecnologia, produto, receita e automação de negócios B2B.
               </p>
             </div>
 
-            {/* Grid 3 Colunas Editorial (Borda Fina + Zero Caixas de Ícones) */}
+            {/* Grid 3 Colunas Editorial */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {AUDIENCE_ROLES.map((role) => (
                 <div
@@ -290,14 +282,11 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* Formulário de Confirmação em 3 Etapas (NOTION & ASIDE FORM CONTAINER) */}
+      {/* Formulário de Confirmação em 3 Etapas (HEADLINES CENTRALIZADAS — ZERO BADGE IN ETAPAS) */}
       <section ref={formRef} className="py-20 bg-white text-zinc-900 border-t border-zinc-200/80">
         <div className="max-w-md mx-auto px-6 space-y-8">
           
           <div className="text-center space-y-2">
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-600 text-xs font-mono font-medium mb-1">
-              Etapa {step} de 3
-            </span>
             <h2 className="text-zinc-900 text-xl sm:text-2xl font-extrabold tracking-tight">
               {step === 1 && "1. Seus dados de acesso"}
               {step === 2 && "2. Dados da sua empresa"}

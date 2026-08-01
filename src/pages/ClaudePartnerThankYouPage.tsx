@@ -79,16 +79,16 @@ export default function ClaudePartnerThankYouPage() {
         </div>
       </section>
 
-      {/* 2ª DOBRA: Próximos Passos (MEIO DA PÁGINA: PADRÃO NOTION.SO REFINADO) */}
+      {/* 2ª DOBRA: Próximos Passos (HEADLINES CENTRALIZADAS — ZERO PILL BADGES) */}
       <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
-        <div className="max-w-5xl mx-auto px-6 space-y-8">
-          <div className="max-w-2xl">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-zinc-100 border border-zinc-200/80 text-zinc-600 text-[11px] font-mono font-medium tracking-wider uppercase mb-3">
-              Processo de Entrada
-            </span>
-            <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+        <div className="max-w-5xl mx-auto px-6 space-y-10">
+          <div className="max-w-2xl mx-auto text-center space-y-2">
+            <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
               O que acontece agora
             </h2>
+            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+              Próximas etapas após o envio da sua aplicação para o Claude Partner Network.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -111,19 +111,17 @@ export default function ClaudePartnerThankYouPage() {
             ].map((item) => (
               <div
                 key={item.step}
-                className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex flex-col justify-between space-y-3"
+                className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2"
               >
-                <div className="space-y-2">
-                  <span className="inline-flex items-center px-2 py-0.5 rounded bg-white border border-zinc-200 text-zinc-700 text-[11px] font-mono font-semibold">
-                    Passo {item.step}
-                  </span>
-                  <h3 className="text-zinc-900 font-bold text-base tracking-tight pt-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-zinc-500 text-xs leading-relaxed font-normal">
-                    {item.desc}
-                  </p>
-                </div>
+                <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
+                  {item.step} / Passo
+                </span>
+                <h3 className="text-zinc-900 font-bold text-base tracking-tight">
+                  {item.title}
+                </h3>
+                <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
