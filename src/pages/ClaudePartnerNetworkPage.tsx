@@ -39,16 +39,17 @@ const confirmationSchema = z.object({
 type ConfirmationFormData = z.infer<typeof confirmationSchema>;
 
 const AUDIENCE_ROLES = [
-  { icon: Cpu, title: 'SaaS & Founders', desc: 'Engenharia de produto e automação B2B' },
-  { icon: Layers, title: 'Software House & Devs', desc: 'Construção de soluções AI-native' },
-  { icon: ShieldCheck, title: 'Cibersegurança', desc: 'Compliance e governança de dados Enterprise' },
-  { icon: Award, title: 'Automação & RevOps', desc: 'Orquestração de pipelines e CRMs inteligentes' },
-  { icon: Sparkles, title: 'Growth & CS', desc: 'Retenção e expansão de contas pós-venda' },
-  { icon: Check, title: 'Produto & Liderança', desc: 'Estratégia de integração de IA em processos' }
+  { icon: Cpu, title: 'Founders & Hackers', desc: 'Quem constrói o produto e quer IA rodando no core do negócio' },
+  { icon: Layers, title: 'Devs & Tech Leads', desc: 'Galera de código que quer criar agentes autônomos de verdade com Claude' },
+  { icon: ShieldCheck, title: 'Cibersegurança', desc: 'Quem cuida de infraestrutura, chaves e segurança sem passar vergonha' },
+  { icon: Award, title: 'RevOps & Automações', desc: 'Quem quer matar o trabalho braçal e automatizar o funil B2B' },
+  { icon: Sparkles, title: 'Growth & Vendas', desc: 'Quem vive de bater meta, escalar máquina de vendas e gerar receita' },
+  { icon: Check, title: 'Líderes de Produto', desc: 'Quem decide o roadmap e não quer ficar pra trás na corrida de IA' }
 ];
 
 export default function ClaudePartnerNetworkPage() {
   const { toast } = useToast();
+  const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
@@ -59,6 +60,7 @@ export default function ClaudePartnerNetworkPage() {
   const {
     register,
     handleSubmit,
+    trigger,
     watch,
     formState: { errors },
   } = useForm<ConfirmationFormData>({
@@ -70,6 +72,20 @@ export default function ClaudePartnerNetworkPage() {
   });
 
   const selectedSegment = watch('segment');
+
+  const handleNextStep1 = async () => {
+    const isValid = await trigger(['fullName', 'corporateEmail']);
+    if (isValid) setStep(2);
+  };
+
+  const handleNextStep2 = async () => {
+    const isValid = await trigger(['company', 'role', 'website', 'segment', 'otherSegment']);
+    if (isValid) setStep(3);
+  };
+
+  const handlePrevStep = () => {
+    setStep((prev) => Math.max(1, prev - 1));
+  };
 
   const onSubmit = async (data: ConfirmationFormData) => {
     setIsSubmitting(true);
@@ -160,7 +176,7 @@ export default function ClaudePartnerNetworkPage() {
             transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
             className="text-zinc-400 text-base md:text-xl font-normal leading-relaxed max-w-2xl mx-auto text-center"
           >
-            Impulsione a arquitetura de inteligência artificial da sua empresa com os modelos Claude 3.5 Sonnet e agentes autônomos de alta performance.
+            Sem mimimi corporativo ou palestrinha. Aqui a gente constrói agentes autônomos de IA e escala operação de receita na prática usando o ecossistema do Claude 3.5 Sonnet.
           </motion.p>
 
           {/* Indicador de Status Limpo — Padrão da Home */}
@@ -171,7 +187,7 @@ export default function ClaudePartnerNetworkPage() {
             className="flex items-center justify-center gap-2 text-zinc-400 text-xs font-medium"
           >
             <span className="w-2 h-2 rounded-full bg-[#00CC6A]" />
-            <span>Programa Exclusivo: <strong className="text-white">Capacitação Oficial Anthropic & RevHackers</strong></span>
+            <span>Papo reto: <strong className="text-white">Trilha de execução restrita RevHackers × Anthropic</strong></span>
           </motion.div>
 
           {/* Box de Apoio */}
@@ -186,7 +202,7 @@ export default function ClaudePartnerNetworkPage() {
               Programa Oficial Anthropic x RevHackers
             </div>
             <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-              Trilha técnica oficial desenvolvida em parceria com a Anthropic. Criada para founders, diretores e times de tecnologia aplicarem a pilha de modelos Claude e agentes autônomos em operações reais.
+              Trilha técnica sem enrolação. Criada pra quem quer meter a mão no código, conectar o Claude no produto e rodar agentes autônomos que geram resultado de verdade.
             </p>
           </motion.div>
 
@@ -224,10 +240,10 @@ export default function ClaudePartnerNetworkPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
               {[
-                { step: "01", title: "Confirmação de Dados", desc: "Preencha o formulário oficial nesta página para garantir sua vaga." },
-                { step: "02", title: "Validação Técnica", desc: "Nossa equipe analisa o alinhamento técnico e de negócio." },
-                { step: "03", title: "Recebimento de Acessos", desc: "Envio de chave de acesso, calendário de encontros e materiais." },
-                { step: "04", title: "Entrada na Trilha", desc: "Início do programa prático de desenvolvimento com o time." }
+                { step: "01", title: "Cadastro sem Frescura", desc: "Preenche seus dados abaixo pra gente entender o seu cenário." },
+                { step: "02", title: "Validação & Tech Match", desc: "A gente analisa a sua arquitetura pra conectar o Claude da forma mais eficiente." },
+                { step: "03", title: "Acessos no Seu E-mail", desc: "Receba as chaves, documentações técnicas e credenciais direto no seu inbox." },
+                { step: "04", title: "Execução Brutal", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
               ].map((item) => (
                 <div key={item.step} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 transition-all shadow-xs group">
                   <div>
@@ -288,15 +304,39 @@ export default function ClaudePartnerNetworkPage() {
           
           <div className="text-center space-y-3">
             <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
-              CLAUDE PARTNER NETWORK × REVHACKERS
+              CADASTRO RÁPIDO · ETAPA {step} DE 3
             </p>
             <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Seja bem-vindo ao Claude Partner Network & RevHackers.
+              {step === 1 && "1. Bora se conhecer"}
+              {step === 2 && "2. Qual é a sua empresa?"}
+              {step === 3 && "3. Qual seu objetivo com IA?"}
             </h2>
             <p className="text-zinc-500 text-sm max-w-xl mx-auto">
-              Ative o acesso da sua empresa ao programa de inteligência artificial da Anthropic & RevHackers. Zero enrolação, 100% execução.
+              {step === 1 && "Preenche seus dados básicos pra gente liberar sua ficha de acesso."}
+              {step === 2 && "Informa onde você roda hoje pra gente mapear a melhor integração."}
+              {step === 3 && "Conta pra gente seu desafio pra receber as chaves no e-mail."}
             </p>
           </div>
+
+          {/* Stepper Progress Bar */}
+          {!isSubmitted && (
+            <div className="flex items-center justify-between max-w-md mx-auto py-2">
+              <div className={`flex items-center gap-2 text-xs font-bold ${step >= 1 ? 'text-[#00CC6A]' : 'text-zinc-400'}`}>
+                <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-all ${step >= 1 ? 'bg-[#00CC6A] text-zinc-950 font-black' : 'bg-zinc-200 text-zinc-600'}`}>1</span>
+                <span>Identificação</span>
+              </div>
+              <div className={`flex-1 h-0.5 mx-3 transition-colors ${step >= 2 ? 'bg-[#00CC6A]' : 'bg-zinc-200'}`} />
+              <div className={`flex items-center gap-2 text-xs font-bold ${step >= 2 ? 'text-[#00CC6A]' : 'text-zinc-400'}`}>
+                <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-all ${step >= 2 ? 'bg-[#00CC6A] text-zinc-950 font-black' : 'bg-zinc-200 text-zinc-600'}`}>2</span>
+                <span>Sua Empresa</span>
+              </div>
+              <div className={`flex-1 h-0.5 mx-3 transition-colors ${step >= 3 ? 'bg-[#00CC6A]' : 'bg-zinc-200'}`} />
+              <div className={`flex items-center gap-2 text-xs font-bold ${step >= 3 ? 'text-[#00CC6A]' : 'text-zinc-400'}`}>
+                <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs transition-all ${step >= 3 ? 'bg-[#00CC6A] text-zinc-950 font-black' : 'bg-zinc-200 text-zinc-600'}`}>3</span>
+                <span>Ativação</span>
+              </div>
+            </div>
+          )}
 
           {isSubmitted ? (
             <div className="p-10 rounded-xl bg-emerald-50/60 border border-emerald-200 text-center space-y-4 shadow-xs">
@@ -311,189 +351,236 @@ export default function ClaudePartnerNetworkPage() {
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-zinc-50/60 p-8 sm:p-10 rounded-xl border border-zinc-200 shadow-xs">
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Nome Completo */}
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-zinc-800">1. Nome Completo *</label>
-                  <input
-                    {...register('fullName')}
-                    placeholder="Seu nome completo"
-                    className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                  />
-                  {errors.fullName && <p className="text-xs text-rose-600">{errors.fullName.message}</p>}
-                </div>
+              {/* STEP 1: DADOS PESSOAIS */}
+              {step === 1 && (
+                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/* Nome Completo */}
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-zinc-800">1. Nome Completo *</label>
+                      <input
+                        {...register('fullName')}
+                        placeholder="Seu nome completo"
+                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      />
+                      {errors.fullName && <p className="text-xs text-rose-600 font-medium">{errors.fullName.message}</p>}
+                    </div>
 
-                {/* E-mail Corporativo */}
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-zinc-800">2. E-mail Corporativo *</label>
-                  <input
-                    {...register('corporateEmail')}
-                    placeholder="voce@empresa.com.br"
-                    className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                  />
-                  {errors.corporateEmail && <p className="text-xs text-rose-600">{errors.corporateEmail.message}</p>}
-                </div>
-              </div>
+                    {/* E-mail Corporativo */}
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-zinc-800">2. E-mail Corporativo *</label>
+                      <input
+                        {...register('corporateEmail')}
+                        placeholder="voce@empresa.com.br"
+                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      />
+                      {errors.corporateEmail && <p className="text-xs text-rose-600 font-medium">{errors.corporateEmail.message}</p>}
+                    </div>
+                  </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Empresa */}
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-zinc-800">3. Empresa *</label>
-                  <input
-                    {...register('company')}
-                    placeholder="Nome da sua empresa"
-                    className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                  />
-                  {errors.company && <p className="text-xs text-rose-600">{errors.company.message}</p>}
-                </div>
-
-                {/* Cargo */}
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-zinc-800">4. Cargo *</label>
-                  <input
-                    {...register('role')}
-                    placeholder="Ex: Founder, CTO, VP of Product, Head de RevOps"
-                    className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                  />
-                  {errors.role && <p className="text-xs text-rose-600">{errors.role.message}</p>}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Site da Empresa */}
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-zinc-800">5. Site da Empresa *</label>
-                  <input
-                    {...register('website')}
-                    placeholder="https://empresa.com.br"
-                    className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                  />
-                  {errors.website && <p className="text-xs text-rose-600">{errors.website.message}</p>}
-                </div>
-
-                {/* Segmento da Empresa */}
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-zinc-800">6. Segmento da Empresa *</label>
-                  <select
-                    {...register('segment')}
-                    className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                  <Button
+                    type="button"
+                    onClick={handleNextStep1}
+                    className="w-full h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
                   >
-                    <option value="">Selecione o segmento</option>
-                    <option value="SaaS">SaaS</option>
-                    <option value="Software house">Software house</option>
-                    <option value="Cibersegurança">Cibersegurança</option>
-                    <option value="Automação">Automação</option>
-                    <option value="RevOps">RevOps</option>
-                    <option value="Produto">Produto</option>
-                    <option value="Growth">Growth</option>
-                    <option value="CS">CS</option>
-                    <option value="Desenvolvimento">Desenvolvimento</option>
-                    <option value="Outro">Outro Segmento B2B</option>
-                  </select>
-                  {errors.segment && <p className="text-xs text-rose-600">{errors.segment.message}</p>}
-                </div>
-              </div>
-
-              {/* Card Condicional: Especificar Segmento quando 'Outro' for selecionado */}
-              {selectedSegment === 'Outro' && (
-                <div className="p-5 rounded-xl bg-white border border-[#00CC6A]/40 shadow-xs space-y-2 transition-all">
-                  <label className="text-xs font-bold text-zinc-900 flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-[#00CC6A]" />
-                    Especificar Segmento da Empresa *
-                  </label>
-                  <input
-                    {...register('otherSegment')}
-                    placeholder="Qual o segmento específico da sua empresa?"
-                    className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                  />
-                  {errors.otherSegment && <p className="text-xs text-rose-600 font-medium">{errors.otherSegment.message}</p>}
-                </div>
+                    <span>Próximo Passo: Sua Empresa →</span>
+                  </Button>
+                </motion.div>
               )}
 
-              {/* Por que quer participar? */}
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-800">7. Por que você quer participar desta trilha? *</label>
-                <textarea
-                  {...register('whyParticipate')}
-                  rows={3}
-                  placeholder="Explique resumidamente seu contexto e expectativas com o programa de parceiros da Anthropic..."
-                  className="w-full p-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                />
-                {errors.whyParticipate && <p className="text-xs text-rose-600">{errors.whyParticipate.message}</p>}
-              </div>
+              {/* STEP 2: DADOS DA EMPRESA */}
+              {step === 2 && (
+                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/* Empresa */}
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-zinc-800">3. Empresa *</label>
+                      <input
+                        {...register('company')}
+                        placeholder="Nome da sua empresa"
+                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      />
+                      {errors.company && <p className="text-xs text-rose-600 font-medium">{errors.company.message}</p>}
+                    </div>
 
-              {/* O que quer construir/melhorar? */}
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-800">8. O que você quer construir ou melhorar com Claude? *</label>
-                <textarea
-                  {...register('whatToBuild')}
-                  rows={3}
-                  placeholder="Descreva o caso de uso prático, automação ou funcionalidade que pretende implementar..."
-                  className="w-full p-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                />
-                {errors.whatToBuild && <p className="text-xs text-rose-600">{errors.whatToBuild.message}</p>}
-              </div>
+                    {/* Cargo */}
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-zinc-800">4. Cargo *</label>
+                      <input
+                        {...register('role')}
+                        placeholder="Ex: Founder, CTO, VP of Product, Head de RevOps"
+                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      />
+                      {errors.role && <p className="text-xs text-rose-600 font-medium">{errors.role.message}</p>}
+                    </div>
+                  </div>
 
-              {/* Checkboxes de Confirmação & Termos */}
-              <div className="pt-4 border-t border-zinc-200 space-y-4">
-                
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    {...register('confirmAvailability')}
-                    className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
-                  />
-                  <span className="text-xs text-zinc-700 font-medium leading-normal">
-                    9. Você confirma disponibilidade para acompanhar até 27/10? *
-                  </span>
-                </label>
-                {errors.confirmAvailability && <p className="text-xs text-rose-600">{errors.confirmAvailability.message}</p>}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/* Site da Empresa */}
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-zinc-800">5. Site da Empresa *</label>
+                      <input
+                        {...register('website')}
+                        placeholder="https://empresa.com.br"
+                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      />
+                      {errors.website && <p className="text-xs text-rose-600 font-medium">{errors.website.message}</p>}
+                    </div>
 
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    {...register('agreeTerms')}
-                    className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
-                  />
-                  <span className="text-xs text-zinc-700 font-medium leading-normal">
-                    10. Você concorda com os termos de participação listados abaixo? *
-                  </span>
-                </label>
-                {errors.agreeTerms && <p className="text-xs text-rose-600">{errors.agreeTerms.message}</p>}
+                    {/* Segmento da Empresa */}
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-zinc-800">6. Segmento da Empresa *</label>
+                      <select
+                        {...register('segment')}
+                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      >
+                        <option value="">Selecione o segmento</option>
+                        <option value="SaaS">SaaS</option>
+                        <option value="Software house">Software house</option>
+                        <option value="Cibersegurança">Cibersegurança</option>
+                        <option value="Automação">Automação</option>
+                        <option value="RevOps">RevOps</option>
+                        <option value="Produto">Produto</option>
+                        <option value="Growth">Growth</option>
+                        <option value="CS">CS</option>
+                        <option value="Desenvolvimento">Desenvolvimento</option>
+                        <option value="Outro">Outro Segmento B2B</option>
+                      </select>
+                      {errors.segment && <p className="text-xs text-rose-600 font-medium">{errors.segment.message}</p>}
+                    </div>
+                  </div>
 
-              </div>
+                  {selectedSegment === 'Outro' && (
+                    <div className="p-5 rounded-xl bg-white border border-[#00CC6A]/40 shadow-xs space-y-2 transition-all">
+                      <label className="text-xs font-bold text-zinc-900 flex items-center gap-2">
+                        <Sparkles className="w-3.5 h-3.5 text-[#00CC6A]" />
+                        Especificar Segmento da Empresa *
+                      </label>
+                      <input
+                        {...register('otherSegment')}
+                        placeholder="Qual o segmento específico da sua empresa?"
+                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                      />
+                      {errors.otherSegment && <p className="text-xs text-rose-600 font-medium">{errors.otherSegment.message}</p>}
+                    </div>
+                  )}
 
-              {/* Termos de Participação & Compromisso */}
-              <div className="p-5 rounded-lg bg-white border border-zinc-200 text-xs text-zinc-600 space-y-3 shadow-xs">
-                <p className="font-bold text-zinc-900 flex items-center gap-2 text-xs uppercase tracking-wide">
-                  <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" /> Termos de Participação & Compromisso de Conclusão:
-                </p>
-                <ol className="list-decimal list-inside space-y-1.5 text-zinc-600 leading-relaxed font-normal">
-                  <li>A trilha é 100% gratuita (investimento coberto pelo programa de parceiros).</li>
-                  <li>As vagas são estritamente limitadas e a participação depende de validação final.</li>
-                  <li>Carga horária estimada de 40 horas práticas com prazo final impreterível em 27/10.</li>
-                  <li>Para garantir o compromisso da turma, a não conclusão ou abandono sem justificativa prévia até 27/10 acarretará taxa de não-conclusão de R$ 500.</li>
-                  <li>A confirmação de inscrição implica na concordância com o cronograma e os termos de dedicação.</li>
-                </ol>
-              </div>
+                  <div className="flex items-center gap-4 pt-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handlePrevStep}
+                      className="w-1/3 h-12 border border-zinc-300 font-bold text-sm text-zinc-700 hover:bg-zinc-100"
+                    >
+                      ← Voltar
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={handleNextStep2}
+                      className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
+                    >
+                      <span>Próximo Passo: Ativação →</span>
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
 
-              {/* CTA Final */}
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin text-zinc-950" />
-                    <span>Criando conta e ativando acessos...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Criar Conta & Liberar Acessos →</span>
-                  </>
-                )}
-              </Button>
+              {/* STEP 3: CONTEXTO & ATIVAÇÃO */}
+              {step === 3 && (
+                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                  {/* Por que quer participar? */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">7. Por que você quer participar desta trilha? *</label>
+                    <textarea
+                      {...register('whyParticipate')}
+                      rows={3}
+                      placeholder="Explique resumidamente seu contexto e expectativas com o programa de parceiros da Anthropic..."
+                      className="w-full p-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    />
+                    {errors.whyParticipate && <p className="text-xs text-rose-600 font-medium">{errors.whyParticipate.message}</p>}
+                  </div>
+
+                  {/* O que quer construir/melhorar? */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">8. O que você quer construir ou melhorar com Claude? *</label>
+                    <textarea
+                      {...register('whatToBuild')}
+                      rows={3}
+                      placeholder="Descreva o caso de uso prático, automação ou funcionalidade que pretende implementar..."
+                      className="w-full p-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    />
+                    {errors.whatToBuild && <p className="text-xs text-rose-600 font-medium">{errors.whatToBuild.message}</p>}
+                  </div>
+
+                  {/* Checkboxes de Confirmação & Termos */}
+                  <div className="pt-4 border-t border-zinc-200 space-y-4">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        {...register('confirmAvailability')}
+                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
+                      />
+                      <span className="text-xs text-zinc-700 font-medium leading-normal">
+                        9. Você confirma disponibilidade para acompanhar até 27/10? *
+                      </span>
+                    </label>
+                    {errors.confirmAvailability && <p className="text-xs text-rose-600 font-medium">{errors.confirmAvailability.message}</p>}
+
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        {...register('agreeTerms')}
+                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
+                      />
+                      <span className="text-xs text-zinc-700 font-medium leading-normal">
+                        10. Você concorda com as regras do jogo e termos de participação? *
+                      </span>
+                    </label>
+                    {errors.agreeTerms && <p className="text-xs text-rose-600 font-medium">{errors.agreeTerms.message}</p>}
+                  </div>
+
+                  {/* Termos de Participação & Compromisso */}
+                  <div className="p-5 rounded-lg bg-white border border-zinc-200 text-xs text-zinc-600 space-y-3 shadow-xs">
+                    <p className="font-bold text-zinc-900 flex items-center gap-2 text-xs uppercase tracking-wide">
+                      <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" /> Regras do Jogo & Compromisso de Execução:
+                    </p>
+                    <ol className="list-decimal list-inside space-y-1.5 text-zinc-600 leading-relaxed font-normal">
+                      <li>A trilha é 100% gratuita para as empresas selecionadas.</li>
+                      <li>Foco em execução prática com carga estimada de 40h e prazo final em 27/10.</li>
+                      <li>Buscamos quem vai até o fim. Abandono sem justificativa prévia até 27/10 gera taxa de não-conclusão de R$ 500 para garantir a dedicação da turma.</li>
+                      <li>Ao se cadastrar você concorda em meter a mão na massa com o time da RevHackers & Anthropic.</li>
+                    </ol>
+                  </div>
+
+                  {/* CTA Final */}
+                  <div className="flex items-center gap-4 pt-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handlePrevStep}
+                      className="w-1/3 h-12 border border-zinc-300 font-bold text-sm text-zinc-700 hover:bg-zinc-100"
+                    >
+                      ← Voltar
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin text-zinc-950" />
+                          <span>Liberando acessos...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Entrar no Jogo & Ativar Acessos ⚡</span>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
 
             </form>
           )}
