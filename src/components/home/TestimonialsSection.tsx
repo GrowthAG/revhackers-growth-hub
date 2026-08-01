@@ -31,14 +31,14 @@ const TestimonialsSection = () => {
       <div className="container-custom">
         {/* Header - Subtle & Clean com Logo da RevHackers */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
-          <div className="flex items-center justify-center gap-2 mb-3">
+          <div className="flex items-center justify-center gap-2 mb-4">
             <img
               src="/brand/revhackers-wordmark-white.png"
               alt="RevHackers Logo"
-              className="h-4 sm:h-5 w-auto brightness-0"
+              className="h-7 sm:h-8 md:h-9 w-auto brightness-0 transition-all"
             />
           </div>
-          <h2 className="text-[11px] font-extrabold text-zinc-400 uppercase tracking-widest mb-3">
+          <h2 className="text-xs font-extrabold text-zinc-400 uppercase tracking-widest mb-4">
             RESULTADOS COMPROVADOS
           </h2>
           <p className="text-2xl md:text-3xl font-extrabold text-zinc-950 tracking-tight leading-tight">

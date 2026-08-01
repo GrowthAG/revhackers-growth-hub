@@ -5,7 +5,7 @@ export const cruzeiroSulCase: CaseStudy = {
     title: "Cruzeiro do Sul Virtual",
     category: "Educação",
     isWideLogo: true,
-    logo: "/uploads/cruzeiro-official-new.png",
+    logo: "/uploads/cruzeiro-site-dark.svg",
     coverImage: "",
     challenge: "A Anhembi Morumbi (Cruzeiro do Sul Educacional) enfrentava um desafio crítico na captação de alunos EAD: alto volume de leads de mídia paga, mas baixa conversão em matrículas devido a (1) demora no atendimento humano (leads esfriavam em 24-48h); (2) falta de qualificação adequada dos leads; (3) ausência de um funil estruturado com automações de nutrição. O mercado de EAD é altamente competitivo e o custo por lead estava aumentando, exigindo uma operação comercial mais eficiente e escalável.",
     solution: "Implementamos uma transformação completa da operação comercial de EAD: (1) Mídia Paga: otimização de campanhas Google Ads e Meta Ads com segmentação por curso e perfil de aluno, reduzindo CPL; (2) CRM Estruturado: implementação de Funnels com pipeline de 6 estágios, do lead à matrícula, com visibilidade total do funil; (3) Agentes de IA (SDR): sistema de IA treinado para resposta instantânea 24/7, triagem, qualificação e agendamento automático de calls com consultores; (4) Automações de Vendas: sequências de nutrição por email/WhatsApp, recuperação de leads frios e follow-up automatizado pós-contato.",

@@ -349,10 +349,10 @@ const FounderVideoWidget = () => {
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[390px] h-[560px] max-h-[85vh] bg-zinc-950 text-white rounded-3xl border border-zinc-800/90 shadow-2xl overflow-hidden flex flex-col justify-between"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[390px] h-[560px] max-h-[85vh] bg-white text-zinc-950 rounded-3xl border border-zinc-200 shadow-2xl overflow-hidden flex flex-col justify-between"
           >
             {/* Header com Foto Oficial do Founder - Enquadramento Perfeito h-44 */}
-            <div className="relative h-44 bg-zinc-900 overflow-hidden shrink-0 border-b border-zinc-900">
+            <div className="relative h-44 bg-zinc-900 overflow-hidden shrink-0 border-b border-zinc-100">
               <img
                 src="/uploads/giulliano-linkedin-profile.png"
                 alt="Giulliano Alves"
@@ -360,25 +360,25 @@ const FounderVideoWidget = () => {
               />
 
               {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-zinc-950/40 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
 
               {/* Close Button */}
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-zinc-950/80 text-zinc-400 hover:text-white border border-zinc-800 flex items-center justify-center transition-colors z-20"
+                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-zinc-700 hover:text-zinc-950 border border-zinc-200 flex items-center justify-center transition-colors z-20 shadow-sm"
               >
                 <X className="w-4 h-4" />
               </button>
 
               {/* Live Founder Badge */}
-              <div className="absolute top-3 left-3 flex items-center gap-2 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-zinc-800">
+              <div className="absolute top-3 left-3 flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-zinc-200 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />
-                <span className="text-[11px] font-bold text-white tracking-tight">Giulliano Alves • Founder</span>
+                <span className="text-[11px] font-bold text-zinc-900 tracking-tight">Giulliano Alves • Founder</span>
               </div>
             </div>
 
             {/* Area de Conversa com Autoscroll e Overflow Perfeito */}
-            <div className="flex-1 p-4 space-y-3 overflow-y-auto min-h-0 text-xs leading-relaxed font-sans bg-zinc-950/50 scroll-smooth">
+            <div className="flex-1 p-4 space-y-3 overflow-y-auto min-h-0 text-xs leading-relaxed font-sans bg-zinc-50/50 scroll-smooth">
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
@@ -387,8 +387,8 @@ const FounderVideoWidget = () => {
                   <div
                     className={`max-w-[85%] p-3.5 rounded-2xl break-words ${
                       msg.sender === 'user'
-                        ? 'bg-[#00CC6A] text-black font-semibold rounded-tr-xs shadow-xs'
-                        : 'bg-zinc-900/90 text-zinc-100 border border-zinc-800/80 rounded-tl-xs shadow-xs'
+                        ? 'bg-[#00CC6A] text-zinc-950 font-bold rounded-tr-xs shadow-xs'
+                        : 'bg-white text-zinc-900 border border-zinc-200/90 rounded-tl-xs shadow-sm font-medium'
                     }`}
                   >
                     {msg.text}
@@ -399,8 +399,8 @@ const FounderVideoWidget = () => {
               {/* Animated Typing Indicator */}
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-zinc-900/90 text-zinc-400 border border-zinc-800/80 p-3 rounded-2xl rounded-tl-xs flex items-center gap-1.5 shadow-xs">
-                    <span className="text-[11px] font-medium text-zinc-400 mr-1">Giulliano digitando</span>
+                  <div className="bg-white text-zinc-500 border border-zinc-200/90 p-3 rounded-2xl rounded-tl-xs flex items-center gap-1.5 shadow-sm">
+                    <span className="text-[11px] font-medium text-zinc-500 mr-1">Giulliano digitando</span>
                     <span className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <span className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                     <span className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -414,7 +414,7 @@ const FounderVideoWidget = () => {
                     <button
                       key={i}
                       onClick={() => handleSendMessage(pill)}
-                      className="text-[11px] bg-zinc-900/90 hover:bg-zinc-800 text-zinc-300 hover:text-white px-3 py-1.5 rounded-full border border-zinc-800 transition-all text-left"
+                      className="text-[11px] bg-white hover:bg-zinc-100 text-zinc-700 hover:text-zinc-950 px-3 py-1.5 rounded-full border border-zinc-200 transition-all text-left shadow-xs font-medium"
                     >
                       {pill}
                     </button>
@@ -425,7 +425,7 @@ const FounderVideoWidget = () => {
             </div>
 
             {/* Input Bar */}
-            <div className="p-3 border-t border-zinc-900 bg-zinc-950 shrink-0">
+            <div className="p-3 border-t border-zinc-100 bg-white shrink-0">
               {!emailCaptured ? (
                 <form onSubmit={handleEmailSubmit} className="space-y-2">
                   <div className="relative flex items-center">
@@ -435,7 +435,7 @@ const FounderVideoWidget = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="bg-zinc-900 border-zinc-800 text-white text-xs h-10 pr-12 rounded-xl placeholder:text-zinc-500 focus:border-[#00CC6A]"
+                      className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs h-10 pr-12 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
                     />
                     <button
                       type="submit"
@@ -458,7 +458,7 @@ const FounderVideoWidget = () => {
                     placeholder="Pergunte sobre GTM, Cases, ROI..."
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
-                    className="bg-zinc-900 border-zinc-800 text-white text-xs h-10 rounded-xl placeholder:text-zinc-500 focus:border-[#00CC6A] flex-1"
+                    className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs h-10 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A] flex-1"
                   />
                   <Button
                     type="submit"
