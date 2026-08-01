@@ -13,6 +13,7 @@ import { DiagnosticActionSection } from '@/components/diagnostics/DiagnosticActi
 import { DiagnosticBookingModal } from '@/components/diagnostics/DiagnosticBookingModal';
 import DiagnosticBookingEmbed from '@/components/diagnostics/DiagnosticBookingEmbed';
 import { getDiagnosticInsights } from '@/utils/diagnosticMapping';
+import { QuestionProgressBar } from '@/components/diagnostics/QuestionProgressBar';
 import SEO from '@/components/shared/SEO';
 
 // Questions centered on "Founder Authority & Bottleneck" - 4 dimensões, total = 100pts
