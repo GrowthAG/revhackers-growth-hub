@@ -142,47 +142,75 @@ export default function MaterialLanding() {
                 description={material.subheadline || 'Material gratuito RevHackers'}
                 canonical={`https://revhackers.com.br/materiais/${slug}`}
             />
-            {/* Hero Section — Fundo Black Purificado (EXACT HOMEPAGE HERO BENCHMARK) */}
-            <section className="relative min-h-[70vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black border-b border-zinc-900">
+            {/* Hero Section — Fundo Black Purificado */}
+            <section className="relative min-h-[50vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black border-b border-zinc-900">
                 <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
                     
                     <span className="text-[#00CC6A] text-xs font-semibold uppercase tracking-wider mb-4">
                         {material.type}
                     </span>
 
-                    <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
+                    <h1 className="font-sans text-[2.25rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.15] tracking-tight text-center max-w-3xl mx-auto">
                         {formatHeadlineWithGreen(material.headline)}
                     </h1>
 
-                    <p className="text-zinc-400 mb-8 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
+                    <p className="text-zinc-400 mb-6 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
                         {material.subheadline}
                     </p>
 
-                    {!showForm ? (
-                        <div>
-                            <Button
-                                onClick={() => setShowForm(true)}
-                                className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 rounded-lg transition-colors flex items-center gap-2"
-                            >
-                                <Download className="w-4 h-4" />
-                                <span>Baixar Material Gratuito →</span>
-                            </Button>
-                        </div>
-                    ) : (
-                        <p className="text-xs text-zinc-500">Preencha o formulário abaixo para liberar seu acesso instantâneo.</p>
-                    )}
+                    <div className="flex items-center gap-2 text-zinc-500 text-xs font-medium">
+                        <span>Material 100% Gratuito</span>
+                        <span>•</span>
+                        <span>Download Instantâneo</span>
+                    </div>
                 </div>
             </section>
 
-            {/* Content / Form Section — Fundo 100% Branco Puro */}
-            <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
-                <div className="max-w-md mx-auto px-6">
-                    {showForm ? (
-                        <div className="bg-white border border-zinc-200/80 p-8 rounded-2xl shadow-xs space-y-6">
+            {/* Content & Form Section — Fundo 100% Branco Puro com Contexto Rico */}
+            <section className="py-16 md:py-24 bg-white text-zinc-900 border-b border-zinc-200/80">
+                <div className="max-w-5xl mx-auto px-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                        
+                        {/* Coluna Esquerda: Contexto, O que contém o material e Para quem é */}
+                        <div className="lg:col-span-7 space-y-8">
+                            <div className="space-y-4">
+                                <h2 className="text-2xl font-extrabold text-zinc-950 tracking-tight leading-tight">
+                                    Sobre este {material.type}
+                                </h2>
+                                <div className="text-zinc-600 text-sm md:text-base leading-relaxed whitespace-pre-line space-y-3">
+                                    {material.description || material.subheadline}
+                                </div>
+                            </div>
+
+                            {/* Destaques e Entregáveis */}
+                            <div className="bg-zinc-50/80 border border-zinc-200/80 p-6 rounded-2xl space-y-4">
+                                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-950">
+                                    O que você vai receber:
+                                </h3>
+                                <ul className="space-y-3 text-xs sm:text-sm">
+                                    <li className="flex items-start gap-3 text-zinc-800 font-medium">
+                                        <span className="w-2 h-2 rounded-full bg-[#00CC6A] mt-1.5 shrink-0" />
+                                        <span>Metodologia prática e aplicável imediatamente na sua operação B2B.</span>
+                                    </li>
+                                    <li className="flex items-start gap-3 text-zinc-800 font-medium">
+                                        <span className="w-2 h-2 rounded-full bg-[#00CC6A] mt-1.5 shrink-0" />
+                                        <span>Templates e checklists validados com mais de R$ 50M em pipeline auditado.</span>
+                                    </li>
+                                    <li className="flex items-start gap-3 text-zinc-800 font-medium">
+                                        <span className="w-2 h-2 rounded-full bg-[#00CC6A] mt-1.5 shrink-0" />
+                                        <span>Acesso direto ao material oficial sem custos ou pegadinhas.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Coluna Direita: Formulário Único de Liberação de Acesso */}
+                        <div className="lg:col-span-5 bg-white border border-zinc-200/90 p-8 rounded-2xl shadow-sm space-y-6 sticky top-28">
                             <div className="text-center space-y-1">
-                                <h3 className="text-lg font-bold text-zinc-950 tracking-tight">Liberar Acesso</h3>
+                                <h3 className="text-lg font-extrabold text-zinc-950 tracking-tight">Liberar Acesso Gratuito</h3>
                                 <p className="text-xs text-zinc-500">Informe seu e-mail corporativo para receber o link de download</p>
                             </div>
+                            
                             <DownloadForm
                                 materialId={material.id}
                                 materialType={material.type}
@@ -190,16 +218,8 @@ export default function MaterialLanding() {
                                 linkMaterial={material.downloadLink}
                             />
                         </div>
-                    ) : (
-                        <div className="text-center space-y-4">
-                            <Button
-                                onClick={() => setShowForm(true)}
-                                className="bg-zinc-950 text-white hover:bg-zinc-800 font-bold text-sm h-12 px-8 rounded-xl shadow-xs transition-all"
-                            >
-                                Clique para Baixar Grátis →
-                            </Button>
-                        </div>
-                    )}
+
+                    </div>
                 </div>
             </section>
         </PageLayout>

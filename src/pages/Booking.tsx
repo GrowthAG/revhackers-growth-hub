@@ -73,16 +73,16 @@ const BookingPage = () => {
 
               {/* Pré-Requisitos em Lista Limpa */}
               <div className="space-y-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-zinc-950 block">
-                  Pré-Requisitos:
+                <span className="text-sm font-extrabold uppercase tracking-wider text-zinc-950 block mb-2">
+                  PRÉ-REQUISITOS:
                 </span>
-                <ul className="space-y-3 text-xs sm:text-sm">
-                  <li className="flex items-center gap-2.5 text-zinc-900 font-semibold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-950 shrink-0" />
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-center gap-2.5 text-zinc-950 font-extrabold">
+                    <span className="w-2 h-2 rounded-full bg-zinc-950 shrink-0" />
                     Operação B2B (High Ticket) tracionando
                   </li>
-                  <li className="flex items-center gap-2.5 text-zinc-900 font-semibold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-950 shrink-0" />
+                  <li className="flex items-center gap-2.5 text-zinc-950 font-extrabold">
+                    <span className="w-2 h-2 rounded-full bg-zinc-950 shrink-0" />
                     Presença do Fundador / C-Level na sessão
                   </li>
                 </ul>

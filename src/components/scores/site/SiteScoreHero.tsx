@@ -118,35 +118,23 @@ export const SiteScoreHero = ({
             </div>
 
             {/* 3-Column Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full border-t border-zinc-100 pt-12">
-              <div className="flex flex-col items-center justify-center gap-4 group/item">
-                <div className="w-12 h-12 flex items-center justify-center bg-zinc-50 border border-zinc-100 group-hover/item:border-black group-hover/item:bg-white group-hover/item:text-zinc-900 transition-all duration-500">
-                  <Zap className="w-5 h-5" />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs font-sans font-bold text-zinc-500 ">01 // Speed</span>
-                  <span className="text-sm font-bold text-zinc-900">Performance</span>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full border-t border-zinc-100 pt-10">
+              <div className="flex flex-col items-center justify-center gap-2 group/item">
+                <Zap className="w-6 h-6 text-zinc-900 mb-1" />
+                <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">01. Performance</span>
+                <span className="text-sm font-extrabold text-zinc-900">Velocidade & Carregamento</span>
               </div>
 
-              <div className="flex flex-col items-center justify-center gap-4 group/item">
-                <div className="w-12 h-12 flex items-center justify-center bg-zinc-50 border border-zinc-100 group-hover/item:border-black group-hover/item:bg-white group-hover/item:text-zinc-900 transition-all duration-500">
-                  <Search className="w-5 h-5" />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs font-sans font-bold text-zinc-500 ">02 // SEO</span>
-                  <span className="text-sm font-bold text-zinc-900">Visibilidade</span>
-                </div>
+              <div className="flex flex-col items-center justify-center gap-2 group/item">
+                <Search className="w-6 h-6 text-zinc-900 mb-1" />
+                <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">02. Visibilidade</span>
+                <span className="text-sm font-extrabold text-zinc-900">SEO & Ranqueamento</span>
               </div>
 
-              <div className="flex flex-col items-center justify-center gap-4 group/item">
-                <div className="w-12 h-12 flex items-center justify-center bg-zinc-50 border border-zinc-100 group-hover/item:border-black group-hover/item:bg-white group-hover/item:text-zinc-900 transition-all duration-500">
-                  <Terminal className="w-5 h-5" />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs font-sans font-bold text-zinc-500 ">03 // Tech</span>
-                  <span className="text-sm font-bold text-zinc-900">Conformidade</span>
-                </div>
+              <div className="flex flex-col items-center justify-center gap-2 group/item">
+                <Terminal className="w-6 h-6 text-zinc-900 mb-1" />
+                <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">03. Arquitetura</span>
+                <span className="text-sm font-extrabold text-zinc-900">Conformidade Técnica</span>
               </div>
             </div>
           </div>

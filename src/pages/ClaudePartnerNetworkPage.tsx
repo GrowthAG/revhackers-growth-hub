@@ -228,7 +228,7 @@ export default function ClaudePartnerNetworkPage() {
                 { step: "01", title: "Cadastro em 3 Etapas", desc: "Preenche seus dados essenciais pra gente liberar suas credenciais de acesso." },
                 { step: "02", title: "Validação & Tech Match", desc: "A gente analisa a sua arquitetura pra conectar o Claude da forma mais eficiente." },
                 { step: "03", title: "Acessos no Seu E-mail", desc: "Receba as chaves, documentações técnicas e credenciais direto no seu inbox." },
-                { step: "04", title: "Execução Brutal", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
+                { step: "04", title: "Execução de Alta Performance", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
               ].map((item) => (
                 <div key={item.step} className="border-t border-zinc-200 pt-5 space-y-2">
                   <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">

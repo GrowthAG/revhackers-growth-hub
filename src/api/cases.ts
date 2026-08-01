@@ -19,12 +19,12 @@ const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
         scale: 2.4
     },
     'Cruzeiro': {
-        logo: '/uploads/cruzeiro-clean.png',
-        scale: 2.3
+        logo: '/uploads/cruzeiro-official-new.png',
+        scale: 1.4
     },
     'Cruzeiro do Sul': {
-        logo: '/uploads/cruzeiro-clean.png',
-        scale: 2.3
+        logo: '/uploads/cruzeiro-official-new.png',
+        scale: 1.4
     },
     'Idee': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c73dcdda192452a508485.png',

@@ -23,7 +23,7 @@ const Metodologia = () => {
                     { name: "Metodologia", url: "https://revhackers.com.br/metodologia" }
                 ]}
                 faq={[
-                    { question: "Qual é a metodologia da RevHackers?", answer: "A metodologia RevHackers é baseada em 4 pilares: Aquisição Brutal (campanhas B2B com CAC calculado), IA para Filtragem (qualificação automatizada de leads), Automação de Follow-Up (sistemas que perseguem leads 24h) e CRM Vault (configuração blindada de CRM para registrar cada oportunidade)." }
+                    { question: "Qual é a metodologia da RevHackers?", answer: "A metodologia RevHackers é baseada em 4 pilares: Aquisição Previsível (campanhas B2B com CAC calculado), IA para Filtragem (qualificação automatizada de leads), Automação de Follow-Up (sistemas que perseguem leads 24h) e CRM Vault (configuração blindada de CRM para registrar cada oportunidade)." }
                 ]}
             />
             <Header />
@@ -63,7 +63,7 @@ const Metodologia = () => {
                             <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
                                 01 / PILAR
                             </span>
-                            <h3 className="text-zinc-900 font-bold text-lg tracking-tight">1. Aquisição Brutal</h3>
+                            <h3 className="text-zinc-900 font-bold text-lg tracking-tight">1. Aquisição Previsível</h3>
                             <p className="text-zinc-500 text-xs leading-relaxed font-normal">
                                 Operamos campanhas B2B injetando previsibilidade matemática. Extraímos leads do mercado (Inbound/Outbound) com teto calculado de CAC.
                             </p>

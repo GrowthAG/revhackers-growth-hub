@@ -98,7 +98,7 @@ const Servicos = () => {
           {/* Section Header Centralizado */}
           <div className="max-w-2xl mx-auto text-center space-y-2">
             <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-              Sistemas de Crescimento Commercial
+              Sistemas de Crescimento Comercial
             </h2>
             <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
               Não vendemos serviços avulsos. Entregamos infraestrutura de receita escalável e componível.

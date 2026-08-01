@@ -126,6 +126,7 @@ const FounderVideoWidget = () => {
   };
 
   const [showPills, setShowPills] = useState(true);
+  const [extractedData, setExtractedData] = useState<{ company?: string; crm?: string; role?: string }>({});
 
   const handleSendMessage = (textToSend?: string) => {
     const text = textToSend || inputText;
@@ -146,9 +147,61 @@ const FounderVideoWidget = () => {
       let aiReply = "Fala! Giulliano aqui. Nossa Engenharia de GTM conecta Midia Paga (Google, Meta e LinkedIn Ads) diretamente ao seu CRM com funis de alta conversao. Quer agendar uma auditoria tecnica de 30 minutos pra ver na pratica?";
       
       const lower = text.toLowerCase().trim();
+      const utmParams = { ...getPersistedUtmParams(), ...captureUtmParams() };
 
-      // Conversational Intent Matching (ZERO EMOJIS)
-      if (lower.includes('nome') || lower.includes('quem e') || lower.includes('quem eh') || lower.includes('quem fala') || lower.includes('quem voce')) {
+      // 1. AI Extraction: Detect CRM Tool
+      const crmMatch = lower.match(/(hubspot|rd station|pipedrive|salesforce|activecampaign|zoho|bitrix|exact sales|ghl)/i);
+      if (crmMatch) {
+        const detectedCrm = crmMatch[0].toUpperCase();
+        setExtractedData(prev => ({ ...prev, crm: detectedCrm }));
+        
+        // Background CRM Sync
+        if (email) {
+          sendToGHL({
+            email,
+            customFields: { crm_atual: detectedCrm, ...utmParams },
+            tags: ['ai_chat_crm_captured', 'gtm_engineering']
+          }, 'lead_capture').catch(() => {});
+        }
+
+        aiReply = `Perfeito! O ${detectedCrm} e excelente quando integrado a nossa Engenharia de GTM. Conseguimos instalar automacoes de qualificacao com IA e roteamento inteligente diretamente nele. Qual e o nome da sua empresa?`;
+      } 
+      // 2. AI Extraction: Detect Company Name or Role
+      else if (lower.includes('empresa') || lower.includes('trabalho na') || lower.includes('sou da') || lower.includes('minha empresa')) {
+        const cleanedCompany = text.replace(/(minha empresa e|sou da|trabalho na|empresa|e a)/gi, '').trim();
+        if (cleanedCompany.length > 1) {
+          setExtractedData(prev => ({ ...prev, company: cleanedCompany }));
+          
+          // Background CRM Sync
+          if (email) {
+            sendToGHL({
+              email,
+              companyName: cleanedCompany,
+              customFields: { ...utmParams },
+              tags: ['ai_chat_company_captured', 'gtm_engineering']
+            }, 'lead_capture').catch(() => {});
+          }
+
+          aiReply = `Excelente! Analisando o modelo da ${cleanedCompany}, o maior ganho costuma vir da aceleracao de pipeline com automacoes entre Midia Paga e CRM. Qual e o seu cargo na empresa hoje?`;
+        }
+      }
+      else if (lower.includes('ceo') || lower.includes('founder') || lower.includes('sócio') || lower.includes('socio') || lower.includes('diretor') || lower.includes('head') || lower.includes('gerente') || lower.includes('coordenador') || lower.includes('vendedor') || lower.includes('sdr')) {
+        const roleMatch = text.trim();
+        setExtractedData(prev => ({ ...prev, role: roleMatch }));
+
+        // Background CRM Sync
+        if (email) {
+          sendToGHL({
+            email,
+            customFields: { cargo: roleMatch, ...utmParams },
+            tags: ['ai_chat_role_captured', 'gtm_engineering']
+          }, 'lead_capture').catch(() => {});
+        }
+
+        aiReply = `Otimo falar com quem esta no comando da operacao! O GTM Engineering e exatamente desenhado para lideres que precisam de previsibilidade de receita e ROI acelerado. Quer agendar nossa Auditoria de Vazamento de Receita de 30 min em /booking?`;
+      }
+      // 3. Intent Matching
+      else if (lower.includes('nome') || lower.includes('quem e') || lower.includes('quem eh') || lower.includes('quem fala') || lower.includes('quem voce')) {
         aiReply = "Eu sou a IA do Giulliano Alves, fundador da RevHackers. Posso te ajudar a entender nossa Engenharia de GTM ou agendar uma auditoria tecnica de receita de 30 min. Como posso ajudar sua empresa hoje?";
       } else if (lower.includes('ola') || lower.includes('oi') || lower.includes('bom dia') || lower.includes('boa tarde') || lower.includes('boa noite') || lower.includes('tudo bem')) {
         aiReply = "Fala! Tudo otimo por aqui. Como posso ajudar sua operacao B2B com GTM Engineering hoje?";
@@ -221,8 +274,8 @@ const FounderVideoWidget = () => {
                 )}
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-bold text-white leading-tight">
-                  Giulliano Alves
+                <span className="text-xs font-extrabold text-white leading-tight">
+                  Converse com Giulliano
                 </span>
                 <span className="text-[10px] text-zinc-400 font-medium flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse inline-block shrink-0" />
@@ -266,24 +319,6 @@ const FounderVideoWidget = () => {
               <div className="absolute top-3 left-3 flex items-center gap-2 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-zinc-800">
                 <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />
                 <span className="text-[11px] font-bold text-white tracking-tight">Giulliano Alves • Founder</span>
-              </div>
-
-              {/* Audio Controls */}
-              <div className="absolute bottom-3 right-3 flex items-center gap-2 z-20">
-                <button
-                  onClick={() => setIsMuted(!isMuted)}
-                  className="w-8 h-8 rounded-full bg-zinc-950/80 text-zinc-300 hover:text-white border border-zinc-800 flex items-center justify-center transition-colors"
-                >
-                  {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-[#00CC6A]" />}
-                </button>
-                <button
-                  onClick={() => setIsMicActive(!isMicActive)}
-                  className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors ${
-                    isMicActive ? 'bg-[#00CC6A] text-black border-[#00CC6A]' : 'bg-zinc-950/80 text-zinc-300 border-zinc-800'
-                  }`}
-                >
-                  {isMicActive ? <Mic className="w-3.5 h-3.5" /> : <MicOff className="w-3.5 h-3.5" />}
-                </button>
               </div>
             </div>
 
