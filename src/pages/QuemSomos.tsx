@@ -26,7 +26,7 @@ const QuemSomos = () => {
           { name: "Quem Somos", url: "https://revhackers.com.br/quem-somos" }
         ]}
       />
-      <div className="min-h-screen bg-black animate-fade-in bg-grain">
+      <div className="min-h-screen bg-white">
         {/* Hero Section */}
         <HeroSection />
 
@@ -39,14 +39,12 @@ const QuemSomos = () => {
         {/* Nossos Valores */}
         <ValuesSection />
 
-        {/* Booking Widget Section */}
-        <section className="py-24 bg-black border-t border-white/5">
-          <div className="container-custom">
+        {/* Booking Widget Section — Fundo 100% Branco Puro */}
+        <section className="py-20 bg-white border-t border-zinc-200/80">
+          <div className="max-w-4xl mx-auto px-6">
             <BookingWidget />
           </div>
         </section>
-
-
       </div>
     </PageLayout>
   );

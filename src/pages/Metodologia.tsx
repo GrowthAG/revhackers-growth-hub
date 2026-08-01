@@ -23,92 +23,82 @@ const Metodologia = () => {
                     { name: "Metodologia", url: "https://revhackers.com.br/metodologia" }
                 ]}
                 faq={[
-                    { question: "Qual é a metodologia da RevHackers?", answer: "A metodologia RevHackers é baseada em 4 pilares: Aquisição Brutal (campanhas B2B com CAC calculado), IA para Filtragem (qualificação automatizada de leads), Automação de Follow-Up (sistemas que perseguem leads 24h) e CRM Vault (configuração blindada de CRM para registrar cada oportunidade)." },
-                    { question: "Quanto tempo demora a implementação?", answer: "O ciclo completo de implementação leva de 90 a 120 dias, passando por 4 fases: Diagnóstico Deep Dive, Fundação de Revenue, Growth Loops e Escala & Otimização." }
+                    { question: "Qual é a metodologia da RevHackers?", answer: "A metodologia RevHackers é baseada em 4 pilares: Aquisição Brutal (campanhas B2B com CAC calculado), IA para Filtragem (qualificação automatizada de leads), Automação de Follow-Up (sistemas que perseguem leads 24h) e CRM Vault (configuração blindada de CRM para registrar cada oportunidade)." }
                 ]}
             />
             <Header />
 
             {/* --- HERO SECTION (BLACK) --- */}
-            <section className="bg-black py-24 md:py-32">
-                <div className="max-w-4xl mx-auto px-6 text-center">
-                    {/* Eyebrow */}
-                    <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
-                        Metodologia
-                    </p>
-
-                    {/* Standard Headline H1 */}
-                    <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center">
+            <section className="bg-black py-20 md:py-28 border-b border-zinc-900">
+                <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
+                    <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-[1.2] tracking-tight text-center max-w-3xl mx-auto">
                         Multiplique seu pipeline B2B por 3x em 90 dias <span className="text-[#00CC6A]">sem contratar mais vendedores.</span>
                     </h1>
-
-                    {/* Standard Subheadline */}
-                    <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center mb-8">
+                    <p className="text-zinc-300 text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto text-center">
                         Instalamos a metodologia de Revenue Engineering que integra GTM, RevOps e IA para automatizar 80% das rotinas operacionais de vendas.
                     </p>
-
-                    <div className="flex justify-center gap-4">
-                        <Button asChild className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 rounded-lg transition-all">
-                            <Link to="/booking">Auditar Minha Operação</Link>
+                    <div className="pt-2 flex justify-center">
+                        <Button asChild className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm sm:text-base h-12 px-8 rounded-xl shadow-lg transition-all">
+                            <Link to="/booking">Auditar Minha Operação →</Link>
                         </Button>
                     </div>
                 </div>
             </section>
 
-            {/* --- PILLARS GRID (WHITE SECTION) --- */}
-            <section className="py-24 bg-white border-t border-zinc-100">
-                <div className="container-custom">
-                    <div className="text-center mb-20">
-                        <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
+            {/* --- PILLARS GRID (WHITE SECTION) — Fundo 100% Branco Puro (Sem Caixas de Ícones) --- */}
+            <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
+                <div className="max-w-6xl mx-auto px-6 space-y-12">
+                    <div className="max-w-2xl mx-auto text-center space-y-2">
+                        <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                             A Engenharia da Venda
                         </h2>
-                        <p className="text-zinc-600 max-w-2xl mx-auto text-lg leading-relaxed font-semibold tracking-tight">
-                            Nós não vendemos "horas de consultoria". Nós montamos esses 4 hardwares na sua operação.
+                        <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+                            Nós não vendemos horas de consultoria. Nós montamos estes 4 motores na sua operação.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                         {/* Pillar 1 */}
-                        <div className="group p-10 rounded-xl bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
-                            <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-8 text-white shadow-sm">
-                                <Database className="w-5 h-5" />
-                            </div>
-                            <h3 className="text-base md:text-lg font-bold text-zinc-900">1. Aquisição Brutal</h3>
-                            <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">
+                        <div className="p-6 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2">
+                            <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
+                                01 / PILAR
+                            </span>
+                            <h3 className="text-zinc-900 font-bold text-lg tracking-tight">1. Aquisição Brutal</h3>
+                            <p className="text-zinc-500 text-xs leading-relaxed font-normal">
                                 Operamos campanhas B2B injetando previsibilidade matemática. Extraímos leads do mercado (Inbound/Outbound) com teto calculado de CAC.
                             </p>
                         </div>
 
                         {/* Pillar 2 */}
-                        <div className="group p-10 rounded-xl bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
-                            <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-8 text-white shadow-sm">
-                                <Network className="w-5 h-5" />
-                            </div>
-                            <h3 className="text-base md:text-lg font-bold text-zinc-900">2. IA Filtra Curiosos</h3>
-                            <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">
+                        <div className="p-6 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2">
+                            <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
+                                02 / PILAR
+                            </span>
+                            <h3 className="text-zinc-900 font-bold text-lg tracking-tight">2. IA Filtra Curiosos</h3>
+                            <p className="text-zinc-500 text-xs leading-relaxed font-normal">
                                 Entrou lead sujo? Seus vendedores não falam com ele. Nossa IA de qualificação corta quem não tem verba e agenda quem tem dor real.
                             </p>
                         </div>
 
                         {/* Pillar 3 */}
-                        <div className="group p-10 rounded-xl bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
-                            <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-8 text-white shadow-sm">
-                                <Zap className="w-5 h-5" />
-                            </div>
-                            <h3 className="text-base md:text-lg font-bold text-zinc-900">3. Automação de Follow-Up</h3>
-                            <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">
-                                Seu vendedor esqueceu de ligar? O sistema não. Plugamos robôs (Make/n8n) que perseguem o lead com consistência até ele preencher o calendário.
+                        <div className="p-6 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2">
+                            <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
+                                03 / PILAR
+                            </span>
+                            <h3 className="text-zinc-900 font-bold text-lg tracking-tight">3. Automação de Follow-Up</h3>
+                            <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                                Seu vendedor esqueceu de ligar? O sistema não. Plugamos robôs que perseguem o lead com consistência até ele preencher o calendário.
                             </p>
                         </div>
 
                         {/* Pillar 4 */}
-                        <div className="group p-10 rounded-xl bg-white border border-zinc-200 hover:border-black transition-all duration-500 relative overflow-hidden shadow-sm">
-                            <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-8 text-white shadow-sm">
-                                <Lock className="w-5 h-5" />
-                            </div>
-                            <h3 className="text-base md:text-lg font-bold text-zinc-900">4. CRM Vault (O Cofre)</h3>
-                            <p className="text-sm md:text-base font-normal text-zinc-500 leading-relaxed">
-                                Nenhuma reunião agendada escapa. Você e seu time operam 100% dentro do CRM configurado por nós para registrar cada ganho de receita.
+                        <div className="p-6 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2">
+                            <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
+                                04 / PILAR
+                            </span>
+                            <h3 className="text-zinc-900 font-bold text-lg tracking-tight">4. CRM Vault (Cofre de Dados)</h3>
+                            <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                                CRM configurado como um relógio suíço. Zero pipeline viciado, zero oportunidade perdida sem justificativa técnica registrada.
                             </p>
                         </div>
                     </div>

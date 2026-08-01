@@ -25,7 +25,6 @@ const Comunidade = () => {
       />
       {/* Hero - Standardized DarkHeroSection */}
       <DarkHeroSection
-        eyebrow="Comunidade"
         title={
           <>
             Acelere o crescimento da sua empresa B2B{' '}
@@ -35,46 +34,45 @@ const Comunidade = () => {
         subtitle="Rede fechada de diretores, founders e líderes de RevOps com troca direta de playbooks e benchmarks."
       />
 
-      {/* CTA Bar */}
-      <Section variant="light" className="py-12 bg-white border-b border-zinc-200">
-        <div className="container-custom text-center">
-          <a href="https://academy.revhackers.com.br/" target="_blank" rel="noopener noreferrer">
-            <Button className="btn-green-flat h-14 px-8 text-sm">
-              Solicitar Acesso à Comunidade
-            </Button>
-          </a>
-        </div>
-      </Section>
-
-      {/* Benefits Grid - 3 Cards */}
-      <Section variant="light" className="py-24 bg-white border-b border-zinc-200">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto mb-16">
-            <span className="font-sans text-xs text-zinc-500 uppercase tracking-[0.2em] mb-4 block">
-              // Por que participar
-            </span>
-            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-              Uma rede que <span className="text-revgreen">acelera</span> resultados.
+      {/* Benefits Grid — Fundo 100% Branco Puro (Sem Verde no Branco) */}
+      <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
+        <div className="max-w-6xl mx-auto px-6 space-y-12">
+          
+          <div className="max-w-2xl mx-auto text-center space-y-2">
+            <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              Uma rede que acelera resultados
             </h2>
+            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+              Troca direta de inteligência operacional com quem está escalando receita no campo de batalha.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
-              { icon: GraduationCap, title: 'Aprendizado contínuo', desc: 'Acesso a conteúdos exclusivos, webinars e discussões com especialistas do mercado.' },
-              { icon: Repeat, title: 'Networking estratégico', desc: 'Conecte-se com profissionais do setor e amplie sua rede de contatos qualificados.' },
-              { icon: Lightbulb, title: 'Insights valiosos', desc: 'Descubra tendências, ferramentas e estratégias que estão transformando o mercado.' },
+              { title: 'Aprendizado Contínuo', desc: 'Acesso a conteúdos exclusivos, webinars e discussões avançadas com especialistas do mercado.' },
+              { title: 'Networking Estratégico', desc: 'Conecte-se com executivos C-Level e amplie sua rede de relacionamentos e parcerias.' },
+              { title: 'Playbooks & Benchmarks', desc: 'Acesso direto a estratégias provadas, ferramentas e estruturas operacionais que funcionam.' },
             ].map((item, i) => (
-              <div key={i} className="group bg-white border border-zinc-200 p-10 hover:border-revgreen/30 transition-all duration-500 rounded-xl">
-                <div className="mb-8 text-zinc-600 group-hover:text-revgreen transition-colors duration-500">
-                  <item.icon size={36} strokeWidth={1.5} />
-                </div>
-                <h3 className="text-base md:text-lg font-bold text-zinc-900">{item.title}</h3>
-                <p className="text-zinc-500 font-light text-sm leading-relaxed">{item.desc}</p>
+              <div key={i} className="p-6 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2">
+                <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
+                  0{i + 1} / BENEFÍCIO
+                </span>
+                <h3 className="text-zinc-900 font-bold text-lg tracking-tight">{item.title}</h3>
+                <p className="text-zinc-500 text-xs leading-relaxed font-normal">{item.desc}</p>
               </div>
             ))}
           </div>
+
+          <div className="pt-4 flex justify-center">
+            <a href="https://academy.revhackers.com.br/" target="_blank" rel="noopener noreferrer">
+              <Button className="bg-zinc-950 text-white hover:bg-zinc-800 font-bold text-sm h-12 px-8 rounded-xl shadow-xs transition-all">
+                Solicitar Acesso à Comunidade →
+              </Button>
+            </a>
+          </div>
+
         </div>
-      </Section>
+      </section>
 
       {/* Features - Logo + List */}
       <Section variant="light" className="py-24 bg-white border-b border-zinc-200">

@@ -222,120 +222,139 @@ const ServicosDetalhe = () => {
           { name: service.title, url: `https://revhackers.com.br/servicos/${slug}` }
         ]}
       />
-      {/* 1. HERO SECTION - Minimal White Header */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 bg-white">
-        <div className="container-custom text-center relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <span className="font-bold text-revgreen bg-revgreen/10 px-3 py-1 text-xxs border border-revgreen/20 uppercase tracking-[0.2em] mb-6 inline-block">
-              {service.number} // {service.title}
-            </span>
-            <h1 className="text-2xl md:text-3xl font-bold text-black mb-8 tracking-tight text-balance leading-[1.05]">
-              {service.title}<span className="text-revgreen">.</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-zinc-500 font-medium leading-relaxed max-w-3xl mx-auto tracking-tight mb-12">
-              {service.subtitle}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button onClick={() => setIsBookingOpen(true)} className="bg-revgreen text-black hover:bg-black hover:text-white h-16 px-12 rounded-sm text-sm font-bold uppercase tracking-wider shadow-sm transition-all focus:outline-none">
-                Auditar Minha Operação
-              </Button>
-            </div>
+      {/* 1. HERO SECTION - Black Standard Hero */}
+      <section className="relative py-20 md:py-28 bg-black border-b border-zinc-900">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
+          <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-[1.2] tracking-tight text-center max-w-3xl mx-auto">
+            {service.title}
+          </h1>
+          <p className="text-zinc-300 text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto text-center">
+            {service.subtitle}
+          </p>
+          <div className="pt-2 flex justify-center">
+            <Button
+              onClick={() => setIsBookingOpen(true)}
+              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm sm:text-base h-12 px-8 rounded-xl shadow-lg transition-all"
+            >
+              <span>Auditar Minha Operação →</span>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* 2. O QUE FAZEMOS (What We Do) */}
-      <Section variant="light" className="py-24 bg-white">
-        <div className="container-custom">
-          <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-            A Engenharia (Como funciona)
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* 2. O QUE FAZEMOS (What We Do) — Fundo 100% Branco Puro */}
+      <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
+        <div className="max-w-6xl mx-auto px-6 space-y-12">
+          <div className="max-w-2xl mx-auto text-center space-y-2">
+            <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              A Engenharia de Execução
+            </h2>
+            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+              Conheça as entregas técnicas e os módulos que compõem este sistema.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {service.whatWeDo.map((item, i) => (
-              <Card
+              <div
                 key={i}
-                className="bg-zinc-50 border border-zinc-100 shadow-sm hover:border-revgreen transition-all duration-300 h-full group cursor-pointer"
+                className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex flex-col justify-between space-y-4 cursor-pointer group"
                 onClick={() => setSelectedService(item)}
               >
-                <CardHeader>
-                  <CardTitle className="text-xl font-bold text-black mb-3 group-hover:text-revgreen transition-colors">{item.title}</CardTitle>
-                  <CardDescription className="text-zinc-600 font-light leading-relaxed">
+                <div className="space-y-2">
+                  <h3 className="text-zinc-900 font-bold text-base tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-500 text-xs leading-relaxed font-normal">
                     {item.description}
-                  </CardDescription>
-                  <div className="mt-4 flex items-center text-revgreen text-xs font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
-                    Saiba mais <ArrowRight className="w-3 h-3 ml-1" />
-                  </div>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* 3. COMO FUNCIONA (How It Works) */}
-      <Section variant="light" className="py-24 bg-zinc-50 border-y border-zinc-200">
-        <div className="container-custom">
-          <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-            Teardown Logístico
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-            {/* Connector Line (Desktop only) */}
-            <div className="hidden md:block absolute top-[24px] left-0 w-full h-[2px] bg-zinc-200 -z-10" />
-
-            {service.howItWorks.map((step, i) => (
-              <div key={i} className="relative group">
-                {/* Number Bubble */}
-                <div className={`w-12 h-12 bg-white border-2 border-revgreen rounded-lg flex items-center justify-center font-sans text-black font-bold mb-6 mx-auto z-10 group-hover:bg-revgreen group-hover:text-white transition-colors shadow-sm`}>
-                  {step.step}
+                  </p>
                 </div>
-                <div className="text-center px-4">
-                  <h3 className="text-base md:text-lg font-bold text-zinc-900">{step.title}</h3>
-                  <p className="text-sm text-zinc-500 font-light">{step.description}</p>
+                <div className="pt-3 border-t border-zinc-200/60 flex items-center justify-between text-xs font-bold text-zinc-900 group-hover:text-zinc-600 transition-colors">
+                  <span>Saiba Mais</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-all" />
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </Section>
+      </section>
 
-      {/* 4. RESULTADOS (Results) */}
-      <Section variant="dark" className="py-24 bg-black border-t border-white/5">
-        <div className="container-custom">
-          <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-            Eficiência Pós-Implementação
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      {/* 3. COMO FUNCIONA (How It Works) — Timeline Horizontal 1px no Fundo Branco */}
+      <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
+        <div className="max-w-6xl mx-auto px-6 space-y-12">
+          <div className="max-w-2xl mx-auto text-center space-y-2">
+            <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              Teardown Logístico (Passo a Passo)
+            </h2>
+            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+              Como implementamos e ativamos este módulo na sua operação B2B.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {service.howItWorks.map((step, i) => (
+              <div key={i} className="border-t border-zinc-200 pt-5 space-y-2">
+                <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
+                  {step.step} / Passo
+                </span>
+                <h3 className="text-zinc-900 font-bold text-base tracking-tight">
+                  {step.title}
+                </h3>
+                <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. RESULTADOS (Results) — Fundo 100% Branco Puro com Números Pretos */}
+      <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
+        <div className="max-w-5xl mx-auto px-6 space-y-10">
+          <div className="max-w-2xl mx-auto text-center space-y-2">
+            <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              Eficiência Pós-Implementação
+            </h2>
+            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+              Resultados médios auditados conquistados por operações parceiras.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {service.results.map((result, i) => (
-              <div key={i} className="p-8 border border-white/10 rounded-sm bg-white/5 text-center hover:bg-white/10 transition-colors group">
-                <div className={`text-2xl md:text-3xl font-bold ${service.accent} mb-4 font-sans group-hover:scale-110 transition-transform duration-300`}>
+              <div key={i} className="p-6 rounded-xl bg-zinc-50/70 border border-zinc-200/80 text-center space-y-2">
+                <div className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight">
                   {result.value}
                 </div>
-                <p className="text-zinc-400 font-light uppercase tracking-wider text-sm">
+                <p className="text-zinc-500 text-xs font-semibold uppercase tracking-wider">
                   {result.label}
                 </p>
               </div>
             ))}
           </div>
         </div>
-      </Section>
+      </section>
 
-      {/* 5. CTA FINAL */}
-      <Section variant="light" className="py-24 bg-white">
-        <div className="container-custom text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">Está com o caixa sangrando?</h2>
-            <p className="text-xl text-zinc-500 mb-10 font-bold">
-              Avaliaremos sua operação tecnicamente e te diremos exatamente porque seu marketing não fecha a conta. Call bruta e pontual.
-            </p>
+      {/* 5. CTA FINAL — Fundo Branco Puro */}
+      <section className="py-20 bg-white text-zinc-900">
+        <div className="max-w-3xl mx-auto px-6 text-center space-y-4">
+          <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight">
+            Está com o caixa sangrando?
+          </h2>
+          <p className="text-zinc-500 text-sm max-w-xl mx-auto leading-relaxed">
+            Avaliaremos sua operação tecnicamente e te diremos exatamente porque seu marketing não fecha a conta. Call bruta e pontual.
+          </p>
+          <div className="pt-2">
             <Button
               onClick={() => setIsBookingOpen(true)}
-              className="bg-black text-white hover:bg-revgreen hover:text-black h-16 px-12 rounded-sm text-sm font-bold tracking-wider uppercase transition-all shadow-sm cursor-pointer"
+              className="bg-zinc-950 text-white hover:bg-zinc-800 font-bold text-sm h-12 px-8 rounded-xl shadow-xs transition-all"
             >
-              Auditar Minha Operação
+              Auditar Minha Operação →
             </Button>
           </div>
         </div>
-      </Section>
+      </section>
 
       {/* Booking Modal */}
       <BookingModal
