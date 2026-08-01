@@ -183,10 +183,20 @@ const FounderVideoWidget = () => {
 
     setTimeout(() => {
       let aiReply = "";
+      const lower = text.toLowerCase().trim();
 
       if (!emailCaptured) {
-        if (conversationalStep === 0) {
-          aiReply = "Entendi perfeitamente! Esse e o gargalo classico de aquisicao B2B. Na RevHackers nos instalamos a arquitetura de GTM no seu CRM para conectar Midia Paga e Automacao em ate 30 dias. Me conta: qual e o segmento da sua empresa e o tamanho da sua equipe comercial?";
+        if (lower.includes("especialista") || lower.includes("humano") || lower.includes("time")) {
+          aiReply = "Show! Sou o Giulliano, fundador da RevHackers. Para eu te direcionar exatamente pro especialista do nosso time técnico ou agendarmos uma sessão de 30 min, me conta: qual e o nome e o segmento da sua empresa?";
+          setConversationalStep(1);
+        } else if (lower.includes("auditoria") || lower.includes("diagnostico") || lower.includes("score")) {
+          aiReply = "Excelente! Nossos diagnosticos preditivos analisam vazamentos de pipeline no seu CRM. Qual e a principal dor da sua empresa hoje: atracao de novos clientes ou conversao do time comercial?";
+          setConversationalStep(1);
+        } else if (lower.includes("case") || lower.includes("heineken") || lower.includes("wysion") || lower.includes("anhembi")) {
+          aiReply = "Boa! Na Wysion geramos 1.000+ reunioes qualificadas em software B2B, e na Heineken aumentamos o sell-out em 30%. Qual e o segmento da sua empresa para eu te mostrar um case parecido?";
+          setConversationalStep(1);
+        } else if (conversationalStep === 0) {
+          aiReply = "Entendi o seu cenario! Na RevHackers nos instalamos a arquitetura de GTM no seu CRM para conectar Midia Paga e Automacao em ate 30 dias. Me conta: qual e o segmento da sua empresa e o tamanho da sua equipe comercial?";
           setConversationalStep(1);
         } else if (conversationalStep === 1) {
           aiReply = "Excelente! Tenho um estudo de viabilidade e arquitetura de receita muito alinhado com a sua operacao. Digite seu e-mail corporativo abaixo para salvarmos seu diagnostico e te enviar a analise completa:";
@@ -195,7 +205,6 @@ const FounderVideoWidget = () => {
           aiReply = "Digite seu e-mail corporativo abaixo para liberar o atendimento consultivo ao vivo:";
         }
       } else {
-        const lower = text.toLowerCase().trim();
         if (lower.includes('como funciona') || lower.includes('o que voces fazem')) {
           aiReply = "Nossa Engenharia de GTM instala 4 motores acionaveis na sua empresa em 30 dias: 1. Midia Paga B2B, 2. Funis de Agendamento, 3. Arquitetura de CRM e 4. Automacao Comercial.";
         } else if (lower.includes('case') || lower.includes('resultado') || lower.includes('heineken') || lower.includes('wysion')) {
