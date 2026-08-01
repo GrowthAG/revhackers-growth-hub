@@ -7,7 +7,6 @@ import { getDiagnosticInsights } from '@/utils/diagnosticMapping';
 import SEO from '@/components/shared/SEO';
 import { DiagnosticFormData } from '@/components/diagnostics/DiagnosticForm';
 
-import { SiteScoreHero } from '@/components/scores/site/SiteScoreHero';
 import { SiteScoreQuiz, QUESTIONS } from '@/components/scores/site/SiteScoreQuiz';
 import { SiteScoreResult } from '@/components/scores/site/SiteScoreResult';
 
