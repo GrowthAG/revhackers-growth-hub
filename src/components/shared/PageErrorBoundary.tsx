@@ -21,10 +21,30 @@ export class PageErrorBoundary extends Component<Props, State> {
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Uncaught error in page:', error, errorInfo);
+    
+    const msg = error?.message || '';
+    const isChunkError = (
+      msg.includes("Unexpected token '<'") ||
+      msg.includes("Failed to fetch dynamically imported module") ||
+      msg.includes("Importing a module script failed") ||
+      msg.includes("error loading dynamically imported module")
+    );
+
+    if (isChunkError) {
+      const lastReload = parseInt(sessionStorage.getItem('rev_chunk_error_reload') || '0', 10);
+      if (Date.now() - lastReload > 4000) {
+        sessionStorage.setItem('rev_chunk_error_reload', String(Date.now()));
+        const url = new URL(window.location.href);
+        url.searchParams.set('_v', String(Date.now()));
+        window.location.replace(url.toString());
+      }
+    }
   }
 
   private handleReload = () => {
-    window.location.reload();
+    const url = new URL(window.location.href);
+    url.searchParams.set('_v', String(Date.now()));
+    window.location.replace(url.toString());
   };
 
   public render() {
