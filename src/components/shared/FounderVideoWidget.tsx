@@ -289,8 +289,25 @@ const FounderVideoWidget = () => {
       window.location.href = "/score";
     } else if (pillText.includes("Cases")) {
       window.location.href = "/cases";
-    } else if (pillText.includes("Especialista") || pillText.includes("WhatsApp")) {
-      window.open("https://api.whatsapp.com/send?phone=5511999999999&text=Olá%20Giulliano,%20vi%20o%20site%20da%20RevHackers%20e%20gostaria%20de%20falar%20sobre%20uma%20auditoria%20b2b", "_blank");
+    } else if (pillText.includes("Especialista")) {
+      setShowPills(false);
+      setMessages(prev => [
+        ...prev,
+        { sender: 'user', text: pillText, timestamp: 'Agora' }
+      ]);
+      setIsTyping(true);
+
+      setTimeout(() => {
+        setIsTyping(false);
+        setMessages(prev => [
+          ...prev,
+          {
+            sender: 'ai',
+            text: "Excelente! Sou o Giulliano, especialista em Engenharia de GTM. Para iniciarmos nossa conversa técnica e mapear os gargalos da sua operação B2B, digite seu e-mail corporativo abaixo:",
+            timestamp: 'Agora'
+          }
+        ]);
+      }, 1200);
     }
   };
 
@@ -441,11 +458,11 @@ const FounderVideoWidget = () => {
                     </div>
                   </form>
                   <button
-                    onClick={() => window.open("https://api.whatsapp.com/send?phone=5511999999999&text=Olá%20Giulliano,%20gostaria%20de%20agendar%20uma%20auditoria%20b2b", "_blank")}
+                    onClick={() => window.location.href = "/booking"}
                     className="w-full text-[11px] font-bold text-zinc-600 hover:text-zinc-950 py-1.5 flex items-center justify-center gap-1.5 bg-zinc-50 border border-zinc-200 rounded-xl hover:bg-zinc-100 transition-colors"
                   >
                     <span className="w-2 h-2 rounded-full bg-[#00CC6A]" />
-                    Prefere falar direto? Chamar no WhatsApp
+                    Prefere agendar reunião? Agendar Sessão de 30 min
                   </button>
                 </>
               ) : (
