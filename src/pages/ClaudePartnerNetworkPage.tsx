@@ -279,10 +279,7 @@ export default function ClaudePartnerNetworkPage() {
       <section ref={formRef} className="py-20 bg-white text-zinc-900">
         <div className="max-w-md mx-auto px-6 space-y-8">
           
-          <div className="text-center space-y-3">
-            <p className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase">
-              ETAPA {step} DE 3
-            </p>
+          <div className="text-center space-y-2">
             <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight">
               {step === 1 && "1. Seus dados de acesso"}
               {step === 2 && "2. Dados da sua empresa"}
