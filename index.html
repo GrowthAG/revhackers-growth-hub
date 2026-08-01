@@ -26,6 +26,19 @@
   <!-- Google Search Console Verification -->
   <meta name="google-site-verification" content="mnJN0Y0oxcM6PFoQsCcacQWBseZol3jbRI4_GEPtp-w" />
 
+  <!-- Auto-reload handler for deploy chunk updates (prevents white screens) -->
+  <script>
+    window.addEventListener('error', function(e) {
+      var msg = e && e.message ? String(e.message) : '';
+      if (msg.indexOf('Loading chunk') !== -1 || msg.indexOf('dynamically imported module') !== -1 || msg.indexOf('Importing a module script failed') !== -1) {
+        if (!sessionStorage.getItem('rev_chunk_reload')) {
+          sessionStorage.setItem('rev_chunk_reload', '1');
+          window.location.reload(true);
+        }
+      }
+    }, true);
+  </script>
+
   <title>RevHackers | Consultoria de Revenue Operations & Growth B2B — São Paulo, Brasil</title>
   <meta name="description"
     content="A primeira consultoria de Revenue Operations do Brasil. Integramos IA, CRM e automações para escalar operações B2B em São Paulo e todo o Brasil." />
