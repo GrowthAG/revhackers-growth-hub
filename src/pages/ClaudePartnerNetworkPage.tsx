@@ -429,8 +429,7 @@ export default function ClaudePartnerNetworkPage() {
 
                   {selectedSegment === 'Outro' && (
                     <div className="p-5 rounded-xl bg-white border border-[#00CC6A]/40 shadow-xs space-y-2 transition-all">
-                      <label className="text-xs font-bold text-zinc-900 flex items-center gap-2">
-                        <Sparkles className="w-3.5 h-3.5 text-[#00CC6A]" />
+                      <label className="text-xs font-bold text-zinc-900 block">
                         Especificar Segmento da Empresa *
                       </label>
                       <input
@@ -467,8 +466,8 @@ export default function ClaudePartnerNetworkPage() {
                 <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
                   {/* Termos de Participação & Compromisso */}
                   <div className="p-5 rounded-lg bg-white border border-zinc-200 text-xs text-zinc-600 space-y-3 shadow-xs">
-                    <p className="font-bold text-zinc-900 flex items-center gap-2 text-xs uppercase tracking-wide">
-                      <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" /> Regras do Jogo & Compromisso de Execução:
+                    <p className="font-bold text-zinc-900 text-xs uppercase tracking-wide">
+                      Regras do Jogo & Compromisso de Execução:
                     </p>
                     <ol className="list-decimal list-inside space-y-1.5 text-zinc-600 leading-relaxed font-normal">
                       <li>A trilha é 100% gratuita para as empresas selecionadas.</li>
