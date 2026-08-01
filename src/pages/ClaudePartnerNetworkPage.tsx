@@ -144,19 +144,19 @@ export default function ClaudePartnerNetworkPage() {
         canonical="https://revhackers.com.br/claude-partner-network"
       />
 
-      {/* Hero Section — Fundo Black Purificado (IDÊNTICO À HOME) */}
+      {/* Hero Section (BENCHMARK HOMEPAGE HERO) */}
       <section
         ref={heroRef}
-        className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-32 pb-20 bg-black border-b border-zinc-900"
+        className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black border-b border-zinc-900"
       >
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center space-y-6 sm:space-y-8">
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
           
           {/* Lockup Oficial: Claude Partner Network by RevHackers */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="flex items-center justify-center gap-3 sm:gap-4 mb-1 p-3 px-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 shadow-inner"
+            className="flex items-center justify-center gap-3 sm:gap-4 mb-6 p-3 px-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 shadow-inner"
           >
             <img
               src="/brand/claude-partner-network.svg"
@@ -171,22 +171,22 @@ export default function ClaudePartnerNetworkPage() {
             />
           </motion.div>
           
-          {/* Headline H1 */}
+          {/* Headline H1 (HOMEPAGE BENCHMARK EXACT SCALE) */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
-            className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-[1.2] tracking-tight text-center max-w-3xl mx-auto"
+            className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center max-w-3xl"
           >
             Você foi selecionado para o <span className="text-[#00CC6A]">Claude Partner Network</span> & RevHackers.
           </motion.h1>
 
-          {/* Subheadline */}
+          {/* Subheadline (HOMEPAGE BENCHMARK EXACT SCALE) */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-            className="text-zinc-300 text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto text-center"
+            className="text-zinc-400 mb-8 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center"
           >
             Aqui é o ambiente onde você vai aprender o Claude de verdade. Dedique-se e com certeza você colherá bons frutos disso.
           </motion.p>
@@ -195,17 +195,15 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="pt-2 flex justify-center"
           >
             <Button
               onClick={scrollToForm}
-              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm sm:text-base h-12 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
+              className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 rounded-lg transition-colors flex items-center gap-2"
             >
               <span>Ativar Acesso & Criar Conta</span>
               <ArrowRight className="w-4 h-4" />
             </Button>
           </motion.div>
-
         </div>
       </section>
 

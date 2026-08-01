@@ -26,18 +26,18 @@ const DarkHeroSection = ({
   onCategoryChange
 }: DarkHeroSectionProps) => {
   return (
-    <section className="bg-black py-24 md:py-32 relative overflow-hidden">
-      <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-        <div className="mb-16">
+    <section className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black border-b border-zinc-900">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
+        <div>
           {eyebrow && (
             <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
               {eyebrow}
             </p>
           )}
-          <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-6 leading-[1.2] tracking-tight text-center max-w-3xl mx-auto">
+          <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
             {title}
           </h1>
-          <p className="text-zinc-300 text-sm sm:text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto text-center mb-8 sm:mb-10">
+          <p className="text-zinc-400 mb-8 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
             {subtitle}
           </p>
         </div>
