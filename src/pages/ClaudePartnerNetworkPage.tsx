@@ -149,14 +149,14 @@ export default function ClaudePartnerNetworkPage() {
         ref={heroRef}
         className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-32 pb-20 bg-black border-b border-zinc-900"
       >
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center space-y-6 sm:space-y-8">
           
-          {/* Lockup Oficinal: Claude Partner Network by RevHackers */}
+          {/* Lockup Oficial: Claude Partner Network by RevHackers */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="flex items-center justify-center gap-3 sm:gap-4 mb-2 p-3 px-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 shadow-inner"
+            className="flex items-center justify-center gap-3 sm:gap-4 mb-1 p-3 px-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 shadow-inner"
           >
             <img
               src="/brand/claude-partner-network.svg"
@@ -176,7 +176,7 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
-            className="font-sans text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-3xl"
+            className="font-sans text-[2.25rem] sm:text-[3rem] md:text-[3.75rem] font-extrabold text-white leading-[1.22] tracking-tight text-center max-w-3xl"
           >
             Você foi selecionado para o <span className="text-[#00CC6A]">Claude Partner Network</span> & RevHackers.
           </motion.h1>
@@ -186,7 +186,7 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-            className="text-zinc-300 text-base md:text-xl font-medium leading-relaxed max-w-2xl mx-auto text-center"
+            className="text-zinc-300 text-base sm:text-lg md:text-xl font-medium leading-relaxed max-w-2xl mx-auto text-center"
           >
             Aqui é o ambiente onde você vai aprender o Claude de verdade. Dedique-se e com certeza você colherá bons frutos disso.
           </motion.p>
@@ -195,11 +195,11 @@ export default function ClaudePartnerNetworkPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="pt-4"
+            className="pt-3 sm:pt-4"
           >
             <Button
               onClick={scrollToForm}
-              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm h-12 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
+              className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm sm:text-base h-12 sm:h-13 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
             >
               <span>Ativar Acesso & Criar Conta</span>
               <ArrowRight className="w-4 h-4" />
