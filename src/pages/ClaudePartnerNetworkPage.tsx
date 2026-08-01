@@ -209,70 +209,74 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* O que acontece agora & Público Elegível (DESIGN LIMPO SEM VIBECODE) */}
-      <section className="py-20 bg-zinc-50 border-b border-zinc-200">
-        <div className="max-w-5xl mx-auto px-6 space-y-16">
+      {/* O que acontece agora & Público Elegível (LINHA DO TEMPO ARQUITETÔNICA — ZERO CARDS / ZERO VIBECODE) */}
+      <section className="py-24 bg-white border-b border-zinc-200 text-zinc-900">
+        <div className="max-w-5xl mx-auto px-6 space-y-20">
           
-          {/* O que acontece agora */}
-          <div className="space-y-8">
+          {/* 1. O que acontece agora (Linha do Tempo Arquitetônica) */}
+          <div className="space-y-12">
             <div className="max-w-3xl">
-              <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
-                Próximos Passos
+              <p className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase mb-2">
+                PRÓXIMOS PASSOS
               </p>
-              <h2 className="text-zinc-900 text-2xl md:text-3xl font-bold tracking-tight leading-tight">
+              <h2 className="text-zinc-950 text-2xl md:text-4xl font-extrabold tracking-tight leading-tight">
                 O que acontece agora
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
-              {[
-                { step: "01", title: "Cadastro em 3 Etapas", desc: "Preenche seus dados abaixo pra gente entender o seu cenário." },
-                { step: "02", title: "Validação & Tech Match", desc: "A gente analisa a sua arquitetura pra conectar o Claude da forma mais eficiente." },
-                { step: "03", title: "Acessos no Seu E-mail", desc: "Receba as chaves, documentações técnicas e credenciais direto no seu inbox." },
-                { step: "04", title: "Execução Brutal", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
-              ].map((item) => (
-                <div key={item.step} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/50 transition-all shadow-xs group">
-                  <div>
-                    <span className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase block mb-3">
-                      PASSO {item.step}
-                    </span>
-                    <h3 className="text-zinc-900 font-bold text-base mb-2 group-hover:text-[#00CC6A] transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-zinc-500 text-xs leading-relaxed">
-                      {item.desc}
-                    </p>
+            {/* Timeline Horizontal Suíça */}
+            <div className="relative pt-6">
+              {/* Linha Conectora de Fundo */}
+              <div className="hidden lg:block absolute top-[31px] left-3 right-3 h-[2px] bg-zinc-200 z-0" />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+                {[
+                  { step: "01", title: "Cadastro em 3 Etapas", desc: "Preenche seus dados abaixo pra gente entender o seu cenário." },
+                  { step: "02", title: "Validação & Tech Match", desc: "A gente analisa a sua arquitetura pra conectar o Claude da forma mais eficiente." },
+                  { step: "03", title: "Acessos no Seu E-mail", desc: "Receba as chaves, documentações técnicas e credenciais direto no seu inbox." },
+                  { step: "04", title: "Execução Brutal", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
+                ].map((item) => (
+                  <div key={item.step} className="space-y-4">
+                    {/* Marcador Verde da Timeline */}
+                    <div className="w-3 h-3 rounded-full bg-[#00CC6A] ring-4 ring-white shadow-xs" />
+                    
+                    <div className="pt-2">
+                      <span className="text-[#00CC6A] font-mono font-extrabold text-sm tracking-wider uppercase block">
+                        PASSO {item.step}
+                      </span>
+                      <h3 className="text-zinc-950 font-extrabold text-lg mt-1 mb-2 tracking-tight">
+                        {item.title}
+                      </h3>
+                      <p className="text-zinc-600 text-xs leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Para quem essa trilha faz sentido */}
-          <div className="space-y-8 pt-10 border-t border-zinc-200/80">
+          {/* 2. Para quem essa trilha faz sentido (Layout Editorial com Linhas Verticais Sutis) */}
+          <div className="space-y-12 pt-16 border-t border-zinc-200">
             <div className="max-w-3xl">
-              <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
-                Público Elegível
+              <p className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase mb-2">
+                PÚBLICO ELEGÍVEL
               </p>
-              <h2 className="text-zinc-900 text-2xl md:text-3xl font-bold tracking-tight leading-tight">
+              <h2 className="text-zinc-950 text-2xl md:text-4xl font-extrabold tracking-tight leading-tight">
                 Para quem essa trilha faz sentido
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8">
               {AUDIENCE_ROLES.map((role) => (
-                <div key={role.title} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/50 transition-all shadow-xs group">
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-2 h-2 rounded-full bg-[#00CC6A]" />
-                      <h3 className="text-zinc-900 font-bold text-base group-hover:text-[#00CC6A] transition-colors">
-                        {role.title}
-                      </h3>
-                    </div>
-                    <p className="text-zinc-500 text-xs leading-relaxed pl-4 border-l border-zinc-200">
-                      {role.desc}
-                    </p>
-                  </div>
+                <div key={role.title} className="pl-5 border-l-2 border-[#00CC6A] space-y-2">
+                  <h3 className="text-zinc-950 font-extrabold text-base tracking-tight">
+                    {role.title}
+                  </h3>
+                  <p className="text-zinc-600 text-xs leading-relaxed">
+                    {role.desc}
+                  </p>
                 </div>
               ))}
             </div>
