@@ -116,7 +116,7 @@ function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactI
     $htmlBody = str_replace(['{{right_now.year}}'], date('Y'), $htmlBody);
     $htmlBody = str_replace(['{{location.name}}'], 'RevHackers', $htmlBody);
 
-    $subject = "Aplicação recebida: Claude Partner Network 2026";
+    $subject = "Sua conta foi criada: Claude Partner Network 2026";
 
     // 1. Send via GHL Conversations API (Verified LC Mail / SendGrid for Location oFTw9DcsKRUj6xCiq4mb)
     if ($contactId) {

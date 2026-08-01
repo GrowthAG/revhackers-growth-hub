@@ -288,13 +288,13 @@ export default function ClaudePartnerNetworkPage() {
           
           <div className="text-center space-y-3">
             <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
-              Ativação de Vaga
+              Criação de Conta & Ativação de Acesso
             </p>
             <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Formulário de Confirmação de Participação
+              Crie sua Conta no Claude Partner Network
             </h2>
             <p className="text-zinc-500 text-sm max-w-xl mx-auto">
-              Preencha com atenção. As vagas não confirmadas dentro do prazo serão reatribuídas aos profissionais da lista de espera.
+              Preencha os dados da sua empresa para ativar sua conta de parceiro e receber suas credenciais de acesso da tecnologia da Anthropic & RevHackers.
             </p>
           </div>
 
@@ -303,9 +303,9 @@ export default function ClaudePartnerNetworkPage() {
               <div className="w-12 h-12 bg-[#00CC6A] text-zinc-950 rounded-full flex items-center justify-center mx-auto font-bold text-xl shadow-xs">
                 ✓
               </div>
-              <h3 className="text-2xl font-bold text-zinc-900">Participação Confirmada com Sucesso</h3>
+              <h3 className="text-2xl font-bold text-zinc-900">Conta Criada com Sucesso! 🚀</h3>
               <p className="text-sm text-zinc-700 max-w-md mx-auto leading-relaxed">
-                Sua confirmação foi registrada no sistema da RevHackers. Nossa equipe revisará seus dados e enviará os acessos e próximos passos no e-mail corporativo cadastrado.
+                Sua conta de parceiro foi ativada. Enviamos um e-mail com a confirmação e os detalhes de acesso para o e-mail corporativo cadastrado.
               </p>
             </div>
           ) : (
@@ -486,10 +486,12 @@ export default function ClaudePartnerNetworkPage() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin text-zinc-950" />
-                    <span>Validando e enviando confirmação...</span>
+                    <span>Criando conta e ativando acessos...</span>
                   </>
                 ) : (
-                  <span>Confirmar minha participação</span>
+                  <>
+                    <span>Criar Conta & Liberar Acessos →</span>
+                  </>
                 )}
               </Button>
 
