@@ -87,7 +87,7 @@ const Cases = () => {
       />
 
       {/* Cases Grid */}
-      <section className="pb-24 bg-white min-h-screen relative">
+      <section className="pt-16 sm:pt-20 pb-24 bg-white min-h-screen relative">
         
         <div className="container-custom relative z-10">
 
@@ -96,7 +96,7 @@ const Cases = () => {
               <Loader2 className="w-8 h-8 text-black animate-spin" />
             </div>
           ) : filteredCases.length === 0 ? (
-            <div className="text-center py-20 border border-dashed border-zinc-200 bg-zinc-50/30">
+            <div className="text-center py-20 border border-dashed border-zinc-200 bg-zinc-50/30 rounded-2xl">
               <h3 className="text-base md:text-lg font-bold text-zinc-900">Nenhum case encontrado</h3>
               <Button variant="link" className="text-black font-bold uppercase text-xxs mt-4" onClick={() => { setSearchQuery(''); setActiveCategory('Todos') }}>
                 Limpar filtros
@@ -106,16 +106,21 @@ const Cases = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredCases.map((study, index) => (
                 <Link to={`/cases/${study.slug}`} className="group h-full" key={study.id || index}>
-                  <div className="bg-white overflow-hidden h-full flex flex-col transition-all duration-300 relative rounded-xl border border-zinc-200 hover:border-zinc-400 shadow-sm hover:shadow-md">
+                  <div className="bg-white overflow-hidden h-full flex flex-col transition-all duration-300 relative rounded-2xl border border-zinc-200/80 hover:border-zinc-400 shadow-xs hover:shadow-md">
                     
-                    {/* Header do Card com Logo */}
-                    <div className="h-44 overflow-hidden bg-zinc-50 flex items-center justify-center border-b border-zinc-100 p-8 relative">
+                    {/* Thumbnail Cover Header do Card (Padronização Ouro) */}
+                    <div className="h-44 bg-gradient-to-b from-zinc-900 to-black flex items-center justify-center border-b border-zinc-800 p-8 relative overflow-hidden group-hover:from-zinc-850 group-hover:to-zinc-950 transition-all">
+                      <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
                       <img
                         src={study.client_logo}
                         alt={study.title}
-                        className="max-w-[180px] max-h-[85px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                        className="max-w-[170px] max-h-[75px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-md brightness-0 invert"
                         style={{
                           transform: study.logoScale ? `scale(${study.logoScale})` : 'scale(1.0)',
+                        }}
+                        onError={(e: any) => {
+                          // Fallback if invert removes visibility for already white SVG
+                          e.target.className = "max-w-[170px] max-h-[75px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-md";
                         }}
                       />
                     </div>
