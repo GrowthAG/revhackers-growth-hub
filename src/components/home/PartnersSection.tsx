@@ -6,7 +6,7 @@ const partners = [
   { name: "Lindoya", logo: "/uploads/lindoya-logo.png" },
   { name: "FMU", logo: "/uploads/e0d3d03b-c1d5-4a6e-9a61-3a1c2a707b5f.png" },
   { name: "Anhembi Morumbi", logo: "/uploads/f5e74a47-fc77-4b34-970e-e839080310fd.png", scale: 1.4 },
-  { name: "Cruzeiro do Sul", logo: "/uploads/cruzeiro-official-new.png", scale: 1.4 },
+  { name: "Cruzeiro do Sul", logo: "/uploads/cruzeiro-official-new.png", scale: 1.6 },
   { name: "Agence", logo: "/uploads/6c09375e-5298-4672-9226-27eb60a6b038.png" },
   { name: "BLDN", logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c77062fe4f1854fadf797.svg", scale: 1.1 },
   { name: "Idee Seguros", logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c73dcdda192452a508485.png" },
