@@ -308,8 +308,8 @@ const FounderVideoWidget = () => {
             onClick={() => setIsOpen(true)}
             className="fixed bottom-6 right-6 z-50 cursor-pointer group select-none"
           >
-            <div className="bg-zinc-950 text-white border border-zinc-800/90 p-2 pr-5 rounded-full shadow-2xl flex items-center gap-3 hover:border-zinc-700 hover:scale-105 transition-all">
-              <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-[#00CC6A]/80 shadow-[0_0_10px_rgba(0,204,106,0.3)] shrink-0 bg-zinc-900 flex items-center justify-center">
+            <div className="bg-white text-zinc-950 border border-zinc-200/90 p-2 pr-5 rounded-full shadow-xl flex items-center gap-3 hover:border-zinc-300 hover:scale-105 transition-all">
+              <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-[#00CC6A] shadow-[0_0_10px_rgba(0,204,106,0.3)] shrink-0 bg-zinc-100 flex items-center justify-center">
                 {!videoError ? (
                   <video
                     src={FOUNDER_VIDEO_URL}
@@ -329,10 +329,10 @@ const FounderVideoWidget = () => {
                 )}
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-extrabold text-white leading-tight">
+                <span className="text-xs font-extrabold text-zinc-950 leading-tight">
                   Converse com Giulliano
                 </span>
-                <span className="text-[10px] text-zinc-400 font-medium flex items-center gap-1.5 mt-0.5">
+                <span className="text-[10px] text-zinc-500 font-semibold flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse inline-block shrink-0" />
                   Founder IA • Online
                 </span>
