@@ -30,43 +30,44 @@ const FounderVideoWidget = () => {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Dynamic Contextual Greeting based on user behavior on the current page
+  // Dynamic Contextual Greeting based on user behavior on the current page (ZERO EMOJIS)
   const getContextualMessages = (pathname: string): Message[] => {
     if (pathname.includes('/blog') || pathname.includes('/artigo')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Vi que você está analisando nossos artigos e estratégias de GTM! 🚀', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar o chat ao vivo e tirar dúvidas técnicas sobre este artigo:', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Vi que voce esta analisando nossos artigos e estrategias de GTM.', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar o chat ao vivo e tirar duvidas tecnicas sobre este artigo:', timestamp: 'Agora' }
       ];
     }
     if (pathname.includes('/materiais') || pathname.includes('/material')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. O que está achando dos nossos materiais de Revenue & GTM Engineering? 📚', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Fala! Giulliano aqui. O que esta achando dos nossos materiais de Revenue & GTM Engineering?', timestamp: 'Agora' },
         { sender: 'ai', text: 'Digite seu e-mail corporativo abaixo para desbloquear o chat e te ajudarmos a escolher o melhor playbook:', timestamp: 'Agora' }
       ];
     }
     if (pathname.includes('/servicos') || pathname.includes('/cases')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Analisando nossos 4 motores de GTM e cases como Wysion (1.000+ reuniões) e Heineken (+30%)? 📈', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para tirar dúvidas direto sobre ROI e implementação em 30 dias:', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Analisando nossos 4 motores de GTM e cases como Wysion (1.000+ reunioes) e Heineken (+30%)?', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para tirar duvidas direto sobre ROI e implementacao em 30 dias:', timestamp: 'Agora' }
       ];
     }
     if (pathname.includes('/diagnostico') || pathname.includes('/score')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Pronto para rodar o Diagnóstico Preditivo da sua operação B2B? ⚡️', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar a análise de vazamentos e falar com nosso time:', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Pronto para rodar o Diagnostico Preditivo da sua operacao B2B?', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar a analise de vazamentos e falar com nosso time:', timestamp: 'Agora' }
       ];
     }
 
     return [
-      { sender: 'ai', text: 'Fala! Giulliano aqui, fundador da RevHackers. 🚀', timestamp: 'Agora' },
-      { sender: 'ai', text: 'Antes de começarmos nossa conversa técnica, digite seu e-mail corporativo para liberar o chat ao vivo:', timestamp: 'Agora' }
+      { sender: 'ai', text: 'Fala! Giulliano aqui, fundador da RevHackers.', timestamp: 'Agora' },
+      { sender: 'ai', text: 'Antes de comecarmos nossa conversa tecnica, digite seu e-mail corporativo para liberar o chat ao vivo:', timestamp: 'Agora' }
     ];
   };
 
   const [messages, setMessages] = useState<Message[]>(() => getContextualMessages(location.pathname));
 
-  // Update context when user navigates to another page
+  // Automatically close modal and update context when user navigates to another page
   useEffect(() => {
+    setIsOpen(false);
     if (!emailCaptured) {
       setMessages(getContextualMessages(location.pathname));
     }
@@ -116,7 +117,7 @@ const FounderVideoWidget = () => {
         { sender: 'user', text: email, timestamp: 'Agora' },
         {
           sender: 'ai',
-          text: 'E-mail registrado no nosso CRM! Como posso ajudar sua operação B2B com GTM Engineering hoje?',
+          text: 'E-mail registrado no nosso CRM! Como posso ajudar sua operacao B2B com GTM Engineering hoje?',
           timestamp: 'Agora'
         }
       ]);
@@ -142,25 +143,25 @@ const FounderVideoWidget = () => {
 
     // Humanized Typing Delay Simulation (1.8s to 2.2s)
     setTimeout(() => {
-      let aiReply = "Fala! Giulliano aqui. Nossa Engenharia de GTM conecta Mídia Paga (Google, Meta e LinkedIn Ads) diretamente ao seu CRM com funis de alta conversão. Quer agendar uma auditoria técnica de 30 minutos pra ver na prática?";
+      let aiReply = "Fala! Giulliano aqui. Nossa Engenharia de GTM conecta Midia Paga (Google, Meta e LinkedIn Ads) diretamente ao seu CRM com funis de alta conversao. Quer agendar uma auditoria tecnica de 30 minutos pra ver na pratica?";
       
       const lower = text.toLowerCase().trim();
 
-      // Conversational Intent Matching
+      // Conversational Intent Matching (ZERO EMOJIS)
       if (lower.includes('nome') || lower.includes('quem e') || lower.includes('quem eh') || lower.includes('quem fala') || lower.includes('quem voce')) {
-        aiReply = "Eu sou a IA do Giulliano Alves, fundador da RevHackers. Posso te ajudar a entender nossa Engenharia de GTM ou agendar uma auditoria técnica de receita de 30 min. Como posso ajudar sua empresa hoje?";
+        aiReply = "Eu sou a IA do Giulliano Alves, fundador da RevHackers. Posso te ajudar a entender nossa Engenharia de GTM ou agendar uma auditoria tecnica de receita de 30 min. Como posso ajudar sua empresa hoje?";
       } else if (lower.includes('ola') || lower.includes('oi') || lower.includes('bom dia') || lower.includes('boa tarde') || lower.includes('boa noite') || lower.includes('tudo bem')) {
-        aiReply = "Fala! Tudo ótimo por aqui. Como posso ajudar sua operação B2B com GTM Engineering hoje?";
+        aiReply = "Fala! Tudo otimo por aqui. Como posso ajudar sua operacao B2B com GTM Engineering hoje?";
       } else if (lower.includes('como funciona') || lower.includes('o que voces fazem') || lower.includes('como eh')) {
-        aiReply = "Nossa Engenharia de GTM instala 4 motores acionáveis na sua empresa em 30 dias: 1. Mídia Paga (Mídia Paga & Social Selling), 2. Funis de Agendamento, 3. Arquitetura de CRM e 4. Automação B2B. Quer ver um exemplo real?";
+        aiReply = "Nossa Engenharia de GTM instala 4 motores acionaveis na sua empresa em 30 dias: 1. Midia Paga (Midia Paga & Social Selling), 2. Funis de Agendamento, 3. Arquitetura de CRM e 4. Automacao B2B. Quer ver um exemplo real?";
       } else if (lower.includes('gtm') || lower.includes('engenharia')) {
-        aiReply = "Boa pergunta! O GTM Engineering substitui aquela consultoria teórica de slides por 4 sistemas instalados na sua operação: Engenharia de Vendas, Arquitetura de CRM, Automação B2B e Habilitação do time comercial em até 30 dias.";
+        aiReply = "Boa pergunta! O GTM Engineering substitui aquela consultoria teorica de slides por 4 sistemas instalados na sua operacao: Engenharia de Vendas, Arquitetura de CRM, Automacao B2B e Habilitacao do time comercial em ate 30 dias.";
       } else if (lower.includes('case') || lower.includes('resultado') || lower.includes('wysion') || lower.includes('heineken')) {
-        aiReply = "Te dar 2 exemplos práticos: na Wysion (Software House), estruturamos a geração de demanda e geramos 1.000+ reuniões qualificadas. Na Heineken, aumentamos o sell-out em 30%. Qual é o setor da sua empresa?";
+        aiReply = "Te dar 2 exemplos praticos: na Wysion (Software House), estruturamos a geracao de demanda e geramos 1.000+ reunioes qualificadas. Na Heineken, aumentamos o sell-out em 30%. Qual e o setor da sua empresa?";
       } else if (lower.includes('custo') || lower.includes('preco') || lower.includes('quanto') || lower.includes('valor')) {
-        aiReply = "Trabalhamos com foco total em ROI acelerado e contrato por marcos de entrega. O caminho padrão que fazemos com todos os clientes é começar pela Auditoria de Vazamento de Receita de 30 min sem custo.";
+        aiReply = "Trabalhamos com foco total em ROI acelerado e contrato por marcos de entrega. O caminho padrao que fazemos com todos os clientes e comecar pela Auditoria de Vazamento de Receita de 30 min sem custo.";
       } else if (lower.includes('agendar') || lower.includes('time') || lower.includes('falar') || lower.includes('reuniao')) {
-        aiReply = "Excelente! Você pode agendar direto na minha agenda corporativa pelo link /booking. Nosso time técnico analisa seus gargalos antes da chamada.";
+        aiReply = "Excelente! Voce pode agendar direto na minha agenda corporativa pelo link /booking. Nosso time tecnico analisa seus gargalos antes da chamada.";
       }
 
       setIsTyping(false);
@@ -170,10 +171,10 @@ const FounderVideoWidget = () => {
   };
 
   const topicPills = [
-    "🚀 O que é GTM Engineering?",
-    "📊 Como funciona a Auditoria?",
-    "🎯 Cases Reais (1000+ Reuniões)",
-    "📅 Agendar com o Time"
+    "O que e GTM Engineering?",
+    "Como funciona a Auditoria?",
+    "Cases Reais (1000+ Reunioes)",
+    "Agendar com o Time"
   ];
 
   return (
@@ -185,7 +186,7 @@ const FounderVideoWidget = () => {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{
               opacity: 1,
-              scale: [1, 1.03, 1]
+              scale: [1, 1.025, 1]
             }}
             transition={{
               scale: {
@@ -200,7 +201,7 @@ const FounderVideoWidget = () => {
             className="fixed bottom-6 right-6 z-50 cursor-pointer group select-none"
           >
             <div className="bg-zinc-950 text-white border border-zinc-800/90 p-2 pr-5 rounded-full shadow-2xl flex items-center gap-3 hover:border-zinc-700 hover:scale-105 transition-all">
-              <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-[#00CC6A] shrink-0 bg-zinc-900 flex items-center justify-center">
+              <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-[#00CC6A]/80 shadow-[0_0_10px_rgba(0,204,106,0.3)] shrink-0 bg-zinc-900 flex items-center justify-center">
                 {!videoError ? (
                   <video
                     src={FOUNDER_VIDEO_URL}
@@ -218,13 +219,15 @@ const FounderVideoWidget = () => {
                     className="w-full h-full object-cover"
                   />
                 )}
-                <span className="absolute bottom-0 right-0 w-3 h-3 bg-[#00CC6A] border-2 border-zinc-950 rounded-full" />
               </div>
               <div className="flex flex-col text-left">
                 <span className="text-xs font-bold text-white leading-tight">
                   Giulliano Alves
                 </span>
-                <span className="text-[10px] text-zinc-400 font-medium">Founder IA • Online</span>
+                <span className="text-[10px] text-zinc-400 font-medium flex items-center gap-1.5 mt-0.5">
+                  <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse inline-block shrink-0" />
+                  Founder IA • Online
+                </span>
               </div>
             </div>
           </motion.div>
