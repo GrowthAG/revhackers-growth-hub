@@ -279,30 +279,31 @@ const FounderVideoWidget = () => {
   };
 
   const topicPills = [
-    "O que e GTM Engineering?",
-    "Como funciona a Auditoria?",
-    "Cases Reais (1000+ Reunioes)",
-    "Agendar com o Time"
+    "📊 Rodar Auditoria de Receita",
+    "🎯 Ver Cases (Heineken, Anhembi)",
+    "💬 Falar com Especialista"
   ];
+
+  const handlePillClickBeforeEmail = (pillText: string) => {
+    if (pillText.includes("Auditoria")) {
+      window.location.href = "/score";
+    } else if (pillText.includes("Cases")) {
+      window.location.href = "/cases";
+    } else if (pillText.includes("Especialista") || pillText.includes("WhatsApp")) {
+      window.open("https://api.whatsapp.com/send?phone=5511999999999&text=Olá%20Giulliano,%20vi%20o%20site%20da%20RevHackers%20e%20gostaria%20de%20falar%20sobre%20uma%20auditoria%20b2b", "_blank");
+    }
+  };
 
   return (
     <>
-      {/* Floating Trigger Button (Bottom-Right) */}
       <AnimatePresence>
         {!isOpen && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{
               opacity: 1,
-              scale: [1, 1.025, 1]
-            }}
-            transition={{
-              scale: {
-                duration: 2.5,
-                repeat: Infinity,
-                repeatType: "mirror",
-                ease: "easeInOut"
-              }
+              scale: 1,
+              y: 0
             }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             onClick={() => setIsOpen(true)}
@@ -334,7 +335,7 @@ const FounderVideoWidget = () => {
                 </span>
                 <span className="text-[10px] text-zinc-400 font-medium flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse inline-block shrink-0" />
-                  Founder IA • Online
+                  Founder RevHackers • Online
                 </span>
               </div>
             </div>
@@ -342,27 +343,23 @@ const FounderVideoWidget = () => {
         )}
       </AnimatePresence>
 
-      {/* Main Interactive Video Chat Modal */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[390px] h-[560px] max-h-[85vh] bg-white text-zinc-950 rounded-3xl border border-zinc-200 shadow-2xl overflow-hidden flex flex-col justify-between"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[390px] h-[580px] max-h-[85vh] bg-white text-zinc-950 rounded-3xl border border-zinc-200 shadow-2xl overflow-hidden flex flex-col justify-between"
           >
-            {/* Header com Foto Oficial do Founder - Enquadramento Perfeito h-44 */}
-            <div className="relative h-44 bg-zinc-900 overflow-hidden shrink-0 border-b border-zinc-100">
+            <div className="relative h-44 bg-zinc-950 overflow-hidden shrink-0 border-b border-zinc-100">
               <img
                 src="/uploads/giulliano-linkedin-profile.png"
                 alt="Giulliano Alves"
                 className="w-full h-full object-cover object-[center_15%] filter brightness-95"
               />
 
-              {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent pointer-events-none" />
 
-              {/* Close Button */}
               <button
                 onClick={() => setIsOpen(false)}
                 className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-zinc-700 hover:text-zinc-950 border border-zinc-200 flex items-center justify-center transition-colors z-20 shadow-sm"
@@ -370,14 +367,12 @@ const FounderVideoWidget = () => {
                 <X className="w-4 h-4" />
               </button>
 
-              {/* Live Founder Badge */}
-              <div className="absolute top-3 left-3 flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full border border-zinc-200 shadow-sm">
+              <div className="absolute top-3 left-3 flex items-center gap-2 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-zinc-800 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />
-                <span className="text-[11px] font-bold text-zinc-900 tracking-tight">Giulliano Alves • Founder</span>
+                <span className="text-[11px] font-bold text-white tracking-tight">ONLINE • Giulliano Alves | Founder</span>
               </div>
             </div>
 
-            {/* Area de Conversa com Autoscroll e Overflow Perfeito */}
             <div className="flex-1 p-4 space-y-3 overflow-y-auto min-h-0 text-xs leading-relaxed font-sans bg-zinc-50/50 scroll-smooth">
               {messages.map((msg, idx) => (
                 <div
@@ -396,7 +391,6 @@ const FounderVideoWidget = () => {
                 </div>
               ))}
 
-              {/* Animated Typing Indicator */}
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="bg-white text-zinc-500 border border-zinc-200/90 p-3 rounded-2xl rounded-tl-xs flex items-center gap-1.5 shadow-sm">
@@ -408,13 +402,13 @@ const FounderVideoWidget = () => {
                 </div>
               )}
 
-              {emailCaptured && showPills && (
+              {showPills && (
                 <div className="pt-2 flex flex-wrap gap-1.5">
                   {topicPills.map((pill, i) => (
                     <button
                       key={i}
-                      onClick={() => handleSendMessage(pill)}
-                      className="text-[11px] bg-white hover:bg-zinc-100 text-zinc-700 hover:text-zinc-950 px-3 py-1.5 rounded-full border border-zinc-200 transition-all text-left shadow-xs font-medium"
+                      onClick={() => emailCaptured ? handleSendMessage(pill) : handlePillClickBeforeEmail(pill)}
+                      className="text-[11px] bg-white hover:bg-zinc-100 text-zinc-800 hover:text-zinc-950 px-3 py-1.5 rounded-full border border-zinc-200 transition-all text-left shadow-xs font-semibold cursor-pointer flex items-center gap-1"
                     >
                       {pill}
                     </button>
@@ -424,28 +418,36 @@ const FounderVideoWidget = () => {
               <div ref={chatEndRef} />
             </div>
 
-            {/* Input Bar */}
-            <div className="p-3 border-t border-zinc-100 bg-white shrink-0">
+            <div className="p-3 border-t border-zinc-100 bg-white shrink-0 space-y-2">
               {!emailCaptured ? (
-                <form onSubmit={handleEmailSubmit} className="space-y-2">
-                  <div className="relative flex items-center">
-                    <Input
-                      type="email"
-                      placeholder="Digite seu e-mail corporativo..."
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs h-10 pr-12 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
-                    />
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="absolute right-1.5 top-1.5 h-7 w-8 bg-[#00CC6A] text-black hover:bg-[#00b35e] font-bold rounded-lg flex items-center justify-center transition-all disabled:opacity-50"
-                    >
-                      {loading ? <Sparkles className="w-3.5 h-3.5 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </form>
+                <>
+                  <form onSubmit={handleEmailSubmit} className="space-y-2">
+                    <div className="relative flex items-center">
+                      <Input
+                        type="email"
+                        placeholder="Digite seu e-mail corporativo..."
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs h-10 pr-12 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
+                      />
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="absolute right-1.5 top-1.5 h-7 w-8 bg-[#00CC6A] text-black hover:bg-[#00b35e] font-bold rounded-lg flex items-center justify-center transition-all disabled:opacity-50"
+                      >
+                        {loading ? <Sparkles className="w-3.5 h-3.5 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </form>
+                  <button
+                    onClick={() => window.open("https://api.whatsapp.com/send?phone=5511999999999&text=Olá%20Giulliano,%20gostaria%20de%20agendar%20uma%20auditoria%20b2b", "_blank")}
+                    className="w-full text-[11px] font-bold text-zinc-600 hover:text-zinc-950 py-1.5 flex items-center justify-center gap-1.5 bg-zinc-50 border border-zinc-200 rounded-xl hover:bg-zinc-100 transition-colors"
+                  >
+                    <span className="w-2 h-2 rounded-full bg-[#00CC6A]" />
+                    Prefere falar direto? Chamar no WhatsApp
+                  </button>
+                </>
               ) : (
                 <form
                   onSubmit={(e) => {
