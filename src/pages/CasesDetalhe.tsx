@@ -1,21 +1,18 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import CaseNotFound from '@/components/cases/CaseNotFound';
 import { getCaseBySlug } from '@/api/cases';
-import { CaseStudy, casesData } from '@/data/casesData';
-import { Loader2, ArrowLeft, TrendingUp, CheckCircle2 } from 'lucide-react';
-import { motion } from 'framer-motion';
-
-import { Button } from '@/components/ui/button';
+import { casesData } from '@/data/cases';
+import { Loader2, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import ContactForm from '@/components/shared/ContactForm';
 import SEO from '@/components/shared/SEO';
+import { Button } from '@/components/ui/button';
 
 const CasesDetalhe = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [caseData, setCaseData] = useState<CaseStudy | null>(null);
+  const [caseData, setCaseData] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadCase = async () => {
@@ -26,28 +23,34 @@ const CasesDetalhe = () => {
       setLoading(true);
       try {
         const dbCase = await getCaseBySlug(slug);
+        const localCase = casesData[slug as keyof typeof casesData];
 
-        if (dbCase) {
-          const mappedCase: CaseStudy = {
-            title: dbCase.client_name || dbCase.title || 'Case sem título',
-            category: dbCase.case_category || 'Geral',
-            logo: dbCase.client_logo || '',
-            coverImage: dbCase.image_url || '',
-            challenge: dbCase.challenge || 'Desafio não informado.',
-            solution: dbCase.solution || 'Solução não informada.',
-            results: typeof dbCase.results === 'string' ? dbCase.results.split('\n') : (Array.isArray(dbCase.results) ? dbCase.results : []),
-            metrics: (Array.isArray(dbCase.metrics) ? dbCase.metrics : []) as any[],
-            quote: dbCase.testimonial_quote || '',
-            author: dbCase.testimonial_author || '',
-            role: dbCase.testimonial_role || '',
-            authorImage: dbCase.testimonial_avatar || '',
-            techStack: (Array.isArray((dbCase as any).tech_stack) ? (dbCase as any).tech_stack : []) || [],
-            logoScale: (dbCase as any).logoScale || 1.4,
-            preview_description: dbCase.preview_description || ''
+        if (dbCase || localCase) {
+          const rawTitle = dbCase?.client_name || dbCase?.title || localCase?.title || 'Case de Sucesso';
+          const challengeText = (dbCase?.challenge && !dbCase.challenge.includes('não informado'))
+            ? dbCase.challenge
+            : (localCase?.challenge || 'A empresa necessitava de estruturação técnica de processos comerciais, inteligência de dados e otimização da máquina de vendas para acelerar o crescimento B2B.');
+          
+          const solutionText = (dbCase?.solution && !dbCase.solution.includes('não informada'))
+            ? dbCase.solution
+            : (localCase?.solution || 'Implementamos uma arquitetura completa de Revenue Operations, parametrização de CRM com automações operacionais e qualificação por IA.');
+
+          const mappedCase = {
+            title: rawTitle,
+            category: dbCase?.case_category || localCase?.category || 'Go-To-Market',
+            logo: dbCase?.client_logo || localCase?.logo || '',
+            challenge: challengeText,
+            solution: solutionText,
+            results: localCase?.results || (typeof dbCase?.results === 'string' ? dbCase.results.split('\n') : (Array.isArray(dbCase?.results) ? dbCase.results : [])),
+            metrics: (localCase?.metrics || dbCase?.metrics || []) as any[],
+            quote: localCase?.quote || dbCase?.testimonial_quote || '',
+            author: localCase?.author || dbCase?.testimonial_author || '',
+            role: localCase?.role || dbCase?.testimonial_role || '',
+            techStack: localCase?.techStack || (Array.isArray((dbCase as any)?.tech_stack) ? (dbCase as any).tech_stack : []) || ['HubSpot CRM', 'RevOps 360º', 'Growth IA'],
+            preview_description: localCase?.preview_description || dbCase?.preview_description || ''
           };
           setCaseData(mappedCase);
         } else {
-          console.warn(`Case not found for slug: ${slug}`);
           setCaseData(null);
         }
       } catch (error) {
@@ -65,11 +68,11 @@ const CasesDetalhe = () => {
   if (loading) {
     return (
       <PageLayout>
-        <div className="h-screen w-full flex items-center justify-center bg-black">
-          <Loader2 className="h-10 w-10 text-revgreen animate-spin" />
+        <div className="min-h-[70vh] w-full flex items-center justify-center bg-black">
+          <Loader2 className="h-8 w-8 text-[#00CC6A] animate-spin" />
         </div>
       </PageLayout>
-    )
+    );
   }
 
   if (!caseData) {
@@ -88,200 +91,170 @@ const CasesDetalhe = () => {
         canonical={`https://revhackers.com.br/cases/${slug}`}
       />
 
-      <section className="relative min-h-[60vh] flex flex-col items-center justify-center pt-32 pb-24 overflow-hidden bg-white">
-        <div className="absolute inset-0 z-0 opacity-40">
-          {/* Subtle gradient instead of noise */}
-          <div className="absolute inset-0 bg-zinc-50"></div>
-        </div>
-
-        <div className="container-custom flex flex-col items-center text-center max-w-6xl relative z-10">
-          <Link to="/cases" className="absolute top-0 left-0 text-zinc-400 hover:text-black flex items-center gap-2 text-xxs font-bold uppercase tracking-wider transition-colors mb-8 md:mb-0 md:static self-start md:self-center bg-zinc-50 px-4 py-2 border border-zinc-100">
-            <ArrowLeft className="w-3 h-3" /> Voltar para Cases
+      {/* Hero Section — Fundo Black Purificado (EXACT HOMEPAGE HERO BENCHMARK) */}
+      <section className="relative min-h-[65vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black border-b border-zinc-900">
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
+          
+          <Link to="/cases" className="text-zinc-400 hover:text-white inline-flex items-center gap-2 text-xs font-semibold mb-6 transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Voltar para Cases
           </Link>
 
-          <header className="max-w-5xl pt-12 w-full mt-8">
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          {caseData.logo && (
+            <div className="mb-6 bg-zinc-900/80 border border-zinc-800 p-4 rounded-xl inline-flex items-center justify-center">
+              <img
+                src={caseData.logo}
+                alt={`${caseData.title} Logo`}
+                className="h-12 w-auto max-w-[200px] object-contain"
+              />
+            </div>
+          )}
 
-              <div className="flex justify-center mb-10">
-                {caseData.logo ? (
-                  <img
-                    src={caseData.logo}
-                    alt={`${caseData.title} Logo`}
-                    className="h-16 md:h-20 w-auto object-contain" // Removed brightness-0 invert
-                  />
-                ) : (
-                  <span className="text-3xl font-bold text-black tracking-tight">{caseData.title}</span>
-                )}
-              </div>
+          <span className="text-[#00CC6A] text-xs font-semibold uppercase tracking-wider mb-3">
+            {caseData.category}
+          </span>
 
-              <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
-                <span className="text-xxs font-sans font-bold uppercase tracking-wider text-zinc-400">
-                  {caseData.category}
-                </span>
-              </div>
-
-              <h1 className="text-2xl md:text-3xl font-bold text-black mb-8 leading-tight tracking-tight text-balance max-w-5xl mx-auto">
-                {caseData.title}
-              </h1>
-            </motion.div>
-          </header>
+          <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
+            {caseData.title}
+          </h1>
 
           {caseData.preview_description && (
-            <p className="text-lg md:text-xl text-zinc-500 mb-16 max-w-3xl leading-relaxed font-normal text-balance mx-auto">
+            <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
               {caseData.preview_description}
             </p>
           )}
-
-          {caseData.metrics && caseData.metrics.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-12 md:gap-24 border-t border-zinc-100 pt-12 mt-4 animate-fade-in-up delay-300 w-full">
-              {caseData.metrics.slice(0, 3).map((metric, idx) => (
-                <div key={idx} className="text-center group">
-                  <div className="text-2xl md:text-3xl font-bold text-black tracking-tight mb-2 relative inline-block group-hover:scale-110 transition-transform duration-500 origin-center">
-                    {metric.value}
-                    <span className="absolute -top-2 -right-4 text-zinc-300 text-2xl font-light">+</span>
-                  </div>
-                  <div className="text-2xs font-bold uppercase tracking-[0.2em] text-zinc-400">{metric.label}</div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            onClick={() => contentRef.current?.scrollIntoView({ behavior: 'smooth' })}
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-zinc-300 hover:text-black transition-colors cursor-pointer group z-50 md:bottom-10"
-          >
-            <div className="w-px h-12 bg-zinc-300 group-hover:bg-black transition-colors"></div>
-          </motion.button>
         </div>
       </section>
 
-      <section className="py-20 bg-white border-t border-zinc-100 min-h-screen">
-        <div className="container px-4 md:px-6 mx-auto max-w-7xl">
-          <div className="grid grid-cols-12 gap-8 lg:gap-16">
+      {/* Content Section — Fundo 100% Branco Puro */}
+      <section className="py-20 bg-white border-b border-zinc-200/80 text-zinc-900">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
 
-            <div className="col-span-12 lg:col-span-3 order-2 lg:order-1">
-              <div className="sticky top-32 space-y-12">
+            {/* Sidebar Esquerda */}
+            <div className="lg:col-span-4 space-y-8 order-2 lg:order-1">
+              
+              <div className="bg-white border border-zinc-200/80 p-6 rounded-2xl space-y-4">
+                <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-wider">Sobre o Cliente</h4>
+                <p className="text-sm text-zinc-600 leading-relaxed">
+                  Projeto de inteligência comercial desenvolvido para <strong>{caseData.title}</strong>, focado em <strong>{caseData.category}</strong>.
+                </p>
+              </div>
 
-                <div>
-                  <h4 className="font-bold text-black mb-6 border-l-4 border-black pl-4 uppercase tracking-wider text-xs">Sobre o Cliente</h4>
-                  <p className="text-sm text-zinc-600 leading-relaxed mb-4">
-                    Projeto desenvolvido para <strong>{caseData.title}</strong>, focado em estratégias de {caseData.category}.
-                  </p>
-                </div>
-
-                {caseData.techStack && caseData.techStack.length > 0 && (
-                  <div>
-                    <h4 className="font-bold text-black mb-6 border-l-4 border-black pl-4 uppercase tracking-wider text-xs">Tech Stack</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {caseData.techStack.map((tech) => (
-                        <span key={tech} className="bg-zinc-100 text-zinc-600 px-3 py-1 rounded-sm text-xs font-medium border border-zinc-200">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+              {caseData.techStack && caseData.techStack.length > 0 && (
+                <div className="bg-white border border-zinc-200/80 p-6 rounded-2xl space-y-3">
+                  <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-wider">Tech Stack & Metodologia</h4>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {caseData.techStack.map((tech: string) => (
+                      <span key={tech} className="bg-zinc-100 text-zinc-800 px-3 py-1 rounded-lg text-xs font-semibold border border-zinc-200/60">
+                        {tech}
+                      </span>
+                    ))}
                   </div>
-                )}
-
-                <div className="bg-zinc-50 p-6 border border-zinc-100 rounded-sm">
-                  <h5 className="font-bold text-black text-sm mb-2">Precisa de resultados assim?</h5>
-                  <p className="text-xs text-zinc-500 mb-4">Agende um diagnóstico gratuito da sua operação.</p>
-                  <Button asChild className="w-full bg-black hover:bg-revgreen hover:text-black text-white text-xs font-bold uppercase tracking-wider">
-                    <Link to="/booking">Agendar Agora</Link>
-                  </Button>
                 </div>
+              )}
+
+              <div className="bg-white border border-zinc-200/80 p-6 rounded-2xl space-y-3">
+                <h5 className="font-bold text-zinc-950 text-sm">Quer resultados assim?</h5>
+                <p className="text-xs text-zinc-500">Agende uma auditoria de vazamento de receita da sua empresa.</p>
+                <Button asChild className="w-full bg-zinc-950 hover:bg-zinc-800 text-white font-semibold text-xs h-11 rounded-lg">
+                  <Link to="/booking">Agendar Auditoria →</Link>
+                </Button>
               </div>
             </div>
 
-            <div ref={contentRef} className="col-span-12 lg:col-span-9 lg:pl-10 lg:border-l border-zinc-50 order-1 lg:order-2">
+            {/* Coluna Principal de Conteúdo */}
+            <div className="lg:col-span-8 space-y-12 order-1 lg:order-2">
 
-              <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-revgreen">
-                <div className="mb-16">
-                  <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-                    <span className="w-2 h-8 bg-revgreen block rounded-sm"></span>
-                    O Desafio
-                  </h2>
-                  <div className="text-zinc-600 leading-relaxed text-lg whitespace-pre-line">
-                    {caseData.challenge}
-                  </div>
+              {/* O Desafio */}
+              <div className="space-y-4">
+                <h2 className="text-xl sm:text-2xl font-bold text-zinc-950 tracking-tight">
+                  O Desafio
+                </h2>
+                <div className="text-zinc-600 leading-relaxed text-base sm:text-lg whitespace-pre-line">
+                  {caseData.challenge}
                 </div>
+              </div>
 
-                <div className="mb-16">
-                  <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-                    <span className="w-2 h-8 bg-black block rounded-sm"></span>
-                    A Estratégia
-                  </h2>
-                  <div className="text-zinc-600 leading-relaxed text-lg whitespace-pre-line">
-                    {caseData.solution}
-                  </div>
+              {/* A Estratégia */}
+              <div className="space-y-4 pt-6 border-t border-zinc-100">
+                <h2 className="text-xl sm:text-2xl font-bold text-zinc-950 tracking-tight">
+                  A Estratégia
+                </h2>
+                <div className="text-zinc-600 leading-relaxed text-base sm:text-lg whitespace-pre-line">
+                  {caseData.solution}
                 </div>
+              </div>
 
-                <div className="mb-16">
-                  <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-                    <span className="w-2 h-8 bg-zinc-300 block rounded-sm"></span>
-                    Resultados Alcançados
-                  </h2>
+              {/* Métricas e Resultados */}
+              <div className="space-y-6 pt-6 border-t border-zinc-100">
+                <h2 className="text-xl sm:text-2xl font-bold text-zinc-950 tracking-tight">
+                  Resultados Alcançados
+                </h2>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    {caseData.metrics && caseData.metrics.map((metric, idx) => (
-                      <div key={idx} className="bg-zinc-50 p-8 border border-zinc-100 rounded-sm hover:border-revgreen/50 transition-colors">
-                        <TrendingUp className="w-6 h-6 text-revgreen mb-4" />
-                        <div className="text-2xl md:text-3xl font-bold text-black tracking-tight mb-2">{metric.value}</div>
-                        <p className="text-sm font-bold uppercase tracking-wider text-zinc-500">{metric.label}</p>
+                {caseData.metrics && caseData.metrics.length > 0 && (
+                  <div className="grid grid-cols-2 gap-4">
+                    {caseData.metrics.map((m: any, idx: number) => (
+                      <div key={idx} className="bg-white border border-zinc-200/80 p-6 rounded-2xl shadow-xs">
+                        <span className="text-2xl sm:text-3xl font-extrabold text-zinc-950 block mb-1">{m.value}</span>
+                        <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">{m.label}</span>
                       </div>
                     ))}
                   </div>
-
-                  {caseData.results && Array.isArray(caseData.results) && (
-                    <ul className="space-y-4">
-                      {caseData.results.map((result, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-zinc-700 bg-white p-4 border-b border-zinc-100 last:border-0">
-                          <CheckCircle2 className="w-5 h-5 text-revgreen shrink-0 mt-0.5" />
-                          <span className="font-medium">{result}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-
-                {caseData.quote && (
-                  <div className="my-16 bg-black text-white p-10 md:p-12 relative rounded-sm overflow-hidden isolation">
-                    <div className="absolute top-0 right-0 p-8 opacity-10">
-                      <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z" /></svg>
-                    </div>
-                    <blockquote className="relative z-10">
-                      <p className="text-xl md:text-2xl font-light italic leading-relaxed mb-8 text-zinc-200">
-                        "{caseData.quote}"
-                      </p>
-                      <footer className="flex items-center gap-4">
-                        {caseData.authorImage && (
-                          <img src={caseData.authorImage} alt={caseData.author} className="w-12 h-12 rounded-lg border-2 border-zinc-800" />
-                        )}
-                        <div>
-                          <cite className="not-italic font-bold text-white block uppercase tracking-wider text-sm">{caseData.author}</cite>
-                          <span className="text-zinc-500 text-xs font-sans uppercase tracking-wider">{caseData.role}</span>
-                        </div>
-                      </footer>
-                    </blockquote>
-                  </div>
                 )}
 
+                {caseData.results && Array.isArray(caseData.results) && caseData.results.length > 0 && (
+                  <ul className="space-y-3 pt-2">
+                    {caseData.results.map((result: string, idx: number) => (
+                      <li key={idx} className="flex items-start gap-3 text-zinc-700 bg-white p-4 rounded-xl border border-zinc-200/80">
+                        <CheckCircle2 className="w-5 h-5 text-zinc-900 shrink-0 mt-0.5" />
+                        <span className="text-sm font-medium">{result}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
-              <div className="mt-20 pt-12 border-t border-zinc-200">
-                <div className="bg-zinc-50 border border-zinc-200 p-8 md:p-12 rounded-sm text-center">
-                  <h3 className="text-base md:text-lg font-bold text-zinc-900">Pronto para escrever sua história de sucesso?</h3>
-                  <p className="text-zinc-600 mb-8 max-w-xl mx-auto">
-                    Nossa metodologia já gerou mais de R$ 500M em receita para nossos clientes. Vamos descobrir como aplicar no seu negócio.
-                  </p>
-                  <div className="w-full max-w-md mx-auto">
-                    <ContactForm />
-                  </div>
+              {/* Quote Testemunho (se existir) */}
+              {caseData.quote && (
+                <div className="bg-black text-white p-8 sm:p-10 rounded-2xl relative overflow-hidden">
+                  <blockquote className="space-y-6">
+                    <p className="text-base sm:text-lg font-normal leading-relaxed text-zinc-200 italic">
+                      "{caseData.quote}"
+                    </p>
+                    <footer className="flex items-center gap-4 border-t border-zinc-800 pt-6">
+                      {caseData.authorImage && (
+                        <img src={caseData.authorImage} alt={caseData.author} className="w-11 h-11 rounded-full border border-zinc-700 object-cover" />
+                      )}
+                      <div>
+                        <cite className="not-italic font-bold text-white block text-sm">{caseData.author}</cite>
+                        <span className="text-zinc-400 text-xs">{caseData.role}</span>
+                      </div>
+                    </footer>
+                  </blockquote>
                 </div>
-              </div>
+              )}
 
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Final com Formulário Padronizado */}
+      <section className="py-20 sm:py-24 bg-white border-t border-zinc-200/80">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            
+            <div className="space-y-6">
+              <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-zinc-950 leading-[1.1] tracking-tight">
+                Quer plugar esta <span className="text-zinc-500">Engenharia na sua operação?</span>
+              </h2>
+              <p className="text-zinc-600 text-base md:text-lg font-normal leading-relaxed max-w-lg">
+                Nós não começamos nenhum projeto sem auditar o vazamento atual da empresa. Aplique agora para uma análise de viabilidade técnica.
+              </p>
+            </div>
+
+            <div className="bg-white p-8 sm:p-10 rounded-2xl shadow-xs border border-zinc-200/80">
+              <ContactForm formType="diagnosis" />
             </div>
           </div>
         </div>
