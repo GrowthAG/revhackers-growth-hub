@@ -1,7 +1,7 @@
-
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import ContactForm from '../shared/ContactForm';
+import { getCurrentQuarterString } from '@/utils/dateUtils';
 
 const ContactFormSection = () => {
   const ref = useRef(null);
@@ -48,7 +48,7 @@ const ContactFormSection = () => {
             </div>
 
             <div className="pt-4 text-xs font-medium text-zinc-500">
-              Agenda Q2 2026 · <span className="text-zinc-300 font-semibold">Vagas limitadas</span>
+              Agenda {getCurrentQuarterString()} · <span className="text-zinc-300 font-semibold">Vagas limitadas</span>
             </div>
           </motion.div>
 

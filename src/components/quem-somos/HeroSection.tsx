@@ -28,7 +28,7 @@ const HeroSection = () => {
         <div className="flex flex-col sm:flex-row gap-4 mb-16 w-full justify-center">
           <Button asChild className="bg-white text-black h-11 px-8 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-revgreen hover:text-black transition-all duration-300">
             <Link to="/diagnostico" onClick={scrollToTop}>
-              Conhecer a Metodologia //
+              Conhecer a Metodologia →
             </Link>
           </Button>
         </div>

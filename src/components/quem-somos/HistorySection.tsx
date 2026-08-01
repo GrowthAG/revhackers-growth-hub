@@ -34,25 +34,25 @@ const HistorySection = () => {
             {/* Era 01 */}
             <div className="bg-white p-12 space-y-8 animate-fade-in [animation-delay:400ms] group hover:bg-zinc-50 transition-colors duration-500">
               <div className="flex justify-between items-start">
-                <span className="text-2xs font-sans text-zinc-300 font-bold uppercase tracking-wider">
-                  [ RH_LOG.01 // ORIGEM ]
+                <span className="text-xs font-sans text-zinc-400 font-bold uppercase tracking-wider">
+                  01. Origem
                 </span>
-                <div className="w-1 h-1 bg-zinc-200 group-hover:bg-black transition-colors" />
+                <div className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full" />
               </div>
-              <p className="text-zinc-500 text-base leading-relaxed font-medium">
+              <p className="text-zinc-600 text-base leading-relaxed font-normal">
                 Nascemos como <span className="text-black font-bold">GrowthAG</span>. Percebemos cedo que "vibe code" e vaidade não sustentam operações sérias. Onde o mercado via criatividade, instalamos processos.
               </p>
             </div>
 
             {/* Era 02 */}
-            <div className="bg-white p-12 space-y-8 animate-fade-in [animation-delay:600ms] group hover:bg-zinc-50 transition-colors duration-500">
+            <div className="bg-white p-12 space-y-6 animate-fade-in [animation-delay:600ms] group hover:bg-zinc-50 transition-colors duration-500">
               <div className="flex justify-between items-start">
-                <span className="text-2xs font-sans text-zinc-300 font-bold uppercase tracking-wider">
-                  [ RH_LOG.02 // LAB ]
+                <span className="text-xs font-sans text-zinc-400 font-bold uppercase tracking-wider">
+                  02. Evolução
                 </span>
-                <div className="w-1 h-1 bg-zinc-200 group-hover:bg-revgreen transition-colors" />
+                <div className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full" />
               </div>
-              <p className="text-zinc-500 text-base leading-relaxed font-medium">
+              <p className="text-zinc-600 text-base leading-relaxed font-normal">
                 Evoluímos para a <span className="text-black font-bold">RevHackers</span>. Deixamos de ser agência para ser laboratório. Hoje, instalamos a arquitetura de receita que suporta o próximo nível de escala B2B.
               </p>
             </div>
