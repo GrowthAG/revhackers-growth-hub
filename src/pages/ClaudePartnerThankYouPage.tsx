@@ -79,29 +79,29 @@ export default function ClaudePartnerThankYouPage() {
         </div>
       </section>
 
-      {/* 2ª DOBRA: Próximos Passos (Fundo Claro SaaS - Padrão Institucional) */}
-      <section className="py-20 bg-zinc-50 border-b border-zinc-200">
-        <div className="max-w-4xl mx-auto px-6 space-y-10">
+      {/* 2ª DOBRA: Próximos Passos (MEIO DA PÁGINA: FUNDO BRANCO SAAS ARQUITETÔNICO — ZERO CARDS) */}
+      <section className="py-24 bg-white text-zinc-900 border-b border-zinc-200">
+        <div className="max-w-5xl mx-auto px-6 space-y-12">
           <div className="max-w-2xl">
-            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-2">
-              Próximos Passos
+            <p className="text-[#00CC6A] font-mono text-xs font-bold tracking-widest uppercase mb-3">
+              [ PROCESSO DE ENTRADA ]
             </p>
-            <h2 className="text-zinc-900 text-2xl md:text-3xl font-bold tracking-tight leading-tight">
+            <h2 className="text-zinc-950 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
               O que acontece agora
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 step: "01",
                 title: "Verifique seu E-mail",
-                desc: "Procure pelo e-mail com remetente RevHackers & Anthropic. Cheque a pasta de spam ou promoções por garantia."
+                desc: "Procure pelo e-mail com remetente RevHackers & Anthropic. Cheque a caixa de entrada do seu e-mail corporativo."
               },
               {
                 step: "02",
-                title: "Ativação de Acessos",
-                desc: "Siga as orientações enviadas para validar suas chaves e entrar no ambiente de parceiros."
+                title: "Entrar no Portal Euler App",
+                desc: "Clique no botão de acesso direto no e-mail para validar credenciais e acessar o ambiente oficial."
               },
               {
                 step: "03",
@@ -109,15 +109,18 @@ export default function ClaudePartnerThankYouPage() {
                 desc: "Prepare-se para construir agentes autônomos de IA e aplicar em operações reais de receita."
               }
             ].map((item) => (
-              <div key={item.step} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/50 transition-all shadow-xs group">
+              <div
+                key={item.step}
+                className="border-t-2 border-zinc-200 hover:border-[#00CC6A] transition-colors duration-300 pt-6 flex flex-col justify-between group"
+              >
                 <div>
-                  <span className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase block mb-3">
-                    PASSO {item.step}
+                  <span className="text-4xl sm:text-5xl font-black font-mono text-[#00CC6A] tracking-tighter block mb-4 group-hover:scale-105 transition-transform origin-left">
+                    {item.step}
                   </span>
-                  <h3 className="text-zinc-900 font-bold text-base mb-2 group-hover:text-[#00CC6A] transition-colors">
+                  <h3 className="text-zinc-950 font-extrabold text-lg tracking-tight mb-2 group-hover:text-[#00CC6A] transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-zinc-500 text-xs leading-relaxed">
+                  <p className="text-zinc-600 text-xs leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
