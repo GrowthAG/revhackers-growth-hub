@@ -124,48 +124,6 @@
 </head>
 
 <body>
-  <!-- Chunk stale cache guard: reloads ONCE if a dynamic import fails or root fails to mount -->
-  <script>
-    window.addEventListener("error", function(e) {
-      var msg = (e.message || '') + (e.filename || '');
-      var isChunkError = (
-        msg.includes("Failed to fetch dynamically imported module") ||
-        msg.includes("Importing a module script failed") ||
-        msg.includes("error loading dynamically imported module")
-      );
-      if (isChunkError && !sessionStorage.getItem('__rx_chunk_refresh')) {
-        sessionStorage.setItem('__rx_chunk_refresh', '1');
-        window.location.reload(true);
-      }
-    });
-
-    // Auto-detect empty #root (White Screen) and self-heal automatically
-    setTimeout(function() {
-      var root = document.getElementById('root');
-      if (root && !root.hasChildNodes()) {
-        var lastWs = parseInt(sessionStorage.getItem('__rx_ws_last') || '0', 10);
-        if (Date.now() - lastWs > 4000) {
-          sessionStorage.setItem('__rx_ws_last', String(Date.now()));
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(regs) {
-              regs.forEach(function(r) { r.unregister(); });
-            });
-          }
-          window.location.reload(true);
-        }
-      }
-    }, 1500);
-
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        var root = document.getElementById('root');
-        if (root && root.hasChildNodes()) {
-          sessionStorage.removeItem('__rx_chunk_refresh');
-          sessionStorage.removeItem('__rx_ws_recovered');
-        }
-      }, 3000);
-    });
-  </script>
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJGSPB3" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
