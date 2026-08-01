@@ -53,10 +53,10 @@ const BookingPage = () => {
       <section className="relative py-20 md:py-28 bg-black border-b border-zinc-900">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-5">
           <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
-            Auditoria de Vazamento de Receita <span className="text-[#00CC6A]">& Engenharia B2B</span>
+            Auditoria de Vazamento de Receita <span className="text-[#00CC6A]">& GTM Engineering</span>
           </h1>
           <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
-            Sessão técnica de 30 minutos para mapear onde sua operação perde receita e desenhar o roadmap de escala com IA e RevOps.
+            Sessão técnica de 30 minutos com nossos arquitetos para auditar gargalos ocultos da sua operação e estruturar o plano de escala com GTM Engineering e AI-Powered ABM.
           </p>
         </div>
       </section>
