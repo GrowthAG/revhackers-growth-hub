@@ -79,11 +79,11 @@ export default function ClaudePartnerThankYouPage() {
         </div>
       </section>
 
-      {/* 2ª DOBRA: Próximos Passos (MEIO DA PÁGINA: FUNDO BRANCO SAAS ARQUITETÔNICO — ZERO CARDS) */}
-      <section className="py-24 bg-white text-zinc-900 border-b border-zinc-200">
+      {/* 2ª DOBRA: Próximos Passos (MEIO DA PÁGINA: FUNDO 100% BRANCO — PRETO E CINZA — ZERO VERDE EM BRANCO) */}
+      <section className="py-24 bg-white text-zinc-950 border-b border-zinc-200">
         <div className="max-w-5xl mx-auto px-6 space-y-12">
           <div className="max-w-2xl">
-            <p className="text-[#00CC6A] font-mono text-xs font-bold tracking-widest uppercase mb-3">
+            <p className="text-zinc-500 font-mono text-xs font-bold tracking-widest uppercase mb-3">
               [ PROCESSO DE ENTRADA ]
             </p>
             <h2 className="text-zinc-950 text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
@@ -111,13 +111,13 @@ export default function ClaudePartnerThankYouPage() {
             ].map((item) => (
               <div
                 key={item.step}
-                className="border-t-2 border-zinc-200 hover:border-[#00CC6A] transition-colors duration-300 pt-6 flex flex-col justify-between group"
+                className="border-t-2 border-zinc-950 hover:border-zinc-700 transition-colors duration-300 pt-6 flex flex-col justify-between group"
               >
                 <div>
-                  <span className="text-4xl sm:text-5xl font-black font-mono text-[#00CC6A] tracking-tighter block mb-4 group-hover:scale-105 transition-transform origin-left">
+                  <span className="text-4xl sm:text-5xl font-black font-mono text-zinc-950 tracking-tighter block mb-4 group-hover:scale-105 transition-transform origin-left">
                     {item.step}
                   </span>
-                  <h3 className="text-zinc-950 font-extrabold text-lg tracking-tight mb-2 group-hover:text-[#00CC6A] transition-colors">
+                  <h3 className="text-zinc-950 font-extrabold text-lg tracking-tight mb-2">
                     {item.title}
                   </h3>
                   <p className="text-zinc-600 text-xs leading-relaxed">
