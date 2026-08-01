@@ -104,6 +104,21 @@
     color: #111111;
   }
 
+  /* Mobile typography & font scaling */
+  @media (max-width: 639px) {
+    html {
+      font-size: 15.5px;
+    }
+    .text-xs {
+      font-size: 0.8125rem !important; /* 13px minimum on mobile */
+      line-height: 1.35 !important;
+    }
+    .text-\[11px\], .text-\[10px\] {
+      font-size: 0.75rem !important; /* 12px minimum on mobile */
+      line-height: 1.35 !important;
+    }
+  }
+
   /* Ultrawide scaling for REM sizing */
   @media (min-width: 1536px) {
     html {

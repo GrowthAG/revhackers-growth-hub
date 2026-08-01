@@ -254,14 +254,14 @@ const FounderScore = () => {
                             }`}>
                               {letter}
                             </div>
-                            <span className="text-xs sm:text-sm font-medium leading-normal">
+                            <span className="text-sm sm:text-base font-medium leading-normal">
                               {opt.label}
                             </span>
                           </div>
 
                           <div className="flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors ml-3 shrink-0">
-                            <span className="text-[10px] font-bold uppercase tracking-wider hidden sm:inline">{letter}</span>
-                            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                            <span className="text-xs font-bold uppercase tracking-wider hidden sm:inline">{letter}</span>
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                           </div>
                         </button>
                       );
@@ -269,7 +269,7 @@ const FounderScore = () => {
                   </div>
 
                   {showLog && currentQData.log && (
-                    <div className="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 text-xs font-medium leading-relaxed flex items-start gap-2">
+                    <div className="p-3.5 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 text-xs sm:text-sm font-medium leading-relaxed flex items-start gap-2">
                       <span className="shrink-0 font-bold">💡 Insight:</span>
                       <span>{currentQData.log}</span>
                     </div>
@@ -277,9 +277,9 @@ const FounderScore = () => {
                 </motion.div>
               </AnimatePresence>
 
-              <div className="flex items-center justify-between pt-4 border-t border-zinc-100 text-[11px] text-zinc-400 font-medium">
+              <div className="flex items-center justify-between pt-4 border-t border-zinc-100 text-xs sm:text-sm text-zinc-500 font-medium">
                 <span className="flex items-center gap-1.5">
-                  <Command className="w-3 h-3" /> Pressione <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">A</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">B</kbd> <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">C</kbd> ou <kbd className="px-1 py-0.5 bg-zinc-100 rounded text-zinc-600 font-semibold">D</kbd> para responder
+                  <Command className="w-3.5 h-3.5" /> Pressione <kbd className="px-1.5 py-0.5 bg-zinc-100 rounded text-zinc-700 font-semibold">A</kbd> <kbd className="px-1.5 py-0.5 bg-zinc-100 rounded text-zinc-700 font-semibold">B</kbd> <kbd className="px-1.5 py-0.5 bg-zinc-100 rounded text-zinc-700 font-semibold">C</kbd> ou <kbd className="px-1.5 py-0.5 bg-zinc-100 rounded text-zinc-700 font-semibold">D</kbd> para responder
                 </span>
                 <span>100% Privado</span>
               </div>

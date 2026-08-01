@@ -65,7 +65,7 @@ export const DiagnosticLayout = ({
 
          {showGovernanceFooter && (
            <div className="mt-8 text-center w-full max-w-xl mx-auto border-t border-zinc-100 pt-6">
-             <p className="text-[11px] font-sans text-zinc-400 leading-relaxed font-medium">
+             <p className="text-xs sm:text-sm font-sans text-zinc-500 leading-relaxed font-medium">
                RevHackers GTM Engineering — Diagnóstico preditivo de receita e maturidade operacional B2B.
              </p>
            </div>

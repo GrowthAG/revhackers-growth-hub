@@ -309,7 +309,7 @@ const FounderVideoWidget = () => {
               </div>
             </div>
 
-            <div className="flex-1 p-4 space-y-3 overflow-y-auto min-h-0 text-xs leading-relaxed font-sans bg-zinc-50/50 scroll-smooth">
+            <div className="flex-1 p-4 space-y-3 overflow-y-auto min-h-0 text-xs sm:text-sm leading-relaxed font-sans bg-zinc-50/50 scroll-smooth">
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
@@ -330,7 +330,7 @@ const FounderVideoWidget = () => {
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="bg-white text-zinc-500 border border-zinc-200/90 p-3 rounded-2xl rounded-tl-xs flex items-center gap-1.5 shadow-sm">
-                    <span className="text-[11px] font-medium text-zinc-500 mr-1">Giulliano digitando</span>
+                    <span className="text-xs font-medium text-zinc-600 mr-1">Giulliano digitando</span>
                     <span className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <span className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                     <span className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -344,7 +344,7 @@ const FounderVideoWidget = () => {
                     <button
                       key={i}
                       onClick={() => emailCaptured ? handleSendMessage(pill) : handlePillClickBeforeEmail(pill)}
-                      className="text-[11px] bg-white hover:bg-zinc-100 text-zinc-800 hover:text-zinc-950 px-3 py-1.5 rounded-full border border-zinc-200 transition-all text-left shadow-xs font-semibold cursor-pointer flex items-center gap-1"
+                      className="text-xs sm:text-sm bg-white hover:bg-zinc-100 text-zinc-800 hover:text-zinc-950 px-3 py-1.5 rounded-full border border-zinc-200 transition-all text-left shadow-xs font-semibold cursor-pointer flex items-center gap-1"
                     >
                       {pill}
                     </button>
@@ -368,7 +368,7 @@ const FounderVideoWidget = () => {
                     placeholder="Responda ou digite sua dúvida aqui..."
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
-                    className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs h-10 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
+                    className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs sm:text-sm h-10 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
                   />
                   <button
                     type="submit"
@@ -388,7 +388,7 @@ const FounderVideoWidget = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs h-10 pr-12 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
+                        className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs sm:text-sm h-10 pr-12 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
                       />
                       <button
                         type="submit"
@@ -401,7 +401,7 @@ const FounderVideoWidget = () => {
                   </form>
                   <button
                     onClick={() => window.location.href = "/booking"}
-                    className="w-full text-[11px] font-bold text-zinc-600 hover:text-zinc-950 py-1.5 flex items-center justify-center gap-1.5 bg-zinc-50 border border-zinc-200 rounded-xl hover:bg-zinc-100 transition-colors"
+                    className="w-full text-xs font-bold text-zinc-700 hover:text-zinc-950 py-2 flex items-center justify-center gap-1.5 bg-zinc-50 border border-zinc-200 rounded-xl hover:bg-zinc-100 transition-colors"
                   >
                     <span className="w-2 h-2 rounded-full bg-[#00CC6A]" />
                     Prefere agendar reunião? Agendar Sessão de 30 min
