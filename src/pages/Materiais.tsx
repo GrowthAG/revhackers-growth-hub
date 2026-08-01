@@ -212,25 +212,25 @@ const Materiais = () => {
         </div>
       </section>
 
-      {/* 3. CTA Footer */}
-      <div className="py-24 bg-white border-t border-zinc-200">
-        <div className="container-custom">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-10">
-            <div className="max-w-2xl text-center md:text-left">
-              <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
+      {/* 3. CTA Footer — Fundo 100% Branco Puro */}
+      <div className="py-20 bg-white border-t border-zinc-200/80">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="max-w-2xl text-center md:text-left space-y-2">
+              <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight">
                 Identificou a Dor?
               </h2>
-              <p className="text-xl text-zinc-500 font-bold tracking-tight leading-relaxed">
-                Pare de ler teoria. Aplique para que nossa Engenharia audite o seu funil e conecte seu CRM à ferramentas de IA.
+              <p className="text-zinc-500 text-sm md:text-base leading-relaxed">
+                Pare de ler teoria. Aplique para que nossa Engenharia audite o seu funil e conecte seu CRM a ferramentas de IA.
               </p>
             </div>
             <div className="flex-shrink-0">
               <Button
                 size="lg"
                 onClick={() => setIsBookingOpen(true)}
-                className="bg-black text-white hover:bg-revgreen hover:text-black font-bold tracking-wider uppercase px-10 h-11 rounded-lg text-xs transition-all duration-500 shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:shadow-revgreen/20"
+                className="bg-zinc-950 text-white hover:bg-zinc-800 font-bold text-sm h-12 px-8 rounded-xl shadow-xs transition-all"
               >
-                Auditar Minha Operação
+                Auditar Minha Operação →
               </Button>
             </div>
           </div>

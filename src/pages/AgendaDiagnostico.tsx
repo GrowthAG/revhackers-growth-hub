@@ -62,42 +62,31 @@ const AgendaDiagnosticoPage = () => {
     return queryString ? `?${queryString}` : '';
   };
 
-  return (
-    <PageLayout>
-      <div className="min-h-screen bg-black pt-24 pb-12 flex flex-col items-center justify-center">
-        <div className="container-custom w-full max-w-5xl">
+      {/* Hero Section (BLACK HERO STANDARD) */}
+      <section className="relative py-20 md:py-28 bg-black border-b border-zinc-900">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-5">
+          <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
+            Agendar <span className="text-[#00CC6A]">Sessão Estratégica</span>
+          </h1>
+          <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
+            Selecione o melhor horário abaixo no calendário oficial de diagnósticos da RevHackers.
+          </p>
+        </div>
+      </section>
 
-          {/* Header minimalista */}
-          <div className="text-center mb-8 animate-fade-in">
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tighter">
-              Agendar <span className="text-revgreen">Sessão Estratégica</span>
-            </h1>
-            <p className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto">
-              Selecione o melhor horário abaixo.
-            </p>
-          </div>
+      {/* Main Section — Fundo 100% Branco Puro */}
+      <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
+        <div className="container-custom w-full max-w-5xl mx-auto px-6">
 
           {/* Calendar Container */}
-          <div className="bg-white/5 border border-white/10 overflow-hidden backdrop-blur-sm shadow-sm relative">
-            {/* Loader / Placeholder */}
-            <div className="absolute inset-0 flex items-center justify-center -z-10">
-              <div className="w-8 h-8 border-2 border-revgreen border-t-transparent rounded-full animate-spin"></div>
-            </div>
-
-            <style>{`
-                  .booking-calendar-wrapper iframe {
-                    background: transparent !important;
-                    min-height: 750px !important;
-                  }
-                `}</style>
-
+          <div className="bg-white overflow-hidden rounded-xl border border-zinc-200/80 shadow-xs relative min-h-[750px]">
             <iframe
               src={`https://team.growthagency.com.br/widget/booking/sKnL4ucDKohNmqj1hn6H${buildQueryParams()}`}
               style={{
                 width: '100%',
                 border: 'none',
                 minHeight: '750px',
-                backgroundColor: 'transparent'
+                backgroundColor: '#ffffff'
               }}
               id="sKnL4ucDKohNmqj1hn6H_1744205651626"
               title="Agendar diagnóstico"
@@ -106,14 +95,12 @@ const AgendaDiagnosticoPage = () => {
 
           {/* Footer minimalista */}
           <div className="mt-8 text-center">
-            <Link to="/" className="text-sm text-zinc-500 hover:text-white transition-colors underline decoration-zinc-800 underline-offset-4">
-              Voltar para Home
+            <Link to="/" className="text-xs font-bold text-zinc-500 hover:text-zinc-950 transition-colors uppercase tracking-wider">
+              ← Voltar para Home
             </Link>
           </div>
         </div>
-      </div>
-    </PageLayout>
-  );
+      </section>
 };
 
 export default AgendaDiagnosticoPage;

@@ -93,55 +93,46 @@ export default function MaterialLanding() {
                 description={(material.description || material.subheadline || 'Material gratuito RevHackers').replace(/<[^>]*>/g, '').substring(0, 160)}
                 canonical={`https://revhackers.com.br/materiais/${slug}`}
             />
-            {/* Hero Section - Apple/OpenAI Minimalist Style */}
-            <section className="pt-32 pb-24 px-6 bg-white min-h-[70vh] flex items-center justify-center">
-                <div className="max-w-3xl mx-auto text-center space-y-10">
-
-                    {/* Headline */}
-                    <div className="space-y-4">
-                        <h1 className="text-[2.5rem] md:text-[3.5rem] font-semibold tracking-tight text-zinc-900 leading-[1.1] max-w-3xl mx-auto">
-                            {(material.headline || material.title || '').replace(/<[^>]*>/g, '')}
-                        </h1>
-                        <p className="text-[1rem] md:text-[1.25rem] text-zinc-500 font-light tracking-tight max-w-xl mx-auto leading-relaxed">
-                            {(material.subheadline || material.description || '').replace(/<[^>]*>/g, '').substring(0, 150)}
-                        </p>
-                    </div>
-
-                    {/* CTA Button */}
-                    {!showForm ? (
-                        <div className="pt-8">
-                            <button
+            {/* Hero Section - Black Standard Hero */}
+            <section className="relative py-20 md:py-28 bg-black border-b border-zinc-900">
+                <div className="max-w-3xl mx-auto px-6 text-center space-y-6">
+                    <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
+                        {(material.headline || material.title || '').replace(/<[^>]*>/g, '')}
+                    </h1>
+                    <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
+                        {(material.subheadline || material.description || '').replace(/<[^>]*>/g, '').substring(0, 150)}
+                    </p>
+                    {!showForm && (
+                        <div className="pt-2 flex justify-center">
+                            <Button
                                 onClick={() => setShowForm(true)}
-                                className="group inline-flex items-center gap-3 bg-revgreen hover:bg-[#00A850] text-white font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 hover:shadow-sm hover:-translate-y-0.5"
+                                className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] font-extrabold text-sm sm:text-base h-12 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2"
                             >
                                 <Download className="w-4 h-4" />
-                                Baixar Gratuitamente
-                                <span className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                                    <ChevronRight className="w-3 h-3" />
-                                </span>
-                            </button>
-                            <p className="text-xs text-zinc-400 mt-4">
-                                Acesso imediato após preencher o formulário
-                            </p>
+                                <span>Baixar Gratuitamente →</span>
+                            </Button>
                         </div>
-                    ) : (
-                        /* Download Form */
-                        <div className="max-w-md mx-auto bg-zinc-50 border border-zinc-200 p-8 text-left animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <div className="mb-6 text-center">
-                                <h3 className="text-lg font-semibold text-zinc-900 mb-1">Acesse o material</h3>
-                                <p className="text-sm text-zinc-500">Preencha seus dados para liberar o download</p>
+                    )}
+                </div>
+            </section>
+
+            {/* Content / Form Section — Fundo 100% Branco Puro */}
+            <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
+                <div className="max-w-md mx-auto px-6">
+                    {showForm && (
+                        <div className="bg-zinc-50/70 border border-zinc-200/80 p-8 rounded-xl space-y-6">
+                            <div className="text-center space-y-1">
+                                <h3 className="text-lg font-bold text-zinc-950 tracking-tight">Acesse o material</h3>
+                                <p className="text-xs text-zinc-500">Preencha seus dados para liberar o download imediato</p>
                             </div>
                             <DownloadForm
                                 materialId={material.id}
                                 materialType={material.type}
-                                onSubmit={() => {
-                                    // Form handles success internally
-                                }}
+                                onSubmit={() => {}}
                                 linkMaterial={material.downloadLink}
                             />
                         </div>
                     )}
-
                 </div>
             </section>
         </PageLayout>

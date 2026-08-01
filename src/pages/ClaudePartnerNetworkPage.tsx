@@ -144,48 +144,48 @@ export default function ClaudePartnerNetworkPage() {
         canonical="https://revhackers.com.br/claude-partner-network"
       />
 
-      {/* Hero Section (BENCHMARK HOMEPAGE HERO) */}
+      {/* Hero Section (HOMEPAGE HERO 100% VISUAL CLONE) */}
       <section
         ref={heroRef}
         className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black border-b border-zinc-900"
       >
         <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
           
-          {/* Lockup Oficial: Claude Partner Network by RevHackers */}
+          {/* Lockup Compacto Oficial: Claude Partner Network by RevHackers */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="flex items-center justify-center gap-3 sm:gap-4 mb-6 p-3 px-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 shadow-inner"
+            className="flex items-center justify-center gap-2.5 mb-6 py-1.5 px-4 rounded-full bg-zinc-900/80 border border-zinc-800"
           >
             <img
               src="/brand/claude-partner-network.svg"
               alt="Claude Partner Network"
-              className="h-7 sm:h-9 w-auto object-contain"
+              className="h-4 sm:h-4.5 w-auto object-contain"
             />
-            <span className="text-zinc-400 font-medium text-xs sm:text-sm tracking-wide lowercase">by</span>
+            <span className="text-zinc-500 font-medium text-xs">by</span>
             <img
               src="/brand/revhackers-wordmark-white.png"
               alt="REVHACKERS"
-              className="h-4 sm:h-5 w-auto object-contain"
+              className="h-3 sm:h-3.5 w-auto object-contain"
             />
           </motion.div>
           
-          {/* Headline H1 (HOMEPAGE BENCHMARK EXACT SCALE) */}
+          {/* Headline H1 (EXACT SAME AS HOME HERO) */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
-            className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center max-w-3xl"
+            className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center max-w-4xl"
           >
             Você foi selecionado para o <span className="text-[#00CC6A]">Claude Partner Network</span> & RevHackers.
           </motion.h1>
 
-          {/* Subheadline (HOMEPAGE BENCHMARK EXACT SCALE) */}
+          {/* Subheadline (EXACT SAME AS HOME HERO) */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+            transition={{ duration: 0.5, delay: 0.08, ease: 'easeOut' }}
             className="text-zinc-400 mb-8 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center"
           >
             Aqui é o ambiente onde você vai aprender o Claude de verdade. Dedique-se e com certeza você colherá bons frutos disso.
@@ -194,7 +194,7 @@ export default function ClaudePartnerNetworkPage() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.15 }}
+            transition={{ duration: 0.5, delay: 0.14, ease: 'easeOut' }}
           >
             <Button
               onClick={scrollToForm}

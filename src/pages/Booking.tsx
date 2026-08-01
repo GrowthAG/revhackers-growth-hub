@@ -49,76 +49,59 @@ const BookingPage = () => {
         description="Agende uma auditoria técnica com a RevHackers para mapear vazamentos na sua operação B2B."
         canonical="https://revhackers.com.br/booking"
       />
-      <section className="py-24 md:py-32 bg-black min-h-screen">
-        <div className="w-full max-w-6xl mx-auto px-6">
+      {/* Hero Section (BLACK HERO STANDARD) */}
+      <section className="relative py-20 md:py-28 bg-black border-b border-zinc-900">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-5">
+          <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
+            Auditoria de Receita B2B
+          </h1>
+          <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
+            Esta é uma agenda técnica focada em achar vazamentos no seu LTV e CAC. Se nossa Engenharia não puder dobrar a eficiência da sua máquina comercial em 90 dias, não faremos proposta.
+          </p>
+        </div>
+      </section>
 
-          {/* Header */}
-          <div className="text-center mb-16">
-            <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase mb-4">
-              [ Vagas Restritas: 3 / mês ]
-            </p>
-            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto text-center mb-8">Auditoria de Receita</h1>
-            <p className="text-sm md:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed text-center">
-              Não fazemos "calls para nos conhecer". Esta é uma agenda técnica focada em achar vazamentos no seu LTV e CAC. Se nossa Engenharia não puder dobrar a eficiência da sua máquina comercial em 90 dias, não faremos proposta.
-            </p>
-          </div>
+      {/* Main Section — Fundo 100% Branco Puro e Minimalista */}
+      <section className="py-16 sm:py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
+        <div className="w-full max-w-5xl mx-auto px-6">
 
-          {/* Layout 2 colunas: info + calendário */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+          {/* Layout 2 colunas: info ultra-clean + calendário */}
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
 
-            {/* Coluna esquerda: contexto de conversão */}
-            <div className="lg:col-span-2 flex flex-col gap-8">
+            {/* Coluna esquerda: contexto minimalista sem poluição */}
+            <div className="lg:col-span-2 flex flex-col justify-center space-y-8">
 
-              {/* Pré-Requisitos */}
-              <div className="bg-zinc-50 border border-zinc-200 p-6 rounded-sm">
-                <span className="font-bold text-xxs tracking-wider uppercase text-zinc-500 mb-4 border-b border-zinc-200 pb-3 block">
-                  Pré-Requisitos da Operação:
+              {/* Pré-Requisitos em Lista Limpa */}
+              <div className="space-y-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-zinc-950 block">
+                  Pré-Requisitos:
                 </span>
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-start gap-3 text-sm text-zinc-700 font-bold">
-                    <CheckCircle className="w-5 h-5 text-black shrink-0 mt-0.5" />
-                    Operação B2B (High Ticket) validada e tracionando.
-                  </div>
-                  <div className="flex items-start gap-3 text-sm text-zinc-700 font-bold">
-                    <CheckCircle className="w-5 h-5 text-black shrink-0 mt-0.5" />
-                    Participação do Fundador/C-Level na reunião técnica.
-                  </div>
-                </div>
+                <ul className="space-y-3 text-xs sm:text-sm">
+                  <li className="flex items-center gap-2.5 text-zinc-900 font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-950 shrink-0" />
+                    Operação B2B (High Ticket) tracionando
+                  </li>
+                  <li className="flex items-center gap-2.5 text-zinc-900 font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-950 shrink-0" />
+                    Presença do Fundador / C-Level na sessão
+                  </li>
+                </ul>
               </div>
 
-              {/* O que acontece depois de agendar */}
-              <div>
-                <span className="font-bold text-xxs tracking-wider uppercase text-zinc-400 mb-5 block">
-                  O que acontece depois:
-                </span>
-                <div className="flex flex-col gap-5">
-                  {nextSteps.map((step, i) => (
-                    <div key={i} className="flex items-start gap-4">
-                      <div className="w-9 h-9 rounded-sm bg-zinc-900 flex items-center justify-center shrink-0">
-                        <step.icon className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold text-zinc-900 mb-1">{step.title}</p>
-                        <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              {/* Métrica Única de Impacto */}
+              <div className="border-t border-zinc-200/80 pt-6 space-y-1">
+                <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Resultado Auditado Misto</p>
+                <p className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight">+R$ 480.000</p>
+                <p className="text-xs text-zinc-500">em receita recuperada nas últimas auditorias.</p>
               </div>
 
-              {/* Mini social proof */}
-              <div className="border-t border-zinc-100 pt-6">
-                <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Resultado típico em 90 dias</p>
-                <p className="text-2xl font-bold text-zinc-900 tracking-tight">+R$480K</p>
-                <p className="text-sm text-zinc-500 mt-1">em receita identificada ou recuperada nas últimas 4 auditorias.</p>
-              </div>
             </div>
 
             {/* Coluna direita: calendário */}
-            <div className="lg:col-span-3 bg-white overflow-hidden min-h-[700px] border border-zinc-100 shadow-sm shadow-zinc-100/50">
+            <div className="lg:col-span-3 bg-white overflow-hidden min-h-[680px] border border-zinc-200/80 rounded-xl shadow-xs">
               <iframe
                 src={BOOKING_BASE_URL}
-                style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '700px', background: '#ffffff' }}
+                style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '680px', background: '#ffffff' }}
                 scrolling="no"
                 id="frZ10gIRdS8iNvtlGq3q_1775165036136"
                 title="Auditoria de Receita"
