@@ -209,17 +209,17 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* O que acontece agora & Público Elegível (FUNDO BRANCO ULTRA MINIMALISTA — LINHAS FINAS & TIPOGRAFIA REFINADA) */}
+      {/* O que acontece agora & Público Elegível (PADRÃO NOTION.SO & ASIDE.COM — LIGHT MODE REFINADO) */}
       <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
-        <div className="max-w-5xl mx-auto px-6 space-y-20">
+        <div className="max-w-6xl mx-auto px-6 space-y-20">
           
-          {/* 1. O que acontece agora (Minimalist Step Flow) */}
-          <div className="space-y-10">
+          {/* 1. O que acontece agora (Notion Step Block System) */}
+          <div className="space-y-8">
             <div className="max-w-2xl">
-              <p className="text-zinc-400 text-xs font-medium tracking-wider uppercase mb-2">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-zinc-100 border border-zinc-200/80 text-zinc-600 text-[11px] font-mono font-medium tracking-wider uppercase mb-3">
                 Processo de Entrada
-              </p>
-              <h2 className="text-zinc-900 text-2xl sm:text-3xl font-bold tracking-tight leading-tight">
+              </span>
+              <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
                 O que acontece agora
               </h2>
               <p className="text-zinc-500 text-xs sm:text-sm mt-2 leading-relaxed">
@@ -227,74 +227,84 @@ export default function ClaudePartnerNetworkPage() {
               </p>
             </div>
 
-            {/* Grid 4 Colunas Minimalista (Borda Fina 1px + Tag Discreta) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Grid 4 Colunas Notion Style (Containers Sutis + Micro Pill Badges) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { step: "01", title: "Cadastro em 3 Etapas", desc: "Preenche seus dados essenciais pra gente liberar suas credenciais de acesso." },
                 { step: "02", title: "Validação & Tech Match", desc: "A gente analisa a sua arquitetura pra conectar o Claude da forma mais eficiente." },
                 { step: "03", title: "Acessos no Seu E-mail", desc: "Receba as chaves, documentações técnicas e credenciais direto no seu inbox." },
                 { step: "04", title: "Execução Brutal", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
               ].map((item) => (
-                <div key={item.step} className="border-t border-zinc-200/90 pt-5 space-y-2">
-                  <span className="text-zinc-400 font-medium text-xs tracking-wider block">
-                    {item.step} / Passo
-                  </span>
-                  <h3 className="text-zinc-900 font-semibold text-sm sm:text-base tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-zinc-500 text-xs leading-relaxed font-normal">
-                    {item.desc}
-                  </p>
+                <div
+                  key={item.step}
+                  className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex flex-col justify-between space-y-3"
+                >
+                  <div className="space-y-2">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded bg-white border border-zinc-200 text-zinc-700 text-[11px] font-mono font-semibold">
+                      Passo {item.step}
+                    </span>
+                    <h3 className="text-zinc-900 font-bold text-base tracking-tight pt-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* 2. Para quem essa trilha faz sentido (Split Grid Minimalista) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-14 border-t border-zinc-200/80">
-            {/* Left Column */}
-            <div className="lg:col-span-4 space-y-3">
-              <p className="text-zinc-400 text-xs font-medium tracking-wider uppercase">
+          {/* 2. Para quem essa trilha faz sentido (Notion Feature Grid com Micro-Ícones) */}
+          <div className="space-y-8 pt-12 border-t border-zinc-200/80">
+            <div className="max-w-2xl">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-zinc-100 border border-zinc-200/80 text-zinc-600 text-[11px] font-mono font-medium tracking-wider uppercase mb-3">
                 Público Elegível
-              </p>
-              <h2 className="text-zinc-900 text-2xl sm:text-3xl font-bold tracking-tight leading-tight">
+              </span>
+              <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
                 Para quem essa trilha foi construída
               </h2>
-              <p className="text-zinc-500 text-xs leading-relaxed">
+              <p className="text-zinc-500 text-xs sm:text-sm mt-2 leading-relaxed">
                 Desenhado exclusivamente para lideranças de tecnologia, produto, receita e automação de negócios B2B.
               </p>
             </div>
 
-            {/* Right Column Grid */}
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
-              {AUDIENCE_ROLES.map((role) => (
-                <div key={role.title} className="border-t border-zinc-200/90 pt-5 space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1 h-1 rounded-full bg-zinc-400" />
-                    <h3 className="text-zinc-900 font-semibold text-sm tracking-tight">
+            {/* Grid 3 Colunas Notion Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {AUDIENCE_ROLES.map((role) => {
+                const IconComponent = role.icon;
+                return (
+                  <div
+                    key={role.title}
+                    className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2.5"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-white border border-zinc-200/80 flex items-center justify-center text-zinc-800 shadow-2xs">
+                      <IconComponent className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-zinc-900 font-bold text-sm tracking-tight">
                       {role.title}
                     </h3>
+                    <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                      {role.desc}
+                    </p>
                   </div>
-                  <p className="text-zinc-500 text-xs leading-relaxed pl-3 font-normal">
-                    {role.desc}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* Formulário de Confirmação em 3 Etapas (ULTRA MINIMALISTA & LEVE) */}
+      {/* Formulário de Confirmação em 3 Etapas (NOTION & ASIDE FORM CONTAINER) */}
       <section ref={formRef} className="py-20 bg-white text-zinc-900 border-t border-zinc-200/80">
         <div className="max-w-md mx-auto px-6 space-y-8">
           
           <div className="text-center space-y-2">
-            <p className="text-zinc-400 text-xs font-medium tracking-wider uppercase">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-600 text-xs font-mono font-medium mb-1">
               Etapa {step} de 3
-            </p>
-            <h2 className="text-zinc-900 text-xl sm:text-2xl font-bold tracking-tight">
+            </span>
+            <h2 className="text-zinc-900 text-xl sm:text-2xl font-extrabold tracking-tight">
               {step === 1 && "1. Seus dados de acesso"}
               {step === 2 && "2. Dados da sua empresa"}
               {step === 3 && "3. Perfil & Ativação"}
@@ -307,14 +317,14 @@ export default function ClaudePartnerNetworkPage() {
           </div>
 
           {!isSubmitted && (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 p-6 rounded-2xl bg-zinc-50/50 border border-zinc-200/80 shadow-2xs">
               
               {/* STEP 1: DADOS PESSOAIS */}
               {step === 1 && (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 flex flex-col">
                   {/* Campo 1 */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-700">1. Nome Completo *</label>
+                    <label className="text-xs font-semibold text-zinc-800">1. Nome Completo *</label>
                     <input
                       {...register('fullName')}
                       placeholder="Seu nome completo"
@@ -325,7 +335,7 @@ export default function ClaudePartnerNetworkPage() {
 
                   {/* Campo 2 */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-700">2. E-mail Corporativo *</label>
+                    <label className="text-xs font-semibold text-zinc-800">2. E-mail Corporativo *</label>
                     <input
                       {...register('corporateEmail')}
                       placeholder="voce@empresa.com.br"
@@ -336,7 +346,7 @@ export default function ClaudePartnerNetworkPage() {
 
                   {/* Campo 3 */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-700">3. WhatsApp / Telefone *</label>
+                    <label className="text-xs font-semibold text-zinc-800">3. WhatsApp / Telefone *</label>
                     <input
                       {...register('phone')}
                       placeholder="(11) 99999-9999"
@@ -360,7 +370,7 @@ export default function ClaudePartnerNetworkPage() {
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 flex flex-col">
                   {/* Campo 1 */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-700">4. Nome da Empresa *</label>
+                    <label className="text-xs font-semibold text-zinc-800">4. Nome da Empresa *</label>
                     <input
                       {...register('company')}
                       placeholder="Nome da sua empresa"
@@ -371,7 +381,7 @@ export default function ClaudePartnerNetworkPage() {
 
                   {/* Campo 2 */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-700">5. Cidade / Estado *</label>
+                    <label className="text-xs font-semibold text-zinc-800">5. Cidade / Estado *</label>
                     <input
                       {...register('city')}
                       placeholder="Ex: São Paulo / SP"
@@ -382,7 +392,7 @@ export default function ClaudePartnerNetworkPage() {
 
                   {/* Campo 3 */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-700">6. Seu Cargo ou Função *</label>
+                    <label className="text-xs font-semibold text-zinc-800">6. Seu Cargo ou Função *</label>
                     <input
                       {...register('role')}
                       placeholder="Ex: Founder, CTO, VP of Product, Head de RevOps"
@@ -416,7 +426,7 @@ export default function ClaudePartnerNetworkPage() {
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 flex flex-col">
                   {/* Item 1 */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-700">7. Tamanho da Empresa / Ops *</label>
+                    <label className="text-xs font-semibold text-zinc-800">7. Tamanho da Empresa / Ops *</label>
                     <select
                       {...register('companySize')}
                       className="w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all"
@@ -433,7 +443,7 @@ export default function ClaudePartnerNetworkPage() {
 
                   {/* Item 2 */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-700">8. Segmento da Empresa *</label>
+                    <label className="text-xs font-semibold text-zinc-800">8. Segmento da Empresa *</label>
                     <select
                       {...register('segment')}
                       className="w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all"
@@ -455,7 +465,7 @@ export default function ClaudePartnerNetworkPage() {
 
                   {selectedSegment === 'Outro' && (
                     <div className="p-3.5 rounded-lg bg-white border border-zinc-200 space-y-1.5 transition-all">
-                      <label className="text-xs font-medium text-zinc-900 block">
+                      <label className="text-xs font-semibold text-zinc-900 block">
                         Especificar Segmento da Empresa *
                       </label>
                       <input

@@ -79,19 +79,19 @@ export default function ClaudePartnerThankYouPage() {
         </div>
       </section>
 
-      {/* 2ª DOBRA: Próximos Passos (MEIO DA PÁGINA: FUNDO BRANCO ULTRA MINIMALISTA) */}
+      {/* 2ª DOBRA: Próximos Passos (MEIO DA PÁGINA: PADRÃO NOTION.SO REFINADO) */}
       <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
-        <div className="max-w-5xl mx-auto px-6 space-y-10">
+        <div className="max-w-5xl mx-auto px-6 space-y-8">
           <div className="max-w-2xl">
-            <p className="text-zinc-400 font-mono text-xs font-semibold tracking-widest uppercase mb-2">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-zinc-100 border border-zinc-200/80 text-zinc-600 text-[11px] font-mono font-medium tracking-wider uppercase mb-3">
               Processo de Entrada
-            </p>
-            <h2 className="text-zinc-900 text-2xl sm:text-3xl font-bold tracking-tight leading-tight">
+            </span>
+            <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
               O que acontece agora
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               {
                 step: "01",
@@ -109,16 +109,21 @@ export default function ClaudePartnerThankYouPage() {
                 desc: "Prepare-se para construir agentes autônomos de IA e aplicar em operações reais de receita."
               }
             ].map((item) => (
-              <div key={item.step} className="border-t border-zinc-200/90 pt-5 space-y-2">
-                <span className="text-zinc-400 font-mono font-medium text-xs tracking-wider block">
-                  {item.step} / PASSO
-                </span>
-                <h3 className="text-zinc-900 font-semibold text-sm sm:text-base tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="text-zinc-500 text-xs leading-relaxed font-normal">
-                  {item.desc}
-                </p>
+              <div
+                key={item.step}
+                className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex flex-col justify-between space-y-3"
+              >
+                <div className="space-y-2">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded bg-white border border-zinc-200 text-zinc-700 text-[11px] font-mono font-semibold">
+                    Passo {item.step}
+                  </span>
+                  <h3 className="text-zinc-900 font-bold text-base tracking-tight pt-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                    {item.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
