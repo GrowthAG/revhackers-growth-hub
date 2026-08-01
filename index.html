@@ -53,23 +53,14 @@
 
   <!-- Auto-reload handler for deploy chunk updates (prevents white screens) -->
   <script>
-    // Aggressive Continuous Purge to instantly obliterate any GHL / LeadConnector widget injected via GTM
     (function() {
       function killGhlWidget() {
         try {
           var selectors = [
-            'chat-widget',
-            '#chat-widget',
-            '#leadconnector-chat-widget',
-            '.hl-chat-widget',
-            '#hl-chat-widget-container',
-            '[id*="chat-widget"]',
-            '[class*="chat-widget"]',
-            '[id*="leadconnector"]',
-            '[class*="leadconnector"]',
-            'iframe[src*="leadconnector"]',
-            'iframe[src*="widget.leadconnectorhq"]',
-            'iframe[src*="msgsndr"]'
+            'chat-widget', '#chat-widget', '#leadconnector-chat-widget',
+            '.hl-chat-widget', '#hl-chat-widget-container', '[id*="chat-widget"]',
+            '[class*="chat-widget"]', '[id*="leadconnector"]', '[class*="leadconnector"]',
+            'iframe[src*="leadconnector"]', 'iframe[src*="widget.leadconnectorhq"]', 'iframe[src*="msgsndr"]'
           ];
           for (var i = 0; i < selectors.length; i++) {
             var targets = document.querySelectorAll(selectors[i]);
@@ -87,19 +78,18 @@
       }
     })();
 
+    // Catch script 404s (stale deployment asset hashes)
     window.addEventListener('error', function(e) {
-      var msg = (e && e.message ? String(e.message) : '') + (e && e.filename ? String(e.filename) : '');
-      var isChunkError = (
-        msg.indexOf('Loading chunk') !== -1 ||
-        msg.indexOf('dynamically imported module') !== -1 ||
-        msg.indexOf('Importing a module script failed') !== -1 ||
-        msg.indexOf('error loading dynamically imported module') !== -1
-      );
-      if (isChunkError) {
-        var lastReload = parseInt(sessionStorage.getItem('rev_chunk_last_reload') || '0', 10);
-        if (Date.now() - lastReload > 3000) {
-          sessionStorage.setItem('rev_chunk_last_reload', String(Date.now()));
-          window.location.reload(true);
+      if (e.target && (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK')) {
+        var src = e.target.src || e.target.href || '';
+        if (src.indexOf('/assets/') !== -1) {
+          var lastFix = parseInt(sessionStorage.getItem('rev_stale_asset_reload') || '0', 10);
+          if (Date.now() - lastFix > 2000) {
+            sessionStorage.setItem('rev_stale_asset_reload', String(Date.now()));
+            var url = new URL(window.location.href);
+            url.searchParams.set('_v', String(Date.now()));
+            window.location.replace(url.toString());
+          }
         }
       }
     }, true);
