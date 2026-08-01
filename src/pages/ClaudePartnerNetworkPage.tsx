@@ -209,11 +209,11 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* O que acontece agora & Público Elegível (HEADLINES CENTRALIZADAS — ZERO BADGES EM PILL BANIDOS) */}
+      {/* O que acontece agora & Público Elegível (VARIEDADE DE LAYOUT — ZERO CARDS DUPLICADOS E EMPILHADOS) */}
       <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
         <div className="max-w-6xl mx-auto px-6 space-y-20">
           
-          {/* 1. O que acontece agora (Headlines Centralizadas — Zero Pill Badges) */}
+          {/* 1. O que acontece agora (Horizontal Pipeline / Timeline Limpa — Sem Cards Box) */}
           <div className="space-y-10">
             <div className="max-w-2xl mx-auto text-center space-y-2">
               <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
@@ -224,18 +224,15 @@ export default function ClaudePartnerNetworkPage() {
               </p>
             </div>
 
-            {/* Grid 4 Colunas Clean (Zero Pill Badges) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Step Pipeline Horizontal com Linhas Superiores e Zero Caixas */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 { step: "01", title: "Cadastro em 3 Etapas", desc: "Preenche seus dados essenciais pra gente liberar suas credenciais de acesso." },
                 { step: "02", title: "Validação & Tech Match", desc: "A gente analisa a sua arquitetura pra conectar o Claude da forma mais eficiente." },
                 { step: "03", title: "Acessos no Seu E-mail", desc: "Receba as chaves, documentações técnicas e credenciais direto no seu inbox." },
                 { step: "04", title: "Execução Brutal", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
               ].map((item) => (
-                <div
-                  key={item.step}
-                  className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2"
-                >
+                <div key={item.step} className="border-t border-zinc-200 pt-5 space-y-2">
                   <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
                     {item.step} / Passo
                   </span>
@@ -250,7 +247,7 @@ export default function ClaudePartnerNetworkPage() {
             </div>
           </div>
 
-          {/* 2. Para quem essa trilha faz sentido (Headlines Centralizadas — Zero Pill Badges) */}
+          {/* 2. Para quem essa trilha faz sentido (Lista de 2 Colunas com Marcadores — Sem Cards Box) */}
           <div className="space-y-10 pt-12 border-t border-zinc-200/80">
             <div className="max-w-2xl mx-auto text-center space-y-2">
               <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
@@ -261,19 +258,19 @@ export default function ClaudePartnerNetworkPage() {
               </p>
             </div>
 
-            {/* Grid 3 Colunas Editorial */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Lista Minimalista 2 Colunas com Marcadores e Divisores de Linha */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 max-w-4xl mx-auto">
               {AUDIENCE_ROLES.map((role) => (
-                <div
-                  key={role.title}
-                  className="p-5 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-2"
-                >
-                  <h3 className="text-zinc-900 font-bold text-base tracking-tight">
-                    {role.title}
-                  </h3>
-                  <p className="text-zinc-500 text-xs leading-relaxed font-normal">
-                    {role.desc}
-                  </p>
+                <div key={role.title} className="flex items-start gap-3 border-b border-zinc-100 pb-4">
+                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-900 mt-2 shrink-0" />
+                  <div className="space-y-1">
+                    <h3 className="text-zinc-900 font-bold text-sm sm:text-base tracking-tight">
+                      {role.title}
+                    </h3>
+                    <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                      {role.desc}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
