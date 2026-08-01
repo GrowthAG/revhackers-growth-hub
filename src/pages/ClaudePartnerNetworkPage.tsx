@@ -209,72 +209,78 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* O que acontece agora & Público Elegível (LINHA DO TEMPO ARQUITETÔNICA — ZERO CARDS / ZERO VIBECODE) */}
-      <section className="py-24 bg-white border-b border-zinc-200 text-zinc-900">
-        <div className="max-w-5xl mx-auto px-6 space-y-20">
+      {/* O que acontece agora & Público Elegível (PADRÃO RELUME / WEBFLOW B2B SAAS — HIGH CONTRAST DARK MODE) */}
+      <section className="py-24 bg-zinc-950 text-white border-y border-zinc-900">
+        <div className="max-w-6xl mx-auto px-6 space-y-24">
           
-          {/* 1. O que acontece agora (Linha do Tempo Arquitetônica) */}
+          {/* 1. O que acontece agora (Relume Top-Border Step Flow) */}
           <div className="space-y-12">
             <div className="max-w-3xl">
-              <p className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase mb-2">
-                PRÓXIMOS PASSOS
+              <p className="text-[#00CC6A] font-mono text-xs font-bold tracking-widest uppercase mb-3">
+                [ PROCESSO DE ENTRADA ]
               </p>
-              <h2 className="text-zinc-950 text-2xl md:text-4xl font-extrabold tracking-tight leading-tight">
+              <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
                 O que acontece agora
               </h2>
+              <p className="text-zinc-400 text-sm mt-3 leading-relaxed max-w-xl">
+                Do cadastro inicial à liberação das credenciais de parceiro no ambiente oficial do Claude.
+              </p>
             </div>
 
-            {/* Timeline Horizontal Suíça */}
-            <div className="relative pt-6">
-              {/* Linha Conectora de Fundo */}
-              <div className="hidden lg:block absolute top-[31px] left-3 right-3 h-[2px] bg-zinc-200 z-0" />
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
-                {[
-                  { step: "01", title: "Cadastro em 3 Etapas", desc: "Preenche seus dados abaixo pra gente entender o seu cenário." },
-                  { step: "02", title: "Validação & Tech Match", desc: "A gente analisa a sua arquitetura pra conectar o Claude da forma mais eficiente." },
-                  { step: "03", title: "Acessos no Seu E-mail", desc: "Receba as chaves, documentações técnicas e credenciais direto no seu inbox." },
-                  { step: "04", title: "Execução Brutal", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
-                ].map((item) => (
-                  <div key={item.step} className="space-y-4">
-                    {/* Marcador Verde da Timeline */}
-                    <div className="w-3 h-3 rounded-full bg-[#00CC6A] ring-4 ring-white shadow-xs" />
-                    
-                    <div className="pt-2">
-                      <span className="text-[#00CC6A] font-mono font-extrabold text-sm tracking-wider uppercase block">
-                        PASSO {item.step}
-                      </span>
-                      <h3 className="text-zinc-950 font-extrabold text-lg mt-1 mb-2 tracking-tight">
-                        {item.title}
-                      </h3>
-                      <p className="text-zinc-600 text-xs leading-relaxed">
-                        {item.desc}
-                      </p>
-                    </div>
+            {/* Grid 4 Colunas Relume Spec (Top-Border Divider + Monospaced Numbers) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pt-4">
+              {[
+                { step: "01", title: "Cadastro em 3 Etapas", desc: "Preenche seus dados essenciais pra gente liberar suas credenciais de acesso." },
+                { step: "02", title: "Validação & Tech Match", desc: "A gente analisa a sua arquitetura pra conectar o Claude da forma mais eficiente." },
+                { step: "03", title: "Acessos no Seu E-mail", desc: "Receba as chaves, documentações técnicas e credenciais direto no seu inbox." },
+                { step: "04", title: "Execução Brutal", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
+              ].map((item) => (
+                <div
+                  key={item.step}
+                  className="border-t-2 border-zinc-800 hover:border-[#00CC6A] transition-colors duration-300 pt-6 flex flex-col justify-between group"
+                >
+                  <div>
+                    <span className="text-4xl sm:text-5xl font-black font-mono text-[#00CC6A] tracking-tighter block mb-4 group-hover:scale-105 transition-transform origin-left">
+                      {item.step}
+                    </span>
+                    <h3 className="text-white font-extrabold text-lg tracking-tight mb-2 group-hover:text-[#00CC6A] transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-zinc-400 text-xs leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* 2. Para quem essa trilha faz sentido (Layout Editorial com Linhas Verticais Sutis) */}
-          <div className="space-y-12 pt-16 border-t border-zinc-200">
-            <div className="max-w-3xl">
-              <p className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase mb-2">
-                PÚBLICO ELEGÍVEL
+          {/* 2. Para quem essa trilha faz sentido (Relume Split 2-Column Grid) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-16 border-t border-zinc-900">
+            {/* Left Header Sticky Column */}
+            <div className="lg:col-span-4 space-y-4">
+              <p className="text-[#00CC6A] font-mono text-xs font-bold tracking-widest uppercase">
+                [ PÚBLICO ELEGÍVEL ]
               </p>
-              <h2 className="text-zinc-950 text-2xl md:text-4xl font-extrabold tracking-tight leading-tight">
-                Para quem essa trilha faz sentido
+              <h2 className="text-white text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                Para quem essa trilha foi construída
               </h2>
+              <p className="text-zinc-400 text-xs leading-relaxed">
+                Desenhado exclusivamente para lideranças de tecnologia, produto, receita e automação de negócios B2B.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8">
+            {/* Right Content 2-Column Grid with Top Borders */}
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
               {AUDIENCE_ROLES.map((role) => (
-                <div key={role.title} className="pl-5 border-l-2 border-[#00CC6A] space-y-2">
-                  <h3 className="text-zinc-950 font-extrabold text-base tracking-tight">
-                    {role.title}
-                  </h3>
-                  <p className="text-zinc-600 text-xs leading-relaxed">
+                <div key={role.title} className="border-t border-zinc-800 pt-6 space-y-2 group">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A]" />
+                    <h3 className="text-white font-extrabold text-base tracking-tight group-hover:text-[#00CC6A] transition-colors">
+                      {role.title}
+                    </h3>
+                  </div>
+                  <p className="text-zinc-400 text-xs leading-relaxed pl-3.5">
                     {role.desc}
                   </p>
                 </div>
