@@ -20,25 +20,30 @@ export const SiteScoreResultGate = ({
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/95 backdrop-blur-md p-4 animate-in fade-in duration-300 overflow-y-auto">
       <div className="bg-white border border-zinc-200 p-8 w-full max-w-4xl flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 shadow-sm relative my-auto max-h-[90vh]">
-        <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 md:border-r border-zinc-200 md:pr-12">
-          <div className="inline-flex items-center gap-2 bg-white px-3 py-1 border border-zinc-200">
-            <div className={`w-1.5 h-1.5 rounded-full ${psiResults?.mobile?.vitals?.score >= 70 ? 'bg-revgreen' : 'bg-red-500'} animate-pulse shadow-[0_0_10px_currentColor]`}></div>
-            <span className="text-xs font-sans font-bold text-zinc-500 ">Análise Finalizada</span>
+        <div className="flex-1 flex flex-col justify-center text-center md:text-left space-y-5 md:border-r border-zinc-200 md:pr-10">
+          <div className="inline-flex items-center gap-2 bg-zinc-50 px-3 py-1 border border-zinc-200 rounded-full w-fit mx-auto md:mx-0">
+            <div className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse"></div>
+            <span className="text-xs font-bold text-zinc-800">Análise Prévia • Score {finalScore}/100</span>
           </div>
 
-          <div className="relative">
-            <div className="text-3xl font-bold text-zinc-900 leading-none shadow-black drop-shadow-2xl">{finalScore}</div>
-          </div>
-
-          <h3 className="text-sm font-medium text-zinc-500 leading-relaxed max-w-xs">
-            {finalScore >= 90 ? (
-              <>Seu site está <span className="text-revgreen font-bold">muito bem otimizado</span>. Confira os detalhes técnicos completos.</>
-            ) : finalScore >= 70 ? (
-              <>Seu site está em bom estado, mas ainda há <span className="text-yellow-400 font-bold">pequenas otimizações</span> cruciais.</>
-            ) : (
-              <>Detectamos oportunidades de <span className="text-revgreen font-bold">otimização técnica</span> crítica na sua infraestrutura.</>
-            )}
+          <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-950 tracking-tight leading-snug">
+            Quer um Raio-X completo da sua empresa e concorrentes?
           </h3>
+
+          <p className="text-zinc-600 text-xs sm:text-sm leading-relaxed font-normal">
+            Preencha o formulário ao lado com o CNPJ da sua empresa para liberar o diagnóstico completo. Nosso sistema vai mapear o seu mercado, analisar seus concorrentes e trazer tudo o que eles estão fazendo em um diagnóstico completo para você seguir e implementar.
+          </p>
+
+          <div className="pt-1 flex flex-col gap-2 text-xs font-semibold text-zinc-500">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A] shrink-0" />
+              <span>Mapeamento de mercado & inteligência competitiva</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A] shrink-0" />
+              <span>Preenchimento rápido via CNPJ</span>
+            </div>
+          </div>
         </div>
 
         <div className="flex-1 w-full max-w-md flex flex-col justify-center">
