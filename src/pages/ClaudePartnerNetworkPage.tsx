@@ -17,15 +17,13 @@ const confirmationSchema = z.object({
     const freeDomains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com', 'bol.com.br'];
     return !freeDomains.includes(domain.toLowerCase());
   }, 'Por favor, utilize seu e-mail corporativo'),
+  phone: z.string().min(10, 'Informe seu WhatsApp / telefone com DDD'),
   company: z.string().min(2, 'Informe o nome da sua empresa'),
-  role: z.string().min(2, 'Informe seu cargo'),
-  website: z.string().min(3, 'Informe o site da empresa'),
+  companySize: z.string().min(1, 'Selecione o tamanho da empresa / ops'),
   segment: z.string().min(1, 'Selecione o segmento da empresa'),
   otherSegment: z.string().optional(),
-  whyParticipate: z.string().min(15, 'Descreva brevemente sua motivação'),
-  whatToBuild: z.string().min(15, 'Descreva o que deseja construir ou melhorar'),
-  confirmAvailability: z.boolean().refine(val => val === true, 'Você precisa confirmar disponibilidade até 27/10'),
-  agreeTerms: z.boolean().refine(val => val === true, 'Você precisa concordar com os termos de participação'),
+  confirmAvailability: z.boolean().refine(val => val === true, 'Confirme a disponibilidade para prosseguir'),
+  agreeTerms: z.boolean().refine(val => val === true, 'Concorde com os termos do programa'),
 }).refine((data) => {
   if (data.segment === 'Outro') {
     return !!data.otherSegment && data.otherSegment.trim().length >= 3;
@@ -74,12 +72,12 @@ export default function ClaudePartnerNetworkPage() {
   const selectedSegment = watch('segment');
 
   const handleNextStep1 = async () => {
-    const isValid = await trigger(['fullName', 'corporateEmail']);
+    const isValid = await trigger(['fullName', 'corporateEmail', 'phone']);
     if (isValid) setStep(2);
   };
 
   const handleNextStep2 = async () => {
-    const isValid = await trigger(['company', 'role', 'website', 'segment', 'otherSegment']);
+    const isValid = await trigger(['company', 'companySize', 'segment', 'otherSegment']);
     if (isValid) setStep(3);
   };
 
@@ -97,25 +95,23 @@ export default function ClaudePartnerNetworkPage() {
       await sendToGHL('claude_partner_network', {
         fullName: data.fullName,
         email: data.corporateEmail,
+        phone: data.phone,
         company: data.company,
-        role: data.role,
-        website: data.website,
+        companySize: data.companySize,
         segment: finalSegment,
-        whyParticipate: data.whyParticipate,
-        whatToBuild: data.whatToBuild,
       });
 
       setIsSubmitted(true);
       toast({
-        title: "Confirmação Registrada",
-        description: "Seus dados foram salvos com sucesso. Nossa equipe validará sua participação.",
+        title: "Conta Ativada com Sucesso",
+        description: "Seus dados foram validados e seus acessos foram disparados pro seu e-mail.",
       });
     } catch (err: any) {
       console.warn("GHL integration fallback:", err);
       setIsSubmitted(true);
       toast({
-        title: "Confirmação Registrada",
-        description: "Seus dados foram salvos. Entraremos em contato em breve.",
+        title: "Conta Ativada",
+        description: "Seus dados foram recebidos com sucesso.",
       });
     } finally {
       setIsSubmitting(false);
@@ -378,23 +374,34 @@ export default function ClaudePartnerNetworkPage() {
                     </div>
                   </div>
 
+                  {/* Telefone / WhatsApp */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">3. WhatsApp / Telefone *</label>
+                    <input
+                      {...register('phone')}
+                      placeholder="(11) 99999-9999"
+                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    />
+                    {errors.phone && <p className="text-xs text-rose-600 font-medium">{errors.phone.message}</p>}
+                  </div>
+
                   <Button
                     type="button"
                     onClick={handleNextStep1}
                     className="w-full h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
                   >
-                    <span>Próximo Passo: Sua Empresa →</span>
+                    <span>Avançar para Dados da Empresa →</span>
                   </Button>
                 </motion.div>
               )}
 
-              {/* STEP 2: DADOS DA EMPRESA */}
+              {/* STEP 2: DADOS DA EMPRESA & OPERAÇÃO */}
               {step === 2 && (
                 <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {/* Empresa */}
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold text-zinc-800">3. Empresa *</label>
+                      <label className="text-xs font-semibold text-zinc-800">4. Empresa *</label>
                       <input
                         {...register('company')}
                         placeholder="Nome da sua empresa"
@@ -403,51 +410,44 @@ export default function ClaudePartnerNetworkPage() {
                       {errors.company && <p className="text-xs text-rose-600 font-medium">{errors.company.message}</p>}
                     </div>
 
-                    {/* Cargo */}
+                    {/* Número de Funcionários / Ops */}
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold text-zinc-800">4. Cargo *</label>
-                      <input
-                        {...register('role')}
-                        placeholder="Ex: Founder, CTO, VP of Product, Head de RevOps"
+                      <label className="text-xs font-semibold text-zinc-800">5. Tamanho da Empresa / Ops *</label>
+                      <select
+                        {...register('companySize')}
                         className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                      />
-                      {errors.role && <p className="text-xs text-rose-600 font-medium">{errors.role.message}</p>}
+                      >
+                        <option value="">Selecione o tamanho</option>
+                        <option value="1-10">1 a 10 colaboradores</option>
+                        <option value="11-50">11 a 50 colaboradores</option>
+                        <option value="51-200">51 a 200 colaboradores</option>
+                        <option value="201-500">201 a 500 colaboradores</option>
+                        <option value="500+">Mais de 500 colaboradores</option>
+                      </select>
+                      {errors.companySize && <p className="text-xs text-rose-600 font-medium">{errors.companySize.message}</p>}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {/* Site da Empresa */}
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-zinc-800">5. Site da Empresa *</label>
-                      <input
-                        {...register('website')}
-                        placeholder="https://empresa.com.br"
-                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                      />
-                      {errors.website && <p className="text-xs text-rose-600 font-medium">{errors.website.message}</p>}
-                    </div>
-
-                    {/* Segmento da Empresa */}
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-zinc-800">6. Segmento da Empresa *</label>
-                      <select
-                        {...register('segment')}
-                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                      >
-                        <option value="">Selecione o segmento</option>
-                        <option value="SaaS">SaaS</option>
-                        <option value="Software house">Software house</option>
-                        <option value="Cibersegurança">Cibersegurança</option>
-                        <option value="Automação">Automação</option>
-                        <option value="RevOps">RevOps</option>
-                        <option value="Produto">Produto</option>
-                        <option value="Growth">Growth</option>
-                        <option value="CS">CS</option>
-                        <option value="Desenvolvimento">Desenvolvimento</option>
-                        <option value="Outro">Outro Segmento B2B</option>
-                      </select>
-                      {errors.segment && <p className="text-xs text-rose-600 font-medium">{errors.segment.message}</p>}
-                    </div>
+                  {/* Segmento da Empresa */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">6. Segmento da Empresa *</label>
+                    <select
+                      {...register('segment')}
+                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    >
+                      <option value="">Selecione o segmento</option>
+                      <option value="SaaS">SaaS</option>
+                      <option value="Software house">Software house</option>
+                      <option value="Cibersegurança">Cibersegurança</option>
+                      <option value="Automação">Automação</option>
+                      <option value="RevOps">RevOps</option>
+                      <option value="Produto">Produto</option>
+                      <option value="Growth">Growth</option>
+                      <option value="CS">CS</option>
+                      <option value="Desenvolvimento">Desenvolvimento</option>
+                      <option value="Outro">Outro Segmento B2B</option>
+                    </select>
+                    {errors.segment && <p className="text-xs text-rose-600 font-medium">{errors.segment.message}</p>}
                   </div>
 
                   {selectedSegment === 'Outro' && (
@@ -479,41 +479,29 @@ export default function ClaudePartnerNetworkPage() {
                       onClick={handleNextStep2}
                       className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
                     >
-                      <span>Próximo Passo: Ativação →</span>
+                      <span>Avançar para Validação →</span>
                     </Button>
                   </div>
                 </motion.div>
               )}
 
-              {/* STEP 3: CONTEXTO & ATIVAÇÃO */}
+              {/* STEP 3: VALIDAÇÃO & ACESSO */}
               {step === 3 && (
                 <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                  {/* Por que quer participar? */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">7. Por que você quer participar desta trilha? *</label>
-                    <textarea
-                      {...register('whyParticipate')}
-                      rows={3}
-                      placeholder="Explique resumidamente seu contexto e expectativas com o programa de parceiros da Anthropic..."
-                      className="w-full p-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                    />
-                    {errors.whyParticipate && <p className="text-xs text-rose-600 font-medium">{errors.whyParticipate.message}</p>}
-                  </div>
-
-                  {/* O que quer construir/melhorar? */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">8. O que você quer construir ou melhorar com Claude? *</label>
-                    <textarea
-                      {...register('whatToBuild')}
-                      rows={3}
-                      placeholder="Descreva o caso de uso prático, automação ou funcionalidade que pretende implementar..."
-                      className="w-full p-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                    />
-                    {errors.whatToBuild && <p className="text-xs text-rose-600 font-medium">{errors.whatToBuild.message}</p>}
+                  {/* Termos de Participação & Compromisso */}
+                  <div className="p-5 rounded-lg bg-white border border-zinc-200 text-xs text-zinc-600 space-y-3 shadow-xs">
+                    <p className="font-bold text-zinc-900 flex items-center gap-2 text-xs uppercase tracking-wide">
+                      <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" /> Regras do Jogo & Compromisso de Execução:
+                    </p>
+                    <ol className="list-decimal list-inside space-y-1.5 text-zinc-600 leading-relaxed font-normal">
+                      <li>A trilha é 100% gratuita para as empresas selecionadas.</li>
+                      <li>Foco em execução prática com carga estimada de 40h e acompanhamento do time.</li>
+                      <li>Ao se cadastrar você concorda em aplicar a tecnologia Claude em operações reais da sua empresa.</li>
+                    </ol>
                   </div>
 
                   {/* Checkboxes de Confirmação & Termos */}
-                  <div className="pt-4 border-t border-zinc-200 space-y-4">
+                  <div className="pt-2 space-y-4">
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
                         type="checkbox"
@@ -521,7 +509,7 @@ export default function ClaudePartnerNetworkPage() {
                         className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
                       />
                       <span className="text-xs text-zinc-700 font-medium leading-normal">
-                        9. Você confirma disponibilidade para acompanhar até 27/10? *
+                        Confirmo disponibilidade para acompanhar a trilha de execução com o time *
                       </span>
                     </label>
                     {errors.confirmAvailability && <p className="text-xs text-rose-600 font-medium">{errors.confirmAvailability.message}</p>}
@@ -533,23 +521,10 @@ export default function ClaudePartnerNetworkPage() {
                         className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
                       />
                       <span className="text-xs text-zinc-700 font-medium leading-normal">
-                        10. Você concorda com as regras do jogo e termos de participação? *
+                        Concordo com as regras do jogo e termos do Claude Partner Network *
                       </span>
                     </label>
                     {errors.agreeTerms && <p className="text-xs text-rose-600 font-medium">{errors.agreeTerms.message}</p>}
-                  </div>
-
-                  {/* Termos de Participação & Compromisso */}
-                  <div className="p-5 rounded-lg bg-white border border-zinc-200 text-xs text-zinc-600 space-y-3 shadow-xs">
-                    <p className="font-bold text-zinc-900 flex items-center gap-2 text-xs uppercase tracking-wide">
-                      <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" /> Regras do Jogo & Compromisso de Execução:
-                    </p>
-                    <ol className="list-decimal list-inside space-y-1.5 text-zinc-600 leading-relaxed font-normal">
-                      <li>A trilha é 100% gratuita para as empresas selecionadas.</li>
-                      <li>Foco em execução prática com carga estimada de 40h e prazo final em 27/10.</li>
-                      <li>Buscamos quem vai até o fim. Abandono sem justificativa prévia até 27/10 gera taxa de não-conclusão de R$ 500 para garantir a dedicação da turma.</li>
-                      <li>Ao se cadastrar você concorda em meter a mão na massa com o time da RevHackers & Anthropic.</li>
-                    </ol>
                   </div>
 
                   {/* CTA Final */}
@@ -570,11 +545,11 @@ export default function ClaudePartnerNetworkPage() {
                       {isSubmitting ? (
                         <>
                           <Loader2 className="w-4 h-4 animate-spin text-zinc-950" />
-                          <span>Liberando acessos...</span>
+                          <span>Validando e liberando acessos...</span>
                         </>
                       ) : (
                         <>
-                          <span>Entrar no Jogo & Ativar Acessos ⚡</span>
+                          <span>Validar & Ativar Acessos ⚡</span>
                         </>
                       )}
                     </Button>
