@@ -76,7 +76,7 @@ const FounderVideoWidget = () => {
     if (isOpen) {
       chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages, isOpen]);
+  }, [messages, isTyping, isOpen]);
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,9 +124,14 @@ const FounderVideoWidget = () => {
     }
   };
 
+  const [showPills, setShowPills] = useState(true);
+
   const handleSendMessage = (textToSend?: string) => {
     const text = textToSend || inputText;
     if (!text.trim()) return;
+
+    // Hide pills when user sends a message
+    setShowPills(false);
 
     const userMsg: Message = { sender: 'user', text, timestamp: 'Agora' };
     setMessages(prev => [...prev, userMsg]);
@@ -135,25 +140,33 @@ const FounderVideoWidget = () => {
     setLoading(true);
     setIsTyping(true);
 
-    // Humanized Typing Delay Simulation (1.8s to 2.4s)
+    // Humanized Typing Delay Simulation (1.8s to 2.2s)
     setTimeout(() => {
       let aiReply = "Fala! Giulliano aqui. Nossa Engenharia de GTM conecta Mídia Paga (Google, Meta e LinkedIn Ads) diretamente ao seu CRM com funis de alta conversão. Quer agendar uma auditoria técnica de 30 minutos pra ver na prática?";
       
-      const lower = text.toLowerCase();
-      if (lower.includes('gtm') || lower.includes('engenharia')) {
+      const lower = text.toLowerCase().trim();
+
+      // Conversational Intent Matching
+      if (lower.includes('nome') || lower.includes('quem e') || lower.includes('quem eh') || lower.includes('quem fala') || lower.includes('quem voce')) {
+        aiReply = "Eu sou a IA do Giulliano Alves, fundador da RevHackers. Posso te ajudar a entender nossa Engenharia de GTM ou agendar uma auditoria técnica de receita de 30 min. Como posso ajudar sua empresa hoje?";
+      } else if (lower.includes('ola') || lower.includes('oi') || lower.includes('bom dia') || lower.includes('boa tarde') || lower.includes('boa noite') || lower.includes('tudo bem')) {
+        aiReply = "Fala! Tudo ótimo por aqui. Como posso ajudar sua operação B2B com GTM Engineering hoje?";
+      } else if (lower.includes('como funciona') || lower.includes('o que voces fazem') || lower.includes('como eh')) {
+        aiReply = "Nossa Engenharia de GTM instala 4 motores acionáveis na sua empresa em 30 dias: 1. Mídia Paga (Mídia Paga & Social Selling), 2. Funis de Agendamento, 3. Arquitetura de CRM e 4. Automação B2B. Quer ver um exemplo real?";
+      } else if (lower.includes('gtm') || lower.includes('engenharia')) {
         aiReply = "Boa pergunta! O GTM Engineering substitui aquela consultoria teórica de slides por 4 sistemas instalados na sua operação: Engenharia de Vendas, Arquitetura de CRM, Automação B2B e Habilitação do time comercial em até 30 dias.";
       } else if (lower.includes('case') || lower.includes('resultado') || lower.includes('wysion') || lower.includes('heineken')) {
         aiReply = "Te dar 2 exemplos práticos: na Wysion (Software House), estruturamos a geração de demanda e geramos 1.000+ reuniões qualificadas. Na Heineken, aumentamos o sell-out em 30%. Qual é o setor da sua empresa?";
       } else if (lower.includes('custo') || lower.includes('preco') || lower.includes('quanto') || lower.includes('valor')) {
         aiReply = "Trabalhamos com foco total em ROI acelerado e contrato por marcos de entrega. O caminho padrão que fazemos com todos os clientes é começar pela Auditoria de Vazamento de Receita de 30 min sem custo.";
-      } else if (lower.includes('agendar') || lower.includes('time') || lower.includes('falar')) {
+      } else if (lower.includes('agendar') || lower.includes('time') || lower.includes('falar') || lower.includes('reuniao')) {
         aiReply = "Excelente! Você pode agendar direto na minha agenda corporativa pelo link /booking. Nosso time técnico analisa seus gargalos antes da chamada.";
       }
 
       setIsTyping(false);
       setMessages(prev => [...prev, { sender: 'ai', text: aiReply, timestamp: 'Agora' }]);
       setLoading(false);
-    }, 2000);
+    }, 1800);
   };
 
   const topicPills = [
@@ -172,12 +185,11 @@ const FounderVideoWidget = () => {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{
               opacity: 1,
-              scale: 1,
-              y: [0, -4, 0]
+              scale: [1, 1.03, 1]
             }}
             transition={{
-              y: {
-                duration: 3,
+              scale: {
+                duration: 2.5,
                 repeat: Infinity,
                 repeatType: "mirror",
                 ease: "easeInOut"
@@ -226,10 +238,10 @@ const FounderVideoWidget = () => {
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] max-h-[85vh] bg-zinc-950 text-white rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden flex flex-col"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] h-[520px] max-h-[85vh] bg-zinc-950 text-white rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden flex flex-col justify-between"
           >
-            {/* Header com Foto Oficial do Founder - Enquadramento Perfeito h-44 sm:h-48 */}
-            <div className="relative h-44 sm:h-48 bg-zinc-900 overflow-hidden shrink-0">
+            {/* Header com Foto Oficial do Founder - Enquadramento Perfeito h-36 */}
+            <div className="relative h-36 bg-zinc-900 overflow-hidden shrink-0 border-b border-zinc-900">
               <img
                 src="/uploads/giulliano-linkedin-profile.png"
                 alt="Giulliano Alves"
@@ -237,7 +249,7 @@ const FounderVideoWidget = () => {
               />
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-zinc-950/60 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/10 to-zinc-950/60 pointer-events-none" />
 
               {/* Close Button */}
               <button
@@ -272,15 +284,15 @@ const FounderVideoWidget = () => {
               </div>
             </div>
 
-            {/* Area de Conversa */}
-            <div className="flex-1 p-4 space-y-3 overflow-y-auto max-h-[300px] text-xs leading-relaxed font-sans bg-zinc-950/50">
+            {/* Area de Conversa com Autoscroll e Overflow Perfeito */}
+            <div className="flex-1 p-4 space-y-3 overflow-y-auto min-h-0 text-xs leading-relaxed font-sans bg-zinc-950/50 scroll-smooth">
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
                   className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] p-3.5 rounded-2xl ${
+                    className={`max-w-[85%] p-3.5 rounded-2xl break-words ${
                       msg.sender === 'user'
                         ? 'bg-white text-zinc-950 font-medium rounded-br-none'
                         : 'bg-zinc-900 text-zinc-200 border border-zinc-800 rounded-bl-none'
@@ -303,7 +315,7 @@ const FounderVideoWidget = () => {
                 </div>
               )}
 
-              {emailCaptured && (
+              {emailCaptured && showPills && (
                 <div className="pt-2 flex flex-wrap gap-1.5">
                   {topicPills.map((pill, i) => (
                     <button

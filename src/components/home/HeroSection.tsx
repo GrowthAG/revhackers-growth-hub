@@ -68,7 +68,7 @@ const HeroSection = () => {
           className="flex items-center justify-center mb-8 flex-wrap"
         >
           {/* Claude Partner Network */}
-          <div className="h-7 flex items-center px-3 sm:px-5">
+          <div className="h-7 flex items-center px-4 sm:px-6">
             <img
               src="/brand/claude-partner-network.svg"
               alt="Claude Partner Network"
@@ -76,8 +76,10 @@ const HeroSection = () => {
             />
           </div>
 
+          <div className="w-px h-4 bg-zinc-800 shrink-0 hidden sm:block" />
+
           {/* Google for Startups */}
-          <div className="h-7 flex items-center gap-2 px-3 sm:px-5 opacity-75 hover:opacity-100 transition-opacity select-none">
+          <div className="h-7 flex items-center gap-2 px-4 sm:px-6 opacity-75 hover:opacity-100 transition-opacity select-none">
             <svg className="w-4 h-4 shrink-0 block" viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -87,10 +89,10 @@ const HeroSection = () => {
             <span className="text-white text-xs font-semibold tracking-tight whitespace-nowrap leading-none">Google for Startups</span>
           </div>
 
-          <div className="w-px h-4 bg-zinc-800 shrink-0" />
+          <div className="w-px h-4 bg-zinc-800 shrink-0 hidden sm:block" />
 
           {/* Funnels Partner */}
-          <div className="h-7 flex items-center px-3 sm:px-5">
+          <div className="h-7 flex items-center px-4 sm:px-6">
             <img
               src="/brand/funnels-logo-white.png"
               alt="Funnels Partner"
