@@ -20,6 +20,8 @@ const confirmationSchema = z.object({
   }, 'Por favor, utilize seu e-mail corporativo'),
   phone: z.string().min(10, 'Informe seu WhatsApp / telefone com DDD'),
   company: z.string().min(2, 'Informe o nome da sua empresa'),
+  city: z.string().min(2, 'Informe sua cidade e estado'),
+  role: z.string().min(2, 'Informe seu cargo ou função'),
   companySize: z.string().min(1, 'Selecione o tamanho da empresa / ops'),
   segment: z.string().min(1, 'Selecione o segmento da empresa'),
   otherSegment: z.string().optional(),
@@ -79,7 +81,7 @@ export default function ClaudePartnerNetworkPage() {
   };
 
   const handleNextStep2 = async () => {
-    const isValid = await trigger(['company', 'companySize', 'segment', 'otherSegment']);
+    const isValid = await trigger(['company', 'city', 'role', 'companySize', 'segment', 'otherSegment']);
     if (isValid) setStep(3);
   };
 
@@ -99,6 +101,8 @@ export default function ClaudePartnerNetworkPage() {
         email: data.corporateEmail,
         phone: data.phone,
         company: data.company,
+        city: data.city,
+        role: data.role,
         companySize: data.companySize,
         segment: finalSegment,
       });
@@ -280,14 +284,14 @@ export default function ClaudePartnerNetworkPage() {
               CADASTRO RÁPIDO · ETAPA {step} DE 3
             </p>
             <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight">
-              {step === 1 && "1. Bora se conhecer"}
-              {step === 2 && "2. Qual é a sua empresa?"}
-              {step === 3 && "3. Qual seu objetivo com IA?"}
+              {step === 1 && "1. Seus dados de acesso"}
+              {step === 2 && "2. Dados da sua empresa"}
+              {step === 3 && "3. Ativação e regras do jogo"}
             </h2>
             <p className="text-zinc-500 text-sm max-w-xl mx-auto">
-              {step === 1 && "Preenche seus dados básicos pra gente liberar sua ficha de acesso."}
-              {step === 2 && "Informa onde você roda hoje pra gente mapear a melhor integração."}
-              {step === 3 && "Conta pra gente seu desafio pra receber as chaves no e-mail."}
+              {step === 1 && "Preencha seus dados básicos pra gente liberar suas credenciais de parceiro."}
+              {step === 2 && "Mapeie sua empresa para conectarmos a melhor integração do Claude."}
+              {step === 3 && "Confirme o compromisso de execução para receber as chaves no e-mail."}
             </p>
           </div>
 
@@ -311,44 +315,32 @@ export default function ClaudePartnerNetworkPage() {
             </div>
           )}
 
-          {isSubmitted ? (
-            <div className="p-10 rounded-xl bg-emerald-50/60 border border-emerald-200 text-center space-y-4 shadow-xs">
-              <div className="w-12 h-12 bg-[#00CC6A] text-zinc-950 rounded-full flex items-center justify-center mx-auto font-bold text-xl shadow-xs">
-                ⚡
-              </div>
-              <h3 className="text-2xl font-bold text-zinc-900">Você está dentro. Seja bem-vindo. 🚀</h3>
-              <p className="text-sm text-zinc-700 max-w-md mx-auto leading-relaxed">
-                Sua empresa foi cadastrada no sistema. O e-mail com a liberação dos seus acessos e próximos passos acabou de ser enviado para a sua caixa de entrada.
-              </p>
-            </div>
-          ) : (
+          {!isSubmitted && (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-zinc-50/60 p-8 sm:p-10 rounded-xl border border-zinc-200 shadow-xs">
               
-              {/* STEP 1: DADOS PESSOAIS */}
+              {/* STEP 1: DADOS PESSOAIS (EMPILHADOS UM ABAIXO DO OUTRO) */}
               {step === 1 && (
-                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {/* Nome Completo */}
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-zinc-800">1. Nome Completo *</label>
-                      <input
-                        {...register('fullName')}
-                        placeholder="Seu nome completo"
-                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                      />
-                      {errors.fullName && <p className="text-xs text-rose-600 font-medium">{errors.fullName.message}</p>}
-                    </div>
+                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 flex flex-col">
+                  {/* Nome Completo */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">1. Nome Completo *</label>
+                    <input
+                      {...register('fullName')}
+                      placeholder="Seu nome completo"
+                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    />
+                    {errors.fullName && <p className="text-xs text-rose-600 font-medium">{errors.fullName.message}</p>}
+                  </div>
 
-                    {/* E-mail Corporativo */}
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-zinc-800">2. E-mail Corporativo *</label>
-                      <input
-                        {...register('corporateEmail')}
-                        placeholder="voce@empresa.com.br"
-                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                      />
-                      {errors.corporateEmail && <p className="text-xs text-rose-600 font-medium">{errors.corporateEmail.message}</p>}
-                    </div>
+                  {/* E-mail Corporativo */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">2. E-mail Corporativo *</label>
+                    <input
+                      {...register('corporateEmail')}
+                      placeholder="voce@empresa.com.br"
+                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    />
+                    {errors.corporateEmail && <p className="text-xs text-rose-600 font-medium">{errors.corporateEmail.message}</p>}
                   </div>
 
                   {/* Telefone / WhatsApp */}
@@ -365,49 +357,69 @@ export default function ClaudePartnerNetworkPage() {
                   <Button
                     type="button"
                     onClick={handleNextStep1}
-                    className="w-full h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
+                    className="w-full h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2 pt-2"
                   >
                     <span>Avançar para Dados da Empresa →</span>
                   </Button>
                 </motion.div>
               )}
 
-              {/* STEP 2: DADOS DA EMPRESA & OPERAÇÃO */}
+              {/* STEP 2: DADOS DA EMPRESA & OPERAÇÃO (EMPILHADOS UM ABAIXO DO OUTRO) */}
               {step === 2 && (
-                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {/* Empresa */}
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-zinc-800">4. Empresa *</label>
-                      <input
-                        {...register('company')}
-                        placeholder="Nome da sua empresa"
-                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                      />
-                      {errors.company && <p className="text-xs text-rose-600 font-medium">{errors.company.message}</p>}
-                    </div>
+                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-5 flex flex-col">
+                  {/* Empresa */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">4. Nome da Empresa *</label>
+                    <input
+                      {...register('company')}
+                      placeholder="Nome da sua empresa"
+                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    />
+                    {errors.company && <p className="text-xs text-rose-600 font-medium">{errors.company.message}</p>}
+                  </div>
 
-                    {/* Número de Funcionários / Ops */}
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold text-zinc-800">5. Tamanho da Empresa / Ops *</label>
-                      <select
-                        {...register('companySize')}
-                        className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
-                      >
-                        <option value="">Selecione o tamanho</option>
-                        <option value="1-10">1 a 10 colaboradores</option>
-                        <option value="11-50">11 a 50 colaboradores</option>
-                        <option value="51-200">51 a 200 colaboradores</option>
-                        <option value="201-500">201 a 500 colaboradores</option>
-                        <option value="500+">Mais de 500 colaboradores</option>
-                      </select>
-                      {errors.companySize && <p className="text-xs text-rose-600 font-medium">{errors.companySize.message}</p>}
-                    </div>
+                  {/* Cidade / Estado */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">5. Cidade / Estado *</label>
+                    <input
+                      {...register('city')}
+                      placeholder="Ex: São Paulo / SP"
+                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    />
+                    {errors.city && <p className="text-xs text-rose-600 font-medium">{errors.city.message}</p>}
+                  </div>
+
+                  {/* Cargo / Função */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">6. Seu Cargo ou Função *</label>
+                    <input
+                      {...register('role')}
+                      placeholder="Ex: Founder, CTO, VP of Product, Head de RevOps"
+                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    />
+                    {errors.role && <p className="text-xs text-rose-600 font-medium">{errors.role.message}</p>}
+                  </div>
+
+                  {/* Tamanho da Empresa / Ops */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-semibold text-zinc-800">7. Tamanho da Empresa / Ops *</label>
+                    <select
+                      {...register('companySize')}
+                      className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
+                    >
+                      <option value="">Selecione o tamanho</option>
+                      <option value="1-10">1 a 10 colaboradores</option>
+                      <option value="11-50">11 a 50 colaboradores</option>
+                      <option value="51-200">51 a 200 colaboradores</option>
+                      <option value="201-500">201 a 500 colaboradores</option>
+                      <option value="500+">Mais de 500 colaboradores</option>
+                    </select>
+                    {errors.companySize && <p className="text-xs text-rose-600 font-medium">{errors.companySize.message}</p>}
                   </div>
 
                   {/* Segmento da Empresa */}
                   <div className="space-y-2">
-                    <label className="text-xs font-semibold text-zinc-800">6. Segmento da Empresa *</label>
+                    <label className="text-xs font-semibold text-zinc-800">8. Segmento da Empresa *</label>
                     <select
                       {...register('segment')}
                       className="w-full h-11 px-3.5 rounded-lg border border-zinc-300 bg-white text-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00CC6A]"
