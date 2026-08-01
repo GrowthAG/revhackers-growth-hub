@@ -4,6 +4,8 @@ import { X, Mic, MicOff, Volume2, VolumeX, Send, Sparkles, ArrowRight } from 'lu
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { submitPublicDiagnostic } from '@/api/publicDiagnostic';
+import { sendToGHL } from '@/lib/ghlRelay';
+import { captureUtmParams, getPersistedUtmParams } from '@/utils/utm';
 
 interface Message {
   sender: 'ai' | 'user';
@@ -49,16 +51,32 @@ const FounderVideoWidget = () => {
     if (!email || !email.includes('@')) return;
 
     setLoading(true);
+    const utmParams = { ...getPersistedUtmParams(), ...captureUtmParams() };
+
     try {
+      // 1. Submit to GCP API / Supabase
       await submitPublicDiagnostic(
-        { email, name: email.split('@')[0], source: 'founder_ai_chat' },
-        { source: 'founder_video_widget', type: 'ai_chat_lead' },
+        { email, name: email.split('@')[0], source: 'founder_ai_chat', company: 'Lead Chat' },
+        { source: 'founder_video_widget', type: 'ai_chat_lead', ...utmParams },
         0,
         { level: "Lead", description: "Interação no Chat IA Founder", action: "Chat", color: "green" },
-        'ai_chat_lead'
+        'lead_capture'
       );
+
+      // 2. Direct GHL Relay Integration with UTM mapping & Tag
+      await sendToGHL({
+        email,
+        name: email.split('@')[0],
+        source: 'founder_video_widget',
+        tags: ['founder_ai_chat', 'video_widget_lead', 'gtm_engineering'],
+        customFields: {
+          fonte_do_lead: 'Founder AI Video Widget',
+          ...utmParams
+        }
+      }, 'lead_capture');
+
     } catch (err) {
-      console.warn("Email capture warning:", err);
+      console.warn("GHL/GCP integration warning:", err);
     } finally {
       setEmailCaptured(true);
       setMessages(prev => [
@@ -66,7 +84,7 @@ const FounderVideoWidget = () => {
         { sender: 'user', text: email, timestamp: 'Agora' },
         {
           sender: 'ai',
-          text: 'E-mail registrado! Como posso ajudar sua operação B2B com GTM Engineering hoje?',
+          text: 'E-mail registrado no Funnels/GHL! Como posso ajudar sua operação B2B com GTM Engineering hoje?',
           timestamp: 'Agora'
         }
       ]);

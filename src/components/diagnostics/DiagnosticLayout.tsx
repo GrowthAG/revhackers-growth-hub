@@ -24,75 +24,54 @@ export const DiagnosticLayout = ({
  hideHeader = false,
  headerVariant = 'default'
 }: DiagnosticLayoutProps) => {
- const isDark = variant === 'dark';
-
  return (
- <PageLayout headerVariant={headerVariant}>
- <style>{`
- #chat-widget, 
- #leadconnector-chat-widget, 
- .hl-chat-widget, 
- #hl-chat-widget-container,
- iframe[name="chat-widget"] { 
- display: none !important; 
- }
- `}</style>
- <div className={cn(
- "min-h-screen transition-colors duration-300 relative overflow-hidden",
- isDark ? "bg-white text-zinc-900" : "bg-zinc-50/80 text-zinc-900"
- )}>
- {/* Subtle Grid Pattern */}
- {!isDark && (
- <div className="absolute inset-0 [background-size:16px_16px] opacity-40 pointer-events-none" />
- )}
+   <PageLayout headerVariant="default">
+     <style>{`
+       #chat-widget, 
+       #leadconnector-chat-widget, 
+       .hl-chat-widget, 
+       #hl-chat-widget-container,
+       iframe[name="chat-widget"] { 
+         display: none !important; 
+       }
+     `}</style>
 
- <Section
- variant="light"
- className={cn(
- "pt-12 pb-16 min-h-screen flex flex-col justify-start relative z-10",
- centered ? "items-center" : "items-center"
- )}
- >
- <div className="container-custom max-w-4xl mx-auto w-full my-auto flex flex-col items-center">
- 
- {/* Standard SaaS Header */}
- {!hideHeader && (
- <div className="mb-8 w-full text-center space-y-2">
- <p className="text-[#00CC6A] text-xs font-medium">Diagnóstico</p>
- <h1 className={cn(
- "text-2xl md:text-3xl font-bold text-zinc-900",
- isDark && "text-zinc-900"
- )}>
- {title}
- </h1>
- <p className={cn(
- "text-sm md:text-base max-w-xl mx-auto text-zinc-500 font-medium leading-relaxed",
- isDark && "text-zinc-500"
- )}>
- {subtitle}
- </p>
- </div>
- )}
+     {/* 1. Official Black Hero Header */}
+     {!hideHeader && (
+       <section className="bg-black py-16 md:py-24 border-b border-zinc-900 relative overflow-hidden">
+         <div className="max-w-4xl mx-auto px-6 text-center space-y-4 relative z-10">
+           <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
+             Diagnóstico Preditivo B2B
+           </p>
+           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+             {title}
+           </h1>
+           <p className="text-sm md:text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed font-normal">
+             {subtitle}
+           </p>
+         </div>
+       </section>
+     )}
 
- {/* Main Container Card Elevado */}
- <div className={cn(
- "w-full transition-all duration-300",
- hideHeader ? "max-w-5xl" : "max-w-3xl"
- )}>
- {children}
- </div>
+     {/* 2. Pure White Content Area */}
+     <section className="py-16 md:py-24 bg-white min-h-[60vh]">
+       <div className="max-w-4xl mx-auto px-6 flex flex-col items-center">
+         <div className={cn(
+           "w-full transition-all duration-300",
+           hideHeader ? "max-w-5xl" : "max-w-3xl"
+         )}>
+           {children}
+         </div>
 
- {/* Governance Footer */}
- {showGovernanceFooter && (
- <div className="mt-16 text-center w-full max-w-xl mx-auto">
- <p className="text-[11px] font-sans text-zinc-500 leading-relaxed font-medium">
- RevHackers Intelligence Unit — Diagnóstico preditivo de receita e maturidade operacional B2B.
- </p>
- </div>
- )}
- </div>
- </Section>
- </div>
- </PageLayout>
+         {showGovernanceFooter && (
+           <div className="mt-16 text-center w-full max-w-xl mx-auto border-t border-zinc-100 pt-8">
+             <p className="text-xs font-sans text-zinc-400 leading-relaxed font-medium">
+               RevHackers Intelligence Unit — Diagnóstico preditivo de receita e maturidade operacional B2B.
+             </p>
+           </div>
+         )}
+       </div>
+     </section>
+   </PageLayout>
  );
 };

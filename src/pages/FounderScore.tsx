@@ -198,31 +198,38 @@ const FounderScore = () => {
  showGovernanceFooter={false}
  variant="light"
  >
- <div className="max-w-2xl mx-auto w-full">
- <div className="flex flex-col md:flex-row gap-0 w-full border border-zinc-200 bg-white overflow-hidden mb-3">
- <span className="hidden md:flex items-center px-5 font-sans text-xs text-zinc-500 bg-zinc-50 border-r border-zinc-200 select-none whitespace-nowrap">
- linkedin.com/in/
- </span>
- <input
- type="text"
- value={linkedinUrl}
- onChange={(e) => setLinkedinUrl(e.target.value)}
- onKeyDown={(e) => e.key === 'Enter' && handleStartDiagnostic(linkedinUrl)}
- placeholder="seu-perfil"
- className="flex-1 bg-transparent border-none text-black h-14 px-5 focus:ring-0 outline-none font-bold text-base placeholder:text-zinc-600"
- />
- <button
- onClick={() => handleStartDiagnostic(linkedinUrl)}
- disabled={!linkedinUrl}
- className="bg-white text-zinc-900 px-8 h-14 font-bold text-xs hover:bg-zinc-50 transition-colors disabled:opacity-40 flex items-center justify-center gap-2 whitespace-nowrap"
- >
- {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <>INICIAR <ArrowRight className="w-3 h-3" /></>}
- </button>
- </div>
- <p className="text-xs text-zinc-500 font-sans">
- Usaremos IA para analisar seu perfil. Perfis com alta privacidade podem ter coleta limitada.
- </p>
- </div>
+        <div className="max-w-xl mx-auto w-full bg-white border border-zinc-200/80 rounded-2xl p-8 shadow-xs space-y-4">
+          <div className="space-y-2">
+            <label className="text-xs font-semibold text-zinc-800 block">
+              Perfil do LinkedIn
+            </label>
+            <div className="flex flex-col sm:flex-row gap-2 w-full">
+              <div className="flex items-center flex-1 bg-white border border-zinc-200 rounded-lg overflow-hidden focus-within:border-zinc-950">
+                <span className="hidden sm:flex items-center px-3 text-xs font-medium text-zinc-400 bg-zinc-50 border-r border-zinc-200 select-none whitespace-nowrap h-11">
+                  linkedin.com/in/
+                </span>
+                <input
+                  type="text"
+                  value={linkedinUrl}
+                  onChange={(e) => setLinkedinUrl(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleStartDiagnostic(linkedinUrl)}
+                  placeholder="seu-perfil"
+                  className="flex-1 bg-transparent border-none text-zinc-900 h-11 px-4 focus:ring-0 outline-none text-sm font-semibold placeholder:text-zinc-400"
+                />
+              </div>
+              <button
+                onClick={() => handleStartDiagnostic(linkedinUrl)}
+                disabled={!linkedinUrl || isAnalyzing}
+                className="bg-zinc-950 text-white hover:bg-zinc-800 h-11 px-6 rounded-lg font-semibold text-sm transition-all disabled:opacity-40 flex items-center justify-center gap-2 whitespace-nowrap shrink-0"
+              >
+                {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Iniciar Análise <ArrowRight className="w-4 h-4" /></>}
+              </button>
+            </div>
+          </div>
+          <p className="text-xs text-zinc-400 font-normal">
+            Usaremos Inteligência Artificial para analisar a presença do seu perfil. Perfis com alta privacidade podem ter coleta limitada.
+          </p>
+        </div>
  </DiagnosticLayout>
  </>
  );

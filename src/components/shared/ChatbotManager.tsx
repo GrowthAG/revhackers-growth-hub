@@ -30,60 +30,14 @@ function removeAllChatWidgets() {
 }
 
 const ChatbotManager = () => {
-    const location = useLocation();
-
     useEffect(() => {
-        const path = location.pathname;
-        const routeType = isPublicRoute(path);
-
-        if (routeType === 'sales') {
-            loadChatbot(BOT_SALES_ID);
-        } else if (routeType === 'content') {
-            loadChatbot(BOT_CONTENT_ID);
-        } else {
-            // Tudo que NAO e rota publica: remover chatbot agressivamente
-            removeAllChatWidgets();
-            // Repetir para pegar widgets que carregam com delay
-            const t1 = setTimeout(removeAllChatWidgets, 500);
-            const t2 = setTimeout(removeAllChatWidgets, 2000);
-            const t3 = setTimeout(removeAllChatWidgets, 5000);
-            return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-        }
-    }, [location]);
+        // Purge any GHL chat widget scripts or elements completely
+        document.getElementById('ghl-chat-script')?.remove();
+        document.querySelectorAll('chat-widget').forEach(el => el.remove());
+        document.querySelectorAll('[id*="chat-widget"], [class*="chat-widget"], [id*="leadconnector"]').forEach(el => el.remove());
+    }, []);
 
     return null;
 };
-
-function tagChatIframes() {
-    document.querySelectorAll('iframe[src*="leadconnector"], iframe[src*="widget.leadconnectorhq"]').forEach(el => {
-        if (!el.hasAttribute('data-revhackers-chatbot')) {
-            el.setAttribute('data-revhackers-chatbot', 'true');
-        }
-    });
-}
-
-function loadChatbot(widgetId: string) {
-    // Remover widget anterior
-    const existingScript = document.getElementById('ghl-chat-script');
-    const existingWidget = document.querySelector('chat-widget');
-    if (existingScript) existingScript.remove();
-    if (existingWidget) existingWidget.remove();
-
-    if (!widgetId || widgetId.includes('YOUR_')) return;
-
-    const script = document.createElement('script');
-    script.src = "https://widget.leadconnectorhq.com/loader.js";
-    script.setAttribute("data-resources-url", "https://widget.leadconnectorhq.com/chat-widget/loader.js");
-    script.setAttribute("data-widget-id", widgetId);
-    script.id = 'ghl-chat-script';
-    script.async = true;
-    document.body.appendChild(script);
-
-    // Tag chat iframes as they appear so removeAllChatWidgets targets only them
-    const observer = new MutationObserver(() => tagChatIframes());
-    observer.observe(document.body, { childList: true, subtree: true });
-    // Stop observing after 10s (widget should be loaded by then)
-    setTimeout(() => observer.disconnect(), 10000);
-}
 
 export default ChatbotManager;

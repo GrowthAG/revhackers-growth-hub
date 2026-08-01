@@ -58,50 +58,48 @@ export const SiteScoreHero = ({
       hideHeader={false}
       headerVariant="default"
     >
-      <div className="max-w-4xl mx-auto flex flex-col items-center w-full min-h-[60vh] justify-center animate-fade-in">
-        <div className="bg-white border border-zinc-200 p-12 mb-8 relative overflow-hidden group w-full text-center hover:border-zinc-300 transition-colors shadow-sm">
-          <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none transition-transform group-hover:scale-105 duration-1000">
-            <Zap className="w-64 h-64 text-black rotate-12" />
-          </div>
-
-          <div className="relative z-10 flex flex-col items-center max-w-2xl mx-auto">
+      <div className="max-w-3xl mx-auto flex flex-col items-center w-full justify-center animate-fade-in">
+        <div className="bg-white border border-zinc-200/80 rounded-2xl p-8 md:p-10 relative overflow-hidden group w-full text-center hover:border-zinc-300 transition-colors shadow-xs">
+          <div className="relative z-10 flex flex-col items-center max-w-2xl mx-auto space-y-6">
             {/* URL Input Action Area */}
-            <div className="mb-16 w-full">
-              <div className="flex flex-col md:flex-row gap-0 w-full border border-zinc-200 bg-white group-hover:border-zinc-300 transition-colors overflow-hidden shadow-sm mb-4">
-                <span className="hidden md:flex items-center px-6 font-sans text-xs text-zinc-500 bg-zinc-50 border-r border-zinc-200 select-none gap-2">
-                  <Globe className="w-4 h-4" />
-                  https://
-                </span>
-                <input
-                  type="text"
-                  value={targetUrl}
-                  onChange={(e) => setTargetUrl(e.target.value)}
-                  placeholder="seu-site.com"
-                  className="flex-1 bg-transparent border-none text-black h-16 px-6 focus:ring-0 outline-none font-bold text-lg placeholder:text-zinc-600"
-                />
+            <div className="w-full space-y-4">
+              <div className="flex flex-col sm:flex-row gap-2 w-full">
+                <div className="flex items-center flex-1 bg-white border border-zinc-200 rounded-lg overflow-hidden focus-within:border-zinc-950">
+                  <span className="hidden sm:flex items-center px-3 text-xs font-medium text-zinc-400 bg-zinc-50 border-r border-zinc-200 select-none whitespace-nowrap h-11 gap-1.5">
+                    <Globe className="w-3.5 h-3.5" />
+                    https://
+                  </span>
+                  <input
+                    type="text"
+                    value={targetUrl}
+                    onChange={(e) => setTargetUrl(e.target.value)}
+                    placeholder="seu-site.com"
+                    className="flex-1 bg-transparent border-none text-zinc-900 h-11 px-4 focus:ring-0 outline-none text-sm font-semibold placeholder:text-zinc-400"
+                  />
+                </div>
                 <button
                   onClick={onStart}
                   disabled={!targetUrl}
-                  className="bg-white text-zinc-900 px-8 h-16 font-bold text-xs hover:bg-zinc-50 transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 min-w-[140px]"
+                  className="bg-zinc-950 text-white hover:bg-zinc-800 h-11 px-6 rounded-lg font-semibold text-sm transition-all disabled:opacity-40 flex items-center justify-center gap-2 whitespace-nowrap shrink-0"
                 >
-                  INICIAR <ArrowRight className="w-3 h-3" />
+                  Iniciar Análise <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
-              <p className="text-xs text-zinc-500 font-sans">
-                *Iniciaremos a análise técnica de infraestrutura
+              <p className="text-xs text-zinc-400 font-normal">
+                *Iniciaremos a análise técnica de infraestrutura e performance.
               </p>
 
               {/* Competitor URLs */}
-              <div className="mt-8 w-full border-t border-zinc-100 pt-8">
-                <div className="flex items-center gap-2 mb-4">
+              <div className="mt-8 w-full border-t border-zinc-100 pt-6 text-left">
+                <div className="flex items-center gap-2 mb-2">
                   <Trophy className="w-4 h-4 text-zinc-500" />
-                  <span className="text-xs font-bold text-zinc-500 ">Benchmark Competitivo (Opcional)</span>
+                  <span className="text-xs font-semibold text-zinc-800">Benchmark Competitivo (Opcional)</span>
                 </div>
-                <p className="text-xs text-zinc-500 mb-4">Compare sua performance contra até 2 concorrentes usando dados reais do Chrome.</p>
-                <div className="space-y-3">
+                <p className="text-xs text-zinc-400 mb-4">Compare sua performance contra até 2 concorrentes usando dados do Chrome.</p>
+                <div className="space-y-2">
                   {competitorUrls.map((url, idx) => (
                     <div key={idx} className="flex items-center gap-2">
-                      <span className="text-xs font-sans text-zinc-500 w-24">Concorrente {idx + 1}</span>
+                      <span className="text-xs font-medium text-zinc-500 w-24">Concorrente {idx + 1}</span>
                       <input
                         type="text"
                         value={url}
@@ -111,7 +109,7 @@ export const SiteScoreHero = ({
                           setCompetitorUrls(newUrls);
                         }}
                         placeholder="concorrente.com"
-                        className="flex-1 bg-zinc-50 border border-zinc-100 text-black h-10 px-4 text-sm focus:ring-0 outline-none focus:border-zinc-300"
+                        className="flex-1 bg-white border border-zinc-200 rounded-lg text-zinc-900 h-10 px-3 text-xs focus:ring-0 outline-none focus:border-zinc-950 font-medium"
                       />
                     </div>
                   ))}
