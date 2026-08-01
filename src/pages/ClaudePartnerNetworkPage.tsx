@@ -288,24 +288,24 @@ export default function ClaudePartnerNetworkPage() {
           
           <div className="text-center space-y-3">
             <p className="text-[#00CC6A] text-xs font-semibold tracking-wider uppercase">
-              Criação de Conta & Ativação de Acesso
+              CLAUDE PARTNER NETWORK × REVHACKERS
             </p>
             <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Crie sua Conta no Claude Partner Network
+              Bem-vindo à nova era da Engenharia de Receita & IA.
             </h2>
             <p className="text-zinc-500 text-sm max-w-xl mx-auto">
-              Preencha os dados da sua empresa para ativar sua conta de parceiro e receber suas credenciais de acesso da tecnologia da Anthropic & RevHackers.
+              Ative seu acesso ao Claude Partner Network da Anthropic & RevHackers. Zero enrolação, 100% execução.
             </p>
           </div>
 
           {isSubmitted ? (
             <div className="p-10 rounded-xl bg-emerald-50/60 border border-emerald-200 text-center space-y-4 shadow-xs">
               <div className="w-12 h-12 bg-[#00CC6A] text-zinc-950 rounded-full flex items-center justify-center mx-auto font-bold text-xl shadow-xs">
-                ✓
+                ⚡
               </div>
-              <h3 className="text-2xl font-bold text-zinc-900">Conta Criada com Sucesso! 🚀</h3>
+              <h3 className="text-2xl font-bold text-zinc-900">Você está dentro. Seja bem-vindo. 🚀</h3>
               <p className="text-sm text-zinc-700 max-w-md mx-auto leading-relaxed">
-                Sua conta de parceiro foi ativada. Enviamos um e-mail com a confirmação e os detalhes de acesso para o e-mail corporativo cadastrado.
+                Sua empresa foi cadastrada no sistema. O e-mail com a liberação dos seus acessos e próximos passos acabou de ser enviado para a sua caixa de entrada.
               </p>
             </div>
           ) : (
