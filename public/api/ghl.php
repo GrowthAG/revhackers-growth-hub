@@ -62,7 +62,7 @@ if (!isset($cleanPayload['tags']) || !is_array($cleanPayload['tags'])) {
 
 $token = 'pit-9285a0fa-9c63-4475-8a39-93f3476d6a81';
 
-// Use GHL Contacts Upsert Endpoint (Handles new and existing contacts by email)
+// Use GHL Contacts Upsert Endpoint
 $ch = curl_init('https://services.leadconnectorhq.com/contacts/upsert');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
@@ -85,19 +85,24 @@ if ($curlError) {
     exit();
 }
 
-// Dispatch confirmation email to lead's inbox
+$ghlData = json_decode($response, true);
+$contactId = $ghlData['contact']['id'] ?? null;
+
+// Send email via GHL Conversations API + PHP Mail fallback
 if (!empty($cleanPayload['email'])) {
-    sendConfirmationEmail(
+    dispatchConfirmationEmail(
         $cleanPayload['email'],
         $cleanPayload['firstName'] ?? 'Parceiro',
-        $cleanPayload['companyName'] ?? 'Sua Empresa'
+        $cleanPayload['companyName'] ?? 'Sua Empresa',
+        $contactId,
+        $token
     );
 }
 
 http_response_code($httpCode >= 200 && $httpCode < 300 ? 200 : 200);
 echo $response;
 
-function sendConfirmationEmail($toEmail, $firstName, $companyName) {
+function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactId, $token) {
     $templatePath = __DIR__ . '/../templates/email-claude-partner-network.html';
     if (!file_exists($templatePath)) {
         return false;
@@ -112,8 +117,34 @@ function sendConfirmationEmail($toEmail, $firstName, $companyName) {
     $htmlBody = str_replace(['{{location.name}}'], 'RevHackers', $htmlBody);
 
     $subject = "Aplicação recebida: Claude Partner Network 2026";
-    $subjectEncoded = "=?UTF-8?B?" . base64_encode($subject) . "?=";
 
+    // 1. Send via GHL Conversations API (Verified LC Mail / SendGrid for Location oFTw9DcsKRUj6xCiq4mb)
+    if ($contactId) {
+        $ghlMsgPayload = [
+            'type' => 'Email',
+            'contactId' => $contactId,
+            'emailTo' => $toEmail,
+            'subject' => $subject,
+            'html' => $htmlBody,
+            'locationId' => 'oFTw9DcsKRUj6xCiq4mb'
+        ];
+
+        $chGhl = curl_init('https://services.leadconnectorhq.com/conversations/messages');
+        curl_setopt($chGhl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($chGhl, CURLOPT_POST, true);
+        curl_setopt($chGhl, CURLOPT_POSTFIELDS, json_encode($ghlMsgPayload));
+        curl_setopt($chGhl, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer ' . $token,
+            'Version: 2021-07-28',
+            'Content-Type: application/json'
+        ]);
+        curl_setopt($chGhl, CURLOPT_SSL_VERIFYPEER, true);
+        curl_exec($chGhl);
+        curl_close($chGhl);
+    }
+
+    // 2. Secondary fallback: Send via PHP mail()
+    $subjectEncoded = "=?UTF-8?B?" . base64_encode($subject) . "?=";
     $headers  = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
     $headers .= "From: RevHackers <contato@revhackers.com.br>\r\n";
