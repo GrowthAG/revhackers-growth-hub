@@ -25,7 +25,7 @@ const PartnersSection = () => {
       {partners.map((partner, index) => (
         <div
           key={index}
-          className="flex-shrink-0 flex items-center justify-center w-36 h-16 transition-opacity duration-300"
+          className="flex-shrink-0 flex items-center justify-center w-40 h-20 transition-all duration-300"
         >
           <img
             src={partner.logo}
@@ -33,7 +33,7 @@ const PartnersSection = () => {
             style={{
               transform: partner.scale ? `scale(${partner.scale})` : 'scale(1)',
             }}
-            className="max-h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+            className="max-h-12 max-w-[140px] w-auto object-contain opacity-85 hover:opacity-100 hover:scale-105 transition-all duration-500 filter drop-shadow-xs"
           />
         </div>
       ))}

@@ -7,52 +7,64 @@ export type CaseStudy = Database['public']['Tables']['cases']['Row'];
 
 const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
     'Heineken': {
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Heineken_logo.svg',
-        scale: 1.2
+        logo: '/uploads/aada4820-3f12-4185-9af6-811f30795a93.png',
+        scale: 1.3
     },
     'FMU': {
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/FMU_logo.png/640px-FMU_logo.png',
-        scale: 1.1
+        logo: '/uploads/e0d3d03b-c1d5-4a6e-9a61-3a1c2a707b5f.png',
+        scale: 1.7
     },
     'Anhembi': {
-        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/69599738c8226b643a25195.svg',
-        scale: 1.3
+        logo: '/uploads/f5e74a47-fc77-4b34-970e-e839080310fd.png',
+        scale: 1.85
     },
     'Cruzeiro do Sul': {
-        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/6959971ec8226b527b25194.svg',
-        scale: 1.4
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Logo_Cruzeiro_do_Sul.png/640px-Logo_Cruzeiro_do_Sul.png',
+        scale: 2.2
     },
     'Lindoya': {
-        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/6959977574830386a6e88495.png',
-        scale: 1.3
+        logo: '/uploads/lindoya-logo.png',
+        scale: 1.6
     },
     'Emagrecentro': {
-        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/695997573ccdd613d4b251a3.png',
-        scale: 1.3
+        logo: '/uploads/emagrecentro-logo-new.png',
+        scale: 2.0
     },
     'ENICS': {
-        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/695996b8748303e24fe82be8.png',
-        scale: 1.3
+        logo: '/uploads/a05718ad-1822-4102-909a-7e86af151e98.png',
+        scale: 1.6
     },
     'TOEFL': {
-        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/6959970205b5117729df4a50.png',
-        scale: 1.3
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/TOEFL_logo.svg/640px-TOEFL_logo.svg.png',
+        scale: 1.6
     },
     'Tikpag': {
-        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/695997877483037113e88497.png',
+        logo: '/uploads/tikpag-logo-final.png',
         scale: 1.8
     },
-    'Agence MR': {
-        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/695997bd3ccdd6417ab25199.png',
-        scale: 1.3
+    'Agence': {
+        logo: '/uploads/6c09375e-5298-4672-9226-27eb60a6b038.png',
+        scale: 1.5
+    },
+    'BT': {
+        logo: '/uploads/bt-logo-new.png',
+        scale: 1.5
+    },
+    'Tegra': {
+        logo: '/uploads/tegra-logo-new.png',
+        scale: 1.6
+    },
+    'Funnels': {
+        logo: '/uploads/e468ed87-3eee-496b-bb1a-3525f02f8429.png',
+        scale: 1.5
     },
     'PlacLux': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c76cfe889d38ced51667d.png',
-        scale: 1.3
+        scale: 1.5
     },
     'BLDN': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c77062fe4f1854fadf797.svg',
-        scale: 1.3
+        scale: 1.5
     }
 };
 

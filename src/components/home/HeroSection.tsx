@@ -121,16 +121,6 @@ const HeroSection = () => {
           </Button>
         </motion.div>
 
-        {/* Microcopy — Hormozi: objection killer */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.26, ease: 'easeOut' }}
-          className="text-zinc-600 text-xs font-normal mb-8"
-        >
-          Risco 100% nosso. Se não gerar oportunidades em 60 dias, devolvemos 100% do valor.
-        </motion.p>
-
         {/* Métricas */}
         <motion.div
           initial={{ opacity: 0 }}
