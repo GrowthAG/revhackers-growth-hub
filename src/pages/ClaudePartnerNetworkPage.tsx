@@ -137,19 +137,19 @@ export default function ClaudePartnerNetworkPage() {
       >
         <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
           
-          {/* Lockup de Logos Oficiais: Claude Partner Network × REVHACKERS */}
+          {/* Lockup Oficinal: Claude Partner Network by RevHackers */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={inViewHero ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="flex items-center justify-center gap-4 sm:gap-6 mb-2 p-3 px-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 shadow-inner"
+            className="flex items-center justify-center gap-3 sm:gap-4 mb-2 p-3 px-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 shadow-inner"
           >
             <img
               src="/brand/claude-partner-network.svg"
               alt="Claude Partner Network"
               className="h-7 sm:h-9 w-auto object-contain"
             />
-            <span className="text-zinc-600 font-light text-base sm:text-lg">×</span>
+            <span className="text-zinc-400 font-medium text-xs sm:text-sm tracking-wide lowercase">by</span>
             <img
               src="/brand/revhackers-wordmark-white.png"
               alt="REVHACKERS"
@@ -195,7 +195,7 @@ export default function ClaudePartnerNetworkPage() {
         </div>
       </section>
 
-      {/* O que acontece agora & Público Elegível (PADRÃO EXACTO SERVICESSECTION DA HOME) */}
+      {/* O que acontece agora & Público Elegível (DESIGN LIMPO SEM VIBECODE) */}
       <section className="py-20 bg-zinc-50 border-b border-zinc-200">
         <div className="max-w-5xl mx-auto px-6 space-y-16">
           
@@ -212,16 +212,16 @@ export default function ClaudePartnerNetworkPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
               {[
-                { step: "01", title: "Cadastro sem Frescura", desc: "Preenche seus dados abaixo pra gente entender o seu cenário." },
+                { step: "01", title: "Cadastro em 3 Etapas", desc: "Preenche seus dados abaixo pra gente entender o seu cenário." },
                 { step: "02", title: "Validação & Tech Match", desc: "A gente analisa a sua arquitetura pra conectar o Claude da forma mais eficiente." },
                 { step: "03", title: "Acessos no Seu E-mail", desc: "Receba as chaves, documentações técnicas e credenciais direto no seu inbox." },
                 { step: "04", title: "Execução Brutal", desc: "Start imediato na construção dos agentes e escala de receita com IA." }
               ].map((item) => (
-                <div key={item.step} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 transition-all shadow-xs group">
+                <div key={item.step} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/50 transition-all shadow-xs group">
                   <div>
-                    <div className="w-9 h-9 bg-zinc-100 rounded-lg flex items-center justify-center mb-5 text-xs font-mono font-bold text-zinc-900 group-hover:bg-[#00CC6A]/10 group-hover:text-[#00CC6A] transition-colors">
-                      {item.step}
-                    </div>
+                    <span className="text-[#00CC6A] text-xs font-mono font-extrabold tracking-widest uppercase block mb-3">
+                      PASSO {item.step}
+                    </span>
                     <h3 className="text-zinc-900 font-bold text-base mb-2 group-hover:text-[#00CC6A] transition-colors">
                       {item.title}
                     </h3>
@@ -246,24 +246,21 @@ export default function ClaudePartnerNetworkPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
-              {AUDIENCE_ROLES.map((role) => {
-                const IconComponent = role.icon;
-                return (
-                  <div key={role.title} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/40 transition-all shadow-xs group">
-                    <div>
-                      <div className="w-10 h-10 bg-zinc-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-[#00CC6A]/10 transition-colors">
-                        <IconComponent className="w-5 h-5 text-zinc-700 group-hover:text-[#00CC6A] transition-colors" strokeWidth={1.5} />
-                      </div>
-                      <h3 className="text-zinc-900 font-bold text-base mb-2 group-hover:text-[#00CC6A] transition-colors">
+              {AUDIENCE_ROLES.map((role) => (
+                <div key={role.title} className="flex flex-col justify-between h-full p-6 bg-white border border-zinc-200 rounded-xl hover:border-[#00CC6A]/50 transition-all shadow-xs group">
+                  <div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-2 h-2 rounded-full bg-[#00CC6A]" />
+                      <h3 className="text-zinc-900 font-bold text-base group-hover:text-[#00CC6A] transition-colors">
                         {role.title}
                       </h3>
-                      <p className="text-zinc-500 text-xs leading-relaxed">
-                        {role.desc}
-                      </p>
                     </div>
+                    <p className="text-zinc-500 text-xs leading-relaxed pl-4 border-l border-zinc-200">
+                      {role.desc}
+                    </p>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
 
