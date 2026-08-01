@@ -42,6 +42,7 @@ const Materiais = lazy(() => import("./pages/Materiais"));
 const MaterialLanding = lazy(() => import("./pages/MaterialLanding"));
 const Metodologia = lazy(() => import("./pages/Metodologia"));
 const ClaudePartnerNetworkPage = lazy(() => import("./pages/ClaudePartnerNetworkPage"));
+const ClaudePartnerThankYouPage = lazy(() => import("./pages/ClaudePartnerThankYouPage"));
 const Comunidade = lazy(() => import("./pages/Comunidade"));
 const Booking = lazy(() => import("./pages/Booking"));
 // Dead import removed: Agenda (route is redirect to /booking)
@@ -166,6 +167,7 @@ const App = () => (
                   {/* Public Routes */}
                   <Route path="/" element={<Index />} />
                   <Route path="/claude-partner-network" element={<ClaudePartnerNetworkPage />} />
+                  <Route path="/claude-partner-network/obrigado" element={<ClaudePartnerThankYouPage />} />
                   <Route path="/public/growthmap/:share_token" element={<PublicGrowthMap />} />
                   <Route path="/p/:slug" element={<ProposalPresentation />} /> {/* Proposal Slide Presentation */}
               <Route path="/p/:slug/legacy" element={<PublicDealRoom />} /> {/* Legacy Deal Room Route */}

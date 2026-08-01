@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -46,6 +47,7 @@ const AUDIENCE_ROLES = [
 ];
 
 export default function ClaudePartnerNetworkPage() {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -106,6 +108,7 @@ export default function ClaudePartnerNetworkPage() {
         title: "Conta Ativada com Sucesso",
         description: "Seus dados foram validados e seus acessos foram disparados pro seu e-mail.",
       });
+      navigate('/claude-partner-network/obrigado');
     } catch (err: any) {
       console.warn("GHL integration fallback:", err);
       setIsSubmitted(true);
@@ -113,6 +116,7 @@ export default function ClaudePartnerNetworkPage() {
         title: "Conta Ativada",
         description: "Seus dados foram recebidos com sucesso.",
       });
+      navigate('/claude-partner-network/obrigado');
     } finally {
       setIsSubmitting(false);
     }
