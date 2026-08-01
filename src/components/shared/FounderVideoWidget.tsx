@@ -16,22 +16,48 @@ interface Message {
 
 const FOUNDER_VIDEO_URL = "https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-laptop-in-an-office-4336-large.mp4";
 
+// Persistent Lead Identity Recovery (localStorage)
+const getStoredIdentity = () => {
+  try {
+    const raw = localStorage.getItem('rev_lead_identity');
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return null;
+};
+
 const FounderVideoWidget = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [isMicActive, setIsMicActive] = useState(false);
-  const [email, setEmail] = useState('');
-  const [emailCaptured, setEmailCaptured] = useState(false);
+  
+  const initialIdentity = getStoredIdentity();
+  const [email, setEmail] = useState<string>(initialIdentity?.email || '');
+  const [emailCaptured, setEmailCaptured] = useState<boolean>(!!initialIdentity?.email);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   // Dynamic Contextual Greeting based on user behavior on the current page (ZERO EMOJIS)
   const getContextualMessages = (pathname: string): Message[] => {
+    const saved = getStoredIdentity();
+    const displayName = saved?.firstName || (saved?.name ? saved.name.split(' ')[0] : '');
+
+    if (saved?.email && displayName) {
+      return [
+        { sender: 'ai', text: `Fala, ${displayName}! Bom te ver de volta por aqui no site da RevHackers.`, timestamp: 'Agora' },
+        { sender: 'ai', text: 'Como posso acelerar a geracao de demanda e a infraestrutura da sua empresa hoje?', timestamp: 'Agora' }
+      ];
+    }
+    if (saved?.email) {
+      return [
+        { sender: 'ai', text: 'Fala! Que bom te ver de volta por aqui.', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Como posso ajudar sua operacao de GTM Engineering hoje?', timestamp: 'Agora' }
+      ];
+    }
+
     if (pathname.includes('/blog') || pathname.includes('/artigo')) {
       return [
         { sender: 'ai', text: 'Fala! Giulliano aqui. Vi que voce esta analisando nossos artigos e estrategias de GTM.', timestamp: 'Agora' },
@@ -85,11 +111,23 @@ const FounderVideoWidget = () => {
 
     setLoading(true);
     const utmParams = { ...getPersistedUtmParams(), ...captureUtmParams() };
+    const extractedName = email.split('@')[0];
+    const firstName = extractedName.split('.')[0];
+
+    // Store in localStorage for persistent recognition across pages & sessions
+    try {
+      localStorage.setItem('rev_lead_identity', JSON.stringify({
+        email,
+        name: extractedName,
+        firstName: firstName.charAt(0).toUpperCase() + firstName.slice(1),
+        capturedAt: new Date().toISOString()
+      }));
+    } catch (e) {}
 
     try {
       // 1. Submit to GCP API / Supabase
       await submitPublicDiagnostic(
-        { email, name: email.split('@')[0], source: 'founder_ai_chat', company: 'Lead Chat' },
+        { email, name: extractedName, source: 'founder_ai_chat', company: 'Lead Chat' },
         { source: 'founder_video_widget', type: 'ai_chat_lead', ...utmParams },
         0,
         { level: "Lead", description: "Interação no Chat IA Founder", action: "Chat", color: "green" },
@@ -99,7 +137,7 @@ const FounderVideoWidget = () => {
       // 2. Direct GHL Relay Integration with UTM mapping & Tag
       await sendToGHL({
         email,
-        name: email.split('@')[0],
+        name: extractedName,
         source: 'founder_video_widget',
         tags: ['founder_ai_chat', 'video_widget_lead', 'gtm_engineering'],
         customFields: {
@@ -117,7 +155,7 @@ const FounderVideoWidget = () => {
         { sender: 'user', text: email, timestamp: 'Agora' },
         {
           sender: 'ai',
-          text: 'E-mail registrado no nosso CRM! Como posso ajudar sua operacao B2B com GTM Engineering hoje?',
+          text: `E-mail registrado no nosso CRM! Como posso ajudar sua operacao B2B com GTM Engineering hoje?`,
           timestamp: 'Agora'
         }
       ]);
@@ -126,7 +164,7 @@ const FounderVideoWidget = () => {
   };
 
   const [showPills, setShowPills] = useState(true);
-  const [extractedData, setExtractedData] = useState<{ company?: string; crm?: string; role?: string }>({});
+  const [extractedData, setExtractedData] = useState<{ company?: string; crm?: string; role?: string; linkedin?: string }>({});
 
   const handleSendMessage = (textToSend?: string) => {
     const text = textToSend || inputText;
@@ -149,6 +187,23 @@ const FounderVideoWidget = () => {
       const lower = text.toLowerCase().trim();
       const utmParams = { ...getPersistedUtmParams(), ...captureUtmParams() };
 
+      // 0. AI Extraction: Detect LinkedIn URL or Profile
+      const linkedinMatch = text.match(/(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+/i);
+      if (linkedinMatch || lower.includes('linkedin.com')) {
+        const detectedLinkedin = linkedinMatch ? linkedinMatch[0] : text.trim();
+        setExtractedData(prev => ({ ...prev, linkedin: detectedLinkedin }));
+        
+        // Background CRM Sync
+        if (email) {
+          sendToGHL({
+            email,
+            customFields: { linkedin: detectedLinkedin, ...utmParams },
+            tags: ['ai_chat_linkedin_captured', 'gtm_engineering']
+          }, 'lead_capture').catch(() => {});
+        }
+
+        aiReply = "Show! Guardei seu perfil do LinkedIn no nosso CRM. Qual e o principal desafio da sua operacao comercial hoje?";
+      }
       // 1. AI Extraction: Detect CRM Tool
       const crmMatch = lower.match(/(hubspot|rd station|pipedrive|salesforce|activecampaign|zoho|bitrix|exact sales|ghl)/i);
       if (crmMatch) {
