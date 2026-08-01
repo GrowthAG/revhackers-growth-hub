@@ -20,10 +20,6 @@ export const boltCase: CaseStudy = {
         { value: "4.2x", label: "ROI Médio em Ads" },
         { value: "-45%", label: "Redução no CAC" }
     ],
-    quote: "A RevHackers elevou o nível da nossa agência com a criação de Landing Pages de alta conversão. Aplicando técnicas avançadas de CRO e design persuasivo, transformaram o tráfego dos nossos clientes em resultados reais. Foi um divisor de águas para nossa performance.",
-    author: "Danilo Arato",
-    authorImage: "/images/danilo-arato.png",
-    role: "CEO, Bolt Digital",
     preview_description: "Desenvolvimento de páginas de alta conversão: Metodologia que aumentou a taxa de conversão média de 1.8% para 7.9%, reduzindo o CAC em 45% e gerando ROI de 4.2x em tráfego pago.",
     logoScale: 1.5,
     techStack: ["Webflow", "Hotjar", "Google Optimize", "Looker Studio"]
