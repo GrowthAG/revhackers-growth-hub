@@ -25,8 +25,14 @@ const confirmationSchema = z.object({
   companySize: z.string().min(1, 'Selecione o tamanho da empresa / ops'),
   segment: z.string().min(1, 'Selecione o segmento da empresa'),
   otherSegment: z.string().optional(),
-  confirmAvailability: z.boolean().refine(val => val === true, 'Confirme a disponibilidade para prosseguir'),
-  agreeTerms: z.boolean().refine(val => val === true, 'Concorde com os termos do programa'),
+  confirmAvailability: z.preprocess(
+    (val) => (Array.isArray(val) ? val.includes(true) || val.includes('true') || val.includes('on') : Boolean(val)),
+    z.boolean().refine(val => val === true, 'Confirme a disponibilidade para prosseguir')
+  ),
+  agreeTerms: z.preprocess(
+    (val) => (Array.isArray(val) ? val.includes(true) || val.includes('true') || val.includes('on') : Boolean(val)),
+    z.boolean().refine(val => val === true, 'Concorde com os termos do programa')
+  ),
 }).refine((data) => {
   if (data.segment === 'Outro') {
     return !!data.otherSegment && data.otherSegment.trim().length >= 3;
@@ -499,78 +505,6 @@ export default function ClaudePartnerNetworkPage() {
                         <>
                           <Loader2 className="w-4 h-4 animate-spin text-zinc-950" />
                           <span>Validando e liberando...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Validar & Ativar Acessos →</span>
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* STEP 3: VALIDAÇÃO & ACESSO */}
-              {step === 3 && (
-                <motion.div initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                  {/* Termos de Participação & Compromisso */}
-                  <div className="p-5 rounded-lg bg-white border border-zinc-200 text-xs text-zinc-600 space-y-3 shadow-xs">
-                    <p className="font-bold text-zinc-900 text-xs uppercase tracking-wide">
-                      Regras do Jogo & Compromisso de Execução:
-                    </p>
-                    <ol className="list-decimal list-inside space-y-1.5 text-zinc-600 leading-relaxed font-normal">
-                      <li>A trilha é 100% gratuita para as empresas selecionadas.</li>
-                      <li>Foco em execução prática com carga estimada de 40h e acompanhamento do time.</li>
-                      <li>Ao se cadastrar você concorda em aplicar a tecnologia Claude em operações reais da sua empresa.</li>
-                    </ol>
-                  </div>
-
-                  {/* Checkboxes de Confirmação & Termos */}
-                  <div className="pt-2 space-y-4">
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        {...register('confirmAvailability')}
-                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
-                      />
-                      <span className="text-xs text-zinc-700 font-medium leading-normal">
-                        Confirmo disponibilidade para acompanhar a trilha de execução com o time *
-                      </span>
-                    </label>
-                    {errors.confirmAvailability && <p className="text-xs text-rose-600 font-medium">{errors.confirmAvailability.message}</p>}
-
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        {...register('agreeTerms')}
-                        className="mt-1 w-4 h-4 text-[#00CC6A] rounded border-zinc-300 bg-white focus:ring-[#00CC6A]"
-                      />
-                      <span className="text-xs text-zinc-700 font-medium leading-normal">
-                        Concordo com as regras do jogo e termos do Claude Partner Network *
-                      </span>
-                    </label>
-                    {errors.agreeTerms && <p className="text-xs text-rose-600 font-medium">{errors.agreeTerms.message}</p>}
-                  </div>
-
-                  {/* CTA Final */}
-                  <div className="flex items-center gap-4 pt-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={handlePrevStep}
-                      className="w-1/3 h-12 border border-zinc-300 font-bold text-sm text-zinc-700 hover:bg-zinc-100"
-                    >
-                      ← Voltar
-                    </Button>
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-2/3 h-12 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin text-zinc-950" />
-                          <span>Validando e liberando acessos...</span>
                         </>
                       ) : (
                         <>
