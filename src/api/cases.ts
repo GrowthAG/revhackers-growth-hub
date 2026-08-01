@@ -16,11 +16,15 @@ const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
     },
     'Anhembi': {
         logo: '/uploads/f5e74a47-fc77-4b34-970e-e839080310fd.png',
-        scale: 1.85
+        scale: 2.4
+    },
+    'Cruzeiro': {
+        logo: '/uploads/cruzeiro-clean.png',
+        scale: 2.3
     },
     'Cruzeiro do Sul': {
-        logo: 'https://asset.brandfetch.io/id_r0F2YqJ/idW6bU689b.png',
-        scale: 2.0
+        logo: '/uploads/cruzeiro-clean.png',
+        scale: 2.3
     },
     'Idee': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c73dcdda192452a508485.png',
@@ -28,11 +32,11 @@ const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
     },
     'Lindoya': {
         logo: '/uploads/lindoya-logo.png',
-        scale: 1.6
+        scale: 1.8
     },
     'Emagrecentro': {
         logo: '/uploads/emagrecentro-logo-new.png',
-        scale: 1.8
+        scale: 2.3
     },
     'ENICS': {
         logo: '/uploads/a05718ad-1822-4102-909a-7e86af151e98.png',
