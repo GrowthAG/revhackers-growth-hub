@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { submitPublicDiagnostic } from "@/api/publicDiagnostic";
 import { analyzeFounderProfileAI, FounderAnalysisResult } from "@/api/founderAnalysis";
-import { Brain, ArrowRight, Users, Loader2, AlertTriangle } from 'lucide-react';
+import { Brain, ArrowRight, Users, Loader2, AlertTriangle, Command } from 'lucide-react';
 import { DiagnosticLayout } from '@/components/diagnostics/DiagnosticLayout';
 import { DiagnosticForm, DiagnosticFormData } from '@/components/diagnostics/DiagnosticForm';
 import { ScoreGauge } from '@/components/diagnostics/ScoreGauge';
