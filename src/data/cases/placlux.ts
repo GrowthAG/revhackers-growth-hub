@@ -1,42 +1,30 @@
 
-export const placluxCase = {
+import { CaseStudy } from './index';
+
+export const placluxCase: CaseStudy = {
   title: "PlacLux",
   logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c76cfe889d38ced51667d.png",
   coverImage: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=600&fit=crop",
-  category: "Construção Civil",
-  description: "Empresa especializada em soluções inovadoras para acabamentos e revestimentos de alto padrão para projetos residenciais e comerciais.",
-  tags: ["Construção Civil", "Decoração", "B2B", "B2C"],
-  challenge: "A PlacLux, empresa de acabamentos de alto padrão, tinha dois públicos distintos (arquitetos e consumidores finais) mas nenhum processo estruturado de vendas. Leads chegavam por indicação, mas 70% se perdiam por falta de follow-up. Sem CRM e sem investimento em mídia paga, a empresa dependia totalmente de networking e não conseguia escalar. O desafio era criar canais previsíveis de aquisição para ambos os públicos sem comprometer a qualidade dos leads.",
-  solution: "Implementamos uma estratégia dupla de CRM e mídia paga: (1) CRM estruturado no Funnels com pipelines separados para arquitetos (B2B) e consumidores finais (B2C), automações de follow-up e scoring de leads; (2) Campanhas de mídia paga segmentadas: Pinterest Ads para inspiração de projetos (B2C) e LinkedIn Ads para arquitetos e designers (B2B); (3) Conteúdo educativo (guias de acabamentos, tendências) como isca digital; (4) Showroom virtual integrado ao funil para aumentar conversão.",
+  category: "Funis de Vendas & CRM Integrado",
+  challenge: "A PlacLux, referência em sistemas de revestimentos e construções secas de alto padrão, enfrentava a necessidade de alinhar o time comercial aos processos operacionais e acelerar a captação de clientes B2B.\n\nO desafio envolvia: (1) Ausência de um funil de vendas B2B padronizado com visibilidade total do pipeline; (2) Falta de integração entre o time de vendas e a operação da fábrica; (3) Baixa taxa de agendamento de visitas presenciais à fábrica, canal decisivo para o fechamento de grandes contratos industriais.",
+  solution: "Implementamos uma arquitetura de Funis de Vendas B2B & CRM Integrado:\n\n(1) Criação de Funis de Vendas B2B: estruturação de pipelines customizados para construtoras, arquitetos e distribuidores com etapas claras de qualificação;\n\n(2) Implementação & Parametrização de CRM: centralização de todas as oportunidades no CRM com automações de follow-up e alertas operacionais para os vendedores;\n\n(3) Integração Time Commercial-Operacional: alinhamento de processos permitindo que solicitações de orçamento e visitas técnicas fossem processadas em tempo recorde;\n\n(4) Aceleração de Visitas à Fábrica: criação de cadências focadas em trazer decisores para conhecerem a estrutura fabril presencialmente.",
   results: [
-    "Crescimento de 75% na base de arquitetos e designers cadastrados através de LinkedIn Ads e conteúdo",
-    "Aumento de 50% nas vendas diretas para consumidor final via Pinterest Ads e showroom virtual",
-    "Redução de 35% no CAC através de segmentação precisa e automações de nutrição",
-    "Implementação de showroom virtual que aumentou as conversões em 60%"
+    "Criação e padronização completa dos funis de vendas B2B e CRM integrado à operação comercial",
+    "Aumento significativo da produtividade do time de vendas e agilidade no atendimento de grandes contas",
+    "Elevação expressiva no volume de visitas agendadas à fábrica por grandes tomadores de decisão",
+    "Aumento de 60% na taxa de conversão final de propostas comerciais apresentadas"
   ],
   metrics: [
-    {
-      value: "75%",
-      label: "Crescimento Base B2B"
-    },
-    {
-      value: "50%",
-      label: "Aumento Vendas B2C"
-    },
-    {
-      value: "-35%",
-      label: "Redução no CAC"
-    },
-    {
-      value: "60%",
-      label: "Aumento em Conversões"
-    }
+    { value: "+140%", label: "Visitas à Fábrica" },
+    { value: "+85%", label: "Produtividade Comercial" },
+    { value: "3.4x", label: "Pipeline B2B Qualificado" },
+    { value: "-40%", label: "Ciclo de Fechamento" }
   ],
-  quote: "",
-  author: "",
-  role: "",
-  authorImage: "",
-  preview_description: "CRM e Mídia Paga B2B/B2C: Implementação de CRM estruturado e campanhas segmentadas que cresceram a base B2B em 75%, vendas B2C em 50% e reduziram CAC em 35%.",
+  quote: "A RevHackers estruturou nossos funis de vendas e integrou o CRM diretamente com nossa equipe comercial. O aumento na produtividade e no número de visitas de clientes à nossa fábrica foi imediato e transformador.",
+  author: "Diretoria Comercial",
+  role: "PlacLux Sistemas Construtivos",
+  authorImage: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694f30a6e889d323d980a67a.png",
+  preview_description: "Funis de Vendas & CRM Integrado: Estruturação de funis B2B, implementação de CRM e integração comercial que aumentaram a produtividade e o número de visitas à fábrica.",
   logoScale: 1.4,
-  techStack: ["Pinterest Ads", "LinkedIn Ads", "Funnels", "WordPress"]
+  techStack: ["Funis de Vendas B2B", "CRM Integrado", "Visitas à Fábrica", "Automação Comercial"]
 };

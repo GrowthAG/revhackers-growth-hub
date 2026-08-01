@@ -16,6 +16,30 @@ const getSlugFromTitle = (title: string) => {
         .replace(/-+/g, '-');
 };
 
+const formatHeadlineWithGreen = (text: string) => {
+    if (!text) return null;
+    const clean = text.replace(/<[^>]*>/g, '');
+    if (clean.includes(':')) {
+        const parts = clean.split(':');
+        return (
+            <>
+                {parts[0]}: <span className="text-[#00CC6A]">{parts.slice(1).join(':')}</span>
+            </>
+        );
+    }
+    const words = clean.split(' ');
+    if (words.length >= 4) {
+        const main = words.slice(0, Math.ceil(words.length * 0.55)).join(' ');
+        const highlight = words.slice(Math.ceil(words.length * 0.55)).join(' ');
+        return (
+            <>
+                {main} <span className="text-[#00CC6A]">{highlight}</span>
+            </>
+        );
+    }
+    return <span className="text-white">{clean}</span>;
+};
+
 export default function MaterialLanding() {
     const { slug } = useParams<{ slug: string }>();
     const [showForm, setShowForm] = useState(false);
@@ -127,7 +151,7 @@ export default function MaterialLanding() {
                     </span>
 
                     <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
-                        {material.headline}
+                        {formatHeadlineWithGreen(material.headline)}
                     </h1>
 
                     <p className="text-zinc-400 mb-8 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">

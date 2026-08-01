@@ -164,21 +164,23 @@ const Cases = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-white border-t border-zinc-100">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 items-center">
-            <div className="flex-1">
-              <h2 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-tight">
-                <div className="w-2 h-2 bg-revgreen absolute -left-4 top-4" />
-                Quer plugar esta Engenharia na sua operação?
+      {/* CTA Section — Fundo 100% Branco Puro */}
+      <section className="py-20 sm:py-24 bg-white border-t border-zinc-200/80">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            
+            {/* Esquerda: Headline & Subheadline com Letras Maiores e Mais Espaçadas */}
+            <div className="space-y-6">
+              <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-zinc-950 leading-[1.1] tracking-tight">
+                Quer plugar esta <span className="text-zinc-500">Engenharia na sua operação?</span>
               </h2>
-              <p className="text-lg text-zinc-500 mb-8 font-bold leading-relaxed">
+              <p className="text-zinc-600 text-base md:text-lg font-normal leading-relaxed max-w-lg">
                 Nós não começamos nenhum projeto sem auditar o vazamento atual da empresa. Aplique agora para uma análise de viabilidade técnica.
               </p>
             </div>
 
-            <div className="w-full md:w-auto bg-white p-8 rounded-xl shadow-sm border border-zinc-200 flex-1">
+            {/* Direita: Formulário Mantido no Padrão Perfeito */}
+            <div className="bg-white p-8 sm:p-10 rounded-2xl shadow-xs border border-zinc-200/80">
               <ContactForm formType="diagnosis" />
             </div>
           </div>

@@ -3,28 +3,28 @@ import { CaseStudy } from './index';
 
 export const bldnCase: CaseStudy = {
     title: "BLDN Digital",
-    category: "Agência de Marketing",
+    category: "Alocação de Squad & Growth 360º",
     logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c77062fe4f1854fadf797.svg",
-    coverImage: "",
-    challenge: "A BLDN Digital, agência especializada em saúde e bem-estar, precisava escalar sua operação para atender mais clientes de forma eficiente.\n\nO desafio era triplo: (1) Estruturar processos replicáveis de implementação de funis de vendas para seus clientes; (2) Padronizar estratégias de mídia paga, CRM e automação que funcionassem em diferentes nichos; (3) Aumentar a capacidade de atendimento sem perder qualidade, permitindo crescer de dezenas para centenas de clientes ativos.",
-    solution: "Implementamos uma transformação completa na operação da BLDN:\n\n(1) Frameworks de Funis de Vendas: criação de templates replicáveis de funis para diferentes nichos (saúde, estética, bem-estar) com estágios padronizados e critérios de passagem;\n\n(2) Playbooks de Mídia Paga: estratégias documentadas de Google Ads e Meta Ads com segmentações testadas e aprovadas para cada nicho;\n\n(3) Stack de CRM e Automação: implementação de Kommo CRM como padrão para todos os clientes, com automações pré-configuradas de nutrição, recuperação e follow-up;\n\n(4) Processos Escaláveis: documentação completa de processos, treinamento de equipe e ferramentas de gestão de múltiplos clientes.",
+    coverImage: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
+    challenge: "A BLDN Digital necessitava de uma estrutura de alocação de Squad especializado em Revenue & Growth para construir processos de vendas previsíveis nos clientes da agência.\n\nO desafio era triplo: (1) Estruturar e alocar um Squad de alta performance para gerenciar a operação de growth dos clientes; (2) Padronizar processos de entrada de leads, qualificação por IA e réguas de CRM; (3) Garantir escalabilidade de entrega mantendo a governança e o alinhamento estratégico.",
+    solution: "Implementamos uma Engenharia de Vendas e Alocação de Squad 360º:\n\n(1) Alocação de Squad Dedicado: estruturação de equipe multidisciplinar (Revenue Architect, Growth Hacker, CRM Specialist) atuando diretamente nas operações dos clientes;\n\n(2) Construção de Processos de Growth: implementação de frameworks replicáveis de aquisição de clientes, mídia de alta intenção e nutrição multicanal;\n\n(3) Arquitetura de CRM & RevOps: parametrização de funis no Kommo/HubSpot com automações de follow-up instantâneo;\n\n(4) Governança & Rituais de Vendas: rituais semanais de análise de pipeline e otimização contínua da produtividade comercial.",
     results: [
-        "Crescimento de 300% na base de clientes ativos, passando de 40 para mais de 120 clientes atendidos simultaneamente",
-        "Redução de 60% no tempo de implementação de funis através de frameworks e templates padronizados",
-        "Aumento de 85% na taxa de sucesso dos clientes através de estratégias testadas e replicáveis",
-        "Escalabilidade operacional: capacidade de onboarding de 10+ novos clientes por mês sem perda de qualidade"
+        "Estruturação e alocação de Squad de Growth operando processos de alta conversão para toda a cartela de clientes",
+        "Crescimento de 300% na base de clientes ativos atendidos com excelência técnica e governança comercial",
+        "Redução de 60% no tempo de ramp-up e estruturação de novos processos de growth",
+        "Aumento de 85% na retenção e sucesso dos clientes através de operações estruturadas"
     ],
     metrics: [
-        { value: "+300%", label: "Crescimento de Clientes" },
-        { value: "120+", label: "Clientes Ativos" },
-        { value: "-60%", label: "Tempo de Implementação" },
-        { value: "+85%", label: "Taxa de Sucesso" }
+        { value: "Squad 360º", label: "Alocação Dedicada" },
+        { value: "+300%", label: "Escala da Operação" },
+        { value: "-60%", label: "Ramp-up de Processos" },
+        { value: "+85%", label: "Sucesso dos Clientes" }
     ],
-    quote: "A RevHackers transformou nossa agência. Antes, cada cliente era um projeto único e caótico. Hoje, temos frameworks replicáveis de funis, mídia paga e automação que funcionam. Escalamos de 40 para 120+ clientes mantendo a qualidade. Foi a virada de chave que precisávamos.",
+    quote: "A RevHackers trouxe a inteligência e a alocação de Squad de Growth que precisávamos para transformar a operação comercial dos nossos clientes. Criaram processos reais de vendas com governança e tecnologia de ponta.",
     author: "Fabio Boldrini",
     role: "CEO, BLDN Digital",
     authorImage: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694f30a6e889d323d980a67a.png",
-    preview_description: "Escalabilidade de Agência: Frameworks de funis, mídia paga e automação que permitiram crescer de 40 para 120+ clientes com processos replicáveis.",
+    preview_description: "Alocação de Squad & Processos de Growth: Estruturação de equipe multidisciplinar dedicada e implantação de processos de vendas previsíveis para clientes da agência.",
     logoScale: 1.5,
-    techStack: ["Kommo CRM", "Google Ads", "Meta Ads", "Zapier"]
+    techStack: ["Revenue Squad", "HubSpot CRM", "Kommo", "Growth Automation"]
 };

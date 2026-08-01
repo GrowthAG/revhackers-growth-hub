@@ -1,6 +1,7 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types";
+import { casesData } from '@/data/cases';
 
 export type CaseStudy = Database['public']['Tables']['cases']['Row'];
 
@@ -122,6 +123,20 @@ const FALLBACK_CASES: any[] = [
     }
 ];
 
+const ALL_LOCAL_CASES: any[] = Object.entries(casesData).map(([slugKey, c]) => ({
+    id: `case-${slugKey}`,
+    title: c.title,
+    client_name: c.title,
+    slug: slugKey,
+    case_category: c.category || 'Go-To-Market',
+    preview_description: c.preview_description || c.challenge?.substring(0, 160) || c.solution?.substring(0, 160) || '',
+    client_logo: c.logo || c.whiteLogo || '',
+    published: true,
+    featured: true,
+    created_at: new Date().toISOString(),
+    metrics: c.metrics || []
+}));
+
 export const getAllCases = async (): Promise<CaseStudy[]> => {
     try {
         const { data, error } = await supabase
@@ -131,44 +146,54 @@ export const getAllCases = async (): Promise<CaseStudy[]> => {
             .order('created_at', { ascending: false });
 
         if (!error && data && data.length > 0) {
-            return data.map(applyOverrides);
+            // Combine DB cases with local cases, avoiding duplicate slugs
+            const dbSlugs = new Set(data.map(d => d.slug));
+            const missingLocal = ALL_LOCAL_CASES.filter(l => !dbSlugs.has(l.slug));
+            return [...data, ...missingLocal].map(applyOverrides);
         }
     } catch (err) {
-        console.warn('Usando cases estáticos de alta performance:', err);
+        console.warn('Usando 18 cases estáticos de alta performance:', err);
     }
 
-    return FALLBACK_CASES.map(applyOverrides);
+    return ALL_LOCAL_CASES.map(applyOverrides);
 };
 
 export const getCaseBySlug = async (slug: string): Promise<CaseStudy | null> => {
-    const { data, error } = await supabase
-        .from('cases')
-        .select('*')
-        .eq('slug', slug)
-        .eq('published', true)
-        .single();
+    try {
+        const { data, error } = await supabase
+            .from('cases')
+            .select('*')
+            .eq('slug', slug)
+            .eq('published', true)
+            .single();
 
-    if (error) {
-        console.error('Error fetching case by slug:', error);
-        return null;
+        if (!error && data) {
+            return applyOverrides(data);
+        }
+    } catch (err) {
+        // Fallback to local
     }
 
-    return data ? applyOverrides(data) : null;
+    const localMatch = ALL_LOCAL_CASES.find(c => c.slug === slug);
+    return localMatch ? applyOverrides(localMatch) : null;
 };
 
 export const getFeaturedCases = async (): Promise<CaseStudy[]> => {
-    const { data, error } = await supabase
-        .from('cases')
-        .select('*')
-        .eq('published', true)
-        .eq('featured', true)
-        .limit(3)
-        .order('created_at', { ascending: false });
+    try {
+        const { data, error } = await supabase
+            .from('cases')
+            .select('*')
+            .eq('published', true)
+            .eq('featured', true)
+            .limit(6)
+            .order('created_at', { ascending: false });
 
-    if (error) {
-        console.error('Error fetching featured cases:', error);
-        return []; // Fail gracefully
+        if (!error && data && data.length > 0) {
+            return data.map(applyOverrides);
+        }
+    } catch (error) {
+        console.warn('Error fetching featured cases from DB, using local cases:', error);
     }
 
-    return (data || []).map(applyOverrides);
+    return ALL_LOCAL_CASES.slice(0, 6).map(applyOverrides);
 };
