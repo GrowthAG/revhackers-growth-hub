@@ -19,7 +19,11 @@ const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
         scale: 1.85
     },
     'Cruzeiro do Sul': {
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Logo_Cruzeiro_do_Sul.png/640px-Logo_Cruzeiro_do_Sul.png',
+        logo: 'https://asset.brandfetch.io/id_r0F2YqJ/idW6bU689b.png',
+        scale: 2.0
+    },
+    'Idee': {
+        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c73dcdda192452a508485.png',
         scale: 2.2
     },
     'Lindoya': {
@@ -28,15 +32,15 @@ const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
     },
     'Emagrecentro': {
         logo: '/uploads/emagrecentro-logo-new.png',
-        scale: 2.0
+        scale: 1.8
     },
     'ENICS': {
         logo: '/uploads/a05718ad-1822-4102-909a-7e86af151e98.png',
         scale: 1.6
     },
     'TOEFL': {
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/TOEFL_logo.svg/640px-TOEFL_logo.svg.png',
-        scale: 1.6
+        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/6959970205b5117729df4a50.png',
+        scale: 1.8
     },
     'Tikpag': {
         logo: '/uploads/tikpag-logo-final.png',

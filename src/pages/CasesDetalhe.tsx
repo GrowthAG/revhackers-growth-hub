@@ -46,6 +46,7 @@ const CasesDetalhe = () => {
             quote: localCase?.quote || dbCase?.testimonial_quote || '',
             author: localCase?.author || dbCase?.testimonial_author || '',
             role: localCase?.role || dbCase?.testimonial_role || '',
+            authorImage: localCase?.authorImage || dbCase?.testimonial_avatar || '',
             techStack: localCase?.techStack || (Array.isArray((dbCase as any)?.tech_stack) ? (dbCase as any).tech_stack : []) || ['HubSpot CRM', 'RevOps 360º', 'Growth IA'],
             preview_description: localCase?.preview_description || dbCase?.preview_description || ''
           };

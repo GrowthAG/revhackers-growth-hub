@@ -11,6 +11,30 @@ import DarkHeroSection from '@/components/shared/DarkHeroSection';
 import { getAllCases, CaseStudy } from '@/api/cases';
 
 
+const CardLogo = ({ logo, title, scale }: { logo?: string; title: string; scale?: number }) => {
+  const [failed, setFailed] = useState(false);
+
+  if (!logo || failed) {
+    return (
+      <div className="flex flex-col items-center justify-center text-center p-4">
+        <span className="text-lg font-extrabold text-zinc-900 tracking-tight leading-snug">{title}</span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={logo}
+      alt={title}
+      onError={() => setFailed(true)}
+      className="max-w-[170px] max-h-[75px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+      style={{
+        transform: scale ? `scale(${scale})` : 'scale(1.0)',
+      }}
+    />
+  );
+};
+
 const Cases = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('Todos');
@@ -110,14 +134,7 @@ const Cases = () => {
                     
                     {/* Thumbnail Cover Header do Card com Logos Originais Nativos */}
                     <div className="h-44 bg-zinc-50/80 flex items-center justify-center border-b border-zinc-100 p-8 relative overflow-hidden group-hover:bg-zinc-100/70 transition-colors">
-                      <img
-                        src={study.client_logo}
-                        alt={study.title}
-                        className="max-w-[170px] max-h-[75px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
-                        style={{
-                          transform: study.logoScale ? `scale(${study.logoScale})` : 'scale(1.0)',
-                        }}
-                      />
+                      <CardLogo logo={study.client_logo} title={study.client_name || study.title} scale={study.logoScale} />
                     </div>
 
                     {/* Conteúdo do Card */}

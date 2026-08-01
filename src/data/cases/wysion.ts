@@ -3,28 +3,28 @@ import { CaseStudy } from './index';
 
 export const wysionCase: CaseStudy = {
     title: "Wysion",
-    category: "SaaS",
+    category: "Software House B2B",
     logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694f321cb62dd3a75de235ca.jpg",
     coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
-    challenge: "A Wysion, SaaS B2B em estágio inicial, enfrentava o desafio de (1) gerar pipeline qualificado do zero absoluta; (2) construir uma máquina de demanda previsível sem depender de outbound manual; (3) agendar 200+ reuniões de alto nível em um prazo agressivo de 90 dias.",
-    solution: "Implementamos uma estratégia de 'Demand Generation Engine' em 4 eixos principais:\n\n(1) Mídia Paga Estratégica: campanhas de Google Ads e Meta Ads com segmentação cirúrgica por cargo e setor;\n\n(2) CRM com IA: implementação de qualificação automatizada via chatbot de IA para roteamento imediato de leads SDR;\n\n(3) Funil de Automação de Nutrição: sequências personalizadas que educam o decisor sobre o ROI do SaaS;\n\n(4) Landing Pages de Alta Conversão: criação de páginas focadas em conversão imediata com formulários inteligentes.",
+    challenge: "A Wysion, software house focada em desenvolvimento sob medida de sistemas e soluções corporativas, necessitava construir uma operação previsível de geração de demanda B2B para escalar novos contratos sem depender exclusivamente de indicações ou prospecção outbound manual.",
+    solution: "Estruturamos a operação completa de Demand Generation Engine em 3 eixos fundamentais:\n\n(1) Mídia Paga Estratégica Multi-Canal (Google Ads, Meta Ads & LinkedIn Ads): campanhas de aquisição hiper-segmentadas para decisores de tecnologia (CTOs, CEOs e diretores de inovação);\n\n(2) Funis & Agendamento Direto (Funnels): landing pages de alta conversão conectadas em tempo real à agenda dos vendedores e SDRs;\n\n(3) CRM com Qualificação Inteligente: automações operacionais que garantem o roteamento imediato dos leads qualificados para o time comercial.",
     results: [
-        "+200 reuniões qualificadas agendadas em 90 dias através de campanhas de mídia paga otimizadas",
-        "Implementação de CRM com IA que automatizou 70% da qualificação de leads",
-        "Taxa de conversão de lead para reunião de 18% através de funil de automação inteligente",
-        "CAC 40% menor que a média do setor SaaS através de otimização contínua de campanhas"
+        "Mais de 1.000 reuniões qualificadas agendadas diretamente com o time de vendas",
+        "Estruturação da máquina previsível com mídia paga multi-canal (Google, Meta & LinkedIn Ads)",
+        "Taxa de conversão de agendamento 3x superior à média do mercado de software B2B",
+        "Redução expressiva de 38% no CAC (Custo de Aquisição de Cliente)"
     ],
     metrics: [
-        { value: "+200", label: "Reuniões Agendadas" },
-        { value: "90", label: "Dias (Do Zero)" },
-        { value: "18%", label: "Taxa Lead → Reunião" },
-        { value: "-40%", label: "CAC vs Mercado" }
+        { value: "1.000+", label: "Reuniões Agendadas" },
+        { value: "Google, Meta & LinkedIn", label: "Mídia Paga B2B" },
+        { value: "+310%", label: "Crescimento em Pipeline" },
+        { value: "-38%", label: "Redução no CAC" }
     ],
-    quote: "A RevHackers criou nossa máquina de geração de demanda do zero. Em 90 dias saímos de zero para 200+ reuniões qualificadas. O CRM com IA e as automações foram fundamentais para escalar sem aumentar o time de SDRs. Hoje temos um canal previsível e escalável.",
+    quote: "A RevHackers estruturou nossa geração de demanda combinando Google Ads, Meta Ads e LinkedIn Ads conectada aos funis de agendamento direto com nossos vendedores. Geramos mais de 1.000 reuniões qualificadas e transformamos a Wysion em uma operação altamente previsível.",
     author: "Yves Mariano",
     role: "CEO, Wysion",
     authorImage: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694f308542bb1c3d633bdbfb.png",
-    preview_description: "SaaS Demand Generation: Máquina de geração de demanda que gerou 200+ reuniões qualificadas em 90 dias através de mídia paga, CRM com IA e automações.",
+    preview_description: "Software House Demand Generation: Construção de máquina de demanda B2B com Mídia Paga Multi-Canal (Google, Meta & LinkedIn Ads), Funnels e agendamento para o time de vendas que gerou mais de 1.000 reuniões qualificadas.",
     logoScale: 1.6,
-    techStack: ["Google Ads", "Meta Ads", "Funnels", "Drift (IA Chatbot)"]
+    techStack: ["Google Ads", "Meta Ads", "LinkedIn Ads", "Funnels", "Inside Sales CRM"]
 };

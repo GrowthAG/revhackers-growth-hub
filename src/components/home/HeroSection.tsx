@@ -78,6 +78,17 @@ const HeroSection = () => {
 
           <div className="w-px h-4 bg-zinc-800 shrink-0" />
 
+          {/* Meta Business Partner */}
+          <div className="h-7 flex items-center px-3 sm:px-5">
+            <img
+              src="/brand/meta-business-partner.svg"
+              alt="Meta Business Partner"
+              className="h-4.5 sm:h-5 w-auto object-contain opacity-75 hover:opacity-100 transition-opacity block"
+            />
+          </div>
+
+          <div className="w-px h-4 bg-zinc-800 shrink-0" />
+
           {/* Google for Startups */}
           <div className="h-7 flex items-center gap-2 px-3 sm:px-5 opacity-75 hover:opacity-100 transition-opacity select-none">
             <svg className="w-4 h-4 shrink-0 block" viewBox="0 0 24 24">
@@ -119,37 +130,6 @@ const HeroSection = () => {
               Ver resultados reais
             </Link>
           </Button>
-        </motion.div>
-
-        {/* Métricas */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.32, ease: 'easeOut' }}
-          className="flex justify-center items-center gap-0 w-full max-w-md border-t border-zinc-800 pt-8"
-        >
-          {stats.map((stat, i) => (
-            <div key={stat.label} className="flex items-center">
-              <div className="flex flex-col items-center px-5 sm:px-7 py-1">
-                {typeof stat.value === 'number' ? (
-                  <NumberTicker 
-                    value={stat.value} 
-                    suffix={stat.suffix} 
-                    prefix={stat.prefix} 
-                    className="text-white font-sans font-bold text-xl sm:text-2xl leading-none tracking-tight" 
-                  />
-                ) : (
-                  <span className="text-white font-sans font-bold text-xl sm:text-2xl leading-none tracking-tight">
-                    {stat.value}
-                  </span>
-                )}
-                <span className="text-zinc-500 text-xs font-sans font-medium mt-2 text-center">
-                  {stat.label}
-                </span>
-              </div>
-              {i < stats.length - 1 && <div className="w-px h-8 bg-zinc-800" />}
-            </div>
-          ))}
         </motion.div>
 
       </div>

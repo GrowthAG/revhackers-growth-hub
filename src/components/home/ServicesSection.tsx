@@ -79,9 +79,10 @@ const ServicesSection = () => {
           </motion.p>
         </div>
 
-        {/* Grid 2x2 — Editorial Limpo sem caixas de ícones */}
+        {/* Grid 2x2 — High-End SaaS Engineering System */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((service, i) => {
+            const monoBadges = ["01 // SALES ENGINE", "02 // DATA ARCHITECTURE", "03 // AUTO WORKFLOW", "04 // OPS ENABLEMENT"];
             return (
               <motion.div
                 key={service.title}
@@ -93,24 +94,31 @@ const ServicesSection = () => {
                 <Link
                   to={service.link}
                   onClick={scrollToTop}
-                  className="group flex flex-col h-full p-6 bg-zinc-50/70 border border-zinc-200/80 rounded-xl hover:border-zinc-300 hover:bg-zinc-50 transition-all space-y-3"
+                  className="group flex flex-col h-full p-8 bg-white border border-zinc-200/80 rounded-2xl hover:border-zinc-950 shadow-xs hover:shadow-md transition-all duration-300 space-y-4"
                 >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-bold text-zinc-400 tracking-wider">
+                      {monoBadges[i]}
+                    </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 group-hover:bg-[#00CC6A] transition-colors" />
+                  </div>
+
                   {/* Título */}
-                  <h3 className="text-zinc-900 font-bold text-base tracking-tight">
+                  <h3 className="text-zinc-950 font-extrabold text-lg tracking-tight">
                     {service.title}
                   </h3>
 
                   {/* Descrição */}
-                  <p className="text-zinc-500 text-xs leading-relaxed flex-1 font-normal">
+                  <p className="text-zinc-600 text-xs leading-relaxed flex-1 font-normal">
                     {service.desc}
                   </p>
 
                   {/* Resultado concreto */}
-                  <div className="flex items-center justify-between pt-3 border-t border-zinc-200/60">
-                    <span className="text-xs font-sans font-bold text-zinc-900">
+                  <div className="flex items-center justify-between pt-4 border-t border-zinc-100">
+                    <span className="text-xs font-semibold text-zinc-950">
                       {service.result}
                     </span>
-                    <ArrowRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-900 group-hover:translate-x-1 transition-all" strokeWidth={1.5} />
+                    <ArrowRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-950 group-hover:translate-x-1 transition-all" strokeWidth={2} />
                   </div>
                 </Link>
               </motion.div>
