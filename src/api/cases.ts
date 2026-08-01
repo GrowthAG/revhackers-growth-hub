@@ -8,30 +8,51 @@ export type CaseStudy = Database['public']['Tables']['cases']['Row'];
 const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
     'Heineken': {
         logo: 'https://upload.wikimedia.org/wikipedia/commons/2/24/Heineken_logo.svg',
-        scale: 1.5 // Standardized size to match ENICS and others
+        scale: 1.2
+    },
+    'FMU': {
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/FMU_logo.png/640px-FMU_logo.png',
+        scale: 1.1
+    },
+    'Anhembi': {
+        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/69599738c8226b643a25195.svg',
+        scale: 1.3
+    },
+    'Cruzeiro do Sul': {
+        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/6959971ec8226b527b25194.svg',
+        scale: 1.4
+    },
+    'Lindoya': {
+        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/6959977574830386a6e88495.png',
+        scale: 1.3
+    },
+    'Emagrecentro': {
+        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/695997573ccdd613d4b251a3.png',
+        scale: 1.3
     },
     'ENICS': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/695996b8748303e24fe82be8.png',
-        scale: 1.5
-    },
-    'TOEFL Junior Brasil': {
-        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/6959970205b5117729df4a50.png',
-        scale: 1.5
+        scale: 1.3
     },
     'TOEFL': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/6959970205b5117729df4a50.png',
-        scale: 1.5
+        scale: 1.3
     },
     'Tikpag': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/695997877483037113e88497.png',
-        scale: 2.8 // Maximized visibility
+        scale: 1.8
     },
     'Agence MR': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/695997bd3ccdd6417ab25199.png',
-        scale: 1.5
+        scale: 1.3
     },
-    'Funnels': {
-        scale: 1.5 // Standardizing size
+    'PlacLux': {
+        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c76cfe889d38ced51667d.png',
+        scale: 1.3
+    },
+    'BLDN': {
+        logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c77062fe4f1854fadf797.svg',
+        scale: 1.3
     }
 };
 

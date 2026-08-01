@@ -108,19 +108,14 @@ const Cases = () => {
                 <Link to={`/cases/${study.slug}`} className="group h-full" key={study.id || index}>
                   <div className="bg-white overflow-hidden h-full flex flex-col transition-all duration-300 relative rounded-2xl border border-zinc-200/80 hover:border-zinc-400 shadow-xs hover:shadow-md">
                     
-                    {/* Thumbnail Cover Header do Card (Padronização Ouro) */}
-                    <div className="h-44 bg-gradient-to-b from-zinc-900 to-black flex items-center justify-center border-b border-zinc-800 p-8 relative overflow-hidden group-hover:from-zinc-850 group-hover:to-zinc-950 transition-all">
-                      <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+                    {/* Thumbnail Cover Header do Card com Logos Originais Nativos */}
+                    <div className="h-44 bg-zinc-50/80 flex items-center justify-center border-b border-zinc-100 p-8 relative overflow-hidden group-hover:bg-zinc-100/70 transition-colors">
                       <img
                         src={study.client_logo}
                         alt={study.title}
-                        className="max-w-[170px] max-h-[75px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-md brightness-0 invert"
+                        className="max-w-[170px] max-h-[75px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
                         style={{
                           transform: study.logoScale ? `scale(${study.logoScale})` : 'scale(1.0)',
-                        }}
-                        onError={(e: any) => {
-                          // Fallback if invert removes visibility for already white SVG
-                          e.target.className = "max-w-[170px] max-h-[75px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105 filter drop-shadow-md";
                         }}
                       />
                     </div>
