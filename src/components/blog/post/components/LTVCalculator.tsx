@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
+import { sendToGHL } from '@/lib/ghlRelay';
+import { triggerFunnelsCampaign } from '@/lib/funnelsAutomationEngine';
 
 const LTVCalculator = () => {
     // Steps: intro -> arpu -> margin -> churn -> calculating -> gate -> result
@@ -39,14 +41,33 @@ const LTVCalculator = () => {
         }
     };
 
-    const handleUnlock = (e: React.FormEvent) => {
+    const handleUnlock = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!name || !email) return;
         setLoading(true);
-        setTimeout(() => {
-            setStep('result');
-            setLoading(false);
-        }, 1000);
+
+        try {
+          await sendToGHL('roi_calculator', {
+            name,
+            email,
+            customFields: {
+              metric_ltv: String(ltv),
+              metric_arpu: String(arpu),
+              metric_churn: String(churn),
+            }
+          });
+          await triggerFunnelsCampaign('roi_calculator', {
+            name,
+            email,
+            source: 'Blog LTV Calculator',
+            tags: ['ltv_calculator', 'roi_calculator', 'blog_lead']
+          });
+        } catch (err) {
+          console.warn('LTV Calculator GHL warning:', err);
+        } finally {
+          setStep('result');
+          setLoading(false);
+        }
     };
 
     const reset = () => {

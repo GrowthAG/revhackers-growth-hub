@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
+import { sendToGHL } from '@/lib/ghlRelay';
+import { triggerFunnelsCampaign } from '@/lib/funnelsAutomationEngine';
 
 const ROASCalculator = () => {
     // Steps: intro -> spend -> revenue -> calculating -> gate -> result
@@ -37,14 +39,33 @@ const ROASCalculator = () => {
         }
     };
 
-    const handleUnlock = (e: React.FormEvent) => {
+    const handleUnlock = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!name || !email) return;
         setLoading(true);
-        setTimeout(() => {
-            setStep('result');
-            setLoading(false);
-        }, 1000);
+
+        try {
+          await sendToGHL('roi_calculator', {
+            name,
+            email,
+            customFields: {
+              metric_roas: String(roas),
+              metric_spend: String(spend),
+              metric_revenue: String(revenue),
+            }
+          });
+          await triggerFunnelsCampaign('roi_calculator', {
+            name,
+            email,
+            source: 'Blog ROAS Calculator',
+            tags: ['roas_calculator', 'roi_calculator', 'blog_lead']
+          });
+        } catch (err) {
+          console.warn('ROAS Calculator GHL warning:', err);
+        } finally {
+          setStep('result');
+          setLoading(false);
+        }
     };
 
     const reset = () => {
