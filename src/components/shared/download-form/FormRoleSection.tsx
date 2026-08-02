@@ -20,23 +20,23 @@ const FormRoleSection = ({ formData, handleRadioChange }: FormRoleSectionProps) 
       >
         <label
           htmlFor="decision-maker"
-          className={`flex items-start space-x-2 border p-3 rounded-sm cursor-pointer transition-all ${formData.roleType === 'decision-maker' ? 'border-black bg-zinc-50' : 'border-zinc-100 bg-white hover:border-zinc-200'}`}
+          className={`flex items-start space-x-3 border p-3.5 rounded-xl cursor-pointer transition-all ${formData.roleType === 'decision-maker' ? 'border-[#00CC6A] bg-emerald-50/40 ring-1 ring-[#00CC6A]' : 'border-zinc-200 bg-white hover:border-zinc-300'}`}
         >
-          <RadioGroupItem value="decision-maker" id="decision-maker" className="mt-1 border-zinc-300 text-black data-[state=checked]:border-black data-[state=checked]:bg-black" />
+          <RadioGroupItem value="decision-maker" id="decision-maker" className="mt-0.5 border-zinc-300 text-[#00CC6A] data-[state=checked]:border-[#00CC6A] data-[state=checked]:bg-[#00CC6A]" />
           <div className="space-y-0.5">
-            <span className="font-bold text-zinc-900 text-tiny uppercase tracking-wider block">Decisor</span>
-            <p className="text-xxs text-zinc-400 leading-tight">Tenho autonomia de aprovação.</p>
+            <span className="font-bold text-zinc-950 text-xs uppercase tracking-wider block">Decisor</span>
+            <p className="text-xs text-zinc-500 leading-tight">Tenho autonomia de aprovação.</p>
           </div>
         </label>
 
         <label
           htmlFor="influencer"
-          className={`flex items-start space-x-2 border p-3 rounded-sm cursor-pointer transition-all ${formData.roleType === 'influencer' ? 'border-black bg-zinc-50' : 'border-zinc-100 bg-white hover:border-zinc-200'}`}
+          className={`flex items-start space-x-3 border p-3.5 rounded-xl cursor-pointer transition-all ${formData.roleType === 'influencer' ? 'border-[#00CC6A] bg-emerald-50/40 ring-1 ring-[#00CC6A]' : 'border-zinc-200 bg-white hover:border-zinc-300'}`}
         >
-          <RadioGroupItem value="influencer" id="influencer" className="mt-1 border-zinc-300 text-black data-[state=checked]:border-black data-[state=checked]:bg-black" />
+          <RadioGroupItem value="influencer" id="influencer" className="mt-0.5 border-zinc-300 text-[#00CC6A] data-[state=checked]:border-[#00CC6A] data-[state=checked]:bg-[#00CC6A]" />
           <div className="space-y-0.5">
-            <span className="font-bold text-zinc-900 text-tiny uppercase tracking-wider block">Influenciador</span>
-            <p className="text-xxs text-zinc-400 leading-tight">Influencio e recomendo soluções.</p>
+            <span className="font-bold text-zinc-950 text-xs uppercase tracking-wider block">Influenciador</span>
+            <p className="text-xs text-zinc-500 leading-tight">Influencio e recomendo soluções.</p>
           </div>
         </label>
       </RadioGroup>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Download } from 'lucide-react';
+import DOMPurify from 'dompurify';
 import DownloadForm from '@/components/shared/download-form';
 import { supabase } from '@/integrations/supabase/client';
 import PageLayout from '@/components/layout/PageLayout';
@@ -177,9 +178,12 @@ export default function MaterialLanding() {
                                 <h2 className="text-2xl font-extrabold text-zinc-950 tracking-tight leading-tight">
                                     Sobre este {material.type}
                                 </h2>
-                                <div className="text-zinc-600 text-sm md:text-base leading-relaxed whitespace-pre-line space-y-3">
-                                    {material.description || material.subheadline}
-                                </div>
+                                <div 
+                                    className="text-zinc-600 text-sm md:text-base leading-relaxed space-y-3"
+                                    dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize((material.description || material.subheadline || '').replace(/^<p>|<\/p>$/g, ''))
+                                    }}
+                                />
                             </div>
 
                             {/* Destaques e Entregáveis */}
