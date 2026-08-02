@@ -193,3 +193,5 @@ export const CommandPalette = () => {
     </Command.Dialog>
   );
 };
+
+export default CommandPalette;
