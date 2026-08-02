@@ -82,7 +82,7 @@ const BookingPage = () => {
           </h1>
           <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
             {leadContext.name ? (
-              <>{leadContext.name}, agende 20 minutos com nossos arquitetos para mostrarmos como aplicar este framework de receita na <strong>{leadContext.company}</strong> nos próximos 90 dias.</>
+              <>{leadContext.name}, agende 30 minutos com nossos arquitetos para mostrarmos como aplicar este framework de receita na <strong>{leadContext.company}</strong> nos próximos 90 dias.</>
             ) : (
               <>Sessão técnica de 30 minutos com nossos arquitetos para auditar gargalos ocultos da sua operação e estruturar o plano de escala com GTM Engineering e AI-Powered ABM.</>
             )}
