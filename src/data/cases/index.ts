@@ -10,7 +10,7 @@ import { cruzeiroSulCase } from './cruzeiro-sul';
 import { btDigitalCase } from './bt-digital';
 import { tikpagCase } from './tikpag';
 import { tegraCase } from './tegra';
-import { boltCase } from './bolt';
+import { enoveCase } from './enove';
 import { lindoyaCase } from './lindoya';
 import { wysionCase } from './wysion';
 import { ideeCase } from './idee';
@@ -60,7 +60,7 @@ export const casesData: Record<string, CaseStudy> = {
 
   "bt-digital": btDigitalCase,
   "tikpag": tikpagCase,
-  "bolt": boltCase,
+  "enove": enoveCase,
   "wysion": wysionCase,
   "idee": ideeCase,
   "bldn": bldnCase

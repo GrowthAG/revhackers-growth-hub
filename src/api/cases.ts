@@ -70,6 +70,14 @@ const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
         logo: '/brand/funnels-logo-black.png',
         scale: 1.0
     },
+    'Enove': {
+        logo: '/uploads/enove-logo.svg',
+        scale: 1.0
+    },
+    'Enove Imobiliária': {
+        logo: '/uploads/enove-logo.svg',
+        scale: 1.0
+    },
     'PlacLux': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c76cfe889d38ced51667d.png',
         scale: 1.0
