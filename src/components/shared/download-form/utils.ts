@@ -1,5 +1,6 @@
 
 import { DownloadFormData } from "./types";
+import { isCorporateEmail } from "@/utils/emailValidation";
 
 export const validateForm = (formData: DownloadFormData): { isValid: boolean; errorMessage?: string } => {
   // Required fields validation
@@ -11,12 +12,20 @@ export const validateForm = (formData: DownloadFormData): { isValid: boolean; er
     };
   }
 
-  // Email validation
+  // Email format validation
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(formData.email)) {
     return {
       isValid: false,
       errorMessage: "Por favor, insira um endereço de email válido."
+    };
+  }
+
+  // Corporate Email Domain Validation (Block Gmail, Hotmail, Yahoo, etc.)
+  if (!isCorporateEmail(formData.email)) {
+    return {
+      isValid: false,
+      errorMessage: "Por favor, insira seu e-mail corporativo. Não aceitamos e-mails pessoais (Gmail, Hotmail, Yahoo, etc.)."
     };
   }
 
