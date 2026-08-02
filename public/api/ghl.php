@@ -104,16 +104,26 @@ http_response_code($httpCode >= 200 && $httpCode < 300 ? 200 : 200);
 echo $response;
 
 function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactId, $token, $rawData = []) {
-    $materialTitle = $rawData['materialTitle'] ?? $rawData['material_title'] ?? 'Guia Prático de Estratégia Go-To-Market (GTM)';
-    $materialLink = $rawData['materialLink'] ?? $rawData['material_link'] ?? 'https://bustling-lemon-68c.notion.site/Plano-de-A-o-90-Dias-GTM-RevOps-377bdc72e0398044a0ddcd65701c5245';
-    $isMaterialDownload = isset($rawData['materialLink']) || isset($rawData['materialTitle']) || ($rawData['formType'] ?? '') === 'download' || ($rawData['actionType'] ?? '') === 'send_material_email';
+    $tagsStr = is_array($rawData['tags'] ?? null) ? implode(' ', $rawData['tags']) : String($rawData['tags'] ?? '');
+    $actionType = $rawData['actionType'] ?? $rawData['formType'] ?? '';
+    
+    $isMaterialDownload = !empty($rawData['materialLink']) || 
+                          !empty($rawData['materialTitle']) || 
+                          $actionType === 'download' || 
+                          $actionType === 'email_material' ||
+                          strpos($tagsStr, 'materiais') !== false ||
+                          strpos($tagsStr, 'download:') !== false;
 
     if ($isMaterialDownload) {
         $templatePath = __DIR__ . '/../templates/email-material-delivery.html';
+        $materialTitle = !empty($rawData['materialTitle']) ? $rawData['materialTitle'] : 'Guia Prático de Estratégia Go-To-Market (GTM)';
+        $materialLink = !empty($rawData['materialLink']) ? $rawData['materialLink'] : 'https://bustling-lemon-68c.notion.site/Plano-de-A-o-90-Dias-GTM-RevOps-377bdc72e0398044a0ddcd65701c5245';
         $subject = "[RevHackers] Seu Material: " . $materialTitle;
     } else {
         $templatePath = __DIR__ . '/../templates/email-claude-partner-network.html';
         $subject = "Seja bem-vindo ao Claude Partner Network & RevHackers.";
+        $materialTitle = '';
+        $materialLink = '';
     }
 
     if (!file_exists($templatePath)) {

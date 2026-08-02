@@ -124,6 +124,13 @@ export function buildContactPayload(
         base.customFields = customFields;
     }
 
+    // Material & Email Delivery metadata for ghl.php backend API
+    base.actionType = payload.actionType || eventType;
+    base.formType = payload.formType || eventType;
+    base.materialTitle = payload.materialTitle || payload.material_title || payload.material || '';
+    base.materialLink = payload.materialLink || payload.material_link || payload.linkMaterial || '';
+    base.slug = payload.slug || payload.materialId || '';
+
     return base;
 }
 
