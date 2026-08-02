@@ -16,6 +16,7 @@ interface DownloadFormContentProps {
   handleRadioChange?: (value: string) => void;
   handleCheckboxChange?: (checked: boolean) => void;
   handleSubmit: (e: React.FormEvent) => void;
+  buttonText?: string;
 }
 
 const inputStyles = "w-full h-11 px-3 sm:px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 text-xs sm:text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all";
@@ -26,7 +27,8 @@ const DownloadFormContent: React.FC<DownloadFormContentProps> = ({
   isSubmitting,
   handleInputChange,
   handleSelectChange,
-  handleSubmit
+  handleSubmit,
+  buttonText = "Baixar Material →"
 }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 text-left">
@@ -155,16 +157,16 @@ const DownloadFormContent: React.FC<DownloadFormContentProps> = ({
           {isSubmitting ? (
             <span className="flex items-center gap-2">
               <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-              Processando...
+              Liberando Acesso...
             </span>
           ) : (
-            <span>Solicitar Aprovação →</span>
+            <span>{buttonText}</span>
           )}
         </Button>
 
         <p className="text-[11px] text-zinc-400 mt-2 text-center flex items-center justify-center gap-1.5">
           <Lock className="w-3 h-3 text-zinc-400" />
-          Seus dados estão seguros conosco. Resposta em até 24h.
+          Seus dados estão seguros conosco. Acesso imediato.
         </p>
       </div>
     </form>

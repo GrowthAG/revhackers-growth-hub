@@ -135,15 +135,41 @@ export const useDownloadForm = (
       await sendMaterialByEmail(webhookData);
 
       setIsSubmitting(false);
-      setIsSuccess(true);
 
-      // We removed window.open and onSubmit here to show the Success View instead.
+      // Check if user is a Decision Maker (Founder, CEO, C-Level, Director, Manager)
+      const roleLower = (formData.role || '').toLowerCase();
+      const isDecisionMaker = roleLower.includes('c-level') || 
+                              roleLower.includes('director') || 
+                              roleLower.includes('manager') || 
+                              roleLower.includes('founder') || 
+                              roleLower.includes('ceo') || 
+                              roleLower.includes('diretor') || 
+                              roleLower.includes('gerente') ||
+                              roleLower.includes('head');
 
-      toast({
-        title: "Sucesso!",
-        description: "Seu material está pronto para acesso.",
-        duration: 5000
-      });
+      if (isDecisionMaker) {
+        // Open material in new tab
+        if (linkMaterial) {
+          window.open(linkMaterial, '_blank');
+        }
+        // Redirect to booking with company & lead context
+        toast({
+          title: "Acesso Liberado!",
+          description: "Abrindo material e direcionando para a sessão de arquitetura.",
+          duration: 3000
+        });
+        const bookingUrl = `/booking?company=${encodeURIComponent(formData.company)}&name=${encodeURIComponent(formData.firstName)}&role=${encodeURIComponent(formData.role)}&material=${encodeURIComponent(materialType)}`;
+        setTimeout(() => {
+          navigate(bookingUrl);
+        }, 800);
+      } else {
+        setIsSuccess(true);
+        toast({
+          title: "Sucesso!",
+          description: "Seu material está pronto para acesso.",
+          duration: 5000
+        });
+      }
 
     } catch (error) {
       console.error('Error submitting form:', error);

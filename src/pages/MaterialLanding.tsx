@@ -208,11 +208,11 @@ export default function MaterialLanding() {
                             </div>
                         </div>
 
-                        {/* Coluna Direita: Formulário Padronizado no Estilo Solicitar Análise (Amplo e sem Espremimento) */}
+                        {/* Coluna Direita: Formulário Padronizado para Download de Materiais */}
                         <div className="lg:col-span-6 bg-white border border-zinc-200/90 p-8 sm:p-10 rounded-3xl shadow-lg space-y-6 sticky top-28 text-left">
                             <div className="space-y-1">
-                                <h3 className="text-xl font-bold text-zinc-900 tracking-tight">Solicitar Análise</h3>
-                                <p className="text-xs sm:text-sm text-zinc-500">Preencha para análise técnica de perfil. Resposta em até 24h.</p>
+                                <h3 className="text-xl font-bold text-zinc-900 tracking-tight">Baixe seu material</h3>
+                                <p className="text-xs sm:text-sm text-zinc-500">Preencha com seus dados corporativos para liberar o acesso imediato.</p>
                             </div>
                             
                             <DownloadForm

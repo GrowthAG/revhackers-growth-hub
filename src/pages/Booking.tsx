@@ -26,9 +26,24 @@ const nextSteps = [
 
 const BookingPage = () => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [leadContext, setLeadContext] = useState<{ company?: string; name?: string; material?: string }>({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Read search parameters for personalization
+    const params = new URLSearchParams(window.location.search);
+    const companyParam = params.get('company');
+    const nameParam = params.get('name');
+    const materialParam = params.get('material');
+
+    if (companyParam || nameParam) {
+      setLeadContext({
+        company: companyParam || undefined,
+        name: nameParam || undefined,
+        material: materialParam || undefined
+      });
+    }
 
     // Load GHL form embed script
     const scriptId = "revhackers-booking-script";
@@ -45,18 +60,32 @@ const BookingPage = () => {
   return (
     <PageLayout>
       <SEO
-        title="Agendar Auditoria de Receita"
+        title={leadContext.company ? `Auditoria de Receita para ${leadContext.company}` : "Agendar Auditoria de Receita"}
         description="Agende uma auditoria técnica com a RevHackers para mapear vazamentos na sua operação B2B."
         canonical="https://revhackers.com.br/booking"
       />
       {/* Hero Section (BLACK HERO STANDARD) */}
       <section className="relative py-20 md:py-28 bg-black border-b border-zinc-900">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-5">
+          {leadContext.company ? (
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00CC6A]/10 border border-[#00CC6A]/30 text-[#00CC6A] text-xs font-bold uppercase tracking-wider mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />
+              Sessão VIP de Arquitetura de Receita
+            </div>
+          ) : null}
           <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
-            Auditoria de Vazamento de Receita <span className="text-[#00CC6A]">& GTM Engineering</span>
+            {leadContext.company ? (
+              <>Sessão de Implementação para a <span className="text-[#00CC6A]">{leadContext.company}</span></>
+            ) : (
+              <>Auditoria de Vazamento de Receita <span className="text-[#00CC6A]">& GTM Engineering</span></>
+            )}
           </h1>
           <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
-            Sessão técnica de 30 minutos com nossos arquitetos para auditar gargalos ocultos da sua operação e estruturar o plano de escala com GTM Engineering e AI-Powered ABM.
+            {leadContext.name ? (
+              <>{leadContext.name}, agende 20 minutos com nossos arquitetos para mostrarmos como aplicar este framework de receita na <strong>{leadContext.company}</strong> nos próximos 90 dias.</>
+            ) : (
+              <>Sessão técnica de 30 minutos com nossos arquitetos para auditar gargalos ocultos da sua operação e estruturar o plano de escala com GTM Engineering e AI-Powered ABM.</>
+            )}
           </p>
         </div>
       </section>
