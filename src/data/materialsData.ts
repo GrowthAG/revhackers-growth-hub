@@ -81,7 +81,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_sales_nav.png',
         material_url: '/materiais/transforme-linkedin',
-        link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-75797/4481633190ac7d5',
+        link_material: 'https://revhackers.notion.site/Transforme-Seu-LinkedIn-em-uma-M-quina-de-Reuni-es-RevHackers-3b0bdc72e03981fbb816d06fea42dff6',
         published: true,
         is_active: true
     },
