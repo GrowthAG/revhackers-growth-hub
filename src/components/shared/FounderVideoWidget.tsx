@@ -73,14 +73,14 @@ const FounderVideoWidget = () => {
 
     if (saved?.email && displayName) {
       return [
-        { sender: 'ai', text: `Fala, ${displayName}! Bom te ver de volta no hub da RevHackers.`, timestamp: 'Agora' },
-        { sender: 'ai', text: 'Como nosso time de engenharia de receita pode acelerar sua operação hoje?', timestamp: 'Agora' }
+        { sender: 'ai', text: `Olá, ${displayName}! Que bom te ver de volta à RevHackers.`, timestamp: 'Agora' },
+        { sender: 'ai', text: 'Como nosso time pode ajudar a acelerar a receita da sua empresa hoje?', timestamp: 'Agora' }
       ];
     }
     if (saved?.email) {
       return [
-        { sender: 'ai', text: 'Fala! Que bom te ver de volta por aqui.', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Como nosso time de GTM Engineering pode ajudar sua empresa hoje?', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Olá! Seja muito bem-vindo de volta.', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Como posso ajudar sua operação de vendas e GTM hoje?', timestamp: 'Agora' }
       ];
     }
 
@@ -88,14 +88,14 @@ const FounderVideoWidget = () => {
     if (pathname.startsWith('/blog/') && pathname.split('/').filter(Boolean).length > 1) {
       const titleStr = pageTitle ? ` "${pageTitle}"` : '';
       return [
-        { sender: 'ai', text: `Fala! Time de Conteúdo da RevHackers por aqui. Vi que você está lendo o artigo${titleStr}.`, timestamp: 'Agora' },
-        { sender: 'ai', text: `Você está com dúvida sobre ${pageTitle ? `"${pageTitle}"` : 'este artigo'} ou quer saber como aplicar essa estratégia na sua empresa?`, timestamp: 'Agora' }
+        { sender: 'ai', text: `Olá! Vi que você está lendo sobre${titleStr}.`, timestamp: 'Agora' },
+        { sender: 'ai', text: `Quer tirar alguma dúvida ou entender como aplicar essa estratégia no seu CRM?`, timestamp: 'Agora' }
       ];
     }
     if (pathname.includes('/blog')) {
       return [
-        { sender: 'ai', text: 'Fala! Time de Engenharia da RevHackers aqui. Vi que você está no nosso Blog de GTM.', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Procura algum tema específico sobre CRM, IA, Prospecção B2B ou Founder-Led Growth?', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Olá! Bem-vindo ao nosso Blog de Revenue Operations e GTM.', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Procura algum tema específico sobre CRM, IA, Prospecção B2B ou Vendas?', timestamp: 'Agora' }
       ];
     }
 
@@ -103,20 +103,20 @@ const FounderVideoWidget = () => {
     if (pathname.startsWith('/materiais/') && pathname.split('/').filter(Boolean).length > 1) {
       const titleStr = pageTitle ? ` "${pageTitle}"` : '';
       return [
-        { sender: 'ai', text: `Fala! Time de Especialistas da RevHackers aqui. Vi que você acessou o material${titleStr}.`, timestamp: 'Agora' },
-        { sender: 'ai', text: `Você está com dúvida sobre ${pageTitle ? `"${pageTitle}"` : 'este material'} ou precisa de ajuda para baixar e implementar?`, timestamp: 'Agora' }
+        { sender: 'ai', text: `Olá! Vi que você acessou o material${titleStr}.`, timestamp: 'Agora' },
+        { sender: 'ai', text: `Precisa de ajuda para baixar ou quer suporte do nosso time para implementar?`, timestamp: 'Agora' }
       ];
     }
     if (pathname.includes('/materiais')) {
       return [
-        { sender: 'ai', text: 'Fala! Time RevHackers por aqui. Vi que você está na nossa Biblioteca de Playbooks e Templates de GTM.', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Procura algum material específico ou quer indicação do melhor playbook para o seu momento?', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Olá! Bem-vindo à nossa Biblioteca de Playbooks e Templates de GTM.', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Quer uma indicação do melhor playbook para o momento atual da sua empresa?', timestamp: 'Agora' }
       ];
     }
     if (pathname.includes('/ferramentas') || pathname.includes('/calculator')) {
       return [
-        { sender: 'ai', text: 'Fala! Time de Receita da RevHackers aqui. Precisa de ajuda com nossas calculadoras de ROI e simuladores?', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Me conta: qual é a meta de receita da sua empresa para os próximos 90 dias?', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Olá! Precisa de ajuda com nossas calculadoras de ROI e simuladores de receita?', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Me conta: qual é a meta de crescimento da sua empresa para os próximos 90 dias?', timestamp: 'Agora' }
       ];
     }
 
@@ -124,16 +124,16 @@ const FounderVideoWidget = () => {
     if (pathname.startsWith('/cases/') && pathname.split('/').filter(Boolean).length > 1) {
       const titleStr = pageTitle ? ` "${pageTitle}"` : '';
       return [
-        { sender: 'ai', text: `Fala! Time de Engenharia RevHackers por aqui. Analisando o case${titleStr}?`, timestamp: 'Agora' },
-        { sender: 'ai', text: 'Quer entender como implementamos essa mesma estrutura de GTM e automações na sua empresa?', timestamp: 'Agora' }
+        { sender: 'ai', text: `Olá! Analisando a história do case${titleStr}?`, timestamp: 'Agora' },
+        { sender: 'ai', text: 'Quer saber como podemos instalar essa mesma estrutura de receita na sua empresa?', timestamp: 'Agora' }
       ];
     }
 
     // Segmentação 4: Serviços / Ecossistema
     if (pathname.includes('/servicos') || pathname.includes('/cases')) {
       return [
-        { sender: 'ai', text: 'Fala! Time de Engenharia da RevHackers por aqui. Analisando nossos 4 motores de GTM B2B?', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Quer saber como implementamos essa mesma máquina no seu CRM em até 30 dias?', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Olá! Bem-vindo ao nosso ecossistema de soluções de Revenue Operations B2B.', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Quer entender qual dos nossos 4 motores de receita faz mais sentido para o seu momento?', timestamp: 'Agora' }
       ];
     }
 
@@ -141,14 +141,14 @@ const FounderVideoWidget = () => {
     if (pathname.includes('/diagnostico') || pathname.includes('/score')) {
       const titleStr = pageTitle ? ` "${pageTitle}"` : '';
       return [
-        { sender: 'ai', text: `Fala! Time de Especialistas RevHackers por aqui. Pronto para rodar o ${titleStr || 'Diagnóstico Preditivo'}?`, timestamp: 'Agora' },
-        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar a análise de gargalos e agendar com nosso squad:', timestamp: 'Agora' }
+        { sender: 'ai', text: `Olá! Pronto para rodar o ${titleStr || 'Diagnóstico Preditivo'}?`, timestamp: 'Agora' },
+        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar a análise completa de gargalos da sua operação:', timestamp: 'Agora' }
       ];
     }
 
     return [
-      { sender: 'ai', text: 'Fala! Somos o time de Engenharia de GTM da RevHackers.', timestamp: 'Agora' },
-      { sender: 'ai', text: 'Me conta: qual é o maior desafio ou gargalo da sua empresa hoje para gerar demanda e escalar vendas B2B?', timestamp: 'Agora' }
+      { sender: 'ai', text: 'Olá! Seja muito bem-vindo à RevHackers.', timestamp: 'Agora' },
+      { sender: 'ai', text: 'Como posso ajudar a acelerar a geração de demanda e a estrutura de vendas da sua empresa hoje?', timestamp: 'Agora' }
     ];
   };
 
