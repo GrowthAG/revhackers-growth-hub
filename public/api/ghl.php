@@ -53,11 +53,11 @@ foreach ($allowedKeys as $key) {
     }
 }
 
-// Guarantee tag for Claude Partner Network
+// Ensure default 'revhackers' tag is present
 if (!isset($cleanPayload['tags']) || !is_array($cleanPayload['tags'])) {
-    $cleanPayload['tags'] = ['claude-partner-network'];
-} else if (!in_array('claude-partner-network', $cleanPayload['tags'])) {
-    $cleanPayload['tags'][] = 'claude-partner-network';
+    $cleanPayload['tags'] = ['revhackers'];
+} else if (!in_array('revhackers', $cleanPayload['tags'])) {
+    $cleanPayload['tags'][] = 'revhackers';
 }
 
 $token = 'pit-9285a0fa-9c63-4475-8a39-93f3476d6a81';
