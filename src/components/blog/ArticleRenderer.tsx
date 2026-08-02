@@ -340,6 +340,31 @@ export const ArticleRenderer: React.FC<ArticleRendererProps> = ({ content }) => 
                 return;
             }
 
+            // Image ![Caption](url)
+            const imgMatch = trimmedLine.match(/^!\[(.*?)\]\((.*?)\)$/);
+            if (imgMatch) {
+                flushParagraph();
+                flushList();
+                flushTable();
+                const caption = imgMatch[1];
+                const imgSrc = imgMatch[2];
+                elements.push(
+                    <figure key={`img-${elementKey++}`} className="my-8 rounded-2xl overflow-hidden border border-zinc-200/90 bg-zinc-950 p-4 shadow-lg text-center space-y-3">
+                        <img
+                            src={imgSrc}
+                            alt={caption}
+                            className="w-full max-h-[450px] object-contain rounded-lg mx-auto"
+                        />
+                        {caption && (
+                            <figcaption className="text-xs font-mono font-bold text-[#00CC6A] uppercase tracking-wider">
+                                {caption}
+                            </figcaption>
+                        )}
+                    </figure>
+                );
+                return;
+            }
+
             // Table row (starts with |)
             if (trimmedLine.startsWith('|') && trimmedLine.endsWith('|')) {
                 flushParagraph();
