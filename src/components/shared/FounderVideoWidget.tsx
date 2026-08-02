@@ -316,26 +316,33 @@ const FounderVideoWidget = () => {
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
             className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[390px] h-[580px] max-h-[85vh] bg-white text-zinc-950 rounded-3xl border border-zinc-200 shadow-2xl overflow-hidden flex flex-col justify-between"
           >
-            <div className="relative h-44 bg-zinc-950 overflow-hidden shrink-0 border-b border-zinc-100">
-              <img
-                src="/uploads/giulliano-linkedin-profile.png"
-                alt="Giulliano Alves"
-                className="w-full h-full object-cover object-[center_15%] filter brightness-95"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent pointer-events-none" />
+            <div className="relative h-20 bg-zinc-950 px-4 py-3 border-b border-zinc-800 flex items-center justify-between shrink-0 shadow-md">
+              <div className="flex items-center gap-3">
+                <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-[#00CC6A] shrink-0 bg-zinc-900">
+                  <img
+                    src="/uploads/giulliano-linkedin-profile.png"
+                    alt="Giulliano Alves"
+                    className="w-full h-full object-cover object-[center_15%]"
+                  />
+                  <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-[#00CC6A] border-2 border-zinc-950" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-xs sm:text-sm font-extrabold text-white leading-tight">
+                    Giulliano Alves
+                  </span>
+                  <span className="text-[10px] text-zinc-400 font-medium flex items-center gap-1.5 mt-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A] animate-pulse inline-block shrink-0" />
+                    Founder RevHackers • Online agora
+                  </span>
+                </div>
+              </div>
 
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-zinc-700 hover:text-zinc-950 border border-zinc-200 flex items-center justify-center transition-colors z-20 shadow-sm"
+                className="w-8 h-8 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 flex items-center justify-center transition-all cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
-
-              <div className="absolute top-3 left-3 flex items-center gap-2 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-zinc-800 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />
-                <span className="text-[11px] font-bold text-white tracking-tight">ONLINE • Giulliano Alves | Founder</span>
-              </div>
             </div>
 
             <div className="flex-1 p-4 space-y-3 overflow-y-auto min-h-0 text-xs sm:text-sm leading-relaxed font-sans bg-zinc-50/50 scroll-smooth">
