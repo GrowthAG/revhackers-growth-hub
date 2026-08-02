@@ -76,6 +76,13 @@ export function buildContactPayload(
         }
     }
 
+    // Identificação de Decisor para Roteamento de Pipeline no Funnels (GHL)
+    const roleStr = String(payload.role || '').toLowerCase();
+    const isDecisionMaker = /founder|ceo|c-level|diretor|director|gerente|head|owner|co-founder|cto|cmo|cro|cfo|vp|socio|sócio/i.test(roleStr);
+    if (isDecisionMaker) {
+        tags.push('decisor', 'mql-comercial');
+    }
+
     const base: Record<string, unknown> = {
         firstName: firstName || (payload.firstName as string) || '',
         lastName: lastName || (payload.lastName as string) || '',
