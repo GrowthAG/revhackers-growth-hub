@@ -50,10 +50,26 @@ const FounderVideoWidget = () => {
     return null;
   }
 
+  // Helper: Extrai o título exato do artigo, material ou case da página atual
+  const getCurrentPageTitle = (): string => {
+    try {
+      const h1 = document.querySelector('h1');
+      if (h1 && h1.innerText && h1.innerText.length < 90) {
+        return h1.innerText.trim();
+      }
+      if (document.title) {
+        const titleClean = document.title.split('|')[0].trim();
+        if (titleClean && titleClean.length < 90) return titleClean;
+      }
+    } catch (e) {}
+    return '';
+  };
+
   // Dynamic Contextual Greeting based on user behavior on the current page (ZERO EMOJIS)
   const getContextualMessages = (pathname: string): Message[] => {
     const saved = getStoredIdentity();
     const displayName = saved?.firstName || (saved?.name ? saved.name.split(' ')[0] : '');
+    const pageTitle = getCurrentPageTitle();
 
     if (saved?.email && displayName) {
       return [
@@ -68,28 +84,59 @@ const FounderVideoWidget = () => {
       ];
     }
 
-    if (pathname.includes('/blog') || pathname.includes('/artigo')) {
+    // Segmentação 1: Artigos do Blog
+    if (pathname.includes('/blog/') || (pathname.includes('/blog') && pathname.split('/').length > 2)) {
+      const titleStr = pageTitle ? ` "${pageTitle}"` : '';
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Vi que você está analisando nossos artigos de Engenharia de GTM.', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Quer tirar dúvidas sobre como aplicar essa estratégia de conteúdo e mídia na sua empresa?', timestamp: 'Agora' }
+        { sender: 'ai', text: `Fala! Giulliano aqui. Vi que você está lendo o artigo${titleStr}.`, timestamp: 'Agora' },
+        { sender: 'ai', text: `Você está com dúvida sobre ${pageTitle ? `"${pageTitle}"` : 'este artigo'} ou quer saber como aplicar essa estratégia no seu negócio?`, timestamp: 'Agora' }
+      ];
+    }
+    if (pathname.includes('/blog')) {
+      return [
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Vi que você está navegando no nosso Blog de Engenharia de GTM.', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Procura algum tema específico sobre CRM, IA, Prospecção B2B ou Founder-Led Growth?', timestamp: 'Agora' }
+      ];
+    }
+
+    // Segmentação 2: Materiais / Calculadoras / Ferramentas
+    if (pathname.includes('/materiais/') || (pathname.includes('/materiais') && pathname.split('/').length > 2)) {
+      const titleStr = pageTitle ? ` "${pageTitle}"` : '';
+      return [
+        { sender: 'ai', text: `Fala! Giulliano aqui. Vi que você acessou o material${titleStr}.`, timestamp: 'Agora' },
+        { sender: 'ai', text: `Você está com dúvida sobre ${pageTitle ? `"${pageTitle}"` : 'este material'} ou precisa de ajuda para interpretar os resultados?`, timestamp: 'Agora' }
       ];
     }
     if (pathname.includes('/materiais') || pathname.includes('/ferramentas') || pathname.includes('/calculator')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Precisa de ajuda para interpretar os números da calculadora ou escolher o melhor playbook?', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Precisa de ajuda com nossos guias, calculadoras ou playbooks de receita?', timestamp: 'Agora' },
         { sender: 'ai', text: 'Me conta: qual é a meta de receita da sua empresa para os próximos 90 dias?', timestamp: 'Agora' }
       ];
     }
-    if (pathname.includes('/servicos') || pathname.includes('/cases')) {
+
+    // Segmentação 3: Cases de Sucesso
+    if (pathname.includes('/cases/') || (pathname.includes('/cases') && pathname.split('/').length > 2)) {
+      const titleStr = pageTitle ? ` "${pageTitle}"` : '';
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Analisando nossos 4 motores de GTM e cases como Wysion (1.000+ reuniões) e Heineken (+30%)?', timestamp: 'Agora' },
+        { sender: 'ai', text: `Fala! Giulliano aqui. Analisando a história do case${titleStr}?`, timestamp: 'Agora' },
+        { sender: 'ai', text: 'Quer entender como implementamos a mesma estrutura de GTM e automações na sua empresa?', timestamp: 'Agora' }
+      ];
+    }
+
+    // Segmentação 4: Serviços / Ecossistema
+    if (pathname.includes('/servicos/') || pathname.includes('/servicos') || pathname.includes('/cases')) {
+      return [
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Analisando nossos 4 motores de GTM B2B e arquitetura de receita?', timestamp: 'Agora' },
         { sender: 'ai', text: 'Quer saber como implementamos essa mesma máquina no seu CRM em até 30 dias?', timestamp: 'Agora' }
       ];
     }
+
+    // Segmentação 5: Diagnósticos & Scores Preditivos
     if (pathname.includes('/diagnostico') || pathname.includes('/score')) {
+      const titleStr = pageTitle ? ` "${pageTitle}"` : '';
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Pronto para rodar a Auditoria Preditiva da sua operação B2B?', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar a análise de vazamentos e falar com nosso time:', timestamp: 'Agora' }
+        { sender: 'ai', text: `Fala! Giulliano aqui. Pronto para rodar o ${titleStr || 'Diagnóstico Preditivo'}?`, timestamp: 'Agora' },
+        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar a análise de gargalos e falar com nosso time:', timestamp: 'Agora' }
       ];
     }
 
@@ -99,29 +146,41 @@ const FounderVideoWidget = () => {
     ];
   };
 
-  // Floating trigger button text depending on current page
+  // Floating trigger button text depending on current page (Sem emojis)
   const getFloatingLabel = (pathname: string): string => {
-    if (pathname.includes('/blog') || pathname.includes('/artigo')) return '💬 Dúvidas sobre este Artigo?';
-    if (pathname.includes('/materiais') || pathname.includes('/ferramentas') || pathname.includes('/calculator')) return '🧮 Ajuda com Calculadoras';
-    if (pathname.includes('/cases') || pathname.includes('/servicos')) return '🎯 Ver Cases & Motores de GTM';
+    if (pathname.includes('/blog/') && pathname.split('/').length > 2) return 'Dúvida sobre este Artigo?';
+    if (pathname.includes('/blog')) return 'Dúvidas do Blog?';
+    if (pathname.includes('/materiais/') && pathname.split('/').length > 2) return 'Dúvida sobre este Material?';
+    if (pathname.includes('/materiais') || pathname.includes('/calculator')) return 'Ajuda com Calculadoras';
+    if (pathname.includes('/cases/') && pathname.split('/').length > 2) return 'Dúvida sobre este Case?';
+    if (pathname.includes('/cases') || pathname.includes('/servicos')) return 'Ver Cases & Motores';
     return 'Converse com Giulliano';
   };
 
-  // Initial pills per page category
+  // Initial pills per page category (Zero Emojis, 100% Vector Focus)
   const getPagePills = (pathname: string): string[] => {
-    if (pathname.includes('/blog') || pathname.includes('/artigo')) {
-      return ["📊 Auditoria de GTM", "🚀 Ver Cases B2B", "💬 Falar com Giulliano"];
+    if (pathname.includes('/blog/') && pathname.split('/').length > 2) {
+      return ["Tirar dúvida sobre este artigo", "Como aplicar na minha empresa?", "Agendar call em /booking"];
     }
-    if (pathname.includes('/materiais') || pathname.includes('/ferramentas') || pathname.includes('/calculator')) {
-      return ["📈 Interpretar Resultado", "📊 Auditoria de Funil", "💬 Falar com Giulliano"];
+    if (pathname.includes('/blog')) {
+      return ["Auditoria de GTM", "Ver Cases B2B", "Falar com Giulliano"];
+    }
+    if (pathname.includes('/materiais/') && pathname.split('/').length > 2) {
+      return ["Tirar dúvida sobre este material", "Calcular ROI com especialista", "Agendar call em /booking"];
+    }
+    if (pathname.includes('/materiais') || pathname.includes('/calculator')) {
+      return ["Interpretar Resultado", "Auditoria de Funil", "Falar com Giulliano"];
+    }
+    if (pathname.includes('/cases/') && pathname.split('/').length > 2) {
+      return ["Como replicar este case?", "Tempo de implementação", "Agendar call em /booking"];
     }
     if (pathname.includes('/cases') || pathname.includes('/servicos')) {
-      return ["🍺 Case Heineken (+30%)", "💻 Case Wysion (1k calls)", "📅 Agendar 30 min em /booking"];
+      return ["Case Heineken (+30%)", "Case Wysion (1k calls)", "Agendar 30 min em /booking"];
     }
     return [
-      "📊 Rodar Auditoria de Receita",
-      "🎯 Ver Cases (Heineken, Anhembi)",
-      "💬 Falar com Especialista"
+      "Rodar Auditoria de Receita",
+      "Ver Cases (Heineken, Anhembi)",
+      "Falar com Especialista"
     ];
   };
 
