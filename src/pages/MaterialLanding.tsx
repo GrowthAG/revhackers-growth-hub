@@ -176,12 +176,14 @@ export default function MaterialLanding() {
                         <div className="lg:col-span-6 space-y-8 text-left py-2">
                             <div className="space-y-4">
                                 <h1 className="text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold text-zinc-950 tracking-tight leading-[1.15]">
-                                    Sobre este {material.type}: <span className="text-zinc-800 font-bold">{material.title}</span>
+                                    Implemente os melhores frameworks de <span className="text-[#00CC6A]">Growth, GTM Engineering &amp; ABM + IA</span> na sua operação.
                                 </h1>
                                 <h2 
                                     className="text-base sm:text-lg text-zinc-600 font-normal leading-relaxed space-y-3 pt-1"
                                     dangerouslySetInnerHTML={{
-                                        __html: DOMPurify.sanitize((material.description || material.subheadline || '').replace(/^<p>|<\/p>$/g, ''))
+                                        __html: DOMPurify.sanitize(
+                                          `Baixe o ${material.type} <strong>${material.title}</strong> oficial da RevHackers. Conteúdo prático, ferramentas e checklists validados em mais de R$ 50M em pipeline acelerado.`
+                                        )
                                     }}
                                 />
                             </div>

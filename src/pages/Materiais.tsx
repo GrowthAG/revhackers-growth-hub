@@ -122,8 +122,8 @@ const Materiais = () => {
         eyebrow="Materiais"
         title={
           <>
-            Copie os frameworks de RevOps e IA{' '}
-            <span className="text-[#00CC6A]">que usamos para escalar operações B2B.</span>
+            Implemente os melhores frameworks de{' '}
+            <span className="text-[#00CC6A]">Growth, GTM Engineering e ABM + IA</span> na sua operação.
           </>
         }
         subtitle="Blueprints de arquitetura, scripts de automação e templates de Go-To-Market prontos para rodar no seu CRM hoje."
