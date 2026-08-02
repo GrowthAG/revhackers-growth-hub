@@ -19,7 +19,6 @@ export type PartnerKey =
   | "anhembi"
   | "fmu-virtual" 
   | "toefl" 
-  | "datavoxx" 
   | "agence-mr" 
   | "heineken" 
   | "bldn-digital" 

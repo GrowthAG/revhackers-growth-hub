@@ -53,5 +53,7 @@ Disallow: /rei-founder
 Disallow: /approve/
 Disallow: /hub/
 Disallow: /dashboard
+Disallow: /partners/datavoxx
+Disallow: /partners/datavoxx/
 
 Sitemap: https://revhackers.com.br/sitemap.xml
