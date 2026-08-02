@@ -6,7 +6,7 @@ import HeroSection from '@/components/quem-somos/HeroSection';
 import HistorySection from '@/components/quem-somos/HistorySection';
 import TimelineSection from '@/components/quem-somos/TimelineSection';
 import ValuesSection from '@/components/quem-somos/ValuesSection';
-import CTASection from '@/components/quem-somos/CTASection';
+import FounderShowcase from '@/components/quem-somos/FounderShowcase';
 import SEO from '@/components/shared/SEO';
 
 const QuemSomos = () => {
@@ -19,7 +19,7 @@ const QuemSomos = () => {
     <PageLayout>
       <SEO
         title="Quem Somos - Consultoria de Revenue Operations"
-        description="Conheça a RevHackers: a primeira consultoria de Revenue Operations do Brasil. Fundada em São Paulo, integramos IA, CRM e automações para escalar empresas B2B."
+        description="Conheça a RevHackers: a primeira consultoria de Revenue Operations do Brasil. Fundada em São Paulo por Giulliano Alves, integramos IA, CRM e automações B2B."
         canonical="https://revhackers.com.br/quem-somos"
         breadcrumbs={[
           { name: "Home", url: "https://revhackers.com.br/" },
@@ -29,6 +29,9 @@ const QuemSomos = () => {
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
         <HeroSection />
+
+        {/* Founder Showcase - Giulliano Alves Authority */}
+        <FounderShowcase />
 
         {/* Nossa História */}
         <HistorySection />

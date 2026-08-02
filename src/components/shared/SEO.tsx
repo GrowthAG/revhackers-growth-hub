@@ -34,17 +34,47 @@ const SEO = ({
     keywords,
 }: SEOProps) => {
 
-    const siteTitle = "RevHackers | Revenue Operations & Growth B2B";
-    const fullTitle = title === "Home" ? siteTitle : `${title} | RevHackers`;
+    const siteTitle = "RevHackers | Consultoria RevOps & Growth B2B";
+    const rawTitle = title === "Home" ? siteTitle : `${title} | RevHackers`;
+    // Garante que o título nunca passe de 60 caracteres no Google (sem corte ...)
+    const fullTitle = rawTitle.length > 60 ? rawTitle.substring(0, 57) + "..." : rawTitle;
     const currentUrl = canonical || (typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : '');
 
-    // Schema.org: ProfessionalService (main entity - GEO essential)
+    // Schema.org: Person (Founder Authority - Giulliano Alves)
+    const founderSchema = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://revhackers.com.br/#giulliano",
+        "name": "Giulliano Alves",
+        "jobTitle": "Founder & Chief Revenue Engineer",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "RevHackers",
+            "url": "https://revhackers.com.br"
+        },
+        "url": "https://www.linkedin.com/in/giullianoalves/",
+        "image": "https://revhackers.com.br/uploads/giulliano-linkedin-profile.png",
+        "sameAs": [
+            "https://www.linkedin.com/in/giullianoalves/",
+            "https://revhackers.com.br/quem-somos"
+        ],
+        "knowsAbout": [
+            "Revenue Operations",
+            "RevOps",
+            "Go-To-Market Engineering",
+            "B2B SaaS Growth",
+            "CRM Architecture",
+            "AI Sales Agents"
+        ]
+    };
+
+    // Schema.org: ProfessionalService & LocalBusiness (GEO-SEO)
     const organizationSchema = {
         "@context": "https://schema.org",
-        "@type": "ProfessionalService",
+        "@type": ["ProfessionalService", "LocalBusiness"],
         "@id": "https://revhackers.com.br/#organization",
         "name": "RevHackers",
-        "alternateName": ["RevHackers", "RevHackers Consultoria", "RevHackers RevOps"],
+        "alternateName": ["RevHackers", "RevHackers Consultoria", "RevHackers RevOps B2B"],
         "url": "https://revhackers.com.br",
         "logo": {
             "@type": "ImageObject",
@@ -52,58 +82,47 @@ const SEO = ({
             "width": 256,
             "height": 256
         },
-        "image": "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/67f7fc91b95d208445a1317a.jpeg",
-        "description": "A primeira consultoria de Revenue Operations do Brasil. Integramos IA, CRM e automações para escalar operações B2B em São Paulo e todo o país.",
+        "image": "https://revhackers.com.br/uploads/giulliano-linkedin-profile.png",
+        "description": "Consultoria líder de Revenue Operations e GTM Engineering no Brasil. Arquitetura de CRM, Agentes de IA e Geração de Demanda B2B.",
         "slogan": "Revenue Architecture for B2B Growth",
         "foundingDate": "2023",
+        "founder": { "@id": "https://revhackers.com.br/#giulliano" },
         "founders": [
-            {
-                "@type": "Person",
-                "name": "Giulliano Alves",
-                "jobTitle": "Co-Founder & Growth Engineer",
-                "url": "https://www.linkedin.com/in/giullianoalves/"
-            },
-            {
-                "@type": "Person",
-                "name": "Luna M.",
-                "jobTitle": "Co-Founder & Revenue Architect"
-            }
+            { "@id": "https://revhackers.com.br/#giulliano" }
         ],
         "sameAs": [
             "https://www.linkedin.com/company/revhackers",
-            "https://www.instagram.com/revhackers",
-            "https://academy.revhackers.com.br"
+            "https://www.linkedin.com/in/giullianoalves/"
         ],
         "address": {
             "@type": "PostalAddress",
+            "streetAddress": "Av. Brig. Faria Lima",
             "addressLocality": "São Paulo",
             "addressRegion": "SP",
             "addressCountry": "BR",
-            "postalCode": "01000-000"
+            "postalCode": "01452-000"
         },
         "geo": {
             "@type": "GeoCoordinates",
-            "latitude": -23.5505,
-            "longitude": -46.6333
+            "latitude": -23.55052,
+            "longitude": -46.633308
         },
         "areaServed": [
-            { "@type": "Country", "name": "Brasil" },
             { "@type": "City", "name": "São Paulo" },
-            { "@type": "City", "name": "Curitiba" },
+            { "@type": "City", "name": "Itaim Bibi" },
+            { "@type": "City", "name": "Faria Lima" },
             { "@type": "City", "name": "Rio de Janeiro" },
+            { "@type": "City", "name": "Curitiba" },
             { "@type": "City", "name": "Belo Horizonte" },
-            { "@type": "City", "name": "Florianópolis" }
+            { "@type": "Country", "name": "Brasil" }
         ],
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
             "name": "Serviços de Revenue Operations",
             "itemListElement": [
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Implementação de CRM (HubSpot, Salesforce, Pipedrive)", "url": "https://revhackers.com.br/servicos/ecossistema-crm" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automação de Vendas com IA (SDR Digital)", "url": "https://revhackers.com.br/servicos/automacao-inteligente" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tração & Mídia Paga B2B", "url": "https://revhackers.com.br/servicos/tracao-midia-paga" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Founder-Led Growth & Social Selling", "url": "https://revhackers.com.br/servicos/founder-led-growth" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sites de Alta Conversão B2B", "url": "https://revhackers.com.br/servicos/web-conversion" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Operations (Agentes de IA)", "url": "https://revhackers.com.br/servicos/ai-operations" } }
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Implementação de CRM B2B", "url": "https://revhackers.com.br/servicos/ecossistema-crm" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automação de Vendas com IA", "url": "https://revhackers.com.br/servicos/automacao-inteligente" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Founder-Led Growth & Social Selling", "url": "https://revhackers.com.br/servicos/founder-led-growth" } }
             ]
         },
         "contactPoint": {
@@ -112,13 +131,50 @@ const SEO = ({
             "url": "https://revhackers.com.br/booking",
             "availableLanguage": ["Portuguese", "English"]
         },
-        "priceRange": "$$$",
-        "knowsLanguage": ["pt-BR", "en"],
-        "knowsAbout": [
-            "Revenue Operations", "RevOps", "Growth B2B", "CRM Implementation",
-            "Sales Automation", "Account Based Marketing", "ABM", "HubSpot",
-            "Salesforce", "Pipeline Management", "Lead Qualification AI",
-            "Founder-Led Growth", "B2B SaaS Growth", "Revenue Architecture"
+        "priceRange": "$$$"
+    };
+
+    // Schema.org: Sitelinks Navigation Elements (Para forçar sitelinks corretos no Google)
+    const sitelinksSchema = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+            {
+                "@type": "SiteNavigationElement",
+                "position": 1,
+                "name": "Metodologia",
+                "url": "https://revhackers.com.br/metodologia"
+            },
+            {
+                "@type": "SiteNavigationElement",
+                "position": 2,
+                "name": "Ecossistema de Serviços",
+                "url": "https://revhackers.com.br/servicos"
+            },
+            {
+                "@type": "SiteNavigationElement",
+                "position": 3,
+                "name": "Cases de Sucesso",
+                "url": "https://revhackers.com.br/cases"
+            },
+            {
+                "@type": "SiteNavigationElement",
+                "position": 4,
+                "name": "Central de Diagnósticos",
+                "url": "https://revhackers.com.br/diagnostico"
+            },
+            {
+                "@type": "SiteNavigationElement",
+                "position": 5,
+                "name": "Quem Somos & Founder",
+                "url": "https://revhackers.com.br/quem-somos"
+            },
+            {
+                "@type": "SiteNavigationElement",
+                "position": 6,
+                "name": "Blog de GTM",
+                "url": "https://revhackers.com.br/blog"
+            }
         ]
     };
 
@@ -213,7 +269,7 @@ const SEO = ({
     } : null;
 
     // Combine all schemas
-    const schemas: any[] = [organizationSchema, websiteSchema];
+    const schemas: any[] = [organizationSchema, websiteSchema, founderSchema, sitelinksSchema];
     if (articleSchema) schemas.push(articleSchema);
     if (breadcrumbSchema) schemas.push(breadcrumbSchema);
     if (faqSchema) schemas.push(faqSchema);
