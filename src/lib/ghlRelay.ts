@@ -74,13 +74,9 @@ export function buildContactPayload(
         if (!tags.includes('materiais')) {
             tags.push('materiais');
         }
-    }
-
-    // Identificação de Decisor para Roteamento de Pipeline no Funnels (GHL)
-    const roleStr = String(payload.role || '').toLowerCase();
-    const isDecisionMaker = /founder|ceo|c-level|diretor|director|gerente|head|owner|co-founder|cto|cmo|cro|cfo|vp|socio|sócio/i.test(roleStr);
-    if (isDecisionMaker) {
-        tags.push('decisor', 'mql-comercial');
+        if (payload.materialId || payload.slug) {
+            tags.push(`download:${payload.materialId || payload.slug}`);
+        }
     }
 
     const base: Record<string, unknown> = {
