@@ -40,6 +40,16 @@ const FounderVideoWidget = () => {
   const [videoError, setVideoError] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  // Do NOT render widget on admin or internal REI routes
+  const isAdminRoute = 
+    location.pathname.startsWith('/admin') || 
+    location.pathname.startsWith('/rei') || 
+    location.pathname.startsWith('/rei-onboarding');
+
+  if (isAdminRoute) {
+    return null;
+  }
+
   // Dynamic Contextual Greeting based on user behavior on the current page (ZERO EMOJIS)
   const getContextualMessages = (pathname: string): Message[] => {
     const saved = getStoredIdentity();
@@ -48,44 +58,70 @@ const FounderVideoWidget = () => {
     if (saved?.email && displayName) {
       return [
         { sender: 'ai', text: `Fala, ${displayName}! Bom te ver de volta por aqui no site da RevHackers.`, timestamp: 'Agora' },
-        { sender: 'ai', text: 'Como posso acelerar a geracao de demanda e a infraestrutura da sua empresa hoje?', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Como posso acelerar a geração de demanda e a infraestrutura da sua empresa hoje?', timestamp: 'Agora' }
       ];
     }
     if (saved?.email) {
       return [
         { sender: 'ai', text: 'Fala! Que bom te ver de volta por aqui.', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Como posso ajudar sua operacao de GTM Engineering hoje?', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Como posso ajudar sua operação de GTM Engineering hoje?', timestamp: 'Agora' }
       ];
     }
 
     if (pathname.includes('/blog') || pathname.includes('/artigo')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Vi que voce esta analisando nossos artigos e estrategias de GTM.', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar o chat ao vivo e tirar duvidas tecnicas sobre este artigo:', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Vi que você está analisando nossos artigos de Engenharia de GTM.', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Quer tirar dúvidas sobre como aplicar essa estratégia de conteúdo e mídia na sua empresa?', timestamp: 'Agora' }
       ];
     }
-    if (pathname.includes('/materiais') || pathname.includes('/material')) {
+    if (pathname.includes('/materiais') || pathname.includes('/ferramentas') || pathname.includes('/calculator')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. O que esta achando dos nossos materiais de Revenue & GTM Engineering?', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Digite seu e-mail corporativo abaixo para desbloquear o chat e te ajudarmos a escolher o melhor playbook:', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Precisa de ajuda para interpretar os números da calculadora ou escolher o melhor playbook?', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Me conta: qual é a meta de receita da sua empresa para os próximos 90 dias?', timestamp: 'Agora' }
       ];
     }
     if (pathname.includes('/servicos') || pathname.includes('/cases')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Analisando nossos 4 motores de GTM e cases como Wysion (1.000+ reunioes) e Heineken (+30%)?', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para tirar duvidas direto sobre ROI e implementacao em 30 dias:', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Analisando nossos 4 motores de GTM e cases como Wysion (1.000+ reuniões) e Heineken (+30%)?', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Quer saber como implementamos essa mesma máquina no seu CRM em até 30 dias?', timestamp: 'Agora' }
       ];
     }
     if (pathname.includes('/diagnostico') || pathname.includes('/score')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Pronto para rodar o Diagnostico Preditivo da sua operacao B2B?', timestamp: 'Agora' },
-        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar a analise de vazamentos e falar com nosso time:', timestamp: 'Agora' }
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Pronto para rodar a Auditoria Preditiva da sua operação B2B?', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Insira seu e-mail corporativo abaixo para liberar a análise de vazamentos e falar com nosso time:', timestamp: 'Agora' }
       ];
     }
 
     return [
       { sender: 'ai', text: 'Fala! Sou o Giulliano, fundador da RevHackers.', timestamp: 'Agora' },
-      { sender: 'ai', text: 'Me conta: qual e o maior desafio ou gargalo da sua empresa hoje para gerar demanda e escalar vendas B2B?', timestamp: 'Agora' }
+      { sender: 'ai', text: 'Me conta: qual é o maior desafio ou gargalo da sua empresa hoje para gerar demanda e escalar vendas B2B?', timestamp: 'Agora' }
+    ];
+  };
+
+  // Floating trigger button text depending on current page
+  const getFloatingLabel = (pathname: string): string => {
+    if (pathname.includes('/blog') || pathname.includes('/artigo')) return '💬 Dúvidas sobre este Artigo?';
+    if (pathname.includes('/materiais') || pathname.includes('/ferramentas') || pathname.includes('/calculator')) return '🧮 Ajuda com Calculadoras';
+    if (pathname.includes('/cases') || pathname.includes('/servicos')) return '🎯 Ver Cases & Motores de GTM';
+    return 'Converse com Giulliano';
+  };
+
+  // Initial pills per page category
+  const getPagePills = (pathname: string): string[] => {
+    if (pathname.includes('/blog') || pathname.includes('/artigo')) {
+      return ["📊 Auditoria de GTM", "🚀 Ver Cases B2B", "💬 Falar com Giulliano"];
+    }
+    if (pathname.includes('/materiais') || pathname.includes('/ferramentas') || pathname.includes('/calculator')) {
+      return ["📈 Interpretar Resultado", "📊 Auditoria de Funil", "💬 Falar com Giulliano"];
+    }
+    if (pathname.includes('/cases') || pathname.includes('/servicos')) {
+      return ["🍺 Case Heineken (+30%)", "💻 Case Wysion (1k calls)", "📅 Agendar 30 min em /booking"];
+    }
+    return [
+      "📊 Rodar Auditoria de Receita",
+      "🎯 Ver Cases (Heineken, Anhembi)",
+      "💬 Falar com Especialista"
     ];
   };
 
@@ -97,6 +133,7 @@ const FounderVideoWidget = () => {
     setIsOpen(false);
     if (!emailCaptured) {
       setMessages(getContextualMessages(location.pathname));
+      setActivePills(getPagePills(location.pathname));
       setConversationalStep(0);
     }
   }, [location.pathname]);
@@ -296,7 +333,7 @@ const FounderVideoWidget = () => {
               </div>
               <div className="flex flex-col text-left">
                 <span className="text-xs font-extrabold text-white leading-tight">
-                  Converse com Giulliano
+                  {getFloatingLabel(location.pathname)}
                 </span>
                 <span className="text-[10px] text-zinc-400 font-medium flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse inline-block shrink-0" />
