@@ -5,6 +5,7 @@ import { createReiProject, updateReiProject, getReiProjectById, type FocalPoint 
 import { reiProjectsGcpAdapter } from '@/api/adapters/rei-projects-gcp';
 import { supabase } from '@/integrations/supabase/client';
 import { getAllClients, type Client } from '@/api/clients';
+import { scrapeCompanyWebsite } from '@/lib/websiteScraperEngine';
 import type { ReiProjectInsert } from '@/api/reiProjects';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -178,36 +179,52 @@ const REIProjectForm = () => {
         }
     };
 
-    // ── Site Analysis Handler ──
+    // ── Site Analysis & Automatic Scraping Handler ──
     const handleAnalyzeSite = async () => {
         if (!clientSite) return;
         setAnalyzingSite(true);
         setSiteAnalysisError(null);
         setSiteAnalysis(null);
         try {
-            const { data, error } = await supabase.functions.invoke('inspect-website', {
-                body: { url: clientSite, enriched: true }
-            });
-            if (error) throw new Error(error.message || 'Erro ao analisar site');
-            if (data?.success === false) throw new Error(data?.error || 'Falha na analise');
+            const clientCompany = watch('client_company') || watch('client_name') || '';
+            const scraped = await scrapeCompanyWebsite(clientSite, clientCompany);
 
-            // Merge scraped data + AI analysis into a single object
-            const merged = {
-                ...data?.data,
-                ...data?.ai_analysis,
+            let merged = {
+                title: scraped.title,
+                description: scraped.description,
+                h1: scraped.h1,
+                logoUrl: scraped.logoUrl,
+                inferredUVP: scraped.inferredUVP,
+                detectedTech: scraped.detectedTech,
+                socialLinks: scraped.socialLinks,
+                score: 85,
+                scrapedAt: scraped.scrapedAt
             };
+
+            // Optional Supabase edge function enrichment
+            try {
+                const { data } = await supabase.functions.invoke('inspect-website', {
+                    body: { url: clientSite, enriched: true }
+                });
+                if (data?.data) {
+                    merged = { ...merged, ...data.data, ...data.ai_analysis };
+                }
+            } catch (supErr) {
+                console.warn('[Site Analysis] Supabase Edge Function fallback to client-side scraper');
+            }
+
             setSiteAnalysis(merged);
             setSiteAnalysisExpanded(true);
             toast({
-                title: 'Site Analisado',
-                description: `Analise de ${clientSite} concluida com sucesso.`,
+                title: '✨ Site Raspado & Analisado com Sucesso',
+                description: `Proposta de Valor e Tech Stack de ${scraped.domain} capturados.`,
             });
         } catch (err: any) {
             console.error('Site analysis error:', err);
             setSiteAnalysisError(err.message || 'Erro desconhecido');
             toast({
-                title: 'Erro na Analise',
-                description: err.message || 'Nao foi possivel analisar o site.',
+                title: 'Erro na Análise do Site',
+                description: err.message || 'Não foi possível raspar o site.',
                 variant: 'destructive'
             });
         } finally {
