@@ -100,22 +100,28 @@ const FounderVideoWidget = () => {
     }
 
     // Segmentação 2: Materiais / Calculadoras / Ferramentas
-    if (pathname.includes('/materiais/') || (pathname.includes('/materiais') && pathname.split('/').length > 2)) {
+    if (pathname.startsWith('/materiais/') && pathname.split('/').filter(Boolean).length > 1) {
       const titleStr = pageTitle ? ` "${pageTitle}"` : '';
       return [
         { sender: 'ai', text: `Fala! Giulliano aqui. Vi que você acessou o material${titleStr}.`, timestamp: 'Agora' },
-        { sender: 'ai', text: `Você está com dúvida sobre ${pageTitle ? `"${pageTitle}"` : 'este material'} ou precisa de ajuda para interpretar os resultados?`, timestamp: 'Agora' }
+        { sender: 'ai', text: `Você está com dúvida sobre ${pageTitle ? `"${pageTitle}"` : 'este material'} ou precisa de ajuda para baixar e implementar?`, timestamp: 'Agora' }
       ];
     }
-    if (pathname.includes('/materiais') || pathname.includes('/ferramentas') || pathname.includes('/calculator')) {
+    if (pathname.includes('/materiais')) {
       return [
-        { sender: 'ai', text: 'Fala! Giulliano aqui. Precisa de ajuda com nossos guias, calculadoras ou playbooks de receita?', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Vi que você está na nossa Biblioteca de Frameworks, Playbooks e Templates de GTM.', timestamp: 'Agora' },
+        { sender: 'ai', text: 'Procura algum material específico ou quer indicação do melhor playbook para o seu momento?', timestamp: 'Agora' }
+      ];
+    }
+    if (pathname.includes('/ferramentas') || pathname.includes('/calculator')) {
+      return [
+        { sender: 'ai', text: 'Fala! Giulliano aqui. Precisa de ajuda com nossas calculadoras de ROI e simuladores de receita?', timestamp: 'Agora' },
         { sender: 'ai', text: 'Me conta: qual é a meta de receita da sua empresa para os próximos 90 dias?', timestamp: 'Agora' }
       ];
     }
 
     // Segmentação 3: Cases de Sucesso
-    if (pathname.includes('/cases/') || (pathname.includes('/cases') && pathname.split('/').length > 2)) {
+    if (pathname.startsWith('/cases/') && pathname.split('/').filter(Boolean).length > 1) {
       const titleStr = pageTitle ? ` "${pageTitle}"` : '';
       return [
         { sender: 'ai', text: `Fala! Giulliano aqui. Analisando a história do case${titleStr}?`, timestamp: 'Agora' },
@@ -124,7 +130,7 @@ const FounderVideoWidget = () => {
     }
 
     // Segmentação 4: Serviços / Ecossistema
-    if (pathname.includes('/servicos/') || pathname.includes('/servicos') || pathname.includes('/cases')) {
+    if (pathname.includes('/servicos') || pathname.includes('/cases')) {
       return [
         { sender: 'ai', text: 'Fala! Giulliano aqui. Analisando nossos 4 motores de GTM B2B e arquitetura de receita?', timestamp: 'Agora' },
         { sender: 'ai', text: 'Quer saber como implementamos essa mesma máquina no seu CRM em até 30 dias?', timestamp: 'Agora' }
@@ -148,30 +154,34 @@ const FounderVideoWidget = () => {
 
   // Floating trigger button text depending on current page (Sem emojis)
   const getFloatingLabel = (pathname: string): string => {
-    if (pathname.includes('/blog/') && pathname.split('/').length > 2) return 'Dúvida sobre este Artigo?';
+    if (pathname.startsWith('/blog/') && pathname.split('/').filter(Boolean).length > 1) return 'Dúvida sobre este Artigo?';
     if (pathname.includes('/blog')) return 'Dúvidas do Blog?';
-    if (pathname.includes('/materiais/') && pathname.split('/').length > 2) return 'Dúvida sobre este Material?';
-    if (pathname.includes('/materiais') || pathname.includes('/calculator')) return 'Ajuda com Calculadoras';
-    if (pathname.includes('/cases/') && pathname.split('/').length > 2) return 'Dúvida sobre este Case?';
+    if (pathname.startsWith('/materiais/') && pathname.split('/').filter(Boolean).length > 1) return 'Dúvida sobre este Material?';
+    if (pathname.includes('/materiais')) return 'Biblioteca de Materiais';
+    if (pathname.includes('/calculator') || pathname.includes('/calculadora')) return 'Ajuda com Calculadoras';
+    if (pathname.startsWith('/cases/') && pathname.split('/').filter(Boolean).length > 1) return 'Dúvida sobre este Case?';
     if (pathname.includes('/cases') || pathname.includes('/servicos')) return 'Ver Cases & Motores';
     return 'Converse com Giulliano';
   };
 
   // Initial pills per page category (Zero Emojis, 100% Vector Focus)
   const getPagePills = (pathname: string): string[] => {
-    if (pathname.includes('/blog/') && pathname.split('/').length > 2) {
+    if (pathname.startsWith('/blog/') && pathname.split('/').filter(Boolean).length > 1) {
       return ["Tirar dúvida sobre este artigo", "Como aplicar na minha empresa?", "Agendar call em /booking"];
     }
     if (pathname.includes('/blog')) {
       return ["Auditoria de GTM", "Ver Cases B2B", "Falar com Giulliano"];
     }
-    if (pathname.includes('/materiais/') && pathname.split('/').length > 2) {
+    if (pathname.startsWith('/materiais/') && pathname.split('/').filter(Boolean).length > 1) {
       return ["Tirar dúvida sobre este material", "Calcular ROI com especialista", "Agendar call em /booking"];
     }
-    if (pathname.includes('/materiais') || pathname.includes('/calculator')) {
+    if (pathname.includes('/materiais')) {
+      return ["Encontrar Playbook Ideal", "Auditoria de Funil", "Falar com Giulliano"];
+    }
+    if (pathname.includes('/calculator') || pathname.includes('/calculadora')) {
       return ["Interpretar Resultado", "Auditoria de Funil", "Falar com Giulliano"];
     }
-    if (pathname.includes('/cases/') && pathname.split('/').length > 2) {
+    if (pathname.startsWith('/cases/') && pathname.split('/').filter(Boolean).length > 1) {
       return ["Como replicar este case?", "Tempo de implementação", "Agendar call em /booking"];
     }
     if (pathname.includes('/cases') || pathname.includes('/servicos')) {
