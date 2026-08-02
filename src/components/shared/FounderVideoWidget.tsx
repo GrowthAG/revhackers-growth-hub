@@ -371,35 +371,14 @@ const FounderVideoWidget = () => {
             onClick={() => setIsOpen(true)}
             className="fixed bottom-8 sm:bottom-10 right-6 sm:right-8 z-50 cursor-pointer group select-none"
           >
-            <div className="bg-zinc-950 text-white border border-zinc-800/90 p-2 pr-5 rounded-full shadow-2xl flex items-center gap-3 hover:border-zinc-700 hover:scale-105 transition-all">
-              <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-[#00CC6A]/80 shadow-[0_0_10px_rgba(0,204,106,0.3)] shrink-0 bg-zinc-900 flex items-center justify-center">
-                {!videoError ? (
-                  <video
-                    src={FOUNDER_VIDEO_URL}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    onError={() => setVideoError(true)}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <img
-                    src="/uploads/giulliano-linkedin-profile.png"
-                    alt="Giulliano Alves"
-                    className="w-full h-full object-cover"
-                  />
-                )}
-              </div>
-              <div className="flex flex-col text-left">
-                <span className="text-xs font-extrabold text-white leading-tight">
-                  {getFloatingLabel(location.pathname)}
-                </span>
-                <span className="text-[10px] text-zinc-400 font-medium flex items-center gap-1.5 mt-0.5">
-                  <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse inline-block shrink-0" />
-                  Founder RevHackers • Online
-                </span>
-              </div>
+            <div className="bg-zinc-950 text-white border border-zinc-800/90 py-2.5 px-4 rounded-full shadow-2xl flex flex-col text-left hover:border-zinc-700 hover:scale-105 transition-all">
+              <span className="text-xs font-extrabold text-white leading-tight">
+                {getFloatingLabel(location.pathname)}
+              </span>
+              <span className="text-[10px] text-zinc-400 font-medium flex items-center gap-1.5 mt-0.5">
+                <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse inline-block shrink-0" />
+                Founder RevHackers • Online
+              </span>
             </div>
           </motion.div>
         )}
