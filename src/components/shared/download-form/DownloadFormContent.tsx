@@ -18,7 +18,7 @@ interface DownloadFormContentProps {
   handleSubmit: (e: React.FormEvent) => void;
 }
 
-const inputStyles = "w-full h-11 px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all";
+const inputStyles = "w-full h-11 px-3 sm:px-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 text-xs sm:text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all";
 const labelStyles = "text-xs font-semibold text-zinc-800 block mb-1.5";
 
 const DownloadFormContent: React.FC<DownloadFormContentProps> = ({

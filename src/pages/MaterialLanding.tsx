@@ -169,13 +169,13 @@ export default function MaterialLanding() {
 
             {/* Content & Form Section — Fundo 100% Branco Puro com Contexto Rico */}
             <section className="py-16 md:py-24 bg-white text-zinc-900 border-b border-zinc-200/80">
-                <div className="max-w-5xl mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <div className="max-w-6xl mx-auto px-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
                         
                         {/* Coluna Esquerda: Contexto, O que contém o material e Para quem é */}
-                        <div className="lg:col-span-7 space-y-8">
+                        <div className="lg:col-span-6 space-y-8">
                             <div className="space-y-4">
-                                <h2 className="text-2xl font-extrabold text-zinc-950 tracking-tight leading-tight">
+                                <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight leading-tight">
                                     Sobre este {material.type}
                                 </h2>
                                 <div 
@@ -187,11 +187,11 @@ export default function MaterialLanding() {
                             </div>
 
                             {/* Destaques e Entregáveis */}
-                            <div className="bg-zinc-50/80 border border-zinc-200/80 p-6 rounded-2xl space-y-4">
+                            <div className="bg-zinc-50/80 border border-zinc-200/80 p-6 sm:p-8 rounded-2xl space-y-4">
                                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-950">
                                     O que você vai receber:
                                 </h3>
-                                <ul className="space-y-3 text-xs sm:text-sm">
+                                <ul className="space-y-3.5 text-xs sm:text-sm">
                                     <li className="flex items-start gap-3 text-zinc-800 font-medium">
                                         <span className="w-2 h-2 rounded-full bg-[#00CC6A] mt-1.5 shrink-0" />
                                         <span>Metodologia prática e aplicável imediatamente na sua operação B2B.</span>
@@ -208,8 +208,8 @@ export default function MaterialLanding() {
                             </div>
                         </div>
 
-                        {/* Coluna Direita: Formulário Padronizado no Estilo Solicitar Análise */}
-                        <div className="lg:col-span-5 bg-white border border-zinc-200/90 p-8 sm:p-10 rounded-3xl shadow-lg space-y-6 sticky top-28 text-left">
+                        {/* Coluna Direita: Formulário Padronizado no Estilo Solicitar Análise (Amplo e sem Espremimento) */}
+                        <div className="lg:col-span-6 bg-white border border-zinc-200/90 p-8 sm:p-10 rounded-3xl shadow-lg space-y-6 sticky top-28 text-left">
                             <div className="space-y-1">
                                 <h3 className="text-xl font-bold text-zinc-900 tracking-tight">Solicitar Análise</h3>
                                 <p className="text-xs sm:text-sm text-zinc-500">Preencha para análise técnica de perfil. Resposta em até 24h.</p>
