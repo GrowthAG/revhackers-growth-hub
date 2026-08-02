@@ -16,20 +16,6 @@ export interface Material {
 
 export const materialsData: Material[] = [
     {
-        id: 'linkedin-pro-masterclass',
-        title: 'Masterclass em Vídeo: Método LinkedInPro — Atração de Clientes B2B',
-        slug: 'linkedin-pro-masterclass',
-        type: 'Masterclass',
-        material_type: 'masterclass',
-        category: 'Growth',
-        description: 'Aula prática exclusiva em vídeo mostrando como estruturar seu perfil e sistema Hub & Spoke no LinkedIn para atrair clientes B2B de forma previsível.',
-        cover_image: '/uploads/processo-comercial-b2b.svg',
-        material_url: '/materiais/linkedin-pro-masterclass',
-        link_material: 'https://portal.linkedinpro.academy/courses/products/b1e5a939-20ce-42f6-907c-0713bba27b9c/categories/cbe7a80d-8b7d-4c08-b20e-8e6a6acb24f5/posts/948db7a1-02a5-4eb8-94ee-941c9213b8bf',
-        published: true,
-        is_active: true
-    },
-    {
         id: 'framework-ia-meta-ads',
         title: 'Framework Completo: Agente de IA para Meta Ads',
         slug: 'framework-ia-meta-ads',
