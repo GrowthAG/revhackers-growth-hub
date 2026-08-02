@@ -19,9 +19,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
         );
     }
 
-    // Se estiver em recuperação, não redirecionar para login (o AuthContext cuidará do roteamento para /reset-password)
+    // Se estiver em recuperação de senha explícita, direcionar para /reset-password
     if (isRecoveringPassword && location.pathname !== '/reset-password') {
-        return null;
+        return <Navigate to="/reset-password" replace />;
     }
 
     const isMasterLogged = typeof window !== 'undefined' && sessionStorage.getItem('rh_master_logged') === 'true';

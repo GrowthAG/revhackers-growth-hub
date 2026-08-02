@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [isProfileLoading, setIsProfileLoading] = useState(false);
     const [isRecoveringPassword, setIsRecoveringPassword] = useState(() => {
         return window.location.hash.includes('type=recovery') ||
-            window.location.hash.includes('access_token=') ||
             window.location.pathname === '/reset-password';
     });
     const { toast } = useToast();
