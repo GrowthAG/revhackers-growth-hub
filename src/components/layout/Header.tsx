@@ -182,6 +182,8 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
                 <NavLink to="/cases">Casos</NavLink>
                 <div className="w-px h-3 mx-1 bg-zinc-800" />
                 <NavLink to="/materiais">Materiais</NavLink>
+                <div className="w-px h-3 mx-1 bg-zinc-800" />
+                <NavLink to="/blog">Blog</NavLink>
               </div>
             </div>
           </nav>
@@ -299,7 +301,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
                 <MobileNavLink to="/servicos" onClick={scrollToTop}>Ecossistema</MobileNavLink>
                 <MobileNavLink to="/cases" onClick={scrollToTop}>Casos</MobileNavLink>
                 <MobileNavLink to="/materiais" onClick={scrollToTop}>Materiais</MobileNavLink>
-                <MobileNavLink to="/blog" onClick={scrollToTop}>Aulas</MobileNavLink>
+                <MobileNavLink to="/blog" onClick={scrollToTop}>Blog</MobileNavLink>
 
                 <div className="py-2 border-b border-white/5 mb-4">
                   <Link
