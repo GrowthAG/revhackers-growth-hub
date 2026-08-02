@@ -52,26 +52,32 @@ export const AdminDashboard: React.FC = () => {
     setLoading(true);
     try {
       const clientsData = await getAllClients();
-      setClients(clientsData);
+      setClients(Array.isArray(clientsData) ? clientsData : []);
 
       if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
         try {
           const projectsData = await reiProjectsGcpAdapter.getAll();
-          setProjects(projectsData);
+          setProjects(Array.isArray(projectsData) ? projectsData : []);
         } catch (e) {
           console.warn('Projetos via GCP não carregados:', e);
+          setProjects([]);
         }
       }
     } catch (error) {
       console.error('Erro ao carregar dados do Dashboard:', error);
+      setClients([]);
+      setProjects([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const activeClientsCount = clients.filter(c => c.status === 'active' || !c.status).length;
-  const onboardingClientsCount = clients.filter(c => c.status === 'onboarding').length;
-  const activeProjectsCount = projects.filter(p => p.status === 'active').length;
+  const safeClients = Array.isArray(clients) ? clients : [];
+  const safeProjects = Array.isArray(projects) ? projects : [];
+
+  const activeClientsCount = safeClients.filter(c => c && (c.status === 'active' || !c.status)).length;
+  const onboardingClientsCount = safeClients.filter(c => c && c.status === 'onboarding').length;
+  const activeProjectsCount = safeProjects.filter(p => p && p.status === 'active').length;
 
   // Cálculo de velocidade dinâmico baseado em entregas ativas por dia da semana
   const velocityData: VelocityPoint[] = useMemo(() => {
@@ -288,14 +294,14 @@ export const AdminDashboard: React.FC = () => {
                 </button>
               </div>
 
-              {projects.length === 0 ? (
+              {safeProjects.length === 0 ? (
                 <div className="text-center py-6">
                   <FolderKanban className="h-6 w-6 text-zinc-300 mx-auto mb-2" />
                   <p className="text-xs text-zinc-500 font-medium">Nenhum projeto REI cadastrado via GCP.</p>
                 </div>
               ) : (
                 <div className="space-y-2.5">
-                  {projects.slice(0, 4).map((proj) => (
+                  {safeProjects.slice(0, 4).map((proj) => (
                     <div
                       key={proj.id}
                       onClick={() => navigate(`/admin/rei?search=${encodeURIComponent(proj.clientEmail)}`)}
