@@ -125,8 +125,11 @@ const FounderVideoWidget = () => {
     ];
   };
 
+  const [activePills, setActivePills] = useState<string[]>(() => getPagePills(location.pathname));
   const [messages, setMessages] = useState<Message[]>(() => getContextualMessages(location.pathname));
   const [conversationalStep, setConversationalStep] = useState<number>(0);
+  const [showPills, setShowPills] = useState(true);
+  const [extractedData, setExtractedData] = useState<{ company?: string; crm?: string; role?: string; linkedin?: string }>({});
 
   // Automatically close modal and update context when user navigates to another page
   useEffect(() => {
@@ -153,7 +156,6 @@ const FounderVideoWidget = () => {
     const extractedName = email.split('@')[0];
     const firstName = extractedName.split('.')[0];
 
-    // Store in localStorage for persistent recognition across pages & sessions
     try {
       localStorage.setItem('rev_lead_identity', JSON.stringify({
         email,
@@ -164,7 +166,6 @@ const FounderVideoWidget = () => {
     } catch (e) {}
 
     try {
-      // 1. Submit to GCP API / Supabase
       await submitPublicDiagnostic(
         { email, name: extractedName, source: 'founder_ai_chat', company: 'Lead Chat' },
         { source: 'founder_video_widget', type: 'ai_chat_lead', ...utmParams },
@@ -173,7 +174,6 @@ const FounderVideoWidget = () => {
         'lead_capture'
       );
 
-      // 2. Direct GHL Relay Integration with UTM mapping & Tag
       await sendToGHL({
         email,
         name: extractedName,
@@ -201,15 +201,6 @@ const FounderVideoWidget = () => {
       setLoading(false);
     }
   };
-
-  const [showPills, setShowPills] = useState(true);
-  const [extractedData, setExtractedData] = useState<{ company?: string; crm?: string; role?: string; linkedin?: string }>({});
-
-  const [activePills, setActivePills] = useState<string[]>([
-    "📊 Rodar Auditoria de Receita",
-    "🎯 Ver Cases (Heineken, Anhembi)",
-    "💬 Falar com Especialista"
-  ]);
 
   const handleSendMessage = (textToSend?: string) => {
     const text = textToSend || inputText;
