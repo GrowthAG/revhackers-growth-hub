@@ -172,39 +172,61 @@ export default function MaterialLanding() {
                 <div className="max-w-6xl mx-auto px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
                         
-                        {/* Coluna Esquerda: Contexto, O que contém o material e Para quem é */}
-                        <div className="lg:col-span-6 space-y-8">
-                            <div className="space-y-4">
-                                <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight leading-tight">
-                                    Sobre este {material.type}
-                                </h2>
-                                <div 
-                                    className="text-zinc-600 text-sm md:text-base leading-relaxed space-y-3"
-                                    dangerouslySetInnerHTML={{
-                                        __html: DOMPurify.sanitize((material.description || material.subheadline || '').replace(/^<p>|<\/p>$/g, ''))
-                                    }}
-                                />
+                        {/* Coluna Esquerda: Card Sincronizado e Perfeitamente Alinhado com o Formulário */}
+                        <div className="lg:col-span-6 bg-white border border-zinc-200/90 p-8 sm:p-10 rounded-3xl shadow-lg space-y-6 text-left flex flex-col justify-between">
+                            <div className="space-y-6">
+                                {/* Header do Conteúdo */}
+                                <div className="space-y-2">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-700 text-xs font-semibold">
+                                        <span className="w-2 h-2 rounded-full bg-[#00CC6A]" />
+                                        <span>Conteúdo Oficial RevHackers</span>
+                                    </div>
+                                    <h2 className="text-xl sm:text-2xl font-bold text-zinc-950 tracking-tight">
+                                        O que você vai encontrar neste {material.type}
+                                    </h2>
+                                    <div 
+                                        className="text-zinc-600 text-xs sm:text-sm leading-relaxed space-y-3 pt-1"
+                                        dangerouslySetInnerHTML={{
+                                            __html: DOMPurify.sanitize((material.description || material.subheadline || '').replace(/^<p>|<\/p>$/g, ''))
+                                        }}
+                                    />
+                                </div>
+
+                                {/* Destaques e Entregáveis */}
+                                <div className="bg-zinc-50 border border-zinc-200/80 p-6 rounded-2xl space-y-4">
+                                    <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A]" />
+                                        O que você vai receber:
+                                    </h3>
+                                    <ul className="space-y-3.5 text-xs sm:text-sm">
+                                        <li className="flex items-start gap-3 text-zinc-700 font-medium">
+                                            <div className="w-5 h-5 rounded-full bg-[#00CC6A]/10 text-[#00CC6A] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">✓</div>
+                                            <span><strong>Metodologia Prática:</strong> Frameworks e ferramentas prontas para aplicar na sua operação B2B.</span>
+                                        </li>
+                                        <li className="flex items-start gap-3 text-zinc-700 font-medium">
+                                            <div className="w-5 h-5 rounded-full bg-[#00CC6A]/10 text-[#00CC6A] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">✓</div>
+                                            <span><strong>Checklists &amp; Templates:</strong> Materiais testados e validados em mais de R$ 50M em pipeline auditado.</span>
+                                        </li>
+                                        <li className="flex items-start gap-3 text-zinc-700 font-medium">
+                                            <div className="w-5 h-5 rounded-full bg-[#00CC6A]/10 text-[#00CC6A] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">✓</div>
+                                            <span><strong>Acesso Garantido:</strong> Liberação direta após o preenchimento da análise técnica.</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
 
-                            {/* Destaques e Entregáveis */}
-                            <div className="bg-zinc-50/80 border border-zinc-200/80 p-6 sm:p-8 rounded-2xl space-y-4">
-                                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-950">
-                                    O que você vai receber:
-                                </h3>
-                                <ul className="space-y-3.5 text-xs sm:text-sm">
-                                    <li className="flex items-start gap-3 text-zinc-800 font-medium">
-                                        <span className="w-2 h-2 rounded-full bg-[#00CC6A] mt-1.5 shrink-0" />
-                                        <span>Metodologia prática e aplicável imediatamente na sua operação B2B.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3 text-zinc-800 font-medium">
-                                        <span className="w-2 h-2 rounded-full bg-[#00CC6A] mt-1.5 shrink-0" />
-                                        <span>Templates e checklists validados com mais de R$ 50M em pipeline auditado.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3 text-zinc-800 font-medium">
-                                        <span className="w-2 h-2 rounded-full bg-[#00CC6A] mt-1.5 shrink-0" />
-                                        <span>Acesso direto ao material oficial sem custos ou pegadinhas.</span>
-                                    </li>
-                                </ul>
+                            {/* Badge de Autoridade no Rodapé do Card */}
+                            <div className="pt-4 border-t border-zinc-100 flex items-center gap-3">
+                                <img 
+                                    src="/founders/giulliano.jpg" 
+                                    alt="Giulliano Alves" 
+                                    className="w-10 h-10 rounded-full object-cover border border-zinc-200"
+                                    onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+                                />
+                                <div>
+                                    <p className="text-xs font-bold text-zinc-900">Curadoria por Giulliano Alves</p>
+                                    <p className="text-[11px] text-zinc-500">Founder RevHackers · Especialista em RevOps B2B</p>
+                                </div>
                             </div>
                         </div>
 
