@@ -37,16 +37,13 @@ const MaterialModal = ({ isOpen, onClose, material, onSuccess }: MaterialModalPr
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-            <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto bg-white border border-zinc-100 p-12 shadow-none rounded-none">
-                <DialogHeader className="mb-10 text-left space-y-4">
-                    <DialogTitle className="text-sm font-bold text-black uppercase tracking-[0.3em] border-b border-black pb-4 w-fit">
-                        {material.type === 'Consultoria' || material.type === 'Diagnóstico' ? 'Solicitação de Diagnóstico' : 'Acesso ao Material'}
+            <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto bg-white border border-zinc-200/80 p-8 sm:p-10 shadow-2xl rounded-3xl text-left">
+                <DialogHeader className="mb-6 space-y-1 text-left">
+                    <DialogTitle className="text-xl font-bold text-zinc-900 tracking-tight">
+                        Solicitar Análise
                     </DialogTitle>
-                    <DialogDescription className="text-zinc-500 text-xs font-normal leading-relaxed uppercase tracking-widest">
-                        {material.type === 'Consultoria' || material.type === 'Diagnóstico' ? 'Contexto:' : 'Conteúdo Selecionado:'}
-                        <span className="font-bold text-black block mt-2 text-sm leading-tight normal-case tracking-normal">
-                            {cleanTitle(material.title || material.material_name || 'Material')}
-                        </span>
+                    <DialogDescription className="text-xs sm:text-sm text-zinc-500">
+                        Preencha para análise técnica de perfil. Resposta em até 24h.
                     </DialogDescription>
                 </DialogHeader>
 

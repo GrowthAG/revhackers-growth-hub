@@ -208,11 +208,11 @@ export default function MaterialLanding() {
                             </div>
                         </div>
 
-                        {/* Coluna Direita: Formulário Único de Liberação de Acesso */}
-                        <div className="lg:col-span-5 bg-white border border-zinc-200/90 p-8 rounded-2xl shadow-sm space-y-6 sticky top-28">
-                            <div className="text-center space-y-1">
-                                <h3 className="text-lg font-extrabold text-zinc-950 tracking-tight">Liberar Acesso Gratuito</h3>
-                                <p className="text-xs text-zinc-500">Informe seu e-mail corporativo para receber o link de download</p>
+                        {/* Coluna Direita: Formulário Padronizado no Estilo Solicitar Análise */}
+                        <div className="lg:col-span-5 bg-white border border-zinc-200/90 p-8 sm:p-10 rounded-3xl shadow-lg space-y-6 sticky top-28 text-left">
+                            <div className="space-y-1">
+                                <h3 className="text-xl font-bold text-zinc-900 tracking-tight">Solicitar Análise</h3>
+                                <p className="text-xs sm:text-sm text-zinc-500">Preencha para análise técnica de perfil. Resposta em até 24h.</p>
                             </div>
                             
                             <DownloadForm
