@@ -104,7 +104,7 @@ http_response_code($httpCode >= 200 && $httpCode < 300 ? 200 : 200);
 echo $response;
 
 function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactId, $token, $rawData = []) {
-    $tagsStr = is_array($rawData['tags'] ?? null) ? implode(' ', $rawData['tags']) : String($rawData['tags'] ?? '');
+    $tagsStr = is_array($rawData['tags'] ?? null) ? implode(' ', $rawData['tags']) : strval($rawData['tags'] ?? '');
     $actionType = $rawData['actionType'] ?? $rawData['formType'] ?? '';
     
     $isMaterialDownload = !empty($rawData['materialLink']) || 
