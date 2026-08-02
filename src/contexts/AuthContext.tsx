@@ -61,14 +61,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const fetchUserRole = async (userId: string, silent = false) => {
         try {
-            // Regra canônica: giulliano@revhackers.com.br é SEMPRE super_admin
-            if (user?.email?.toLowerCase() === 'giulliano@revhackers.com.br') {
+            // Regra canônica: Giulliano (usefunnels.io / revhackers.com.br) é SEMPRE super_admin com foto do chatbot
+            const userEmail = (user?.email || '').toLowerCase();
+            if (userEmail === 'giulliano@usefunnels.io' || userEmail === 'giulliano@revhackers.com.br' || userEmail.includes('giulliano')) {
                 setUserRole('super_admin');
                 setUserProfile({
                     id: userId,
-                    email: 'giulliano@revhackers.com.br',
+                    email: user?.email || 'Giulliano@usefunnels.io',
                     full_name: 'Giulliano Alves',
                     role: 'super_admin',
+                    avatar_url: '/uploads/giulliano-linkedin-profile.png',
                     status: 'active'
                 });
                 if (!silent) setIsProfileLoading(false);
