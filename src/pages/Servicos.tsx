@@ -1,59 +1,78 @@
-
+import React from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import Section from '@/components/ui/Section';
-import { ArrowUpRight, Cpu, Database, LayoutTemplate, LineChart, MessageSquareCode, Search, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
 import SEO from '@/components/shared/SEO';
+import { RevCardIcon, RevIcon } from '@/components/shared/RevIconLibrary';
 
-const capabilities = [
+const engines = [
   {
-    id: "01",
-    title: "SDR de Inteligência Artificial",
-    description: "Criamos agentes baseados em LLMs avançados para qualificar todos os seus leads. Zero curiosos no caledário dos seus Closers.",
-    tech: ["OpenAI API", "Agentic Workflows", "Vector DBs"],
-    icon: Cpu,
-    slug: "ai-operations"
+    id: "MOTOR 01",
+    title: "IA Operations & SDR Digital",
+    subtitle: "Qualificação Autônoma & Agentes de IA",
+    description: "Agentes autônomos baseados em LLMs avançados treinados no seu playbook para qualificar leads 24/7, responder dúvidas técnicas e agendar diretamente na agenda dos seus Closers.",
+    tech: ["OpenAI API", "Agentic Workflows", "Vector DBs", "WhatsApp API"],
+    icon: RevIcon.Cpu,
+    slug: "ai-operations",
+    badge: "IA & AUTOMAÇÃO"
   },
   {
-    id: "02",
-    title: "Engenharia de CRM (O Cofre)",
-    description: "Infraestrutura comercial blindada e à prova de falhas. Onde seus vendedores não terão desculpas para perder reuniões ou follow-ups.",
-    tech: ["CRM Architecture", "Pipeline Logic", "Data Sync"],
-    icon: Database,
-    slug: "ecossistema-crm"
+    id: "MOTOR 02",
+    title: "Engenharia de CRM & Revenue Operations",
+    subtitle: "Arquitetura Comercial Blindada",
+    description: "Reestruturação profunda da sua plataforma comercial (HubSpot, Salesforce, Pipedrive). Estágios de pipeline padronizados, automações de follow-up, SLA de passagem e dashboards nativos de velocidade.",
+    tech: ["CRM Architecture", "Pipeline Logic", "Data Sync", "n8n / Make"],
+    icon: RevIcon.Database,
+    slug: "ecossistema-crm",
+    badge: "REVOPS & DADOS"
   },
   {
-    id: "03",
-    title: "Follow-Up Implacável (Automations)",
-    description: "Robôs lógicos que perseguem via Whatsapp/Email leads que esfriaram no funil, 24 horas por dia.",
-    tech: ["n8n / Make", "ActiveCampaign", "Webhooks"],
-    icon: Sparkles,
-    slug: "automacao-inteligente"
+    id: "MOTOR 03",
+    title: "Tração & Mídia Paga B2B",
+    subtitle: "Aquisição Preditiva de ICP",
+    description: "Gestão técnica de tráfego injetando MQLs (Marketing Qualified Leads) hiper-qualificados direto no topo do funil. Estratégias de LinkedIn B2B, Google Search e ABM preditivo.",
+    tech: ["LinkedIn B2B", "Google Search", "Meta Ads", "ABM Targeting"],
+    icon: RevIcon.Trending,
+    slug: "tracao-midia-paga",
+    badge: "AQUISIÇÃO & TRÁFEGO"
   },
   {
-    id: "04",
-    title: "Tracionamento B2B (Aquisição)",
-    description: "Gestão técnica de tráfego injetando MQLs (Marketing Qualified Leads) qualificados direto na boca do funil.",
-    tech: ["Meta Ads", "LinkedIn B2B", "Google Engine"],
-    icon: LineChart,
-    slug: "tracao-midia-paga"
+    id: "MOTOR 04",
+    title: "Founder-Led Growth & Web Conversion",
+    subtitle: "Autoridade C-Level & Páginas de Alta Conversão",
+    description: "Transformação da autoridade do fundador e do site da empresa em ímãs de conversão B2B. Posicionamento no LinkedIn, Social Selling e Landing Pages desenvolvidas para máxima taxa de agendamento.",
+    tech: ["LinkedIn Authority", "Social Selling", "Next.js", "CRO Testing"],
+    icon: RevIcon.Sparkles,
+    slug: "founder-led-growth",
+    badge: "AUTORIDADE & CRO"
+  }
+];
+
+const ecosystemSteps = [
+  {
+    step: "01",
+    title: "Aquisição & Atração",
+    desc: "Mídia Paga B2B e Founder-Led Growth capturam o ICP ideal.",
+    icon: RevIcon.Trending
   },
   {
-    id: "05",
-    title: "Filtros de Conversão (Site)",
-    description: "Tear-down de infraestrutura e interfaces web otimizados 100% para fazer o fundador B2B preencher o formulário.",
-    tech: ["CRO Testing", "Next.js", "Analytics"],
-    icon: LayoutTemplate,
-    slug: "web-conversion"
+    step: "02",
+    title: "Qualificação por IA",
+    desc: "SDR Digital atende em segundos, enriquece dados e filtra curiosos.",
+    icon: RevIcon.Cpu
   },
   {
-    id: "06",
-    title: "Processos de Founder (Desmame)",
-    description: "Aulas e playbooks para tirar o Fundador da rua e criar uma equipe comercial que fecha contrato sem depender dele.",
-    tech: ["Playbooks", "Sales SLA", "Handoff"],
-    icon: MessageSquareCode,
-    slug: "founder-led-growth"
+    step: "03",
+    title: "Operação no CRM",
+    desc: "Pipeline blindado com automação de follow-up e SLA comercial.",
+    icon: RevIcon.Database
+  },
+  {
+    step: "04",
+    title: "Fechamento & Escala",
+    desc: "Dashboards de velocidade de receita indicam gargalos e expansão.",
+    icon: RevIcon.Sparkles
   }
 ];
 
@@ -61,73 +80,136 @@ const Servicos = () => {
   return (
     <PageLayout>
       <SEO
-        title="Consultoria de Revenue Operations & Automação B2B"
-        description="Serviços de consultoria em Revenue Operations, IA, CRM e Automação de Vendas B2B em São Paulo e Brasil. Transforme sua operação comercial com a RevHackers."
+        title="Ecossistema de Soluções GTM & RevOps B2B"
+        description="Conheça os 4 Motores do Ecossistema RevHackers: IA Operations, Engenharia de CRM, Tração B2B e Founder-Led Growth. Infraestrutura de receita integrada."
         canonical="https://revhackers.com.br/servicos"
         breadcrumbs={[
           { name: "Home", url: "https://revhackers.com.br/" },
           { name: "Ecossistema", url: "https://revhackers.com.br/servicos" }
         ]}
         faq={[
-          { question: "O que é Revenue Operations (RevOps)?", answer: "Revenue Operations é a metodologia que integra Marketing, Vendas e Customer Success sob uma infraestrutura unificada de dados, automações e processos, eliminando silos e maximizando receita recorrente." },
-          { question: "Como funciona a consultoria da RevHackers?", answer: "Realizamos uma auditoria técnica da sua operação B2B, identificamos vazamentos de receita e implementamos automações de IA, CRM e processos para escalar sua operação comercial." },
-          { question: "Quais empresas a RevHackers atende?", answer: "Atendemos empresas B2B com operações comerciais complexas que buscam escalar receita através de tecnologia, automação e processos de Revenue Operations." }
+          { question: "Como os 4 Motores do Ecossistema funcionam juntos?", answer: "Os 4 Motores operam de forma integrada sob a Metodologia REI: a mídia paga e autoridade atraem o lead, a IA qualifica e enriquece os dados, o CRM operacionaliza a venda e os dashboards medem a velocidade de receita." },
+          { question: "Preciso contratar os 4 Motores simultaneamente?", answer: "Não. Realizamos um diagnóstico preditivo inicial (Metodologia REI) para identificar qual motor está causando gargalo e priorizamos a implementação por ondas de impacto." },
+          { question: "Quanto tempo leva para implementar o Ecossistema?", answer: "As primeiras ondas de automação e CRM entram no ar entre 14 e 30 dias, gerando clareza e previsibilidade imediata no pipeline." }
         ]}
       />
-      {/* Hero Section (BENCHMARK HOMEPAGE HERO) */}
-      <section className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black border-b border-zinc-900">
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
-          <h1 className="font-sans text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] font-extrabold text-white mb-5 leading-[1.1] tracking-tight text-center max-w-3xl mx-auto">
-            Elimine gargalos de receita conectando <span className="text-[#00CC6A]">CRM, ABM, IA e automações em um único motor de vendas.</span>
+
+      {/* Hero Section — Alinhamento Total com o Título 'Ecossistema' */}
+      <section className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-32 pb-20 bg-black border-b border-zinc-900 text-center">
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-[#00CC6A] text-xs font-mono font-bold uppercase tracking-wider">
+            <ShieldCheck size={14} className="text-[#00CC6A]" />
+            <span>ECOSSISTEMA DE ENGENHARIA DE GTM</span>
+          </div>
+
+          <h1 className="font-sans text-[2.25rem] sm:text-[3rem] md:text-[3.5rem] font-extrabold text-white leading-[1.1] tracking-tight max-w-4xl mx-auto">
+            O Ecossistema de Soluções para Escalar <span className="text-[#00CC6A]">Operações B2B de Alto Ticket.</span>
           </h1>
-          <p className="text-zinc-400 mb-8 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto text-center">
-            Engenheiramos toda a infraestrutura de Go-To-Market de ponta a ponta. Unificamos inteligência preditiva, ABM automatizado e CRM para fechar contratos maiores em menos tempo.
+
+          <p className="text-zinc-400 text-base md:text-lg font-normal leading-relaxed max-w-2xl mx-auto">
+            4 Motores Integrados de IA, CRM, Mídia e Autoridade operando sob a Metodologia REI para transformar dados dispersos em uma máquina de receita previsível.
           </p>
-          <div>
-            <Button asChild className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-semibold text-sm h-11 px-6 rounded-lg transition-colors">
-              <Link to="/booking">Auditar Minha Operação →</Link>
+
+          <div className="pt-2 flex flex-col sm:flex-row gap-4 justify-center w-full">
+            <Button asChild size="lg" className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-bold text-sm h-12 px-8 rounded-xl transition-all">
+              <Link to="/booking">
+                Auditar Meu Ecossistema
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="border-zinc-800 bg-zinc-900 text-zinc-300 hover:text-white hover:bg-zinc-800 font-bold text-sm h-12 px-6 rounded-xl">
+              <Link to="/metodologia">
+                Ver Metodologia REI 40Q
+              </Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Capabilities Matrix - Fundo 100% Branco Puro (Zero Cinza, Zero Caixas de Ícones) */}
-      <section className="py-20 bg-white text-zinc-900 border-b border-zinc-200/80">
-        <div className="max-w-6xl mx-auto px-6 space-y-16">
-          
-          {/* Section Header Centralizado */}
-          <div className="max-w-2xl mx-auto text-center space-y-2">
-            <h2 className="text-zinc-900 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-              Sistemas de Crescimento Comercial
+      {/* Fluxo do Ecossistema (Como os 4 Motores Se Conectam) */}
+      <section className="py-20 bg-zinc-950 text-white border-b border-zinc-900">
+        <div className="max-w-6xl mx-auto px-6 space-y-12">
+          <div className="text-center space-y-3 max-w-2xl mx-auto">
+            <span className="text-[#00CC6A] text-xs font-mono font-bold tracking-widest uppercase">
+              ARQUITETURA DE INTEGRAÇÃO
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Como os 4 Motores Conectam Sua Operação
             </h2>
-            <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
-              Não vendemos serviços avulsos. Entregamos infraestrutura de receita escalável e componível.
+            <p className="text-zinc-400 text-xs sm:text-sm">
+              Sem dados duplicados, sem perdas no handoff e com 100% de visibilidade de ponta a ponta.
             </p>
           </div>
 
-          {/* Grid 3 Colunas Editorial Limpa (Sem caixas de ícones) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {capabilities.map((item) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {ecosystemSteps.map((s) => (
+              <div key={s.step} className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 space-y-4 relative group hover:border-zinc-700 transition-all">
+                <div className="flex items-center justify-between">
+                  <RevCardIcon icon={s.icon} size={20} />
+                  <span className="text-xs font-mono font-bold text-zinc-500 bg-zinc-950 px-2.5 py-1 rounded-md border border-zinc-800">
+                    ETAPA {s.step}
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-white tracking-tight">{s.title}</h3>
+                <p className="text-xs text-zinc-400 leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Os 4 Motores do Ecossistema — Design System Preto & Verde */}
+      <section className="py-24 bg-white text-zinc-900 border-b border-zinc-200/80">
+        <div className="max-w-6xl mx-auto px-6 space-y-16">
+          
+          <div className="max-w-3xl mx-auto text-center space-y-3">
+            <span className="text-[#00CC6A] text-xs font-mono font-bold tracking-widest uppercase bg-zinc-950 px-3 py-1 rounded-md border border-zinc-800">
+              MOTORES DE GTM ENGINEERING
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight leading-tight">
+              Os 4 Pilares do Ecossistema RevHackers
+            </h2>
+            <p className="text-zinc-500 text-sm leading-relaxed max-w-xl mx-auto">
+              Cada motor resolve um gargalo específico na jornada de aquisição, qualificação, operação e retenção.
+            </p>
+          </div>
+
+          {/* Grid de 2x2 Colunas Grandes */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {engines.map((item) => (
               <div
                 key={item.id}
-                className="p-6 rounded-xl bg-zinc-50/70 border border-zinc-200/80 hover:border-zinc-300 hover:bg-zinc-50 transition-all flex flex-col justify-between space-y-6"
+                className="p-8 rounded-2xl bg-white border border-zinc-200/90 hover:border-zinc-300 hover:shadow-lg transition-all flex flex-col justify-between space-y-6"
               >
-                <div className="space-y-3">
-                  <span className="text-zinc-400 font-sans font-semibold text-xs tracking-wider block">
-                    {item.id} / SISTEMA
-                  </span>
-                  <h3 className="text-zinc-900 font-bold text-lg tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="text-zinc-500 text-xs leading-relaxed font-normal">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <RevCardIcon icon={item.icon} size={22} />
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-md bg-zinc-950 text-[#00CC6A] border border-zinc-800">
+                      {item.badge}
+                    </span>
+                  </div>
+
+                  <div>
+                    <span className="text-xs font-mono font-bold text-zinc-400 tracking-wider block mb-1">
+                      {item.id}
+                    </span>
+                    <h3 className="text-xl font-bold text-zinc-900 tracking-tight leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs font-semibold text-zinc-600 mt-0.5">
+                      {item.subtitle}
+                    </p>
+                  </div>
+
+                  <p className="text-xs md:text-sm text-zinc-500 leading-relaxed font-normal">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="space-y-4 pt-4 border-t border-zinc-200/60">
+                <div className="space-y-4 pt-4 border-t border-zinc-100">
                   <div className="flex flex-wrap gap-1.5">
                     {item.tech.map((tech) => (
-                      <span key={tech} className="text-[10px] font-semibold text-zinc-600 uppercase bg-white border border-zinc-200 px-2 py-0.5 rounded">
+                      <span key={tech} className="text-[10px] font-semibold text-zinc-700 uppercase bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 rounded-md">
                         {tech}
                       </span>
                     ))}
@@ -135,10 +217,10 @@ const Servicos = () => {
 
                   <Link
                     to={`/servicos/${item.slug}`}
-                    className="inline-flex items-center text-xs font-bold text-zinc-900 uppercase tracking-wider hover:text-zinc-600 transition-colors gap-2"
+                    className="inline-flex items-center text-xs font-bold text-zinc-900 uppercase tracking-wider hover:text-[#00CC6A] transition-colors gap-2 pt-2"
                   >
-                    <span>Explorar Detalhes</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                    <span>Explorar Arquitetura do Motor</span>
+                    <ArrowUpRight className="w-4 h-4 text-zinc-500" />
                   </Link>
                 </div>
               </div>
@@ -147,18 +229,27 @@ const Servicos = () => {
         </div>
       </section>
 
-      {/* CTA Section - Fundo 100% Branco Puro */}
-      <section className="py-20 bg-white text-zinc-900 border-t border-zinc-200/80">
-        <div className="max-w-3xl mx-auto px-6 text-center space-y-4">
-          <h2 className="text-zinc-900 text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Está pronto para a Máquina?
+      {/* CTA Final */}
+      <section className="py-20 bg-zinc-950 text-white border-t border-zinc-900">
+        <div className="max-w-3xl mx-auto px-6 text-center space-y-6">
+          <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mx-auto text-[#00CC6A]">
+            <ShieldCheck size={24} />
+          </div>
+
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Pronto para Instalar o Ecossistema na Sua Empresa?
           </h2>
-          <p className="text-zinc-500 text-sm max-w-xl mx-auto leading-relaxed">
-            Vagas de implementação restritas. Vamos auditar suas finanças e plugar a Automação se houver fit com a RevHackers.
+
+          <p className="text-zinc-400 text-sm max-w-xl mx-auto leading-relaxed">
+            Realizamos uma auditoria preditiva dos seus gargalos atuais para desenhar o plano de implementação sob medida em 30 dias.
           </p>
+
           <div className="pt-2">
-            <Button asChild className="bg-zinc-950 text-white hover:bg-zinc-800 font-bold text-sm h-11 px-8 rounded-xl shadow-xs transition-all">
-              <Link to="/booking">Auditar Minha Operação →</Link>
+            <Button asChild size="lg" className="bg-[#00CC6A] text-black hover:bg-[#00b35e] font-bold text-xs uppercase tracking-wider h-12 px-8 rounded-xl transition-all">
+              <Link to="/booking">
+                Agendar Diagnóstico do Ecossistema
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
             </Button>
           </div>
         </div>
