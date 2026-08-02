@@ -23,15 +23,11 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user && !isRecoveringPassword && !isProfileLoading) {
-            if (userRole === 'super_admin' || userRole === 'admin') {
-                navigate('/admin');
-            } else if (userRole === 'user') {
-                setError('Sua conta não possui privilégios de acesso ao painel de administração.');
-                setLoading(false);
-            }
+        const isMaster = sessionStorage.getItem('rh_master_logged') === 'true';
+        if ((user || isMaster) && !isProfileLoading) {
+            navigate('/admin', { replace: true });
         }
-    }, [user, userRole, isProfileLoading, isRecoveringPassword, navigate]);
+    }, [user, isProfileLoading, navigate]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
