@@ -84,8 +84,8 @@ export const AdminDashboard: React.FC = () => {
     const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     const counts: Record<string, number> = { Seg: 0, Ter: 0, Qua: 0, Qui: 0, Sex: 0, Sáb: 0, Dom: 0 };
     
-    projects.forEach(p => {
-      if (p.createdAt) {
+    safeProjects.forEach(p => {
+      if (p && p.createdAt) {
         const d = new Date(p.createdAt);
         const dayName = days[d.getDay()];
         if (counts[dayName] !== undefined) {
@@ -95,15 +95,15 @@ export const AdminDashboard: React.FC = () => {
     });
 
     return [
-      { day: 'Seg', concluidas: counts.Seg || (projects.length > 0 ? Math.ceil(projects.length * 0.25) : 0) },
-      { day: 'Ter', concluidas: counts.Ter || (projects.length > 0 ? Math.ceil(projects.length * 0.35) : 0) },
-      { day: 'Qua', concluidas: counts.Qua || (projects.length > 0 ? Math.ceil(projects.length * 0.30) : 0) },
-      { day: 'Qui', concluidas: counts.Qui || (projects.length > 0 ? Math.ceil(projects.length * 0.40) : 0) },
-      { day: 'Sex', concluidas: counts.Sex || (projects.length > 0 ? Math.ceil(projects.length * 0.20) : 0) },
+      { day: 'Seg', concluidas: counts.Seg || (safeProjects.length > 0 ? Math.ceil(safeProjects.length * 0.25) : 0) },
+      { day: 'Ter', concluidas: counts.Ter || (safeProjects.length > 0 ? Math.ceil(safeProjects.length * 0.35) : 0) },
+      { day: 'Qua', concluidas: counts.Qua || (safeProjects.length > 0 ? Math.ceil(safeProjects.length * 0.30) : 0) },
+      { day: 'Qui', concluidas: counts.Qui || (safeProjects.length > 0 ? Math.ceil(safeProjects.length * 0.40) : 0) },
+      { day: 'Sex', concluidas: counts.Sex || (safeProjects.length > 0 ? Math.ceil(safeProjects.length * 0.20) : 0) },
       { day: 'Sáb', concluidas: counts.Sáb || 0 },
       { day: 'Dom', concluidas: counts.Dom || 0 },
     ];
-  }, [projects]);
+  }, [safeProjects]);
 
   const totalVelocity = velocityData.reduce((acc, curr) => acc + curr.concluidas, 0);
 
