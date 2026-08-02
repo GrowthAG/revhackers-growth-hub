@@ -317,7 +317,7 @@ const AdminProposalNew = () => {
                             }}
                             className="bg-revgreen hover:bg-revgreen-hover text-zinc-950 font-bold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 transition-colors"
                         >
-                            ⚡ INJETAR DADOS DO BANCO DE DADOS
+                            ✨ INJETAR DADOS DO BANCO DE DADOS
                         </button>
                     </div>
 
