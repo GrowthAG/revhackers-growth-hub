@@ -147,29 +147,16 @@ export const useDownloadForm = (
                               roleLower.includes('gerente') ||
                               roleLower.includes('head');
 
-      if (isDecisionMaker) {
-        // Open material in new tab
-        if (linkMaterial) {
-          window.open(linkMaterial, '_blank');
-        }
-        // Redirect to booking with company & lead context
-        toast({
-          title: "Acesso Liberado!",
-          description: "Abrindo material e direcionando para a sessão de arquitetura.",
-          duration: 3000
-        });
-        const bookingUrl = `/booking?company=${encodeURIComponent(formData.company)}&name=${encodeURIComponent(formData.firstName)}&role=${encodeURIComponent(formData.role)}&material=${encodeURIComponent(materialType)}`;
-        setTimeout(() => {
-          navigate(bookingUrl);
-        }, 800);
-      } else {
-        setIsSuccess(true);
-        toast({
-          title: "Sucesso!",
-          description: "Seu material está pronto para acesso.",
-          duration: 5000
-        });
-      }
+      // Redirect ALL leads directly to booking page without opening new tabs
+      toast({
+        title: "Dados Recebidos!",
+        description: "Redirecionando para a sessão técnica. O material será enviado no seu e-mail.",
+        duration: 3000
+      });
+      const bookingUrl = `/booking?company=${encodeURIComponent(formData.company)}&name=${encodeURIComponent(formData.firstName)}&role=${encodeURIComponent(formData.role)}&material=${encodeURIComponent(materialType)}`;
+      setTimeout(() => {
+        navigate(bookingUrl);
+      }, 500);
 
     } catch (error) {
       console.error('Error submitting form:', error);
