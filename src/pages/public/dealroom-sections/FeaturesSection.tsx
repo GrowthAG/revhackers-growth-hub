@@ -7,7 +7,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
     'Bot': <Bot className="w-6 h-6 text-white" />,
     'MessageSquareText': <MessageSquareText className="w-6 h-6 text-white" />,
     'Cpu': <Cpu className="w-6 h-6 text-white" />,
-    'Zap': <Zap className="w-6 h-6 text-white" />
+    'Sparkles': <Sparkles className="w-6 h-6 text-white" />
 };
 
 export default function FeaturesSection({ proposal }: { proposal: any }) {
@@ -44,7 +44,7 @@ export default function FeaturesSection({ proposal }: { proposal: any }) {
                     {features.map((feature: any, i: number) => (
                         <div key={i} className="bg-zinc-900 border border-zinc-800 p-10 lg:p-12 rounded-3xl hover:-translate-y-2 transition-transform duration-300 group shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]">
                             <div className="w-14 h-14 bg-zinc-800 rounded-2xl flex items-center justify-center mb-8 border border-zinc-700/50 group-hover:border-[#00CC6A]/50 transition-colors">
-                                {ICON_MAP[feature.icon] || <Zap className="w-6 h-6 text-white" />}
+                                {ICON_MAP[feature.icon] || <Sparkles className="w-6 h-6 text-white" />}
                             </div>
                             <h3 className="text-sm font-black text-white uppercase tracking-widest mb-4">
                                 <EditableField path={`crm_data.live_proposal.features.${i}.title`} placeholder="NOME DO MÓDULO" />

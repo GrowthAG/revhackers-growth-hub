@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card } from '@/components/ui/card';
-import { XCircle, CheckCircle2, AlertTriangle, TrendingUp, Zap } from 'lucide-react';
+import { XCircle, CheckCircle2, AlertTriangle, TrendingUp, Sparkles } from 'lucide-react';
 
 interface CardItem {
     title: string;
@@ -23,7 +23,7 @@ const ConversionCards = ({ title, items, onCTAClick }: ConversionCardsProps) => 
             case 'danger': return <XCircle className={iconClasses} />;
             case 'success': return <CheckCircle2 className={iconClasses} />;
             case 'warning': return <AlertTriangle className={iconClasses} />;
-            case 'info': return <Zap className={iconClasses} />;
+            case 'info': return <Sparkles className={iconClasses} />;
             default: return <XCircle className={iconClasses} />;
         }
     };

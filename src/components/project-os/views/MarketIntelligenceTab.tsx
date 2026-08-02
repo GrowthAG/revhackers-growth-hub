@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
-    Loader2, Zap, Target, Search, Linkedin, Activity,
+    Loader2, Sparkles, Target, Search, Linkedin, Activity,
     BrainCircuit, Users, Building2, Globe, TrendingUp,
     BarChart2, RefreshCw, Lightbulb, AlertCircle, Wrench, Focus, Crosshair
 } from 'lucide-react';
@@ -175,7 +175,7 @@ export const MarketIntelligenceTab: React.FC<MarketIntelligenceTabProps> = ({ pr
                     >
                         {isGenerating
                             ? <><Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> GPT-4.5...</>
-                            : <><Zap className="w-3.5 h-3.5 mr-1.5" /> Gerar Análise IA</>
+                            : <><Sparkles className="w-3.5 h-3.5 mr-1.5" /> Gerar Análise IA</>
                         }
                     </Button>
                 </div>
@@ -316,7 +316,7 @@ export const MarketIntelligenceTab: React.FC<MarketIntelligenceTabProps> = ({ pr
                             {/* Plano de Ação (Oportunidades) */}
                             <div className="p-8 space-y-4 bg-zinc-50/30">
                                 <p className="text-xxs font-black text-zinc-400 uppercase tracking-widest flex items-center gap-2 mb-6">
-                                    <Zap size={14} className="text-[#00CC6A]" /> Plano de Ação Estratégico
+                                    <Sparkles size={14} className="text-[#00CC6A]" /> Plano de Ação Estratégico
                                 </p>
                                 <ul className="space-y-4">
                                     {(aiAnalysis.oportunidades_estrategicas || []).map((opt: string, i: number) => (

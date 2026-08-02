@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Database, Zap, ShieldCheck, CheckCircle2, Layers, Repeat, Globe, Copy, Server } from 'lucide-react';
+import { Database, Sparkles, ShieldCheck, CheckCircle2, Layers, Repeat, Globe, Copy, Server } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import StrategicContext from '../components/StrategicContext';
@@ -180,7 +180,7 @@ RESULTADO: 3-5% de 'Ressurreição' de pipeline sem esforço humano.`
                 </Card>
 
                 <h2 className="font-bold text-zinc-900 mb-8 mt-16 flex items-center gap-3">
-                    <Zap className="w-6 h-6 text-revgreen" />
+                    <Sparkles className="w-6 h-6 text-revgreen" />
                     Fluxos Lógicos (Blueprints)
                 </h2>
 

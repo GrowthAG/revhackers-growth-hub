@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import {
-    Loader2, Building2, Globe, Users, Zap, BrainCircuit,
+    Loader2, Building2, Globe, Users, Sparkles, BrainCircuit,
     ArrowRight, CheckCircle2, Flame, UserCircle, Target, Briefcase, Activity, Linkedin, ShieldCheck,
     RefreshCw, Mail, Search, Edit3, Save, PlayCircle, FileText, UserPlus, Trash2, HeartHandshake, EyeOff
 } from 'lucide-react';
@@ -401,7 +401,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
                             {/* Proxima acao */}
                             {lead?.nextAction && (
                                 <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 flex items-center gap-3">
-                                    <Zap className="w-4 h-4 text-zinc-400 shrink-0" />
+                                    <Sparkles className="w-4 h-4 text-zinc-400 shrink-0" />
                                     <div>
                                         <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400 mb-0.5">Proxima Acao</p>
                                         <p className="text-sm font-bold text-zinc-900">{lead.nextAction}</p>

@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Mail, Zap, ShieldCheck, CheckCircle2, TrendingUp, AlertTriangle, Fingerprint, Copy } from 'lucide-react';
+import { Mail, Sparkles, ShieldCheck, CheckCircle2, TrendingUp, AlertTriangle, Fingerprint, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import StrategicContext from '../components/StrategicContext';
@@ -119,7 +119,7 @@ Obrigado pela ajuda,
         </p>
 
         <h2 className="font-bold text-zinc-900 mb-8 mt-16 flex items-center gap-3">
-          <Zap className="w-6 h-6 text-revgreen" />
+          <Sparkles className="w-6 h-6 text-revgreen" />
           3 Estratégias que Sobreviveram a 2025
         </h2>
 

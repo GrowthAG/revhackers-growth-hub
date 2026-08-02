@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Users, AlertTriangle, Briefcase, Zap, ArrowRight, BrainCircuit, PenTool, Database, CheckCircle2, Copy } from 'lucide-react';
+import { Users, AlertTriangle, Briefcase, Sparkles, ArrowRight, BrainCircuit, PenTool, Database, CheckCircle2, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
@@ -19,7 +19,7 @@ const GrowthTeamLeanArticle = ({ onCTAClick }: { onCTAClick?: () => void }) => {
         {
             title: "Full-Stack Dev",
             desc: "O executor. Growth exige mexer no produto, instalar pixels complexos e criar landing pages em horas, não semanas. O dev de growth aceita 'codar feio' para validar rápido.",
-            icon: <Zap className="w-5 h-5 text-revgreen" />
+            icon: <Sparkles className="w-5 h-5 text-revgreen" />
         },
         {
             title: "Product Designer",

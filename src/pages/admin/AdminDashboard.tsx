@@ -170,7 +170,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs hover:border-zinc-300 transition-all">
             <div className="flex items-center justify-between text-zinc-500 mb-2">
               <span className="text-xs font-medium">Projetos REI</span>
-              <Zap size={16} className="text-[#00CC6A]" />
+              <Sparkles size={16} className="text-[#00CC6A]" />
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-zinc-900 tabular-nums">{projects.length}</span>

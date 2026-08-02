@@ -3,7 +3,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Section from '@/components/ui/Section';
-import { ArrowUpRight, Cpu, Database, LayoutTemplate, LineChart, MessageSquareCode, Search, Zap } from 'lucide-react';
+import { ArrowUpRight, Cpu, Database, LayoutTemplate, LineChart, MessageSquareCode, Search, Sparkles } from 'lucide-react';
 import SEO from '@/components/shared/SEO';
 
 const capabilities = [
@@ -28,7 +28,7 @@ const capabilities = [
     title: "Follow-Up Implacável (Automations)",
     description: "Robôs lógicos que perseguem via Whatsapp/Email leads que esfriaram no funil, 24 horas por dia.",
     tech: ["n8n / Make", "ActiveCampaign", "Webhooks"],
-    icon: Zap,
+    icon: Sparkles,
     slug: "automacao-inteligente"
   },
   {

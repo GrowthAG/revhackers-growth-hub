@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Search, CheckCircle2, Zap } from 'lucide-react';
+import { Loader2, Search, CheckCircle2, Sparkles } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { scraperGcpAdapter } from '@/api/adapters/scraper-gcp';
 
@@ -157,7 +157,7 @@ export default function StepFounderLinkedIn({ form }: StepFounderProps) {
 
                 <div className="space-y-2">
                     <Label className="text-xs font-bold uppercase tracking-wide text-zinc-500 flex items-center gap-2">
-                        <Zap className="h-4 w-4 text-amber-500" /> Seus Diferenciais Estratégicos (Superpowers) *
+                        <Sparkles className="h-4 w-4 text-amber-500" /> Seus Diferenciais Estratégicos (Superpowers) *
                     </Label>
                     <Textarea
                         {...form.register('founder_superpowers')}

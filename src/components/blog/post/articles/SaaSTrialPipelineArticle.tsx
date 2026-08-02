@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Mail, Zap, XCircle, TrendingUp, CheckCircle2, AlertTriangle, ArrowRight, Copy } from 'lucide-react';
+import { Mail, Sparkles, XCircle, TrendingUp, CheckCircle2, AlertTriangle, ArrowRight, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import StrategicContext from '../components/StrategicContext';

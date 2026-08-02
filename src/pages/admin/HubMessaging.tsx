@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Hash, Send, Loader2, MessageSquare, Zap,
+  Hash, Send, Loader2, MessageSquare, Sparkles,
   FolderKanban, CheckSquare, GitBranch, ChevronDown, ChevronRight
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -364,7 +364,7 @@ export default function HubMessaging() {
                         : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'
                     )}
                   >
-                    <Zap className="w-3.5 h-3.5 shrink-0 text-[#00CC6A]" />
+                    <Sparkles className="w-3.5 h-3.5 shrink-0 text-[#00CC6A]" />
                     <span className="text-[13px] font-medium truncate">{conv.name}</span>
                   </button>
                 ))}
@@ -389,7 +389,7 @@ export default function HubMessaging() {
               {/* Header do canal */}
               <div className="px-6 py-3.5 border-b border-zinc-100 flex items-center gap-3 shrink-0 bg-white">
                 {activeConv.type === 'project'
-                  ? <Zap className="w-4 h-4 text-[#00CC6A] shrink-0" />
+                  ? <Sparkles className="w-4 h-4 text-[#00CC6A] shrink-0" />
                   : <Hash className="w-4 h-4 text-zinc-400 shrink-0" />
                 }
                 <div>
@@ -410,7 +410,7 @@ export default function HubMessaging() {
                   <div className="flex flex-col items-center justify-center h-full text-center pb-8">
                     <div className="w-12 h-12 border border-zinc-200 flex items-center justify-center mb-4">
                       {activeConv.type === 'project'
-                        ? <Zap className="w-5 h-5 text-[#00CC6A]" strokeWidth={1.5} />
+                        ? <Sparkles className="w-5 h-5 text-[#00CC6A]" strokeWidth={1.5} />
                         : <MessageSquare className="w-5 h-5 text-zinc-300" strokeWidth={1.5} />
                       }
                     </div>

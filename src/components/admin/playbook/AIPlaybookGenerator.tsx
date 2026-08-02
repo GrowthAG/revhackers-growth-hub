@@ -3,7 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Zap, Send, FileText, CheckCircle2, Cpu, AlertCircle } from 'lucide-react';
+import { Loader2, Sparkles, Send, FileText, CheckCircle2, Cpu, AlertCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
 interface AIPlaybookGeneratorProps {
@@ -188,7 +188,7 @@ export const AIPlaybookGenerator: React.FC<AIPlaybookGeneratorProps> = ({ projec
                         {isGenerating ? (
                             <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Processando Contexto...</>
                         ) : (
-                            <><Zap className="w-4 h-4 mr-2" /> Gerar Base Automática</>
+                            <><Sparkles className="w-4 h-4 mr-2" /> Gerar Base Automática</>
                         )}
                     </Button>
                 </div>
@@ -232,7 +232,7 @@ export const AIPlaybookGenerator: React.FC<AIPlaybookGeneratorProps> = ({ projec
                     {!content && !isGenerating && (
                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-50/80 backdrop-blur-sm z-10 text-center px-12">
                             <div className="w-16 h-16 bg-white border border-zinc-200 flex items-center justify-center mb-4 shadow-sm">
-                                <Zap className="w-6 h-6 text-zinc-300" />
+                                <Sparkles className="w-6 h-6 text-zinc-300" />
                             </div>
                             <h4 className="text-lg font-bold text-zinc-900 mb-2">Tela de Refinamento</h4>
                             <p className="text-sm text-zinc-500 max-w-sm">

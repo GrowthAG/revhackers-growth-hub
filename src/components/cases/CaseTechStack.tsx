@@ -1,9 +1,13 @@
+import { Settings, Activity, BarChart3, Globe, Database, Mail } from 'lucide-react';
 
-import { Settings, Zap, BarChart3, Globe, Database, Mail } from 'lucide-react';
+interface TechItem {
+    name: string;
+    icon?: any;
+}
 
 interface CaseTechStackProps {
     category: string;
-    customTools?: string[];
+    customTools?: (string | TechItem)[];
 }
 
 const CaseTechStack = ({ category, customTools }: CaseTechStackProps) => {
@@ -11,7 +15,7 @@ const CaseTechStack = ({ category, customTools }: CaseTechStackProps) => {
     const getStack = (cat: string) => {
         const defaultStack = [
             { name: "Analytics", icon: BarChart3 },
-            { name: "Automation", icon: Zap },
+            { name: "Automation", icon: Activity },
             { name: "CRM", icon: Database },
         ];
 

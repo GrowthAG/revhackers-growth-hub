@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, ShieldCheck, Merge, Zap, Users, Copy, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Merge, Sparkles, Users, Copy, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from 'react-router-dom';

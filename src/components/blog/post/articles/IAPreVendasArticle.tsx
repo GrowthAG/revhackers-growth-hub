@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Bot, Zap, ShieldCheck, CheckCircle2, Cpu, BrainCircuit, Terminal, Copy } from 'lucide-react';
+import { Bot, Sparkles, ShieldCheck, CheckCircle2, Cpu, BrainCircuit, Terminal, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import StrategicContext from '../components/StrategicContext';
@@ -137,7 +137,7 @@ Não use exclamações.`
                                 <p className="text-zinc-600 text-sm font-mono leading-relaxed italic">"{app.example}"</p>
                             </div>
                             <div className="mt-4 flex items-center gap-2 text-sm text-emerald-700 font-bold">
-                                <Zap className="w-4 h-4" />
+                                <Sparkles className="w-4 h-4" />
                                 Impacto: {app.results}
                             </div>
                         </div>

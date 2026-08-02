@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Video, Target, Zap, AlertTriangle, CheckCircle2, Copy, MonitorPlay } from 'lucide-react';
+import { ArrowRight, Video, Target, Sparkles, AlertTriangle, CheckCircle2, Copy, MonitorPlay } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -130,7 +130,7 @@ Abs,
                                 <p className="text-zinc-900 font-medium italic m-0">"{step.script}"</p>
                             </div>
                             <div className="flex items-center gap-2 text-sm text-emerald-700 font-bold">
-                                <Zap className="w-4 h-4" />
+                                <Sparkles className="w-4 h-4" />
                                 {step.impact}
                             </div>
                         </div>

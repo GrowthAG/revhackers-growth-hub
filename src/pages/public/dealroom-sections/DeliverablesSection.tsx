@@ -96,7 +96,7 @@ export default function DeliverablesSection({ proposal }: { proposal: any }) {
                     {/* COL 3 */}
                     <div className="bg-[#F9FAFB] border border-zinc-200 p-12 lg:p-14 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] relative overflow-hidden group">
                         <div className="absolute -top-4 -right-4 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                            <Zap className="w-32 h-32 text-black" />
+                            <FolderKanban className="w-32 h-32 text-black" />
                         </div>
                         <h3 className="text-sm font-black text-zinc-900 uppercase tracking-widest mb-8 border-b border-zinc-200 pb-4 relative z-10">
                             <EditableField path="crm_data.live_proposal.deliverables.2.category" placeholder="Hand-off & Integração Zoho" />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Play, X, Loader2, RefreshCw, BarChart2, ShieldCheck, Zap, Layers, Target, Compass, Users, Sparkles, ArrowRight, Share2, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { Play, X, Loader2, RefreshCw, BarChart2, ShieldCheck, Sparkles, Layers, Target, Compass, Users, ArrowRight, Share2, TrendingUp, CheckCircle2 } from 'lucide-react';
 import FrameworkCard from '@/components/growthmap/FrameworkCard';
 import REIBridge from '@/components/growthmap/REIBridge';
 import {
@@ -273,7 +273,7 @@ export default function GrowthMap() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
               <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-5 space-y-2">
                 <span className="text-[11px] font-sans font-bold text-[#00CC6A] uppercase tracking-wider block flex items-center gap-1.5">
-                  <Zap size={14} /> VETORES DE CRESCIMENTO PREDITIVO
+                  <Sparkles size={14} /> VETORES DE CRESCIMENTO PREDITIVO
                 </span>
                 <p className="text-xs text-zinc-300 leading-relaxed font-medium">
                   <strong className="text-white">Adoção de Automações por IA:</strong> +2,5 mi de novos CNPJs abertos buscam processos automatizados para operar com times enxutos.

@@ -10,7 +10,7 @@ import {
     Mail,
     Building2,
     Loader2,
-    Zap,
+    Sparkles,
     ExternalLink,
     MapPin,
     Briefcase,
@@ -163,7 +163,7 @@ export const AdminClients = () => {
                     <div className="bg-white border border-zinc-200/80 rounded-xl p-5 shadow-xs hover:border-zinc-300 transition-all">
                         <div className="flex items-center justify-between text-zinc-500 mb-2">
                             <span className="text-xs font-medium text-zinc-500">Projetos REI</span>
-                            <Zap size={15} className="text-[#00CC6A]" />
+                            <Sparkles size={15} className="text-[#00CC6A]" />
                         </div>
                         <div className="flex items-baseline gap-2">
                             <span className="text-2xl font-bold text-zinc-900 tabular-nums">{reiProjects.length}</span>
@@ -333,7 +333,7 @@ export const AdminClients = () => {
                                                             className="h-8 px-2.5 rounded-md hover:bg-zinc-100 text-zinc-700 text-[11px] font-mono font-bold gap-1 border border-zinc-200 bg-white"
                                                             title="Ver Projetos REI"
                                                         >
-                                                            <Zap size={13} className="text-[#00CC6A]" /> REI
+                                                            <Sparkles size={13} className="text-[#00CC6A]" /> REI
                                                         </Button>
                                                         <Button
                                                             variant="ghost"

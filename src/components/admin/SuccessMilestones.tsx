@@ -31,7 +31,7 @@ const PHASE_CONFIG: Record<string, { label: string; color: string; bg: string }>
 };
 
 const OWNER_CONFIG: Record<string, { label: string; icon: typeof Users }> = {
-    revhackers: { label: 'RevHackers', icon: Zap },
+    revhackers: { label: 'RevHackers', icon: Sparkles },
     cliente: { label: 'Cliente', icon: Target },
     ambos: { label: 'Ambos', icon: Users },
 };

@@ -340,7 +340,7 @@ function BudgetInvestmentView({ plan, onBudgetChange }: { plan: any; onBudgetCha
                 <div className="grid md:grid-cols-2 gap-4">
                     <div className="border border-zinc-200 p-6 ">
                         <div className="flex items-center gap-2 mb-3">
-                            <Zap className="w-4 h-4 text-zinc-400" />
+                            <Sparkles className="w-4 h-4 text-zinc-400" />
                             <p className="text-xs text-zinc-400 uppercase tracking-[0.2em] font-bold">{config.fee.label}</p>
                         </div>
                         <p className="text-2xl font-bold text-black mb-1">{P(config.fee.range[0])} – {P(config.fee.range[1])}</p>

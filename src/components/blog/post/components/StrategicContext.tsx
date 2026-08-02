@@ -1,5 +1,4 @@
 
-import { Zap } from 'lucide-react';
 import { ReactNode } from 'react';
 
 interface StrategicContextProps {

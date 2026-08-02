@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, ShieldCheck, Target, Zap, TrendingUp, AlertTriangle, Copy, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Target, Sparkles, TrendingUp, AlertTriangle, Copy, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from 'react-router-dom';

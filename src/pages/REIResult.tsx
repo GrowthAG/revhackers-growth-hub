@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Zap, Target, Loader2, Share2, Check, Globe } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Sparkles, Target, Loader2, Share2, Check, Globe } from 'lucide-react';
 import { getReiProjectById } from '@/api/reiProjects';
 // import PageLayout from '@/components/layout/PageLayout'; // Not used in this layout
 // import Section from '@/components/ui/Section'; // Not used
@@ -275,7 +275,7 @@ export default function REIResult() {
 
                         <div className="flex flex-col items-center justify-center text-center mt-12 mb-16">
                             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 text-zinc-400 text-xxs uppercase tracking-[0.2em] mb-6">
-                                <Zap className="w-3 h-3" /> {content.title}
+                                <Sparkles className="w-3 h-3" /> {content.title}
                             </div>
                             <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4">
                                 {result.score}

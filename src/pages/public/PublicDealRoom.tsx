@@ -118,7 +118,7 @@ const RoadmapDisplay = ({ scope, proposal }: { scope: any, proposal: any }) => {
             <div className="relative flex justify-center pt-8">
                 <div className="z-10 bg-zinc-100 p-2 border border-zinc-200">
                     <div className="w-12 h-12 bg-zinc-900 text-white flex items-center justify-center">
-                        <Zap className="w-6 h-6 fill-white" />
+                        <FolderKanban className="w-6 h-6 text-white" />
                     </div>
                 </div>
             </div>

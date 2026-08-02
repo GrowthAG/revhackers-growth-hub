@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import AdminLayout from '@/components/layout/AdminLayout';
-import { Plus, Search, ArrowLeft, Zap, CheckCircle2, Clock, FolderKanban, ExternalLink } from 'lucide-react';
+import { Plus, Search, ArrowLeft, CheckCircle2, Clock, FolderKanban, ExternalLink, Sparkles } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -145,7 +145,7 @@ const AdminProjects: React.FC = () => {
               onClick={() => navigate('/rei/wizard')}
               className="bg-[#00CC6A] text-zinc-950 hover:bg-[#00b35e] rounded-lg h-9 px-4 text-xs font-semibold tracking-wide shadow-xs gap-2 flex items-center transition-all"
             >
-              <Zap size={15} className="fill-zinc-950" /> 📋 Iniciar Call REI (40 Perguntas)
+              <FolderKanban size={15} className="fill-zinc-950 text-zinc-950" /> 📋 Iniciar Call REI (40 Perguntas)
             </Button>
             <Button
               onClick={() => navigate('/admin/rei/novo')}

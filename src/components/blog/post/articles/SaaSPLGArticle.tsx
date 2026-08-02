@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { MousePointerClick, Zap, Users, ShieldCheck, CheckCircle2, TrendingUp, AlertTriangle, Play, Mail, Copy } from 'lucide-react';
+import { MousePointerClick, Sparkles, Users, ShieldCheck, CheckCircle2, TrendingUp, AlertTriangle, Play, Mail, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import StrategicContext from '../components/StrategicContext';

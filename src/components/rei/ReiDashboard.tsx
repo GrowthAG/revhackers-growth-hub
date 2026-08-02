@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Target, Share2, ArrowRight, Zap, TrendingUp, BarChart2, Loader2, Globe } from 'lucide-react';
+import { Target, Share2, ArrowRight, Activity, TrendingUp, BarChart2, Loader2, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { generateReiPdf } from '@/utils/pdfGenerator';

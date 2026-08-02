@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Rocket, Zap, Users, ShieldCheck, CheckCircle2, TrendingUp, AlertTriangle, Play, MousePointerClick, Copy } from 'lucide-react';
+import { Rocket, Sparkles, Users, ShieldCheck, CheckCircle2, TrendingUp, AlertTriangle, Play, MousePointerClick, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import StrategicContext from '../components/StrategicContext';
@@ -77,7 +77,7 @@ Abs,
 
     const anatomy = [
         { label: "ACQ", title: "Aquisição", desc: "O produto é a isca. SEO e Conteúdo trazem o usuário para testar grátis.", icon: <Users className="w-5 h-5 text-zinc-600" /> },
-        { label: "ACT", title: "Ativação", desc: "O usuário sente o valor (Aha Moment) antes de pagar.", icon: <Zap className="w-5 h-5 text-yellow-500" /> },
+        { label: "ACT", title: "Ativação", desc: "O usuário sente o valor (Aha Moment) antes de pagar.", icon: <Sparkles className="w-5 h-5 text-yellow-500" /> },
         { label: "RET", title: "Retenção", desc: "O produto cria hábito. O uso se torna diário/semanal.", icon: <TrendingUp className="w-5 h-5 text-zinc-700" /> },
         { label: "REF", title: "Referral", desc: "O usuário ama tanto que convida outros (Growth Loop).", icon: <Rocket className="w-5 h-5 text-revgreen" /> }
     ];

@@ -124,7 +124,7 @@ function PersonaCard({ persona, index }: { persona: any; index: number }) {
                     <EditableField path={`persona_data.personas.${index}.pain`} className="text-xs text-zinc-800 leading-relaxed font-medium" placeholder={p.pain} multiline />
                 </div>
                 <div className="bg-zinc-50 border border-zinc-200 rounded p-3">
-                    <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><Zap className="w-3 h-3" /> Evento Crítico</p>
+                    <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><Sparkles className="w-3 h-3" /> Evento Crítico</p>
                     <EditableField path={`persona_data.personas.${index}.trigger`} className="text-xs text-zinc-800 leading-relaxed font-medium" placeholder={p.trigger} multiline />
                 </div>
             </div>
