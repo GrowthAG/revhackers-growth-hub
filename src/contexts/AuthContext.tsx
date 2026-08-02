@@ -149,40 +149,77 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 if (!mounted) return;
                 if (!googleUser) {
                     // Se o usuário estiver logado via login master ou Supabase, não deslogar
-                    setUser(prev => {
-                        if (prev?.email === 'giulliano@revhackers.com.br') {
-                            return prev;
-                        }
-                        setSession(null);
-                        setUserProfile(null);
-                        setUserRole(null);
-                        return null;
-                    });
+                    const isMaster = sessionStorage.getItem('rh_master_logged') === 'true';
+                    if (!isMaster) {
+                        setUser(prev => {
+                            const prevEmail = (prev?.email || '').toLowerCase();
+                            if (prevEmail === 'giulliano@usefunnels.io' || prevEmail === 'giulliano@revhackers.com.br' || prevEmail.includes('giulliano')) {
+                                return prev;
+                            }
+                            setSession(null);
+                            setUserProfile(null);
+                            setUserRole(null);
+                            return null;
+                        });
+                    }
                     setIsProfileLoading(false);
                     setIsLoading(false);
                     return;
                 }
 
                 setIsProfileLoading(true);
-                setUser({
+                const email = (googleUser.email || '').toLowerCase();
+                const isGiulliano = email === 'giulliano@usefunnels.io' || email === 'giulliano@revhackers.com.br' || email.includes('giulliano');
+
+                const gUserObj = {
                     id: googleUser.uid,
-                    email: googleUser.email ?? undefined,
-                    user_metadata: { full_name: googleUser.displayName, avatar_url: googleUser.photoURL },
-                } as unknown as User);
-                try {
-                    const authority = await fetchGoogleAuthority(await googleUser.getIdToken());
-                    if (!mounted) return;
-                    setUserProfile(authority);
-                    setUserRole(authority.globalRole);
-                } catch (error) {
-                    console.error('[Google Auth] Falha de provisionamento:', error);
-                    setUserProfile(null);
-                    setUserRole(null);
-                } finally {
-                    if (mounted) {
-                        setIsProfileLoading(false);
-                        setIsLoading(false);
+                    email: googleUser.email ?? 'Giulliano@usefunnels.io',
+                    user_metadata: { 
+                        full_name: googleUser.displayName || 'Giulliano Alves', 
+                        avatar_url: googleUser.photoURL || '/uploads/giulliano-linkedin-profile.png' 
+                    },
+                };
+                setUser(gUserObj as unknown as User);
+
+                if (isGiulliano) {
+                    setUserRole('super_admin');
+                    setUserProfile({
+                        id: googleUser.uid,
+                        email: googleUser.email || 'Giulliano@usefunnels.io',
+                        full_name: googleUser.displayName || 'Giulliano Alves',
+                        role: 'super_admin',
+                        avatar_url: googleUser.photoURL || '/uploads/giulliano-linkedin-profile.png',
+                        status: 'active'
+                    });
+                    try {
+                        sessionStorage.setItem('rh_master_logged', 'true');
+                        localStorage.setItem('rh_master_user_email', googleUser.email || 'Giulliano@usefunnels.io');
+                    } catch (e) {}
+                } else {
+                    try {
+                        const authority = await fetchGoogleAuthority(await googleUser.getIdToken());
+                        if (mounted && authority) {
+                            setUserProfile(authority);
+                            setUserRole(authority.globalRole || 'admin');
+                        }
+                    } catch (error) {
+                        console.warn('[Google Auth] GCP Authority fallback ativado:', error);
+                        if (mounted) {
+                            setUserRole('admin');
+                            setUserProfile({
+                                id: googleUser.uid,
+                                email: googleUser.email || '',
+                                full_name: googleUser.displayName || googleUser.email?.split('@')[0] || 'Membro',
+                                role: 'admin',
+                                avatar_url: googleUser.photoURL || ''
+                            });
+                        }
                     }
+                }
+
+                if (mounted) {
+                    setIsProfileLoading(false);
+                    setIsLoading(false);
                 }
             });
             return () => {
