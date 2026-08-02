@@ -15,7 +15,7 @@ const partners = [
   { name: "Tegra", logo: "/uploads/tegra-logo-new.png", scale: 1.6 },
   { name: "Tikpag", logo: "/uploads/tikpag-logo-final.png", scale: 1.6 },
   { name: "Placlux", logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c76cfe889d38ced51667d.png", scale: 1.3 },
-  { name: "Funnels", logo: "/uploads/funnels-official-logo.webp", scale: 1.3 },
+  { name: "Funnels", logo: "/brand/funnels-logo-white.png", scale: 1.3 },
   { name: "ENICS", logo: "/uploads/a05718ad-1822-4102-909a-7e86af151e98.png", scale: 1.4 }
 ];
 

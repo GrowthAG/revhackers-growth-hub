@@ -93,7 +93,7 @@ const HeroSection = () => {
           {/* Funnels Partner */}
           <div className="h-7 flex items-center px-4 sm:px-6">
             <img
-              src="/uploads/funnels-official-logo.webp"
+              src="/brand/funnels-logo-white.png"
               alt="Funnels Partner"
               className="h-5 sm:h-6 w-auto object-contain opacity-85 hover:opacity-100 transition-opacity block"
             />
