@@ -170,7 +170,7 @@ export default function MaterialLanding() {
             {/* Content & Form Section — Fundo 100% Branco Puro com Contexto Rico */}
             <section className="py-16 md:py-24 bg-white text-zinc-900 border-b border-zinc-200/80">
                 <div className="max-w-6xl mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
                         
                         {/* Coluna Esquerda: Headline, Subheadline e Bullet points Limpos */}
                         <div className="lg:col-span-6 space-y-8 text-left py-2">

@@ -71,6 +71,7 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
       handleRadioChange={handleRadioChange}
       handleCheckboxChange={handleCheckboxChange}
       handleSubmit={handleSubmit}
+      buttonText="Baixar Material →"
     />
   );
 };
