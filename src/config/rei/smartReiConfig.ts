@@ -4,173 +4,249 @@ import { REISection, REIConfig } from '@/types/rei';
 /**
  * smartReiConfig.ts
  *
- * Configuração Otimizada do Diagnóstico & Onboarding REI (Revenue Excellence Initiative).
- * Elimina 100% das redundâncias entre formulários e reduz de 45+ para 18 Perguntas de Alto Impacto
- * divididas em 3 Pilares Executivos.
+ * Protocolo Executivo Master REI (Revenue Excellence Initiative).
+ * Onboarding Completo, Profundo e Estratégico (28 Perguntas em 4 Módulos Técnicos),
+ * combinado com Enriquecimento Prévio por CNPJ e Transcrição por IA.
  */
 
 export const smartReiSections: REISection[] = [
   {
     id: 1,
-    title: "Pilar 1: Arquitetura de Negócio, Oferta & ICP",
+    title: "Módulo 1: Arquitetura de Receita, ICP & Matriz de Unidades Econômicas",
     questions: [
       {
-        id: "icp_definition",
-        label: "Perfil de Cliente Ideal (ICP) e Anti-ICP",
+        id: "icp_and_anticp_definition",
+        label: "Perfil de Cliente Ideal (ICP), Decisor Econômico e Perfil Recusado (Anti-ICP)",
         type: "textarea",
         validation: z.string().min(10, "Descreva seu ICP e perfil de cliente recusado"),
-        placeholder: "Ideal: Empresas B2B de 20-100 funcionários com CRM instalado. Anti-ICP: B2C ou startups sem produto validado."
+        placeholder: "ICP Ideal: Empresas B2B de 20-100 funcionários com CRM instalado. Decisor: CEO/CMO. Anti-ICP: B2C ou startups sem produto validado."
       },
       {
-        id: "ticket_and_cycle",
-        label: "Ticket Médio & Ciclo de Vendas Habitual",
+        id: "unit_economics_margins",
+        label: "Ticket Médio, MRR/ARR Atual e Margem Bruta de Contribuição",
         type: "input",
-        validation: z.string().min(2, "Informe seu ticket médio e tempo de fechamento"),
-        placeholder: "Ex: Ticket R$ 8.000/mês | Ciclo de 30 a 45 dias"
+        validation: z.string().min(2, "Informe seu ticket médio e margens"),
+        placeholder: "Ex: Ticket R$ 10.000/mês | MRR R$ 150k | Margem Bruta 80%"
       },
       {
-        id: "uvp_competitive_edge",
-        label: "Proposta Única de Valor (UVP) & Diferencial Defensável",
+        id: "sales_cycle_and_friction",
+        label: "Ciclo de Vendas Habitual & Principais Pontos de Atrito",
         type: "textarea",
-        validation: z.string().min(10, "Informe seu diferencial contra concorrentes"),
-        placeholder: "O que você entrega que nenhum concorrente direto consegue copiar nos primeiros 90 dias?"
+        validation: z.string().min(5, "Tempo do ciclo e onde o lead trava"),
+        placeholder: "Ex: Ciclo de 35 dias. Atrito: Envio de proposta comercial e agendamento da call de fechamento."
       },
       {
-        id: "media_channels_budget",
-        label: "Canais de Aquisição & Orçamento Mensal de Mídia",
+        id: "uvp_defensible_edge",
+        label: "Proposta Única de Valor (UVP) & 3 Vantagens Competitivas Defensáveis",
+        type: "textarea",
+        validation: z.string().min(10, "Diferencial defensável contra concorrentes"),
+        placeholder: "Por que clientes fecham com você e não com a concorrência? (Cite 3 vantagens reais)."
+      },
+      {
+        id: "acquisition_channels_budget",
+        label: "Canais de Aquisição Atuais & Orçamento Mensal de Mídia Paga",
         type: "textarea",
         validation: z.string().min(5, "Canais e orçamento de mídia"),
-        placeholder: "Ex: R$ 15.000/mês divididos em Google Ads (60%) e LinkedIn Ads (40%). Outbound via Cold Email."
+        placeholder: "Ex: R$ 20.000/mês (50% Google Ads, 30% LinkedIn Ads, 20% Meta Ads) + Cold Mail Outbound."
       },
       {
-        id: "revenue_goals_90d_12m",
-        label: "Metas de Receita & Novos Contratos (90 Dias vs 12 Meses)",
+        id: "onboarding_capacity_ltv",
+        label: "Capacidade Máxima de Onboarding Sem Perda de Qualidade",
         type: "input",
-        validation: z.string().min(5, "Metas de receita"),
-        placeholder: "90 dias: +R$ 50k MRR | 12 meses: R$ 3M ARR"
+        validation: z.string().min(2, "Capacidade de novos clientes por mês"),
+        placeholder: "Ex: Máximo de 8 novas contas por mês com a equipe atual."
       },
       {
-        id: "primary_leak_bottleneck",
-        label: "Onde está o Maior Vazamento de Receita Hoje?",
-        type: "select",
-        validation: z.string().min(1, "Selecione o gargalo principal"),
-        options: [
-          "Atração: Falta de volume de leads qualificados no topo de funil",
-          "Qualificação: Volume alto de leads curiosos sem orçamento/fit",
-          "Conversão Comercial: Leads qualificados esfriam entre a demonstração e o fechamento",
-          "Retenção/LTV: Cancelamento precoce e falta de expansão na base"
-        ]
+        id: "numeric_goals_90d_12m",
+        label: "Metas Numéricas de Receita & Marcos de Sucesso (90d vs 12m)",
+        type: "input",
+        validation: z.string().min(5, "Metas de receita e marcos"),
+        placeholder: "90 dias: +R$ 60k MRR e CAC < R$ 3.000 | 12 meses: R$ 4M ARR"
       }
     ]
   },
   {
     id: 2,
-    title: "Pilar 2: Engenharia de CRM, RevOps & Automações de IA",
+    title: "Módulo 2: Engenharia de CRM, RevOps, SLAs & Automação de IA",
     questions: [
       {
-        id: "tech_stack_crm",
-        label: "CRM Atual & Ecossistema de Ferramentas",
+        id: "tech_stack_and_crm",
+        label: "Stack Tecnológico Atual, CRM Central & Nível de Higienização de Dados",
         type: "input",
-        validation: z.string().min(2, "CRM e ferramentas"),
-        placeholder: "Ex: HubSpot Pro + Make + GoHighLevel + Typeform"
+        validation: z.string().min(2, "CRM e ferramentas ativas"),
+        placeholder: "Ex: HubSpot Pro + GoHighLevel + Make + Typeform + WhatsApp Z-API"
       },
       {
-        id: "sales_team_structure",
-        label: "Estrutura do Time Comercial (SDRs, BDRs, Closers)",
+        id: "sales_team_roles",
+        label: "Composição Exata da Equipe Comercial (SDRs, BDRs, Closers, Gestores)",
         type: "input",
-        validation: z.string().min(2, "Composição do time"),
-        placeholder: "Ex: 2 SDRs outbound, 1 SDR inbound, 2 Account Executives (Closers)"
+        validation: z.string().min(2, "Composição do time de vendas"),
+        placeholder: "Ex: 2 SDRs Inbound, 1 BDR Outbound, 2 Account Executives (Closers), 1 Head de Vendas"
       },
       {
-        id: "speed_to_lead_sla",
-        label: "Tempo Médio de Primeiro Atendimento (SLA)",
+        id: "speed_to_lead_sla_rule",
+        label: "Tempo Médio de Resposta ao Lead Qualificado (SLA Speed-to-Lead)",
         type: "select",
         validation: z.string().min(1, "Selecione o SLA atual"),
         options: [
-          "Imediato (menos de 5 minutos via automação/WhatsApp)",
-          "Entre 5 e 30 minutos",
-          "Entre 1 e 4 horas",
-          "Mais de 24 horas ou sem SLA definido"
+          "Imediato (menos de 3 minutos via IA/WhatsApp autônomo)",
+          "Entre 3 e 15 minutos (atendimento manual rápido)",
+          "Entre 15 minutos e 2 horas",
+          "Mais de 2 horas ou sem regra de SLA definida"
         ]
       },
       {
-        id: "pipeline_conversion_friction",
-        label: "Taxas de Passagem & Ponto de Maior Atrito Comercial",
+        id: "crm_pipeline_friction",
+        label: "Etapas do CRM & Taxa de Passagem com Maior Desperdício de Leads",
         type: "textarea",
-        validation: z.string().min(5, "Descreva onde o lead trava"),
-        placeholder: "O lead agenda mas não comparece à call (No-show de 35%), ou no-show pós-proposta."
+        validation: z.string().min(5, "Onde os leads esfriam"),
+        placeholder: "Ex: No-show de 30% entre a qualificação do SDR e a reunião com o AE."
       },
       {
-        id: "ai_agent_scope",
-        label: "Escopo Desejado para Agentes de IA no CRM",
+        id: "conversational_ai_scope",
+        label: "Escopo Desejado para Implementação de Agentes de IA no CRM",
         type: "select",
-        validation: z.string().min(1, "Escopo de IA"),
+        validation: z.string().min(1, "Escopo de IA desejado"),
         options: [
           "Qualificação em tempo real + Agendamento autônomo de chamadas",
-          "Enriquecimento de dados de empresas antes da reunião do vendedor",
-          "Follow-up e reativação automática de propostas paradas",
-          "Arquitetura completa de IA (Qualificação + Enriquecimento + Follow-up)"
+          "Enriquecimento automático de dados de empresas pré-call",
+          "Follow-up inteligente de propostas paradas e reativação",
+          "Arquitetura Completa de IA (Qualificação + Enriquecimento + Follow-up)"
         ]
       },
       {
-        id: "top_lost_reasons",
-        label: "Principais Motivos de Perda Registrados no CRM",
+        id: "top_lost_reasons_crm",
+        label: "Principais Motivos de Perda Cadastrados no CRM",
         type: "textarea",
-        validation: z.string().min(5, "Motivos de perda"),
-        placeholder: "1. Preço/Orçamento | 2. Timing/Sem prioridade | 3. Optou por concorrente interno"
+        validation: z.string().min(5, "Motivos de perda de negócios"),
+        placeholder: "1. Objeção de Preço | 2. Timing/Falta de orçamento | 3. Preferiu solução caseira/concorrente"
+      },
+      {
+        id: "cpq_proposal_friction",
+        label: "Processo de Geração e Envio de Propostas Comercial (CPQ)",
+        type: "textarea",
+        validation: z.string().min(5, "Como propostas são geradas e enviadas"),
+        placeholder: "Tempo médio de envio pós-call: 24h. Taxa de conversão de propostas: 25%."
       }
     ]
   },
   {
     id: 3,
-    title: "Pilar 3: Founder-Led Growth & Ativos de Autoridade",
+    title: "Módulo 3: Founder-Led Growth, Personal Branding & Ativos de Autoridade",
     questions: [
       {
-        id: "market_dogmas_to_break",
-        label: "Dogmas do Mercado que o Founder Quer Combater",
+        id: "founder_origin_superpower",
+        label: "História de Origem & 'Superpoder' do Fundador",
         type: "textarea",
-        validation: z.string().min(5, "Quais verdades você quer derrubar?"),
-        placeholder: "Ex: 'Agências tradicionais vendem relatório de vaidade em vez de receita instalada no CRM'."
+        validation: z.string().min(5, "Diferencial de bagagem do founder"),
+        placeholder: "Qual bagagem/experiência única do fundador gera autoridade instantânea no primeiro minuto de reunião?"
       },
       {
-        id: "founder_origin_superpower",
-        label: "Superpoder & Diferencial de Bagagem do Founder",
+        id: "market_dogmas_to_break",
+        label: "Mitos e Dogmas do Mercado que o Founder Quer Combater Publicamente",
         type: "textarea",
-        validation: z.string().min(5, "Diferencial do fundador"),
-        placeholder: "O que o founder viveu/construiu que gera credibilidade imediata no primeiro minuto de conversa?"
+        validation: z.string().min(5, "Verdades do setor que você combate"),
+        placeholder: "Ex: 'Agências tradicionais vendem relatórios de vaidade em vez de receita real no CRM'."
+      },
+      {
+        id: "unspoken_buyer_fear",
+        label: "Dor Oculta & Medo Não Verbalizado do Comprador C-Level",
+        type: "textarea",
+        validation: z.string().min(5, "Dor oculta do decisor"),
+        placeholder: "O comprador tem medo de contratar a solução errada e parecer incompetente perante sócios/conselho."
       },
       {
         id: "brand_voice_redlines",
-        label: "Tom de Voz & Linhas Vermelhas (Palavras/Assuntos Proibidos)",
+        label: "Tom de Voz, Vocabulário Oficial & Linhas Vermelhas (Palavras Proibidas)",
         type: "textarea",
-        validation: z.string().min(5, "Estilo de comunicação"),
-        placeholder: "Tom: Direto, provocativo, técnico e sem jargões corporativos vazios. Proibido: Promessas milagrosas."
+        validation: z.string().min(5, "Estilo de comunicação e restrições"),
+        placeholder: "Tom: Direto, incisivo, técnico e consultivo. Proibido: Clichês de agência ('sinergia', 'descomplicar')."
       },
       {
         id: "founder_distribution_channels",
-        label: "Canais Principais de Atuação do Founder",
+        label: "Canais Principais de Distribuição do Founder",
         type: "select",
         validation: z.string().min(1, "Canal principal"),
         options: [
-          "LinkedIn (Artigos, Posts de Autoridade e Conexões C-Level)",
-          "YouTube & Vídeos de Demonstração Técnica",
-          "Podcasts & Eventos Presenciais do Setor",
+          "LinkedIn (Posts de Autoridade, Artigos e Conexões C-Level)",
+          "YouTube & Demonstrações Técnicas de Código/Processo",
+          "Podcasts, Palestras e Eventos Presenciais",
           "Omnichannel (LinkedIn + YouTube + Eventos)"
         ]
       },
       {
-        id: "unspoken_buyer_fear",
-        label: "Dor Oculta / Medo Não Verbalizado do Comprador",
-        type: "textarea",
-        validation: z.string().min(5, "Dor oculta do comprador"),
-        placeholder: "O comprador não tem medo apenas de perder dinheiro, ele tem medo de parecer incompetente para o conselho/sócios."
+        id: "founder_time_budget",
+        label: "Disponibilidade de Tempo Semanal do Founder para Gravação/Aprovação",
+        type: "select",
+        validation: z.string().min(1, "Disponibilidade de tempo"),
+        options: [
+          "1 a 2 horas por semana (Gravações em bloco)",
+          "3 a 5 horas por semana",
+          "Mais de 5 horas por semana (Foco em Founder-Led Growth)"
+        ]
       },
       {
         id: "legacy_positioning_12m",
-        label: "Posicionamento Desejado em 12 Meses",
+        label: "Visão de Legado & Posicionamento Desejado em 12 Meses",
         type: "textarea",
         validation: z.string().min(5, "Como quer ser visto no mercado"),
-        placeholder: "Ser reconhecido como a referência número 1 em Engenharia de GTM no Brasil."
+        placeholder: "Ser reconhecido como a maior autoridade em Engenharia de GTM no Brasil."
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: "Módulo 4: Dev Web, Conversão de LPs, Tracking & Compliance",
+    questions: [
+      {
+        id: "lp_conversion_speed",
+        label: "Taxa de Conversão Atual das Landing Pages & Velocidade Mobile",
+        type: "input",
+        validation: z.string().min(2, "Taxa de conversão e velocidade"),
+        placeholder: "Ex: Conversão atual 4.5% | Carregamento mobile 2.1s"
+      },
+      {
+        id: "tracking_pixels_setup",
+        label: "Pixels e Tags Instaladas (GTM, Meta, LinkedIn, GA4, Hotjar)",
+        type: "textarea",
+        validation: z.string().min(5, "Pixels ativos"),
+        placeholder: "GTM instalado com Meta Pixel e LinkedIn Insight Tag. GA4 configurado com eventos de conversão."
+      },
+      {
+        id: "utm_dictionary_standard",
+        label: "Padronização do Dicionário de UTMs da Empresa",
+        type: "input",
+        validation: z.string().min(2, "Padrão de UTMs"),
+        placeholder: "Ex: Padrão utm_source (meta, google, linkedin) | utm_medium (cpc, organico, email)"
+      },
+      {
+        id: "lead_magnets_assets",
+        label: "Ofertas de Captura Existentes (Planilhas, Calculadoras, Playbooks)",
+        type: "textarea",
+        validation: z.string().min(5, "Materiais ricos ativos"),
+        placeholder: "Planilha de CAC/LTV, Calculadora de ROI e E-book de Estratégia GTM."
+      },
+      {
+        id: "visual_identity_guidelines",
+        label: "Identidade Visual, Paleta de Cores e Referências Visuais do Setor",
+        type: "textarea",
+        validation: z.string().min(5, "Referências visuais"),
+        placeholder: "Design minimalista estilo Linear/Funnels. Cores: Preto, Branco e Verde Ação."
+      },
+      {
+        id: "legal_compliance_lgpd",
+        label: "Compliance, LGPD & Restrições Regulatórias do Mercado",
+        type: "textarea",
+        validation: z.string().optional(),
+        optional: true,
+        placeholder: "Políticas de privacidade em conformidade com LGPD. Sem restrições regulatórias específicas."
+      },
+      {
+        id: "approval_workflow_campaigns",
+        label: "Processo e Alçada Interna de Aprovação de Campanhas e Mídia",
+        type: "textarea",
+        validation: z.string().min(2, "Processo de aprovação"),
+        placeholder: "Aprovação direta pelo CMO/Founder via ClickUp em até 24 horas."
       }
     ]
   }
@@ -178,8 +254,8 @@ export const smartReiSections: REISection[] = [
 
 export const smartReiConfig: REIConfig = {
   type: 'consulting',
-  title: 'REI – Revenue Excellence Initiative (Smart Protocol)',
-  subtitle: 'Protocolo Executivo de Onboarding & Arquitetura de GTM em 3 Pilares',
+  title: 'REI – Revenue Excellence Initiative (Master Protocol)',
+  subtitle: 'Protocolo Executivo de Onboarding & Arquitetura de GTM (28 Perguntas em 4 Módulos)',
   sections: smartReiSections,
-  totalQuestions: 18
+  totalQuestions: 28
 };
