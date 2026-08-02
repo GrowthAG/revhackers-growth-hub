@@ -118,28 +118,28 @@ const ReiDashboard = ({ type, score, radarData, insights, onAction, clientName =
             label: "Founder Ledger",
             title: "Painel de Autoridade",
             scoreLabel: "Score de Autoridade",
-            icon: <Zap className="w-3 h-3" />,
+            icon: <Sparkles className="w-3 h-3 text-[#00CC6A]" />,
             cta: "Receber Plano de Personal Branding"
         },
         DEV: {
             label: "Tech Audit",
             title: "Diagnóstico Digital",
             scoreLabel: "Maturidade Digital",
-            icon: <BarChart2 className="w-3 h-3" />,
+            icon: <BarChart2 className="w-3 h-3 text-[#00CC6A]" />,
             cta: "Ver Cronograma de Implementação"
         },
         CONSULTING: {
             label: "Revenue Scan",
             title: "Raio-X de Receita",
             scoreLabel: "Revenue Score",
-            icon: <TrendingUp className="w-3 h-3" />,
+            icon: <TrendingUp className="w-3 h-3 text-[#00CC6A]" />,
             cta: "Agendar Planejamento Estratégico"
         },
         FUNNEL: {
             label: "Sales Machine",
             title: "Funnels & Automação",
             scoreLabel: "Eficiência Comercial",
-            icon: <Zap className="w-3 h-3" />,
+            icon: <Sparkles className="w-3 h-3 text-[#00CC6A]" />,
             cta: "Ver Estrutura de Funis"
         },
         SITE: {

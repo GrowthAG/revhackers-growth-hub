@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Activity, TrendingUp, TrendingDown, Minus, AlertTriangle, Zap, Target, Heart, BarChart3 } from 'lucide-react';
+import { Activity, TrendingUp, TrendingDown, Minus, AlertTriangle, Target, Heart, BarChart3 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { calculateHealthScore, getSuccessVector } from '@/api/successPlan';
 
@@ -31,7 +31,7 @@ const DIMENSION_CONFIG = {
 } as const;
 
 const VECTOR_CONFIG = {
-    accelerating: { label: 'Acelerando', icon: Zap, color: '#00CC6A', bg: 'bg-[#00CC6A]/10' },
+    accelerating: { label: 'Acelerando', icon: Activity, color: '#00CC6A', bg: 'bg-[#00CC6A]/10' },
     on_track: { label: 'No Ritmo', icon: TrendingUp, color: '#00CC6A', bg: 'bg-[#00CC6A]/10' },
     stalling: { label: 'Estagnando', icon: Minus, color: '#a1a1aa', bg: 'bg-zinc-100' },
     at_risk: { label: 'Em Risco', icon: TrendingDown, color: '#ef4444', bg: 'bg-zinc-100' },

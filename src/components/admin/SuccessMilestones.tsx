@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, Circle, Clock, Flag, Zap, Target, Users } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, Flag, ShieldCheck, Target, Users } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 

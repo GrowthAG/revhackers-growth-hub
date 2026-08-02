@@ -5,7 +5,7 @@ import {
 } from 'recharts';
 import {
   FolderKanban, CheckCircle2, Plus,
-  Clock, Zap, Users, TrendingUp, FileText, ArrowUpRight,
+  Clock, Sparkles, Users, TrendingUp, FileText, ArrowUpRight,
   Calendar, Target, Activity, Building2, ExternalLink
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -290,7 +290,7 @@ export const AdminDashboard: React.FC = () => {
 
               {projects.length === 0 ? (
                 <div className="text-center py-6">
-                  <Zap className="h-6 w-6 text-zinc-300 mx-auto mb-2" />
+                  <FolderKanban className="h-6 w-6 text-zinc-300 mx-auto mb-2" />
                   <p className="text-xs text-zinc-500 font-medium">Nenhum projeto REI cadastrado via GCP.</p>
                 </div>
               ) : (
