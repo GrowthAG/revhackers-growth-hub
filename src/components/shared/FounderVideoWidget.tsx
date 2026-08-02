@@ -168,6 +168,12 @@ const FounderVideoWidget = () => {
   const [showPills, setShowPills] = useState(true);
   const [extractedData, setExtractedData] = useState<{ company?: string; crm?: string; role?: string; linkedin?: string }>({});
 
+  const [activePills, setActivePills] = useState<string[]>([
+    "📊 Rodar Auditoria de Receita",
+    "🎯 Ver Cases (Heineken, Anhembi)",
+    "💬 Falar com Especialista"
+  ]);
+
   const handleSendMessage = (textToSend?: string) => {
     const text = textToSend || inputText;
     if (!text.trim()) return;
@@ -183,50 +189,73 @@ const FounderVideoWidget = () => {
 
     setTimeout(() => {
       let aiReply = "";
+      let newPills: string[] = [];
       const lower = text.toLowerCase().trim();
 
       if (!emailCaptured) {
-        if (lower.includes("especialista") || lower.includes("humano") || lower.includes("time")) {
-          aiReply = "Show! Sou o Giulliano, fundador da RevHackers. Para eu te direcionar exatamente pro especialista do nosso time técnico ou agendarmos uma sessão de 30 min, me conta: qual e o nome e o segmento da sua empresa?";
+        if (lower.includes("especialista") || lower.includes("humano") || lower.includes("time") || lower.includes("giulliano")) {
+          aiReply = "Show! Sou o Giulliano, fundador da RevHackers. Eu conduzo pessoalmente a sessão técnica de 30 min sem custo para analisar vazamentos de receita no seu CRM.\n\nPara eu te direcionar com precisão: qual é o nome da sua empresa e qual o seu CRM atual?";
+          newPills = ["🟢 Usamos HubSpot / Pipedrive", "🔴 Não temos CRM ainda", "📅 Agendar Sessão em /booking"];
           setConversationalStep(1);
-        } else if (lower.includes("auditoria") || lower.includes("diagnostico") || lower.includes("score")) {
-          aiReply = "Excelente! Nossos diagnosticos preditivos analisam vazamentos de pipeline no seu CRM. Qual e a principal dor da sua empresa hoje: atracao de novos clientes ou conversao do time comercial?";
+        } else if (lower.includes("auditoria") || lower.includes("diagnostico") || lower.includes("score") || lower.includes("vazamento")) {
+          aiReply = "Excelente! Nossa auditoria analisa 4 pilares: Mídia Paga, Qualificação, Automação e CRM.\n\nQual é a principal dor da sua empresa hoje no funil?";
+          newPills = ["🎯 Falta de Leads Qualificados", "⏳ Demora no Atendimento (SLA)", "📊 Perda no Fechamento Comercial"];
           setConversationalStep(1);
-        } else if (lower.includes("case") || lower.includes("heineken") || lower.includes("wysion") || lower.includes("anhembi")) {
-          aiReply = "Boa! Na Wysion geramos 1.000+ reunioes qualificadas em software B2B, e na Heineken aumentamos o sell-out em 30%. Qual e o segmento da sua empresa para eu te mostrar um case parecido?";
+        } else if (lower.includes("case") || lower.includes("heineken") || lower.includes("wysion") || lower.includes("anhembi") || lower.includes("cruzeiro")) {
+          aiReply = "Excelente! Na Heineken aumentamos o sell-out em 30%, na Wysion geramos +1.000 reuniões qualificadas em software B2B, e na Anhembi Morumbi otimizamos a atração de alunos.\n\nQual é o segmento da sua empresa para eu te mostrar os números mais próximos do seu mercado?";
+          newPills = ["💻 Software & SaaS B2B", "🏭 Indústria / Grande Conta", "🎓 Educação / Serviços", "📖 Ver Todos os Cases no Site"];
           setConversationalStep(1);
+        } else if (lower.includes("software") || lower.includes("saas") || lower.includes("indústria") || lower.includes("educação") || lower.includes("serviços") || lower.includes("hubspot") || lower.includes("pipedrive")) {
+          aiReply = "Perfeito! Nesse segmento, nossa Engenharia de GTM conecta Mídia Paga B2B + Qualificação por IA direto no seu CRM, gerando pipeline previsível em 30 a 90 dias.\n\nDigite seu e-mail corporativo abaixo para liberarmos o estudo de viabilidade completo da sua empresa:";
+          newPills = [];
+          setConversationalStep(2);
+        } else if (lower.includes("ver todos os cases") || lower.includes("site")) {
+          aiReply = "Você pode acessar nossa página oficial de cases em /cases para ver todos os estudos de viabilidade completos. Digite seu e-mail corporativo abaixo para receber a apresentação executiva:";
+          newPills = [];
+          setConversationalStep(2);
         } else if (conversationalStep === 0) {
-          aiReply = "Entendi o seu cenario! Na RevHackers nos instalamos a arquitetura de GTM no seu CRM para conectar Midia Paga e Automacao em ate 30 dias. Me conta: qual e o segmento da sua empresa e o tamanho da sua equipe comercial?";
+          aiReply = "Entendi o seu cenário! Na RevHackers nós instalamos os 4 motores de GTM no seu CRM em até 30 dias: Mídia Paga B2B, Funis de Conversão, CRM com IA e Automação Comercial.\n\nMe conta: qual é o segmento da sua empresa e o tamanho da sua equipe comercial?";
+          newPills = ["💻 Software B2B (1-5 pessoas)", "🏭 Indústria / Serviços (6-20 pessoas)", "🚀 Escala (+20 pessoas)"];
           setConversationalStep(1);
         } else if (conversationalStep === 1) {
-          aiReply = "Excelente! Tenho um estudo de viabilidade e arquitetura de receita muito alinhado com a sua operacao. Digite seu e-mail corporativo abaixo para salvarmos seu diagnostico e te enviar a analise completa:";
+          aiReply = "Excelente! Tenho um estudo de viabilidade e arquitetura de receita muito alinhado com a sua operação.\n\nDigite seu e-mail corporativo abaixo para salvarmos seu diagnóstico e te enviar a análise completa:";
+          newPills = [];
           setConversationalStep(2);
         } else {
-          aiReply = "Digite seu e-mail corporativo abaixo para liberar o atendimento consultivo ao vivo:";
+          aiReply = "Digite seu e-mail corporativo abaixo para liberar o atendimento consultivo ao vivo e agendamento de 30 min:";
+          newPills = [];
         }
       } else {
         if (lower.includes('como funciona') || lower.includes('o que voces fazem')) {
-          aiReply = "Nossa Engenharia de GTM instala 4 motores acionaveis na sua empresa em 30 dias: 1. Midia Paga B2B, 2. Funis de Agendamento, 3. Arquitetura de CRM e 4. Automacao Comercial.";
+          aiReply = "Nossa Engenharia de GTM instala 4 motores acionáveis na sua empresa em 30 dias: 1. Mídia Paga B2B, 2. Funis de Agendamento, 3. Arquitetura de CRM com IA e 4. Automação Comercial.";
         } else if (lower.includes('case') || lower.includes('resultado') || lower.includes('heineken') || lower.includes('wysion')) {
-          aiReply = "Na Wysion geramos 1.000+ reunioes qualificadas em software B2B, e na Heineken aumentamos o sell-out em 30%. Qual e o foco da sua empresa hoje?";
+          aiReply = "Na Wysion geramos 1.000+ reuniões qualificadas em software B2B, na Heineken aumentamos o sell-out em 30% e na Anhembi otimizamos a atração. Você pode ver todos em /cases.";
         } else {
-          aiReply = "Excelente ponto! Voce tambem pode agendar uma sessao de 30 minutos direto na nossa agenda corporativa em /booking para ver os motores rodando na pratica.";
+          aiReply = "Excelente ponto! Você também pode agendar uma sessão de 30 minutos direto na nossa agenda corporativa em /booking para ver os motores rodando na prática.";
         }
       }
 
       setIsTyping(false);
       setMessages(prev => [...prev, { sender: 'ai', text: aiReply, timestamp: 'Agora' }]);
+      if (newPills.length > 0) {
+        setActivePills(newPills);
+        setShowPills(true);
+      } else {
+        setShowPills(false);
+      }
       setLoading(false);
-    }, 2000);
+    }, 1800);
   };
 
-  const topicPills = [
-    "📊 Rodar Auditoria de Receita",
-    "🎯 Ver Cases (Heineken, Anhembi)",
-    "💬 Falar com Especialista"
-  ];
-
   const handlePillClickBeforeEmail = (pillText: string) => {
+    if (pillText.includes("/booking")) {
+      window.location.href = "/booking";
+      return;
+    }
+    if (pillText.includes("/cases")) {
+      window.location.href = "/cases";
+      return;
+    }
     handleSendMessage(pillText);
   };
 
@@ -340,7 +369,7 @@ const FounderVideoWidget = () => {
 
               {showPills && (
                 <div className="pt-2 flex flex-wrap gap-1.5">
-                  {topicPills.map((pill, i) => (
+                  {activePills.map((pill, i) => (
                     <button
                       key={i}
                       onClick={() => emailCaptured ? handleSendMessage(pill) : handlePillClickBeforeEmail(pill)}
