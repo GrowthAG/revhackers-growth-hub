@@ -26,7 +26,7 @@ export const useDownloadForm = (
     industry: '',
     role: '',
     roleType: 'decision-maker',
-    agree: false
+    agree: true
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

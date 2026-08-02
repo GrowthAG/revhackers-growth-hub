@@ -4,10 +4,10 @@ import { DownloadFormData } from "./types";
 export const validateForm = (formData: DownloadFormData): { isValid: boolean; errorMessage?: string } => {
   // Required fields validation
   if (!formData.firstName || !formData.email || !formData.company ||
-    !formData.industry || !formData.role || !formData.agree) {
+    !formData.industry || !formData.role) {
     return {
       isValid: false,
-      errorMessage: "Por favor, preencha todos os campos obrigatórios e aceite os termos."
+      errorMessage: "Por favor, preencha todos os campos obrigatórios."
     };
   }
 
