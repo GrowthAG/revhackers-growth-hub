@@ -82,7 +82,7 @@ const CasesSection = () => {
                       <img
                         src={anyItem.client_logo || anyItem.logo}
                         alt={anyItem.title || anyItem.client_name}
-                        className="max-w-[150px] max-h-[65px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                        className="max-w-[80%] max-h-[60px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
 

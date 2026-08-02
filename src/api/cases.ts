@@ -8,75 +8,75 @@ export type CaseStudy = Database['public']['Tables']['cases']['Row'];
 const CASE_OVERRIDES: Record<string, { logo?: string; scale?: number }> = {
     'Heineken': {
         logo: '/uploads/aada4820-3f12-4185-9af6-811f30795a93.png',
-        scale: 1.3
+        scale: 1.0
     },
     'FMU': {
         logo: '/uploads/e0d3d03b-c1d5-4a6e-9a61-3a1c2a707b5f.png',
-        scale: 1.7
+        scale: 1.0
     },
     'Anhembi': {
         logo: '/uploads/f5e74a47-fc77-4b34-970e-e839080310fd.png',
-        scale: 2.6
+        scale: 1.0
     },
     'Cruzeiro': {
         logo: '/uploads/cruzeiro-site-dark.svg',
-        scale: 2.6
+        scale: 1.0
     },
     'Cruzeiro do Sul': {
         logo: '/uploads/cruzeiro-site-dark.svg',
-        scale: 2.6
+        scale: 1.0
     },
     'Cruzeiro do Sul Virtual': {
         logo: '/uploads/cruzeiro-site-dark.svg',
-        scale: 2.6
+        scale: 1.0
     },
     'Idee': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c73dcdda192452a508485.png',
-        scale: 2.2
+        scale: 1.0
     },
     'Lindoya': {
         logo: '/uploads/lindoya-logo.png',
-        scale: 2.2
+        scale: 1.0
     },
     'Emagrecentro': {
         logo: '/uploads/emagrecentro-logo-new.png',
-        scale: 2.6
+        scale: 1.0
     },
     'ENICS': {
         logo: '/uploads/a05718ad-1822-4102-909a-7e86af151e98.png',
-        scale: 1.6
+        scale: 1.0
     },
     'TOEFL': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/6959970205b5117729df4a50.png',
-        scale: 1.8
+        scale: 1.0
     },
     'Tikpag': {
         logo: '/uploads/tikpag-logo-final.png',
-        scale: 1.8
+        scale: 1.0
     },
     'Agence': {
         logo: '/uploads/6c09375e-5298-4672-9226-27eb60a6b038.png',
-        scale: 1.5
+        scale: 1.0
     },
     'BT': {
         logo: '/uploads/bt-logo-new.png',
-        scale: 1.5
+        scale: 1.0
     },
     'Tegra': {
         logo: '/uploads/tegra-logo-new.png',
-        scale: 1.6
+        scale: 1.0
     },
     'Funnels': {
-        logo: '/brand/funnels-logo-white.png',
-        scale: 1.5
+        logo: '/brand/funnels-logo-black.png',
+        scale: 1.0
     },
     'PlacLux': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c76cfe889d38ced51667d.png',
-        scale: 1.5
+        scale: 1.0
     },
     'BLDN': {
         logo: 'https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c77062fe4f1854fadf797.svg',
-        scale: 1.5
+        scale: 1.0
     }
 };
 

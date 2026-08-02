@@ -11,7 +11,7 @@ import DarkHeroSection from '@/components/shared/DarkHeroSection';
 import { getAllCases, CaseStudy } from '@/api/cases';
 
 
-const CardLogo = ({ logo, title, scale }: { logo?: string; title: string; scale?: number }) => {
+const CardLogo = ({ logo, title }: { logo?: string; title: string; scale?: number }) => {
   const [failed, setFailed] = useState(false);
 
   if (!logo || failed) {
@@ -27,10 +27,7 @@ const CardLogo = ({ logo, title, scale }: { logo?: string; title: string; scale?
       src={logo}
       alt={title}
       onError={() => setFailed(true)}
-      className="max-w-[220px] max-h-[90px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
-      style={{
-        transform: scale ? `scale(${scale})` : 'scale(1.0)',
-      }}
+      className="max-w-[80%] max-h-[65px] w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
     />
   );
 };
