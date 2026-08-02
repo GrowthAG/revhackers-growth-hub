@@ -6,6 +6,7 @@ import { reiProjectsGcpAdapter } from '@/api/adapters/rei-projects-gcp';
 import { supabase } from '@/integrations/supabase/client';
 import { getAllClients, type Client } from '@/api/clients';
 import { scrapeCompanyWebsite } from '@/lib/websiteScraperEngine';
+import { fetchCNPJData } from '@/lib/cnpjEnrichmentEngine';
 import type { ReiProjectInsert } from '@/api/reiProjects';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -148,30 +149,57 @@ const REIProjectForm = () => {
     const labelClasses = "text-xs font-medium pl-0.5 text-zinc-400";
     const sectionTitleClasses = "text-xs font-semibold text-zinc-900 border-b border-zinc-200 pb-2 flex items-center gap-2 mb-6";
 
-    // ... CNPJ Logic (Keep same) ...
+    // ── Ultra-Enriched CNPJ Lookup (Auto-fills Everything) ──
     const handleCnpjLookup = async (cnpjValue: string) => {
         const cleanCnpj = cnpjValue.replace(/\D/g, '');
         if (cleanCnpj.length !== 14) return;
 
         setIsSearchingCnpj(true);
         try {
-            const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCnpj}`);
-            if (!response.ok) throw new Error('CNPJ não encontrado');
-            const data = await response.json();
+            const enriched = await fetchCNPJData(cleanCnpj);
+            if (!enriched) throw new Error('CNPJ não encontrado na base federal.');
 
-            if (data.razao_social) setValue('client_company', data.razao_social);
-            if (data.nome_fantasia) setValue('trade_name', data.nome_fantasia);
-            if (data.email) setValue('client_email', data.email.toLowerCase());
+            if (enriched.razaoSocial) setValue('client_company', enriched.razaoSocial);
+            if (enriched.nomeFantasia) setValue('trade_name', enriched.nomeFantasia);
+            if (enriched.email) setValue('client_email', enriched.email.toLowerCase());
+
+            // Auto-fill Segment/Setor from CNAE description
+            if (enriched.setorInferido) {
+                setValue('type', enriched.setorInferido.includes('SaaS') ? 'consulting' : 'crm_ops');
+            }
+
+            // Deduces domain from email if available
+            if (enriched.email && enriched.email.includes('@')) {
+                const domainFromEmail = enriched.email.split('@')[1];
+                if (domainFromEmail && !domainFromEmail.includes('gmail') && !domainFromEmail.includes('hotmail') && !domainFromEmail.includes('yahoo')) {
+                    setClientSite(`https://${domainFromEmail}`);
+                    // Auto-trigger website and logo scraping
+                    scrapeCompanyWebsite(`https://${domainFromEmail}`, enriched.nomeFantasia || enriched.razaoSocial)
+                        .then(scraped => {
+                            if (scraped) {
+                                setSiteAnalysis({
+                                    title: scraped.title,
+                                    description: scraped.description,
+                                    h1: scraped.h1,
+                                    logoUrl: scraped.logoUrl,
+                                    inferredUVP: scraped.inferredUVP,
+                                    detectedTech: scraped.detectedTech,
+                                    socialLinks: scraped.socialLinks,
+                                });
+                            }
+                        }).catch(() => {});
+                }
+            }
 
             toast({
-                title: 'Dados Corporativos Localizados',
-                description: `Empresa: ${data.nome_fantasia || data.razao_social}`,
+                title: '✨ CNPJ Enriquecido com Sucesso!',
+                description: `${enriched.nomeFantasia || enriched.razaoSocial} | Setor: ${enriched.setorInferido} (${enriched.cnaePrincipal.descricao})`,
             });
-        } catch (error) {
+        } catch (error: any) {
             console.error('Erro ao buscar CNPJ:', error);
             toast({
                 title: 'CNPJ não localizado',
-                description: 'Prossiga com o preenchimento manual.',
+                description: error?.message || 'Prossiga com o preenchimento manual.',
                 variant: 'destructive'
             });
         } finally {
