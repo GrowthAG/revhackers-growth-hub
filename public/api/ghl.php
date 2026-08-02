@@ -158,7 +158,7 @@ function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactI
         curl_setopt($chGhl, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer ' . $token,
             'Version: 2021-07-28',
-            'Content-Type': 'application/json'
+            'Content-Type: application/json'
         ]);
         curl_setopt($chGhl, CURLOPT_SSL_VERIFYPEER, true);
         curl_exec($chGhl);
