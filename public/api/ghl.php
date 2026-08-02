@@ -95,15 +95,27 @@ if (!empty($cleanPayload['email'])) {
         $cleanPayload['firstName'] ?? 'Parceiro',
         $cleanPayload['companyName'] ?? 'Sua Empresa',
         $contactId,
-        $token
+        $token,
+        $data
     );
 }
 
 http_response_code($httpCode >= 200 && $httpCode < 300 ? 200 : 200);
 echo $response;
 
-function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactId, $token) {
-    $templatePath = __DIR__ . '/../templates/email-claude-partner-network.html';
+function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactId, $token, $rawData = []) {
+    $materialTitle = $rawData['materialTitle'] ?? $rawData['material_title'] ?? 'Guia Prático de Estratégia Go-To-Market (GTM)';
+    $materialLink = $rawData['materialLink'] ?? $rawData['material_link'] ?? 'https://bustling-lemon-68c.notion.site/Plano-de-A-o-90-Dias-GTM-RevOps-377bdc72e0398044a0ddcd65701c5245';
+    $isMaterialDownload = isset($rawData['materialLink']) || isset($rawData['materialTitle']) || ($rawData['formType'] ?? '') === 'download' || ($rawData['actionType'] ?? '') === 'send_material_email';
+
+    if ($isMaterialDownload) {
+        $templatePath = __DIR__ . '/../templates/email-material-delivery.html';
+        $subject = "[RevHackers] Seu Material: " . $materialTitle;
+    } else {
+        $templatePath = __DIR__ . '/../templates/email-claude-partner-network.html';
+        $subject = "Seja bem-vindo ao Claude Partner Network & RevHackers.";
+    }
+
     if (!file_exists($templatePath)) {
         return false;
     }
@@ -113,10 +125,10 @@ function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactI
     // Replace GHL style placeholders with lead values
     $htmlBody = str_replace(['{{contact.first_name}}', '{{firstName}}'], htmlspecialchars($firstName), $htmlBody);
     $htmlBody = str_replace(['{{contact.company_name}}', '{{companyName}}'], htmlspecialchars($companyName), $htmlBody);
+    $htmlBody = str_replace(['{{materialTitle}}'], htmlspecialchars($materialTitle), $htmlBody);
+    $htmlBody = str_replace(['{{materialLink}}'], htmlspecialchars($materialLink), $htmlBody);
     $htmlBody = str_replace(['{{right_now.year}}'], date('Y'), $htmlBody);
     $htmlBody = str_replace(['{{location.name}}'], 'RevHackers', $htmlBody);
-
-    $subject = "Seja bem-vindo ao Claude Partner Network & RevHackers.";
 
     // 1. Send via GHL Conversations API (Verified LC Mail / SendGrid for Location oFTw9DcsKRUj6xCiq4mb)
     if ($contactId) {
@@ -136,7 +148,7 @@ function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactI
         curl_setopt($chGhl, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer ' . $token,
             'Version: 2021-07-28',
-            'Content-Type: application/json'
+            'Content-Type': 'application/json'
         ]);
         curl_setopt($chGhl, CURLOPT_SSL_VERIFYPEER, true);
         curl_exec($chGhl);

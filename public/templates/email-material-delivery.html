@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seu Material Rico da RevHackers</title>
+  <style type="text/css">
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    table { border-collapse: collapse !important; }
+    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #dbe4ee; color: #1e293b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; }
+      .body-padding { padding: 24px 20px !important; }
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #dbe4ee; color: #1e293b;">
+
+  <div style="display: none; font-size: 1px; color: #dbe4ee; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+    Oi {{contact.first_name}}, seu material {{materialTitle}} está pronto para acesso no Notion...
+  </div>
+
+  <!-- Outer Canvas -->
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #dbe4ee; table-layout: fixed;">
+    <tr>
+      <td align="center" style="padding: 40px 10px;">
+
+        <!-- Main Email Container -->
+        <table border="0" cellpadding="0" cellspacing="0" width="600" class="email-container" style="background-color: #eef2f6; width: 600px; table-layout: fixed; border-radius: 0px; overflow: hidden;">
+          
+          <!-- TOP BLACK HEADER BAR WITH REVHACKERS WORDMARK -->
+          <tr>
+            <td align="center" style="background-color: #000000; padding: 24px 20px;">
+              <a href="https://revhackers.com.br" target="_blank" style="text-decoration: none;">
+                <img src="https://revhackers.com.br/brand/revhackers-wordmark-white.png" alt="REVHACKERS" width="190" style="display: block; width: 190px; height: auto; border: 0;" />
+              </a>
+            </td>
+          </tr>
+
+          <!-- MIDDLE LIGHT BODY CONTAINER -->
+          <tr>
+            <td style="background-color: #eef2f6; padding: 36px 40px 32px 40px;" class="body-padding">
+              
+              <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 24px; color: #0f172a;">
+                Oi <strong style="background-color: #e2e8f0; padding: 2px 6px; border-radius: 4px;">{{contact.first_name}}</strong>,
+              </p>
+
+              <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 24px; color: #0f172a;">
+                Seu acesso ao material <strong style="color: #000000;">{{materialTitle}}</strong> foi liberado com sucesso.
+              </p>
+
+              <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 24px; color: #0f172a;">
+                Preparamos uma documentação completa e prática no Notion para ajudar a acelerar a operação de vendas e tração da <strong style="background-color: #e2e8f0; padding: 2px 6px; border-radius: 4px;">{{contact.company_name}}</strong>.
+              </p>
+
+              <!-- MAIN CTA BUTTON TO NOTION -->
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 28px 0 28px 0;">
+                <tr>
+                  <td align="center">
+                    <a href="{{materialLink}}" target="_blank" style="display: inline-block; background-color: #00CC6A; color: #000000; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 28px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                      👉 ACESSAR MATERIAL NO NOTION →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 0 0 16px 0; font-size: 15px; line-height: 24px; font-weight: 700; color: #0f172a;">
+                O que você encontrará no material:
+              </p>
+
+              <p style="margin: 0 0 20px 0; font-size: 14px; line-height: 22px; color: #334155;">
+                • <strong>Playbook Executivo Completo:</strong> Metodologias e rotinas práticas em Português BR.<br />
+                • <strong>Mapa Mental Interativo:</strong> Fluxogramas de processos do Whimsical embedados.<br />
+                • <strong>Matrizes de Qualificação:</strong> Critérios de passagem e triagem no CRM.<br />
+                • <strong>Scripts de Prospecção:</strong> Modelos copiáveis para WhatsApp e E-mail.
+              </p>
+
+              <!-- SECONDARY CALLOUT: 30 MINUTE BOOKING SESSION -->
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; margin: 24px 0 24px 0;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 700; color: #0f172a;">
+                      📅 Sessão Técnica de Implementação (30 Minutos)
+                    </p>
+                    <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 20px; color: #475569;">
+                      Quer que os especialistas da RevHackers desenhem e implementem esta arquitetura de vendas na sua empresa nos próximos 90 dias?
+                    </p>
+                    <a href="https://revhackers.com.br/booking" target="_blank" style="color: #059669; font-size: 13px; font-weight: 700; text-decoration: underline;">
+                      Agendar reunião técnica de 30 minutos →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 0 0 4px 0; font-size: 15px; line-height: 24px; color: #0f172a;">
+                Abraço,
+              </p>
+              <p style="margin: 0 0 2px 0; font-size: 15px; font-weight: 700; color: #0f172a;">
+                Giulliano Alves
+              </p>
+              <p style="margin: 0; font-size: 14px; color: #475569;">
+                Founder & Revenue Engineer | RevHackers
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td align="center" style="background-color: #000000; padding: 28px 24px 28px 24px; border-top: 1px solid #18181b;">
+              <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 20px;">
+                <tr>
+                  <td style="padding: 0 10px;">
+                    <a href="https://www.instagram.com/revhackers" target="_blank" style="color: #a1a1aa; font-size: 12px; text-decoration: none; font-weight: 600;">Instagram</a>
+                  </td>
+                  <td style="color: #3f3f46; font-size: 12px;">•</td>
+                  <td style="padding: 0 10px;">
+                    <a href="https://www.linkedin.com/company/revhackers" target="_blank" style="color: #a1a1aa; font-size: 12px; text-decoration: none; font-weight: 600;">LinkedIn</a>
+                  </td>
+                  <td style="color: #3f3f46; font-size: 12px;">•</td>
+                  <td style="padding: 0 10px;">
+                    <a href="https://www.youtube.com/@revhackers" target="_blank" style="color: #a1a1aa; font-size: 12px; text-decoration: none; font-weight: 600;">YouTube</a>
+                  </td>
+                  <td style="color: #3f3f46; font-size: 12px;">•</td>
+                  <td style="padding: 0 10px;">
+                    <a href="https://revhackers.com.br" target="_blank" style="color: #a1a1aa; font-size: 12px; text-decoration: none; font-weight: 600;">Website</a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin: 0; font-size: 11px; line-height: 16px; color: #71717a;">
+                © {{right_now.year}} RevHackers. Todos os direitos reservados.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
