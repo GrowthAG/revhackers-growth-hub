@@ -33,7 +33,7 @@ export interface RevIconProps extends LucideProps {
 
 // 1. Icones Vetoriais Puros (Lucide-React)
 export const RevIcon = {
-    Sparkles: (props: RevIconProps) => <Sparkles size={props.size ?? 18} className={`text-[#00CC6A] ${props.className || ''}`} {...props} />,
+    Sparkles: (props: RevIconProps) => <Target size={props.size ?? 18} className={`text-[#00CC6A] ${props.className || ''}`} {...props} />,
     Shield: (props: RevIconProps) => <ShieldCheck size={props.size ?? 18} className={`text-[#00CC6A] ${props.className || ''}`} {...props} />,
     Activity: (props: RevIconProps) => <Activity size={props.size ?? 18} className={`text-[#00CC6A] ${props.className || ''}`} {...props} />,
     Kanban: (props: RevIconProps) => <FolderKanban size={props.size ?? 18} className={`text-[#00CC6A] ${props.className || ''}`} {...props} />,

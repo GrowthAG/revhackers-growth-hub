@@ -43,7 +43,7 @@ const engines = [
     subtitle: "Autoridade C-Level & Páginas de Alta Conversão",
     description: "Transformação da autoridade do fundador e do site da empresa em ímãs de conversão B2B. Posicionamento no LinkedIn, Social Selling e Landing Pages desenvolvidas para máxima taxa de agendamento.",
     tech: ["LinkedIn Authority", "Social Selling", "Next.js", "CRO Testing"],
-    icon: RevIcon.Sparkles,
+    icon: RevIcon.Target,
     slug: "founder-led-growth",
     badge: "AUTORIDADE & CRO"
   }
@@ -72,7 +72,7 @@ const ecosystemSteps = [
     step: "04",
     title: "Fechamento & Escala",
     desc: "Dashboards de velocidade de receita indicam gargalos e expansão.",
-    icon: RevIcon.Sparkles
+    icon: RevIcon.Activity
   }
 ];
 
@@ -95,7 +95,7 @@ const Servicos = () => {
       />
 
       {/* Hero Section — Alinhamento Total com o Título 'Ecossistema' */}
-      <section className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-32 pb-20 bg-black border-b border-zinc-900 text-center">
+      <section className="relative flex flex-col justify-center items-center overflow-hidden pt-28 pb-12 bg-black border-b border-zinc-900 text-center">
         <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-[#00CC6A] text-xs font-mono font-bold uppercase tracking-wider">
             <ShieldCheck size={14} className="text-[#00CC6A]" />
