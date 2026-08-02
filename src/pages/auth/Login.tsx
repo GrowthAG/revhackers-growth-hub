@@ -86,6 +86,24 @@ const Login = () => {
                             </p>
                         </div>
 
+                        {/* Profile Avatar Badge se for o master ou email Giulliano@usefunnels.io */}
+                        {(email.toLowerCase().includes('giulliano') || email.toLowerCase().includes('usefunnels')) && (
+                            <div className="flex items-center gap-3 p-3 bg-zinc-950 text-white rounded-xl border border-zinc-800 shadow-md animate-fade-in">
+                                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#00CC6A] shrink-0 bg-zinc-900">
+                                    <img
+                                        src="/uploads/giulliano-linkedin-profile.png"
+                                        alt="Giulliano Alves"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#00CC6A] border-2 border-black" />
+                                </div>
+                                <div className="flex flex-col text-left min-w-0 flex-1">
+                                    <span className="text-xs font-bold text-white truncate">Giulliano Alves</span>
+                                    <span className="text-[10px] text-[#00CC6A] font-mono font-medium">Founder RevHackers • Super Admin</span>
+                                </div>
+                            </div>
+                        )}
+
                         {/* Form Section Híbrida: Google + Email/Senha simultâneos */}
                         <div className="space-y-5">
                             {error && (

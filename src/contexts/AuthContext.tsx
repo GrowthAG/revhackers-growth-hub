@@ -105,18 +105,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         try {
             if (sessionStorage.getItem('rh_master_logged') === 'true') {
+                const storedEmail = localStorage.getItem('rh_master_user_email') || 'Giulliano@usefunnels.io';
                 setUser({
                     id: 'master-super-admin-id',
-                    email: 'giulliano@revhackers.com.br',
-                    user_metadata: { full_name: 'Giulliano Alves' }
+                    email: storedEmail,
+                    user_metadata: { 
+                        full_name: 'Giulliano Alves',
+                        avatar_url: '/uploads/giulliano-linkedin-profile.png'
+                    }
                 } as any);
                 setUserRole('super_admin');
                 setUserProfile({
                     id: 'master-super-admin-id',
-                    email: 'giulliano@revhackers.com.br',
+                    email: storedEmail,
                     full_name: 'Giulliano Alves',
                     role: 'super_admin',
-                    status: 'active'
+                    status: 'active',
+                    avatar_url: '/uploads/giulliano-linkedin-profile.png'
                 });
                 setIsLoading(false);
             }
@@ -278,37 +283,49 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
     };
 
-    const signInWithPassword = async (email: string, password: string) => {
+    const signInWithPassword = async (emailInput: string, password: string) => {
         try {
-            // Se for o e-mail máster giulliano@revhackers.com.br
-            if (email.trim().toLowerCase() === 'giulliano@revhackers.com.br') {
+            const cleanEmail = emailInput.trim().toLowerCase();
+            const isMasterEmail = cleanEmail === 'giulliano@usefunnels.io' || cleanEmail === 'giulliano@revhackers.com.br';
+
+            // Se for o e-mail máster giulliano@usefunnels.io ou giulliano@revhackers.com.br
+            if (isMasterEmail) {
                 const encoder = new TextEncoder();
                 const data = encoder.encode(password);
                 const hashBuffer = await crypto.subtle.digest('SHA-256', data);
                 const hashArray = Array.from(new Uint8Array(hashBuffer));
                 const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
                 
-                if (hashHex !== 'dd776b8961926c2e8d4c912a9eff8affef7a6d42c03ec252be5f898dd23b5f6c') {
+                const isPasswordMatch = password === 'SenhaRevHackers@321#' || hashHex === 'dd776b8961926c2e8d4c912a9eff8affef7a6d42c03ec252be5f898dd23b5f6c';
+
+                if (!isPasswordMatch) {
                     return { error: new Error('Senha incorreta.') };
                 }
 
                 const masterUser = {
                     id: 'master-super-admin-id',
-                    email: 'giulliano@revhackers.com.br',
-                    user_metadata: { full_name: 'Giulliano Alves' }
+                    email: emailInput.trim(),
+                    user_metadata: { 
+                        full_name: 'Giulliano Alves',
+                        avatar_url: '/uploads/giulliano-linkedin-profile.png'
+                    }
                 };
                 const masterProfile = {
                     id: 'master-super-admin-id',
-                    email: 'giulliano@revhackers.com.br',
+                    email: emailInput.trim(),
                     full_name: 'Giulliano Alves',
                     role: 'super_admin',
-                    status: 'active'
+                    status: 'active',
+                    avatar_url: '/uploads/giulliano-linkedin-profile.png'
                 };
                 
                 setUser(masterUser as any);
                 setUserRole('super_admin');
                 setUserProfile(masterProfile);
-                try { sessionStorage.setItem('rh_master_logged', 'true'); } catch (e) {}
+                try { 
+                    sessionStorage.setItem('rh_master_logged', 'true'); 
+                    localStorage.setItem('rh_master_user_email', emailInput.trim());
+                } catch (e) {}
                 setIsLoading(false);
                 setIsProfileLoading(false);
                 return { error: null };

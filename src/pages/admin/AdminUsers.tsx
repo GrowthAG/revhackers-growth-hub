@@ -239,7 +239,12 @@ const AdminUsers = () => {
         try {
             const { error } = await supabase
                 .from("profiles")
-                .update({ full_name: editData.full_name, role: editData.role, status: editData.status })
+                .update({ 
+                    full_name: editData.full_name, 
+                    role: editData.role, 
+                    status: editData.status,
+                    avatar_url: editData.avatar_url 
+                })
                 .eq("id", editData.id);
 
             if (error) throw error;
@@ -479,6 +484,23 @@ const AdminUsers = () => {
                                         onChange={(e) => setEditData({ ...editData, full_name: e.target.value })}
                                         className="h-10 border-zinc-200 rounded-lg text-xs shadow-none"
                                     />
+                                </div>
+                                <div className="space-y-1.5">
+                                    <Label className="text-xs font-semibold text-zinc-700">URL da Imagem / Foto do Perfil (Avatar)</Label>
+                                    <div className="flex items-center gap-3">
+                                        <Avatar className="w-10 h-10 border border-zinc-200">
+                                            <AvatarImage src={editData.avatar_url || ''} alt={editData.full_name} />
+                                            <AvatarFallback className="bg-zinc-100 text-zinc-700 font-bold text-xs">
+                                                {(editData.full_name || 'MB').substring(0, 2).toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <Input
+                                            value={editData.avatar_url || ''}
+                                            onChange={(e) => setEditData({ ...editData, avatar_url: e.target.value })}
+                                            placeholder="https://... ou /uploads/foto.png"
+                                            className="h-10 border-zinc-200 rounded-lg text-xs shadow-none flex-1"
+                                        />
+                                    </div>
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div className="space-y-1.5">
