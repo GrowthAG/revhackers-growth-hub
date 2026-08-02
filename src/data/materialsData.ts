@@ -67,7 +67,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_sales_commission.png',
         material_url: '/materiais/crm-estrategico',
-        link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-75537/dcc3fba9d7b5449',
+        link_material: 'https://bustling-lemon-68c.notion.site/Guia-Completo-CRM-Estrat-gico-que-Realmente-Converte-RevHackers-3b0bdc72e03981388a36da7b135588d4',
         published: true,
         is_active: true
     },
