@@ -172,14 +172,14 @@ export default function MaterialLanding() {
                 <div className="max-w-6xl mx-auto px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
                         
-                        {/* Coluna Esquerda: Headline, Subheadline e Bullet points Limpos */}
+                        {/* Coluna Esquerda: Headline H1 proeminente, Subheadline H2 e Bullet points SEO/GEO */}
                         <div className="lg:col-span-6 space-y-8 text-left py-2">
                             <div className="space-y-4">
-                                <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight leading-tight">
-                                    Sobre este {material.type}
-                                </h2>
-                                <div 
-                                    className="text-zinc-600 text-sm sm:text-base leading-relaxed space-y-3"
+                                <h1 className="text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold text-zinc-950 tracking-tight leading-[1.15]">
+                                    Sobre este {material.type}: <span className="text-zinc-800 font-bold">{material.title}</span>
+                                </h1>
+                                <h2 
+                                    className="text-base sm:text-lg text-zinc-600 font-normal leading-relaxed space-y-3 pt-1"
                                     dangerouslySetInnerHTML={{
                                         __html: DOMPurify.sanitize((material.description || material.subheadline || '').replace(/^<p>|<\/p>$/g, ''))
                                     }}
