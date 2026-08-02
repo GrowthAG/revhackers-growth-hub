@@ -95,7 +95,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_gtm_strategy.png',
         material_url: '/materiais/guia-gtm',
-        link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-75377/8058bda68fdda75',
+        link_material: 'https://notion.so/3b0bdc72e039815981aceeebe1632a33',
         published: true,
         is_active: true
     },
