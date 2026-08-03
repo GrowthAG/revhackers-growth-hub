@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Clock, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import BlogCoverArt from './BlogCoverArt';
+import { getArticleImageBySlug, getFrameworkImage } from './post/articles/utils/frameworkImages';
 
 interface Author {
   name: string;
@@ -28,6 +28,24 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({ post, onClick }: BlogCardProps) => {
+  const isStatic = typeof post.id === 'number' || post.id.toString().startsWith('static-');
+  const articleImage = (post.image && post.image !== '')
+    ? post.image
+    : (isStatic ? (getArticleImageBySlug(post.slug) || getFrameworkImage(post.category, post.slug)) : getFrameworkImage(post.category, post.slug));
+
+  const [imgSrc, setImgSrc] = useState(articleImage);
+
+  useEffect(() => {
+    setImgSrc(articleImage);
+  }, [articleImage]);
+
+  const handleImageError = () => {
+    const fallback = getFrameworkImage(post.category, post.slug);
+    if (imgSrc !== fallback) {
+      setImgSrc(fallback);
+    }
+  };
+
   const cleanExcerpt = useMemo(() =>
     (post.excerpt || '').replace(/<[^>]*>?/gm, ''),
     [post.excerpt]
@@ -41,8 +59,13 @@ const BlogCard = ({ post, onClick }: BlogCardProps) => {
     >
       <article className="h-full flex flex-col bg-white border border-zinc-200/80 rounded-xl overflow-hidden hover:border-zinc-300 transition-all duration-300 shadow-xs hover:shadow-md p-5 space-y-4">
         {/* Cover Container */}
-        <div className="aspect-[16/9] w-full rounded-lg border border-zinc-800 relative overflow-hidden">
-          <BlogCoverArt seed={post.slug || post.id} className="w-full h-full transition-transform duration-500 group-hover:scale-[1.02]" />
+        <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-zinc-950 relative flex items-center justify-center border border-zinc-800">
+          <img
+            src={imgSrc}
+            alt={post.title}
+            onError={handleImageError}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+          />
           <div className="absolute top-3 left-3">
             <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#00CC6A] text-black">
               {post.category}
