@@ -1,10 +1,9 @@
 
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, Calendar, User, Share2, Linkedin, Twitter, Link as LinkIcon } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getFrameworkImage } from './articles/utils/frameworkImages';
+import BlogCoverArt from '../BlogCoverArt';
 
 interface Author {
   name: string;
@@ -36,26 +35,6 @@ const BlogPostHeader = ({
 }: BlogPostHeaderProps) => {
   const scrollToTop = () => {
     window.scrollTo(0, 0);
-  };
-
-  const [imgSrc, setImgSrc] = useState(post.image);
-
-  useEffect(() => {
-    setImgSrc(post.image);
-  }, [post.image]);
-
-  const handleImageError = () => {
-    const fallback = getFrameworkImage(post.category, post.slug);
-    if (imgSrc !== fallback) {
-      setImgSrc(fallback);
-    }
-  };
-
-  // Clean HTML from title
-  const cleanTitle = () => {
-    const div = document.createElement('div');
-    div.innerHTML = post.title;
-    return div.textContent || div.innerText || '';
   };
 
   return <>
@@ -105,15 +84,10 @@ const BlogPostHeader = ({
       </div>
     </div>
 
-    {/* Featured Image - NUNCA CORTA IMAGENS (object-contain) */}
+    {/* Cover gerada por componente - unica por artigo, nunca quebra */}
     <div className="max-w-4xl mx-auto mb-10">
-      <figure className="overflow-hidden rounded-2xl bg-zinc-950 border border-zinc-800/90 p-2 sm:p-4 shadow-2xl flex items-center justify-center">
-        <img
-          src={imgSrc}
-          alt={cleanTitle()}
-          onError={handleImageError}
-          className="w-auto max-w-full max-h-[500px] object-contain mx-auto rounded-xl"
-        />
+      <figure className="overflow-hidden rounded-2xl border border-zinc-800/90 shadow-2xl">
+        <BlogCoverArt seed={post.slug} className="w-full h-[260px] sm:h-[340px] md:h-[400px]" />
       </figure>
     </div>
   </>;
