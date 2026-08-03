@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, ShieldCheck, Sparkles, Building2, Linkedin, Award } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck, Sparkles, Building2, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -54,9 +54,8 @@ export const FounderShowcase = () => {
 
           {/* Founder Bio & Strategic Credentials */}
           <div className="w-full lg:w-7/12 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-[#00CC6A] text-xs font-mono font-bold uppercase tracking-wider">
-              <Award size={14} className="text-[#00CC6A]" />
-              <span>Engenharia de GTM & Founder-Led Growth</span>
+            <div className="inline-flex items-center gap-2 border-l-2 border-[#00CC6A] pl-3">
+              <span className="text-[#00CC6A] text-xs font-mono font-bold uppercase tracking-[0.2em]">Engenharia de GTM & Founder-Led Growth</span>
             </div>
 
             <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">

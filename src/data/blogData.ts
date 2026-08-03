@@ -2233,7 +2233,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Criando uma abordagem integrada de aquisição para maximizar seus resultados.",
     content: "Conteúdo renderizado via componente customizado",
     category: "PLG",
-    image: "/images/blog-v2/blog_saas_pipeline.png",
+    image: "/uploads/revenue-architecture-hero.svg",
     author: {
       name: "Giulliano Alves",
       role: "CEO and Founder",
@@ -2265,7 +2265,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Formando um time multidisciplinar e eficiente mesmo com orçamento limitado.",
     content: "Conteúdo renderizado via componente customizado",
     category: "MarTech",
-    image: "/images/blog-v2/blog_revops_core.png",
+    image: "/uploads/processo-comercial-b2b.svg",
     author: {
       name: "Giulliano Alves",
       role: "CEO and Founder",
@@ -2281,7 +2281,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Um guia objetivo sobre os KPIs que realmente fazem diferença no crescimento do seu negócio.",
     content: "Conteúdo renderizado via componente customizado",
     category: "Dados",
-    image: "/images/blog-v2/blog_pricing_psychology.png",
+    image: "/uploads/revenue-architecture-hero.svg",
     author: {
       name: "Giulliano Alves",
       role: "CEO and Founder",
