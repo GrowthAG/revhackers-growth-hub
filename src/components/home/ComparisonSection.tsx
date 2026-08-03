@@ -93,8 +93,49 @@ const ComparisonSection = () => {
           </p>
         </div>
 
-        {/* Comparison Table */}
-        <div className="max-w-5xl mx-auto overflow-x-auto">
+        {/* Comparison Table — Mobile: stacked cards */}
+        <div className="max-w-2xl mx-auto space-y-6 md:hidden">
+          {criteria.map((row, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 8 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.05 * i, ease: 'easeOut' }}
+              className="border border-zinc-200 rounded-2xl overflow-hidden"
+            >
+              <div className="bg-zinc-50 px-4 py-3 border-b border-zinc-200">
+                <span className="text-xs font-bold text-zinc-700 leading-snug">{row.label}</span>
+              </div>
+
+              <div className="bg-zinc-900 px-4 py-3.5 flex items-center gap-3">
+                <StatusIcon value={row.revhackersGood} />
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-[#00CC6A] font-sans tracking-wider uppercase">RevHackers</span>
+                  <span className="text-xs text-zinc-100 font-medium leading-snug">{row.revhackers}</span>
+                </div>
+              </div>
+
+              <div className="bg-white px-4 py-3.5 flex items-center gap-3 border-b border-zinc-100">
+                <StatusIcon value={row.internoGood} />
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-zinc-400 font-sans tracking-wider uppercase">Time Interno</span>
+                  <span className="text-xs text-zinc-500 font-medium leading-snug">{row.interno}</span>
+                </div>
+              </div>
+
+              <div className="bg-white px-4 py-3.5 flex items-center gap-3">
+                <StatusIcon value={row.agenciaGood} />
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-zinc-400 font-sans tracking-wider uppercase">Agência Digital</span>
+                  <span className="text-xs text-zinc-500 font-medium leading-snug">{row.agencia}</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Comparison Table — Desktop: grid */}
+        <div className="max-w-5xl mx-auto overflow-x-auto hidden md:block">
 
           {/* Column Headers */}
           <div className="grid grid-cols-4 gap-0 mb-0">
