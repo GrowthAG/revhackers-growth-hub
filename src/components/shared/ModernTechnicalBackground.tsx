@@ -41,7 +41,7 @@ const ModernTechnicalBackground = () => {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, width, height);
 
-            ctx.fillStyle = '#03FC3B'; // RevGreen
+            ctx.fillStyle = '#00CC6A'; // RevGreen
             ctx.font = '10px monospace'; // Very small, almost abstract
 
             for (let i = 0; i < drops.length; i++) {
@@ -49,7 +49,7 @@ const ModernTechnicalBackground = () => {
                 if (Math.random() > 0.985) {
                     // Use a subtle square or dot instead of binary digits (Aesthetic upgrade)
                     const opacity = Math.random() * 0.3;
-                    ctx.fillStyle = `rgba(3, 252, 59, ${opacity})`;
+                    ctx.fillStyle = `rgba(0, 204, 106, ${opacity})`;
 
                     // Draw a thin technical vertical line or small square
                     ctx.fillRect(i * COLUMN_WIDTH, drops[i] * 12, 1, 8);

@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { buildBookingUrl } from '@/utils/utm';
+import ModernTechnicalBackground from '@/components/shared/ModernTechnicalBackground';
 
 import { NumberTicker } from '@/components/ui/NumberTicker';
 
@@ -24,6 +25,8 @@ const HeroSection = () => {
       ref={ref}
       className="relative min-h-[85vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 bg-black"
     >
+      <ModernTechnicalBackground />
+
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-center">
 
         {/* Headline — WHY + HOW (Hormozi) */}
