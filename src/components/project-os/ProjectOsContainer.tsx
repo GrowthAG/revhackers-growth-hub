@@ -22,7 +22,7 @@ export const ProjectOsContainer: React.FC<ProjectOsContainerProps> = ({ projectI
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm flex flex-col gap-3">
-             <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400">
+             <div className="flex items-center gap-2 text-zinc-900 dark:text-zinc-100">
                 <Target className="w-5 h-5" />
                 <h3 className="font-semibold">O Norte (Estratégia)</h3>
              </div>

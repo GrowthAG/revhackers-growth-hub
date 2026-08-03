@@ -189,6 +189,17 @@ className="h-[3px] flex-1 bg-zinc-800 rounded-full"
 - ❌ Nao criar botoes coloridos em telas de apresentacao ao cliente (apenas zinc ou white)
 - ❌ **Nao usar o caractere em dash (`\u2014`) em NENHUM lugar - usar hifen simples (`-`)**
 
+### Anti-Vibecode - Fugir do "AI Slop"
+
+LLMs (Claude incluido) convergem por padrao para escolhas genericas de frontend - o que o mercado chama de "AI slop": fontes batidas, gradiente roxo em fundo branco, layout prontinho de SaaS generico. O Nobibecode existe justamente para fugir disso. Ao gerar ou revisar qualquer UI neste projeto:
+
+- ❌ PROIBIDO: `Inter`, `Roboto`, `Arial` ou qualquer fonte de sistema generica. Este projeto usa `Plus Jakarta Sans` (`font-sans`), `Outfit` (`font-display`) e `JetBrains Mono` (`font-mono`) - nunca adicionar Inter de volta ao font stack nem a nenhum `@import`, mesmo que pareca inofensivo.
+- ❌ PROIBIDO: gradiente de qualquer tipo (regra ja existente acima) - isso ja e a principal defesa do projeto contra o cliche "gradiente roxo em fundo branco". Se precisar de atmosfera/profundidade num fundo escuro, usar textura (grid tecnico sutil, ruido, linhas), nunca cor.
+- ❌ PROIBIDO: paleta fora de zinc + `#00CC6A` (isso inclui `indigo`, `violet`, `purple`, `blue`, `lime` e qualquer outra cor do Tailwind default) - mesmo em telas internas/admin. Se precisar diferenciar semanticamente (status, prioridade, categoria), variar peso/opacidade do zinc antes de recorrer a outra cor.
+- ❌ PROIBIDO: icone Lucide dentro de container generico `w-12 h-12 bg-zinc-50 border rounded-xl` sem nenhuma variacao - isso e a mesma composicao usada por 90% dos SaaS gerados por IA. Usar essa base apenas quando fizer sentido, mas variar borda/sombra/proporcao para o card ter identidade propria.
+- ✅ Motion deve ser orquestrado, nao espalhado: preferir um page-load bem coreografado com stagger (`transition={{ delay: i * 0.05 }}`, como em `ComparisonSection.tsx`) a varias microinteracoes soltas sem coerencia entre si.
+- ✅ Ao adicionar qualquer webfont novo, remover imediatamente o anterior se ele deixar de ser usado (nao deixar `@import` ou entrada em `fontFamily` mortos - eles pesam no load e reintroduzem fontes genericas por acidente em copy-paste futuro).
+
 ---
 
 ## Arquitetura de Geracao do Plano

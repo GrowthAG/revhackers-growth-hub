@@ -51,7 +51,6 @@ export default {
 			fontFamily: {
 				'sans':      ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
 				'display':   ['"Outfit"', '"Plus Jakarta Sans"', 'sans-serif'],
-				'body':      ['"Inter"', '"Plus Jakarta Sans"', 'sans-serif'],
 				'mono':      ['"JetBrains Mono"', 'monospace'],
 				'mono-tech': ['"JetBrains Mono"', 'monospace'],
 			},

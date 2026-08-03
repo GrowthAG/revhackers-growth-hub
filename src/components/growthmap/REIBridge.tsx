@@ -35,7 +35,7 @@ export default function REIBridge({ connections, actions, onAddToSprint }: REIBr
         <div className="mb-4">
           <h3 className="text-[10px] font-bold tracking-widest text-zinc-400 uppercase">Diagnóstico Cruzado</h3>
           <h4 className="text-lg font-bold text-white flex items-center gap-2">
-            <span className="text-violet-400">REI</span>
+            <span className="text-zinc-300">REI</span>
             <span className="text-zinc-600">×</span>
             <span className="text-lime-400">GrowthMap</span>
           </h4>

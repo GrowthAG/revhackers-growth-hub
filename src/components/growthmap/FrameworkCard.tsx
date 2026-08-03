@@ -165,7 +165,7 @@ export default function FrameworkCard({ framework, onRegenerate, onClick }: Fram
       <div className="mt-4 pt-3 border-t border-white/5 flex justify-between items-center">
         <div>
           {(framework.rei_connections?.length ?? 0) > 0 && (
-            <span className="flex items-center gap-1 text-[10px] text-violet-400 font-medium">
+            <span className="flex items-center gap-1 text-[10px] text-zinc-400 font-medium">
               <Link2 size={11} />
               {framework.rei_connections!.length} {framework.rei_connections!.length === 1 ? 'dado' : 'dados'} do REI
             </span>
