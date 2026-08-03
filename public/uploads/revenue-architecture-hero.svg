@@ -23,11 +23,11 @@
   <!-- Badge Top -->
   <rect x="475" y="100" width="250" height="36" rx="18" fill="#18181b" stroke="#27272a" stroke-width="1" />
   <circle cx="495" cy="118" r="4" fill="#00CC6A" />
-  <text x="510" y="123" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="12" fill="#00CC6A" letter-spacing="2">REVHACKERS METRICS</text>
+  <text x="510" y="123" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="12" fill="#00CC6A" letter-spacing="2">REVHACKERS METRICS</text>
 
   <!-- Title -->
-  <text x="600" y="200" font-family="Inter, system-ui, sans-serif" font-weight="900" font-size="52" fill="#ffffff" text-anchor="middle" letter-spacing="-1">REVOPS FRAMEWORK</text>
-  <text x="600" y="240" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="20" fill="#a1a1aa" text-anchor="middle" letter-spacing="1">Aligning Marketing, Sales &amp; Customer Success for Growth</text>
+  <text x="600" y="200" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="52" fill="#ffffff" text-anchor="middle" letter-spacing="-1">REVOPS FRAMEWORK</text>
+  <text x="600" y="240" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="600" font-size="20" fill="#a1a1aa" text-anchor="middle" letter-spacing="1">Aligning Marketing, Sales &amp; Customer Success for Growth</text>
 
   <!-- Interconnected Nodes / Gears -->
   <g transform="translate(0, 40)">
@@ -39,8 +39,8 @@
       <circle r="75" fill="#18181b" stroke="#27272a" stroke-width="3" />
       <circle r="60" fill="none" stroke="#00CC6A" stroke-width="2" stroke-dasharray="8 4" opacity="0.5" />
       <circle r="8" fill="#00CC6A" />
-      <text y="-10" font-family="Inter, system-ui, sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">MARKETING</text>
-      <text y="15" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="11" fill="#00CC6A" text-anchor="middle" letter-spacing="1">AQUISIÇÃO</text>
+      <text y="-10" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">MARKETING</text>
+      <text y="15" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="11" fill="#00CC6A" text-anchor="middle" letter-spacing="1">AQUISIÇÃO</text>
     </g>
 
     <!-- Node 2: Sales -->
@@ -48,8 +48,8 @@
       <circle r="90" fill="#18181b" stroke="#00CC6A" stroke-width="4" />
       <circle r="75" fill="none" stroke="#00CC6A" stroke-width="2" opacity="0.3" />
       <circle r="12" fill="#00CC6A" />
-      <text y="-10" font-family="Inter, system-ui, sans-serif" font-weight="900" font-size="20" fill="#ffffff" text-anchor="middle">SALES</text>
-      <text y="18" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="12" fill="#00CC6A" text-anchor="middle" letter-spacing="1">CONVERSÃO</text>
+      <text y="-10" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="20" fill="#ffffff" text-anchor="middle">SALES</text>
+      <text y="18" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="12" fill="#00CC6A" text-anchor="middle" letter-spacing="1">CONVERSÃO</text>
     </g>
 
     <!-- Node 3: Customer Success -->
@@ -57,11 +57,11 @@
       <circle r="75" fill="#18181b" stroke="#27272a" stroke-width="3" />
       <circle r="60" fill="none" stroke="#00CC6A" stroke-width="2" stroke-dasharray="8 4" opacity="0.5" />
       <circle r="8" fill="#00CC6A" />
-      <text y="-10" font-family="Inter, system-ui, sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">CS &amp; EXPANSÃO</text>
-      <text y="15" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="11" fill="#00CC6A" text-anchor="middle" letter-spacing="1">RETENÇÃO</text>
+      <text y="-10" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="900" font-size="16" fill="#ffffff" text-anchor="middle">CS &amp; EXPANSÃO</text>
+      <text y="15" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="700" font-size="11" fill="#00CC6A" text-anchor="middle" letter-spacing="1">RETENÇÃO</text>
     </g>
   </g>
 
   <!-- Bottom Brand Signature -->
-  <text x="600" y="620" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="16" fill="#71717a" text-anchor="middle" letter-spacing="3">REVHACKERS GTM ENGINEERING</text>
+  <text x="600" y="620" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="16" fill="#71717a" text-anchor="middle" letter-spacing="3">REVHACKERS GTM ENGINEERING</text>
 </svg>
