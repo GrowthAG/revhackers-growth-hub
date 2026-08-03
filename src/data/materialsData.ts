@@ -25,7 +25,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_marketing_automation.png',
         material_url: '/materiais/framework-ia-meta-ads',
-        link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-77477/31372c5d222fba9',
+        link_material: 'https://revhackers.notion.site/Framework-Completo-Agente-de-IA-para-Meta-Ads-Pipeline-B2B-RevHackers-3b1bdc72e039819cbf9df5a5ee67a94d',
         published: true,
         is_active: true
     },
