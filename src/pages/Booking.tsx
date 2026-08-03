@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { CheckCircle, Clock, FileText, Zap } from 'lucide-react';
 import SEO from '@/components/shared/SEO';
+import ModernTechnicalBackground from '@/components/shared/ModernTechnicalBackground';
 
 const BOOKING_BASE_URL = "https://pages.revhackers.com.br/widget/booking/frZ10gIRdS8iNvtlGq3q";
 
@@ -65,8 +66,9 @@ const BookingPage = () => {
         canonical="https://revhackers.com.br/booking"
       />
       {/* Hero Section (BLACK HERO STANDARD) */}
-      <section className="relative py-20 md:py-28 bg-black border-b border-zinc-900">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-5">
+      <section className="relative overflow-hidden py-20 md:py-28 bg-black border-b border-zinc-900">
+        <ModernTechnicalBackground />
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-5">
           {leadContext.company ? (
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00CC6A]/10 border border-[#00CC6A]/30 text-[#00CC6A] text-xs font-bold uppercase tracking-wider mb-2">
               <span className="w-2 h-2 rounded-full bg-[#00CC6A] animate-pulse" />

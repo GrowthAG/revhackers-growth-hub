@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowUpRight, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
 import SEO from '@/components/shared/SEO';
 import { RevCardIcon, RevIcon } from '@/components/shared/RevIconLibrary';
+import ModernTechnicalBackground from '@/components/shared/ModernTechnicalBackground';
 
 const engines = [
   {
@@ -96,10 +97,10 @@ const Servicos = () => {
 
       {/* Hero Section — Alinhamento Total com o Título 'Ecossistema' */}
       <section className="relative flex flex-col justify-center items-center overflow-hidden pt-28 pb-12 bg-black border-b border-zinc-900 text-center">
+        <ModernTechnicalBackground />
         <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-[#00CC6A] text-xs font-mono font-bold uppercase tracking-wider">
-            <ShieldCheck size={14} className="text-[#00CC6A]" />
-            <span>ECOSSISTEMA DE ENGENHARIA DE GTM</span>
+          <div className="inline-flex items-center gap-2 border-l-2 border-[#00CC6A] pl-3">
+            <span className="text-[#00CC6A] text-xs font-mono font-bold uppercase tracking-[0.2em]">Ecossistema de Engenharia de GTM</span>
           </div>
 
           <h1 className="font-sans text-[2.25rem] sm:text-[3rem] md:text-[3.5rem] font-extrabold text-white leading-[1.1] tracking-tight max-w-4xl mx-auto">
@@ -127,31 +128,39 @@ const Servicos = () => {
       </section>
 
       {/* Fluxo do Ecossistema (Como os 4 Motores Se Conectam) */}
-      <section className="py-20 bg-zinc-950 text-white border-b border-zinc-900">
+      <section className="py-20 bg-zinc-50 text-zinc-900 border-b border-zinc-200">
         <div className="max-w-6xl mx-auto px-6 space-y-12">
           <div className="text-center space-y-3 max-w-2xl mx-auto">
             <span className="text-[#00CC6A] text-xs font-mono font-bold tracking-widest uppercase">
               ARQUITETURA DE INTEGRAÇÃO
             </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight">
               Como os 4 Motores Conectam Sua Operação
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-sm">
+            <p className="text-zinc-500 text-xs sm:text-sm">
               Sem dados duplicados, sem perdas no handoff e com 100% de visibilidade de ponta a ponta.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {ecosystemSteps.map((s) => (
-              <div key={s.step} className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 space-y-4 relative group hover:border-zinc-700 transition-all">
-                <div className="flex items-center justify-between">
+              <div key={s.step} className="p-6 pt-8 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-4 relative overflow-hidden group hover:border-zinc-700 transition-all">
+                {/* Numeral fantasma - assinatura tecnica, substitui o badge "ETAPA N" */}
+                <span className="absolute top-1 right-3 text-6xl font-black text-white/[0.04] leading-none select-none">
+                  {s.step}
+                </span>
+                {/* Marcadores de canto - prancheta tecnica */}
+                <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-zinc-700" />
+                <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-zinc-700" />
+
+                <div className="relative flex items-center justify-between">
                   <RevCardIcon icon={s.icon} size={20} />
-                  <span className="text-xs font-mono font-bold text-zinc-500 bg-zinc-950 px-2.5 py-1 rounded-md border border-zinc-800">
-                    ETAPA {s.step}
+                  <span className="text-[10px] font-mono font-bold text-zinc-500 tracking-widest">
+                    {s.step}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-white tracking-tight">{s.title}</h3>
-                <p className="text-xs text-zinc-400 leading-relaxed">{s.desc}</p>
+                <h3 className="relative text-lg font-bold text-white tracking-tight">{s.title}</h3>
+                <p className="relative text-xs text-zinc-400 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -163,8 +172,8 @@ const Servicos = () => {
         <div className="max-w-6xl mx-auto px-6 space-y-16">
           
           <div className="max-w-3xl mx-auto text-center space-y-3">
-            <span className="text-[#00CC6A] text-xs font-mono font-bold tracking-widest uppercase bg-zinc-950 px-3 py-1 rounded-md border border-zinc-800">
-              MOTORES DE GTM ENGINEERING
+            <span className="text-[#00CC6A] text-xs font-mono font-bold tracking-[0.2em] uppercase">
+              Motores de GTM Engineering
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight leading-tight">
               Os 4 Pilares do Ecossistema RevHackers

@@ -35,7 +35,7 @@ export default function CasesSection({ proposal }: { proposal: any }) {
     const cases = liveData.cases || defaultCases;
 
     return (
-        <section className="w-full min-h-[100dvh] flex flex-col items-center bg-zinc-950 p-8 lg:p-12 pt-16 pb-[200px] lg:pb-[200px] relative overflow-hidden border-t-8 border-[#00CC6A]">
+        <section className="w-full min-h-[100dvh] flex flex-col items-center bg-zinc-950 p-8 lg:p-12 pt-16 pb-16 lg:pb-[200px] relative overflow-hidden border-t-8 border-[#00CC6A]">
 
             <div className="absolute top-20 left-10 opacity-[0.03]">
                 <TrendingUp className="w-[800px] h-[800px] text-white" />

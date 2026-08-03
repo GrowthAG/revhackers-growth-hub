@@ -6,6 +6,7 @@ import Section from '@/components/ui/Section';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import SEO from '@/components/shared/SEO';
+import ModernTechnicalBackground from '@/components/shared/ModernTechnicalBackground';
 
 const Metodologia = () => {
     useEffect(() => {
@@ -29,8 +30,9 @@ const Metodologia = () => {
             <Header />
 
             {/* --- HERO SECTION (BLACK) --- */}
-            <section className="bg-black py-20 md:py-28 border-b border-zinc-900">
-                <div className="max-w-4xl mx-auto px-6 text-center space-y-6">
+            <section className="relative overflow-hidden bg-black py-20 md:py-28 border-b border-zinc-900">
+                <ModernTechnicalBackground />
+                <div className="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-6">
                     <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-[1.2] tracking-tight text-center max-w-3xl mx-auto">
                         Multiplique seu pipeline B2B por 3x em 90 dias <span className="text-[#00CC6A]">sem contratar mais vendedores.</span>
                     </h1>

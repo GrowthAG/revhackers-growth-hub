@@ -3,6 +3,7 @@ import Section from '@/components/ui/Section';
 import { ArrowUpRight, BarChart2, Globe, TrendingUp, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '@/components/shared/SEO';
+import ModernTechnicalBackground from '@/components/shared/ModernTechnicalBackground';
 
 const DiagnosticoGateway = () => {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ const DiagnosticoGateway = () => {
       <SEO title="Central de Diagnósticos" description="Descubra onde estão os vazamentos na sua operação B2B com diagnósticos gratuitos de Growth, CRM, Founder e Site." canonical="https://revhackers.com.br/diagnostico" />
       
       <section className="bg-black pt-28 pb-12 relative overflow-hidden">
+        <ModernTechnicalBackground />
         <div className="max-w-5xl mx-auto px-6 relative z-10 space-y-4 text-center">
           <p className="text-[#00CC6A] text-xs font-mono font-bold tracking-widest uppercase">
             CENTRAL DE DIAGNÓSTICOS
