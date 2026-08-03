@@ -5,7 +5,7 @@ const partners = [
   { name: "Heineken", logo: "/uploads/aada4820-3f12-4185-9af6-811f30795a93.png", scale: 1.3 },
   { name: "Lindoya", logo: "/uploads/lindoya-logo.png", scale: 1.3 },
   { name: "FMU", logo: "/uploads/e0d3d03b-c1d5-4a6e-9a61-3a1c2a707b5f.png", scale: 1.4 },
-  { name: "Anhembi Morumbi", logo: "/uploads/f5e74a47-fc77-4b34-970e-e839080310fd.png", scale: 1.8 },
+  { name: "Anhembi Morumbi", logo: "/uploads/f5e74a47-fc77-4b34-970e-e839080310fd.png", scale: 1.1 },
   { name: "Cruzeiro do Sul", logo: "/uploads/cruzeiro-site-dark.svg", scale: 1.25 },
   { name: "Agence", logo: "/uploads/6c09375e-5298-4672-9226-27eb60a6b038.png", scale: 1.3 },
   { name: "BLDN", logo: "https://storage.googleapis.com/msgsndr/oFTw9DcsKRUj6xCiq4mb/media/694c77062fe4f1854fadf797.svg", scale: 1.3 },
