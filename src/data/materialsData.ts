@@ -101,7 +101,7 @@ export const materialsData: Material[] = [
     },
     {
         id: 'linkedin-outreach',
-        title: 'LinkedIn Outreach Revolution',
+        title: 'Guia de Outreach Personalizado no LinkedIn',
         slug: 'linkedin-outreach',
         type: 'Guia',
         material_type: 'guide',
@@ -109,13 +109,13 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_polemic_growth.png',
         material_url: '/materiais/linkedin-outreach',
-        link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-74457/864a540dc185f92',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b2bdc72e03981128dcbd9b1285f0c98',
         published: true,
         is_active: true
     },
     {
         id: 'timing-sales-playbook',
-        title: 'Timing Sales Playbook',
+        title: 'Framework de Vendas por Timing',
         slug: 'timing-sales-playbook',
         type: 'Playbook',
         material_type: 'playbook',
@@ -123,13 +123,13 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_demo_anatomy.png',
         material_url: '/materiais/timing-sales-playbook',
-        link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-74377/ac670d7da5d9815',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b2bdc72e0398157aec3cd72ca2c1915',
         published: true,
         is_active: true
     },
     {
         id: 'contato-decisores',
-        title: 'Como Conseguir Telefone e E-mail de Qualquer Decisor',
+        title: 'Como Conseguir Contato Direto de Decisores B2B',
         slug: 'contato-decisores',
         type: 'Guia',
         material_type: 'guide',
@@ -137,13 +137,13 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_cold_email_2025.png',
         material_url: '/materiais/contato-decisores',
-        link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-74037/4f52e2490ba6ea1',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b2bdc72e03981849f51cc033be06d9a',
         published: true,
         is_active: true
     },
     {
         id: 'framework-clickup',
-        title: 'O Framework que nos Levou ao TOP 10 Mundial do ClickUp',
+        title: 'Como Estruturar Operação de Projetos no ClickUp para Times de Growth',
         slug: 'framework-clickup',
         type: 'Framework',
         material_type: 'framework',
@@ -151,7 +151,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_pmf_fit.png',
         material_url: '/materiais/framework-clickup',
-        link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-73777/1cd15c7fdc86518',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b2bdc72e039815d81dde70d2273a6dd',
         published: true,
         is_active: true
     },
