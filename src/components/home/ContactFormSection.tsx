@@ -10,6 +10,7 @@ const ContactFormSection = () => {
   return (
     <section
       ref={ref}
+      id="solicitar-analise"
       className="relative py-24 bg-black border-t border-zinc-900 overflow-hidden"
     >
       <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -68,7 +69,7 @@ const ContactFormSection = () => {
                 </p>
               </div>
 
-              <ContactForm formType="contact" variant="light" />
+              <ContactForm formType="diagnosis" variant="light" />
             </div>
           </motion.div>
 

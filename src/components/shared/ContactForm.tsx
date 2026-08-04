@@ -207,7 +207,7 @@ const ContactForm = ({ formType = 'contact', variant = 'light' }: ContactFormPro
         disabled={isSubmitting}
         className="w-full h-11 bg-zinc-900 hover:bg-zinc-800 text-white font-semibold text-sm tracking-wide rounded-lg shadow-xs transition-all flex items-center justify-center gap-2 mt-4"
       >
-        {isSubmitting ? 'Validando e enviando...' : formType === 'diagnosis' ? 'Agendar Diagnóstico →' : 'Solicitar Aprovação →'}
+        {isSubmitting ? 'Validando e enviando...' : formType === 'diagnosis' ? 'Agendar Análise →' : 'Solicitar Aprovação →'}
       </Button>
     </form>
   );
