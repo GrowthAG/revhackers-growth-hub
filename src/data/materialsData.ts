@@ -25,7 +25,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_marketing_automation.png',
         material_url: '/materiais/framework-ia-meta-ads',
-        link_material: 'https://revhackers.notion.site/Framework-Completo-Agente-de-IA-para-Meta-Ads-Pipeline-B2B-RevHackers-3b1bdc72e039819cbf9df5a5ee67a94d',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b1bdc72e039818fb5ccc42c813e1fa1',
         published: true,
         is_active: true
     },
@@ -53,7 +53,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_growth_chatgpt.png',
         material_url: '/materiais/guia-agent-builder',
-        link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-77057/23e08419c8226b5',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b1bdc72e03981f286f3ee0390b60fd5',
         published: true,
         is_active: true
     },
@@ -67,7 +67,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_sales_commission.png',
         material_url: '/materiais/crm-estrategico',
-        link_material: 'https://revhackers.notion.site/Guia-Completo-CRM-Estrat-gico-que-Realmente-Converte-RevHackers-3b0bdc72e03981f98ec8e41d7b136792',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b1bdc72e0398116ad99c92f4aceb3c8',
         published: true,
         is_active: true
     },
@@ -81,7 +81,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_sales_nav.png',
         material_url: '/materiais/transforme-linkedin',
-        link_material: 'https://revhackers.notion.site/Transforme-Seu-LinkedIn-em-uma-M-quina-de-Reuni-es-RevHackers-3b0bdc72e03981fbb816d06fea42dff6',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b1bdc72e0398139b03bf54002aa472f',
         published: true,
         is_active: true
     },
@@ -95,7 +95,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_gtm_strategy.png',
         material_url: '/materiais/guia-gtm',
-        link_material: 'https://bustling-lemon-68c.notion.site/Plano-de-A-o-90-Dias-GTM-RevOps-377bdc72e0398044a0ddcd65701c5245',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b1bdc72e0398113a40ed099ea7f2f79',
         published: true,
         is_active: true
     },
@@ -152,6 +152,20 @@ export const materialsData: Material[] = [
         cover_image: '/images/blog-v2/blog_pmf_fit.png',
         material_url: '/materiais/framework-clickup',
         link_material: 'https://doc.clickup.com/9017035197/p/h/8cqa2dx-73777/1cd15c7fdc86518',
+        published: true,
+        is_active: true
+    },
+    {
+        id: 'servidor-ia-local',
+        title: 'Servidor de IA Local & Cluster de LLMs',
+        slug: 'servidor-ia-local',
+        type: 'Guia',
+        material_type: 'guide',
+        category: 'Infraestrutura',
+        description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
+        cover_image: '/images/blog-v2/blog_ai_marketing.png',
+        material_url: '/materiais/servidor-ia-local',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b1bdc72e03981e3ad18d9916c0a67d4',
         published: true,
         is_active: true
     }
