@@ -271,20 +271,22 @@ const BlogPostPage = () => {
       <section className="relative min-h-[60vh] flex flex-col items-center justify-center pt-24 pb-20 overflow-hidden bg-black">
         {/* Full-bleed high-impact background (Fixed: "sem imagem no banner") */}
         <div className="absolute inset-0 z-0">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0"
-          >
-            <img
-              src={heroImgSrc}
-              alt=""
-              fetchPriority="high"
-              onError={handleHeroImageError}
-              className="w-full h-full object-cover blur-xl scale-110"
-            />
-          </motion.div>
+          {heroImgSrc && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              transition={{ duration: 1 }}
+              className="absolute inset-0"
+            >
+              <img
+                src={heroImgSrc}
+                alt=""
+                fetchPriority="high"
+                onError={handleHeroImageError}
+                className="w-full h-full object-cover blur-xl scale-110"
+              />
+            </motion.div>
+          )}
           <div className="absolute inset-0 bg-black/70"></div>
           {/* Noise overlay for texture */}
           <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>

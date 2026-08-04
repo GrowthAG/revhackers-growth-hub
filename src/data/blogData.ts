@@ -2201,7 +2201,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Um guia completo para extrair insights acionáveis dos dados da sua operação de marketing.",
     content: "Conteúdo renderizado via componente customizado",
     category: "Dados",
-    image: "/images/blog-v2/blog_ai_marketing.png",
+    image: "/images/blog-v2/blog_data_marketing_diag_v2.png",
     author: {
       name: "Luna",
       role: "Analista de Marketing e Redatora",
@@ -2217,7 +2217,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Processos e estratégias prontos para implementar e colher resultados rápidos.",
     content: "Conteúdo renderizado via componente customizado",
     category: "Vendas",
-    image: "/images/blog-v2/blog_polemic_growth.png",
+    image: "/images/blog-v2/blog_strategy_playbooks_v2.png",
     author: {
       name: "Giulliano Alves",
       role: "CEO and Founder",
@@ -2233,7 +2233,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Criando uma abordagem integrada de aquisição para maximizar seus resultados.",
     content: "Conteúdo renderizado via componente customizado",
     category: "PLG",
-    image: "/uploads/revenue-architecture-hero.svg",
+    image: "/images/blog-v2/blog_marketing_fusion_v2.png",
     author: {
       name: "Giulliano Alves",
       role: "CEO and Founder",
@@ -2249,7 +2249,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Estratégias de marketing com baixo investimento e alto retorno para empresas em fase inicial.",
     content: "Conteúdo renderizado via componente customizado",
     category: "MarTech",
-    image: "/images/blog-v2/blog_gtm_strategy.png",
+    image: "/images/blog-v2/blog_roi_acquisition_v2.png",
     author: {
       name: "Giulliano Alves",
       role: "CEO and Founder",
@@ -2265,7 +2265,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Formando um time multidisciplinar e eficiente mesmo com orçamento limitado.",
     content: "Conteúdo renderizado via componente customizado",
     category: "MarTech",
-    image: "/uploads/processo-comercial-b2b.svg",
+    image: "/images/blog-v2/blog_growth_team_structure_v2.png",
     author: {
       name: "Giulliano Alves",
       role: "CEO and Founder",
@@ -2281,7 +2281,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Um guia objetivo sobre os KPIs que realmente fazem diferença no crescimento do seu negócio.",
     content: "Conteúdo renderizado via componente customizado",
     category: "Dados",
-    image: "/uploads/revenue-architecture-hero.svg",
+    image: "/images/blog-v2/blog_founder_data_v2.png",
     author: {
       name: "Giulliano Alves",
       role: "CEO and Founder",
@@ -2298,7 +2298,7 @@ Se sua empresa opera com receita recorrente e quer construir um sistema de recei
     excerpt: "Uma análise comparativa das principais ferramentas para gestão de relacionamento com clientes B2B.",
     content: "Conteúdo renderizado via componente customizado",
     category: "MarTech",
-    image: "/images/blog-v2/blog_funnel_comercial.png",
+    image: "/images/blog-v2/blog_crm_stack_2024_v2.png",
     author: {
       name: "Giulliano Alves",
       role: "CEO and Founder",
