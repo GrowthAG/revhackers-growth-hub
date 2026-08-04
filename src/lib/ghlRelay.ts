@@ -70,6 +70,13 @@ export function buildContactPayload(
     const utms = getUtmParams();
 
     const tags = ['revhackers', eventType];
+    if (Array.isArray(payload.tags)) {
+        for (const tag of payload.tags as unknown[]) {
+            if (typeof tag === 'string' && tag.trim() && !tags.includes(tag)) {
+                tags.push(tag);
+            }
+        }
+    }
     if (eventType === 'download' || eventType === 'email_material' || payload.materialId || payload.materiallink || payload.materialTitle) {
         if (!tags.includes('materiais')) {
             tags.push('materiais');
