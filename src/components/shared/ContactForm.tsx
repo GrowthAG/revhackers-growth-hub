@@ -19,9 +19,10 @@ import { sendToGHL } from '@/lib/ghlRelay';
 interface ContactFormProps {
   formType?: 'diagnosis' | 'contact' | 'material';
   variant?: 'light' | 'dark';
+  onSuccess?: () => void;
 }
 
-const ContactForm = ({ formType = 'contact', variant = 'light' }: ContactFormProps) => {
+const ContactForm = ({ formType = 'contact', variant = 'light', onSuccess }: ContactFormProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,6 +57,8 @@ const ContactForm = ({ formType = 'contact', variant = 'light' }: ContactFormPro
         title: "Sucesso!",
         description: "Suas informações foram enviadas com sucesso.",
       });
+
+      onSuccess?.();
 
       // Redirect based on form type
       if (formType === 'diagnosis') {

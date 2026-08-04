@@ -6,7 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from "@/lib/utils";
-import LeadCaptureModal from '@/components/shared/LeadCaptureModal';
+import ContactFormModal from '@/components/shared/ContactFormModal';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -326,7 +326,7 @@ const Header = ({ variant = 'default' }: HeaderProps) => {
           )
         }
       </header >
-      <LeadCaptureModal isOpen={isLeadModalOpen} onClose={() => setIsLeadModalOpen(false)} />
+      <ContactFormModal isOpen={isLeadModalOpen} onClose={() => setIsLeadModalOpen(false)} />
     </>
   );
 };
