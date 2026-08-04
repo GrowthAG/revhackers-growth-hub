@@ -34,7 +34,6 @@ const FounderVideoWidget = () => {
   const [loading, setLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [videoError, setVideoError] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Do NOT render widget on admin or internal REI routes
   const isAdminRoute = 
@@ -205,12 +204,6 @@ const FounderVideoWidget = () => {
       setConversationalStep(0);
     }
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (isOpen) {
-      chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages, isTyping, isOpen]);
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
