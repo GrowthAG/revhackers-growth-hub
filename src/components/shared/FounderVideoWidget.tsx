@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
-import ContactForm from './ContactForm';
+import { X, Mic, MicOff, Volume2, VolumeX, Send, Sparkles, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { submitPublicDiagnostic } from '@/api/publicDiagnostic';
+import { sendToGHL } from '@/lib/ghlRelay';
+import { captureUtmParams, getPersistedUtmParams } from '@/utils/utm';
 
 interface Message {
   sender: 'ai' | 'user';
@@ -34,6 +38,7 @@ const FounderVideoWidget = () => {
   const [loading, setLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Do NOT render widget on admin or internal REI routes
   const isAdminRoute = 
@@ -204,6 +209,12 @@ const FounderVideoWidget = () => {
       setConversationalStep(0);
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (isOpen) {
+      chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, isTyping, isOpen]);
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -407,11 +418,11 @@ const FounderVideoWidget = () => {
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[440px] max-h-[90vh] bg-white text-zinc-950 rounded-3xl border border-zinc-200 shadow-2xl overflow-y-auto flex flex-col justify-between"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[390px] h-[580px] max-h-[85vh] bg-white text-zinc-950 rounded-3xl border border-zinc-200 shadow-2xl overflow-hidden flex flex-col justify-between"
           >
-            <div className="relative bg-zinc-950 px-5 py-4 border-b border-zinc-800 flex items-center justify-between shrink-0 shadow-md">
+            <div className="relative h-20 bg-zinc-950 px-4 py-3 border-b border-zinc-800 flex items-center justify-between shrink-0 shadow-md">
               <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#00CC6A] shrink-0 bg-zinc-900">
+                <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-[#00CC6A] shrink-0 bg-zinc-900">
                   <img
                     src="/uploads/giulliano-linkedin-profile.png"
                     alt="Giulliano Alves"
@@ -420,11 +431,11 @@ const FounderVideoWidget = () => {
                 </div>
                 <div className="flex flex-col text-left">
                   <span className="text-xs sm:text-sm font-extrabold text-white leading-tight">
-                    Solicitar Análise Técnica
+                    Giulliano Alves
                   </span>
                   <span className="text-[10px] text-zinc-400 font-medium flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#00CC6A] animate-pulse inline-block shrink-0" />
-                    RevHackers GTM Engineering
+                    Founder RevHackers • Online agora
                   </span>
                 </div>
               </div>
@@ -437,17 +448,128 @@ const FounderVideoWidget = () => {
               </button>
             </div>
 
-            <div className="p-6 space-y-4">
-              <div className="space-y-1">
-                <h3 className="text-lg font-bold text-zinc-900 tracking-tight">
-                  Solicitar Análise
-                </h3>
-                <p className="text-xs text-zinc-500">
-                  Preencha para análise técnica de perfil. Resposta em até 24h.
-                </p>
-              </div>
+            <div className="flex-1 p-4 space-y-3 overflow-y-auto min-h-0 text-xs sm:text-sm leading-relaxed font-sans bg-zinc-50/50 scroll-smooth">
+              {messages.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div
+                    className={`max-w-[85%] p-3.5 rounded-2xl break-words ${
+                      msg.sender === 'user'
+                        ? 'bg-[#00CC6A] text-zinc-950 font-bold rounded-tr-xs shadow-xs'
+                        : 'bg-white text-zinc-900 border border-zinc-200/90 rounded-tl-xs shadow-sm font-medium'
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
 
-              <ContactForm formType="diagnosis" variant="light" />
+              {isTyping && (
+                <div className="flex justify-start">
+                  <div className="bg-white text-zinc-500 border border-zinc-200/90 p-3 rounded-2xl rounded-tl-xs flex items-center gap-1.5 shadow-sm">
+                    <span className="text-xs font-medium text-zinc-600 mr-1">Giulliano digitando</span>
+                    <span className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-1.5 h-1.5 bg-[#00CC6A] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                </div>
+              )}
+
+              {showPills && (
+                <div className="pt-2 flex flex-wrap gap-1.5">
+                  {activePills.map((pill, i) => (
+                    <button
+                      key={i}
+                      onClick={() => emailCaptured ? handleSendMessage(pill) : handlePillClickBeforeEmail(pill)}
+                      className="text-xs sm:text-sm bg-white hover:bg-zinc-100 text-zinc-800 hover:text-zinc-950 px-3 py-1.5 rounded-full border border-zinc-200 transition-all text-left shadow-xs font-semibold cursor-pointer flex items-center gap-1"
+                    >
+                      {pill}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <div ref={chatEndRef} />
+            </div>
+
+            <div className="p-3 border-t border-zinc-100 bg-white shrink-0 space-y-2">
+              {!emailCaptured && conversationalStep < 2 ? (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}
+                  className="flex items-center gap-2"
+                >
+                  <Input
+                    type="text"
+                    placeholder="Responda ou digite sua dúvida aqui..."
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs sm:text-sm h-10 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading || !inputText.trim()}
+                    className="h-10 w-10 bg-[#00CC6A] text-black hover:bg-[#00b35e] font-bold rounded-xl flex items-center justify-center transition-all shrink-0 disabled:opacity-50"
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                </form>
+              ) : !emailCaptured && conversationalStep >= 2 ? (
+                <>
+                  <form onSubmit={handleEmailSubmit} className="space-y-2">
+                    <div className="relative flex items-center">
+                      <Input
+                        type="email"
+                        placeholder="Digite seu e-mail corporativo para liberar..."
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs sm:text-sm h-10 pr-12 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A]"
+                      />
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="absolute right-1.5 top-1.5 h-7 w-8 bg-[#00CC6A] text-black hover:bg-[#00b35e] font-bold rounded-lg flex items-center justify-center transition-all disabled:opacity-50"
+                      >
+                        {loading ? <Sparkles className="w-3.5 h-3.5 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </form>
+                  <button
+                    onClick={() => window.location.href = "/booking"}
+                    className="w-full text-xs font-bold text-zinc-700 hover:text-zinc-950 py-2 flex items-center justify-center gap-1.5 bg-zinc-50 border border-zinc-200 rounded-xl hover:bg-zinc-100 transition-colors"
+                  >
+                    <span className="w-2 h-2 rounded-full bg-[#00CC6A]" />
+                    Prefere agendar reunião? Agendar Sessão de 30 min
+                  </button>
+                </>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}
+                  className="flex items-center gap-2"
+                >
+                  <Input
+                    placeholder="Pergunte sobre GTM, Cases, ROI..."
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    className="bg-zinc-50 border-zinc-200 text-zinc-900 text-xs h-10 rounded-xl placeholder:text-zinc-400 focus:border-[#00CC6A] flex-1"
+                  />
+                  <Button
+                    type="submit"
+                    size="icon"
+                    disabled={loading || !inputText.trim()}
+                    className="h-10 w-10 bg-[#00CC6A] text-black hover:bg-[#00b35e] rounded-xl shrink-0 border-none font-bold"
+                  >
+                    <Send className="w-4 h-4" />
+                  </Button>
+                </form>
+              )}
             </div>
           </motion.div>
         )}
