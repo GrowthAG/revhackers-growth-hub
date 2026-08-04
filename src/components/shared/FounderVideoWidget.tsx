@@ -236,14 +236,14 @@ const FounderVideoWidget = () => {
 
     try {
       await submitPublicDiagnostic(
-        { email, name: extractedName, source: 'founder_ai_chat', company: 'Lead Chat' },
+        { email, name: extractedName, source: 'founder_ai_chat', company: '' },
         { source: 'founder_video_widget', type: 'ai_chat_lead', ...utmParams },
         0,
         { level: "Lead", description: "Interação no Chat IA Founder", action: "Chat", color: "green" },
         'lead_capture'
       );
 
-      await sendToGHL({
+      await sendToGHL('lead_capture', {
         email,
         name: extractedName,
         source: 'founder_video_widget',
@@ -252,7 +252,7 @@ const FounderVideoWidget = () => {
           fonte_do_lead: 'Founder AI Video Widget',
           ...utmParams
         }
-      }, 'lead_capture');
+      });
 
     } catch (err) {
       console.warn("GHL/GCP integration warning:", err);
@@ -294,33 +294,52 @@ const FounderVideoWidget = () => {
           aiReply = "Show! Sou o Giulliano, fundador da RevHackers. Eu conduzo pessoalmente a sessão técnica de 30 min sem custo para analisar vazamentos de receita no seu CRM.\n\nPara eu te direcionar com precisão: qual é o nome da sua empresa e qual o seu CRM atual?";
           newPills = ["🟢 Usamos HubSpot / Pipedrive", "🔴 Não temos CRM ainda", "📅 Agendar Sessão em /booking"];
           setConversationalStep(1);
-        } else if (lower.includes("auditoria") || lower.includes("diagnostico") || lower.includes("score") || lower.includes("vazamento")) {
+        } else if (lower.includes("auditoria") || lower.includes("diagnostico") || lower.includes("diagnóstico") || lower.includes("score") || lower.includes("vazamento")) {
           aiReply = "Excelente! Nossa auditoria analisa 4 pilares: Mídia Paga, Qualificação, Automação e CRM.\n\nQual é a principal dor da sua empresa hoje no funil?";
           newPills = ["🎯 Falta de Leads Qualificados", "⏳ Demora no Atendimento (SLA)", "📊 Perda no Fechamento Comercial"];
           setConversationalStep(1);
-        } else if (lower.includes("case") || lower.includes("heineken") || lower.includes("wysion") || lower.includes("anhembi") || lower.includes("cruzeiro")) {
+        } else if (lower.includes("case") || lower.includes("heineken") || lower.includes("wysion") || lower.includes("anhembi") || lower.includes("cruzeiro") || lower.includes("resultado")) {
           aiReply = "Excelente! Na Heineken aumentamos o sell-out em 30%, na Wysion geramos +1.000 reuniões qualificadas em software B2B, e na Anhembi Morumbi otimizamos a atração de alunos.\n\nQual é o segmento da sua empresa para eu te mostrar os números mais próximos do seu mercado?";
           newPills = ["💻 Software & SaaS B2B", "🏭 Indústria / Grande Conta", "🎓 Educação / Serviços", "📖 Ver Todos os Cases no Site"];
           setConversationalStep(1);
-        } else if (lower.includes("software") || lower.includes("saas") || lower.includes("indústria") || lower.includes("educação") || lower.includes("serviços") || lower.includes("hubspot") || lower.includes("pipedrive")) {
-          aiReply = "Perfeito! Nesse segmento, nossa Engenharia de GTM conecta Mídia Paga B2B + Qualificação por IA direto no seu CRM, gerando pipeline previsível em 30 a 90 dias.\n\nDigite seu e-mail corporativo abaixo para liberarmos o estudo de viabilidade completo da sua empresa:";
+        } else if (lower.includes("preço") || lower.includes("preco") || lower.includes("valor") || lower.includes("investimento") || lower.includes("quanto custa") || lower.includes("quanto é") || lower.includes("mensalidade")) {
+          aiReply = "Boa pergunta! O investimento varia conforme a complexidade da sua operação (tamanho do time, CRM atual, canais de aquisição), então não temos uma tabela fixa publicada.\n\nO jeito mais rápido de eu te passar um número certo é entender seu cenário na sessão técnica de 30 min, sem custo. Quer agendar?";
+          newPills = ["📅 Agendar Sessão em /booking", "🎯 Prefiro entender o processo antes"];
+          setConversationalStep(1);
+        } else if (lower.includes("prazo") || lower.includes("quanto tempo") || lower.includes("quando") || lower.includes("demora")) {
+          aiReply = "Nossa Engenharia de GTM costuma ficar operacional em 30 a 90 dias, dependendo da complexidade do seu CRM e canais atuais.\n\nQuer que eu detalhe como funciona cada fase?";
+          newPills = ["🎯 Sim, quero entender as fases", "📅 Prefiro já agendar em /booking"];
+          setConversationalStep(1);
+        } else if (lower.includes("contato") || lower.includes("telefone") || lower.includes("whatsapp") || lower.includes("falar com alguém") || lower.includes("email direto")) {
+          aiReply = "Sem problema! O jeito mais direto é agendar 30 min na agenda oficial em /booking, o próprio Giulliano conduz a sessão.\n\nSe preferir, também posso registrar seu e-mail aqui pra alguém do time te retornar.";
+          newPills = ["📅 Agendar Sessão em /booking"];
+          setConversationalStep(1);
+        } else if (lower.includes("quem são") || lower.includes("quem sao") || lower.includes("sobre a empresa") || lower.includes("o que é a revhackers") || lower.includes("o que e a revhackers")) {
+          aiReply = "A RevHackers instala Engenharia de GTM (Go-To-Market) dentro do seu CRM: mídia paga B2B, qualificação por IA e automação comercial, integrados, não um relatório em PDF solto.\n\nQuer ver como isso se aplica no seu segmento?";
+          newPills = ["💻 Software & SaaS B2B", "🏭 Indústria / Grande Conta", "📖 Ver Cases no Site"];
+          setConversationalStep(1);
+        } else if (lower.includes("obrigad") || lower.includes("valeu") || lower.includes("ok") || lower.includes("entendi")) {
+          aiReply = "Fico à disposição! Se quiser aprofundar, posso te mostrar um case parecido com sua operação ou já agendar uma sessão técnica de 30 min.";
+          newPills = ["📖 Ver Cases", "📅 Agendar em /booking"];
+        } else if (lower.includes("software") || lower.includes("saas") || lower.includes("indústria") || lower.includes("industria") || lower.includes("educação") || lower.includes("educacao") || lower.includes("serviços") || lower.includes("servicos") || lower.includes("hubspot") || lower.includes("pipedrive")) {
+          aiReply = "Perfeito! Nesse segmento, nossa Engenharia de GTM conecta Mídia Paga B2B + Qualificação por IA direto no seu CRM, gerando pipeline previsível em 30 a 90 dias.\n\nDigite seu e-mail corporativo abaixo para liberarmos o estudo de viabilidade completo da sua empresa, ou continue perguntando o que quiser antes disso.";
+          newPills = ["📅 Prefiro já agendar em /booking"];
+          setConversationalStep(2);
+        } else if (lower.includes("deixar meu e-mail") || lower.includes("deixar meu email") || (lower.includes("e-mail") && lower.includes("prefiro"))) {
+          aiReply = "Perfeito! Digite seu e-mail corporativo abaixo que a gente te retorna com precisão:";
           newPills = [];
           setConversationalStep(2);
         } else if (lower.includes("ver todos os cases") || lower.includes("site")) {
-          aiReply = "Você pode acessar nossa página oficial de cases em /cases para ver todos os estudos de viabilidade completos. Digite seu e-mail corporativo abaixo para receber a apresentação executiva:";
-          newPills = [];
+          aiReply = "Você pode acessar nossa página oficial de cases em /cases para ver todos os estudos de viabilidade completos. Se preferir, digite seu e-mail abaixo pra receber a apresentação executiva, ou continue perguntando.";
+          newPills = ["📅 Prefiro já agendar em /booking"];
           setConversationalStep(2);
         } else if (conversationalStep === 0) {
           aiReply = "Entendi o seu cenário! Na RevHackers nós instalamos os 4 motores de GTM no seu CRM em até 30 dias: Mídia Paga B2B, Funis de Conversão, CRM com IA e Automação Comercial.\n\nMe conta: qual é o segmento da sua empresa e o tamanho da sua equipe comercial?";
           newPills = ["💻 Software B2B (1-5 pessoas)", "🏭 Indústria / Serviços (6-20 pessoas)", "🚀 Escala (+20 pessoas)"];
           setConversationalStep(1);
-        } else if (conversationalStep === 1) {
-          aiReply = "Excelente! Tenho um estudo de viabilidade e arquitetura de receita muito alinhado com a sua operação.\n\nDigite seu e-mail corporativo abaixo para salvarmos seu diagnóstico e te enviar a análise completa:";
-          newPills = [];
-          setConversationalStep(2);
         } else {
-          aiReply = "Digite seu e-mail corporativo abaixo para liberar o atendimento consultivo ao vivo e agendamento de 30 min:";
-          newPills = [];
+          aiReply = "Essa eu prefiro não arriscar te dar uma resposta genérica. O Giulliano consegue te responder isso direto numa sessão técnica de 30 min, sem custo, ou você pode digitar seu e-mail que a gente te retorna com precisão.";
+          newPills = ["📅 Agendar Sessão em /booking", "📩 Prefiro deixar meu e-mail"];
         }
       } else {
         if (lower.includes('como funciona') || lower.includes('o que voces fazem')) {
