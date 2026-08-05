@@ -23,7 +23,7 @@ const AgendaGiulliano = () => {
             <SEO title="Agende Agora com Giulliano Alves" description="Agende sua sessão estratégica de 30 minutos com Giulliano Alves — Revenue Operations e Growth B2B." canonical="https://revhackers.com.br/agenda-giulliano" />
             <div className="min-h-screen bg-white flex flex-col">
                 {/* Header com foto + headline */}
-                <div className="w-full pt-10 pb-6 px-4">
+                <div className="w-full pt-28 pb-6 px-4">
                     <div className="max-w-2xl mx-auto flex items-center gap-4">
                         <img
                             src="/uploads/giulliano-linkedin-profile.png"
