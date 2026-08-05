@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import GrowthMapPreview from '@/components/diagnostics/GrowthMapPreview';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Share2, AlertTriangle, Rocket, CheckCircle2, ShieldCheck, BarChart2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -279,6 +280,12 @@ export default function PublicDiagnosticResult() {
 
                 </div>
             </div>
+            
+            {/* GrowthMap Preview - 3 frameworks grátis */}
+            <GrowthMapPreview 
+              diagnosticScore={score} 
+              diagnosticType={result.tipo_diagnostico}
+            />
         </PageLayout>
     );
 }
