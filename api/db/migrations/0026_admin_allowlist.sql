@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS admin_allowlist (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email_pattern TEXT NOT NULL UNIQUE,
-  added_by UUID REFERENCES internal_users(id),
+  added_by TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   
   CONSTRAINT valid_pattern CHECK (
