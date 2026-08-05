@@ -5,23 +5,18 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Building2, Globe, TrendingUp, AlertTriangle, RefreshCw, Loader2, Plus, ExternalLink, ArrowUpRight, ArrowDownRight, Target, Users, Sparkles, Share2, Download } from 'lucide-react';
 import AdminLayout from '@/components/layout/AdminLayout';
-import { intelligenceGcpAdapter, type IntelligenceJobView, type IntelligenceFindingView } from '@/api/adapters/intelligence-gcp';
+import { intelligenceGcpAdapter, type IntelligenceJobView, type IntelligenceFindingView, type IndustryInsight } from '@/api/adapters/intelligence-gcp';
+import { useTenantId, DEFAULT_STAGING_TENANT_ID } from '@/hooks/useTenantId';
 import { cn } from '@/lib/utils';
 
-interface IndustryInsight { label: string; value: string; description: string; trend: 'up' | 'down' | 'neutral'; }
-
-const FALLBACK_INSIGHTS: IndustryInsight[] = [
-  { label: 'TAM CRM/Martech Brasil 2025', value: 'R$ 2,8 bi', description: 'Mercado crescendo ~18% a.a., impulsionado pela digitalização acelerada de PMEs pós-pandemia.', trend: 'up' },
-  { label: 'PMEs sem CRM estruturado', value: '68%', description: 'Maioria das PMEs brasileiras ainda usa planilhas — janela de captura enorme para a Funnels.', trend: 'neutral' },
-  { label: 'Custo HubSpot vs. alternativa local', value: '3x', description: 'Planos HubSpot custam até 3x mais que solução nacional, criando gap direto de preço para a Funnels.', trend: 'down' },
-  { label: 'Crescimento do mercado', value: '-18% a.a.', description: 'Expansão consistente acima do PIB, sustentada por adoção de automação e inbound marketing no Brasil.', trend: 'up' },
-  { label: 'Ticket médio PME em CRM', value: 'R$ 1.200/ano', description: 'PMEs brasileiras gastam em média R$ 1.200/ano em ferramentas de CRM — mercado acessível e escalável.', trend: 'neutral' },
-];
-
+// Industry Insights cards are now derived from real competitor data via
+// `intelligenceGcpAdapter.listInsights()` (rules-based engine, zero LLM cost).
+// If the project has no competitors, the dashboard shows an honest empty
+// state with a CTA — no fabricated TAM numbers.
 export default function IntelligenceDashboard() {
   const { projectId } = useParams<{ projectId?: string }>();
+  const tenantId = useTenantId() ?? DEFAULT_STAGING_TENANT_ID;
   const activeProjectId = projectId || 'demo-project';
-  const tenantId = 'demo-tenant';
   const [showAddModal, setShowAddModal] = useState(false);
 
   const competitorsQuery = useQuery({
@@ -47,6 +42,12 @@ export default function IntelligenceDashboard() {
     queryKey: ['findings', activeProjectId],
     queryFn: () => intelligenceGcpAdapter.listFindings(tenantId),
     refetchInterval: 15000,
+    refetchOnWindowFocus: false,
+  });
+
+  const insightsQuery = useQuery({
+    queryKey: ['insights', activeProjectId],
+    queryFn: () => intelligenceGcpAdapter.listInsights(tenantId, activeProjectId),
     refetchOnWindowFocus: false,
   });
 
@@ -99,6 +100,7 @@ export default function IntelligenceDashboard() {
   const signals = signalsQuery.data || [];
   const jobs = jobsQuery.data || [];
   const findings = findingsQuery.data || [];
+  const insights = insightsQuery.data || [];
 
   return (
     <AdminLayout>
@@ -118,25 +120,39 @@ export default function IntelligenceDashboard() {
             <button onClick={() => shareMutation.mutate()} disabled={shareMutation.isPending} className="flex items-center gap-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 border border-zinc-200 font-medium px-4 py-2 rounded-lg transition text-sm disabled:opacity-50">
               {shareMutation.isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> Gerando link...</> : <><Share2 className="w-4 h-4" /> Compartilhar</>}
             </button>
-            <button onClick={() => { competitorsQuery.refetch(); signalsQuery.refetch(); jobsQuery.refetch(); findingsQuery.refetch(); }} disabled={competitorsQuery.isFetching} className="flex items-center gap-2 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-semibold px-4 py-2 rounded-lg transition text-sm disabled:opacity-50">
+            <button onClick={() => { competitorsQuery.refetch(); signalsQuery.refetch(); jobsQuery.refetch(); findingsQuery.refetch(); insightsQuery.refetch(); }} disabled={competitorsQuery.isFetching} className="flex items-center gap-2 bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-semibold px-4 py-2 rounded-lg transition text-sm disabled:opacity-50">
+
               <RefreshCw className={cn("w-4 h-4", competitorsQuery.isFetching && "animate-spin")} /> Atualizar
             </button>
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {FALLBACK_INSIGHTS.map((insight, i) => (
-            <div key={i} className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
-              <div className="flex justify-between items-start text-zinc-500 text-sm font-medium">
-                <span>{insight.label}</span>
-                {insight.trend === 'up' && <ArrowUpRight className="w-5 h-5 text-[#00CC6A]" />}
-                {insight.trend === 'down' && <ArrowDownRight className="w-5 h-5 text-rose-500" />}
-                {insight.trend === 'neutral' && <Target className="w-5 h-5 text-amber-500" />}
-              </div>
-              <div className="text-2xl font-bold text-zinc-900 mt-2">{insight.value}</div>
-              <div className="text-xs text-zinc-500 mt-2 leading-relaxed">{insight.description}</div>
+          {insightsQuery.isLoading ? (
+            <div className="col-span-full flex items-center justify-center py-12 text-zinc-500">
+              <Loader2 className="w-5 h-5 animate-spin mr-2" /> Calculando insights a partir dos concorrentes...
             </div>
-          ))}
+          ) : insights.length === 0 ? (
+            <div className="col-span-full bg-white border border-zinc-200 rounded-xl p-8 shadow-xs text-center">
+              <Sparkles className="w-8 h-8 text-zinc-400 mx-auto mb-3" />
+              <h3 className="text-base font-semibold text-zinc-900 mb-2">Sem dados para gerar insights ainda</h3>
+              <p className="text-sm text-zinc-500 max-w-md mx-auto">
+                Adicione concorrentes com CNPJ para gerar Industry Insights derivados de dados reais (capital social, porte, UF, SPI, sinais de mercado).
+              </p>
+            </div>
+          ) : (
+            insights.map((insight: IndustryInsight, i: number) => (
+              <div key={`${insight.label}-${i}`} className="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs">
+                <div className="flex justify-between items-start text-zinc-500 text-sm font-medium">
+                  <span>{insight.label}</span>
+                  {insight.trend === 'up' && <ArrowUpRight className="w-5 h-5 text-[#00CC6A]" />}
+                  {insight.trend === 'down' && <ArrowDownRight className="w-5 h-5 text-rose-500" />}
+                  {insight.trend === 'neutral' && <Target className="w-5 h-5 text-amber-500" />}
+                </div>
+                <div className="text-2xl font-bold text-zinc-900 mt-2">{insight.value}</div>
+                <div className="text-xs text-zinc-500 mt-2 leading-relaxed">{insight.description}</div>
+              </div>
+            ))
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
