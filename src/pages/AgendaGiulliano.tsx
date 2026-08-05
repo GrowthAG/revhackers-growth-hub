@@ -35,10 +35,10 @@ const AgendaGiulliano = () => {
                                 Sessão 1:1 com o Founder
                             </p>
                             <h1 className="text-2xl md:text-4xl font-black text-zinc-900 tracking-tight leading-[1.05] mb-1.5">
-                                Vamos achar o gargalo da sua receita.
+                                Escolha o melhor horário pra conversarmos.
                             </h1>
                             <p className="text-sm md:text-[15px] text-zinc-500 font-medium leading-relaxed">
-                                30 minutos comigo, sem discurso de vendas. Eu mesmo reviso seu funil e te digo, na hora, onde está travando.
+                                30 minutos, direto ao ponto, sem discurso de vendas.
                             </p>
                         </div>
                     </div>
