@@ -11,35 +11,54 @@ import { AuthMiddleware } from './auth-middleware';
 
 const OptionalUrl = z.string().url().max(2000).optional().or(z.literal('').transform(() => undefined));
 const OptionalString = (max = 256) => z.string().trim().max(max).optional();
+const CnpjString = z.string().trim().regex(/^[0-9]{11,14}$/, 'CNPJ/CPF deve ter 11 ou 14 dígitos').optional();
+const CepString = z.string().trim().regex(/^[0-9]{8}$/, 'CEP deve ter 8 dígitos').optional();
+const StatusEnum = z.enum(['onboarding', 'active', 'churned']).optional();
 
 const CreateClientSchema = z.object({
   name: z.string().trim().min(1, 'Nome do cliente é obrigatório').max(256),
   email: z.string().trim().email('E-mail inválido').max(254),
+  tradeName: OptionalString(256),
   company: OptionalString(256),
   phone: OptionalString(32),
-  logoUrl: OptionalUrl,
-  website: OptionalUrl,
-  linkedinUrl: OptionalUrl,
+  cnpj: CnpjString,
+  cep: CepString,
+  address: OptionalString(512),
+  number: OptionalString(32),
+  complement: OptionalString(128),
+  neighborhood: OptionalString(256),
   city: OptionalString(128),
   state: OptionalString(64),
   country: z.string().trim().max(64).optional(),
   segment: OptionalString(128),
   companySize: OptionalString(64),
+  logoUrl: OptionalUrl,
+  website: OptionalUrl,
+  linkedinUrl: OptionalUrl,
+  status: StatusEnum,
 });
 
 const UpdateClientSchema = z.object({
   name: z.string().trim().min(1).max(256).optional(),
   email: z.string().trim().email('E-mail inválido').max(254).optional(),
+  tradeName: z.string().trim().max(256).nullable().optional(),
   company: z.string().trim().max(256).nullable().optional(),
   phone: z.string().trim().max(32).nullable().optional(),
-  logoUrl: z.string().url().max(2000).nullable().optional(),
-  website: z.string().url().max(2000).nullable().optional(),
-  linkedinUrl: z.string().url().max(2000).nullable().optional(),
+  cnpj: z.string().trim().regex(/^[0-9]{11,14}$/).nullable().optional(),
+  cep: z.string().trim().regex(/^[0-9]{8}$/).nullable().optional(),
+  address: z.string().trim().max(512).nullable().optional(),
+  number: z.string().trim().max(32).nullable().optional(),
+  complement: z.string().trim().max(128).nullable().optional(),
+  neighborhood: z.string().trim().max(256).nullable().optional(),
   city: z.string().trim().max(128).nullable().optional(),
   state: z.string().trim().max(64).nullable().optional(),
   country: z.string().trim().max(64).optional(),
   segment: z.string().trim().max(128).nullable().optional(),
   companySize: z.string().trim().max(64).nullable().optional(),
+  logoUrl: z.string().url().max(2000).nullable().optional(),
+  website: z.string().url().max(2000).nullable().optional(),
+  linkedinUrl: z.string().url().max(2000).nullable().optional(),
+  status: StatusEnum,
 });
 
 function parseBody<T>(raw: unknown, schema: z.ZodType<T>): T {
@@ -112,8 +131,8 @@ export function createClientsRoutes(deps: ClientsRoutesDependencies) {
       if (error instanceof ApiError) {
         const statusMap: Record<string, number> = {
           not_found: 404,
-          validation_failed: 400,
-          unauthorized: 403,
+          validation: 400,
+          forbidden: 403,
           unauthenticated: 401,
         };
         return json(statusMap[error.code] ?? 500, { error: { code: error.code, message: error.message } });
