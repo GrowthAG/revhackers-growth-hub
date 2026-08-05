@@ -20,17 +20,24 @@ const AgendaGiulliano = () => {
 
     return (
         <PageLayout>
-            <SEO title="Agendar com Giulliano" description="Agende uma conversa com Giulliano Alves sobre Revenue Operations e Growth B2B." canonical="https://revhackers.com.br/agenda-giulliano" />
+            <SEO title="Agende Agora com Giulliano Alves" description="Agende sua sessão estratégica de 30 minutos com Giulliano Alves — Revenue Operations e Growth B2B." canonical="https://revhackers.com.br/agenda-giulliano" />
             <div className="min-h-screen bg-white flex flex-col">
-                {/* Header compacto */}
-                <div className="w-full pt-8 pb-4 px-4">
-                    <div className="max-w-2xl mx-auto text-center">
-                        <h1 className="text-xl md:text-2xl font-black text-zinc-900 tracking-tight leading-tight mb-1">
-                            Agende um horário comigo
-                        </h1>
-                        <p className="text-sm text-zinc-500 font-medium">
-                            Escolha o melhor momento para conversarmos.
-                        </p>
+                {/* Header com foto + headline */}
+                <div className="w-full pt-10 pb-6 px-4">
+                    <div className="max-w-2xl mx-auto flex items-center gap-4">
+                        <img
+                            src="/uploads/giulliano-linkedin-profile.png"
+                            alt="Giulliano Alves"
+                            className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover object-[center_15%] border border-zinc-200 shrink-0"
+                        />
+                        <div className="flex-1 min-w-0">
+                            <h1 className="text-2xl md:text-3xl font-black text-zinc-900 tracking-tight leading-tight mb-1">
+                                Agende Agora
+                            </h1>
+                            <p className="text-sm text-zinc-500 font-medium">
+                                Escolha o melhor horário para conversarmos.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
