@@ -222,3 +222,15 @@ export interface CreateIntelligenceFindingParams {
   severity?: Severity; confidence_score?: number | null;
   source_url?: string | null; source_name?: string | null; recommended_action?: string | null;
 }
+
+// GROWTHMAP SHARES (links públicos de compartilhamento — capability tokens)
+export interface GrowthMapShareRecord {
+  share_token: string; tenant_id: string; project_id: string;
+  created_by: string; created_at: string; expires_at: string | null;
+  revoked: boolean;
+}
+
+export interface CreateShareParams {
+  share_token: string; tenant_id: string; project_id: string;
+  created_by: string; expires_at?: string | null;
+}

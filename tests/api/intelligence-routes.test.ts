@@ -1,8 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { createIntelligenceRoutes } from '../../api/src/http/intelligence-routes';
-import type { CompetitorRecord, CompetitorIntelligenceRecord, MarketSignalRecord, IntelligenceJobRecord, IntelligenceFindingRecord } from '../../api/src/domains/intelligence/types';
+import type { CompetitorRecord, CompetitorIntelligenceRecord, MarketSignalRecord, IntelligenceJobRecord, IntelligenceFindingRecord, GrowthMapShareRecord, CreateShareParams } from '../../api/src/domains/intelligence/types';
 
 function createMockRepository() {
+  // Store em memória que emula a persistência de app.growthmap_shares
+  // (comportamento de create → find → revoke usado nos testes round-trip).
+  const shareStore = new Map<string, GrowthMapShareRecord>();
+
   return {
     createCompetitor: vi.fn(),
     findCompetitorById: vi.fn(),
@@ -29,6 +33,30 @@ function createMockRepository() {
     listJobsByTenant: vi.fn(),
     listFindingsByTenant: vi.fn(),
     createFinding: vi.fn(),
+    // ─── GrowthMap shares (persistente) ────────────────────────────────────
+    createShare: vi.fn(async (params: CreateShareParams): Promise<GrowthMapShareRecord> => {
+      const record: GrowthMapShareRecord = {
+        share_token: params.share_token,
+        tenant_id: params.tenant_id,
+        project_id: params.project_id,
+        created_by: params.created_by,
+        created_at: new Date().toISOString(),
+        expires_at: params.expires_at ?? null,
+        revoked: false,
+      };
+      shareStore.set(record.share_token, record);
+      return record;
+    }),
+    findShareByToken: vi.fn(async (shareToken: string): Promise<GrowthMapShareRecord | null> => {
+      return shareStore.get(shareToken) ?? null;
+    }),
+    revokeShareByToken: vi.fn(async (shareToken: string): Promise<GrowthMapShareRecord | null> => {
+      const existing = shareStore.get(shareToken);
+      if (!existing) return null;
+      const revoked = { ...existing, revoked: true };
+      shareStore.set(shareToken, revoked);
+      return revoked;
+    }),
   };
 }
 
@@ -316,7 +344,7 @@ describe('Intelligence Routes — CRUD operations', () => {
     const res = await route(req);
     expect(res?.status).toBe(201);
     const body = (await res?.json()) as any;
-    expect(body.data.share_token).toMatch(/^shr_\d+_[a-z0-9]+$/);
+    expect(body.data.share_token).toMatch(/^shr_[0-9a-f]{48}$/);
     expect(body.data.share_url).toContain('/public/growthmap/');
   });
 
@@ -406,4 +434,128 @@ describe('Intelligence Routes — CRUD operations', () => {
     const res = await route(req);
     expect(res?.status).toBe(404);
   });
+
+  it('share token persiste entre instâncias de rota (simula restart/scale do Cloud Run)', async () => {
+    // O mesmo repository emula o banco compartilhado entre duas instâncias.
+    // Com o store em memória antigo (module-level Map), um novo processo perdia
+    // todos os tokens — aqui o segundo handler precisa achar o token criado pelo primeiro.
+    const routeA = createIntelligenceRoutes({ repository: mockRepo as any, jobsRepository: mockRepo as any, fonteDataConnector: mockConnector as any });
+    const routeB = createIntelligenceRoutes({ repository: mockRepo as any, jobsRepository: mockRepo as any, fonteDataConnector: mockConnector as any });
+    mockRepo.listCompetitorsByProject.mockResolvedValue([]);
+
+    const createRes = await routeA(new Request('https://api.test/v1/intelligence/share', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tenant_id: 'tenant-1', project_id: 'proj-1', created_by: 'user@revhackers.com' }),
+    }));
+    const { data: { share_token: shareToken } } = (await createRes?.json()) as any;
+
+    const readRes = await routeB(new Request(`https://api.test/v1/intelligence/share/${shareToken}`, { method: 'GET' }));
+    expect(readRes?.status).toBe(200);
+    const body = (await readRes?.json()) as any;
+    expect(body.data.share_token).toBe(shareToken);
+    expect(body.data.project_id).toBe('proj-1');
+  });
 });
+
+describe('Intelligence Routes — GET /v1/intelligence/insights/:project_id', () => {
+  let mockRepo: ReturnType<typeof createMockRepository>;
+  let mockConnector: ReturnType<typeof createMockConnector>;
+  let route: (req: Request) => Promise<Response | null>;
+
+  beforeEach(() => {
+    mockRepo = createMockRepository();
+    mockConnector = createMockConnector();
+    route = createIntelligenceRoutes({ repository: mockRepo as any, jobsRepository: mockRepo as any, fonteDataConnector: mockConnector as any });
+  });
+
+  const PROJECT = '12345678-1234-1234-1234-123456789012';
+  const TENANT = 'tenant-1';
+  const url = (q?: string) =>
+    `https://api.test/v1/intelligence/insights/${PROJECT}${q ? `?${q}` : ''}`;
+
+  it('returns 400 when tenant_id is missing', async () => {
+    const res = await route(new Request(url(), { method: 'GET' }));
+    expect(res?.status).toBe(400);
+    const body = (await res?.json()) as any;
+    expect(body.error.code).toBe('validation');
+  });
+
+  it('returns 400 when project_id is not a UUID', async () => {
+    const res = await route(new Request(`https://api.test/v1/intelligence/insights/not-a-uuid?tenant_id=${TENANT}`, { method: 'GET' }));
+    expect(res?.status).toBe(405); // path doesn't match any route, falls through to method-not-allowed
+  });
+
+  it('returns empty insights array when no competitors are registered', async () => {
+    mockRepo.listCompetitorsFullByProject.mockResolvedValueOnce([]);
+    mockRepo.listSignalsByTenant.mockResolvedValueOnce([]);
+    const res = await route(new Request(url(`tenant_id=${TENANT}`), { method: 'GET' }));
+    expect(res?.status).toBe(200);
+    const body = (await res?.json()) as any;
+    expect(body.data.insights).toEqual([{
+      label: 'Concorrentes monitorados',
+      value: '0',
+      description: 'Nenhum concorrente cadastrado ainda.',
+      trend: 'neutral',
+    }]);
+    expect(body.data.source).toBe('rules-based');
+    expect(typeof body.data.generated_at).toBe('string');
+  });
+
+  it('returns insights derived from enriched competitors', async () => {
+    const enriched = makeIntelligence({
+      capital_social_brl: 1_500_000,
+      porte: 'ME',
+      uf: 'SP',
+      spi_score: 75,
+      spi_category: 'SCALEUP',
+      ofs_risk_level: 'LOW',
+      enrichment_status: 'enriched',
+    });
+    mockRepo.listCompetitorsFullByProject.mockResolvedValueOnce([
+      { competitor: makeCompetitor({ id: 'comp-1' }), intelligence: enriched, recent_signals: [], comparison: null },
+    ]);
+    mockRepo.listSignalsByTenant.mockResolvedValueOnce([makeSignal({ sentiment: 'positive' })]);
+
+    const res = await route(new Request(url(`tenant_id=${TENANT}`), { method: 'GET' }));
+    expect(res?.status).toBe(200);
+    const body = (await res?.json()) as any;
+    const labels = body.data.insights.map((i: any) => i.label);
+    expect(labels).toContain('Concorrentes monitorados');
+    expect(labels).toContain('Empresas enriquecidas');
+    expect(labels).toContain('Capital social somado');
+    expect(labels).toContain('Porte predominante');
+    expect(labels).toContain('Concentração geográfica');
+    expect(labels).toContain('SPI médio');
+    expect(labels).toContain('Perfil de risco (OFS)');
+    expect(labels).toContain('Sinais de mercado detectados');
+  });
+
+  it('returns only competitor-monitored card when competitors are not enriched', async () => {
+    mockRepo.listCompetitorsFullByProject.mockResolvedValueOnce([
+      { competitor: makeCompetitor({ id: 'comp-1' }), intelligence: null, recent_signals: [], comparison: null },
+      { competitor: makeCompetitor({ id: 'comp-2' }), intelligence: null, recent_signals: [], comparison: null },
+    ]);
+    mockRepo.listSignalsByTenant.mockResolvedValueOnce([]);
+    const res = await route(new Request(url(`tenant_id=${TENANT}`), { method: 'GET' }));
+    expect(res?.status).toBe(200);
+    const body = (await res?.json()) as any;
+    const labels = body.data.insights.map((i: any) => i.label);
+    expect(labels).toContain('Empresas enriquecidas');
+    expect(labels).toContain('Concorrentes monitorados');
+    expect(labels).not.toContain('Capital social somado');
+    expect(labels).not.toContain('Porte predominante');
+    expect(labels).not.toContain('SPI médio');
+    expect(labels).not.toContain('Perfil de risco (OFS)');
+  });
+
+  it('returns 405 on POST to insights endpoint', async () => {
+    const res = await route(new Request(url(`tenant_id=${TENANT}`), { method: 'POST' }));
+    expect(res?.status).toBe(405);
+  });
+
+  it('returns 405 on PUT to insights endpoint', async () => {
+    const res = await route(new Request(url(`tenant_id=${TENANT}`), { method: 'PUT' }));
+    expect(res?.status).toBe(405);
+  });
+});
+

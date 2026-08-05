@@ -117,8 +117,9 @@ export function createReiProjectsRoutes(deps: ReiProjectsRoutesDependencies) {
       if (error instanceof ApiError) {
         const statusMap: Record<string, number> = {
           not_found: 404,
-          validation_failed: 400,
-          unauthorized: 403,
+          validation: 400,
+          forbidden: 403,
+          conflict: 409,
           unauthenticated: 401,
         };
         return json(statusMap[error.code] ?? 500, { error: { code: error.code, message: error.message } });

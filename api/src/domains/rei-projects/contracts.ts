@@ -3,6 +3,12 @@ export type ReiProjectStatus = 'active' | 'pending' | 'overdue';
 export type ReiProjectTier = 'free' | 'paid';
 export type ReiQuarter = 'Q1' | 'Q2' | 'Q3' | 'Q4';
 
+export interface ReiProjectTaskSummary {
+  total: number;
+  done: number;
+  overdue: number;
+}
+
 export interface ReiProjectRecord {
   id: string;
   tenantId: string;
@@ -28,6 +34,8 @@ export interface ReiProjectRecord {
   clickupProvisionedAt: string | null;
   createdAt: string;
   updatedAt: string;
+  /** Optional aggregate populated by list-with-tasks; undefined when not requested. */
+  tasks?: ReiProjectTaskSummary;
 }
 
 export interface CreateReiProjectInput {

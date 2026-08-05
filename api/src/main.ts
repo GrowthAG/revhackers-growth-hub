@@ -4,6 +4,8 @@ import { loadDatabaseConfig } from './db/config';
 import { checkPostgresReady, createPostgresResources } from './db/postgres';
 import { PostgresClientRepository } from './domains/clients/postgres-repository';
 import { ClientService } from './domains/clients/service';
+import { PostgresContentRepository } from './domains/content/postgres-repository';
+import { ContentService } from './domains/content/service';
 import { PostgresGrowthMapRepository } from './domains/growthmap/postgres-repository';
 import { GrowthMapService } from './domains/growthmap/service';
 import { PostgresReiProjectRepository } from './domains/rei-projects/postgres-repository';
@@ -13,6 +15,7 @@ import { StrategicPlanService } from './domains/strategic-plans/service';
 import { PostgresOpportunityRepository } from './domains/opportunities/postgres-repository';
 import { FonteDataService } from './domains/opportunities/fontedata-service';
 import { createClientsRoutes } from './http/clients-routes';
+import { createContentRoutes } from './http/content-routes';
 import { createGrowthMapRoutes } from './http/growthmap-routes';
 import { createIdentityRoutes } from './http/identity-routes';
 import { createOpportunitiesRoutes } from './http/opportunities-routes';
@@ -62,6 +65,9 @@ async function main(): Promise<void> {
   const fonteDataConnector = new FonteDataIntelligenceConnector();
   const fonteDataService = new FonteDataService();
 
+  const contentRepository = new PostgresContentRepository(postgres.pool);
+  const contentService = new ContentService(contentRepository);
+
   const identityRoutes = createIdentityRoutes({ verifier, identities });
   const intelligenceRoutes = createIntelligenceRoutes({
     repository: intelligenceRepository,
@@ -103,6 +109,11 @@ async function main(): Promise<void> {
     service: new GrowthMapService(new PostgresGrowthMapRepository(postgres.pool)),
     idempotency: new PostgresIdempotencyStore(postgres.pool),
   });
+  const contentRoutes = createContentRoutes({
+    service: contentService,
+    verifier,
+    identities,
+  });
 
   const envVars = process.env as Record<string, string>;
   const lifecycleRoute = async (request: Request) =>
@@ -127,7 +138,8 @@ async function main(): Promise<void> {
     (await clientRoutes(request)) ??
     (await reiProjectRoutes(request)) ??
     (await strategicPlanRoutes(request)) ??
-    growthMapRoutes(request, requestId);
+    (await growthMapRoutes(request, requestId)) ??
+    (await contentRoutes(request));
 
   const api = createApiServer(config, undefined, {
     route,

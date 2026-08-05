@@ -89,6 +89,12 @@ MIGRATIONS=(
     "0016_fix_phantom_fks.sql"
     "0017_fix_rls_consistency.sql"
     "0018_seed_minimal_data.sql"
+    "0019_extend_client_fields.sql"
+    "0020_blog_articles.sql"
+    "0021_materials.sql"
+    "0022_case_studies.sql"
+    "0023_content_backfill.sql"
+    "0024_create_growthmap_shares.sql"
 )
 
 # ============================================================================

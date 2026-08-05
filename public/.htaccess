@@ -25,10 +25,10 @@ RewriteRule ^([^/]+)$ $1.html [L]
 RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
 RewriteRule ^([^/]+)/?$ $1/index.html [L]
 
-# SPA Fallback: serve index.html for any route that isn't a real file or directory
+# SPA Fallback: serve /index.html for any route that isn't a real file or directory
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [L]
+RewriteRule ^ /index.html [L]
 
 # Cache assets (hash no nome = safe to cache forever)
 <FilesMatch "\.(js|css|woff2|woff|ttf|png|jpg|jpeg|svg|ico|webp)$">
@@ -41,6 +41,8 @@ RewriteRule ^ index.html [L]
     Header set Pragma "no-cache"
     Header set Expires "0"
     Header set X-LiteSpeed-Cache-Control "no-cache, no-store, bypass"
+    Header set X-HCDN-Cache-Control "no-cache, no-store, bypass"
+    Header set X-Cache-Control "no-cache"
 </FilesMatch>
 
 # Compressão gzip

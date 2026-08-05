@@ -8,8 +8,15 @@ interface ClientRow extends QueryResultRow {
   id: string;
   name: string;
   email: string;
+  trade_name: string | null;
   company: string | null;
   phone: string | null;
+  cnpj: string | null;
+  cep: string | null;
+  address: string | null;
+  number: string | null;
+  complement: string | null;
+  neighborhood: string | null;
   logo_url: string | null;
   website: string | null;
   linkedin_url: string | null;
@@ -18,6 +25,7 @@ interface ClientRow extends QueryResultRow {
   country: string;
   segment: string | null;
   company_size: string | null;
+  status: string;
   created_at: Date | string;
   updated_at: Date | string;
 }
@@ -33,8 +41,15 @@ function mapRow(row: ClientRow): ClientRecord {
     id: row.id,
     name: row.name,
     email: row.email,
+    tradeName: row.trade_name,
     company: row.company,
     phone: row.phone,
+    cnpj: row.cnpj,
+    cep: row.cep,
+    address: row.address,
+    number: row.number,
+    complement: row.complement,
+    neighborhood: row.neighborhood,
     logoUrl: row.logo_url,
     website: row.website,
     linkedinUrl: row.linkedin_url,
@@ -43,14 +58,16 @@ function mapRow(row: ClientRow): ClientRecord {
     country: row.country,
     segment: row.segment,
     companySize: row.company_size,
+    status: (row.status ?? 'onboarding') as ClientRecord['status'],
     createdAt: iso(row.created_at),
     updatedAt: iso(row.updated_at),
   };
 }
 
 const SELECT_COLUMNS = `
-  id, name, email, company, phone, logo_url, website, linkedin_url,
-  city, state, country, segment, company_size, created_at, updated_at
+  id, name, email, trade_name, company, phone, cnpj, cep, address, number,
+  complement, neighborhood, logo_url, website, linkedin_url,
+  city, state, country, segment, company_size, status, created_at, updated_at
 `;
 
 export class PostgresClientRepository implements ClientRepository {
@@ -80,15 +97,26 @@ export class PostgresClientRepository implements ClientRepository {
     return withTenantTransaction(this.pool, tenantId, async (client) => {
       const result = await client.query<ClientRow>(
         `INSERT INTO app.clients (
-          name, email, company, phone, logo_url, website, linkedin_url,
-          city, state, country, segment, company_size
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+          name, email, trade_name, company, phone, cnpj, cep, address, number,
+          complement, neighborhood, logo_url, website, linkedin_url,
+          city, state, country, segment, company_size, status
+        ) VALUES (
+          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
+          $11, $12, $13, $14, $15, $16, $17, $18, $19, $20
+        )
         RETURNING ${SELECT_COLUMNS}`,
         [
           input.name.trim(),
           input.email.trim().toLowerCase(),
+          input.tradeName?.trim() ?? null,
           input.company?.trim() ?? null,
           input.phone?.trim() ?? null,
+          input.cnpj?.trim() ?? null,
+          input.cep?.trim() ?? null,
+          input.address?.trim() ?? null,
+          input.number?.trim() ?? null,
+          input.complement?.trim() ?? null,
+          input.neighborhood?.trim() ?? null,
           input.logoUrl?.trim() ?? null,
           input.website?.trim() ?? null,
           input.linkedinUrl?.trim() ?? null,
@@ -97,6 +125,7 @@ export class PostgresClientRepository implements ClientRepository {
           input.country?.trim() ?? 'Brasil',
           input.segment?.trim() ?? null,
           input.companySize?.trim() ?? null,
+          input.status ?? 'onboarding',
         ]
       );
       const row = result.rows[0];
@@ -118,24 +147,39 @@ export class PostgresClientRepository implements ClientRepository {
         `UPDATE app.clients SET
           name = $2,
           email = $3,
-          company = $4,
-          phone = $5,
-          logo_url = $6,
-          website = $7,
-          linkedin_url = $8,
-          city = $9,
-          state = $10,
-          country = $11,
-          segment = $12,
-          company_size = $13
+          trade_name = $4,
+          company = $5,
+          phone = $6,
+          cnpj = $7,
+          cep = $8,
+          address = $9,
+          number = $10,
+          complement = $11,
+          neighborhood = $12,
+          logo_url = $13,
+          website = $14,
+          linkedin_url = $15,
+          city = $16,
+          state = $17,
+          country = $18,
+          segment = $19,
+          company_size = $20,
+          status = $21
         WHERE id = $1::uuid
         RETURNING ${SELECT_COLUMNS}`,
         [
           id,
           input.name !== undefined ? input.name.trim() : current.name,
           input.email !== undefined ? input.email.trim().toLowerCase() : current.email,
+          input.tradeName !== undefined ? (input.tradeName?.trim() ?? null) : current.trade_name,
           input.company !== undefined ? (input.company?.trim() ?? null) : current.company,
           input.phone !== undefined ? (input.phone?.trim() ?? null) : current.phone,
+          input.cnpj !== undefined ? (input.cnpj?.trim() ?? null) : current.cnpj,
+          input.cep !== undefined ? (input.cep?.trim() ?? null) : current.cep,
+          input.address !== undefined ? (input.address?.trim() ?? null) : current.address,
+          input.number !== undefined ? (input.number?.trim() ?? null) : current.number,
+          input.complement !== undefined ? (input.complement?.trim() ?? null) : current.complement,
+          input.neighborhood !== undefined ? (input.neighborhood?.trim() ?? null) : current.neighborhood,
           input.logoUrl !== undefined ? (input.logoUrl?.trim() ?? null) : current.logo_url,
           input.website !== undefined ? (input.website?.trim() ?? null) : current.website,
           input.linkedinUrl !== undefined ? (input.linkedinUrl?.trim() ?? null) : current.linkedin_url,
@@ -144,6 +188,7 @@ export class PostgresClientRepository implements ClientRepository {
           input.country !== undefined ? (input.country?.trim() ?? 'Brasil') : current.country,
           input.segment !== undefined ? (input.segment?.trim() ?? null) : current.segment,
           input.companySize !== undefined ? (input.companySize?.trim() ?? null) : current.company_size,
+          input.status !== undefined ? input.status : current.status,
         ]
       );
       const row = result.rows[0];

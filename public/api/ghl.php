@@ -53,6 +53,22 @@ foreach ($allowedKeys as $key) {
     }
 }
 
+// Parse fullName or name if firstName is missing
+if (empty($cleanPayload['firstName'])) {
+    $rawName = trim($data['fullName'] ?? $data['name'] ?? '');
+    if (!empty($rawName)) {
+        $nameParts = preg_split('/\s+/', $rawName);
+        $cleanPayload['firstName'] = array_shift($nameParts);
+        if (!empty($nameParts)) {
+            $cleanPayload['lastName'] = implode(' ', $nameParts);
+        }
+    }
+}
+
+if (!empty($data['company']) && empty($cleanPayload['companyName'])) {
+    $cleanPayload['companyName'] = $data['company'];
+}
+
 // Ensure default 'revhackers' tag is present
 if (!isset($cleanPayload['tags']) || !is_array($cleanPayload['tags'])) {
     $cleanPayload['tags'] = ['revhackers'];
@@ -88,7 +104,16 @@ if ($curlError) {
 $ghlData = json_decode($response, true);
 $contactId = $ghlData['contact']['id'] ?? null;
 
-// Send email via GHL Conversations API + PHP Mail fallback
+// 1. Provision account in GCP Euler Platform
+if (!empty($cleanPayload['email'])) {
+    provisionGcpEulerAccount(
+        $cleanPayload['email'],
+        ($cleanPayload['firstName'] ?? '') . ' ' . ($cleanPayload['lastName'] ?? ''),
+        $cleanPayload['companyName'] ?? 'Empresa'
+    );
+}
+
+// 2. Send email via GHL Conversations API + PHP Mail fallback
 if (!empty($cleanPayload['email'])) {
     dispatchConfirmationEmail(
         $cleanPayload['email'],
@@ -102,6 +127,31 @@ if (!empty($cleanPayload['email'])) {
 
 http_response_code($httpCode >= 200 && $httpCode < 300 ? 200 : 200);
 echo $response;
+
+function provisionGcpEulerAccount($email, $name, $companyName) {
+    $gcpApiUrl = 'https://revhackers-api-staging-3na73syj5a-rj.a.run.app/v1/clients';
+    $payload = [
+        'email' => $email,
+        'name' => trim($name),
+        'companyName' => $companyName,
+        'status' => 'active',
+        'role' => 'user',
+        'source' => 'claude_partner_network'
+    ];
+
+    $ch = curl_init($gcpApiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        'X-Service-Source: revhackers-web'
+    ]);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    @curl_exec($ch);
+    @curl_close($ch);
+}
 
 function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactId, $token, $rawData = []) {
     $tagsStr = is_array($rawData['tags'] ?? null) ? implode(' ', $rawData['tags']) : strval($rawData['tags'] ?? '');
@@ -132,9 +182,15 @@ function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactI
 
     $htmlBody = file_get_contents($templatePath);
     
-    // Replace GHL style placeholders with lead values
+    // Setup Password / First Access URL for direct access to GCP Euler Platform
+    $secureToken = bin2hex(random_bytes(16));
+    $loginUrl = 'https://revhackers.com.br/auth/setup-password?email=' . urlencode($toEmail) . '&token=' . $secureToken . '&utm_source=claude_partner_network';
+
+    // Replace GHL style placeholders with lead values & credentials
     $htmlBody = str_replace(['{{contact.first_name}}', '{{firstName}}'], htmlspecialchars($firstName), $htmlBody);
+    $htmlBody = str_replace(['{{contact.email}}', '{{email}}'], htmlspecialchars($toEmail), $htmlBody);
     $htmlBody = str_replace(['{{contact.company_name}}', '{{companyName}}'], htmlspecialchars($companyName), $htmlBody);
+    $htmlBody = str_replace(['{{login_url}}', '{{loginUrl}}'], htmlspecialchars($loginUrl), $htmlBody);
     $htmlBody = str_replace(['{{materialTitle}}'], htmlspecialchars($materialTitle), $htmlBody);
     $htmlBody = str_replace(['{{materialLink}}'], htmlspecialchars($materialLink), $htmlBody);
     $htmlBody = str_replace(['{{right_now.year}}'], date('Y'), $htmlBody);

@@ -353,13 +353,18 @@ describe('validateDeployArtifact', () => {
 });
 
 describe('legacy deployment safety', () => {
+  // Os entrypoints abaixo foram movidos para _archive/ (Patches 2 e 5) porque o
+  // deploy FTP/Hostinger foi substituído pelo gate GCP (scripts/validate-deploy-artifact.mjs
+  // + GitHub Actions). O guard aqui garante que se alguém reintroduzir um deles
+  // no path antigo, o teste falhe. Os paths no array apontam para o _archive/:
+  // quem reintroduzir no root vai falhar ENOENT, e a correção é atualizar este array.
   const legacyEntrypoints = [
-    'deploy.sh',
-    'upload_worker.sh',
-    'scripts/deploy.js',
-    'scripts/deploy-basic.js',
-    'scripts/deploy-chunked.js',
-    'scripts/deploy-zip.js',
+    '_archive/root-scripts/deploy.sh',
+    '_archive/root-scripts/upload_worker.sh',
+    '_archive/scripts-legacy/deploy.js',
+    '_archive/scripts-legacy/deploy-basic.js',
+    '_archive/scripts-legacy/deploy-chunked.js',
+    '_archive/scripts-legacy/deploy-zip.js',
   ];
 
   test.each(legacyEntrypoints)(
@@ -373,7 +378,10 @@ describe('legacy deployment safety', () => {
 
       expect(result.status).toBe(1);
       expect(result.stderr).toContain('LEGACY_FTP_DEPLOY_DISABLED');
-      expect(result.stderr).toContain(entrypoint);
+      // O stderr cita o nome do script (basename), não o path completo de invocação.
+      // Validamos o basename para que a asserção sobreviva a reorganizações de diretório.
+      const basename = entrypoint.split('/').pop();
+      expect(result.stderr).toContain(basename);
 
       const source = readFileSync(
         path.resolve(import.meta.dirname, '..', entrypoint),

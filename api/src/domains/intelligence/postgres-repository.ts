@@ -1,7 +1,8 @@
-import type { QueryablePool } from '../../db/postgres';
+import { withTenantTransaction, type QueryablePool } from '../../db/postgres';
 import type {
   CompetitorRecord,
   CreateCompetitorParams,
+  CreateShareParams,
   UpdateCompetitorParams,
   CompetitorIntelligenceRecord,
   UpsertIntelligenceParams,
@@ -10,6 +11,7 @@ import type {
   MarketSignalRecord,
   CreateMarketSignalParams,
   CompetitorWithIntelligence,
+  GrowthMapShareRecord,
 } from './types';
 
 export class PostgresIntelligenceRepository {
@@ -293,6 +295,84 @@ export class PostgresIntelligenceRepository {
     return fullList;
   }
 
+  // ─── 6. GROWTHMAP SHARES (persistent public share links) ───────────────────
+
+  async createShare(params: CreateShareParams): Promise<GrowthMapShareRecord> {
+    const result = await withTenantTransaction(this.pool, params.tenant_id, async (client) => {
+      return client.query(
+        `INSERT INTO app.growthmap_shares (
+           share_token, tenant_id, project_id, created_by, expires_at, revoked
+         ) VALUES ($1, $2, $3, $4, $5, false)
+         RETURNING share_token, tenant_id, project_id, created_by, created_at, expires_at, revoked`,
+        [
+          params.share_token,
+          params.tenant_id,
+          params.project_id,
+          params.created_by,
+          params.expires_at ?? null,
+        ],
+      );
+    });
+    const row = result.rows[0];
+    if (!row) throw new Error('createShare returned no row.');
+    return this.mapShare(row);
+  }
+
+  /**
+   * Leitura pública por capability token (sem contexto de tenant). A policy
+   * growthmap_shares_public_token_read autoriza SELECT apenas para a linha cujo
+   * share_token corresponde ao setting app.share_token.
+   */
+  async findShareByToken(shareToken: string): Promise<GrowthMapShareRecord | null> {
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      await client.query("SELECT set_config('app.share_token', $1, true)", [shareToken]);
+      const result = await client.query(
+        `SELECT share_token, tenant_id, project_id, created_by, created_at, expires_at, revoked
+         FROM app.growthmap_shares
+         WHERE share_token = $1
+         LIMIT 1`,
+        [shareToken],
+      );
+      await client.query('COMMIT');
+      const row = result.rows[0];
+      return row ? this.mapShare(row) : null;
+    } catch (error) {
+      try { await client.query('ROLLBACK'); } catch { /* preserva erro original */ }
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  /**
+   * Revogação por capability token: portador do token só pode invalidar o
+   * próprio link (policy growthmap_shares_public_token_revoke).
+   */
+  async revokeShareByToken(shareToken: string): Promise<GrowthMapShareRecord | null> {
+    const client = await this.pool.connect();
+    try {
+      await client.query('BEGIN');
+      await client.query("SELECT set_config('app.share_token', $1, true)", [shareToken]);
+      const result = await client.query(
+        `UPDATE app.growthmap_shares
+         SET revoked = true
+         WHERE share_token = $1
+         RETURNING share_token, tenant_id, project_id, created_by, created_at, expires_at, revoked`,
+        [shareToken],
+      );
+      await client.query('COMMIT');
+      const row = result.rows[0];
+      return row ? this.mapShare(row) : null;
+    } catch (error) {
+      try { await client.query('ROLLBACK'); } catch { /* preserva erro original */ }
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
   // ─── PRIVATE MAPPERS ────────────────────────────────────────────────────────
 
   private mapCompetitor(row: any): CompetitorRecord {
@@ -381,6 +461,18 @@ export class PostgresIntelligenceRepository {
       detected_at: typeof row.detected_at === 'string' ? row.detected_at : row.detected_at.toISOString(),
       created_at: typeof row.created_at === 'string' ? row.created_at : row.created_at.toISOString(),
       updated_at: typeof row.updated_at === 'string' ? row.updated_at : row.updated_at.toISOString(),
+    };
+  }
+
+  private mapShare(row: any): GrowthMapShareRecord {
+    return {
+      share_token: row.share_token,
+      tenant_id: row.tenant_id,
+      project_id: row.project_id,
+      created_by: row.created_by,
+      created_at: typeof row.created_at === 'string' ? row.created_at : row.created_at.toISOString(),
+      expires_at: row.expires_at == null ? null : (typeof row.expires_at === 'string' ? row.expires_at : row.expires_at.toISOString()),
+      revoked: row.revoked,
     };
   }
 }

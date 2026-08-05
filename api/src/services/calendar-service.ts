@@ -1,16 +1,19 @@
-// @ts-nocheck
+// @ts-nocheck — calendar-service uses googleapis SDK whose @types conflict
+// with `exactOptionalPropertyTypes: true` in api/tsconfig.json. Re-enable
+// type checking once the SDK types are updated (tracked in TODO in
+// api/tsconfig.json).
 /**
  * calendar-service.ts
  *
  * GCP-native replacement for supabase/functions/google-meetings/index.ts.
- * 
+ *
  * RESPONSIBILITIES:
  * 1. List Google Calendar events (meetings) for a user
  * 2. Persist meetings to app.meetings (GCP Cloud SQL)
  * 3. Create Google Meet events programmatically
  * 4. Setup Google Calendar webhooks (push notifications)
  * 5. OAuth2 token refresh logic
- * 
+ *
  * OBSERVAÇÃO: Esta é a base para o MediaOrchestrator (T9.6) que vai
  * disparar o pipeline (transcribe → analyze → attach to GHL) quando uma
  * meeting terminar.
@@ -301,16 +304,18 @@ async function createMeetEvent(
       },
     });
 
+    const event = response.data;
+    const meetingUrl = event.hangoutLink || event.conferenceData?.entryPoints?.find(ep => ep.entryPointType === 'video')?.uri || '';
     return {
-      eventId: response.data.id || '',
-      meetingUrl: response.data.hangoutLink || response.data.conferenceData?.entryPoints?.[0]?.uri || '',
-      htmlLink: response.data.htmlLink || '',
+      eventId: event.id || '',
+      meetingUrl,
+      htmlLink: event.htmlLink || '',
     };
   }, 'Google Calendar create event');
 }
 
 // ============================================================================
-// Service: SetupWebhook
+// Service: SetupCalendarWebhook
 // ============================================================================
 
 async function setupCalendarWebhook(
@@ -321,102 +326,30 @@ async function setupCalendarWebhook(
     const oauth2Client = createOAuth2Client(refreshToken, env);
     const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
 
-    // 1. Create watch request
-    const watchResponse = await calendar.events.watch({
+    const response = await calendar.events.watch({
       calendarId: 'primary',
       requestBody: {
-        id: `revhackers-webhook-${Date.now()}`,
+        id: `webhook-${Date.now()}`,
         type: 'web_hook',
         address: env.CALENDAR_WEBHOOK_URL,
-        params: {
-          ttl: '86400', // 24 hours
-        },
       },
     });
 
     return {
-      webhookId: watchResponse.data.id || '',
-      expirationTime: watchResponse.data.expiration || '',
+      webhookId: response.data.id || '',
+      expirationTime: response.data.expiration || '',
     };
   }, 'Google Calendar setup webhook');
 }
 
-// ============================================================================
-// HTTP Handler (for Cloud Run)
-// ============================================================================
+export {
+  listCalendarEvents,
+  persistMeetings,
+  createMeetEvent,
+  setupCalendarWebhook,
+  mapGoogleEventToCalendarEvent,
+  classifyMeetingType,
+  CalendarEventSchema,
+};
 
-export async function handleCalendarList(
-  request: Request,
-  env: { GOOGLE_OAUTH_CLIENT_ID: string; GOOGLE_OAUTH_CLIENT_SECRET: string; GOOGLE_OAUTH_REDIRECT_URI: string; DATABASE_URL: string },
-  pool: Pool,
-): Promise<Response> {
-  if (request.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders });
-  }
-
-  // 1. Auth
-  const { getAuth } = await import('firebase-admin/auth');
-  const authHeader = request.headers.get('Authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return new Response(JSON.stringify({ success: false, error: 'Missing or invalid Authorization header' }), {
-      status: 401,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-
-  let user: { user_id: string; email: string };
-  try {
-    const decoded = await getAuth().verifyIdToken(authHeader.replace('Bearer ', ''));
-    user = { user_id: decoded.uid, email: decoded.email || '' };
-  } catch (err: any) {
-    return new Response(JSON.stringify({ success: false, error: err.message || 'Auth failed' }), {
-      status: err.status || 401,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-
-  if (request.method !== 'POST' && request.method !== 'GET') {
-    return new Response(JSON.stringify({ success: false, error: 'Method not allowed' }), {
-      status: 405,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-
-  // 2. Get refresh_token from user_metadata (in real impl, fetch from DB)
-  const refreshToken = env.GOOGLE_REFRESH_TOKEN_DEMO || ''; // TODO: fetch from user_oauth_tokens table
-
-  // 3. Parse query params
-  const url = new URL(request.url);
-  const timeMin = url.searchParams.get('timeMin') || undefined;
-  const timeMax = url.searchParams.get('timeMax') || undefined;
-  const maxResults = parseInt(url.searchParams.get('maxResults') || '50');
-  const query = url.searchParams.get('q') || undefined;
-  const persist = url.searchParams.get('persist') === 'true';
-
-  // 4. List events from Google Calendar
-  const events = await listCalendarEvents(refreshToken, env, {
-    timeMin,
-    timeMax,
-    maxResults,
-    query,
-  });
-
-  // 5. Optionally persist to DB
-  if (persist && events.length > 0) {
-    // In real impl, get tenant_id from user.tenant_id (after auth context)
-    const tenantId = 'demo-tenant'; // TODO: replace with actual lookup
-    const result = await persistMeetings(pool, events, tenantId, user.user_id);
-    return new Response(
-      JSON.stringify({
-        success: true,
-        data: { events, persisted: result },
-      }),
-      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
-    );
-  }
-
-  return new Response(
-    JSON.stringify({ success: true, data: { events } }),
-    { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
-  );
-}
+export type { CalendarEvent };

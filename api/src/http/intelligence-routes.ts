@@ -3,6 +3,7 @@ import { ApiError } from '../contracts/errors';
 import type { PostgresIntelligenceJobsRepository } from '../domains/intelligence/postgres-repository-jobs';
 import type { PostgresIntelligenceRepository } from '../domains/intelligence/postgres-repository';
 import type { FonteDataIntelligenceConnector } from '../domains/intelligence/fonte-data-connector';
+import { buildIndustryInsights } from '../domains/intelligence/insights-builder';
 
 // ============================================================================
 // ZOD SCHEMAS
@@ -55,16 +56,15 @@ const CreateShareSchema = z.object({
   expires_at: z.string().datetime().optional(),
 });
 
-// Tokens de compartilhamento (in-memory store, suficiente para o escopo atual)
-const shareTokens = new Map<string, {
-  share_token: string;
-  tenant_id: string;
-  project_id: string;
-  created_by: string;
-  created_at: string;
-  expires_at: string | null;
-  revoked: boolean;
-}>();
+/**
+ * Token de compartilhamento criptograficamente seguro (padrão LinkCapability
+ * de contracts/identity.ts: token opaco, escopo mínimo, expiração, revogação).
+ * Persistido em app.growthmap_shares — sobrevive a restart/scale do Cloud Run.
+ */
+function generateShareToken(): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(24));
+  return `shr_${Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('')}`;
+}
 
 interface IntelligenceRoutesDependencies {
   repository: PostgresIntelligenceRepository;
@@ -237,27 +237,24 @@ export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
         return json(200, { data: findings, count: findings.length });
       }
 
-      // POST /v1/intelligence/share — Gerar token de compartilhamento
+      // POST /v1/intelligence/share — Gerar token de compartilhamento (persistente)
       if (request.method === 'POST' && url.pathname === '/v1/intelligence/share') {
         const raw = await safeJsonParse(request);
         const parsed = parseBody(raw, CreateShareSchema);
         if ('error' in parsed) return json(400, { error: parsed.error });
         const body = parsed.data;
-        const shareToken = `shr_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
-        shareTokens.set(shareToken, {
-          share_token: shareToken,
+        const share = await deps.repository.createShare({
+          share_token: generateShareToken(),
           tenant_id: body.tenant_id,
           project_id: body.project_id,
           created_by: body.created_by,
-          created_at: new Date().toISOString(),
           expires_at: body.expires_at ?? null,
-          revoked: false,
         });
         return json(201, {
           data: {
-            share_token: shareToken,
-            share_url: `${url.origin}/public/growthmap/${shareToken}`,
-            expires_at: body.expires_at ?? null,
+            share_token: share.share_token,
+            share_url: `${url.origin}/public/growthmap/${share.share_token}`,
+            expires_at: share.expires_at,
           },
         });
       }
@@ -266,7 +263,7 @@ export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
       const shareTokenMatch = url.pathname.match(/^\/v1\/intelligence\/share\/([a-zA-Z0-9_-]+)$/);
       if (request.method === 'GET' && shareTokenMatch) {
         const shareToken = shareTokenMatch[1]!;
-        const tokenData = shareTokens.get(shareToken);
+        const tokenData = await deps.repository.findShareByToken(shareToken);
         if (!tokenData || tokenData.revoked) {
           return json(404, { error: { code: 'not_found', message: 'Link de compartilhamento inválido ou revogado.' } });
         }
@@ -288,15 +285,30 @@ export function createIntelligenceRoutes(deps: IntelligenceRoutesDependencies) {
         });
       }
 
-      // DELETE /v1/intelligence/share/:share_token — Revogar token
+      // DELETE /v1/intelligence/share/:share_token — Revogar token (portador só revoga o próprio)
       if (request.method === 'DELETE' && shareTokenMatch) {
         const shareToken = shareTokenMatch[1]!;
-        const tokenData = shareTokens.get(shareToken);
-        if (!tokenData) {
+        const revoked = await deps.repository.revokeShareByToken(shareToken);
+        if (!revoked) {
           return json(404, { error: { code: 'not_found', message: 'Link de compartilhamento não encontrado.' } });
         }
-        shareTokens.set(shareToken, { ...tokenData, revoked: true });
         return json(200, { data: { share_token: shareToken, revoked: true } });
+      }
+
+      // GET /v1/intelligence/insights/:project_id — Industry Insights derived from enriched competitor data
+      const insightsMatch = url.pathname.match(/^\/v1\/intelligence\/insights\/([0-9a-f-]{36})$/);
+      if (request.method === 'GET' && insightsMatch) {
+        const projectId = insightsMatch[1]!;
+        const tenantId = url.searchParams.get('tenant_id');
+        if (!tenantId) {
+          return json(400, { error: { code: 'validation', message: 'tenant_id é obrigatório.' } });
+        }
+        const [fullCompetitors, signals] = await Promise.all([
+          deps.repository.listCompetitorsFullByProject(tenantId, projectId),
+          deps.repository.listSignalsByTenant(tenantId, 100),
+        ]);
+        const insights = buildIndustryInsights(fullCompetitors, signals);
+        return json(200, { data: { insights, source: 'rules-based', generated_at: new Date().toISOString() } });
       }
 
       // GET /v1/intelligence/findings/:id/full — Drill-down de finding
