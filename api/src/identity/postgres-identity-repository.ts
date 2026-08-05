@@ -44,24 +44,55 @@ export class PostgresIdentityRepository implements IdentityRepository {
   }
 
   /**
+   * Verifica se email está na allowlist (match exato ou por domínio).
+   * Retorna true se autorizado, false se bloqueado.
+   */
+  async isEmailAllowed(email: string): Promise<boolean> {
+    const normalizedEmail = email.toLowerCase();
+    const domain = '@' + normalizedEmail.split('@')[1];
+    
+    const result = await this.pool.query<{ id: string }>(`
+      SELECT id FROM admin_allowlist 
+      WHERE email_pattern = $1 OR email_pattern = $2
+      LIMIT 1
+    `, [normalizedEmail, domain]);
+    
+    return result.rows.length > 0;
+  }
+
+  /**
    * Garante que o usuario existe no banco. Se nao existir, cria com role=null e
    * status=active. Nunca cria tenant nem membership — isso e feito fora daqui.
    * Seguro porque o token ja foi verificado pelo Firebase antes desta chamada.
+   * 
+   * BLOQUEIA automaticamente emails fora da allowlist (retorna erro 403).
    */
   async findOrCreateUser(token: Pick<VerifiedToken, 'issuer' | 'subject'>): Promise<InternalUser> {
     const existing = await this.findUser(token);
     if (existing) return existing;
 
+    // Extrair email do token subject (formato Firebase: "google-oauth2|123456|email")
+    const email = this.extractEmailFromSubject(token.subject);
+    if (!email) {
+      throw new Error('findOrCreateUser: não foi possível extrair email do token.');
+    }
+
+    // Verificar allowlist antes de criar usuário
+    const isAllowed = await this.isEmailAllowed(email);
+    if (!isAllowed) {
+      throw new Error('EMAIL_NOT_ALLOWED:' + email);
+    }
+
     // Upsert atomico: cria internal_user + user_identity em uma transacao sem tenant
     const result = await this.pool.query<{ id: string; global_role: GlobalRole | null; status: 'active' | 'disabled' }>(`
       WITH new_user AS (
-        INSERT INTO app.internal_users (status)
-        VALUES ('active')
+        INSERT INTO internal_users (global_role, status)
+        VALUES (NULL, 'active')
         RETURNING id, global_role, status
       ),
       new_identity AS (
-        INSERT INTO app.user_identities (issuer, subject, user_id)
-        SELECT $1, $2, id FROM new_user
+        INSERT INTO user_identities (user_id, provider, provider_id)
+        SELECT id, $1, $2 FROM new_user
         RETURNING user_id
       )
       SELECT id, global_role, status FROM new_user
@@ -70,6 +101,22 @@ export class PostgresIdentityRepository implements IdentityRepository {
     const row = result.rows[0];
     if (!row) throw new Error('findOrCreateUser: insert returned no row.');
     return { id: row.id, globalRole: row.global_role, status: row.status, memberships: [] };
+  }
+
+  /**
+   * Extrai email do subject do token Firebase.
+   * Formato: "google-oauth2|123456|email@domain.com"
+   */
+  private extractEmailFromSubject(subject: string): string | null {
+    // Firebase subject format: provider|provider_id|email
+    const parts = subject.split('|');
+    if (parts.length === 3) {
+      const email = parts[2];
+      if (email && email.includes('@')) {
+        return email.toLowerCase();
+      }
+    }
+    return null;
   }
 
   async resolveProjectTenant(user: InternalUser, projectId: string): Promise<TenantId | null> {

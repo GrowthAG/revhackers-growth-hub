@@ -39,17 +39,17 @@ const FounderVideoWidget = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const [activePills, setActivePills] = useState<string[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [conversationalStep, setConversationalStep] = useState<number>(0);
+  const [showPills, setShowPills] = useState(true);
+  const [extractedData, setExtractedData] = useState<{ company?: string; crm?: string; role?: string; linkedin?: string }>({});
 
   // Do NOT render widget on admin or internal REI routes
   const isAdminRoute = 
     location.pathname.startsWith('/admin') || 
     location.pathname.startsWith('/rei') || 
     location.pathname.startsWith('/rei-onboarding');
-
-  if (isAdminRoute) {
-    return null;
-  }
-
   // Helper: Extrai o título exato do artigo, material ou case da página atual
   const getCurrentPageTitle = (): string => {
     try {
@@ -193,12 +193,6 @@ const FounderVideoWidget = () => {
       "Falar com Especialista"
     ];
   };
-
-  const [activePills, setActivePills] = useState<string[]>(() => getPagePills(location.pathname));
-  const [messages, setMessages] = useState<Message[]>(() => getContextualMessages(location.pathname));
-  const [conversationalStep, setConversationalStep] = useState<number>(0);
-  const [showPills, setShowPills] = useState(true);
-  const [extractedData, setExtractedData] = useState<{ company?: string; crm?: string; role?: string; linkedin?: string }>({});
 
   // Automatically close modal and update context when user navigates to another page
   useEffect(() => {

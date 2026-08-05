@@ -136,12 +136,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }, []); // [] = roda UMA VEZ ao montar, não reage a mudanças de estado
 
     useEffect(() => {
+        console.log('[AuthContext] State changed:', { 
+            hasUser: !!user, 
+            userEmail: user?.email,
+            isProfileLoading,
+            isLoading,
+            hasProfile: !!userProfile,
+            userRole 
+        });
+    }, [user, isProfileLoading, isLoading, userProfile, userRole]);
+
+    useEffect(() => {
         if (window.location.hash.includes('type=recovery') ||
             window.location.hash.includes('access_token=') ||
             window.location.pathname === '/reset-password') {
             setIsRecoveringPassword(true);
         }
-
         if (isGoogleAuthEnabled) {
             let mounted = true;
             const unsubscribe = observeGoogleAuth(async (googleUser) => {
@@ -167,6 +177,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 }
 
                 setIsProfileLoading(true);
+                // Armazena token Firebase no callback do observeGoogleAuth
+                try {
+                    const idToken = await googleUser.getIdToken();
+                    sessionStorage.setItem('rh_firebase_id_token', idToken);
+                    console.log('[Google Auth] Token armazenado via observeGoogleAuth:', idToken.substring(0, 20) + '...');
+                } catch (tokenErr) {
+                    console.warn('[Google Auth] Falha ao armazenar token:', tokenErr);
+                }
                 const email = (googleUser.email || '').toLowerCase();
                 const isGiulliano = email === 'giulliano@usefunnels.io' || email === 'giulliano@revhackers.com.br' || email.includes('giulliano');
 
@@ -195,23 +213,37 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                         localStorage.setItem('rh_master_user_email', googleUser.email || 'Giulliano@usefunnels.io');
                     } catch (e) {}
                 } else {
+                    // USUÁRIO NÃO-GIULLIANO: buscar autoridade da API GCP
+                    // Se falhar, NÃO dar role automático (segurança)
                     try {
-                        const authority = await fetchGoogleAuthority(await googleUser.getIdToken());
+                        const idToken = await googleUser.getIdToken();
+                        const authority = await fetchGoogleAuthority(idToken);
                         if (mounted && authority) {
                             setUserProfile(authority);
-                            setUserRole(authority.globalRole || 'admin');
+                            setUserRole(authority.globalRole || 'user');
                         }
-                    } catch (error) {
-                        console.warn('[Google Auth] GCP Authority fallback ativado:', error);
-                        if (mounted) {
-                            setUserRole('admin');
-                            setUserProfile({
-                                id: googleUser.uid,
-                                email: googleUser.email || '',
-                                full_name: googleUser.displayName || googleUser.email?.split('@')[0] || 'Membro',
-                                role: 'admin',
-                                avatar_url: googleUser.photoURL || ''
-                            });
+                    } catch (error: any) {
+                        // Se API retornar 403, email não está na allowlist
+                        if (error.message?.includes('403') || error.message?.includes('forbidden')) {
+                            console.error('[Google Auth] Email não autorizado:', googleUser.email);
+                            if (mounted) {
+                                await signOutGoogle();
+                                toast({
+                                    variant: 'destructive',
+                                    title: 'Acesso não autorizado',
+                                    description: `O email ${googleUser.email} não está autorizado a acessar o sistema.`,
+                                });
+                                setUser(null);
+                                setUserProfile(null);
+                                setUserRole(null);
+                            }
+                        } else {
+                            // Outros erros: log mas NÃO dar role
+                            console.warn('[Google Auth] Falha ao buscar autoridade:', error);
+                            if (mounted) {
+                                setUserRole(null); // Sem role = sem acesso
+                                setUserProfile(null);
+                            }
                         }
                     }
                 }
@@ -414,12 +446,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const signInWithGoogle = async () => {
         try {
-            setError?.(null);
             setIsLoading(true);
 
             // Tenta autenticação via Firebase Google Popup (Provedor primário de Auth)
             try {
                 const googleUser = await signInWithGooglePopup();
+                // Armazena token Firebase imediatamente após login
+                const idToken = await googleUser.getIdToken();
+                sessionStorage.setItem('rh_firebase_id_token', idToken);
+                console.log('[Google Auth] Token Firebase armazenado:', idToken.substring(0, 20) + '...');
                 const email = (googleUser.email || 'Giulliano@usefunnels.io').toLowerCase();
                 const isGiulliano = email.includes('giulliano') || email.includes('usefunnels') || email.includes('revhackers');
 
@@ -558,11 +593,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             return { error };
         }
     }
-
     const signOut = async () => {
         try {
-            // Limpar estado local primeiro
-            setSession(null);
+            // Limpa token Firebase armazenado
+            sessionStorage.removeItem('rh_firebase_id_token');
+            console.log('[Auth] Token Firebase removido do storage');
             setUser(null);
             setUserProfile(null);
             setUserRole(null);

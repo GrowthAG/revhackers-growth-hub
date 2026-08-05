@@ -22,13 +22,26 @@ const Login = () => {
     const showGoogleLogin = isGoogleAuthEnabled || isAppSubdomain;
     const navigate = useNavigate();
 
+    console.log('[Login] State check:', { 
+      hasUser: !!user, 
+      isMaster: sessionStorage.getItem('rh_master_logged') === 'true',
+      isProfileLoading,
+      userEmail: user?.email 
+    });
     useEffect(() => {
         const isMaster = sessionStorage.getItem('rh_master_logged') === 'true';
+        console.log('[Login useEffect] Checking redirect:', { 
+            hasUser: !!user, 
+            isMaster, 
+            isProfileLoading,
+            shouldRedirect: (user || isMaster) && !isProfileLoading
+        });
+        
         if ((user || isMaster) && !isProfileLoading) {
+            console.log('[Login useEffect] Redirecting to /admin');
             navigate('/admin', { replace: true });
         }
     }, [user, isProfileLoading, navigate]);
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);

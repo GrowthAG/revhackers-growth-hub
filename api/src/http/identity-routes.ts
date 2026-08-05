@@ -24,14 +24,23 @@ export function createIdentityRoutes(deps: IdentityRouteDependencies) {
     const token = await deps.verifier.verify(bearer(request));
     // findOrCreateUser: registra o usuario no primeiro login Google valido.
     // Nao cria tenant nem membership — isso requer acao do admin.
-    const user = await deps.identities.findOrCreateUser(token);
-    if (user.status !== 'active') throw ApiError.forbidden();
+    // BLOQUEIA automaticamente emails fora da allowlist.
+    try {
+      const user = await deps.identities.findOrCreateUser(token);
+      if (user.status !== 'active') throw ApiError.forbidden();
 
-    return new Response(JSON.stringify({
-      id: user.id,
-      globalRole: user.globalRole,
-      status: user.status,
-      memberships: user.memberships.map(({ tenantId, role, status }) => ({ tenantId, role, status })),
-    }), { status: 200, headers: { 'content-type': 'application/json; charset=utf-8' } });
+      return new Response(JSON.stringify({
+        id: user.id,
+        globalRole: user.globalRole,
+        status: user.status,
+        memberships: user.memberships.map(({ tenantId, role, status }) => ({ tenantId, role, status })),
+      }), { status: 200, headers: { 'content-type': 'application/json; charset=utf-8' } });
+    } catch (err: any) {
+      if (err.message?.startsWith('EMAIL_NOT_ALLOWED:')) {
+        const email = err.message.split(':')[1];
+        throw ApiError.forbidden(`Email ${email} não está autorizado a acessar o sistema.`);
+      }
+      throw err;
+    }
   };
 }
