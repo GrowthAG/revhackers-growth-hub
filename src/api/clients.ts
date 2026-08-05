@@ -74,64 +74,14 @@ export const getClientById = async (id: string): Promise<Client | null> => {
 };
 
 export const createClient = async (client: ClientInsert): Promise<Client | null> => {
-    if (isGcpEnabled()) {
-        try {
-            return await clientsGcpAdapter.create(client);
-        } catch (error) {
-            console.warn('GCP create failed, falling back to Supabase:', error);
-        }
-    }
-    const { data, error } = await supabase
-        .from('clients' as any)
-        .insert(client as any)
-        .select()
-        .single();
-
-    if (error) {
-        console.error('Error creating client:', error);
-        throw error;
-    }
-    return data as any;
+    return await clientsGcpAdapter.create(client);
 };
 
 export const updateClient = async (id: string, updates: ClientUpdate): Promise<Client | null> => {
-    if (isGcpEnabled()) {
-        try {
-            return await clientsGcpAdapter.update(id, updates);
-        } catch (error) {
-            console.warn('GCP update failed, falling back to Supabase:', error);
-        }
-    }
-    const { data, error } = await supabase
-        .from('clients' as any)
-        .update(updates as any)
-        .eq('id', id)
-        .select()
-        .single();
-
-    if (error) {
-        console.error('Error updating client:', error);
-        throw error;
-    }
-    return data as any;
+    return await clientsGcpAdapter.update(id, updates);
 };
 
 export const deleteClient = async (id: string): Promise<void> => {
-    if (isGcpEnabled()) {
-        try {
-            return await clientsGcpAdapter.delete(id);
-        } catch (error) {
-            console.warn('GCP delete failed, falling back to Supabase:', error);
-        }
-    }
-    const { error } = await supabase
-        .from('clients' as any)
-        .delete()
-        .eq('id', id);
-
-    if (error) {
-        console.error('Error deleting client:', error);
-        throw error;
-    }
+    await clientsGcpAdapter.delete(id);
 };
 

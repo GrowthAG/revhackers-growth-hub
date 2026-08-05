@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Plus, Trash2, Briefcase, Search, Download, TrendingUp, ArrowLeft, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { migrateCases } from '@/services/migrationService';
-
 import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 
 const AdminCases = () => {
@@ -18,43 +16,35 @@ const AdminCases = () => {
     useEffect(() => { fetchCases(); }, []);
 
     const fetchCases = async () => {
-        if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
-            try {
-                const gcpCases = await contentGcpAdapter.getCases();
-                setCases(gcpCases.map(c => ({
-                    id: c.id,
-                    client_name: c.clientName,
-                    client_logo: c.clientLogo,
-                    case_category: c.caseCategory,
-                    title: c.headline,
-                    published: c.published,
-                    created_at: c.createdAt,
-                })));
-                return;
-            } catch (e) {
-                console.warn('Fallback para Supabase no fetchCases...', e);
-            }
+        try {
+            const gcpCases = await contentGcpAdapter.getCases();
+            setCases(gcpCases.map(c => ({
+                id: c.id,
+                client_name: c.clientName,
+                client_logo: c.clientLogo,
+                case_category: c.caseCategory,
+                title: c.headline,
+                published: c.published,
+                created_at: c.createdAt,
+            })));
+        } catch (e) {
+            console.error('Erro ao carregar cases via GCP', e);
+            toast.error('Erro ao carregar cases');
         }
-
-        const { data, error } = await supabase
-            .from('cases')
-            .select('*')
-            .order('created_at', { ascending: false });
-        if (error) toast.error('Erro ao carregar cases');
-        else setCases(data || []);
     };
 
     const handleDelete = async (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
         if (!confirm('Excluir este case?')) return;
-        const { error } = await supabase.from('cases').delete().eq('id', id);
-        if (error) toast.error('Erro ao excluir');
-        else {
+        try {
+            await contentGcpAdapter.deleteCase(id);
             toast.success('Case excluído');
             setCases(cases.filter(c => c.id !== id));
+        } catch (err) {
+            console.error('Erro ao excluir case', err);
+            toast.error('Erro ao excluir');
         }
     };
-
     const handleMigrate = async () => {
         if (!confirm('Importar cases do arquivo estático?')) return;
         toast.loading('Importando...', { id: 'migrate' });

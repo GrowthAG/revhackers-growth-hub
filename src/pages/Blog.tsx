@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import BlogHeader from '@/components/blog/BlogHeader';
@@ -6,10 +5,9 @@ import BlogCard from '@/components/blog/BlogCard';
 import { Button } from '@/components/ui/button';
 import { Search, Filter, BookOpen } from 'lucide-react';
 import SEO from '@/components/shared/SEO';
-import { supabase } from '@/integrations/supabase/client';
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 import { getArticleImageBySlug } from '@/components/blog/post/articles/utils/frameworkImages';
 import { blogPosts as staticBlogPosts } from '@/data/blogData';
-
 
 
 // Interface para post do blog
@@ -47,30 +45,24 @@ const Blog = () => {
     return `/uploads/${path}`;
   };
 
-  // Buscar posts do Supabase
+
+  // Buscar posts do GCP (contentGcpAdapter)
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Timeout de 10 segundos (Codex recommendation)
+        // Timeout de 10 segundos (proteção contra requests travados)
         const timeoutPromise = new Promise((_, reject) =>
           setTimeout(() => reject(new Error('Timeout de rede')), 10000)
         );
 
-        const fetchPromise = supabase
-          .from('blog_posts')
-          .select('*')
-          .eq('published', true)
-          .order('date', { ascending: false });
-
-        const { data, error } = await Promise.race([fetchPromise, timeoutPromise]) as any;
-
-        if (error) throw error;
+        const fetchPromise = contentGcpAdapter.getBlogArticles();
+        const data = await Promise.race([fetchPromise, timeoutPromise]);
 
         if (data) {
           setApiPosts(data);
         }
       } catch (err: any) {
-        console.warn('⚠️ [BLOG] Falha ao carregar do banco (usando offline):', err.message);
+        console.warn('⚠️ [BLOG] Falha ao carregar do GCP (usando offline):', err.message);
       } finally {
         setIsLoading(false);
       }
@@ -78,10 +70,8 @@ const Blog = () => {
 
     fetchPosts();
   }, []);
-
-  // Format Supabase posts + merge with static blogData (deduplicate by slug, Supabase wins)
   const blogPosts = useMemo(() => {
-    const supabasePosts: BlogPost[] = apiPosts.map(post => ({
+    const gcpPosts: BlogPost[] = apiPosts.map(post => ({
       id: post.id,
       title: post.title,
       slug: post.slug,
@@ -99,12 +89,12 @@ const Blog = () => {
       featured: post.featured || false
     }));
 
-    // Slugs already in Supabase
-    const supabaseSlugs = new Set(supabasePosts.map(p => p.slug));
+    // Slugs already in GCP
+    const gcpSlugs = new Set(gcpPosts.map(p => p.slug));
 
-    // Static posts not yet synced to Supabase
+    // Static posts not yet synced to GCP
     const staticOnly: BlogPost[] = staticBlogPosts
-      .filter(p => !supabaseSlugs.has(p.slug))
+      .filter(p => !gcpSlugs.has(p.slug))
       .map(p => ({
         id: `static-${p.id}`,
         title: p.title.replace(/<span>|<\/span>/g, ''),
@@ -123,7 +113,7 @@ const Blog = () => {
         featured: p.featured || false
       }));
 
-    return [...supabasePosts, ...staticOnly].sort((a, b) =>
+    return [...gcpPosts, ...staticOnly].sort((a, b) =>
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
   }, [apiPosts]);

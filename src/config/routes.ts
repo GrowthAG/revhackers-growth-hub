@@ -111,7 +111,8 @@ export const APP_ROUTES = {
     CASES: '/admin/cases',
     CASE_NEW: '/admin/cases/new',
     CASE_EDIT: '/admin/cases/edit/:id',
-    SYNC: '/admin/sync',
+
+
     CRONOGRAMA: '/admin/cronograma',
     CRONOGRAMA_EDIT: '/admin/cronograma/:id',
     DIAGNOSTIC_VIEW: '/admin/diagnostico/:id',

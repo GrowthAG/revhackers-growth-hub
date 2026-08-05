@@ -1,3 +1,15 @@
+// NOTE: This page is the public client portal and intentionally still uses
+// Supabase direct calls. The calls are anonymous public RPCs that have
+// NO equivalent in the GCP API yet:
+//   - supabase.from('rei_projects').update(last_login_at)
+//   - supabase.from('strategic_plans').select(access_token)
+//   - supabase.rpc('has_public_nps_response')
+//   - supabase.rpc('get_public_knowledge_library_id')
+//   - supabase.rpc('get_public_shared_documents')
+//   - supabase.rpc('get_public_project_sprints')
+//   - supabase.rpc('get_public_project_tasks')
+// Migrating this file requires building matching public routes in the
+// GCP API (Sprint 3 work, out of scope here).
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'sonner';

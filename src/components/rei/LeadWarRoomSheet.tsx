@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import {
     Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription
@@ -89,6 +89,7 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
     lead, open, onClose, onQualified
 }) => {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [fullData, setFullData] = useState<FullLeadData | null>(null);
     const [loadingData, setLoadingData] = useState(false);
     const [qualifying, setQualifying] = useState(false);
@@ -234,7 +235,6 @@ export const LeadWarRoomSheet: React.FC<LeadWarRoomSheetProps> = ({
         if (!lead?.id || !newNote.trim()) return;
         setSavingNotes(true);
         try {
-            const { data: { user } } = await supabase.auth.getUser();
             const authorName = user?.email?.split('@')[0] || 'Consultor';
 
             const newNoteObj = {

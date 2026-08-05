@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Plus, Trash2, FileText, Search, Download, ExternalLink, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { materialsData } from '@/data/materialsData';
 import { migrateMaterials } from '@/services/migrationService';
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 
 const AdminMaterials = () => {
     const [materials, setMaterials] = useState<any[]>([]);
@@ -18,16 +18,12 @@ const AdminMaterials = () => {
 
     const fetchMaterials = async () => {
         try {
-            const { data, error } = await supabase
-                .from('materials')
-                .select('*')
-                .order('created_at', { ascending: false });
-            
-            if (error || !data || data.length === 0) {
-                // Fallback para materialsData se banco estiver vazio
-                setMaterials(materialsData);
-            } else {
+            const data = await contentGcpAdapter.getMaterials();
+            if (data && data.length > 0) {
                 setMaterials(data);
+            } else {
+                // Fallback para materialsData se GCP retornar vazio
+                setMaterials(materialsData);
             }
         } catch {
             setMaterials(materialsData);
@@ -38,7 +34,7 @@ const AdminMaterials = () => {
         e.stopPropagation();
         if (!confirm('Excluir este material?')) return;
         try {
-            await supabase.from('materials').delete().eq('id', id);
+            await contentGcpAdapter.deleteMaterial(id);
         } catch (err) {
             console.error('Erro ao deletar material', err);
         }

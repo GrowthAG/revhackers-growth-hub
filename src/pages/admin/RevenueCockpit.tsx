@@ -29,7 +29,7 @@ import {
   LEAD_SOURCE_LABELS,
   LeadSource,
 } from '@/types/pipeline';
-import { advanceStage } from '@/services/PipelineService';
+import { reiProjectsGcpAdapter } from '@/api/adapters/rei-projects-gcp';
 import { advanceOpportunityStage } from '@/api/opportunities';
 import { useToast } from '@/hooks/use-toast';
 import { PipelineSkeleton } from '@/components/ui/skeleton';
@@ -836,62 +836,44 @@ export const RevenueCockpit: React.FC = () => {
   const { data: projects = [], isLoading: loadingProjects, refetch: refetchProjects } = useQuery({
     queryKey: ['revenue-projects'],
     queryFn: async () => {
-      const { data: rawProjects, error } = await supabase
-        .from('rei_projects')
-        .select('id, client_name, client_company, trade_name, type, status, pipeline_stage, created_at, updated_at, onboarding_phase, onboarding_phase_entered_at')
-        .in('pipeline_stage', ['won', 'onboarding', 'active', 'completed'])
-        .order('updated_at', { ascending: false });
-
-      if (error) {
-        console.warn('[RevenueCockpit] Erro ao carregar projetos:', error.message);
-        return DEMO_PROJECTS;
-      }
-      if (!rawProjects?.length) return DEMO_PROJECTS;
+      // TODO: orqflow_tasks and pipeline_stage live outside the GCP
+      // rei_projects schema. Until the API exposes a tasks route, we
+      // load all REI projects via the GCP adapter and accept that
+      // task counts (total/done/overdue) come back as 0. The
+      // opportunities table has no GCP route either; the first query
+      // (line ~789) remains on Supabase until that lands.
+      const gcpProjects = await reiProjectsGcpAdapter.getAll();
+      const rawProjects = gcpProjects.filter(p =>
+        ['active', 'pending', 'overdue'].includes(p.status)
+      );
+      if (!rawProjects.length) return DEMO_PROJECTS;
 
       const ids = rawProjects.map(p => p.id);
-
-      // Tasks for execution projects (com fallback seguro contra erros de schema)
-      let tasks: any[] = [];
-      try {
-        const { data: fetchedTasks, error: tasksErr } = await supabase
-          .from('orqflow_tasks' as any)
-          .select('id, project_id, status, due_date')
-          .in('project_id', ids)
-          .not('status', 'eq', 'archived');
-        if (!tasksErr && fetchedTasks) {
-          tasks = fetchedTasks;
-        }
-      } catch (e) {
-        console.warn('[RevenueCockpit] Tabela de tarefas legada nao disponivel, usando fallback seguro');
-      }
+      const tasks: any[] = []; // TODO: replace with GCP orqflow_tasks route
 
       const todayIso = new Date().toISOString();
 
-      return rawProjects.map((proj: any) => {
-        const ptasks = tasks?.filter(t => t.project_id === proj.id) || [];
-        const done = ptasks.filter(t => t.status === 'done').length;
-        const overdue = ptasks.filter(t => t.due_date && t.due_date < todayIso && t.status !== 'done').length;
+      return rawProjects.map((proj) => {
+        const ptasks = tasks?.filter((t: any) => t.project_id === proj.id) || [];
+        const done = ptasks.filter((t: any) => t.status === 'done').length;
+        const overdue = ptasks.filter((t: any) => t.due_date && t.due_date < todayIso && t.status !== 'done').length;
 
         return {
           id: proj.id,
-          client_name: proj.client_name,
-          client_company: proj.client_company,
-          trade_name: proj.trade_name,
+          client_name: proj.clientName,
+          client_company: proj.clientCompany || proj.clientName,
+          trade_name: proj.clientName,
           type: proj.type,
           status: proj.status,
-          pipeline_stage: proj.pipeline_stage || 'active',
+          pipeline_stage: proj.status,
           lead_source: null,
-          opportunity_data: null,
-          created_at: proj.created_at,
-          updated_at: proj.updated_at,
-          maturity_pct: 0,
-          rei_score: 0,
-          plan_status: null,
-          display_name: getDisplayName({ trade_name: proj.trade_name, client_company: proj.client_company, client_name: proj.client_name }),
-          days_in_stage: getDaysSince(proj.updated_at),
-          onboarding_phase: proj.onboarding_phase || 1,
-          onboarding_phase_entered_at: proj.onboarding_phase_entered_at || proj.created_at,
-          days_in_phase: getDaysSince(proj.onboarding_phase_entered_at || proj.updated_at),
+          created_at: proj.lastReiDate || new Date().toISOString(),
+          updated_at: proj.nextReiDate || new Date().toISOString(),
+          days_in_stage: 0,
+          display_name: getDisplayName({ trade_name: proj.clientName, client_company: proj.clientCompany || proj.clientName, client_name: proj.clientName }),
+          total_tasks: ptasks.length,
+          done_tasks: done,
+          overdue_tasks: overdue,
         } as ProjectRow;
       });
     }

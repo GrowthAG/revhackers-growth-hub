@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { reiProjectsGcpAdapter } from '@/api/adapters/rei-projects-gcp';
 
 interface SidebarBadges {
   pipeline: number;
@@ -14,25 +14,18 @@ export function useSidebarBadges(): SidebarBadges {
 
     const fetchCounts = async () => {
       try {
-        const [pipelineRes, projectsRes] = await Promise.all([
-          supabase
-            .from('rei_projects')
-            .select('id', { count: 'exact', head: true })
-            .not('pipeline_stage', 'in', '(won,lost)')
-            .not('status', 'eq', 'archived'),
-          supabase
-            .from('rei_projects')
-            .select('id', { count: 'exact', head: true })
-            .eq('status', 'active')
-            .not('pipeline_stage', 'in', '(won,lost,lead_inbound)'),
-        ]);
+        const projects = await reiProjectsGcpAdapter.getAll();
+        if (stale) return;
 
-        if (!stale) {
-          setBadges({
-            pipeline: pipelineRes.count || 0,
-            projects: projectsRes.count || 0,
-          });
-        }
+        // NOTE: The original Supabase hook queried rei_projects by
+        // pipeline_stage (a field that lives in `opportunities`, not
+        // `rei_projects`). The query was semantically broken; we now
+        // count client-side from the GCP data.
+        const active = projects.filter(p => p.status === 'active').length;
+        setBadges({
+          pipeline: 0, // pipeline_stage lives in opportunities, no cross-table count available
+          projects: active,
+        });
       } catch (err) {
         console.error('[useSidebarBadges] fetch error:', err);
       }

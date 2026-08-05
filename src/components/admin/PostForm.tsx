@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { uploadImageToSupabase } from '@/utils/uploadImageToSupabase';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2, Save, ArrowLeft, Upload, Trash2 } from 'lucide-react';
-import { Database } from "@/integrations/supabase/types";
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 
 // Type definition for form data
 type PostFormData = any;
@@ -84,6 +83,10 @@ const PostForm = ({ initialData, isEditing = false }: PostFormProps) => {
     const onSubmit = async (data: PostFormData) => {
         setLoading(true);
         try {
+            // NOTE: We still call supabase.auth.getSession() to obtain an
+            // author UUID for the new post. Until the GCP API ignores the
+            // request's authorId in favour of the authenticated user, we
+            // forward the Supabase session user id (same admin in staging).
             const { data: { session } } = await supabase.auth.getSession();
             if (!session) {
                 toast({ title: 'Sessão expirada', variant: 'destructive' });
@@ -91,10 +94,7 @@ const PostForm = ({ initialData, isEditing = false }: PostFormProps) => {
                 return;
             }
 
-            // Prepare payload
-            // IMPORTANT: We do NOT send author_id. The trigger/default should handle it.
-            // But we DO need to ensure we don't send `id` if creating.
-            const payload = {
+            const basePayload = {
                 title: data.title,
                 slug: data.slug,
                 excerpt: data.excerpt,
@@ -103,43 +103,20 @@ const PostForm = ({ initialData, isEditing = false }: PostFormProps) => {
                 image: data.image,
                 published: data.published,
                 featured: data.featured,
-                read_time: data.read_time,
+                readTime: data.read_time,
                 date: data.date || new Date().toISOString(),
-                // updated_at is handled by trigger, but we can send it too
-                updated_at: new Date().toISOString()
+                updatedAt: new Date().toISOString(),
             };
 
             if (isEditing && initialData?.id) {
-                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
-                    try {
-                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.updateBlogArticle(initialData.id, payload);
-                    } catch (gcpErr) {
-                        console.warn('GCP updateBlogArticle failed, falling back to Supabase', gcpErr);
-                        const { error: supaErr } = await supabase.from('blog_posts').update(payload).eq('id', initialData.id);
-                        if (supaErr) throw supaErr;
-                    }
-                } else {
-                    const { error: supaErr } = await supabase.from('blog_posts').update(payload).eq('id', initialData.id);
-                    if (supaErr) throw supaErr;
-                }
+                await contentGcpAdapter.updateBlogArticle(initialData.id, basePayload);
             } else {
-                const insertPayload = {
-                    ...payload,
-                    created_at: new Date().toISOString(),
-                    author_id: session?.user?.id || 'master-user-id'
+                const createPayload = {
+                    ...basePayload,
+                    createdAt: new Date().toISOString(),
+                    authorId: session.user.id,
                 };
-                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
-                    try {
-                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.createBlogArticle(insertPayload);
-                    } catch (gcpErr) {
-                        console.warn('GCP createBlogArticle failed, falling back to Supabase', gcpErr);
-                        const { error: supaErr } = await supabase.from('blog_posts').insert(insertPayload);
-                        if (supaErr) throw supaErr;
-                    }
-                } else {
-                    const { error: supaErr } = await supabase.from('blog_posts').insert(insertPayload);
-                    if (supaErr) throw supaErr;
-                }
+                await contentGcpAdapter.createBlogArticle(createPayload);
             }
 
             toast({
@@ -148,7 +125,6 @@ const PostForm = ({ initialData, isEditing = false }: PostFormProps) => {
             });
 
             navigate('/admin/posts');
-
         } catch (error: any) {
             console.error(error);
             toast({
@@ -160,25 +136,13 @@ const PostForm = ({ initialData, isEditing = false }: PostFormProps) => {
             setLoading(false);
         }
     };
-
     const handleDelete = async () => {
         if (!isEditing || !initialData?.id) return;
         if (!window.confirm("Tem certeza que deseja excluir este Artigo? Esta ação não pode ser desfeita.")) return;
 
         setLoading(true);
         try {
-            if (import.meta.env.VITE_GCP_ENABLED === 'true') {
-                try {
-                    await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.deleteBlogArticle(initialData.id);
-                } catch (gcpErr) {
-                    console.warn('GCP deleteBlogArticle failed, falling back to Supabase', gcpErr);
-                    const { error } = await supabase.from('blog_posts').delete().eq('id', initialData.id);
-                    if (error) throw error;
-                }
-            } else {
-                const { error } = await supabase.from('blog_posts').delete().eq('id', initialData.id);
-                if (error) throw error;
-            }
+            await contentGcpAdapter.deleteBlogArticle(initialData.id);
             toast({ title: 'Artigo excluído' });
             navigate('/admin/posts');
         } catch (error: any) {

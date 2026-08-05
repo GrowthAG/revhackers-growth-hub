@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,8 +10,8 @@ import { useToast } from '@/hooks/use-toast';
 import { uploadImageToSupabase } from '@/utils/uploadImageToSupabase';
 import { Loader2, Save, Upload, Building, Trash2 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Database } from "@/integrations/supabase/types";
 import AIEditorLayout from '@/components/layout/AIEditorLayout';
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 
 // Define form shape explicitly since some fields might be missing from generated types
 interface CaseFormValues {
@@ -106,16 +105,7 @@ const CaseForm = ({ initialData, isEditing = false }: CaseFormProps) => {
         if (!isEditing || !initialData?.id || !confirm('Excluir este case?')) return;
         setLoading(true);
         try {
-            if (import.meta.env.VITE_GCP_ENABLED === 'true') {
-                try {
-                    await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.deleteCase(initialData.id);
-                } catch (gcpErr) {
-                    console.warn('GCP deleteCase failed, falling back to Supabase', gcpErr);
-                    await supabase.from('cases').delete().eq('id', initialData.id);
-                }
-            } else {
-                await supabase.from('cases').delete().eq('id', initialData.id);
-            }
+            await contentGcpAdapter.deleteCase(initialData.id);
             toast({ title: 'Case excluído' });
             navigate('/admin/cases');
         } catch (error) {
@@ -128,39 +118,14 @@ const CaseForm = ({ initialData, isEditing = false }: CaseFormProps) => {
     const onSubmit = async (data: CaseFormValues) => {
         setLoading(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session && import.meta.env.VITE_GCP_ENABLED !== 'true') { navigate('/login'); return; }
-
             const payload = { ...data };
 
             if (isEditing && initialData?.id) {
-                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
-                    try {
-                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.updateCase(initialData.id, payload);
-                    } catch (gcpErr) {
-                        console.warn('GCP updateCase failed, falling back to Supabase', gcpErr);
-                        const { error } = await supabase.from('cases').update(payload).eq('id', initialData.id);
-                        if (error) throw error;
-                    }
-                } else {
-                    const { error } = await supabase.from('cases').update(payload).eq('id', initialData.id);
-                    if (error) throw error;
-                }
+                await contentGcpAdapter.updateCase(initialData.id, payload);
                 toast({ title: 'Case atualizado!' });
                 navigate('/admin/cases');
             } else {
-                if (import.meta.env.VITE_GCP_ENABLED === 'true') {
-                    try {
-                        await (await import('@/api/adapters/content-gcp')).contentGcpAdapter.createCase(payload);
-                    } catch (gcpErr) {
-                        console.warn('GCP createCase failed, falling back to Supabase', gcpErr);
-                        const { error } = await supabase.from('cases').insert(payload);
-                        if (error) throw error;
-                    }
-                } else {
-                    const { error } = await supabase.from('cases').insert(payload);
-                    if (error) throw error;
-                }
+                await contentGcpAdapter.createCase(payload);
                 toast({ title: 'Case criado!' });
                 navigate('/admin/cases');
             }
@@ -170,7 +135,6 @@ const CaseForm = ({ initialData, isEditing = false }: CaseFormProps) => {
             setLoading(false);
         }
     };
-
     return (
         <AIEditorLayout
             title={isEditing ? 'Editar Case' : 'Novo Case'}

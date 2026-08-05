@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Plus, Trash2, BookOpen, Search, ExternalLink, ArrowLeft, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { blogPosts as staticBlogPosts } from '@/data/blogData';
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 
 export const AdminBlog = () => {
     const [posts, setPosts] = useState<any[]>([]);
@@ -17,11 +16,7 @@ export const AdminBlog = () => {
 
     const fetchPosts = async () => {
         try {
-            const { data } = await supabase
-                .from('blog_posts')
-                .select('*')
-                .order('date', { ascending: false });
-
+            const data = await contentGcpAdapter.getBlogArticles();
             if (data && data.length > 0) {
                 setPosts(data);
             } else {
@@ -36,7 +31,7 @@ export const AdminBlog = () => {
         e.stopPropagation();
         if (!confirm('Excluir este artigo?')) return;
         try {
-            await supabase.from('blog_posts').delete().eq('id', id);
+            await contentGcpAdapter.deleteBlogArticle(id);
         } catch (err) {
             console.error('Erro ao excluir artigo:', err);
         }

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
@@ -6,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { FileText, Book, BookOpen, BarChart3, PlaySquare, FileSpreadsheet, Search, ArrowRight } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import { useToast } from '@/components/ui/use-toast';
-import { supabase } from '@/integrations/supabase/client';
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 import Section from '@/components/ui/Section';
 import { Input } from '@/components/ui/input';
 import MaterialModal from '@/components/shared/MaterialModal';
@@ -37,7 +36,8 @@ const Materiais = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Buscar materiais do Supabase com timeout e fallback automatico para materialsData
+
+  // Buscar materiais do GCP (contentGcpAdapter) com timeout e fallback automatico para materialsData
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
@@ -45,15 +45,8 @@ const Materiais = () => {
           setTimeout(() => reject(new Error('Timeout de rede')), 5000)
         );
 
-        const fetchPromise = supabase
-          .from('materials')
-          .select('*')
-          .eq('published', true)
-          .order('created_at', { ascending: false });
-
-        const { data, error } = await Promise.race([fetchPromise, timeoutPromise]) as any;
-
-        if (error) throw error;
+        const fetchPromise = contentGcpAdapter.getMaterials();
+        const data = await Promise.race([fetchPromise, timeoutPromise]);
 
         if (data && data.length > 0) {
           setApiMaterials(data);
@@ -70,7 +63,6 @@ const Materiais = () => {
 
     fetchMaterials();
   }, []);
-
   // Filter materials (use materialsData if apiMaterials yields 0 after filtering)
   const rawMaterials = apiMaterials.length > 0 ? apiMaterials : materialsData;
   const filteredDbMaterials = rawMaterials.filter(m => {

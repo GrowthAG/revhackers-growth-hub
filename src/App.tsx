@@ -44,6 +44,7 @@ const MaterialLanding = lazy(() => import("./pages/MaterialLanding"));
 const Metodologia = lazy(() => import("./pages/Metodologia"));
 const ClaudePartnerNetworkPage = lazy(() => import("./pages/ClaudePartnerNetworkPage"));
 const ClaudePartnerThankYouPage = lazy(() => import("./pages/ClaudePartnerThankYouPage"));
+const SetupPasswordPage = lazy(() => import("./pages/auth/SetupPasswordPage"));
 const Comunidade = lazy(() => import("./pages/Comunidade"));
 const Booking = lazy(() => import("./pages/Booking"));
 // Dead import removed: Agenda (route is redirect to /booking)
@@ -102,7 +103,7 @@ const AdminClients = lazy(() => import("./pages/admin/AdminClients"));
 const ClientForm = lazy(() => import("./pages/admin/ClientForm"));
 const AdminMaterialNew = lazy(() => import("./pages/admin/AdminMaterialNew"));
 const AdminMaterialEdit = lazy(() => import("./pages/admin/AdminMaterialEdit"));
-const AdminSync = lazy(() => import("./pages/admin/AdminSync"));
+
 const FixMaterialsPage = lazy(() => import("./pages/admin/FixMaterialsPage"));
 const AdminCases = lazy(() => import("./pages/admin/AdminCases"));
 const AdminCaseNew = lazy(() => import("./pages/admin/AdminCaseNew"));
@@ -236,6 +237,7 @@ const App = () => (
               <Route path="/signup" element={<Navigate to="/login" replace />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<UpdatePassword />} />
+              <Route path="/auth/setup-password" element={<SetupPasswordPage />} />
               <Route path="/complete-profile" element={<CompleteProfile />} />
               <Route path="/rei-hub" element={<Navigate to="/admin/projects" replace />} />
               <Route path="/rei-dev" element={<ReiDev />} />
@@ -287,7 +289,8 @@ const App = () => (
               <Route path="/admin/rei/novo" element={<ProtectedRoute><REIProjectForm /></ProtectedRoute>} />
               <Route path="/admin/rei/:id" element={<ProtectedRoute><REIProjectForm /></ProtectedRoute>} />
 
-              <Route path="/admin/sync" element={<ProtectedRoute><AdminSync /></ProtectedRoute>} />
+
+
               <Route path="/admin/cronograma" element={<ProtectedRoute><GrowthCronograma /></ProtectedRoute>} />
               <Route path="/admin/cronograma/:id" element={<ProtectedRoute><GrowthCronograma /></ProtectedRoute>} />
               {/* Projects Listing */}

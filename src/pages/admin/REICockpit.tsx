@@ -16,6 +16,7 @@ import {
   Star
 } from 'lucide-react';
 import { reiGcpAdapter, type REIOnboardingView, type ExpansionOpportunityView } from '@/api/adapters/rei-gcp';
+import { useTenantId, DEFAULT_STAGING_TENANT_ID } from '@/hooks/useTenantId';
 
 const KANBAN_PHASES: { key: REIOnboardingView['current_phase']; title: string; subtitle: string }[] = [
   { key: 'O1_EMBARK', title: 'O1. Embark', subtitle: 'Boas-Vindas & Acesso' },
@@ -56,8 +57,8 @@ export const REICockpit: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ['rei-onboardings-active'] });
     },
   });
+  const tenantId = useTenantId() ?? DEFAULT_STAGING_TENANT_ID;
 
-  const tenantId = 'demo-tenant';
   const [showExpansionModal, setShowExpansionModal] = useState(false);
   const [activeOnboardingId, setActiveOnboardingId] = useState<string | null>(null);
   const [expansionForm, setExpansionForm] = useState({

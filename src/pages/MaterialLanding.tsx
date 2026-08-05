@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Download } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import DownloadForm from '@/components/shared/download-form';
-import { supabase } from '@/integrations/supabase/client';
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 import PageLayout from '@/components/layout/PageLayout';
 import SEO from '@/components/shared/SEO';
 import { Button } from '@/components/ui/button';
@@ -52,12 +52,8 @@ export default function MaterialLanding() {
 
         const fetchFromDatabase = async () => {
             try {
-                const { data, error } = await supabase
-                    .from('materials')
-                    .select('*')
-                    .eq('published', true);
-
-                if (error) throw error;
+                // GCP /v1/materials já retorna apenas publicados por padrão
+                const data = await contentGcpAdapter.getMaterials();
 
                 let foundMaterial: any = null;
 

@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { lifecycleGcpAdapter, type LifecycleEvent } from '@/api/adapters/intelligence-gcp';
+import { useTenantId, DEFAULT_STAGING_TENANT_ID } from '@/hooks/useTenantId';
 import { cn } from '@/lib/utils';
 
 // Define the 8 lifecycle stages
@@ -24,8 +25,8 @@ const LIFECYCLE_STAGES = [
 const STAGE_INDEX: Record<string, number> = LIFECYCLE_STAGES.reduce((acc, s, i) => ({ ...acc, [s.value]: i }), {});
 
 export default function LifecycleTimeline() {
-  const { contactId } = useParams<{ contactId: string }>();
-  const tenantId = 'demo-tenant';
+  const tenantId = useTenantId() ?? DEFAULT_STAGING_TENANT_ID;
+
 
   const journeyQuery = useQuery({
     queryKey: ['lifecycle-journey', contactId],

@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 import { Button } from '@/components/ui/button';
 import AdminLayout from '@/components/layout/AdminLayout';
 import AdminPageLayout from '@/components/layout/AdminPageLayout';
@@ -23,73 +22,63 @@ const FixMaterialsPage = () => {
 
 
     const runResetAndFix = async () => {
-        // Removed confirm dialog to prevent UI blocking issues
-        // if (!confirm("ISSO VAI APAGAR TODOS OS MATERIAIS EXISTENTES E RECRIAR OS OFICIAIS. Tem certeza?")) return;
-
         setStatus('INICIANDO CORREÇÃO...\n');
 
         // 1. Delete ALL existing materials
         setStatus(prev => prev + '1. Apagando materiais antigos...\n');
 
-        // ... (rest of the logic remains similar but with new status updates)
-        const { data: allMaterials } = await supabase.from('materials').select('id');
-        if (allMaterials && allMaterials.length > 0) {
-            const idsToDelete = allMaterials.map(m => m.id);
-            const { error: deleteError } = await supabase
-                .from('materials')
-                .delete()
-                .in('id', idsToDelete);
-
-            if (deleteError) {
-                setStatus(prev => prev + `ERRO ao apagar: ${deleteError.message}\n`);
-                return;
+        try {
+            const allMaterials = await contentGcpAdapter.getMaterials();
+            if (allMaterials && allMaterials.length > 0) {
+                for (const mat of allMaterials) {
+                    if (mat.id) {
+                        try {
+                            await contentGcpAdapter.deleteMaterial(String(mat.id));
+                        } catch (err: any) {
+                            setStatus(prev => prev + `[ERRO delete ${mat.id}] ${err.message}\n`);
+                        }
+                    }
+                }
+                setStatus(prev => prev + `Sucesso: ${allMaterials.length} materiais antigos apagados.\n`);
+            } else {
+                setStatus(prev => prev + `Nenhum material antigo encontrado para apagar.\n`);
             }
-            setStatus(prev => prev + `Sucesso: ${allMaterials.length} materiais antigos apagados.\n`);
-        } else {
-            setStatus(prev => prev + `Nenhum material antigo encontrado para apagar.\n`);
+        } catch (err: any) {
+            setStatus(prev => prev + `ERRO ao listar materiais: ${err.message}\n`);
+            return;
         }
 
         // 2. Insert Official Materials
         setStatus(prev => prev + '2. Inserindo materiais oficiais...\n');
 
+        const slugify = (s: string) =>
+            s.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '');
 
         for (const mat of OFFICIAL_MATERIALS) {
-            // Try explicit type first
-            let currentError;
+            const basePayload = {
+                material_name: mat.title,
+                slug: slugify(mat.title),
+                material_type: mat.type,
+                material_url: mat.url,
+                description: `Material oficial: ${mat.title}. Conteúdo prático e validado para sua operação.`,
+                published: true,
+                is_active: true,
+            };
 
-            const { error: firstError } = await supabase
-                .from('materials')
-                .insert({
-                    material_name: mat.title,
-                    material_url: mat.url,
-                    material_type: mat.type,
-                    description: `Material oficial: ${mat.title}. Conteúdo prático e validado para sua operação.`,
-                    published: true,
-                    is_active: true
-                });
-
-            if (!firstError) {
+            try {
+                await contentGcpAdapter.createMaterial(basePayload);
                 setStatus(prev => prev + `[OK] ${mat.title}\n`);
-                continue;
-            }
-
-            // Fallback: Try 'framework' if the specific type failed (Constraint Issue)
-
-            const { error: secondError } = await supabase
-                .from('materials')
-                .insert({
-                    material_name: mat.title,
-                    material_url: mat.url,
-                    material_type: 'framework', // Safe Fallback
-                    description: `Material oficial: ${mat.title}. Conteúdo prático e validado para sua operação.`,
-                    published: true,
-                    is_active: true
-                });
-
-            if (secondError) {
-                setStatus(prev => prev + `[FALHA FATAL] ${mat.title}: ${secondError.message}\n`);
-            } else {
-                setStatus(prev => prev + `[OK - Fallback] ${mat.title} (Inserido como framework)\n`);
+            } catch (firstErr: any) {
+                // Fallback: Try 'framework' if the specific type failed (Constraint Issue)
+                try {
+                    await contentGcpAdapter.createMaterial({ ...basePayload, material_type: 'framework' });
+                    setStatus(prev => prev + `[OK - Fallback] ${mat.title} (Inserido como framework)\n`);
+                } catch (secondErr: any) {
+                    setStatus(prev => prev + `[FALHA FATAL] ${mat.title}: ${secondErr.message}\n`);
+                }
             }
         }
         setStatus(prev => prev + '\n✅ PROCESSO CONCLUÍDO!');

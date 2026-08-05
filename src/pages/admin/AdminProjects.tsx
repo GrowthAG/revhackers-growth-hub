@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+
 import AdminLayout from '@/components/layout/AdminLayout';
 import { Plus, Search, ArrowLeft, CheckCircle2, Clock, FolderKanban, ExternalLink, Sparkles } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -32,60 +32,23 @@ const AdminProjects: React.FC = () => {
   const { data: projects = [], isLoading } = useQuery({
     queryKey: ['admin-projects-list'],
     queryFn: async () => {
-      // Tenta carregar via GCP Adapter se ativo
-      if (import.meta.env.VITE_GCP_ENABLED === 'true' || import.meta.env.VITE_CLIENTS_GCP_ENABLED === 'true') {
-        try {
-          const gcpProjects = await reiProjectsGcpAdapter.getAll();
-          return gcpProjects.map(p => ({
-            id: p.id,
-            client_name: p.clientName,
-            client_company: p.clientCompany || p.clientName,
-            trade_name: p.clientName,
-            type: p.type,
-            status: p.status,
-            pipeline_stage: p.status,
-            created_at: p.lastReiDate || new Date().toISOString(),
-            updated_at: p.nextReiDate || new Date().toISOString(),
-            display_name: p.clientName,
-            tasks: { total: 0, done: 0, overdue: 0 }
-          }));
-        } catch (e) {
-          console.warn('Fallback para Supabase no AdminProjects...', e);
-        }
-      }
-
-      const { data: raw, error } = await supabase
-        .from('rei_projects')
-        .select('id, client_name, client_company, trade_name, type, status, pipeline_stage, created_at, updated_at')
-        .not('status', 'eq', 'archived')
-        .order('updated_at', { ascending: false });
-
-      if (error) throw error;
-      if (!raw?.length) return [];
-
-      const ids = raw.map(p => p.id);
-      const { data: tasks } = await supabase
-        .from('orqflow_tasks')
-        .select('id, project_id, status, due_date')
-        .in('project_id', ids)
-        .not('status', 'eq', 'archived');
-
-      const nowIso = new Date().toISOString();
-
-      return raw
-        .filter((p: any) => !PRE_SALE.includes(p.pipeline_stage || '') && p.pipeline_stage !== 'lost')
-        .map(p => {
-          const ptasks = (tasks || []).filter(t => t.project_id === p.id);
-          return {
-            ...p,
-            display_name: getDisplayName({ trade_name: p.trade_name, client_company: p.client_company, client_name: p.client_name }),
-            tasks: {
-              total: ptasks.length,
-              done: ptasks.filter(t => t.status === 'done').length,
-              overdue: ptasks.filter(t => t.due_date && t.due_date < nowIso && t.status !== 'done').length,
-            },
-          };
-        });
+      // TODO: task counts (total/done/overdue) require an orqflow_tasks
+      // route on the GCP API which does not exist yet. Until that lands,
+      // counts are returned as 0 and rendered as such on the dashboard.
+      const gcpProjects = await reiProjectsGcpAdapter.getAll();
+      return gcpProjects.map(p => ({
+        id: p.id,
+        client_name: p.clientName,
+        client_company: p.clientCompany || p.clientName,
+        trade_name: p.clientName,
+        type: p.type,
+        status: p.status,
+        pipeline_stage: p.status,
+        created_at: p.lastReiDate || new Date().toISOString(),
+        updated_at: p.nextReiDate || new Date().toISOString(),
+        display_name: p.clientName,
+        tasks: { total: 0, done: 0, overdue: 0 },
+      }));
     },
   });
 

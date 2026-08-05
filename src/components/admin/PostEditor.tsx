@@ -8,10 +8,9 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Save, Upload, Loader2, Trash2, Image as ImageIcon, Cpu } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { uploadImageToSupabase } from '@/utils/uploadImageToSupabase';
 import AIEditorLayout from '@/components/layout/AIEditorLayout';
-
+import { contentGcpAdapter } from '@/api/adapters/content-gcp';
 const categories = [
   'RevOps', 'Account Based Marketing', 'PLG', 'Estratégia', 'CRO',
   'Dados', 'Automação', 'Vendas', 'Geração de Demanda',
@@ -86,52 +85,54 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
       setIsUploadingImage(false);
     }
   };
-
   const handleSave = async () => {
     if (!title) return toast.error('Título é obrigatório');
 
     setIsSaving(true);
     try {
-      const postData = {
-        title,
-        slug,
-        excerpt,
-        content,
-        category: category === 'Outra' ? customCategory : category,
-        image: coverImage,
-        thumbnail: coverImage,
-        read_time: `${Math.max(1, Math.ceil(content.split(/\s+/).length / 200))} min`,
-        published,
-        updated_at: new Date().toISOString(),
-      };
+        // NOTE: adapter expects camelCase fields. The adapter's
+        // toGcpCasePayload-like helper is not used here; we map inline.
+        // The GCP API requires authorId (UUID); PostEditor is called
+        // from the public blog list and may not have a Supabase session,
+        // so we pass the post's existing id as a placeholder when editing
+        // and skip authorId on create (server will resolve from auth).
+        const basePayload: Record<string, unknown> = {
+            title,
+            slug,
+            excerpt,
+            content,
+            category: category === 'Outra' ? customCategory : category,
+            image: coverImage,
+            readTime: `${Math.max(1, Math.ceil(content.split(/\s+/).length / 200))} min`,
+            published,
+            updatedAt: new Date().toISOString(),
+        };
 
-      if (isEditing && post) {
-        const { error } = await supabase.from('blog_posts').update(postData).eq('id', String(post.id));
-        if (error) throw error;
-        toast.success('Artigo atualizado!');
-      } else {
-        const { error } = await supabase.from('blog_posts').insert([postData]);
-        if (error) throw error;
-        toast.success('Artigo criado!');
-        navigate('/admin/posts');
-      }
+        if (isEditing && post) {
+            await contentGcpAdapter.updateBlogArticle(String(post.id), basePayload);
+            toast.success('Artigo atualizado!');
+        } else {
+            await contentGcpAdapter.createBlogArticle(basePayload);
+            toast.success('Artigo criado!');
+            navigate('/admin/posts');
+        }
     } catch (error: any) {
-      toast.error('Erro ao salvar: ' + error.message);
+        toast.error('Erro ao salvar: ' + error.message);
     } finally {
-      setIsSaving(false);
+        setIsSaving(false);
     }
   };
 
   const handleDelete = async () => {
     if (!post || !confirm('Tem certeza que deseja excluir?')) return;
-    const { error } = await supabase.from('blog_posts').delete().eq('id', String(post.id));
-    if (error) toast.error('Erro ao excluir');
-    else {
-      toast.success('Artigo excluído');
-      navigate('/admin/posts');
+    try {
+        await contentGcpAdapter.deleteBlogArticle(String(post.id));
+        toast.success('Artigo excluído');
+        navigate('/admin/posts');
+    } catch (error: any) {
+        toast.error('Erro ao excluir: ' + (error.message || 'desconhecido'));
     }
   };
-
   const handleAnalyzeVisuals = async () => {
     if (!content) return toast.error('Escreva algum conteúdo primeiro para a IA analisar.');
 

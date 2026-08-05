@@ -1,4 +1,4 @@
-import { apiBase } from './_base';
+import { authenticatedRequest, apiBase } from './_base';
 
 export interface BlogArticleGcp {
   id: string;
@@ -35,106 +35,188 @@ export interface CaseStudyGcp {
   createdAt: string;
 }
 
+// ============ Normalizers: frontend (snake_case) → GCP API (camelCase) ============
+
+// Blog: frontend fields already match Zod schema (title, slug, category, authorId, readTime)
+// No transformation needed for blog articles
+
+// Materials: frontend sends snake_case, Zod expects camelCase
+function toGcpMaterialPayload(input: Record<string, unknown>): Record<string, unknown> {
+  const swap: Record<string, string> = {
+    material_name: 'materialName',
+    material_type: 'materialType',
+    material_url: 'materialUrl',
+    link_material: 'materialUrl',
+    is_active: 'isActive',
+  };
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(input)) {
+    if (v === undefined) continue;
+    const target = swap[k] ?? k;
+    out[target] = v;
+  }
+  return out;
+}
+
+// Cases: frontend sends snake_case, Zod expects camelCase
+// title → headline (frontend field name to Zod field name)
+// Zod requires BOTH title AND headline as separate required fields
+function toGcpCasePayload(input: Record<string, unknown>): Record<string, unknown> {
+  const swap: Record<string, string> = {
+    client_name: 'clientName',
+    client_logo: 'clientLogo',
+    case_category: 'caseCategory',
+    cover_image: 'coverImage',
+  };
+  const out: Record<string, unknown> = {};
+  // Copy title to both title and headline (Zod requires both)
+  if (input.title !== undefined) {
+    out.title = input.title;
+    out.headline = input.title;
+  }
+  for (const [k, v] of Object.entries(input)) {
+    if (v === undefined || k === 'title') continue; // title already handled above
+    const target = swap[k] ?? k;
+    out[target] = v;
+  }
+  return out;
+}
+
+// ============ Response normalizers: GCP API (camelCase) → frontend (snake_case) ============
+
+// Blog: map to snake_case for frontend compatibility
+function fromGcpBlog(record: Record<string, unknown> | null | undefined): Record<string, unknown> | null {
+  if (!record) return null;
+  const swap: Record<string, string> = {
+    authorName: 'author_name',
+    readTime: 'read_time',
+    createdAt: 'created_at',
+  };
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(record)) {
+    out[swap[k] ?? k] = v;
+  }
+  return out;
+}
+
+// Materials: map to snake_case for frontend compatibility
+function fromGcpMaterial(record: Record<string, unknown> | null | undefined): Record<string, unknown> | null {
+  if (!record) return null;
+  const swap: Record<string, string> = {
+    materialName: 'material_name',
+    materialType: 'material_type',
+    materialUrl: 'material_url',
+    isActive: 'is_active',
+    createdAt: 'created_at',
+  };
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(record)) {
+    out[swap[k] ?? k] = v;
+  }
+  return out;
+}
+
+// Cases: map to snake_case for frontend compatibility
+function fromGcpCase(record: Record<string, unknown> | null | undefined): Record<string, unknown> | null {
+  if (!record) return null;
+  const swap: Record<string, string> = {
+    clientName: 'client_name',
+    clientLogo: 'client_logo',
+    caseCategory: 'case_category',
+    coverImage: 'cover_image',
+    createdAt: 'created_at',
+  };
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(record)) {
+    out[swap[k] ?? k] = v;
+  }
+  return out;
+}
+
+// ============ HTTP helpers ============
+
+async function callPublic<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(`${apiBase()}${path.startsWith('/') ? path : `/${path}`}`, init);
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`API GCP ${init?.method || 'GET'} ${path} falhou: ${res.status} ${text}`);
+  }
+  const body = await res.json().catch(() => ({}));
+  return (body && typeof body === 'object' && 'data' in body ? body.data : body) as T;
+}
+
+async function callAuth<T>(path: string, init?: RequestInit): Promise<T> {
+  const headers = new Headers(init?.headers);
+  if (init?.body && !headers.has('content-type')) {
+    headers.set('content-type', 'application/json');
+  }
+  const res = await authenticatedRequest(path, { ...init, headers });
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`API GCP ${init?.method || 'GET'} ${path} falhou: ${res.status} ${text}`);
+  }
+  const body = await res.json().catch(() => ({}));
+  return (body && typeof body === 'object' && 'data' in body ? body.data : body) as T;
+}
+
 export const contentGcpAdapter = {
   // Blog Articles
-  async getBlogArticles(): Promise<BlogArticleGcp[]> {
-    const res = await fetch(`${apiBase()}/blog/articles`);
-    if (!res.ok) throw new Error('Falha ao carregar artigos do Blog da API GCP');
-    return res.json();
+  async getBlogArticles(): Promise<Record<string, unknown>[]> {
+    const data = await callPublic<BlogArticleGcp[]>('/v1/blog/articles');
+    return data.map(r => fromGcpBlog(r) as Record<string, unknown>);
   },
 
-  async createBlogArticle(payload: any): Promise<any> {
-    const res = await fetch(`${apiBase()}/blog/articles`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) throw new Error('Falha ao criar artigo na API GCP');
-    return res.json();
+  async createBlogArticle(payload: Record<string, unknown>): Promise<Record<string, unknown>> {
+    return callAuth<BlogArticleGcp>('/v1/blog/articles', { method: 'POST', body: JSON.stringify(payload) })
+      .then(r => fromGcpBlog(r) as Record<string, unknown>);
   },
 
-  async updateBlogArticle(id: string, payload: any): Promise<any> {
-    const res = await fetch(`${apiBase()}/blog/articles/${encodeURIComponent(id)}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) throw new Error('Falha ao atualizar artigo na API GCP');
-    return res.json();
+  async updateBlogArticle(id: string, payload: Record<string, unknown>): Promise<Record<string, unknown>> {
+    return callAuth<BlogArticleGcp>(`/v1/blog/articles/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(payload) })
+      .then(r => fromGcpBlog(r) as Record<string, unknown>);
   },
 
   async deleteBlogArticle(id: string): Promise<void> {
-    const res = await fetch(`${apiBase()}/blog/articles/${encodeURIComponent(id)}`, {
-      method: 'DELETE',
-    });
-    if (!res.ok) throw new Error('Falha ao excluir artigo na API GCP');
+    await callAuth(`/v1/blog/articles/${encodeURIComponent(id)}`, { method: 'DELETE' });
   },
 
   // Materials
-  async getMaterials(): Promise<MaterialGcp[]> {
-    const res = await fetch(`${apiBase()}/materials`);
-    if (!res.ok) throw new Error('Falha ao carregar materiais da API GCP');
-    return res.json();
+  async getMaterials(): Promise<Record<string, unknown>[]> {
+    const data = await callPublic<MaterialGcp[]>('/v1/materials');
+    return data.map(r => fromGcpMaterial(r) as Record<string, unknown>);
   },
 
-  async createMaterial(payload: any): Promise<any> {
-    const res = await fetch(`${apiBase()}/materials`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) throw new Error('Falha ao criar material na API GCP');
-    return res.json();
+  async createMaterial(payload: Record<string, unknown>): Promise<Record<string, unknown>> {
+    return callAuth<MaterialGcp>('/v1/materials', { method: 'POST', body: JSON.stringify(toGcpMaterialPayload(payload)) })
+      .then(r => fromGcpMaterial(r) as Record<string, unknown>);
   },
 
-  async updateMaterial(id: string, payload: any): Promise<any> {
-    const res = await fetch(`${apiBase()}/materials/${encodeURIComponent(id)}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) throw new Error('Falha ao atualizar material na API GCP');
-    return res.json();
+  async updateMaterial(id: string, payload: Record<string, unknown>): Promise<Record<string, unknown>> {
+    return callAuth<MaterialGcp>(`/v1/materials/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(toGcpMaterialPayload(payload)) })
+      .then(r => fromGcpMaterial(r) as Record<string, unknown>);
   },
 
   async deleteMaterial(id: string): Promise<void> {
-    const res = await fetch(`${apiBase()}/materials/${encodeURIComponent(id)}`, {
-      method: 'DELETE',
-    });
-    if (!res.ok) throw new Error('Falha ao excluir material na API GCP');
+    await callAuth(`/v1/materials/${encodeURIComponent(id)}`, { method: 'DELETE' });
   },
 
   // Cases
-  async getCases(): Promise<CaseStudyGcp[]> {
-    const res = await fetch(`${apiBase()}/cases`);
-    if (!res.ok) throw new Error('Falha ao carregar cases da API GCP');
-    return res.json();
+  async getCases(): Promise<Record<string, unknown>[]> {
+    const data = await callPublic<CaseStudyGcp[]>('/v1/cases');
+    return data.map(r => fromGcpCase(r) as Record<string, unknown>);
   },
 
-  async createCase(payload: any): Promise<any> {
-    const res = await fetch(`${apiBase()}/cases`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) throw new Error('Falha ao criar case na API GCP');
-    return res.json();
+  async createCase(payload: Record<string, unknown>): Promise<Record<string, unknown>> {
+    return callAuth<CaseStudyGcp>('/v1/cases', { method: 'POST', body: JSON.stringify(toGcpCasePayload(payload)) })
+      .then(r => fromGcpCase(r) as Record<string, unknown>);
   },
 
-  async updateCase(id: string, payload: any): Promise<any> {
-    const res = await fetch(`${apiBase()}/cases/${encodeURIComponent(id)}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) throw new Error('Falha ao atualizar case na API GCP');
-    return res.json();
+  async updateCase(id: string, payload: Record<string, unknown>): Promise<Record<string, unknown>> {
+    return callAuth<CaseStudyGcp>(`/v1/cases/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify(toGcpCasePayload(payload)) })
+      .then(r => fromGcpCase(r) as Record<string, unknown>);
   },
 
   async deleteCase(id: string): Promise<void> {
-    const res = await fetch(`${apiBase()}/cases/${encodeURIComponent(id)}`, {
-      method: 'DELETE',
-    });
-    if (!res.ok) throw new Error('Falha ao excluir case na API GCP');
+    await callAuth(`/v1/cases/${encodeURIComponent(id)}`, { method: 'DELETE' });
   },
 };

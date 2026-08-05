@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getReiProjectById, type ReiProject } from '@/api/reiProjects';
 import { SignatureEngine } from '@/components/legal/SignatureEngine';
 import { ShieldCheck, Loader2, FileCheck2, ArrowUpRight } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+
 import { useToast } from '@/hooks/use-toast';
 
 const PublicKickoffValidation: React.FC = () => {

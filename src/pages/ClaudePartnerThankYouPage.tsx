@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
@@ -7,6 +8,10 @@ import { ArrowRight } from 'lucide-react';
 
 export default function ClaudePartnerThankYouPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.location.href = '/auth/setup-password';
+  }, []);
 
   return (
     <PageLayout headerVariant="default">
@@ -47,7 +52,7 @@ export default function ClaudePartnerThankYouPage() {
             transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
             className="font-sans text-[2.25rem] sm:text-[3.25rem] md:text-[4rem] font-extrabold text-white leading-[1.1] tracking-tight text-center max-w-2xl"
           >
-            Tudo certo, sua conta foi ativada.
+            Primeiro Passo: Crie Sua Senha.
           </motion.h1>
 
           {/* Subheadline */}
@@ -57,7 +62,7 @@ export default function ClaudePartnerThankYouPage() {
             transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
             className="text-zinc-300 text-base sm:text-lg font-medium leading-relaxed max-w-xl mx-auto text-center"
           >
-            Enviamos a confirmação com os detalhes de acesso diretamente para a caixa de entrada do seu e-mail corporativo.
+            Clique no botão verde abaixo para definir a sua senha corporativa e ativar o seu acesso no EulerApp.
           </motion.p>
 
           {/* Card de Confirmação & Ativação de Acesso High-Tech */}
@@ -101,15 +106,13 @@ export default function ClaudePartnerThankYouPage() {
               </div>
             </div>
 
-            {/* Botão de Acesso Direto ao Portal */}
+            {/* Botão de Acesso Direto à Criação de Senha */}
             <div className="pt-2">
               <a
-                href="https://eulerapp.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-xs sm:text-sm h-12 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md"
+                href="/auth/setup-password"
+                className="w-full bg-[#00CC6A] hover:bg-[#00b35e] text-zinc-950 font-extrabold text-xs sm:text-sm h-12 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#00CC6A]/20"
               >
-                <span>Entrar no Portal Euler App</span>
+                <span>Criar Minha Senha & Acessar Euler App →</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
             </div>
