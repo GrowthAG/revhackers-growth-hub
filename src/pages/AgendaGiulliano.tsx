@@ -20,7 +20,12 @@ const AgendaGiulliano = () => {
 
     return (
         <PageLayout>
-            <SEO title="Sessão técnica com Giulliano Alves, Founder RevHackers" description="30 minutos comigo para mapear onde sua máquina de receita B2B está travando. Sem discurso de vendas, sem enrolação." canonical="https://revhackers.com.br/agenda-giulliano" />
+            <SEO
+                title="Escolha o melhor horário pra conversarmos"
+                description="30 minutos, direto ao ponto, sem discurso de vendas. Sessão 1:1 com o Founder da RevHackers."
+                canonical="https://revhackers.com.br/agenda-giulliano"
+                image="https://revhackers.com.br/uploads/giulliano-linkedin-profile.png"
+            />
             <div className="min-h-screen bg-white flex flex-col">
                 {/* Header com foto + headline */}
                 <div className="w-full pt-28 pb-8 px-4">
