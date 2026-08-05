@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import SEO from '@/components/shared/SEO';
 
-const BOOKING_URL = 'https://pages.revhackers.com.br/widget/booking/MmyRuRPox3ZComQA3jJ1';
-const IFRAME_ID = 'MmyRuRPox3ZComQA3jJ1_1775263729923';
+const BOOKING_URL = 'https://pages.revhackers.com.br/widget/booking/frZ10gIRdS8iNvtlGq3q';
+const IFRAME_ID = 'frZ10gIRdS8iNvtlGq3q_1775165036136';
 
 const AgendaGiulliano = () => {
     useEffect(() => {
