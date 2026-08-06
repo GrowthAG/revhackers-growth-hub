@@ -70,7 +70,8 @@ const Materiais = () => {
     return !link.includes('docs.google.com') && !link.includes('drive.google.com');
   });
 
-  const materials = filteredDbMaterials.length > 0 ? filteredDbMaterials : materialsData;
+  // Mais recentes primeiro: materiais novos entram no fim do array/fonte de dados
+  const materials = (filteredDbMaterials.length > 0 ? filteredDbMaterials : materialsData).slice().reverse();
 
   const handleDownloadClick = (material: any) => {
     setSelectedMaterial(material);
