@@ -291,7 +291,7 @@ export const materialsData: Material[] = [
         description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
         cover_image: '/images/blog-v2/blog_polemic_growth.png',
         material_url: '/materiais/framework-prime-o-playbook-definitivo-de-comentarios-de-autoridade-no-linkedin-b2b',
-        link_material: 'https://app.notion.com/p/3b4bdc72e0398172afe9d32737c0fcaa',
+        link_material: 'https://app.notion.com/p/3b4bdc72e03981d99754c9f5e8772a62',
         published: true,
         is_active: true
     }
