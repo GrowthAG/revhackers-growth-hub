@@ -4,7 +4,7 @@ import { DownloadFormProps } from './types';
 import { useDownloadForm } from './hooks/useDownloadForm';
 import DownloadFormContent from './DownloadFormContent';
 
-const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: DownloadFormProps) => {
+const DownloadForm = ({ materialId, materialType, materialTitle, onSubmit, linkMaterial }: DownloadFormProps) => {
   const {
     formData,
     isSubmitting,
@@ -14,7 +14,7 @@ const DownloadForm = ({ materialId, materialType, onSubmit, linkMaterial }: Down
     handleRadioChange,
     handleCheckboxChange,
     handleSubmit
-  } = useDownloadForm(materialId, materialType, onSubmit, linkMaterial);
+  } = useDownloadForm(materialId, materialType, materialTitle, onSubmit, linkMaterial);
 
   if (isSuccess) {
     return (

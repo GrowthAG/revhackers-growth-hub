@@ -216,6 +216,7 @@ export default function MaterialLanding() {
                             <DownloadForm
                                 materialId={material.id}
                                 materialType={material.type}
+                                materialTitle={material.title}
                                 onSubmit={() => {}}
                                 linkMaterial={material.downloadLink}
                             />

@@ -229,6 +229,7 @@ const Downloads = () => {
               <DownloadForm
                 materialId={selectedMaterial.id}
                 materialType={selectedMaterial.type}
+                materialTitle={selectedMaterial.title}
                 onSubmit={handleFormSubmit}
               />
             </div>

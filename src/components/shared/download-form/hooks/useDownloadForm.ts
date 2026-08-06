@@ -10,6 +10,7 @@ import { sendToGHL } from '@/lib/ghlRelay';
 export const useDownloadForm = (
   materialId: string,
   materialType: string,
+  materialTitle: string,
   onSubmit: () => void,
   linkMaterial?: string
 ) => {
@@ -62,7 +63,6 @@ export const useDownloadForm = (
     try {
       const emailData = {
         ...webhookData,
-        materialTitle: materialType,
         materialLink: linkMaterial || '',
         actionType: 'send_material_email'
       };
@@ -108,7 +108,7 @@ export const useDownloadForm = (
       ...formData,
       formType: 'download',
       materialId,
-      materialTitle: materialType,
+      materialTitle,
       materialType,
       materialLink: linkMaterial || '',
       source: window.location.href,

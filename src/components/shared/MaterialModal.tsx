@@ -51,6 +51,7 @@ const MaterialModal = ({ isOpen, onClose, material, onSuccess }: MaterialModalPr
                     <DownloadForm
                         materialId={material.materialId || material.id || 'unknown'}
                         materialType={material.type || material.material_type || 'material'}
+                        materialTitle={cleanTitle(material.title || material.material_name || '')}
                         linkMaterial={material.link_material || material.material_url}
                         onSubmit={onSuccess}
                     />

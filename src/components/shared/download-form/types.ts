@@ -14,6 +14,7 @@ export interface DownloadFormData {
 export interface DownloadFormProps {
   materialId: string;
   materialType: string;
+  materialTitle: string;
   onSubmit: () => void;
   linkMaterial?: string;  // Novo campo para o link do material
 }
