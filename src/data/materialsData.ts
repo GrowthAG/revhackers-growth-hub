@@ -280,5 +280,19 @@ export const materialsData: Material[] = [
         link_material: 'https://bustling-lemon-68c.notion.site/3b2bdc72e039815095e7fe40a648b77e',
         published: true,
         is_active: true
+    },
+    {
+        id: 'framework-prime-linkedin-autoridade',
+        title: 'Framework Prime: O Playbook Definitivo de Comentários de Autoridade no LinkedIn B2B',
+        slug: 'framework-prime-o-playbook-definitivo-de-comentarios-de-autoridade-no-linkedin-b2b',
+        type: 'Playbook',
+        material_type: 'playbook',
+        category: 'LinkedIn',
+        description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
+        cover_image: '/images/blog-v2/blog_polemic_growth.png',
+        material_url: '/materiais/framework-prime-o-playbook-definitivo-de-comentarios-de-autoridade-no-linkedin-b2b',
+        link_material: 'https://app.notion.com/p/3b4bdc72e0398172afe9d32737c0fcaa',
+        published: true,
+        is_active: true
     }
 ];
