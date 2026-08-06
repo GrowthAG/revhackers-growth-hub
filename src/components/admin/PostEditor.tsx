@@ -18,6 +18,8 @@ const categories = [
   'Dados', 'Automação', 'Vendas', 'Geração de Demanda',
   'Polemic Led Growth', 'Outra'
 ];
+
+interface PostEditorProps {
   post?: {
     id: number | string;
     title: string;

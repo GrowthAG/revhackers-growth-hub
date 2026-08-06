@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DownloadFormData } from './types';
 import { Lock } from 'lucide-react';
@@ -131,20 +130,6 @@ const DownloadFormContent: React.FC<DownloadFormContentProps> = ({
             </SelectContent>
           </Select>
         </div>
-      </div>
-
-      {/* Row 4: Textarea */}
-      <div className="space-y-1 pt-1">
-        <Label htmlFor="message" className={labelStyles}>Como podemos ajudar?</Label>
-        <Textarea
-          id="message"
-          name="message"
-          placeholder="Descreva brevemente seus desafios atuais de receita..."
-          rows={3}
-          value={(formData as any).message || ''}
-          onChange={handleInputChange}
-          className="w-full p-3.5 rounded-lg border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 text-sm focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all resize-none"
-        />
       </div>
 
       {/* Submit Button */}

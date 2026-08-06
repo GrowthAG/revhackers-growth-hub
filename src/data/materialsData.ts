@@ -294,5 +294,19 @@ export const materialsData: Material[] = [
         link_material: 'https://bustling-lemon-68c.notion.site/3b4bdc72e03981d99754c9f5e8772a62',
         published: true,
         is_active: true
+    },
+    {
+        id: 'matriz-roteamento-ia-custo',
+        title: 'Matriz de Roteamento de IA: Qual Modelo Usar em Cada Tarefa',
+        slug: 'matriz-roteamento-ia-qual-modelo-usar-em-cada-tarefa',
+        type: 'Framework',
+        material_type: 'framework',
+        category: 'Automação',
+        description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
+        cover_image: '/images/blog-v2/blog_growth_chatgpt.png',
+        material_url: '/materiais/matriz-roteamento-ia-qual-modelo-usar-em-cada-tarefa',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b4bdc72e03981f3a55cf9be2a62fa6d',
+        published: true,
+        is_active: true
     }
 ];
