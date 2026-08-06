@@ -108,8 +108,9 @@ export const useDownloadForm = (
       ...formData,
       formType: 'download',
       materialId,
+      materialTitle: materialType,
       materialType,
-      materiallink: linkMaterial || '',
+      materialLink: linkMaterial || '',
       source: window.location.href,
       timestamp: new Date().toISOString()
     };

@@ -114,7 +114,11 @@ if (!empty($cleanPayload['email'])) {
 }
 
 // 2. Send email via GHL Conversations API + PHP Mail fallback
-if (!empty($cleanPayload['email'])) {
+// A chamada 'download' e apenas rastreio/tag de CRM (materialLink ainda nao populado nesse ponto do fluxo).
+// O e-mail com o material real e disparado pela chamada seguinte, actionType 'email_material'/'send_material_email'.
+$dispatchActionType = $data['actionType'] ?? $data['formType'] ?? '';
+$isTrackingOnlyDownloadCall = $dispatchActionType === 'download';
+if (!empty($cleanPayload['email']) && !$isTrackingOnlyDownloadCall) {
     dispatchConfirmationEmail(
         $cleanPayload['email'],
         $cleanPayload['firstName'] ?? 'Parceiro',
@@ -165,9 +169,14 @@ function dispatchConfirmationEmail($toEmail, $firstName, $companyName, $contactI
                           strpos($tagsStr, 'download:') !== false;
 
     if ($isMaterialDownload) {
+        // Nunca inventar par titulo/link: se o material real nao veio no payload, nao ha o que enviar.
+        if (empty($rawData['materialLink']) || empty($rawData['materialTitle'])) {
+            error_log('[ghl.php] dispatchConfirmationEmail: material download sem materialLink/materialTitle no payload, e-mail nao enviado. actionType=' . $actionType);
+            return false;
+        }
         $templatePath = __DIR__ . '/../templates/email-material-delivery.html';
-        $materialTitle = !empty($rawData['materialTitle']) ? $rawData['materialTitle'] : 'Guia Prático de Estratégia Go-To-Market (GTM)';
-        $materialLink = !empty($rawData['materialLink']) ? $rawData['materialLink'] : 'https://bustling-lemon-68c.notion.site/Plano-de-A-o-90-Dias-GTM-RevOps-377bdc72e0398044a0ddcd65701c5245';
+        $materialTitle = $rawData['materialTitle'];
+        $materialLink = $rawData['materialLink'];
         $subject = "[RevHackers] Seu Material: " . $materialTitle;
     } else {
         $templatePath = __DIR__ . '/../templates/email-claude-partner-network.html';
