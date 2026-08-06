@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { invokeAi } from "@/hooks/useAiInvoke";
 import {
   Opportunity,
   OpportunityStage,
@@ -10,7 +11,6 @@ import {
 // ============================================================================
 // TYPES
 // ============================================================================
-
 export interface CreateOpportunityInput {
   client_name: string;
   client_email?: string;
@@ -321,18 +321,19 @@ export async function convertOpportunityToProject(
     console.warn('[Opportunities] Falha no Handover Bridge (não critico):', handoverErr);
   }
 
-  // 2. Auto-trigger: gerar success plan via AI (nao bloqueia o fluxo principal)
-  supabase.functions.invoke('generate-success-plan', {
-    body: { project_id: projectId },
-  }).then((res) => {
-    if (res.error) {
-      console.warn('[Opportunities] generate-success-plan falhou (nao critico):', res.error.message);
-    } else {
-      console.log('[Opportunities] Success plan gerado automaticamente para projeto', projectId);
-    }
-  }).catch((err) => {
-    console.warn('[Opportunities] generate-success-plan error (nao critico):', err?.message);
-  });
+  // 2. Auto-trigger: gerar success plan via AI (nao bloqueia o fluxo principal).
+  // Migrado para invokeAi (Wave 1.3) — tenta GCP, cai em Supabase.
+  invokeAi('generate-success-plan', { project_id: projectId })
+    .then((res) => {
+      if (res.error) {
+        console.warn('[Opportunities] generate-success-plan falhou (nao critico):', res.error.message);
+      } else {
+        console.log('[Opportunities] Success plan gerado automaticamente para projeto', projectId);
+      }
+    })
+    .catch((err) => {
+      console.warn('[Opportunities] generate-success-plan error (nao critico):', err?.message);
+    });
 
   return { projectId };
 }

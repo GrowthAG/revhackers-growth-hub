@@ -14,12 +14,15 @@
 
 import { z, ZodError } from 'zod';
 import { ApiError } from '../contracts/errors';
-import type { AuthMiddleware } from './auth-middleware';
-import type { QueryablePool } from '../db/postgres';
 import { handleAnalyzeDiagnostic } from '../ai/handlers/analyze-diagnostic';
 import { handleGenerateGrowthmap } from '../ai/handlers/generate-growthmap';
 import { handleSwotAnalysis } from '../ai/handlers/swot-analysis';
 import { handleGrowthMapSuggest } from '../ai/handlers/growthmap-suggest';
+import { handleCruxBenchmark } from '../ai/handlers/crux-benchmark';
+import { handleGenerateImage } from '../ai/handlers/generate-image';
+import { handleGeneratePlaybook } from '../ai/handlers/generate-playbook';
+import type { AuthMiddleware } from './auth-middleware';
+import type { QueryablePool } from '../db/postgres';
 
 interface AiRoutesDependencies {
   auth: AuthMiddleware;
@@ -38,8 +41,10 @@ const ROUTE_TABLE: Record<string, HandlerFn> = {
   'generate-growthmap': handleGenerateGrowthmap,
   'swot-analysis': handleSwotAnalysis,
   'growthmap-suggest': handleGrowthMapSuggest,
+  'crux-benchmark': handleCruxBenchmark,
+  'generate-image': handleGenerateImage,
+  'generate-playbook': handleGeneratePlaybook,
 };
-
 function json(status: number, value: unknown): Response {
   return new Response(JSON.stringify(value), {
     status,

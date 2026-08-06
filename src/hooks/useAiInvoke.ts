@@ -1,10 +1,11 @@
 /**
  * useAiInvoke - Hook para chamar handlers AI.
  *
- * Estrategia de migracao gradual (Wave 1):
+ * Estrategia de migracao gradual (Wave 1.3):
  *   1. Tenta GCP se VITE_GCP_ENABLED e o handler existe no adapter.
  *   2. Fallback para Supabase Edge Function se GCP falhar.
- *   3. Garante que nenhum fluxo existente quebra durante a migracao.
+ *   3. Log explicito em ambos os caminhos (DEV only para sucesso).
+ *   4. Garante que nenhum fluxo existente quebra durante a migracao.
  *
  * Ref: docs/architecture/gcp-migration/ai-supabase-to-gcp-migration.md
  */
@@ -21,6 +22,7 @@ interface UseAiInvokeOptions {
 }
 
 const GCP_ENABLED = import.meta.env.VITE_GCP_ENABLED === 'true';
+const IS_DEV = import.meta.env.DEV;
 
 /** Mapeia handler GCP -> nome da edge function Supabase. */
 const SUPABASE_HANDLER_MAP: Record<string, string> = {
@@ -68,28 +70,39 @@ async function invokeSupabase<T>(
   }
 }
 
-export function useAiInvoke() {
-  const invoke = useCallback(
-    async <T = unknown>(
-      handlerName: string,
-      body: Record<string, unknown>,
-      options: UseAiInvokeOptions = {},
-    ): Promise<InvokeResult<T>> => {
-      const timeoutMs = options.timeoutMs ?? 30_000;
+/**
+ * Implementacao compartilhada entre hook e helper.
+ * Tenta GCP primeiro (se habilitado), fallback automatico pra Supabase.
+ */
+async function invokeInternal<T = unknown>(
+  handlerName: string,
+  body: Record<string, unknown>,
+  options: UseAiInvokeOptions = {},
+): Promise<InvokeResult<T>> {
+  const timeoutMs = options.timeoutMs ?? 30_000;
 
-      // 1) Tenta GCP se habilitado e nao forcado Supabase
-      if (GCP_ENABLED && !options.forceSupabase) {
-        const gcpResult = await aiGcpAdapter.invoke<T>(handlerName, body, { timeoutMs });
-        if (!gcpResult.error) return gcpResult;
-        console.warn(`[useAiInvoke] GCP ${handlerName} falhou, fallback Supabase:`, gcpResult.error.message);
+  // 1) Tenta GCP se habilitado e nao forcado Supabase.
+  if (GCP_ENABLED && !options.forceSupabase) {
+    const gcpResult = await aiGcpAdapter.invoke<T>(handlerName, body, { timeoutMs });
+    if (!gcpResult.error) {
+      if (IS_DEV) {
+        console.info(`[useAiInvoke] GCP ${handlerName} OK`);
       }
+      return gcpResult;
+    }
+    console.warn(`[useAiInvoke] GCP ${handlerName} falhou, fallback Supabase:`, gcpResult.error.message);
+  }
 
-      // 2) Fallback Supabase
-      return invokeSupabase<T>(handlerName, body, timeoutMs);
-    },
-    [],
-  );
+  // 2) Fallback Supabase.
+  const sbResult = await invokeSupabase<T>(handlerName, body, timeoutMs);
+  if (IS_DEV && !sbResult.error) {
+    console.info(`[useAiInvoke] Supabase ${handlerName} OK`);
+  }
+  return sbResult;
+}
 
+export function useAiInvoke() {
+  const invoke = useCallback(invokeInternal, []);
   return { invoke };
 }
 
@@ -99,10 +112,5 @@ export async function invokeAi<T = unknown>(
   body: Record<string, unknown>,
   options: UseAiInvokeOptions = {},
 ): Promise<InvokeResult<T>> {
-  const timeoutMs = options.timeoutMs ?? 30_000;
-  if (GCP_ENABLED && !options.forceSupabase) {
-    const gcpResult = await aiGcpAdapter.invoke<T>(handlerName, body, { timeoutMs });
-    if (!gcpResult.error) return gcpResult;
-  }
-  return invokeSupabase<T>(handlerName, body, timeoutMs);
+  return invokeInternal<T>(handlerName, body, options);
 }

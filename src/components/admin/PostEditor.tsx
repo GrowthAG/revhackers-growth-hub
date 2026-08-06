@@ -11,13 +11,13 @@ import { Save, Upload, Loader2, Trash2, Image as ImageIcon, Cpu } from 'lucide-r
 import { uploadImageToSupabase } from '@/utils/uploadImageToSupabase';
 import AIEditorLayout from '@/components/layout/AIEditorLayout';
 import { contentGcpAdapter } from '@/api/adapters/content-gcp';
+import { invokeAi } from '@/hooks/useAiInvoke';
+
 const categories = [
   'RevOps', 'Account Based Marketing', 'PLG', 'Estratégia', 'CRO',
   'Dados', 'Automação', 'Vendas', 'Geração de Demanda',
   'Polemic Led Growth', 'Outra'
 ];
-
-interface PostEditorProps {
   post?: {
     id: number | string;
     title: string;
@@ -253,14 +253,14 @@ const PostEditor = ({ post, isEditing = false }: PostEditorProps) => {
     setGeneratingImageId(idx);
     try {
       // 1. Generate via Edge Function (DALL-E 3)
-      const { data: genData, error: genError } = await supabase.functions.invoke('generate-image', {
-        body: { prompt }
-      });
+      // 1. Generate via GCP AI handler (DALL-E 3 proxied).
+      const { data: genData, error: genError } = await invokeAi<{ success: boolean; imageUrl: string; error?: string }>('generate-image', { prompt });
 
-      if (genError || !genData.success) throw new Error(genError?.message || genData?.error || 'Falha na geração');
+      if (genError || !genData?.success || !genData.imageUrl) {
+        throw new Error(genError?.message || genData?.error || 'Falha na geracao');
+      }
 
       const dalleUrl = genData.imageUrl;
-
       // 2. Download to Blob (Proxy via Edge Function if needed, but client fetch usually works for DALL-E urls if no CORS)
       // DALL-E URLs are usually accessible.
       const res = await fetch(dalleUrl);

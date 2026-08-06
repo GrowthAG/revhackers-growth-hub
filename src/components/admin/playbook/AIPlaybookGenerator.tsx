@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Sparkles, Send, FileText, CheckCircle2, Cpu, AlertCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { invokeAi } from '@/hooks/useAiInvoke';
 
 interface AIPlaybookGeneratorProps {
     projectId: string;
@@ -34,12 +34,13 @@ export const AIPlaybookGenerator: React.FC<AIPlaybookGeneratorProps> = ({ projec
         try {
             // Force Edge Function call
             // We assume edge function returns { markdown: string }
-            const { data, error } = await supabase.functions.invoke('generate-playbook', {
-                body: { projectId, framework }
+            // Migrated to GCP AI handler (Wave 1.3) — falls back to Supabase automatically.
+            const { data, error } = await invokeAi<{ markdown?: string; error?: string }>('generate-playbook', {
+                projectId, framework
             });
 
             if (error) {
-                console.error("Function Error:", error);
+                console.error('Function Error:', error);
                 throw error;
             }
 

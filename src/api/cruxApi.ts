@@ -1,66 +1,72 @@
 /**
- * Chrome UX Report (CrUX) API - Client-side proxy via Edge Function
- * Métricas reais de experiência do usuário para benchmark competitivo no SiteScore
- *
- * A chamada real à CrUX API acontece no Edge Function `crux-benchmark`
- * para não expor API keys no client-side.
+ * cruxApi - Benchmark de CrUX (Chrome UX Report) via GCP AI handler
+ * (Wave 1.3 - migrado de supabase.functions.invoke para invokeAi).
  */
 
-import { supabase } from '@/integrations/supabase/client';
+import { invokeAi } from '@/hooks/useAiInvoke';
+
+export type CrUXCategory = 'FAST' | 'AVERAGE' | 'SLOW';
+
+export interface CrUXMetric {
+    p75: number;
+    category: CrUXCategory;
+}
 
 export interface CrUXMetrics {
     url: string;
-    lcp: {
-        p75: number;
-        category: 'FAST' | 'AVERAGE' | 'SLOW';
-    };
-    cls: {
-        p75: number;
-        category: 'FAST' | 'AVERAGE' | 'SLOW';
-    };
-    inp: {
-        p75: number;
-        category: 'FAST' | 'AVERAGE' | 'SLOW';
-    };
-    ttfb: {
-        p75: number;
-        category: 'FAST' | 'AVERAGE' | 'SLOW';
-    };
-    formFactor: 'PHONE' | 'DESKTOP' | 'ALL_FORM_FACTORS' | string;
+    lcp: CrUXMetric;
+    cls: CrUXMetric;
+    inp: CrUXMetric;
+    ttfb: CrUXMetric;
+    formFactor: string;
     collectionPeriod?: string;
     error?: string;
+}
+
+export interface RankingEntry {
+    url: string;
+    score: number;
+    position: number;
+}
+
+export interface AiInterpretation {
+    summary: string;
+    client_standout: string[];
+    client_concerns: string[];
+    competitor_advantages: Array<{ competitor: string; advantages: string[] }>;
+    recommendations: string[];
 }
 
 export interface BenchmarkResult {
     clientSite: CrUXMetrics;
     competitors: CrUXMetrics[];
-    ranking: {
-        lcp: number;
-        cls: number;
-        inp: number;
-        overall: number;
-    };
+    ranking: RankingEntry[];
+    aiInterpretation?: AiInterpretation | string;
+    collectionPeriod?: string;
+    formFactor: string;
 }
 
 /**
- * Realiza benchmark do site do cliente contra concorrentes via Edge Function
- * (API key gerenciada server-side - não passa mais como parâmetro)
+ * Realiza benchmark do site do cliente contra concorrentes via GCP AI.
+ * API key gerenciada server-side (nao passa como parametro).
  */
 export async function runCompetitiveBenchmark(
     clientUrl: string,
     competitorUrls: string[],
     formFactor: 'PHONE' | 'DESKTOP' = 'PHONE'
 ): Promise<BenchmarkResult> {
-    const { data, error } = await supabase.functions.invoke('crux-benchmark', {
-        body: { clientUrl, competitorUrls, formFactor }
+    const { data, error } = await invokeAi<BenchmarkResult>('crux-benchmark', {
+        clientUrl,
+        competitorUrls,
+        formFactor,
     });
-
     if (error) throw error;
-    return data as BenchmarkResult;
+    if (!data) throw new Error('Resposta vazia do handler de benchmark.');
+    return data;
 }
 
 /**
- * Formata valor de métrica para exibição
+ * Formata valor de metrica para exibicao
  */
 export function formatMetricValue(metric: 'lcp' | 'cls' | 'inp' | 'ttfb', value: number): string {
     switch (metric) {
@@ -79,7 +85,7 @@ export function formatMetricValue(metric: 'lcp' | 'cls' | 'inp' | 'ttfb', value:
 /**
  * Retorna cor baseada na categoria
  */
-export function getCategoryColor(category: 'FAST' | 'AVERAGE' | 'SLOW'): string {
+export function getCategoryColor(category: CrUXCategory): string {
     switch (category) {
         case 'FAST': return '#00C853';
         case 'AVERAGE': return '#FFAB00';
