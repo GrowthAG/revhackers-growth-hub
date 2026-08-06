@@ -16,6 +16,7 @@
  * Ref: docs/architecture/gcp-migration/08-edge-functions-mapping.md (Onda 2)
  */
 
+import { invokeAi } from '@/hooks/useAiInvoke';
 import { supabase } from '@/integrations/supabase/client';
 import { growthMapGcpDataAdapter } from '@/api/adapters/growthmap-gcp';
 import type {
@@ -23,8 +24,6 @@ import type {
   FrameworkResult,
   REIConnection,
 } from '@/types/growthmap';
-
-// ─── Catalog ──────────────────────────────────────────────────────────────────
 
 export const FRAMEWORK_CATALOG = [
   // Pilar 1 — Inteligência Estratégica
@@ -92,10 +91,42 @@ interface GrowthMapAdapter {
   save(project_id: string, framework: FrameworkResult): Promise<void>;
 }
 
+// ─── GCP adapter (generation via invokeAi) ─────────────────────────────────────
+
+const gcpGenerateAdapter = {
+  async generate(params: GenerateFrameworkParams): Promise<FrameworkResult> {
+    // Wave 1.4: Use invokeAi for generation
+    const result = await invokeAi<{
+      framework?: string;
+      data?: Record<string, unknown>;
+      generated_at?: string;
+      rei_connections?: REIConnection[];
+      generated_actions?: string[];
+    }>('generate-growthmap', params as Record<string, unknown>);
+
+    if (result.error) {
+      throw new Error(`GrowthMap generate error: ${result.error.message}`);
+    }
+
+    const data = result.data as { result?: { framework?: string; data?: Record<string, unknown>; generated_at?: string; rei_connections?: REIConnection[]; generated_actions?: string[] } } | undefined;
+    const inner = data?.result || data || {};
+
+    const catalog = FRAMEWORK_CATALOG.find(f => f.id === params.framework_id);
+    return {
+      id: (inner.framework as string) || params.framework_id,
+      pillar: catalog?.pillar ?? 'inteligencia_estrategica',
+      title: catalog?.title ?? params.framework_id,
+      subtitle: catalog?.subtitle ?? '',
+      status: 'done' as const,
+      generated_at: (inner.generated_at as string) || new Date().toISOString(),
+      data: (inner.data as Record<string, unknown>) || {},
+      rei_connections: (inner.rei_connections as REIConnection[]) || [],
+      generated_actions: (inner.generated_actions as string[]) || [],
+    };
+  },
+};
+
 // ─── Supabase adapter (current runtime) ───────────────────────────────────────
-
-const supabaseAdapter: GrowthMapAdapter = {
-
   async generate(params) {
     const { data, error } = await supabase.functions.invoke('generate-growthmap', {
       body: params,
@@ -162,11 +193,12 @@ const supabaseAdapter: GrowthMapAdapter = {
 
 // Migração incremental do piloto: load/save podem operar 100% no GCP em staging,
 // enquanto a geração de IA permanece na Edge Function até ser portada ao Cloud Run.
-// A flag nasce desligada; produção atual não muda sem configuração explícita.
-const useGcpDataPlane = import.meta.env.VITE_GROWTHMAP_GCP_ENABLED === 'true';
-const activeAdapter: GrowthMapAdapter = useGcpDataPlane
-  ? { generate: supabaseAdapter.generate, load: growthMapGcpDataAdapter.load, save: growthMapGcpDataAdapter.save }
-  : supabaseAdapter;
+// Wave 1.4: Use invokeAi for generation (GCP first, fallback to Supabase)
+const activeAdapter: GrowthMapAdapter = {
+  generate: gcpGenerateAdapter.generate,
+  load: growthMapGcpDataAdapter.load,
+  save: growthMapGcpDataAdapter.save,
+};
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 

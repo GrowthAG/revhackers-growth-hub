@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { invokeAi } from '@/hooks/useAiInvoke';
 
 export interface FounderAnalysisResult {
     archetype: string;
@@ -17,42 +17,7 @@ export interface FounderAnalysisResult {
     };
 }
 
-export async function analyzeFounderProfileAI(
-    linkedinUrl: string,
-    answers: number[],
-    quizScore: number
-): Promise<FounderAnalysisResult> {
-    try {
-        const timeout = new Promise<never>((_, reject) =>
-            setTimeout(() => reject(new Error('timeout')), 30000)
-        );
-
-        const invoke = supabase.functions.invoke('analyze-diagnostic', {
-            body: { type: 'founder', answers, totalScore: quizScore, linkedinUrl }
-        });
-
-        const { data, error } = await Promise.race([invoke, timeout]);
-
-        if (error) throw error;
-
-        // Validate and return only expected fields (no unsafe ...parsed spread)
-        return {
-            archetype: data.archetype || 'Executor',
-            score: quizScore,
-            headline: data.headline || '',
-            analysis: data.analysis || '',
-            strengths: Array.isArray(data.strengths) ? data.strengths.slice(0, 2) : [],
-            blindSpots: Array.isArray(data.blindSpots) ? data.blindSpots.slice(0, 2) : [],
-            brandingGaps: Array.isArray(data.brandingGaps) ? data.brandingGaps.slice(0, 2) : [],
-            actionableInsight: data.actionableInsight || '',
-            linkedinData: data.linkedinData || undefined,
-        };
-    } catch (error) {
-        console.error("Erro founder analysis:", error);
-        return getMockAnalysis(quizScore);
-    }
-}
-
+// Fallback mock - used when both GCP and Supabase fail
 function getMockAnalysis(score: number): FounderAnalysisResult {
     if (score > 80) return {
         archetype: "Visionario",
@@ -84,4 +49,44 @@ function getMockAnalysis(score: number): FounderAnalysisResult {
         brandingGaps: ["Zero presenca digital", "Nenhum conteudo publicado"],
         actionableInsight: "Crie um post no LinkedIn contando 1 resultado real de um cliente. Faca isso hoje.",
     };
+}
+
+export async function analyzeFounderProfileAI(
+    linkedinUrl: string,
+    answers: number[],
+    quizScore: number
+): Promise<FounderAnalysisResult> {
+    try {
+        // Wave 1.4: Use invokeAi (tries GCP first, falls back to Supabase)
+        const result = await invokeAi<Record<string, unknown>>('analyze-diagnostic', {
+            type: 'founder',
+            answers,
+            totalScore: quizScore,
+            linkedinUrl
+        });
+
+        if (result.error) {
+            console.warn('[founderAnalysis] invokeAi failed:', result.error.message);
+            return getMockAnalysis(quizScore);
+        }
+
+        // Unwrap GCP response: { result: { archetype, analysis, ... } }
+        const raw = result.data as { result?: unknown } | undefined;
+        const data = (raw?.result as Record<string, unknown>) || raw || {};
+
+        return {
+            archetype: (data.archetype as string) || 'Executor',
+            score: quizScore,
+            headline: ((data.linkedinData as Record<string, unknown>)?.headline as string) || '',
+            analysis: (data.analysis as string) || '',
+            strengths: ((data.strengths as string[]) || []).slice(0, 2),
+            blindSpots: ((data.blindSpots as string[]) || []).slice(0, 2),
+            brandingGaps: ((data.brandingGaps as string[]) || []).slice(0, 2),
+            actionableInsight: (data.actionableInsight as string) || '',
+            linkedinData: (data.linkedinData as FounderAnalysisResult['linkedinData']) || undefined,
+        };
+    } catch (error) {
+        console.error("Erro founder analysis:", error);
+        return getMockAnalysis(quizScore);
+    }
 }

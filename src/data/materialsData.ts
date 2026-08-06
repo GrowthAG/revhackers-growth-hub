@@ -308,5 +308,19 @@ export const materialsData: Material[] = [
         link_material: 'https://bustling-lemon-68c.notion.site/3b4bdc72e03981f3a55cf9be2a62fa6d',
         published: true,
         is_active: true
+    },
+    {
+        id: 'prospeccao-ultra-segmentada-7-dados',
+        title: 'Framework de Prospecção Ultra-Segmentada: 7 Campos de Filtro e Cadência Multicanal',
+        slug: 'prospeccao-ultra-segmentada-7-dados',
+        type: 'Framework',
+        material_type: 'framework',
+        category: 'Prospecção',
+        description: '<p>Material oficial. Conteúdo prático e validado para sua operação.</p>',
+        cover_image: '/images/blog-v2/blog_cold_email_2025.png',
+        material_url: '/materiais/prospeccao-ultra-segmentada-7-dados',
+        link_material: 'https://bustling-lemon-68c.notion.site/3b4bdc72e039819d9bc9cc14774f247f',
+        published: true,
+        is_active: true
     }
 ];
