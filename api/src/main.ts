@@ -25,6 +25,8 @@ import { GoogleIdentityTokenVerifier } from './identity/google-identity-verifier
 import { PostgresIdentityRepository } from './identity/postgres-identity-repository';
 import { createApiServer } from './server';
 import { createAuthRoutes } from './http/auth-routes';
+import { createAiRoutes } from './http/ai-routes';
+import { AuthMiddleware } from './http/auth-middleware';
 
 import { PostgresFinanceRepository } from './domains/finance/postgres-repository';
 import { InfinitePayConnector } from './domains/finance/connectors/infinitepay-connector';
@@ -125,7 +127,10 @@ async function main(): Promise<void> {
     (await handleContactJourney(request, envVars, postgres.pool as any)) ??
     null;
 
+  const authMiddleware = new AuthMiddleware({ verifier, identities });
+
   const authRoutes = createAuthRoutes({ pool: postgres.pool });
+  const aiRoutes = createAiRoutes({ auth: authMiddleware, pool: postgres.pool });
 
   const route = async (request: Request, requestId: string) =>
     (await authRoutes(request)) ??
@@ -139,7 +144,8 @@ async function main(): Promise<void> {
     (await reiProjectRoutes(request)) ??
     (await strategicPlanRoutes(request)) ??
     (await growthMapRoutes(request, requestId)) ??
-    (await contentRoutes(request));
+    (await contentRoutes(request)) ??
+    (await aiRoutes(request));
 
   const api = createApiServer(config, undefined, {
     route,

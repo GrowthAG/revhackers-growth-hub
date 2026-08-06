@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { aiGcpAdapter } from '@/api/adapters/ai-gcp';
 
 export interface DiagnosticAnalysisResult {
     archetype: string;
@@ -10,60 +11,90 @@ export interface DiagnosticAnalysisResult {
 
 type DiagnosticType = 'growth' | 'revenue';
 
-// Labels mantidas client-side apenas para o mock fallback
 const DIMENSION_LABELS: Record<DiagnosticType, string[]> = {
-    growth: [
-        "Estratégia de Aquisição",
-        "CAC (Custo de Aquisição)",
-        "Processo de Vendas",
-        "Retenção / LTV",
-        "Metas de Receita do Time",
-        "Conteúdo / Inbound",
-        "Data Analytics"
-    ],
-    revenue: [
-        "Previsibilidade de Receita",
-        "Estrutura Comercial",
-        "Taxa de Conversão",
-        "CRM e Tecnologia",
-        "Ciclo de Vendas",
-        "CS / Retenção",
-        "Expansion Revenue"
-    ]
+    growth: ['Captacao', 'Ativacao', 'Retencao', 'Receita', 'Referencia'],
+    revenue: ['Diagnostico', 'Estrategia', 'Execucao', 'Metricas', 'Time'],
 };
+
+interface GcpAnalysisPayload {
+    archetype?: string;
+    headline?: string;
+    executive_summary?: string;
+    strengths?: string[];
+    gaps?: string[];
+    top_3_priorities?: string[];
+    immediateAction?: string;
+}
+
+function asPayload(value: unknown): GcpAnalysisPayload {
+    if (value && typeof value === 'object') {
+        const wrapper = value as { result?: unknown };
+        const inner = wrapper.result && typeof wrapper.result === 'object' ? wrapper.result : value;
+        if (inner && typeof inner === 'object') {
+            return inner as GcpAnalysisPayload;
+        }
+    }
+    return {};
+}
 
 export async function analyzeDiagnosticAI(
     type: DiagnosticType,
     answers: number[],
     totalScore: number
 ): Promise<DiagnosticAnalysisResult> {
+    const fallbackMock = () => getMockAnalysis(type, answers, totalScore);
+
     try {
-        const timeout = new Promise<never>((_, reject) =>
-            setTimeout(() => reject(new Error('timeout')), 30000)
+        const { data, error } = await aiGcpAdapter.analyzeDiagnostic<unknown>(
+            { type, answers, totalScore },
+            { timeoutMs: 30_000 },
         );
 
-        const invoke = supabase.functions.invoke('analyze-diagnostic', {
-            body: { type, answers, totalScore }
-        });
-
-        const { data, error } = await Promise.race([invoke, timeout]);
-
-        if (error) throw error;
-
-        if (!data?.archetype || !data?.headline || !data?.strengths || !data?.gaps || !data?.immediateAction) {
-            throw new Error('Incomplete AI response');
+        if (error || !data) {
+            console.warn('[diagnosticAnalysis] GCP indisponivel, fallback Supabase:', error?.message);
+            const fallback = await fallbackToSupabase(type, answers, totalScore);
+            return fallback ?? fallbackMock();
         }
 
+        const obj = asPayload(data);
+        const strengths: string[] = Array.isArray(obj.strengths)
+            ? obj.strengths.slice(0, 3)
+            : (Array.isArray(obj.top_3_priorities) ? obj.top_3_priorities.slice(0, 3) : []);
+
         return {
-            archetype: data.archetype,
-            headline: data.headline,
-            strengths: Array.isArray(data.strengths) ? data.strengths.slice(0, 3) : [],
-            gaps: Array.isArray(data.gaps) ? data.gaps.slice(0, 3) : [],
-            immediateAction: data.immediateAction
+            archetype: obj.archetype ?? 'Perfil sem classificacao',
+            headline: obj.headline ?? obj.executive_summary ?? 'Diagnostico em processamento.',
+            strengths,
+            gaps: obj.gaps ?? [],
+            immediateAction: obj.immediateAction ?? strengths[0] ?? 'Revisar dimensoes com menor score.',
         };
     } catch (error) {
-        console.error("Erro diagnostic analysis:", error);
-        return getMockAnalysis(type, answers, totalScore);
+        console.error('Erro diagnostic analysis:', error);
+        return fallbackMock();
+    }
+}
+
+async function fallbackToSupabase(
+    type: DiagnosticType,
+    answers: number[],
+    totalScore: number,
+): Promise<DiagnosticAnalysisResult | null> {
+    try {
+        const { data, error } = await supabase.functions.invoke('analyze-diagnostic', {
+            body: { type, answers, totalScore },
+        });
+        if (error || !data || typeof data !== 'object') return null;
+        const d = data as Partial<DiagnosticAnalysisResult>;
+        if (!d.archetype || !d.headline) return null;
+        return {
+            archetype: d.archetype,
+            headline: d.headline,
+            strengths: Array.isArray(d.strengths) ? d.strengths.slice(0, 3) : [],
+            gaps: Array.isArray(d.gaps) ? d.gaps.slice(0, 3) : [],
+            immediateAction: d.immediateAction ?? '',
+        };
+    } catch {
+        return null;
     }
 }
 
@@ -72,56 +103,65 @@ function getMockAnalysis(type: DiagnosticType, answers: number[], totalScore: nu
     const strong = answers
         .map((s, i) => ({ label: labels[i], score: s }))
         .filter(d => d.score >= 15)
-        .map(d => `${d.label} está em nível operacional sólido.`);
+        .map(d => `${d.label} esta em nivel operacional solido.`);
     const weak = answers
         .map((s, i) => ({ label: labels[i], score: s }))
         .filter(d => d.score <= 5)
-        .map(d => `${d.label} está comprometendo sua operação - ação imediata necessária.`);
+        .map(d => `${d.label} esta comprometendo sua operacao - acao imediata necessaria.`);
 
-    if (type === 'growth') {
-        if (totalScore >= 80) return {
-            archetype: "Motor de Crescimento",
-            headline: "Sua operação de growth está madura. Você tem multicanalidade, controle de CAC e processos estruturados. O próximo passo é escalar sem aumentar o custo marginal.",
-            strengths: strong.length >= 3 ? strong.slice(0, 3) : ["Aquisição multicanal ativa", "Processos de vendas estruturados", "Metas atreladas a receita"],
-            gaps: weak.length >= 1 ? weak.slice(0, 3) : ["Potencial de otimização em retenção e expansion revenue", "Margem para automação de processos manuais", "Oportunidade de redução adicional de CAC"],
-            immediateAction: "Implemente um dashboard semanal de CAC por canal para identificar os 20% de investimento que geram 80% dos resultados."
-        };
-        if (totalScore >= 50) return {
-            archetype: "Tração Manual",
-            headline: "Sua empresa cresce, mas depende de esforço manual excessivo. Processos existem parcialmente, mas falta automação e previsibilidade.",
-            strengths: strong.length >= 2 ? strong.slice(0, 3) : ["Base de aquisição funcional", "Consciência dos problemas operacionais", "Equipe com potencial de estruturação"],
-            gaps: weak.length >= 1 ? weak.slice(0, 3) : ["Dependência de canais únicos para aquisição", "CAC sem tracking granular por canal", "Processo de vendas sem playbook documentado"],
-            immediateAction: "Documente seu processo de vendas em um playbook de 1 página: etapas, critérios de qualificação e templates de contato. Isso reduz dependência de 'heróis' individuais."
-        };
+    if (strong.length === 0 && weak.length === 0) {
         return {
-            archetype: "Operação Passiva",
-            headline: "Sua operação de growth é essencialmente reativa. Sem processos, sem métricas e sem previsibilidade, cada mês é uma loteria.",
-            strengths: strong.length >= 1 ? strong.slice(0, 3) : ["Reconhecimento da necessidade de mudança", "Espaço total para estruturação", "Baixo custo de correção neste estágio"],
-            gaps: weak.length >= 1 ? weak.slice(0, 3) : ["Ausência de estratégia de aquisição ativa", "Zero visibilidade sobre CAC e ROI", "Sem processo de vendas - tudo depende de intuição"],
-            immediateAction: "Defina 1 canal de aquisição principal (o que já gera mais leads) e instale tracking de CAC nele nos próximos 7 dias. Sem dados, qualquer investimento é um tiro no escuro."
+            archetype: 'Operacao Estavel',
+            headline: 'Voce tem uma base solida, mas ha espaco para otimizacao.',
+            strengths: ['Operacao estavel em todas as dimensoes.'],
+            gaps: ['Nenhuma dimensao em estado critico.'],
+            immediateAction: 'Foque em otimizacao gradual de cada dimensao.',
         };
     }
 
-    // Revenue
+    if (type === 'growth') {
+        if (totalScore >= 80) return {
+            archetype: 'Growth Maduro',
+            headline: 'Voce tem um motor de growth funcionando - hora de escala agressiva.',
+            strengths: strong.length > 0 ? strong : ['Operacao bem estruturada.'],
+            gaps: weak.length > 0 ? weak : ['Otimizar CAC para escala.'],
+            immediateAction: 'Escavar canais que ja funcionam e dobrar budget neles.',
+        };
+        if (totalScore >= 50) return {
+            archetype: 'Growth em Construcao',
+            headline: 'Voce tem sinais de tracao, mas ha gaps criticos para escalar.',
+            strengths: strong.length > 0 ? strong : ['Algumas dimensoes fortes.'],
+            gaps: weak.length > 0 ? weak : ['Identificar gargalos.'],
+            immediateAction: 'Resolver os 1-2 maiores gaps antes de aumentar investimento.',
+        };
+        return {
+            archetype: 'Growth Inicial',
+            headline: 'Voce esta no comeco - precisa de fundacao antes de escalar.',
+            strengths: strong.length > 0 ? strong : ['Disposicao para construir.'],
+            gaps: weak.length > 0 ? weak : ['Multiplas dimensoes precisam de atencao.'],
+            immediateAction: 'Comece por um canal de aquisicao, meca e itere.',
+        };
+    }
+
     if (totalScore >= 80) return {
-        archetype: "Motor de Receita",
-        headline: "Sua operação de receita está madura com previsibilidade, time especializado e tecnologia integrada. O desafio agora é expansion revenue e eficiência marginal.",
-        strengths: strong.length >= 3 ? strong.slice(0, 3) : ["Receita recorrente dominante", "Time comercial especializado", "CRM integrado com automação"],
-        gaps: weak.length >= 1 ? weak.slice(0, 3) : ["Potencial não explorado de upsell/cross-sell", "Otimização do ciclo de vendas", "Retenção proativa ainda em evolução"],
-        immediateAction: "Crie uma meta de Expansion Revenue: defina que 15% da receita mensal deve vir de upsell/cross-sell em clientes ativos. Meça separadamente."
+        archetype: 'Operacao de Receita Madura',
+        headline: 'Sua operacao de receita esta otimizada - foco em novos mercados.',
+        strengths: strong.length > 0 ? strong : ['Operacao eficiente.'],
+        gaps: weak.length > 0 ? weak : ['Explorar novos segmentos.'],
+        immediateAction: 'Escalar para novos ICPs.',
     };
     if (totalScore >= 50) return {
-        archetype: "Pipeline em Construção",
-        headline: "Sua operação de receita tem fundamentos, mas falta maturidade em tecnologia e previsibilidade. O crescimento está limitado pela estrutura atual.",
-        strengths: strong.length >= 2 ? strong.slice(0, 3) : ["Estrutura comercial básica funcional", "Consciência das métricas de conversão", "Ciclo de vendas parcialmente controlado"],
-        gaps: weak.length >= 1 ? weak.slice(0, 3) : ["CRM subutilizado ou inexistente", "Falta de previsibilidade na receita", "Conversão abaixo do potencial por falta de qualificação"],
-        immediateAction: "Configure seu CRM para registrar TODAS as oportunidades com valor, estágio e data de previsão de fechamento. Sem pipeline estruturado, forecast é ficção."
+        archetype: 'Receita em Crescimento',
+        headline: 'Voce tem uma maquina de receita funcionando - mas com vazamentos.',
+        strengths: strong.length > 0 ? strong : ['Base construida.'],
+        gaps: weak.length > 0 ? weak : ['Vazamentos na operacao.'],
+        immediateAction: 'Vedar os vazamentos antes de acelerar.',
     };
     return {
-        archetype: "Funil Invertido",
-        headline: "Sua operação de receita carece de estrutura fundamental. Sem previsibilidade, sem CRM e sem time especializado, a empresa depende de oportunismo.",
-        strengths: strong.length >= 1 ? strong.slice(0, 3) : ["Reconhecimento da necessidade de estruturação", "Oportunidade de implementação do zero", "Baixa complexidade para primeiras ações"],
-        gaps: weak.length >= 1 ? weak.slice(0, 3) : ["Receita totalmente imprevisível", "Sem time comercial estruturado", "Zero tecnologia de vendas - dados perdidos"],
-        immediateAction: "Implemente um CRM básico (HubSpot Free) esta semana. Registre cada lead com fonte, valor estimado e próximo passo. Em 30 dias, você terá seu primeiro forecast real."
+        archetype: 'Receita em Construcao',
+        headline: 'Sua operacao de receita precisa de fundacao estruturada.',
+        strengths: strong.length > 0 ? strong : ['Voce identificou o problema.'],
+        gaps: weak.length > 0 ? weak : ['Falta de processo.'],
+        immediateAction: 'Implementar metricas e processos basicos primeiro.',
     };
 }
