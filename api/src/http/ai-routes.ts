@@ -4,17 +4,6 @@
  * Endpoints:
  *   POST /v1/ai/analyze-diagnostic
  *   POST /v1/ai/generate-growthmap
- *   POST /v1/ai/generate-strategic-plan
- *   POST /v1/ai/agent-chat
- *   POST /v1/ai/auto-enrich-project
- *   POST /v1/ai/market-intelligence
- *   POST /v1/ai/inspect-website
- *   POST /v1/ai/scrape-profile
- *   POST /v1/ai/generate-playbook
- *   POST /v1/ai/generate-success-plan
- *   POST /v1/ai/crux-benchmark
- *   POST /v1/ai/generate-image
- *   POST /v1/ai/trigger-post-rei-enrichment
  *   POST /v1/ai/swot-analysis         (NOVA — MiniMax growth hub)
  *   POST /v1/ai/growthmap-suggest     (NOVA — MiniMax growth hub)
  *
@@ -39,12 +28,16 @@ interface AiRoutesDependencies {
 
 const PATH_PREFIX = '/v1/ai/';
 
-const ROUTE_TABLE: Record<string, (deps: { pool: QueryablePool; userId: string; tenantId: string }, body: unknown) => Promise<Record<string, unknown>>> = {
+type HandlerFn = (
+  deps: { pool: QueryablePool; userId: string; tenantId: string },
+  body: unknown,
+) => Promise<Record<string, unknown>>;
+
+const ROUTE_TABLE: Record<string, HandlerFn> = {
   'analyze-diagnostic': handleAnalyzeDiagnostic,
   'generate-growthmap': handleGenerateGrowthmap,
   'swot-analysis': handleSwotAnalysis,
   'growthmap-suggest': handleGrowthMapSuggest,
-  // Demais handlers — registrados em Wave 1.2 (delegados a subagente em paralelo).
 };
 
 function json(status: number, value: unknown): Response {
@@ -56,7 +49,7 @@ function json(status: number, value: unknown): Response {
 
 function toValidationError(err: ZodError): ApiError {
   const fieldErrors = err.flatten().fieldErrors;
-  return ApiError.validation(`Payload inválido: ${JSON.stringify(fieldErrors)}`);
+  return ApiError.validation(`Payload invalido: ${JSON.stringify(fieldErrors)}`);
 }
 
 export function createAiRoutes(deps: AiRoutesDependencies) {
@@ -64,11 +57,13 @@ export function createAiRoutes(deps: AiRoutesDependencies) {
     const url = new URL(request.url);
     if (!url.pathname.startsWith(PATH_PREFIX)) return null;
 
-    const handlerName = url.pathname.slice(PATH_PREFIX.length).split('/')[0];
-    if (!handlerName) return null;
+    // Extrai o handlerName (string antes do primeiro '/' apos o prefixo).
+    const remainder = url.pathname.slice(PATH_PREFIX.length);
+    const slashIdx = remainder.indexOf('/');
+    const handlerName = slashIdx === -1 ? remainder : remainder.slice(0, slashIdx);
 
-    // GET é apenas pra healthcheck.
-    if (request.method === 'GET' && url.pathname === '/v1/ai/') {
+    // Healthcheck no path raiz.
+    if (handlerName === '' && request.method === 'GET') {
       return json(200, {
         status: 'ok',
         handlers: Object.keys(ROUTE_TABLE),
@@ -76,14 +71,17 @@ export function createAiRoutes(deps: AiRoutesDependencies) {
       });
     }
 
+    // Qualquer outro path sem handler especifico cai fora.
+    if (handlerName === '') return null;
+
     if (request.method !== 'POST') {
-      return json(405, { error: { code: 'validation', message: 'Método não permitido.' } });
+      return json(405, { error: { code: 'validation', message: 'Metodo nao permitido.' } });
     }
 
     const handler = ROUTE_TABLE[handlerName];
     if (!handler) {
       return json(404, {
-        error: { code: 'not_found', message: `Handler AI não encontrado: ${handlerName}` },
+        error: { code: 'not_found', message: `Handler AI nao encontrado: ${handlerName}` },
         available: Object.keys(ROUTE_TABLE),
       });
     }
@@ -96,7 +94,7 @@ export function createAiRoutes(deps: AiRoutesDependencies) {
     try {
       body = await request.json();
     } catch {
-      return json(400, { error: { code: 'validation', message: 'Body JSON inválido.' } });
+      return json(400, { error: { code: 'validation', message: 'Body JSON invalido.' } });
     }
 
     try {
@@ -112,7 +110,6 @@ export function createAiRoutes(deps: AiRoutesDependencies) {
       if (err instanceof ApiError) {
         return json(err.status, err.toBody());
       }
-      // Erro desconhecido → log e 500 sem vazar detalhe.
       console.error(JSON.stringify({
         severity: 'ERROR',
         event: 'ai_handler_error',
