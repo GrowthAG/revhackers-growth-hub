@@ -127,6 +127,7 @@ const gcpGenerateAdapter = {
 };
 
 // ─── Supabase adapter (current runtime) ───────────────────────────────────────
+const supabaseAdapter = {
   async generate(params) {
     const { data, error } = await supabase.functions.invoke('generate-growthmap', {
       body: params,
