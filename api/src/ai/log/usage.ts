@@ -14,6 +14,14 @@ export async function logAiUsage(
   pool: QueryablePool,
   entry: AiUsageLogEntry,
 ): Promise<void> {
+  console.log(JSON.stringify({
+    severity: 'INFO',
+    event: 'ai_usage_log_attempt',
+    edge_function: entry.edgeFunction,
+    provider: entry.provider,
+    model: entry.model,
+    success: entry.success,
+  }));
   try {
     await pool.query(
       `INSERT INTO app.ai_usage_log
@@ -34,16 +42,22 @@ export async function logAiUsage(
         JSON.stringify(entry.metadata ?? {}),
       ],
     );
+    console.log(JSON.stringify({
+      severity: 'INFO',
+      event: 'ai_usage_log_success',
+      edge_function: entry.edgeFunction,
+    }));
   } catch (err) {
     // Best-effort: log no console estruturado mas não propaga.
     console.error(
       JSON.stringify({
-        severity: 'WARNING',
+        severity: 'ERROR',
         event: 'ai_usage_log_failed',
         edge_function: entry.edgeFunction,
         provider: entry.provider,
         model: entry.model,
         error: err instanceof Error ? err.message : String(err),
+        stack: err instanceof Error ? err.stack : undefined,
       }),
     );
   }
