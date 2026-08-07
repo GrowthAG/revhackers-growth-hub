@@ -74,6 +74,7 @@ const GrowthScore = lazy(() => import("./pages/GrowthScore"));
 const SiteScore = lazy(() => import("./pages/SiteScore"));
 const FounderScore = lazy(() => import("./pages/FounderScore"));
 const RevenueScore = lazy(() => import("./pages/RevenueScore"));
+const EnrichedDiagnostic = lazy(() => import("./pages/EnrichedDiagnostic"));
 
 // REI Workflows (Heavy - 15-38KB each)
 // Dead import removed: ReiHub (route is redirect to /admin/projects)
@@ -228,8 +229,9 @@ const App = () => (
               {/* Public Scores (Lead Gen) */}
               <Route path="/score" element={<PageErrorBoundary><GrowthScore /></PageErrorBoundary>} />
               <Route path="/score-site" element={<PageErrorBoundary><SiteScore /></PageErrorBoundary>} />
-              <Route path="/score-founder" element={<PageErrorBoundary><FounderScore /></PageErrorBoundary>} />
               <Route path="/score-revenue" element={<PageErrorBoundary><RevenueScore /></PageErrorBoundary>} />
+              <Route path="/diagnostico/v2" element={<PageErrorBoundary><EnrichedDiagnostic /></PageErrorBoundary>} />
+
               <Route path="/diagnostico/resultado/:id" element={<PublicDiagnosticResult />} />
 
               {/* Auth Routes */}
